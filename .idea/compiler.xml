@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Maestri Del Rinascimento" />
+        <module name="GC46" />
       </profile>
     </annotationProcessing>
   </component>
