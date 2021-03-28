@@ -1,0 +1,39 @@
+{
+  "NumberOfCards": 2,
+  "DevelopmentCard":[
+    {
+      "color":null,
+      "level": 1,
+      "cardId": 5,
+      "victoryPoints": 0,
+      "costShields": 0,
+      "costServants": 0,
+      "costCoins":  0,
+      "inputServants": 0,
+      "inputCoins": 0,
+      "inputStones": 0,
+      "outputShields": 0,
+      "outputServants": 0,
+      "outputCoins": 0,
+      "outputStones": 0,
+      "outputFaith": 0
+    },
+    {
+      "color":null,
+      "level": 1,
+      "cardId": 2,
+      "victoryPoints": 0,
+      "costShields": 0,
+      "costServants": 0,
+      "costCoins":  0,
+      "inputServants": 0,
+      "inputCoins": 0,
+      "inputStones": 0,
+      "outputShields": 0,
+      "outputServants": 0,
+      "outputCoins": 0,
+      "outputStones": 0,
+      "outputFaith": 0
+    }
+  ]
+}

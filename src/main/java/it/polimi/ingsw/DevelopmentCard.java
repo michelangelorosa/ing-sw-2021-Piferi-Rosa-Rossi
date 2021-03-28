@@ -18,7 +18,7 @@ public class DevelopmentCard {
     private final Color color;
     private final Level level;
 
-    private final int cardId;
+    private int cardId;
     private int victoryPoints;
 
     private int costShields;
@@ -64,6 +64,7 @@ public class DevelopmentCard {
     }
 
     public int getCardId() {
+
         return cardId;
     }
 
