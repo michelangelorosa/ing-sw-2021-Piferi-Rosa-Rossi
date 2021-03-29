@@ -2,7 +2,8 @@
   "NumberOfCards": 48,
   "DevelopmentCard":[
     {
-      "color":null,
+
+      "color": 3,
       "level": 0,
       "cardId": 1,
       "victoryPoints": 1,
@@ -21,7 +22,7 @@
       "outputFaith": 1
     },
     {
-      "color":null,
+      "color":1,
       "level": 0,
       "cardId": 2,
       "victoryPoints": 1,
@@ -40,7 +41,7 @@
       "outputFaith": 1
     },
     {
-      "color":null,
+      "color":0,
       "level": 0,
       "cardId": 3,
       "victoryPoints": 1,
@@ -59,7 +60,7 @@
       "outputFaith": 1
     },
     {
-      "color":null,
+      "color":2,
       "level": 0,
       "cardId": 4,
       "victoryPoints": 1,
@@ -78,7 +79,7 @@
       "outputFaith": 1
     },
     {
-      "color":null,
+      "color":3,
       "level": 0,
       "cardId": 5,
       "victoryPoints": 2,
@@ -97,7 +98,7 @@
       "outputFaith": 0
     },
     {
-      "color":null,
+      "color":1,
       "level": 0,
       "cardId": 6,
       "victoryPoints": 2,
@@ -116,7 +117,7 @@
       "outputFaith": 0
     },
     {
-      "color":null,
+      "color":0,
       "level": 0,
       "cardId": 7,
       "victoryPoints": 2,
@@ -135,7 +136,7 @@
       "outputFaith": 0
     },
     {
-      "color":null,
+      "color":2,
       "level": 0,
       "cardId": 8,
       "victoryPoints": 2,
@@ -154,7 +155,7 @@
       "outputFaith": 0
     },
     {
-      "color":null,
+      "color":3,
       "level": 0,
       "cardId": 9,
       "victoryPoints": 3,
@@ -173,7 +174,7 @@
       "outputFaith": 0
     },
     {
-      "color":null,
+      "color":1,
       "level": 0,
       "cardId": 10,
       "victoryPoints": 3,
@@ -192,7 +193,7 @@
       "outputFaith": 0
     },
     {
-      "color":null,
+      "color":0,
       "level": 0,
       "cardId": 11,
       "victoryPoints": 3,
@@ -211,7 +212,7 @@
       "outputFaith": 0
     },
     {
-      "color":null,
+      "color":2,
       "level": 0,
       "cardId": 12,
       "victoryPoints": 3,
@@ -230,7 +231,7 @@
       "outputFaith": 0
     },
     {
-      "color":null,
+      "color":3,
       "level": 0,
       "cardId": 13,
       "victoryPoints": 4,
@@ -249,7 +250,7 @@
       "outputFaith": 1
     },
     {
-      "color":null,
+      "color":1,
       "level": 0,
       "cardId": 14,
       "victoryPoints": 4,
@@ -268,7 +269,7 @@
       "outputFaith": 1
     },
     {
-      "color":null,
+      "color": 0,
       "level": 0,
       "cardId": 15,
       "victoryPoints": 4,
@@ -287,7 +288,7 @@
       "outputFaith": 1
     },
     {
-      "color":null,
+      "color":2,
       "level": 0,
       "cardId": 16,
       "victoryPoints": 4,
@@ -306,7 +307,7 @@
       "outputFaith": 1
     },
     {
-      "color":null,
+      "color":3,
       "level": 1,
       "cardId": 17,
       "victoryPoints": 5,
@@ -325,7 +326,7 @@
       "outputFaith": 2
     },
     {
-      "color":null,
+      "color":1,
       "level": 1,
       "cardId": 18,
       "victoryPoints": 5,
@@ -344,7 +345,7 @@
       "outputFaith": 2
     },
     {
-      "color":null,
+      "color":0,
       "level": 1,
       "cardId": 19,
       "victoryPoints": 5,
@@ -363,7 +364,7 @@
       "outputFaith": 2
     },
     {
-      "color":null,
+      "color":2,
       "level": 1,
       "cardId": 20,
       "victoryPoints": 5,
@@ -382,7 +383,7 @@
       "outputFaith": 2
     },
     {
-      "color":null,
+      "color":3,
       "level": 1,
       "cardId": 21,
       "victoryPoints": 6,
@@ -401,7 +402,7 @@
       "outputFaith": 0
     },
     {
-      "color":null,
+      "color":1,
       "level": 1,
       "cardId": 22,
       "victoryPoints": 6,
@@ -420,7 +421,7 @@
       "outputFaith": 0
     },
     {
-      "color":null,
+      "color":0,
       "level": 1,
       "cardId": 23,
       "victoryPoints": 6,
@@ -439,7 +440,7 @@
       "outputFaith": 0
     },
     {
-      "color":null,
+      "color":2,
       "level": 1,
       "cardId": 24,
       "victoryPoints": 6,
@@ -458,7 +459,7 @@
       "outputFaith": 0
     },
     {
-      "color":null,
+      "color":3,
       "level": 1,
       "cardId": 25,
       "victoryPoints": 7,
@@ -477,7 +478,7 @@
       "outputFaith": 2
     },
     {
-      "color":null,
+      "color":1,
       "level": 1,
       "cardId": 26,
       "victoryPoints": 7,
@@ -496,7 +497,7 @@
       "outputFaith": 2
     },
     {
-      "color":null,
+      "color":0,
       "level": 1,
       "cardId": 27,
       "victoryPoints": 7,
@@ -515,7 +516,7 @@
       "outputFaith": 2
     },
     {
-      "color":null,
+      "color":2,
       "level": 1,
       "cardId": 28,
       "victoryPoints": 7,
@@ -534,7 +535,7 @@
       "outputFaith": 2
     },
     {
-      "color":null,
+      "color":3,
       "level": 1,
       "cardId": 29,
       "victoryPoints": 8,
@@ -553,7 +554,7 @@
       "outputFaith": 1
     },
     {
-      "color":null,
+      "color":1,
       "level": 1,
       "cardId": 30,
       "victoryPoints": 8,
@@ -572,7 +573,7 @@
       "outputFaith": 1
     },
     {
-      "color":null,
+      "color":0,
       "level": 1,
       "cardId": 31,
       "victoryPoints": 8,
@@ -591,7 +592,7 @@
       "outputFaith": 1
     },
     {
-      "color":null,
+      "color":2,
       "level": 1,
       "cardId": 32,
       "victoryPoints": 8,
@@ -610,7 +611,7 @@
       "outputFaith": 1
     },
     {
-      "color":null,
+      "color":3,
       "level": 2,
       "cardId": 33,
       "victoryPoints": 9,
@@ -629,7 +630,7 @@
       "outputFaith": 2
     },
     {
-      "color":null,
+      "color":1,
       "level": 2,
       "cardId": 34,
       "victoryPoints": 9,
@@ -648,7 +649,7 @@
       "outputFaith": 2
     },
     {
-      "color":null,
+      "color":0,
       "level": 2,
       "cardId": 35,
       "victoryPoints": 9,
@@ -667,7 +668,7 @@
       "outputFaith": 2
     },
     {
-      "color":null,
+      "color":2,
       "level": 2,
       "cardId": 36,
       "victoryPoints": 9,
@@ -686,7 +687,7 @@
       "outputFaith": 2
     },
     {
-      "color":null,
+      "color":3,
       "level": 2,
       "cardId": 37,
       "victoryPoints": 10,
@@ -705,7 +706,7 @@
       "outputFaith": 1
     },
     {
-      "color":null,
+      "color":1,
       "level": 2,
       "cardId": 38,
       "victoryPoints": 10,
@@ -724,7 +725,7 @@
       "outputFaith": 1
     },
     {
-      "color":null,
+      "color":0,
       "level": 2,
       "cardId": 39,
       "victoryPoints": 10,
@@ -743,7 +744,7 @@
       "outputFaith": 1
     },
     {
-      "color":null,
+      "color":2,
       "level": 2,
       "cardId": 40,
       "victoryPoints": 1,
@@ -762,7 +763,7 @@
       "outputFaith": 1
     },
     {
-      "color":null,
+      "color":3,
       "level": 2,
       "cardId": 41,
       "victoryPoints": 11,
@@ -781,7 +782,7 @@
       "outputFaith": 3
     },
     {
-      "color":null,
+      "color":1,
       "level": 2,
       "cardId": 42,
       "victoryPoints": 11,
@@ -800,7 +801,7 @@
       "outputFaith": 3
     },
     {
-      "color":null,
+      "color":0,
       "level": 2,
       "cardId": 43,
       "victoryPoints": 11,
@@ -819,7 +820,7 @@
       "outputFaith": 3
     },
     {
-      "color":null,
+      "color":2,
       "level": 2,
       "cardId": 44,
       "victoryPoints": 11,
@@ -838,7 +839,7 @@
       "outputFaith": 3
     },
     {
-      "color":null,
+      "color":3,
       "level": 2,
       "cardId": 45,
       "victoryPoints": 12,
@@ -857,7 +858,7 @@
       "outputFaith": 0
     },
     {
-      "color":null,
+      "color":1,
       "level": 2,
       "cardId": 46,
       "victoryPoints": 12,
@@ -876,7 +877,7 @@
       "outputFaith": 0
     },
     {
-      "color":null,
+      "color":0,
       "level": 2,
       "cardId": 47,
       "victoryPoints": 12,
@@ -895,7 +896,7 @@
       "outputFaith": 0
     },
     {
-      "color":null,
+      "color":2,
       "level": 2,
       "cardId": 48,
       "victoryPoints": 12,
