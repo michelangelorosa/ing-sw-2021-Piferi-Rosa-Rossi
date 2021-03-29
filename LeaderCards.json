@@ -15,6 +15,45 @@
       "discountStones": 0
     },
     {
+      "leaderAbility": 0,
+      "cardId": 50,
+      "victoryPoints": 2,
+      "needsBlueCard": 1,
+      "needsPurpleCard": 1,
+      "needsYellowCard": 0,
+      "needsGreenCard": 0,
+      "discountShields": 1,
+      "discountServants": 0,
+      "discountCoins": 0,
+      "discountStones": 0
+    },
+    {
+      "leaderAbility": 0,
+      "cardId": 51,
+      "victoryPoints": 2,
+      "needsBlueCard": 1,
+      "needsPurpleCard": 0,
+      "needsYellowCard": 0,
+      "needsGreenCard": 1,
+      "discountShields": 0,
+      "discountServants": 0,
+      "discountCoins": 0,
+      "discountStones": 1
+    },
+    {
+      "leaderAbility": 0,
+      "cardId": 52,
+      "victoryPoints": 2,
+      "needsBlueCard": 0,
+      "needsPurpleCard": 1,
+      "needsYellowCard": 1,
+      "needsGreenCard": 0,
+      "discountShields": 0,
+      "discountServants": 0,
+      "discountCoins": 1,
+      "discountStones": 0
+    },
+    {
       "leaderAbility": 1,
       "cardId": 53,
       "victoryPoints": 3,
@@ -22,8 +61,37 @@
       "needsServants": 0,
       "needsCoins": 5,
       "needsStones": 0,
-      "needsGreenCard": 0,
       "depotType": 3
+    },
+    {
+      "leaderAbility": 1,
+      "cardId": 54,
+      "victoryPoints": 3,
+      "needsShields": 0,
+      "needsServants": 0,
+      "needsCoins": 0,
+      "needsStones": 5,
+      "depotType": 1
+    },
+    {
+      "leaderAbility": 1,
+      "cardId": 55,
+      "victoryPoints": 3,
+      "needsShields": 0,
+      "needsServants": 5,
+      "needsCoins": 0,
+      "needsStones": 0,
+      "depotType": 0
+    },
+    {
+      "leaderAbility": 1,
+      "cardId": 56,
+      "victoryPoints": 3,
+      "needsShields": 5,
+      "needsServants": 0,
+      "needsCoins": 0,
+      "needsStones": 0,
+      "depotType": 2
     },
     {
       "leaderAbility": 2,
@@ -36,17 +104,92 @@
       "marbleConversion": 1
     },
     {
+      "leaderAbility": 2,
+      "cardId": 58,
+      "victoryPoints": 5,
+      "needsBlueCard": 0,
+      "needsPurpleCard": 1,
+      "needsYellowCard": 0,
+      "needsGreenCard": 2,
+      "marbleConversion": 0
+    },
+    {
+      "leaderAbility": 2,
+      "cardId": 59,
+      "victoryPoints": 5,
+      "needsBlueCard": 2,
+      "needsPurpleCard": 0,
+      "needsYellowCard": 1,
+      "needsGreenCard": 0,
+      "marbleConversion": 3
+    },
+    {
+      "leaderAbility": 2,
+      "cardId": 60,
+      "victoryPoints": 5,
+      "needsBlueCard": 0,
+      "needsPurpleCard": 2,
+      "needsYellowCard": 0,
+      "needsGreenCard": 1,
+      "marbleConversion": 2
+    },
+    {
       "leaderAbility": 3,
       "cardId": 61,
       "victoryPoints": 4,
       "levelRequired": 2,
       "needsBlueCard": 0,
       "needsPurpleCard": 0,
+      "needsYellowCard": 1,
+      "needsGreenCard": 0,
+      "inputShields":  1,
+      "inputServants": 0,
+      "inputCoins": 0,
+      "inputStones": 0,
+      "outputFaith": 1
+    },
+    {
+      "leaderAbility": 3,
+      "cardId": 62,
+      "victoryPoints": 4,
+      "levelRequired": 2,
+      "needsBlueCard": 1,
+      "needsPurpleCard": 0,
+      "needsYellowCard": 0,
+      "needsGreenCard": 0,
+      "inputShields":  0,
+      "inputServants": 1,
+      "inputCoins": 0,
+      "inputStones": 0,
+      "outputFaith": 1
+    },
+    {
+      "leaderAbility": 3,
+      "cardId": 63,
+      "victoryPoints": 4,
+      "levelRequired": 2,
+      "needsBlueCard": 0,
+      "needsPurpleCard": 1,
       "needsYellowCard": 0,
       "needsGreenCard": 0,
       "inputShields":  0,
       "inputServants": 0,
       "inputCoins": 0,
+      "inputStones": 1,
+      "outputFaith": 1
+    },
+    {
+      "leaderAbility": 3,
+      "cardId": 64,
+      "victoryPoints": 4,
+      "levelRequired": 2,
+      "needsBlueCard": 0,
+      "needsPurpleCard": 0,
+      "needsYellowCard": 0,
+      "needsGreenCard": 1,
+      "inputShields":  0,
+      "inputServants": 0,
+      "inputCoins": 1,
       "inputStones": 0,
       "outputFaith": 1
     }

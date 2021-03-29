@@ -28,34 +28,13 @@ public class testJson
             JsonArray jsonArrayCards = fileObject.get("DevelopmentCard").getAsJsonArray();
             for(JsonElement cardElement : jsonArrayCards){
                 //Gets json objects
-                JsonObject developmentCardJsonObject = cardElement.getAsJsonObject();
+                JsonObject DevelopmentCardJsonObject = cardElement.getAsJsonObject();
 
                 //Data Extraction
-                int colorInt = developmentCardJsonObject.get("color").getAsInt();
+                //Number color = DevelopmentCardJsonObject.get("color").getAsNumber();
+                Integer cardId = DevelopmentCardJsonObject.get("cardId").getAsInt();
 
-                int levelInt = developmentCardJsonObject.get("level").getAsInt();
-
-                int cardId = developmentCardJsonObject.get("cardId").getAsInt();
-                int victoryPoints = developmentCardJsonObject.get("victoryPoints").getAsInt();
-
-                int costShields = developmentCardJsonObject.get("costShields").getAsInt();
-                int costServants = developmentCardJsonObject.get("costServants").getAsInt();
-                int costCoins = developmentCardJsonObject.get("costCoins").getAsInt();
-                int costStones = developmentCardJsonObject.get("costStones").getAsInt();
-
-                int inputShields = developmentCardJsonObject.get("inputShields").getAsInt();
-                int inputServants = developmentCardJsonObject.get("inputServants").getAsInt();
-                int inputCoins = developmentCardJsonObject.get("inputCoins").getAsInt();
-                int inputStones = developmentCardJsonObject.get("inputStones").getAsInt();
-
-                int outputShields = developmentCardJsonObject.get("outputShields").getAsInt();
-                int outputServants = developmentCardJsonObject.get("outputServants").getAsInt();
-                int outputCoins = developmentCardJsonObject.get("outputCoins").getAsInt();
-                int outputStones = developmentCardJsonObject.get("outputStones").getAsInt();
-
-                int outputFaith = developmentCardJsonObject.get("outputFaith").getAsInt();
-
-                System.out.println("Carta numero: "+cardId+" Colore: "+colorInt);
+                System.out.println("Color: "+" idCard: "+cardId);
             }
 
             //Print card
