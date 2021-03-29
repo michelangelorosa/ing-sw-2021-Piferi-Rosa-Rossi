@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.Model;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -16,7 +16,7 @@ From a JSON File reads the values, if succeeds those are printed on screen.
 public class testJson
 {
     public static void main( String[] args ) {
-        File cards = new File("cards.json");
+        File cards = new File("DevelopmentCards.json");
         try {
             JsonElement fileElement = JsonParser.parseReader(new FileReader(cards));
             JsonObject fileObject = fileElement.getAsJsonObject();

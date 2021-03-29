@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.Model;
 
 public class DevelopmentCard {
     enum Color {
@@ -18,7 +18,7 @@ public class DevelopmentCard {
     private final Color color;
     private final Level level;
 
-    private int cardId;
+    private final int cardId;
     private int victoryPoints;
 
     private int costShields;
