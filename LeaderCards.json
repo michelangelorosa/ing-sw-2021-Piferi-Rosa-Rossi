@@ -1,0 +1,54 @@
+{
+  "NumberOfCards": 16,
+  "LeaderCard":[
+    {
+      "leaderAbility": 0,
+      "cardId": 49,
+      "victoryPoints": 2,
+      "needsBlueCard": 0,
+      "needsPurpleCard": 0,
+      "needsYellowCard": 1,
+      "needsGreenCard": 1,
+      "discountShields": 0,
+      "discountServants": 1,
+      "discountCoins": 0,
+      "discountStones": 0
+    },
+    {
+      "leaderAbility": 1,
+      "cardId": 53,
+      "victoryPoints": 3,
+      "needsShields": 0,
+      "needsServants": 0,
+      "needsCoins": 5,
+      "needsStones": 0,
+      "needsGreenCard": 0,
+      "depotType": 3
+    },
+    {
+      "leaderAbility": 2,
+      "cardId": 57,
+      "victoryPoints": 5,
+      "needsBlueCard": 1,
+      "needsPurpleCard": 0,
+      "needsYellowCard": 2,
+      "needsGreenCard": 0,
+      "marbleConversion": 1
+    },
+    {
+      "leaderAbility": 3,
+      "cardId": 61,
+      "victoryPoints": 4,
+      "levelRequired": 2,
+      "needsBlueCard": 0,
+      "needsPurpleCard": 0,
+      "needsYellowCard": 0,
+      "needsGreenCard": 0,
+      "inputShields":  0,
+      "inputServants": 0,
+      "inputCoins": 0,
+      "inputStones": 0,
+      "outputFaith": 1
+    }
+  ]
+}
