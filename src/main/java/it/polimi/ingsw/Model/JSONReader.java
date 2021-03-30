@@ -22,8 +22,8 @@ public class JSONReader {
         DevelopmentCard cardToRead;
         int cardsInDeck = 1;
 
-        DevelopmentCard.Color[] colors = DevelopmentCard.Color.values();
-        DevelopmentCard.Level[] levels = DevelopmentCard.Level.values();
+        Color[] colors = Color.values();
+        Level[] levels = Level.values();
 
         int colorInt;
 
@@ -31,21 +31,6 @@ public class JSONReader {
 
         int cardId;
         int victoryPoints;
-
-        int costShields;
-        int costServants;
-        int costCoins;
-        int costStones;
-
-        int inputShields;
-        int inputServants;
-        int inputCoins;
-        int inputStones;
-
-        int outputShields;
-        int outputServants;
-        int outputCoins;
-        int outputStones;
 
         int outputFaith;
 
@@ -72,24 +57,13 @@ public class JSONReader {
                 cardId = developmentCardJsonObject.get("cardId").getAsInt();
                 victoryPoints = developmentCardJsonObject.get("victoryPoints").getAsInt();
 
-                costShields = developmentCardJsonObject.get("costShields").getAsInt();
-                costServants = developmentCardJsonObject.get("costServants").getAsInt();
-                costCoins = developmentCardJsonObject.get("costCoins").getAsInt();
-                costStones = developmentCardJsonObject.get("costStones").getAsInt();
-
-                inputShields = developmentCardJsonObject.get("inputShields").getAsInt();
-                inputServants = developmentCardJsonObject.get("inputServants").getAsInt();
-                inputCoins = developmentCardJsonObject.get("inputCoins").getAsInt();
-                inputStones = developmentCardJsonObject.get("inputStones").getAsInt();
-
-                outputShields = developmentCardJsonObject.get("outputShields").getAsInt();
-                outputServants = developmentCardJsonObject.get("outputServants").getAsInt();
-                outputCoins = developmentCardJsonObject.get("outputCoins").getAsInt();
-                outputStones = developmentCardJsonObject.get("outputStones").getAsInt();
+                ResourceStack cost = new ResourceStack(developmentCardJsonObject.get("costShields").getAsInt(), developmentCardJsonObject.get("costServants").getAsInt(), developmentCardJsonObject.get("costCoins").getAsInt(), developmentCardJsonObject.get("costStones").getAsInt());
+                ResourceStack input = new ResourceStack(developmentCardJsonObject.get("inputShields").getAsInt(), developmentCardJsonObject.get("inputServants").getAsInt(), developmentCardJsonObject.get("inputCoins").getAsInt(), developmentCardJsonObject.get("inputStones").getAsInt());
+                ResourceStack output = new ResourceStack(developmentCardJsonObject.get("outputShields").getAsInt(), developmentCardJsonObject.get("outputServants").getAsInt(), developmentCardJsonObject.get("outputCoins").getAsInt(), developmentCardJsonObject.get("outputStones").getAsInt());
 
                 outputFaith = developmentCardJsonObject.get("outputFaith").getAsInt();
 
-                cardToRead = new DevelopmentCard(colors[colorInt], levels[levelInt], cardId, victoryPoints, costShields, costServants, costCoins, costStones, inputShields, inputServants, inputCoins, inputStones, outputShields, outputServants, outputCoins, outputStones, outputFaith);
+                cardToRead = new DevelopmentCard(colors[colorInt], levels[levelInt], cardId, victoryPoints, cost, input, output, outputFaith);
 
                 System.out.println("Number: " + cardsInDeck + " CardId: " + cardId);
 
@@ -116,3 +90,4 @@ public class JSONReader {
         return readCards;
     }
 }
+
