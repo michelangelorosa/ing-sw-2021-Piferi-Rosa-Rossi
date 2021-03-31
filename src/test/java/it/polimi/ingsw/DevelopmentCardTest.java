@@ -131,4 +131,16 @@ public class DevelopmentCardTest {
 
         assertEquals(12, outputFaith3);
     }
+
+    /**
+     * Test for "toString" method in DevelopmentCard Class.
+     */
+
+    @Test
+    public void toStringTest() {
+
+        String testString = "1 100 BLUE ONE 0 1 2 3 2 6 13 16 31 0 0 0 12";
+
+        assertArrayEquals(testString.toCharArray(), card.toString().toCharArray());
+    }
 }

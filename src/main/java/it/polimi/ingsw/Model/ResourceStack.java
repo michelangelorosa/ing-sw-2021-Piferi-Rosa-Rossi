@@ -85,4 +85,12 @@ public class ResourceStack {
     public void setStones(int stones) {
         this.stones = stones;
     }
+
+    /**
+     * toString override method for ResourceStack Class.
+     */
+
+    public String toString() {
+        return shields+" "+servants+" "+coins+" "+stones;
+    }
 }

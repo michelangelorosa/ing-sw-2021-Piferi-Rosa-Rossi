@@ -58,4 +58,16 @@ public class ResourceStackTest {
         assertEquals(3, coins2);
         assertEquals(4, stones2);
     }
+
+    /**
+     * Test for "toString" method in ResourceStack Class.
+     */
+
+    @Test
+    public void toStringTest() {
+
+        String testString = "1 2 3 4";
+
+        assertArrayEquals(testString.toCharArray(), stack.toString().toCharArray());
+    }
 }

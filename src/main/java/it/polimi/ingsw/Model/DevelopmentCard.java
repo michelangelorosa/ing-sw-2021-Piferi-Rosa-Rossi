@@ -155,4 +155,12 @@ public class DevelopmentCard {
         this.output = output;
     }
 
+    /**
+     * toString override method for DevelopmentCard Class.
+     */
+
+    public String toString() {
+        return cardId+" "+victoryPoints+" "+color+" "+level+" "+cost+" "+input+" "+output+" "+outputFaith;
+    }
+
 }
