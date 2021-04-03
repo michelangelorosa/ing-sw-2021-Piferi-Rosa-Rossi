@@ -4,7 +4,6 @@ package it.polimi.ingsw.Model;
  * DevelopmentCard Class describes the different attributes and methods
  * needed for the creation of a Development Card.
  */
-
 public class DevelopmentCard {
 
     /**
@@ -13,7 +12,6 @@ public class DevelopmentCard {
      * Each instantiated Development Card has two attributes (color and level) indicating the card's
      * color and level, which are final, has they shall not be changed.
      */
-
     private final Color color;
     private final Level level;
 
@@ -21,7 +19,6 @@ public class DevelopmentCard {
      * Each Development Card has its own unique cardId (hence the "final" declaration), used for
      * recognition, and a finite number of victory points.
      */
-
     private final int cardId;
     private int victoryPoints;
 
@@ -30,7 +27,6 @@ public class DevelopmentCard {
      * production input and production output of the card. As some cards can have faith points as a
      * production outcome, an integer attribute called outputFaith is introduced.
      */
-
     private ResourceStack cost;
     private ResourceStack input;
     private ResourceStack output;
@@ -39,7 +35,6 @@ public class DevelopmentCard {
     /**
      * Constructor for DevelopmentCard Class.
      */
-
     public DevelopmentCard(Color color, Level level, int cardId, int victoryPoints, ResourceStack cost, ResourceStack input, ResourceStack output, int outputFaith) {
         this.color = color;
         this.level = level;
@@ -54,7 +49,6 @@ public class DevelopmentCard {
     /**
      * Getter for "color" attribute in DevelopmentCard Class.
      */
-
     public Color getColor() {
         return this.color;
     }
@@ -62,7 +56,6 @@ public class DevelopmentCard {
     /**
      * Getter for "level" attribute in DevelopmentCard Class.
      */
-
     public Level getLevel() {
         return this.level;
     }
@@ -78,7 +71,6 @@ public class DevelopmentCard {
     /**
      * Getter for "victoryPoints" attribute in DevelopmentCard Class.
      */
-
     public int getVictoryPoints() {
         return victoryPoints;
     }
@@ -86,7 +78,6 @@ public class DevelopmentCard {
     /**
      * Setter for "victoryPoints" attribute in DevelopmentCard Class.
      */
-
     public void setVictoryPoints(int victoryPoints) {
         this.victoryPoints = victoryPoints;
     }
@@ -94,7 +85,6 @@ public class DevelopmentCard {
     /**
      * Getter for "outputFaith" attribute in DevelopmentCard Class.
      */
-
     public int getOutputFaith() {
         return outputFaith;
     }
@@ -102,7 +92,6 @@ public class DevelopmentCard {
     /**
      * Setter for "outputFaith" attribute in DevelopmentCard Class.
      */
-
     public void setOutputFaith(int outputFaith) {
         this.outputFaith = outputFaith;
     }
@@ -110,7 +99,6 @@ public class DevelopmentCard {
     /**
      * Getter for "cost" attribute in DevelopmentCard Class.
      */
-
     public ResourceStack getCost() {
         return cost;
     }
@@ -118,7 +106,6 @@ public class DevelopmentCard {
     /**
      * Setter for "cost" attribute in DevelopmentCard Class.
      */
-
     public void setCost(ResourceStack cost) {
         this.cost = cost;
     }
@@ -126,7 +113,6 @@ public class DevelopmentCard {
     /**
      * Getter for "input" attribute in DevelopmentCard Class.
      */
-
     public ResourceStack getInput() {
         return input;
     }
@@ -134,7 +120,6 @@ public class DevelopmentCard {
     /**
      * Setter for "input" attribute in DevelopmentCard Class.
      */
-
     public void setInput(ResourceStack input) {
         this.input = input;
     }
@@ -142,7 +127,6 @@ public class DevelopmentCard {
     /**
      * Getter for "output" attribute in DevelopmentCard Class.
      */
-
     public ResourceStack getOutput() {
         return output;
     }
@@ -150,7 +134,6 @@ public class DevelopmentCard {
     /**
      * Setter for "output" attribute in DevelopmentCard Class.
      */
-
     public void setOutput(ResourceStack output) {
         this.output = output;
     }
@@ -158,7 +141,6 @@ public class DevelopmentCard {
     /**
      * toString override method for DevelopmentCard Class.
      */
-
     public String toString() {
         return cardId+" "+victoryPoints+" "+color+" "+level+" "+cost+" "+input+" "+output+" "+outputFaith;
     }

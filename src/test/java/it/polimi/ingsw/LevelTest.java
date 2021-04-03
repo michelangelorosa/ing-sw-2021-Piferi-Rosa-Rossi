@@ -8,13 +8,11 @@ import static org.junit.Assert.assertSame;
 /**
  * Unit test for Level enum-type Class.
  */
-
 public class LevelTest {
 
     /**
      * getter test for Level enum-type Class.
      */
-
     @Test
     public void getterTest() {
 

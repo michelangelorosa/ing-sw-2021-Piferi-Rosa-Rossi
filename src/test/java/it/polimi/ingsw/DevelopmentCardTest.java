@@ -11,7 +11,6 @@ import org.junit.Test;
 /**
  * Unit test for DevelopmentCard Class.
  */
-
 public class DevelopmentCardTest {
 
     ResourceStack cost = new ResourceStack(0, 1, 2, 3);
@@ -25,7 +24,6 @@ public class DevelopmentCardTest {
     /**
      * Constructor test for DevelopmentCard Class.
      */
-
     @Test
     public void constructorTest() {
 
@@ -56,7 +54,6 @@ public class DevelopmentCardTest {
     /**
      * Setter test for DevelopmentCard Class.
      */
-
     @Test
     public void setterTest() {
         int victoryPoints2 = 21;
@@ -97,7 +94,6 @@ public class DevelopmentCardTest {
     /**
      * Getter test for DevelopmentCard Class.
      */
-
     @Test
     public void getterTest() {
         Color color3 = card.getColor();
@@ -135,7 +131,6 @@ public class DevelopmentCardTest {
     /**
      * Test for "toString" method in DevelopmentCard Class.
      */
-
     @Test
     public void toStringTest() {
 

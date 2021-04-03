@@ -8,7 +8,6 @@ import org.junit.Test;
 /**
  * Unit test for ResourceStack Class.
  */
-
 public class ResourceStackTest {
 
     ResourceStack stack = new ResourceStack(1, 2, 3, 4);
@@ -16,7 +15,6 @@ public class ResourceStackTest {
     /**
      * Constructor test for ResourceStack Class.
      */
-
     @Test
     public void constructorTest() {
         assertEquals(1, stack.getShields());
@@ -28,7 +26,6 @@ public class ResourceStackTest {
     /**
      * Setter test for ResourceStack Class.
      */
-
     @Test
     public void setterTest() {
         stack.setShields(10);
@@ -45,7 +42,6 @@ public class ResourceStackTest {
     /**
      * Getter test for ResourceStack Class.
      */
-
     @Test
     public void getterTest() {
         int shields2 = stack.getShields();
@@ -62,7 +58,6 @@ public class ResourceStackTest {
     /**
      * Test for "toString" method in ResourceStack Class.
      */
-
     @Test
     public void toStringTest() {
 

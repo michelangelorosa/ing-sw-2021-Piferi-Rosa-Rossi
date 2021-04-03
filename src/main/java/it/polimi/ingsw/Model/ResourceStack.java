@@ -4,7 +4,6 @@ package it.polimi.ingsw.Model;
  * ResourceStack Class contains four integer private attributes indicating the amount of each
  * different type of resource: shields, servants, coins, stones.
  */
-
 public class ResourceStack {
     private int shields;
     private int servants;
@@ -14,7 +13,6 @@ public class ResourceStack {
     /**
      * Constructor for ResourceStack Class.
      */
-
     public ResourceStack(int shields, int servants, int coins, int stones) {
         this.shields = shields;
         this.servants = servants;
@@ -25,7 +23,6 @@ public class ResourceStack {
     /**
      * Getter for "shields" attribute in ResourceStack Class.
      */
-
     public int getShields() {
         return shields;
     }
@@ -33,7 +30,6 @@ public class ResourceStack {
     /**
      * Setter for "shields" attribute in ResourceStack Class.
      */
-
     public void setShields(int shields) {
         this.shields = shields;
     }
@@ -41,7 +37,6 @@ public class ResourceStack {
     /**
      * Getter for "servants" attribute in ResourceStack Class.
      */
-
     public int getServants() {
         return servants;
     }
@@ -49,7 +44,6 @@ public class ResourceStack {
     /**
      * Setter for "servants" attribute in ResourceStack Class.
      */
-
     public void setServants(int servants) {
         this.servants = servants;
     }
@@ -57,7 +51,6 @@ public class ResourceStack {
     /**
      * Getter for "coins" attribute in ResourceStack Class.
      */
-
     public int getCoins() {
         return coins;
     }
@@ -65,7 +58,6 @@ public class ResourceStack {
     /**
      * Setter for "coins" attribute in ResourceStack Class.
      */
-
     public void setCoins(int coins) {
         this.coins = coins;
     }
@@ -73,7 +65,6 @@ public class ResourceStack {
     /**
      * Getter for "stones" attribute in ResourceStack Class.
      */
-
     public int getStones() {
         return stones;
     }
@@ -81,7 +72,6 @@ public class ResourceStack {
     /**
      * Setter for "stones" attribute in ResourceStack Class.
      */
-
     public void setStones(int stones) {
         this.stones = stones;
     }
@@ -89,7 +79,6 @@ public class ResourceStack {
     /**
      * toString override method for ResourceStack Class.
      */
-
     public String toString() {
         return shields+" "+servants+" "+coins+" "+stones;
     }

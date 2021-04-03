@@ -8,13 +8,11 @@ import org.junit.Test;
 /**
  * Unit test for DevelopmentCardDeck Class.
  */
-
 public class DevelopmentCardDeckTest {
 
     /**
      * Here a new DevelopmentCardDeck object is created along with four different DevelopmentCard objects.
      */
-
     ResourceStack cost = new ResourceStack(0, 1, 2, 3);
     ResourceStack input = new ResourceStack(2, 6, 13, 16);
     ResourceStack output = new ResourceStack(31, 0, 0, 0);
@@ -44,7 +42,6 @@ public class DevelopmentCardDeckTest {
     /**
      * Constructor test for DevelopmentCardDeck Class.
      */
-
     @Test
     public void constructorTest() {
 
@@ -57,7 +54,6 @@ public class DevelopmentCardDeckTest {
      * Test for "addCard" method in DevelopmentCardDeck Class. It checks if cards are added correctly
      * to the deck.
      */
-
     @Test
     public void addCardTest() {
 
@@ -78,7 +74,6 @@ public class DevelopmentCardDeckTest {
     /**
      * Getter test for DevelopmentCardClass.
      */
-
     @Test
     public void getterTest() {
 
@@ -98,7 +93,6 @@ public class DevelopmentCardDeckTest {
     /**
      * Setter test for DevelopmentCardClass.
      */
-
     @Test
     public void setterTest() {
 
@@ -121,7 +115,6 @@ public class DevelopmentCardDeckTest {
      * Test for "isEmpty" method in DevelopmentCardDeck Class. It checks if the method correctly checks
      * whether the deck is empty or not.
      */
-
     @Test
     public void isEmptyTest() {
 
@@ -136,7 +129,6 @@ public class DevelopmentCardDeckTest {
      * The outcome of this test is to be checked manually (hence the use of a for cycle to print the
      * cards' values).
      */
-
     @Test
     public void shuffleTest() {
 
@@ -160,7 +152,6 @@ public class DevelopmentCardDeckTest {
      * Test for "drawCard" method in DevelopmentCardDeck Class. It checks if the card is drawn correctly
      * and if the deck length is correctly update when calling the method.
      */
-
     @Test
     public void drawCardTest() {
 
@@ -180,7 +171,6 @@ public class DevelopmentCardDeckTest {
     /**
      * Test for "toString" method in DevelopmentCardDeck Class.
      */
-
     @Test
     public void toStringTest() {
 

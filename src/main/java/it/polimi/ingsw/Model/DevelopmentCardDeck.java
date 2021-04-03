@@ -7,7 +7,6 @@ import java.util.Collections;
   * DevelopmentCardDeck Class contains three private attributes: an array of DevelopmentCards, a color and a level.
   * Another private integer attribute (cardsInDeck) is used to keep track of how many cards are in the deck.
   */
-
 public class DevelopmentCardDeck {
     private DevelopmentCard[] cards;
     private Color color;
@@ -17,7 +16,6 @@ public class DevelopmentCardDeck {
      /**
       * Constructor for DevelopmentCardDeck Class.
       */
-
     public DevelopmentCardDeck(Color color, Level level) {
         this.cards = new DevelopmentCard[4];
         this.color = color;
@@ -28,7 +26,6 @@ public class DevelopmentCardDeck {
      /**
       * Getter for "cards" attribute in DevelopmentCardDeck Class.
       */
-
     public DevelopmentCard[] getCards() {
         return cards;
     }
@@ -36,7 +33,6 @@ public class DevelopmentCardDeck {
      /**
       * Setter for "cards" attribute in DevelopmentCardDeck
       */
-
     public void setCards(DevelopmentCard[] cards) {
         this.cards = cards;
     }
@@ -44,7 +40,6 @@ public class DevelopmentCardDeck {
      /**
       * Getter for "color" attribute in DevelopmentCardDeck
       */
-
     public Color getColor() {
         return color;
     }
@@ -52,7 +47,6 @@ public class DevelopmentCardDeck {
      /**
       * Setter for "color" attribute in DevelopmentCardDeck
       */
-
     public void setColor(Color color) {
         this.color = color;
     }
@@ -60,7 +54,6 @@ public class DevelopmentCardDeck {
      /**
       * Getter for "level" attribute in DevelopmentCardDeck
       */
-
     public Level getLevel() {
         return level;
     }
@@ -68,7 +61,6 @@ public class DevelopmentCardDeck {
      /**
       * Setter for "level" attribute in DevelopmentCardDeck
       */
-
     public void setLevel(Level level) {
         this.level = level;
     }
@@ -76,7 +68,6 @@ public class DevelopmentCardDeck {
      /**
       * Getter for "cardsInDeck" attribute in DevelopmentCardDeck
       */
-
      public int getCardsInDeck() {
          return cardsInDeck;
      }
@@ -84,7 +75,6 @@ public class DevelopmentCardDeck {
      /**
       * This method returns true if "cardsInDeck" equals zero, meaning there are no cards in the deck.
       */
-
     public boolean isEmpty() {
         return cardsInDeck == 0;
     }
@@ -92,7 +82,6 @@ public class DevelopmentCardDeck {
      /**
       * This method uses a java.util.Collections standard method tu shuffle all the cards in the deck.
       */
-
     public void shuffle() {
         Collections.shuffle(Arrays.asList(cards));
     }
@@ -100,7 +89,6 @@ public class DevelopmentCardDeck {
      /**
       * This method adds a card in the "cards" array attribute while also incrementing "cardsInDeck".
       */
-
     public void addCard(DevelopmentCard card) {
         this.cards[cardsInDeck++] = card;
     }
@@ -109,7 +97,6 @@ public class DevelopmentCardDeck {
       * This method draws a card from the deck and updates the deck's length. If the deck is empty, a new
       * exception is thrown indicating the absence of cards in the deck.
       */
-
     public DevelopmentCard drawCard() throws IllegalArgumentException {
         if(isEmpty()) {
             throw new IllegalArgumentException("Cannot draw card from empty deck!");

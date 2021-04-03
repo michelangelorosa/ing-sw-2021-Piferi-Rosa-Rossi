@@ -8,13 +8,11 @@ import org.junit.Test;
 /**
  * Unit test for Color enum-type Class.
  */
-
 public class ColorTest {
 
     /**
      * getter test for Color enum-type Class.
      */
-
     @Test
     public void getterTest() {
 
