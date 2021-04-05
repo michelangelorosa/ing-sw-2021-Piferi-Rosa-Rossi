@@ -88,5 +88,71 @@ public class JSONReader {
 
         return readCards;
     }
+
+    public static FaithCell[] ReadFaithCells() {
+        File cells = new File("FaithTrack.json");
+
+        FaithCell[] readCells = new FaithCell[25];
+        FaithCell cellToRead;
+        int cellsRead = 0;
+
+        VaticanReportSection[] vaticanReportSections = VaticanReportSection.values();
+        PopeSpace[] popeSpaces = PopeSpace.values();
+
+        int vaticanint;
+
+        int popeint;
+
+        int idCell;
+        int victoryPoints;
+
+        try {
+            JsonElement fileElement = JsonParser.parseReader(new FileReader(cells));
+            JsonObject fileObject = fileElement.getAsJsonObject();
+
+            //Extracting the number of cards in the deck
+            int example = fileObject.get("NumberOfCells").getAsInt();
+            System.out.println("Number of cards in deck: "+ example);
+            //Extracting card values from JSON
+            JsonArray jsonArrayCards = fileObject.get("FaithCell").getAsJsonArray();
+
+            for(JsonElement cellElement : jsonArrayCards){
+                //Gets json objects
+                JsonObject faithCellJsonObject = cellElement.getAsJsonObject();
+
+                //DevelopmentCard Data Extraction
+                vaticanint = faithCellJsonObject.get("VaticanReportSection").getAsInt();
+
+                popeint = faithCellJsonObject.get("PopeSpace").getAsInt();
+
+                idCell = faithCellJsonObject.get("IdCell").getAsInt();
+                victoryPoints = faithCellJsonObject.get("VictoryPoints").getAsInt();
+
+                FaithCell cell = new FaithCell(idCell, victoryPoints, vaticanReportSections[vaticanint], popeSpaces[popeint]);
+
+                //System.out.println("id: " + idCell + " points: " + victoryPoints + " pope Space: " +popeSpaces[popeint] + " vatican:" +vaticanReportSections[vaticanint]);
+
+                readCells[cellsRead] = cell;
+
+                cellsRead ++;
+            }
+
+            //Print card
+
+        }catch (FileNotFoundException e){
+            System.err.println("Error: Missing file!");
+            e.printStackTrace();
+        }catch (Exception e){
+            System.err.println("Error: Input file is corrupt!");
+            e.printStackTrace();
+        }
+
+        if (cellsRead < 25)
+            System.err.println("Error: Not enough cells in JSON file!");
+        else if (cellsRead > 25)
+            System.err.println("Error: Too many cells in JSON file!");
+
+        return readCells;
+    }
 }
 

@@ -23,7 +23,7 @@ public class testJson
 
             //Extracting the number of cards in the deck
             Integer example = fileObject.get("NumberOfCards").getAsInt();
-            System.out.println("Number of cards in deck: "+example);
+            System.out.println("Number of cards in deck: " +example);
             //Extracting card values from JSON
             JsonArray jsonArrayCards = fileObject.get("DevelopmentCard").getAsJsonArray();
             for(JsonElement cardElement : jsonArrayCards){

@@ -1,0 +1,154 @@
+{
+  "NumberOfCells": 25,
+  "FaithCell": [
+    {
+      "IdCell": 0,
+      "VictoryPoints": 0,
+      "VaticanReportSection": 0,
+      "PopeSpace": 0
+    },
+    {
+      "IdCell": 1,
+      "VictoryPoints": 0,
+      "VaticanReportSection": 0,
+      "PopeSpace": 0
+    },
+    {
+      "IdCell": 2,
+      "VictoryPoints": 0,
+      "VaticanReportSection": 0,
+      "PopeSpace": 0
+    },
+    {
+      "IdCell": 3,
+      "VictoryPoints": 1,
+      "VaticanReportSection": 0,
+      "PopeSpace": 0
+    },
+    {
+      "IdCell": 4,
+      "VictoryPoints": 1,
+      "VaticanReportSection": 0,
+      "PopeSpace": 0
+    },
+    {
+      "IdCell": 5,
+      "VictoryPoints": 1,
+      "VaticanReportSection": 1,
+      "PopeSpace": 0
+    },
+    {
+      "IdCell": 6,
+      "VictoryPoints": 2,
+      "VaticanReportSection": 1,
+      "PopeSpace": 0
+    },
+    {
+      "IdCell": 7,
+      "VictoryPoints": 2,
+      "VaticanReportSection": 1,
+      "PopeSpace": 0
+    },
+    {
+      "IdCell": 8,
+      "VictoryPoints": 2,
+      "VaticanReportSection": 1,
+      "PopeSpace": 1
+    },
+    {
+      "IdCell": 9,
+      "VictoryPoints": 4,
+      "VaticanReportSection": 0,
+      "PopeSpace": 0
+    },
+    {
+      "IdCell": 10,
+      "VictoryPoints": 4,
+      "VaticanReportSection": 0,
+      "PopeSpace": 0
+    },
+    {
+      "IdCell": 11,
+      "VictoryPoints": 4,
+      "VaticanReportSection": 0,
+      "PopeSpace": 0
+    },
+    {
+      "IdCell": 12,
+      "VictoryPoints": 6,
+      "VaticanReportSection": 2,
+      "PopeSpace": 0
+    },
+    {
+      "IdCell": 13,
+      "VictoryPoints": 6,
+      "VaticanReportSection": 2,
+      "PopeSpace": 0
+    },
+    {
+      "IdCell": 14,
+      "VictoryPoints": 6,
+      "VaticanReportSection": 2,
+      "PopeSpace": 0
+    },
+    {
+      "IdCell": 15,
+      "VictoryPoints": 9,
+      "VaticanReportSection": 2,
+      "PopeSpace": 0
+    },
+    {
+      "IdCell": 16,
+      "VictoryPoints": 9,
+      "VaticanReportSection": 2,
+      "PopeSpace": 2
+    },
+    {
+      "IdCell": 17,
+      "VictoryPoints": 9,
+      "VaticanReportSection": 0,
+      "PopeSpace": 0
+    },
+    {
+      "IdCell": 18,
+      "VictoryPoints": 12,
+      "VaticanReportSection": 0,
+      "PopeSpace": 0
+    },
+    {
+      "IdCell": 19,
+      "VictoryPoints": 12,
+      "VaticanReportSection": 3,
+      "PopeSpace": 0
+    },{
+      "IdCell": 20,
+      "VictoryPoints": 12,
+      "VaticanReportSection": 3,
+      "PopeSpace": 0
+    },
+    {
+      "IdCell": 21,
+      "VictoryPoints": 16,
+      "VaticanReportSection": 3,
+      "PopeSpace": 0
+    },
+    {
+      "IdCell": 22,
+      "VictoryPoints": 16,
+      "VaticanReportSection": 3,
+      "PopeSpace": 0
+    },
+    {
+      "IdCell": 23,
+      "VictoryPoints": 16,
+      "VaticanReportSection": 3,
+      "PopeSpace": 0
+    },
+    {
+      "IdCell": 24,
+      "VictoryPoints": 20,
+      "VaticanReportSection": 3,
+      "PopeSpace": 3
+    }
+  ]
+}
