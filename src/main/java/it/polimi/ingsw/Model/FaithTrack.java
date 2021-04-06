@@ -7,21 +7,16 @@ public class FaithTrack {
     private int playerTHREE;
     private int playerFOUR;
 
-    private boolean playerONEOnGame;
-    private boolean playerTWOOnGame;
-    private boolean playerTHREEOnGame;
-    private boolean playerFOUROnGame;
-
     public FaithTrack(){
         this.cells = new FaithCell[25];
         this.playerONE = 0;
-        this.playerONEOnGame = false;
         this.playerTWO = 0;
-        this.playerTWOOnGame = false;
         this.playerTHREE = 0;
-        this.playerTHREEOnGame = false;
         this.playerFOUR = 0;
-        this.playerFOUROnGame = false;
+    }
+
+    public FaithCell[] getCells() {
+        return cells;
     }
 
     public void setPlayerONE(int playerONE) {
@@ -38,42 +33,6 @@ public class FaithTrack {
 
     public void setPlayerFOUR(int playerFOUR) {
         this.playerFOUR = playerFOUR;
-    }
-
-    public void setPlayerONEOnGame(boolean playerONEOnGame) {
-        this.playerONEOnGame = playerONEOnGame;
-    }
-
-    public void setPlayerTWOOnGame(boolean playerTWOOnGame) {
-        this.playerTWOOnGame = playerTWOOnGame;
-    }
-
-    public void setPlayerTHREEOnGame(boolean playerTHREEOnGame) {
-        this.playerTHREEOnGame = playerTHREEOnGame;
-    }
-
-    public void setPlayerFOUROnGame(boolean playerFOUROnGame) {
-        this.playerFOUROnGame = playerFOUROnGame;
-    }
-
-    public FaithCell[] getCells() {
-        return cells;
-    }
-
-    public boolean isPlayerONEOnGame() {
-        return playerONEOnGame;
-    }
-
-    public boolean isPlayerTWOOnGame() {
-        return playerTWOOnGame;
-    }
-
-    public boolean isPlayerTHREEOnGame() {
-        return playerTHREEOnGame;
-    }
-
-    public boolean isPlayerFOUROnGame() {
-        return playerFOUROnGame;
     }
 
     public int getPlayerONE() {
@@ -95,13 +54,13 @@ public class FaithTrack {
     /**
      * In this method one player goes ahead in the Faith Track
      */
-
     public boolean stepAhead(Player player, int steps){
-        if(player == Player.PLAYER_ONE) playerONE+=steps;
-        else if(player == Player.PLAYER_TWO) playerTWO+=steps;
-        else if(player == Player.PLAYER_THREE) playerTHREE+=steps;
-        else if(player == Player.PLAYER_FOUR) playerFOUR+=steps;
-        //else ERROR
+        if(player.getTurnPosition() == 0) playerONE += steps;
+        else if(player.getTurnPosition() == 1) playerTWO += steps;
+        else if(player.getTurnPosition() == 2) playerTHREE += steps;
+        else if(player.getTurnPosition() == 3) playerFOUR += steps;
+        else
+            System.err.println("Error: No player corresponds to position "+player.getTurnPosition());
         return checkFinishedTrack();
     }
 
@@ -109,13 +68,15 @@ public class FaithTrack {
      * In this method all the players except for one, go ahead in the Faith Track.
      * This happens if the player is still on for the game.
      */
-
-    public boolean allAhead(Player player, int steps){
-        //if player != 0,1,2,3 ERROR
-        if(player != Player.PLAYER_ONE && playerONEOnGame) playerONE+=steps;
-        if(player != Player.PLAYER_TWO && playerTWOOnGame) playerTWO+=steps;
-        if(player != Player.PLAYER_THREE && playerTHREEOnGame) playerTHREE+=steps;
-        if(player != Player.PLAYER_FOUR && playerFOUROnGame) playerFOUR+=steps;
+    public boolean allAhead(Player player, Player[] players, int steps){
+        if (player.getTurnPosition() < 0 || player.getTurnPosition() > 3) {
+            System.err.println("Error: No player corresponds to position " + player.getTurnPosition());
+            return false;
+        }
+        if(player.getTurnPosition() != 0 && players[0].getStatus() == PlayerStatus.IN_GAME) playerONE += steps;
+        if(player.getTurnPosition() != 1 && players[1].getStatus() == PlayerStatus.IN_GAME) playerTWO += steps;
+        if(player.getTurnPosition() != 2 && players[2].getStatus() == PlayerStatus.IN_GAME) playerTHREE += steps;
+        if(player.getTurnPosition() != 3 && players[3].getStatus() == PlayerStatus.IN_GAME) playerFOUR += steps;
 
         return checkFinishedTrack();
     }
@@ -123,27 +84,32 @@ public class FaithTrack {
     /**
      * If any player arrive on the last cell of the faith track, he wins the game
      */
-
     public boolean checkFinishedTrack(){
         if(playerONE >= 24){
             playerONE = 24;
             return true;
         }
-        if(playerTWO == 24){
+        if(playerTWO >= 24){
             playerTWO = 24;
             return true;
         }
-        if(playerTHREE == 24) return true;
-        if(playerFOUR == 24) return true;
+        if(playerTHREE >= 24) {
+            playerTHREE = 24;
+            return true;
+        }
+        if(playerFOUR >= 24) {
+            playerFOUR = 24;
+            return true;
+        }
         return false;
     }
 
     public int getFinalPoints(Player player, int points){
         int victoryPoints = 0;
-        if(player == Player.PLAYER_ONE) victoryPoints =points + cells[playerONE].getVictoryPoints();
-        else if(player == Player.PLAYER_TWO) victoryPoints = points + cells[playerTWO].getVictoryPoints();
-        else if(player == Player.PLAYER_THREE) victoryPoints = points + cells[playerTHREE].getVictoryPoints();
-        else if(player == Player.PLAYER_FOUR) victoryPoints = points + cells[playerFOUR].getVictoryPoints();
+        if(player.getTurnPosition() == 0) victoryPoints = points + cells[playerONE].getVictoryPoints();
+        else if(player.getTurnPosition() == 1) victoryPoints = points + cells[playerTWO].getVictoryPoints();
+        else if(player.getTurnPosition() == 2) victoryPoints = points + cells[playerTHREE].getVictoryPoints();
+        else if(player.getTurnPosition() == 3) victoryPoints = points + cells[playerFOUR].getVictoryPoints();
         return victoryPoints;
     }
 }
