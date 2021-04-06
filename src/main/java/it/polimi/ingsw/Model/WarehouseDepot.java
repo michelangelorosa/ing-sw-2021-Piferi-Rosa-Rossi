@@ -40,6 +40,8 @@ public class WarehouseDepot {
       * Setter for "storedResources" attribute in WarehouseDepot Class.
       */
     public void setStoredResources(int storedResources) {
+        if(storedResources == 0 && !this.isFromLeaderCardAbility)
+            this.resourceType = ResourceType.NONE;
         this.storedResources = storedResources;
     }
 

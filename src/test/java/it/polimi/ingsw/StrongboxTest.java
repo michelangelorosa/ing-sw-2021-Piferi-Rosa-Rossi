@@ -2,6 +2,7 @@ package it.polimi.ingsw;
 
 import static org.junit.Assert.*;
 
+import it.polimi.ingsw.Model.ResourceStack;
 import it.polimi.ingsw.Model.ResourceType;
 import it.polimi.ingsw.Model.Strongbox;
 import org.junit.Test;
@@ -17,10 +18,68 @@ public class StrongboxTest {
      */
     @Test
     public void constructorTest() {
-        assertEquals(0,strongbox.getStoredResources().getShields());
-        assertEquals(0,strongbox.getStoredResources().getServants());
-        assertEquals(0,strongbox.getStoredResources().getCoins());
-        assertEquals(0,strongbox.getStoredResources().getStones());
+        assertEquals(0,strongbox.getStoredResources().getResource(ResourceType.SHIELDS));
+        assertEquals(0,strongbox.getStoredResources().getResource(ResourceType.SERVANTS));
+        assertEquals(0,strongbox.getStoredResources().getResource(ResourceType.COINS));
+        assertEquals(0,strongbox.getStoredResources().getResource(ResourceType.STONES));
+    }
+
+    /**
+     * Test for "reset" method in StrongboxClass;
+     */
+    @Test
+    public void resetTest() {
+        ResourceStack resourceStack = new ResourceStack(1,1,2,3);
+        strongbox.addToAllTypes(resourceStack);
+        strongbox.reset();
+
+        assertEquals(0,strongbox.getStoredResources().getResource(ResourceType.SHIELDS));
+        assertEquals(0,strongbox.getStoredResources().getResource(ResourceType.SERVANTS));
+        assertEquals(0,strongbox.getStoredResources().getResource(ResourceType.COINS));
+        assertEquals(0,strongbox.getStoredResources().getResource(ResourceType.STONES));
+    }
+
+    /**
+     * Test for "addToAllTypesTest" method in Strongbox Class
+     */
+    @Test
+    public void addToAllTypesTest() {
+        ResourceStack resourceStack = new ResourceStack(1,1,2,3);
+        strongbox.addToAllTypes(resourceStack);
+
+        assertEquals(1,strongbox.getStoredResources().getResource(ResourceType.SHIELDS));
+        assertEquals(1,strongbox.getStoredResources().getResource(ResourceType.SERVANTS));
+        assertEquals(2,strongbox.getStoredResources().getResource(ResourceType.COINS));
+        assertEquals(3,strongbox.getStoredResources().getResource(ResourceType.STONES));
+    }
+
+    /**
+     * Test for "removeFromAllTypesTest" method in Strongbox Class
+     */
+    @Test
+    public void removeFromAllTypesTest() {
+        ResourceStack resourceStack = new ResourceStack(2,1,2,3);
+
+        strongbox.addResourcesByType(1, ResourceType.SHIELDS);
+        strongbox.addResourcesByType(2, ResourceType.SERVANTS);
+        strongbox.addResourcesByType(3, ResourceType.COINS);
+        strongbox.addResourcesByType(4, ResourceType.STONES);
+
+        strongbox.removeFromAllTypes(resourceStack);
+
+        assertEquals(1,strongbox.getStoredResources().getResource(ResourceType.SHIELDS));
+        assertEquals(2,strongbox.getStoredResources().getResource(ResourceType.SERVANTS));
+        assertEquals(3,strongbox.getStoredResources().getResource(ResourceType.COINS));
+        assertEquals(4,strongbox.getStoredResources().getResource(ResourceType.STONES));
+
+        ResourceStack resourceStack2 = new ResourceStack(1,1,2,3);
+
+        strongbox.removeFromAllTypes(resourceStack2);
+
+        assertEquals(0,strongbox.getStoredResources().getResource(ResourceType.SHIELDS));
+        assertEquals(1,strongbox.getStoredResources().getResource(ResourceType.SERVANTS));
+        assertEquals(1,strongbox.getStoredResources().getResource(ResourceType.COINS));
+        assertEquals(1,strongbox.getStoredResources().getResource(ResourceType.STONES));
     }
 
     /**
@@ -33,20 +92,20 @@ public class StrongboxTest {
         strongbox.addResourcesByType(3, ResourceType.COINS);
         strongbox.addResourcesByType(4, ResourceType.STONES);
 
-        assertEquals(1,strongbox.getStoredResources().getShields());
-        assertEquals(2,strongbox.getStoredResources().getServants());
-        assertEquals(3,strongbox.getStoredResources().getCoins());
-        assertEquals(4,strongbox.getStoredResources().getStones());
+        assertEquals(1,strongbox.getStoredResources().getResource(ResourceType.SHIELDS));
+        assertEquals(2,strongbox.getStoredResources().getResource(ResourceType.SERVANTS));
+        assertEquals(3,strongbox.getStoredResources().getResource(ResourceType.COINS));
+        assertEquals(4,strongbox.getStoredResources().getResource(ResourceType.STONES));
 
         strongbox.addResourcesByType(1, ResourceType.SHIELDS);
         strongbox.addResourcesByType(2, ResourceType.SERVANTS);
         strongbox.addResourcesByType(3, ResourceType.COINS);
         strongbox.addResourcesByType(4, ResourceType.STONES);
 
-        assertEquals(2,strongbox.getStoredResources().getShields());
-        assertEquals(4,strongbox.getStoredResources().getServants());
-        assertEquals(6,strongbox.getStoredResources().getCoins());
-        assertEquals(8,strongbox.getStoredResources().getStones());
+        assertEquals(2,strongbox.getStoredResources().getResource(ResourceType.SHIELDS));
+        assertEquals(4,strongbox.getStoredResources().getResource(ResourceType.SERVANTS));
+        assertEquals(6,strongbox.getStoredResources().getResource(ResourceType.COINS));
+        assertEquals(8,strongbox.getStoredResources().getResource(ResourceType.STONES));
     }
 
     /**

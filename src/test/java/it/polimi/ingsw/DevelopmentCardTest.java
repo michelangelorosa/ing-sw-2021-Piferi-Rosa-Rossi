@@ -2,10 +2,7 @@ package it.polimi.ingsw;
 
 import static org.junit.Assert.*;
 
-import it.polimi.ingsw.Model.Color;
-import it.polimi.ingsw.Model.DevelopmentCard;
-import it.polimi.ingsw.Model.Level;
-import it.polimi.ingsw.Model.ResourceStack;
+import it.polimi.ingsw.Model.*;
 import org.junit.Test;
 
 /**
@@ -32,20 +29,20 @@ public class DevelopmentCardTest {
         assertEquals(1, card.getCardId());
         assertEquals(100, card.getVictoryPoints());
 
-        assertEquals(0, card.getCost().getShields());
-        assertEquals(1, card.getCost().getServants());
-        assertEquals(2, card.getCost().getCoins());
-        assertEquals(3, card.getCost().getStones());
+        assertEquals(0, card.getCost().getResource(ResourceType.SHIELDS));
+        assertEquals(1, card.getCost().getResource(ResourceType.SERVANTS));
+        assertEquals(2, card.getCost().getResource(ResourceType.COINS));
+        assertEquals(3, card.getCost().getResource(ResourceType.STONES));
 
-        assertEquals(2, card.getInput().getShields());
-        assertEquals(6, card.getInput().getServants());
-        assertEquals(13, card.getInput().getCoins());
-        assertEquals(16, card.getInput().getStones());
+        assertEquals(2, card.getInput().getResource(ResourceType.SHIELDS));
+        assertEquals(6, card.getInput().getResource(ResourceType.SERVANTS));
+        assertEquals(13, card.getInput().getResource(ResourceType.COINS));
+        assertEquals(16, card.getInput().getResource(ResourceType.STONES));
 
-        assertEquals(31, card.getOutput().getShields());
-        assertEquals(0, card.getOutput().getServants());
-        assertEquals(0, card.getOutput().getCoins());
-        assertEquals(0, card.getOutput().getStones());
+        assertEquals(31, card.getOutput().getResource(ResourceType.SHIELDS));
+        assertEquals(0, card.getOutput().getResource(ResourceType.SERVANTS));
+        assertEquals(0, card.getOutput().getResource(ResourceType.COINS));
+        assertEquals(0, card.getOutput().getResource(ResourceType.STONES));
 
         assertEquals(12, card.getOutputFaith());
 
@@ -72,20 +69,20 @@ public class DevelopmentCardTest {
         card.setOutputFaith(outputFaith2);
 
         assertEquals(21, card.getVictoryPoints());
-        assertEquals(99, card.getCost().getShields());
-        assertEquals(99, card.getCost().getServants());
-        assertEquals(99, card.getCost().getCoins());
-        assertEquals(99, card.getCost().getStones());
+        assertEquals(99, card.getCost().getResource(ResourceType.SHIELDS));
+        assertEquals(99, card.getCost().getResource(ResourceType.SERVANTS));
+        assertEquals(99, card.getCost().getResource(ResourceType.COINS));
+        assertEquals(99, card.getCost().getResource(ResourceType.STONES));
 
-        assertEquals(88, card.getInput().getShields());
-        assertEquals(88, card.getInput().getServants());
-        assertEquals(88, card.getInput().getCoins());
-        assertEquals(88, card.getInput().getStones());
+        assertEquals(88, card.getInput().getResource(ResourceType.SHIELDS));
+        assertEquals(88, card.getInput().getResource(ResourceType.SERVANTS));
+        assertEquals(88, card.getInput().getResource(ResourceType.COINS));
+        assertEquals(88, card.getInput().getResource(ResourceType.STONES));
 
-        assertEquals(77, card.getOutput().getShields());
-        assertEquals(77, card.getOutput().getServants());
-        assertEquals(77, card.getOutput().getCoins());
-        assertEquals(77, card.getOutput().getStones());
+        assertEquals(77, card.getOutput().getResource(ResourceType.SHIELDS));
+        assertEquals(77, card.getOutput().getResource(ResourceType.SERVANTS));
+        assertEquals(77, card.getOutput().getResource(ResourceType.COINS));
+        assertEquals(77, card.getOutput().getResource(ResourceType.STONES));
 
         assertEquals(0, card.getOutputFaith());
 
@@ -110,20 +107,20 @@ public class DevelopmentCardTest {
         assertEquals(1, card.getCardId());
         assertEquals(100, card.getVictoryPoints());
 
-        assertEquals(0, cost3.getShields());
-        assertEquals(1, cost3.getServants());
-        assertEquals(2, cost3.getCoins());
-        assertEquals(3, cost3.getStones());
+        assertEquals(0, cost3.getResource(ResourceType.SHIELDS));
+        assertEquals(1, cost3.getResource(ResourceType.SERVANTS));
+        assertEquals(2, cost3.getResource(ResourceType.COINS));
+        assertEquals(3, cost3.getResource(ResourceType.STONES));
 
-        assertEquals(2, input3.getShields());
-        assertEquals(6, input3.getServants());
-        assertEquals(13, input3.getCoins());
-        assertEquals(16, input3.getStones());
+        assertEquals(2, input3.getResource(ResourceType.SHIELDS));
+        assertEquals(6, input3.getResource(ResourceType.SERVANTS));
+        assertEquals(13, input3.getResource(ResourceType.COINS));
+        assertEquals(16, input3.getResource(ResourceType.STONES));
 
-        assertEquals(31, output3.getShields());
-        assertEquals(0, output3.getServants());
-        assertEquals(0, output3.getCoins());
-        assertEquals(0, output3.getStones());
+        assertEquals(31, output3.getResource(ResourceType.SHIELDS));
+        assertEquals(0, output3.getResource(ResourceType.SERVANTS));
+        assertEquals(0, output3.getResource(ResourceType.COINS));
+        assertEquals(0, output3.getResource(ResourceType.STONES));
 
         assertEquals(12, outputFaith3);
     }

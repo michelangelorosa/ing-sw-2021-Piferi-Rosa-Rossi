@@ -23,28 +23,50 @@ public class Strongbox {
     }
 
     /**
+     * This method resets the Strongbox to its initial state.
+     */
+    public void reset() {
+        ResourceType[] resourceTypes = ResourceType.values();
+        for(int i = 1; i <= 4; i++)
+            this.storedResources.setResource(0, resourceTypes[i]);
+    }
+
+    /**
+     * This method adds a set of resources to the strongbox.
+     * @param resourceStack is the set of resources to be added.
+     */
+    public void addToAllTypes(ResourceStack resourceStack) {
+        ResourceType[] resourceTypes = ResourceType.values();
+
+        for(int i = 1; i <= 4; i++)
+            this.storedResources.addResource(resourceStack.getResource(resourceTypes[i]), resourceTypes[i]);
+    }
+
+    /**
+     * This method removes a set of resources from the strongbox.
+     * @param resourceStack is the set of resources to be removed.
+     */
+    public void removeFromAllTypes(ResourceStack resourceStack) {
+        ResourceType[] resourceTypes = ResourceType.values();
+
+        for(int i = 1; i <= 4; i++) {
+            if(this.storedResources.getResource(resourceTypes[i]) < resourceStack.getResource(resourceTypes[i])) {
+                System.err.println("Error: Not enough "+resourceTypes[i]+" in strongbox for removal");
+                return;
+            }
+            else
+                this.storedResources.removeResource(resourceStack.getResource(resourceTypes[i]), resourceTypes[i]);
+        }
+    }
+
+    /**
      * This method is used to count all resources of a certain type
      * inside the strongbox.
      * @param resourceType specifies the type of resource searched.
      * @return the number of resources counted.
      */
     public int countResourcesByType(ResourceType resourceType) {
-        int countedInt = 0;
-        switch (resourceType) {
-            case SHIELDS:
-                countedInt = this.storedResources.getShields();
-                break;
-            case SERVANTS:
-                countedInt = this.storedResources.getServants();
-                break;
-            case COINS:
-                countedInt = this.storedResources.getCoins();
-                break;
-            case STONES:
-                countedInt = this.storedResources.getStones();
-                break;
-        }
-        return countedInt;
+        return this.storedResources.getResource(resourceType);
     }
 
     /**
@@ -53,20 +75,7 @@ public class Strongbox {
      * @param resourceType is the type of the resources which are to be added.
      */
     public void addResourcesByType(int resourcesToAdd, ResourceType resourceType) {
-        switch (resourceType) {
-            case SHIELDS:
-                this.storedResources.setShields(this.storedResources.getShields() + resourcesToAdd);
-                break;
-            case SERVANTS:
-                this.storedResources.setServants(this.storedResources.getServants() + resourcesToAdd);
-                break;
-            case COINS:
-                this.storedResources.setCoins(this.storedResources.getCoins() + resourcesToAdd);
-                break;
-            case STONES:
-                this.storedResources.setStones(this.storedResources.getStones() + resourcesToAdd);
-                break;
-        }
+        this.storedResources.addResource(resourcesToAdd, resourceType);
     }
 
     /**
@@ -81,20 +90,7 @@ public class Strongbox {
      */
     public int removeResourcesByType(int resourcesToRemove, ResourceType resourceType) {
         if(this.countResourcesByType(resourceType) >= resourcesToRemove) {
-            switch (resourceType) {
-                case SHIELDS:
-                    this.storedResources.setShields(this.storedResources.getShields() - resourcesToRemove);
-                    break;
-                case SERVANTS:
-                    this.storedResources.setServants(this.storedResources.getServants() - resourcesToRemove);
-                    break;
-                case COINS:
-                    this.storedResources.setCoins(this.storedResources.getCoins() - resourcesToRemove);
-                    break;
-                case STONES:
-                    this.storedResources.setStones(this.storedResources.getStones() - resourcesToRemove);
-                    break;
-            }
+            this.storedResources.removeResource(resourcesToRemove, resourceType);
             return 0;
         }
         else {

@@ -67,6 +67,19 @@ public class Warehouse {
     }
 
     /**
+     * This method resets the Warehouse to its initial state.
+     */
+    public void reset() {
+        this.warehouseDepots[0].setStoredResources(0);
+        this.warehouseDepots[1].setStoredResources(0);
+        this.warehouseDepots[2].setStoredResources(0);
+        this.extraWarehouseDepot1.setStoredResources(0);
+        this.extraWarehouseDepot2.setStoredResources(0);
+        this.extraWarehouseDepot1IsActive = false;
+        this.extraWarehouseDepot2IsActive = false;
+    }
+
+    /**
      * This method is used to activate the extra depots and set its resource type when a card leader
      * ability is active.
      * <p>
@@ -255,7 +268,7 @@ public class Warehouse {
     }
 
     /**
-     * This method returns true if a certain type of resource fits inside the warehouse.
+     * This method returns true if a certain type of resource can fit inside the warehouse.
      * @return true if the resource can fit.
      */
     public boolean resourceTypeFits(ResourceType resourceType) {
@@ -272,9 +285,34 @@ public class Warehouse {
         if(extraWarehouseDepot2IsActive && extraWarehouseDepot2.getResourceType() == resourceType)
             fitsInExtraDepot2 = !extraWarehouseDepot2.isFull();
 
-        return fitsInStandardDepot || fitsInExtraDepot1 || fitsInExtraDepot2;
+        return fitsInStandardDepot || fitsInExtraDepot1 || fitsInExtraDepot2 || (this.areEmptyDepotsFillableByType(resourceType) && this.emptyDepotExists());
     }
 
+    /**
+     * This method returns true if there is at least one empty depot (not including leader ability ones)
+     * inside the Warehouse.
+     * @return true if there is at least one empty depot.
+     */
+    public boolean emptyDepotExists() {
+        for(WarehouseDepot depot : this.getWarehouseDepots())
+            if(depot.getResourceType() == ResourceType.NONE)
+                return true;
 
+        return false;
+    }
+
+    /**
+     * This method returns true if one or more empty depots inside the warehouse can be filled with the
+     * specified type of resource.
+     * @param resourceType is the type of resources that have to be checked.
+     * @return true if the resource can fit.
+     */
+    public boolean areEmptyDepotsFillableByType(ResourceType resourceType) {
+        for(WarehouseDepot depot : this.getWarehouseDepots())
+            if(depot.getResourceType() == resourceType)
+                return false;
+
+        return true;
+    }
 
 }

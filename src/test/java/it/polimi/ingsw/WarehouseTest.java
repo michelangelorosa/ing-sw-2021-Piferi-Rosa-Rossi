@@ -127,11 +127,15 @@ public class WarehouseTest {
 
         extraResources = warehouse.addResources(1,ResourceType.SHIELDS, warehouse.getWarehouseDepots()[0]);
         assertEquals(1,extraResources);
+        assertEquals(3,warehouse.getWarehouseDepots()[0].getStoredResources());
 
         extraResources = warehouse.addResources(1,ResourceType.COINS, warehouse.getWarehouseDepots()[2]);
         assertEquals(1,extraResources);
+        assertEquals(0,warehouse.getWarehouseDepots()[2].getStoredResources());
 
         extraResources = warehouse.addResources(1, ResourceType.SERVANTS, warehouse.getWarehouseDepots()[1]);
+        assertEquals(2,warehouse.getWarehouseDepots()[1].getStoredResources());
+        assertEquals(ResourceType.SERVANTS,warehouse.getWarehouseDepots()[1].getResourceType());
         assertEquals(0,extraResources);
 
         warehouse.getWarehouseDepots()[0].setStoredResources(0);
@@ -141,14 +145,17 @@ public class WarehouseTest {
         extraResources = warehouse.addResources(2,ResourceType.SHIELDS, warehouse.getWarehouseDepots()[0]);
         assertEquals(0,extraResources);
         assertEquals(2,warehouse.getWarehouseDepots()[0].getStoredResources());
+        assertEquals(ResourceType.SHIELDS,warehouse.getWarehouseDepots()[0].getResourceType());
 
         extraResources = warehouse.addResources(1, ResourceType.SERVANTS, warehouse.getWarehouseDepots()[1]);
         assertEquals(0,extraResources);
         assertEquals(1,warehouse.getWarehouseDepots()[1].getStoredResources());
+        assertEquals(ResourceType.SERVANTS,warehouse.getWarehouseDepots()[1].getResourceType());
 
-        extraResources = warehouse.addResources(1,ResourceType.SHIELDS, warehouse.getWarehouseDepots()[2]);
-        assertEquals(1,extraResources);
-        assertEquals(0,warehouse.getWarehouseDepots()[2].getStoredResources());
+        extraResources = warehouse.addResources(1,ResourceType.COINS, warehouse.getWarehouseDepots()[2]);
+        assertEquals(0,extraResources);
+        assertEquals(1,warehouse.getWarehouseDepots()[2].getStoredResources());
+        assertEquals(ResourceType.COINS,warehouse.getWarehouseDepots()[2].getResourceType());
 
         warehouse.getWarehouseDepots()[0].setStoredResources(0);
         warehouse.getWarehouseDepots()[0].setResourceType(ResourceType.NONE);
@@ -439,5 +446,61 @@ public class WarehouseTest {
         warehouse.getExtraWarehouseDepot2().addResources(2);
         assertFalse(warehouse.resourceTypeFits(ResourceType.SHIELDS));
         assertFalse(warehouse.resourceTypeFits(ResourceType.COINS));
+    }
+
+    /**
+     * Test for "emptyDepotExists" in Warehouse Class.
+     */
+    @Test
+    public void emptyDepotExistsTest() {
+        warehouse.getWarehouseDepots()[0].setResourceType(ResourceType.SHIELDS);
+        warehouse.getWarehouseDepots()[1].setResourceType(ResourceType.SERVANTS);
+        warehouse.getWarehouseDepots()[2].setResourceType(ResourceType.STONES);
+        warehouse.getWarehouseDepots()[0].addResources(3);
+        warehouse.getWarehouseDepots()[1].addResources(2);
+        warehouse.getWarehouseDepots()[2].addResources(1);
+
+        assertFalse(warehouse.emptyDepotExists());
+
+        warehouse.removeResourcesByType(1, ResourceType.STONES);
+
+        assertTrue(warehouse.emptyDepotExists());
+
+        warehouse.removeResourcesByType(2, ResourceType.SERVANTS);
+
+        assertTrue(warehouse.emptyDepotExists());
+
+        warehouse.removeResourcesByType(3, ResourceType.SHIELDS);
+
+        assertTrue(warehouse.emptyDepotExists());
+
+        warehouse.addResources(1, ResourceType.STONES, warehouse.getWarehouseDepots()[2]);
+
+        assertTrue(warehouse.emptyDepotExists());
+
+        warehouse.addResources(2, ResourceType.SERVANTS, warehouse.getWarehouseDepots()[1]);
+
+        assertTrue(warehouse.emptyDepotExists());
+
+        warehouse.addResources(3, ResourceType.SHIELDS, warehouse.getWarehouseDepots()[0]);
+
+        assertFalse(warehouse.emptyDepotExists());
+    }
+
+    /**
+     * Test for "areEmptyDepotsFillableByType" in Warehouse Class.
+     */
+
+    @Test
+    public void areEmptyDepotsFillableByTypeTest() {
+        warehouse.getWarehouseDepots()[0].setResourceType(ResourceType.SHIELDS);
+        warehouse.getWarehouseDepots()[2].setResourceType(ResourceType.STONES);
+        warehouse.getWarehouseDepots()[0].addResources(3);
+        warehouse.getWarehouseDepots()[2].addResources(1);
+
+        assertFalse(warehouse.areEmptyDepotsFillableByType(ResourceType.SHIELDS));
+        assertFalse(warehouse.areEmptyDepotsFillableByType(ResourceType.STONES));
+        assertTrue(warehouse.areEmptyDepotsFillableByType(ResourceType.SERVANTS));
+        assertTrue(warehouse.areEmptyDepotsFillableByType(ResourceType.COINS));
     }
 }

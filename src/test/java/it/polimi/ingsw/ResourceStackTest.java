@@ -3,6 +3,7 @@ package it.polimi.ingsw;
 import static org.junit.Assert.*;
 
 import it.polimi.ingsw.Model.ResourceStack;
+import it.polimi.ingsw.Model.ResourceType;
 import org.junit.Test;
 
 /**
@@ -17,10 +18,10 @@ public class ResourceStackTest {
      */
     @Test
     public void constructorTest() {
-        assertEquals(1, stack.getShields());
-        assertEquals(2, stack.getServants());
-        assertEquals(3, stack.getCoins());
-        assertEquals(4, stack.getStones());
+        assertEquals(1, stack.getResource(ResourceType.SHIELDS));
+        assertEquals(2, stack.getResource(ResourceType.SERVANTS));
+        assertEquals(3, stack.getResource(ResourceType.COINS));
+        assertEquals(4, stack.getResource(ResourceType.STONES));
     }
 
     /**
@@ -28,15 +29,15 @@ public class ResourceStackTest {
      */
     @Test
     public void setterTest() {
-        stack.setShields(10);
-        stack.setServants(20);
-        stack.setCoins(30);
-        stack.setStones(40);
+        stack.setResource(10, ResourceType.SHIELDS);
+        stack.setResource(20, ResourceType.SERVANTS);
+        stack.setResource(30, ResourceType.COINS);
+        stack.setResource(40, ResourceType.STONES);
 
-        assertEquals(10, stack.getShields());
-        assertEquals(20, stack.getServants());
-        assertEquals(30, stack.getCoins());
-        assertEquals(40, stack.getStones());
+        assertEquals(10, stack.getResource(ResourceType.SHIELDS));
+        assertEquals(20, stack.getResource(ResourceType.SERVANTS));
+        assertEquals(30, stack.getResource(ResourceType.COINS));
+        assertEquals(40, stack.getResource(ResourceType.STONES));
     }
 
     /**
@@ -44,10 +45,10 @@ public class ResourceStackTest {
      */
     @Test
     public void getterTest() {
-        int shields2 = stack.getShields();
-        int servants2 = stack.getServants();
-        int coins2 = stack.getCoins();
-        int stones2 = stack.getStones();
+        int shields2 = stack.getResource(ResourceType.SHIELDS);
+        int servants2 = stack.getResource(ResourceType.SERVANTS);
+        int coins2 = stack.getResource(ResourceType.COINS);
+        int stones2 = stack.getResource(ResourceType.STONES);
 
         assertEquals(1, shields2);
         assertEquals(2, servants2);

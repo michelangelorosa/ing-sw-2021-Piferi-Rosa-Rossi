@@ -77,6 +77,71 @@ public class ResourceStack {
     }
 
     /**
+     * Getter for a specified type of resource inside the stack.
+     * @param resourceType is the specified resource type.
+     * @return the number of resources of the specified type.
+     */
+    public int getResource(ResourceType resourceType) {
+        if(resourceType == ResourceType.SHIELDS)
+            return shields;
+        else if (resourceType == ResourceType.SERVANTS)
+            return servants;
+        else if (resourceType == ResourceType.COINS)
+            return coins;
+        else if (resourceType == ResourceType.STONES)
+            return stones;
+        else
+            return -1;
+    }
+
+    /**
+     * Setter for a specified type of resource inside the stack.
+     * @param resourceType is the specified resource type.
+     */
+    public void setResource(int resources, ResourceType resourceType) {
+        if(resourceType == ResourceType.SHIELDS)
+            this.shields = resources;
+        else if (resourceType == ResourceType.SERVANTS)
+            this.servants = resources;
+        else if (resourceType == ResourceType.COINS)
+            this.coins = resources;
+        else if (resourceType == ResourceType.STONES)
+            this.stones = resources;
+    }
+
+    /**
+     * This method is used to add resources of a specified type to the stack.
+     * @param resourcesToAdd is the number of resources to add.
+     * @param resourceType is the specified resource type.
+     */
+    public void addResource(int resourcesToAdd, ResourceType resourceType) {
+        if(resourceType == ResourceType.SHIELDS)
+            this.shields += resourcesToAdd;
+        else if (resourceType == ResourceType.SERVANTS)
+            this.servants += resourcesToAdd;
+        else if (resourceType == ResourceType.COINS)
+            this.coins += resourcesToAdd;
+        else if (resourceType == ResourceType.STONES)
+            this.stones += resourcesToAdd;
+    }
+
+    /**
+     * This method is used to remove resources of a specified type from the stack.
+     * @param resourcesToRemove is the number of resources to remove.
+     * @param resourceType is the specified resource type.
+     */
+    public void removeResource(int resourcesToRemove, ResourceType resourceType) {
+        if(resourceType == ResourceType.SHIELDS)
+            this.shields -= resourcesToRemove;
+        else if (resourceType == ResourceType.SERVANTS)
+            this.servants -= resourcesToRemove;
+        else if (resourceType == ResourceType.COINS)
+            this.coins -= resourcesToRemove;
+        else if (resourceType == ResourceType.STONES)
+            this.stones -= resourcesToRemove;
+    }
+
+    /**
      * toString override method for ResourceStack Class.
      */
     public String toString() {
