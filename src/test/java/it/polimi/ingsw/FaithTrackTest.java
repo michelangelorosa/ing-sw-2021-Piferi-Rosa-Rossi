@@ -41,32 +41,31 @@ public class FaithTrackTest {
     /**
      * Setter test for Faith Track
      */
-/*
+
     @Test
     public void setterTest(){
+
+        Player[] players = new Player[4];
+        players[0] = new Player("zero", 0, true);
+        players[1] = new Player("one", 1, false);
+        players[2] = new Player("two", 2, false);
+        players[3] = new Player("three", 3, false);
+
         test.setPlayerONE(12);
         test.setPlayerTWO(15);
         test.setPlayerTHREE(1);
         test.setPlayerFOUR(8);
 
-        test.setPlayerONEOnGame(true);
-        test.setPlayerTWOOnGame(false);
-        test.setPlayerTHREEOnGame(true);
-        test.setPlayerFOUROnGame(false);
 
         assertEquals(12, test.getPlayerONE());
         assertEquals(15, test.getPlayerTWO());
         assertEquals(1, test.getPlayerTHREE());
         assertEquals(8, test.getPlayerFOUR());
 
-        assertTrue(test.isPlayerONEOnGame());
-        assertFalse(test.isPlayerTWOOnGame());
-        assertTrue(test.isPlayerTHREEOnGame());
-        assertFalse(test.isPlayerFOUROnGame());
     }
 
 
- */
+
     /**
      * Here I check that the method "stepAhead()" works properly by passing in input the advancement of the third
      * player by 2 cells. We will use this method every time a player needs to go ahead in the Faith Track.
