@@ -8,7 +8,7 @@ public class FaithTrack {
     private int playerFOUR;
 
     public FaithTrack(){
-        this.cells = new FaithCell[25];
+        this.cells = JSONReader.ReadFaithCells();
         this.playerONE = 0;
         this.playerTWO = 0;
         this.playerTHREE = 0;

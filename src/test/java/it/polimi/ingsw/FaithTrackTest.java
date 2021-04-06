@@ -16,7 +16,7 @@ public class FaithTrackTest {
     /**
      * Getter test for Faith Track
      */
-
+/*
     @Test
     public void getterTest(){
 
@@ -29,17 +29,19 @@ public class FaithTrackTest {
 
         assertEquals("0 0 No No", test.getCells()[0].toString());
 
-        assertEquals(false, test.isPlayerONEOnGame());
+        assertEquals(false, test.());
         assertEquals(false, test.isPlayerTWOOnGame());
         assertEquals(false, test.isPlayerTHREEOnGame());
         assertEquals(false, test.isPlayerFOUROnGame());
 
     }
 
+ */
+
     /**
      * Setter test for Faith Track
      */
-
+/*
     @Test
     public void setterTest(){
         test.setPlayerONE(12);
@@ -63,12 +65,21 @@ public class FaithTrackTest {
         assertFalse(test.isPlayerFOUROnGame());
     }
 
+
+ */
     /**
      * Here I check that the method "stepAhead()" works properly by passing in input the advancement of the third
      * player by 2 cells. We will use this method every time a player needs to go ahead in the Faith Track.
      */
     @Test
     public void stepAheadTest(){
+
+        Player[] players = new Player[4];
+        players[0] = new Player("zero", 0, true);
+        players[1] = new Player("one", 1, false);
+        players[2] = new Player("two", 2, false);
+        players[3] = new Player("three", 3, false);
+
         test.getCells()[0] = new FaithCell(0, 0, VaticanReportSection.No, PopeSpace.No);
         test.getCells()[1] = new FaithCell(1, 0, VaticanReportSection.No, PopeSpace.No);
         test.getCells()[2] = new FaithCell(2, 0, VaticanReportSection.No, PopeSpace.No);
@@ -95,7 +106,7 @@ public class FaithTrackTest {
         test.getCells()[23] = new FaithCell(23, 16, VaticanReportSection.THREE, PopeSpace.No);
         test.getCells()[24] = new FaithCell(24, 20, VaticanReportSection.THREE, PopeSpace.THREE);
 
-        test.stepAhead(Player.PLAYER_THREE, 2);
+        test.stepAhead(players[2], 2);
         /*
             System.out.println("1: " + test.getPlayerONE());
             System.out.println("2: " + test.getPlayerTWO());
@@ -113,8 +124,15 @@ public class FaithTrackTest {
      * Here I check that the method "allAhead()" works properly by passing in input the player that has to stay in his
      * cell, and the advancement of all the other players that are still on the game.
      */
+
     @Test
     public void allAheadTest() {
+
+        Player[] players = new Player[4];
+        players[0] = new Player("zero", 0, true);
+        players[1] = new Player("one", 1, false);
+        players[2] = new Player("two", 2, false);
+        players[3] = new Player("three", 3, false);
 
         test.getCells()[0] = new FaithCell(0, 0, VaticanReportSection.No, PopeSpace.No);
         test.getCells()[1] = new FaithCell(1, 0, VaticanReportSection.No, PopeSpace.No);
@@ -142,12 +160,7 @@ public class FaithTrackTest {
         test.getCells()[23] = new FaithCell(23, 16, VaticanReportSection.THREE, PopeSpace.No);
         test.getCells()[24] = new FaithCell(24, 20, VaticanReportSection.THREE, PopeSpace.THREE);
 
-        test.setPlayerONEOnGame(true);
-        test.setPlayerTWOOnGame(true);
-        test.setPlayerTHREEOnGame(false);
-        test.setPlayerFOUROnGame(true);
-
-        test.allAhead(Player.PLAYER_FOUR,3);
+        test.allAhead(players[2], players, 3);
 
         /*
             System.out.println("1: " + test.getPlayerONE());
@@ -162,6 +175,7 @@ public class FaithTrackTest {
         assertEquals(test.getPlayerFOUR(),0);
     }
 
+
     /**
      * Here I check if the method "checkFinished()" works properly by testing setting playerONE to 21 and then making
      * him advance 3 cells ahead. We can see that the first time the method returns FALSE and the second time it
@@ -170,6 +184,12 @@ public class FaithTrackTest {
 
     @Test
     public void checkFinishedTest() {
+
+        Player[] players = new Player[4];
+        players[0] = new Player("zero", 0, true);
+        players[1] = new Player("one", 1, false);
+        players[2] = new Player("two", 2, false);
+        players[3] = new Player("three", 3, false);
 
         test.getCells()[0] = new FaithCell(0, 0, VaticanReportSection.No, PopeSpace.No);
         test.getCells()[1] = new FaithCell(1, 0, VaticanReportSection.No, PopeSpace.No);
@@ -200,9 +220,10 @@ public class FaithTrackTest {
         test.setPlayerONE(21);
         assertFalse(test.checkFinishedTrack());
 
-        test.stepAhead(Player.PLAYER_ONE,3);
+        test.stepAhead(players[0],3);
         assertTrue(test.checkFinishedTrack());
     }
+
 
     /**
      * In this test I check if the method "getFinalPoints()" works properly by giving to all the players a number,
@@ -212,6 +233,12 @@ public class FaithTrackTest {
 
     @Test
     public void getFinalPointsTest() {
+
+        Player[] players = new Player[4];
+        players[0] = new Player("zero", 0, true);
+        players[1] = new Player("one", 1, false);
+        players[2] = new Player("two", 2, false);
+        players[3] = new Player("three", 3, false);
 
         test.getCells()[0] = new FaithCell(0, 0, VaticanReportSection.No, PopeSpace.No);
         test.getCells()[1] = new FaithCell(1, 0, VaticanReportSection.No, PopeSpace.No);
@@ -240,25 +267,34 @@ public class FaithTrackTest {
         test.getCells()[24] = new FaithCell(24, 20, VaticanReportSection.THREE, PopeSpace.THREE);
 
         test.setPlayerONE(23);
-        test.stepAhead(Player.PLAYER_ONE,1);
+        test.stepAhead(players[0],1);
 
         test.setPlayerTWO(12);
         test.setPlayerTHREE(22);
         test.setPlayerFOUR(0);
 
-        assertEquals(20, test.getFinalPoints(Player.PLAYER_ONE, 0));
-        assertEquals(22, test.getFinalPoints(Player.PLAYER_TWO, 16));
-        assertEquals(40, test.getFinalPoints(Player.PLAYER_THREE, 24));
-        assertEquals(9, test.getFinalPoints(Player.PLAYER_FOUR, 9));
+        System.out.println(test.getFinalPoints(players[0], 0));
+        System.out.println(test.getFinalPoints(players[1], 16));
+        System.out.println(test.getFinalPoints(players[2], 24));
+        System.out.println(test.getFinalPoints(players[3], 9));
 
-        /**
+
+
+        assertEquals(20, test.getFinalPoints(players[0], 0));
+        assertEquals(22, test.getFinalPoints(players[1], 16));
+        assertEquals(40, test.getFinalPoints(players[2], 24));
+        assertEquals(9, test.getFinalPoints(players[3], 9));
+
+        /*
          * In this exemple we can see that every time the player goes too far in the Faith Track the counter stays on
          * cell #24 (the last of the track
          */
 
         test.setPlayerONE(23);
-        test.stepAhead(Player.PLAYER_ONE,15);
-        assertEquals(20, test.getFinalPoints(Player.PLAYER_ONE, 0));
+        test.stepAhead(players[0],15);
+        assertEquals(20, test.getFinalPoints(players[1], 0));
+
+
 
     }
 }
