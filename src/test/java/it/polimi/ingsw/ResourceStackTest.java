@@ -12,6 +12,8 @@ import org.junit.Test;
 public class ResourceStackTest {
 
     ResourceStack stack = new ResourceStack(1, 2, 3, 4);
+    ResourceStack stack2 = new ResourceStack(2, 3, 4, 5);
+
 
     /**
      * Constructor test for ResourceStack Class.
@@ -65,5 +67,17 @@ public class ResourceStackTest {
         String testString = "1 2 3 4";
 
         assertArrayEquals(testString.toCharArray(), stack.toString().toCharArray());
+    }
+
+    /**
+     * Test for addAllTypes. I created a new ResourceStack called stack3 that is the sum of the resources of stack
+     * and stack2. After calling the method stack and stack3 has the same number of resources.
+     */
+    @Test
+    public void addAllTypesTest(){
+        stack.addToAllTypes(stack2);
+        ResourceStack stack3 = new ResourceStack(3, 5, 7, 9);
+
+        assertArrayEquals(stack3.toString().toCharArray(), stack.toString().toCharArray());
     }
 }

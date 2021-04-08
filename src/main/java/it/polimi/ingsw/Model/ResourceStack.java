@@ -126,6 +126,17 @@ public class ResourceStack {
     }
 
     /**
+     * This method is used to add the resources of different ResourceStack
+     * @param resourceStack
+     */
+    public void addToAllTypes(ResourceStack resourceStack){
+        ResourceType[] types = ResourceType.values();
+        for(int i = 1; i < 5; i++){
+            this.addResource(resourceStack.getResource(types[i]), types[i]);
+        }
+    }
+
+    /**
      * This method is used to remove resources of a specified type from the stack.
      * @param resourcesToRemove is the number of resources to remove.
      * @param resourceType is the specified resource type.
