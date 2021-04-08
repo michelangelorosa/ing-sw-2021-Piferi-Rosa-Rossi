@@ -16,9 +16,15 @@ public class FaithTrackTest {
     /**
      * Getter test for Faith Track
      */
-/*
+
     @Test
     public void getterTest(){
+
+        Player[] players = new Player[4];
+        players[0] = new Player("zero", 0, true);
+        players[1] = new Player("one", 1, false);
+        players[2] = new Player("two", 2, false);
+        players[3] = new Player("three", 3, false);
 
         test.getCells()[0] = new FaithCell(0, 0, VaticanReportSection.No, PopeSpace.No);
 
@@ -29,14 +35,21 @@ public class FaithTrackTest {
 
         assertEquals("0 0 No No", test.getCells()[0].toString());
 
-        assertEquals(false, test.());
-        assertEquals(false, test.isPlayerTWOOnGame());
-        assertEquals(false, test.isPlayerTHREEOnGame());
-        assertEquals(false, test.isPlayerFOUROnGame());
+        players[0].setStatus(PlayerStatus.IN_GAME);
+        players[1].setStatus(PlayerStatus.IDLE);
+        players[2].setStatus(PlayerStatus.IDLE);
+        players[3].setStatus(PlayerStatus.IN_GAME);
+
+
+        assertEquals(PlayerStatus.IN_GAME, players[0].getStatus());
+        assertEquals(PlayerStatus.IDLE, players[1].getStatus());
+        assertEquals(PlayerStatus.IDLE, players[2].getStatus());
+        assertEquals(PlayerStatus.IN_GAME, players[0].getStatus());
+
 
     }
 
- */
+
 
     /**
      * Setter test for Faith Track
@@ -61,6 +74,18 @@ public class FaithTrackTest {
         assertEquals(15, test.getPlayerTWO());
         assertEquals(1, test.getPlayerTHREE());
         assertEquals(8, test.getPlayerFOUR());
+
+        players[0].setStatus(PlayerStatus.IN_GAME);
+        players[1].setStatus(PlayerStatus.IDLE);
+        players[2].setStatus(PlayerStatus.IDLE);
+        players[3].setStatus(PlayerStatus.IN_GAME);
+
+        assertEquals(PlayerStatus.IN_GAME, players[0].getStatus());
+        assertEquals(PlayerStatus.IDLE, players[1].getStatus());
+        assertEquals(PlayerStatus.IDLE, players[2].getStatus());
+        assertEquals(PlayerStatus.IN_GAME, players[0].getStatus());
+
+
 
     }
 
@@ -171,7 +196,7 @@ public class FaithTrackTest {
         assertEquals(test.getPlayerONE(),3);
         assertEquals(test.getPlayerTWO(), 3);
         assertEquals(test.getPlayerTHREE(), 0);
-        assertEquals(test.getPlayerFOUR(),0);
+        assertEquals(test.getPlayerFOUR(),3);
     }
 
 
@@ -272,12 +297,12 @@ public class FaithTrackTest {
         test.setPlayerTHREE(22);
         test.setPlayerFOUR(0);
 
-        System.out.println(test.getFinalPoints(players[0], 0));
-        System.out.println(test.getFinalPoints(players[1], 16));
-        System.out.println(test.getFinalPoints(players[2], 24));
-        System.out.println(test.getFinalPoints(players[3], 9));
-
-
+        /*
+            System.out.println(test.getFinalPoints(players[0], 0));
+            System.out.println(test.getFinalPoints(players[1], 16));
+            System.out.println(test.getFinalPoints(players[2], 24));
+            System.out.println(test.getFinalPoints(players[3], 9));
+         */
 
         assertEquals(20, test.getFinalPoints(players[0], 0));
         assertEquals(22, test.getFinalPoints(players[1], 16));
@@ -291,7 +316,7 @@ public class FaithTrackTest {
 
         test.setPlayerONE(23);
         test.stepAhead(players[0],15);
-        assertEquals(20, test.getFinalPoints(players[1], 0));
+        assertEquals(20, test.getFinalPoints(players[0], 0));
 
 
 
