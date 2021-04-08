@@ -2,83 +2,73 @@ package it.polimi.ingsw;
 
 import static org.junit.Assert.*;
 
-import it.polimi.ingsw.Model.Color;
 import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Model.PlayerStatus;
 import org.junit.Test;
 
 /**
- * Unit test for Player enum-type Class.
+ * Unit test for Player Class.
  */
-
 public class PlayerTest {
 
+    Player playerOne = new Player("alberto", 0, true);
+    Player playerTwo = new Player("nikola", 1, false);
+    Player playerThree = new Player("roberto", 2, false);
+    Player playerFour = new Player("giacomo", 3, false);
 
+    /**
+     * Constructor and Getter test for Player Class.
+     */
     @Test
-    public void constructorTest(){
-        Player players = new Player("zero", 0, true);
+    public void constructorTest() {
+        assertEquals("alberto", playerOne.getNickname());
+        assertEquals("nikola", playerTwo.getNickname());
+        assertEquals("roberto", playerThree.getNickname());
+        assertEquals("giacomo", playerFour.getNickname());
 
-        assertEquals("zero", players.getNickname());
-        assertEquals(0, players.getTurnPosition());
-        assertEquals(true, players.hasInkwell());
-    }
+        assertEquals(0, playerOne.getTurnPosition());
+        assertEquals(1, playerTwo.getTurnPosition());
+        assertEquals(2, playerThree.getTurnPosition());
+        assertEquals(3, playerFour.getTurnPosition());
 
-    @Test
-    public void setterTest(){
-        Player[] players = new Player[4];
-        players[0] = new Player("zero", 0, true);
-        players[1] = new Player("one", 1, false);
-        players[2] = new Player("two", 2, false);
-        players[3] = new Player("three", 3, false);
+        assertTrue(playerOne.hasInkwell());
+        assertFalse(playerTwo.hasInkwell());
+        assertFalse(playerThree.hasInkwell());
+        assertFalse(playerFour.hasInkwell());
 
-        players[0].setStatus(PlayerStatus.IDLE);
-        players[1].setStatus(PlayerStatus.IN_GAME);
-        players[2].setStatus(PlayerStatus.IDLE);
-        players[3].setStatus(PlayerStatus.IN_GAME);
+        assertEquals(PlayerStatus.IN_GAME, playerOne.getStatus());
+        assertEquals(PlayerStatus.IN_GAME, playerTwo.getStatus());
+        assertEquals(PlayerStatus.IN_GAME, playerThree.getStatus());
+        assertEquals(PlayerStatus.IN_GAME, playerFour.getStatus());
 
-        assertEquals(PlayerStatus.IDLE, players[0].getStatus());
-        assertEquals(PlayerStatus.IN_GAME, players[1].getStatus());
-        assertEquals(PlayerStatus.IDLE, players[2].getStatus());
-        assertEquals(PlayerStatus.IN_GAME, players[3].getStatus());
+        assertEquals(0, playerOne.getVictoryPoints());
+        assertEquals(0, playerTwo.getVictoryPoints());
+        assertEquals(0, playerThree.getVictoryPoints());
+        assertEquals(0, playerFour.getVictoryPoints());
     }
 
     /**
-     * getter test for Player enum-type Class.
+     * Setter test for Player Class.
      */
-
     @Test
-    public void getterTest() {
+    public void setterTest() {
+        assertEquals(PlayerStatus.IN_GAME, playerOne.getStatus());
+        playerOne.setStatus(PlayerStatus.IDLE);
+        assertEquals(PlayerStatus.IDLE, playerOne.getStatus());
+        playerOne.setStatus(PlayerStatus.WON);
+        assertEquals(PlayerStatus.WON, playerOne.getStatus());
+        playerOne.setStatus(PlayerStatus.LOST);
+        assertEquals(PlayerStatus.LOST, playerOne.getStatus());
+        playerOne.setStatus(PlayerStatus.IN_GAME);
+        assertEquals(PlayerStatus.IN_GAME, playerOne.getStatus());
+    }
 
-        Player[] players = new Player[4];
-        players[0] = new Player("zero", 0, true);
-        players[1] = new Player("one", 1, false);
-        players[2] = new Player("two", 2, false);
-        players[3] = new Player("three", 3, false);
-
-        players[0].setStatus(PlayerStatus.IDLE);
-        players[1].setStatus(PlayerStatus.IN_GAME);
-        players[2].setStatus(PlayerStatus.IDLE);
-        players[3].setStatus(PlayerStatus.IN_GAME);
-
-        assertEquals("zero", players[0].getNickname());
-        assertEquals("one", players[1].getNickname());
-        assertEquals("two", players[2].getNickname());
-        assertEquals("three", players[3].getNickname());
-
-
-        assertEquals(0, players[0].getTurnPosition());
-        assertEquals(1, players[1].getTurnPosition());
-        assertEquals(2, players[2].getTurnPosition());
-        assertEquals(3, players[3].getTurnPosition());
-
-        assertEquals(true, players[0].hasInkwell());
-        assertEquals(false, players[1].hasInkwell());
-        assertEquals(false, players[2].hasInkwell());
-        assertEquals(false, players[3].hasInkwell());
-
-        assertEquals(PlayerStatus.IDLE, players[0].getStatus());
-        assertEquals(PlayerStatus.IN_GAME, players[1].getStatus());
-        assertEquals(PlayerStatus.IDLE, players[2].getStatus());
-        assertEquals(PlayerStatus.IN_GAME, players[3].getStatus());
+    /**
+     * Test for "addVictoryPoints" method in Player Class.
+     */
+    @Test
+    public void addVictoryPointsTest() {
+        playerOne.addVictoryPoints(21);
+        assertEquals(21, playerOne.getVictoryPoints());
     }
 }

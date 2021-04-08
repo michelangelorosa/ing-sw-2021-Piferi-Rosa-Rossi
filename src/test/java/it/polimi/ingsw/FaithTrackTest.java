@@ -138,10 +138,10 @@ public class FaithTrackTest {
             System.out.println("4: " + test.getPlayerFOUR());
          */
 
-            assertEquals(test.getPlayerONE(),0);
-            assertEquals(test.getPlayerTWO(), 0);
-            assertEquals(test.getPlayerTHREE(), 2);
-            assertEquals(test.getPlayerFOUR(),0);
+        assertEquals(test.getPlayerONE(),0);
+        assertEquals(test.getPlayerTWO(), 0);
+        assertEquals(test.getPlayerTHREE(), 2);
+        assertEquals(test.getPlayerFOUR(),0);
     }
 
     /**
@@ -251,7 +251,7 @@ public class FaithTrackTest {
 
     /**
      * In this test I check if the method "getFinalPoints()" works properly by giving to all the players a number,
-     * whitch rapresents the cell, and sum the victory points of their cell with the points they have gained during the
+     * which represents the cell, and sum the victory points of their cell with the points they have gained during the
      * game.
      */
 
@@ -310,7 +310,7 @@ public class FaithTrackTest {
         assertEquals(9, test.getFinalPoints(players[3], 9));
 
         /*
-         * In this exemple we can see that every time the player goes too far in the Faith Track the counter stays on
+         * In this example we can see that every time the player goes too far in the Faith Track the counter stays on
          * cell #24 (the last of the track
          */
 
