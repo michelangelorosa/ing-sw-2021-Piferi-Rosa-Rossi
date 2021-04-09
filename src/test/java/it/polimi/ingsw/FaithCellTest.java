@@ -15,31 +15,31 @@ public class FaithCellTest {
 
         FaithCell[] cells = new FaithCell[25];
 
-        cells[0] = new FaithCell(0, 0, VaticanReportSection.No, PopeSpace.No);
-        cells[1] = new FaithCell(1, 0, VaticanReportSection.No, PopeSpace.No);
-        cells[2] = new FaithCell(2, 0, VaticanReportSection.No, PopeSpace.No);
-        cells[3] = new FaithCell(3, 1, VaticanReportSection.No, PopeSpace.No);
-        cells[4] = new FaithCell(4, 1, VaticanReportSection.No, PopeSpace.No);
-        cells[5] = new FaithCell(5, 1, VaticanReportSection.ONE, PopeSpace.No);
-        cells[6] = new FaithCell(6, 2, VaticanReportSection.ONE, PopeSpace.No);
-        cells[7] = new FaithCell(7, 2, VaticanReportSection.ONE, PopeSpace.No);
-        cells[8] = new FaithCell(8, 2, VaticanReportSection.ONE, PopeSpace.ONE);
-        cells[9] = new FaithCell(9, 4, VaticanReportSection.No, PopeSpace.No);
-        cells[10] = new FaithCell(10, 4, VaticanReportSection.No, PopeSpace.No);
-        cells[11] = new FaithCell(11, 4, VaticanReportSection.No, PopeSpace.No);
-        cells[12] = new FaithCell(12, 6, VaticanReportSection.TWO, PopeSpace.No);
-        cells[13] = new FaithCell(13, 6, VaticanReportSection.TWO, PopeSpace.No);
-        cells[14] = new FaithCell(14, 6, VaticanReportSection.TWO, PopeSpace.No);
-        cells[15] = new FaithCell(15, 9, VaticanReportSection.TWO, PopeSpace.No);
-        cells[16] = new FaithCell(16, 9, VaticanReportSection.TWO, PopeSpace.TWO);
-        cells[17] = new FaithCell(17, 9, VaticanReportSection.No, PopeSpace.No);
-        cells[18] = new FaithCell(18, 12, VaticanReportSection.No, PopeSpace.No);
-        cells[19] = new FaithCell(19, 12, VaticanReportSection.THREE, PopeSpace.No);
-        cells[20] = new FaithCell(20, 12, VaticanReportSection.THREE, PopeSpace.No);
-        cells[21] = new FaithCell(21, 16, VaticanReportSection.THREE, PopeSpace.No);
-        cells[22] = new FaithCell(22, 16, VaticanReportSection.THREE, PopeSpace.No);
-        cells[23] = new FaithCell(23, 16, VaticanReportSection.THREE, PopeSpace.No);
-        cells[24] = new FaithCell(24, 20, VaticanReportSection.THREE, PopeSpace.THREE);
+        cells[0] = new FaithCell(0, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[1] = new FaithCell(1, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[2] = new FaithCell(2, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[3] = new FaithCell(3, 1, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[4] = new FaithCell(4, 1, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[5] = new FaithCell(5, 1, VaticanReportSectionEnum.ONE, PopeSpace.No);
+        cells[6] = new FaithCell(6, 2, VaticanReportSectionEnum.ONE, PopeSpace.No);
+        cells[7] = new FaithCell(7, 2, VaticanReportSectionEnum.ONE, PopeSpace.No);
+        cells[8] = new FaithCell(8, 2, VaticanReportSectionEnum.ONE, PopeSpace.ONE);
+        cells[9] = new FaithCell(9, 4, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[10] = new FaithCell(10, 4, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[11] = new FaithCell(11, 4, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[12] = new FaithCell(12, 6, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        cells[13] = new FaithCell(13, 6, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        cells[14] = new FaithCell(14, 6, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        cells[15] = new FaithCell(15, 9, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        cells[16] = new FaithCell(16, 9, VaticanReportSectionEnum.TWO, PopeSpace.TWO);
+        cells[17] = new FaithCell(17, 9, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[18] = new FaithCell(18, 12, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[19] = new FaithCell(19, 12, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        cells[20] = new FaithCell(20, 12, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        cells[21] = new FaithCell(21, 16, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        cells[22] = new FaithCell(22, 16, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        cells[23] = new FaithCell(23, 16, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        cells[24] = new FaithCell(24, 20, VaticanReportSectionEnum.THREE, PopeSpace.THREE);
 
         for(int i = 0; i < 25; i++){
             assertEquals(i, cells[i].getIdCell());
@@ -55,31 +55,31 @@ public class FaithCellTest {
 
         FaithCell[] cells = new FaithCell[25];
 
-        cells[0] = new FaithCell(0, 0, VaticanReportSection.No, PopeSpace.No);
-        cells[1] = new FaithCell(1, 0, VaticanReportSection.No, PopeSpace.No);
-        cells[2] = new FaithCell(2, 0, VaticanReportSection.No, PopeSpace.No);
-        cells[3] = new FaithCell(3, 1, VaticanReportSection.No, PopeSpace.No);
-        cells[4] = new FaithCell(4, 1, VaticanReportSection.No, PopeSpace.No);
-        cells[5] = new FaithCell(5, 1, VaticanReportSection.ONE, PopeSpace.No);
-        cells[6] = new FaithCell(6, 2, VaticanReportSection.ONE, PopeSpace.No);
-        cells[7] = new FaithCell(7, 2, VaticanReportSection.ONE, PopeSpace.No);
-        cells[8] = new FaithCell(8, 2, VaticanReportSection.ONE, PopeSpace.ONE);
-        cells[9] = new FaithCell(9, 4, VaticanReportSection.No, PopeSpace.No);
-        cells[10] = new FaithCell(10, 4, VaticanReportSection.No, PopeSpace.No);
-        cells[11] = new FaithCell(11, 4, VaticanReportSection.No, PopeSpace.No);
-        cells[12] = new FaithCell(12, 6, VaticanReportSection.TWO, PopeSpace.No);
-        cells[13] = new FaithCell(13, 6, VaticanReportSection.TWO, PopeSpace.No);
-        cells[14] = new FaithCell(14, 6, VaticanReportSection.TWO, PopeSpace.No);
-        cells[15] = new FaithCell(15, 9, VaticanReportSection.TWO, PopeSpace.No);
-        cells[16] = new FaithCell(16, 9, VaticanReportSection.TWO, PopeSpace.TWO);
-        cells[17] = new FaithCell(17, 9, VaticanReportSection.No, PopeSpace.No);
-        cells[18] = new FaithCell(18, 12, VaticanReportSection.No, PopeSpace.No);
-        cells[19] = new FaithCell(19, 12, VaticanReportSection.THREE, PopeSpace.No);
-        cells[20] = new FaithCell(20, 12, VaticanReportSection.THREE, PopeSpace.No);
-        cells[21] = new FaithCell(21, 16, VaticanReportSection.THREE, PopeSpace.No);
-        cells[22] = new FaithCell(22, 16, VaticanReportSection.THREE, PopeSpace.No);
-        cells[23] = new FaithCell(23, 16, VaticanReportSection.THREE, PopeSpace.No);
-        cells[24] = new FaithCell(24, 20, VaticanReportSection.THREE, PopeSpace.THREE);
+        cells[0] = new FaithCell(0, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[1] = new FaithCell(1, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[2] = new FaithCell(2, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[3] = new FaithCell(3, 1, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[4] = new FaithCell(4, 1, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[5] = new FaithCell(5, 1, VaticanReportSectionEnum.ONE, PopeSpace.No);
+        cells[6] = new FaithCell(6, 2, VaticanReportSectionEnum.ONE, PopeSpace.No);
+        cells[7] = new FaithCell(7, 2, VaticanReportSectionEnum.ONE, PopeSpace.No);
+        cells[8] = new FaithCell(8, 2, VaticanReportSectionEnum.ONE, PopeSpace.ONE);
+        cells[9] = new FaithCell(9, 4, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[10] = new FaithCell(10, 4, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[11] = new FaithCell(11, 4, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[12] = new FaithCell(12, 6, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        cells[13] = new FaithCell(13, 6, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        cells[14] = new FaithCell(14, 6, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        cells[15] = new FaithCell(15, 9, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        cells[16] = new FaithCell(16, 9, VaticanReportSectionEnum.TWO, PopeSpace.TWO);
+        cells[17] = new FaithCell(17, 9, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[18] = new FaithCell(18, 12, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[19] = new FaithCell(19, 12, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        cells[20] = new FaithCell(20, 12, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        cells[21] = new FaithCell(21, 16, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        cells[22] = new FaithCell(22, 16, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        cells[23] = new FaithCell(23, 16, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        cells[24] = new FaithCell(24, 20, VaticanReportSectionEnum.THREE, PopeSpace.THREE);
 
         assertEquals(0, cells[0].getVictoryPoints());
         assertEquals(0, cells[1].getVictoryPoints());
@@ -116,57 +116,57 @@ public class FaithCellTest {
     public void getVaticanReportSectionTest(){
         FaithCell[] cells = new FaithCell[25];
 
-        cells[0] = new FaithCell(0, 0, VaticanReportSection.No, PopeSpace.No);
-        cells[1] = new FaithCell(1, 0, VaticanReportSection.No, PopeSpace.No);
-        cells[2] = new FaithCell(2, 0, VaticanReportSection.No, PopeSpace.No);
-        cells[3] = new FaithCell(3, 1, VaticanReportSection.No, PopeSpace.No);
-        cells[4] = new FaithCell(4, 1, VaticanReportSection.No, PopeSpace.No);
-        cells[5] = new FaithCell(5, 1, VaticanReportSection.ONE, PopeSpace.No);
-        cells[6] = new FaithCell(6, 2, VaticanReportSection.ONE, PopeSpace.No);
-        cells[7] = new FaithCell(7, 2, VaticanReportSection.ONE, PopeSpace.No);
-        cells[8] = new FaithCell(8, 2, VaticanReportSection.ONE, PopeSpace.ONE);
-        cells[9] = new FaithCell(9, 4, VaticanReportSection.No, PopeSpace.No);
-        cells[10] = new FaithCell(10, 4, VaticanReportSection.No, PopeSpace.No);
-        cells[11] = new FaithCell(11, 4, VaticanReportSection.No, PopeSpace.No);
-        cells[12] = new FaithCell(12, 6, VaticanReportSection.TWO, PopeSpace.No);
-        cells[13] = new FaithCell(13, 6, VaticanReportSection.TWO, PopeSpace.No);
-        cells[14] = new FaithCell(14, 6, VaticanReportSection.TWO, PopeSpace.No);
-        cells[15] = new FaithCell(15, 9, VaticanReportSection.TWO, PopeSpace.No);
-        cells[16] = new FaithCell(16, 9, VaticanReportSection.TWO, PopeSpace.TWO);
-        cells[17] = new FaithCell(17, 9, VaticanReportSection.No, PopeSpace.No);
-        cells[18] = new FaithCell(18, 12, VaticanReportSection.No, PopeSpace.No);
-        cells[19] = new FaithCell(19, 12, VaticanReportSection.THREE, PopeSpace.No);
-        cells[20] = new FaithCell(20, 12, VaticanReportSection.THREE, PopeSpace.No);
-        cells[21] = new FaithCell(21, 16, VaticanReportSection.THREE, PopeSpace.No);
-        cells[22] = new FaithCell(22, 16, VaticanReportSection.THREE, PopeSpace.No);
-        cells[23] = new FaithCell(23, 16, VaticanReportSection.THREE, PopeSpace.No);
-        cells[24] = new FaithCell(24, 20, VaticanReportSection.THREE, PopeSpace.THREE);
+        cells[0] = new FaithCell(0, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[1] = new FaithCell(1, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[2] = new FaithCell(2, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[3] = new FaithCell(3, 1, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[4] = new FaithCell(4, 1, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[5] = new FaithCell(5, 1, VaticanReportSectionEnum.ONE, PopeSpace.No);
+        cells[6] = new FaithCell(6, 2, VaticanReportSectionEnum.ONE, PopeSpace.No);
+        cells[7] = new FaithCell(7, 2, VaticanReportSectionEnum.ONE, PopeSpace.No);
+        cells[8] = new FaithCell(8, 2, VaticanReportSectionEnum.ONE, PopeSpace.ONE);
+        cells[9] = new FaithCell(9, 4, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[10] = new FaithCell(10, 4, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[11] = new FaithCell(11, 4, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[12] = new FaithCell(12, 6, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        cells[13] = new FaithCell(13, 6, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        cells[14] = new FaithCell(14, 6, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        cells[15] = new FaithCell(15, 9, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        cells[16] = new FaithCell(16, 9, VaticanReportSectionEnum.TWO, PopeSpace.TWO);
+        cells[17] = new FaithCell(17, 9, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[18] = new FaithCell(18, 12, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[19] = new FaithCell(19, 12, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        cells[20] = new FaithCell(20, 12, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        cells[21] = new FaithCell(21, 16, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        cells[22] = new FaithCell(22, 16, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        cells[23] = new FaithCell(23, 16, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        cells[24] = new FaithCell(24, 20, VaticanReportSectionEnum.THREE, PopeSpace.THREE);
 
-        assertEquals(VaticanReportSection.No, cells[0].getVaticanReportSection());
-        assertEquals(VaticanReportSection.No, cells[1].getVaticanReportSection());
-        assertEquals(VaticanReportSection.No, cells[2].getVaticanReportSection());
-        assertEquals(VaticanReportSection.No, cells[3].getVaticanReportSection());
-        assertEquals(VaticanReportSection.No, cells[4].getVaticanReportSection());
-        assertEquals(VaticanReportSection.ONE, cells[5].getVaticanReportSection());
-        assertEquals(VaticanReportSection.ONE, cells[6].getVaticanReportSection());
-        assertEquals(VaticanReportSection.ONE, cells[7].getVaticanReportSection());
-        assertEquals(VaticanReportSection.ONE, cells[8].getVaticanReportSection());
-        assertEquals(VaticanReportSection.No, cells[9].getVaticanReportSection());
-        assertEquals(VaticanReportSection.No, cells[10].getVaticanReportSection());
-        assertEquals(VaticanReportSection.No, cells[11].getVaticanReportSection());
-        assertEquals(VaticanReportSection.TWO, cells[12].getVaticanReportSection());
-        assertEquals(VaticanReportSection.TWO, cells[13].getVaticanReportSection());
-        assertEquals(VaticanReportSection.TWO, cells[14].getVaticanReportSection());
-        assertEquals(VaticanReportSection.TWO, cells[15].getVaticanReportSection());
-        assertEquals(VaticanReportSection.TWO, cells[16].getVaticanReportSection());
-        assertEquals(VaticanReportSection.No, cells[17].getVaticanReportSection());
-        assertEquals(VaticanReportSection.No, cells[18].getVaticanReportSection());
-        assertEquals(VaticanReportSection.THREE, cells[19].getVaticanReportSection());
-        assertEquals(VaticanReportSection.THREE, cells[20].getVaticanReportSection());
-        assertEquals(VaticanReportSection.THREE, cells[21].getVaticanReportSection());
-        assertEquals(VaticanReportSection.THREE, cells[22].getVaticanReportSection());
-        assertEquals(VaticanReportSection.THREE, cells[23].getVaticanReportSection());
-        assertEquals(VaticanReportSection.THREE, cells[24].getVaticanReportSection());
+        assertEquals(VaticanReportSectionEnum.No, cells[0].getVaticanReportSection());
+        assertEquals(VaticanReportSectionEnum.No, cells[1].getVaticanReportSection());
+        assertEquals(VaticanReportSectionEnum.No, cells[2].getVaticanReportSection());
+        assertEquals(VaticanReportSectionEnum.No, cells[3].getVaticanReportSection());
+        assertEquals(VaticanReportSectionEnum.No, cells[4].getVaticanReportSection());
+        assertEquals(VaticanReportSectionEnum.ONE, cells[5].getVaticanReportSection());
+        assertEquals(VaticanReportSectionEnum.ONE, cells[6].getVaticanReportSection());
+        assertEquals(VaticanReportSectionEnum.ONE, cells[7].getVaticanReportSection());
+        assertEquals(VaticanReportSectionEnum.ONE, cells[8].getVaticanReportSection());
+        assertEquals(VaticanReportSectionEnum.No, cells[9].getVaticanReportSection());
+        assertEquals(VaticanReportSectionEnum.No, cells[10].getVaticanReportSection());
+        assertEquals(VaticanReportSectionEnum.No, cells[11].getVaticanReportSection());
+        assertEquals(VaticanReportSectionEnum.TWO, cells[12].getVaticanReportSection());
+        assertEquals(VaticanReportSectionEnum.TWO, cells[13].getVaticanReportSection());
+        assertEquals(VaticanReportSectionEnum.TWO, cells[14].getVaticanReportSection());
+        assertEquals(VaticanReportSectionEnum.TWO, cells[15].getVaticanReportSection());
+        assertEquals(VaticanReportSectionEnum.TWO, cells[16].getVaticanReportSection());
+        assertEquals(VaticanReportSectionEnum.No, cells[17].getVaticanReportSection());
+        assertEquals(VaticanReportSectionEnum.No, cells[18].getVaticanReportSection());
+        assertEquals(VaticanReportSectionEnum.THREE, cells[19].getVaticanReportSection());
+        assertEquals(VaticanReportSectionEnum.THREE, cells[20].getVaticanReportSection());
+        assertEquals(VaticanReportSectionEnum.THREE, cells[21].getVaticanReportSection());
+        assertEquals(VaticanReportSectionEnum.THREE, cells[22].getVaticanReportSection());
+        assertEquals(VaticanReportSectionEnum.THREE, cells[23].getVaticanReportSection());
+        assertEquals(VaticanReportSectionEnum.THREE, cells[24].getVaticanReportSection());
     }
 
     /**
@@ -177,31 +177,31 @@ public class FaithCellTest {
     public void getPopeSpaceTest(){
         FaithCell[] cells = new FaithCell[25];
 
-        cells[0] = new FaithCell(0, 0, VaticanReportSection.No, PopeSpace.No);
-        cells[1] = new FaithCell(1, 0, VaticanReportSection.No, PopeSpace.No);
-        cells[2] = new FaithCell(2, 0, VaticanReportSection.No, PopeSpace.No);
-        cells[3] = new FaithCell(3, 1, VaticanReportSection.No, PopeSpace.No);
-        cells[4] = new FaithCell(4, 1, VaticanReportSection.No, PopeSpace.No);
-        cells[5] = new FaithCell(5, 1, VaticanReportSection.ONE, PopeSpace.No);
-        cells[6] = new FaithCell(6, 2, VaticanReportSection.ONE, PopeSpace.No);
-        cells[7] = new FaithCell(7, 2, VaticanReportSection.ONE, PopeSpace.No);
-        cells[8] = new FaithCell(8, 2, VaticanReportSection.ONE, PopeSpace.ONE);
-        cells[9] = new FaithCell(9, 4, VaticanReportSection.No, PopeSpace.No);
-        cells[10] = new FaithCell(10, 4, VaticanReportSection.No, PopeSpace.No);
-        cells[11] = new FaithCell(11, 4, VaticanReportSection.No, PopeSpace.No);
-        cells[12] = new FaithCell(12, 6, VaticanReportSection.TWO, PopeSpace.No);
-        cells[13] = new FaithCell(13, 6, VaticanReportSection.TWO, PopeSpace.No);
-        cells[14] = new FaithCell(14, 6, VaticanReportSection.TWO, PopeSpace.No);
-        cells[15] = new FaithCell(15, 9, VaticanReportSection.TWO, PopeSpace.No);
-        cells[16] = new FaithCell(16, 9, VaticanReportSection.TWO, PopeSpace.TWO);
-        cells[17] = new FaithCell(17, 9, VaticanReportSection.No, PopeSpace.No);
-        cells[18] = new FaithCell(18, 12, VaticanReportSection.No, PopeSpace.No);
-        cells[19] = new FaithCell(19, 12, VaticanReportSection.THREE, PopeSpace.No);
-        cells[20] = new FaithCell(20, 12, VaticanReportSection.THREE, PopeSpace.No);
-        cells[21] = new FaithCell(21, 16, VaticanReportSection.THREE, PopeSpace.No);
-        cells[22] = new FaithCell(22, 16, VaticanReportSection.THREE, PopeSpace.No);
-        cells[23] = new FaithCell(23, 16, VaticanReportSection.THREE, PopeSpace.No);
-        cells[24] = new FaithCell(24, 20, VaticanReportSection.THREE, PopeSpace.THREE);
+        cells[0] = new FaithCell(0, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[1] = new FaithCell(1, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[2] = new FaithCell(2, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[3] = new FaithCell(3, 1, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[4] = new FaithCell(4, 1, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[5] = new FaithCell(5, 1, VaticanReportSectionEnum.ONE, PopeSpace.No);
+        cells[6] = new FaithCell(6, 2, VaticanReportSectionEnum.ONE, PopeSpace.No);
+        cells[7] = new FaithCell(7, 2, VaticanReportSectionEnum.ONE, PopeSpace.No);
+        cells[8] = new FaithCell(8, 2, VaticanReportSectionEnum.ONE, PopeSpace.ONE);
+        cells[9] = new FaithCell(9, 4, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[10] = new FaithCell(10, 4, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[11] = new FaithCell(11, 4, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[12] = new FaithCell(12, 6, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        cells[13] = new FaithCell(13, 6, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        cells[14] = new FaithCell(14, 6, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        cells[15] = new FaithCell(15, 9, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        cells[16] = new FaithCell(16, 9, VaticanReportSectionEnum.TWO, PopeSpace.TWO);
+        cells[17] = new FaithCell(17, 9, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[18] = new FaithCell(18, 12, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[19] = new FaithCell(19, 12, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        cells[20] = new FaithCell(20, 12, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        cells[21] = new FaithCell(21, 16, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        cells[22] = new FaithCell(22, 16, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        cells[23] = new FaithCell(23, 16, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        cells[24] = new FaithCell(24, 20, VaticanReportSectionEnum.THREE, PopeSpace.THREE);
 
         for(int i = 0; i < 25; i++){
             if(i != 8 && i != 16 && i != 24){
@@ -227,10 +227,10 @@ public class FaithCellTest {
     public void setVaticanReportSectionTest(){
         FaithCell[] cells = new FaithCell[25];
 
-        cells[5] = new FaithCell(0, 0, VaticanReportSection.No, PopeSpace.No);
-        cells[5].setVaticanReportSection(VaticanReportSection.THREE);
+        cells[5] = new FaithCell(0, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        cells[5].setVaticanReportSection(VaticanReportSectionEnum.THREE);
 
-        assertEquals(VaticanReportSection.THREE, cells[5].getVaticanReportSection());
+        assertEquals(VaticanReportSectionEnum.THREE, cells[5].getVaticanReportSection());
     }
 
     /**
@@ -241,7 +241,7 @@ public class FaithCellTest {
     public void setVictoryPointsTest(){
         FaithCell[] cells = new FaithCell[25];
 
-        cells[12] = new FaithCell(0, 0, VaticanReportSection.No, PopeSpace.No);
+        cells[12] = new FaithCell(0, 0, VaticanReportSectionEnum.No, PopeSpace.No);
         cells[12].setVictoryPoints(134);
 
         assertEquals(134, cells[12].getVictoryPoints());
@@ -256,7 +256,7 @@ public class FaithCellTest {
 
         FaithCell[] cells = new FaithCell[25];
 
-        cells[21] = new FaithCell(0, 0, VaticanReportSection.No, PopeSpace.No);
+        cells[21] = new FaithCell(0, 0, VaticanReportSectionEnum.No, PopeSpace.No);
 
         String testString = "0 0 No No";
 

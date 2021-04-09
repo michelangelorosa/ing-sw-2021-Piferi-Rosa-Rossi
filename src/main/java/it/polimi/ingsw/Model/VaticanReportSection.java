@@ -1,18 +1,28 @@
 package it.polimi.ingsw.Model;
 
-/**
- * Color enum-type Class contains all possible colors a
- * Development Card (or Development Card Deck) can have.
- */
+public class VaticanReportSection {
 
-public enum VaticanReportSection {
-    No, ONE, TWO, THREE;
+    private final int begin;
+    private final int end;
+    private final int points;
 
-    /**
-     * This particular method uses an array of Color instances containing each different color
-     * to return a particular color based on the integer given when calling the method.
-     */
 
-    private static final VaticanReportSection[] reportSections = VaticanReportSection.values();
-    public static VaticanReportSection getReportSection(int i) { return VaticanReportSection.reportSections[i]; }
+    public VaticanReportSection(int begin, int end, int points) {
+        this.begin = begin;
+        this.end = end;
+        this.points = points;
+
+    }
+
+    public int getBegin() {
+        return begin;
+    }
+
+    public int getEnd() {
+        return end;
+    }
+
+    public int getPoints() {
+        return points;
+    }
 }

@@ -74,6 +74,17 @@ public class PlayerTest {
     }
 
     /**
+     * Test for method "victory" for Player Class.
+     */
+    @Test
+    public void victoryTest(){
+        playerOne.stepAhead(26);
+        playerOne.victory();
+        assertEquals(24, playerOne.getFaithTrackPosition());
+        assertTrue(playerOne.victory());
+    }
+
+    /**
      * Test for "addVictoryPoints" method in Player Class.
      */
     @Test

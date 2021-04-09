@@ -2,13 +2,13 @@ package it.polimi.ingsw.Model;
 
 public class FaithCell {
 
-    private VaticanReportSection vaticanReportSection;
+    private VaticanReportSectionEnum vaticanReportSectionEnum;
     private final PopeSpace popeSpace;
     private final int idCell;
     private int victoryPoints;
 
-    public FaithCell(int idCell, int victoryPoints, VaticanReportSection vaticanReportSection, PopeSpace popeSpace) {
-        this.vaticanReportSection = vaticanReportSection;
+    public FaithCell(int idCell, int victoryPoints, VaticanReportSectionEnum vaticanReportSectionEnum, PopeSpace popeSpace) {
+        this.vaticanReportSectionEnum = vaticanReportSectionEnum;
         this.popeSpace = popeSpace;
         this.idCell = idCell;
         this.victoryPoints = victoryPoints;
@@ -22,16 +22,16 @@ public class FaithCell {
         return victoryPoints;
     }
 
-    public VaticanReportSection getVaticanReportSection() {
-        return vaticanReportSection;
+    public VaticanReportSectionEnum getVaticanReportSection() {
+        return vaticanReportSectionEnum;
     }
 
     public PopeSpace getPopeSpace() {
         return popeSpace;
     }
 
-    public void setVaticanReportSection(VaticanReportSection vaticanReportSection) {
-        this.vaticanReportSection = vaticanReportSection;
+    public void setVaticanReportSection(VaticanReportSectionEnum vaticanReportSectionEnum) {
+        this.vaticanReportSectionEnum = vaticanReportSectionEnum;
     }
 
     public void setVictoryPoints(int victoryPoints) {
@@ -39,7 +39,7 @@ public class FaithCell {
     }
 
     public String toString() {
-        return idCell+" "+victoryPoints + " " + vaticanReportSection + " " +popeSpace;
+        return idCell+" "+victoryPoints + " " + vaticanReportSectionEnum + " " +popeSpace;
     }
 
 }

@@ -97,7 +97,7 @@ public class JSONReader {
         FaithCell cellToRead;
         int cellsRead = 0;
 
-        VaticanReportSection[] vaticanReportSections = VaticanReportSection.values();
+        VaticanReportSectionEnum[] vaticanReportSectionEnums = VaticanReportSectionEnum.values();
         PopeSpace[] popeSpaces = PopeSpace.values();
 
         int vaticanint;
@@ -129,7 +129,7 @@ public class JSONReader {
                 idCell = faithCellJsonObject.get("IdCell").getAsInt();
                 victoryPoints = faithCellJsonObject.get("VictoryPoints").getAsInt();
 
-                FaithCell cell = new FaithCell(idCell, victoryPoints, vaticanReportSections[vaticanint], popeSpaces[popeint]);
+                FaithCell cell = new FaithCell(idCell, victoryPoints, vaticanReportSectionEnums[vaticanint], popeSpaces[popeint]);
 
                 //System.out.println("id: " + idCell + " points: " + victoryPoints + " pope Space: " +popeSpaces[popeint] + " vatican:" +vaticanReportSections[vaticanint]);
 
