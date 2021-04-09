@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import it.polimi.ingsw.Model.*;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 /**
  * Unit test for FaithTrack Class.
  */
@@ -20,31 +22,31 @@ public class FaithTrackTest {
     @Test
     public void getterTest(){
 
-        Player[] players = new Player[4];
-        players[0] = new Player("zero", 0, true);
-        players[1] = new Player("one", 1, false);
-        players[2] = new Player("two", 2, false);
-        players[3] = new Player("three", 3, false);
+        ArrayList<Player> players = new ArrayList <>();
+        players.add(new Player("zero", 0, true));
+        players.add(new Player("one", 1, false));
+        players.add(new Player("two", 2, false));
+        players.add(new Player("three", 3, false));
 
-        test.getCells()[0] = new FaithCell(0, 0, VaticanReportSection.No, PopeSpace.No);
+        test.getCells()[0] = new FaithCell(0, 0, VaticanReportSectionEnum.No, PopeSpace.No);
 
-        assertEquals(0, test.getPlayerONE());
-        assertEquals(0, test.getPlayerTWO());
-        assertEquals(0, test.getPlayerTHREE());
-        assertEquals(0, test.getPlayerFOUR());
+        assertEquals(0, players.get(0).getFaithTrackPosition());
+        assertEquals(0, players.get(1).getFaithTrackPosition());
+        assertEquals(0, players.get(2).getFaithTrackPosition());
+        assertEquals(0, players.get(3).getFaithTrackPosition());
 
         assertEquals("0 0 No No", test.getCells()[0].toString());
 
-        players[0].setStatus(PlayerStatus.IN_GAME);
-        players[1].setStatus(PlayerStatus.IDLE);
-        players[2].setStatus(PlayerStatus.IDLE);
-        players[3].setStatus(PlayerStatus.IN_GAME);
+        players.get(0).setStatus(PlayerStatus.IN_GAME);
+        players.get(1).setStatus(PlayerStatus.IDLE);
+        players.get(2).setStatus(PlayerStatus.IDLE);
+        players.get(3).setStatus(PlayerStatus.IN_GAME);
 
 
-        assertEquals(PlayerStatus.IN_GAME, players[0].getStatus());
-        assertEquals(PlayerStatus.IDLE, players[1].getStatus());
-        assertEquals(PlayerStatus.IDLE, players[2].getStatus());
-        assertEquals(PlayerStatus.IN_GAME, players[0].getStatus());
+        assertEquals(PlayerStatus.IN_GAME, players.get(0).getStatus());
+        assertEquals(PlayerStatus.IDLE, players.get(1).getStatus());
+        assertEquals(PlayerStatus.IDLE, players.get(2).getStatus());
+        assertEquals(PlayerStatus.IN_GAME, players.get(3).getStatus());
 
 
     }
@@ -58,32 +60,31 @@ public class FaithTrackTest {
     @Test
     public void setterTest(){
 
-        Player[] players = new Player[4];
-        players[0] = new Player("zero", 0, true);
-        players[1] = new Player("one", 1, false);
-        players[2] = new Player("two", 2, false);
-        players[3] = new Player("three", 3, false);
+        ArrayList<Player> players = new ArrayList <>();
+        players.add(new Player("zero", 0, true));
+        players.add(new Player("one", 1, false));
+        players.add(new Player("two", 2, false));
+        players.add(new Player("three", 3, false));
 
-        test.setPlayerONE(12);
-        test.setPlayerTWO(15);
-        test.setPlayerTHREE(1);
-        test.setPlayerFOUR(8);
+        players.get(0).stepAhead(12);
+        players.get(1).stepAhead(15);
+        players.get(2).stepAhead(1);
+        players.get(3).stepAhead(8);
 
+        assertEquals(12, players.get(0).getFaithTrackPosition());
+        assertEquals(15, players.get(1).getFaithTrackPosition());
+        assertEquals(1, players.get(2).getFaithTrackPosition());
+        assertEquals(8, players.get(3).getFaithTrackPosition());
 
-        assertEquals(12, test.getPlayerONE());
-        assertEquals(15, test.getPlayerTWO());
-        assertEquals(1, test.getPlayerTHREE());
-        assertEquals(8, test.getPlayerFOUR());
+        players.get(0).setStatus(PlayerStatus.IN_GAME);
+        players.get(1).setStatus(PlayerStatus.IDLE);
+        players.get(2).setStatus(PlayerStatus.IDLE);
+        players.get(3).setStatus(PlayerStatus.IN_GAME);
 
-        players[0].setStatus(PlayerStatus.IN_GAME);
-        players[1].setStatus(PlayerStatus.IDLE);
-        players[2].setStatus(PlayerStatus.IDLE);
-        players[3].setStatus(PlayerStatus.IN_GAME);
-
-        assertEquals(PlayerStatus.IN_GAME, players[0].getStatus());
-        assertEquals(PlayerStatus.IDLE, players[1].getStatus());
-        assertEquals(PlayerStatus.IDLE, players[2].getStatus());
-        assertEquals(PlayerStatus.IN_GAME, players[0].getStatus());
+        assertEquals(PlayerStatus.IN_GAME, players.get(0).getStatus());
+        assertEquals(PlayerStatus.IDLE, players.get(1).getStatus());
+        assertEquals(PlayerStatus.IDLE, players.get(2).getStatus());
+        assertEquals(PlayerStatus.IN_GAME, players.get(3).getStatus());
 
 
 
@@ -98,39 +99,39 @@ public class FaithTrackTest {
     @Test
     public void stepAheadTest(){
 
-        Player[] players = new Player[4];
-        players[0] = new Player("zero", 0, true);
-        players[1] = new Player("one", 1, false);
-        players[2] = new Player("two", 2, false);
-        players[3] = new Player("three", 3, false);
+        ArrayList<Player> players = new ArrayList <>();
+        players.add(new Player("zero", 0, true));
+        players.add(new Player("one", 1, false));
+        players.add(new Player("two", 2, false));
+        players.add(new Player("three", 3, false));
 
-        test.getCells()[0] = new FaithCell(0, 0, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[1] = new FaithCell(1, 0, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[2] = new FaithCell(2, 0, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[3] = new FaithCell(3, 1, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[4] = new FaithCell(4, 1, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[5] = new FaithCell(5, 1, VaticanReportSection.ONE, PopeSpace.No);
-        test.getCells()[6] = new FaithCell(6, 2, VaticanReportSection.ONE, PopeSpace.No);
-        test.getCells()[7] = new FaithCell(7, 2, VaticanReportSection.ONE, PopeSpace.No);
-        test.getCells()[8] = new FaithCell(8, 2, VaticanReportSection.ONE, PopeSpace.ONE);
-        test.getCells()[9] = new FaithCell(9, 4, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[10] = new FaithCell(10, 4, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[11] = new FaithCell(11, 4, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[12] = new FaithCell(12, 6, VaticanReportSection.TWO, PopeSpace.No);
-        test.getCells()[13] = new FaithCell(13, 6, VaticanReportSection.TWO, PopeSpace.No);
-        test.getCells()[14] = new FaithCell(14, 6, VaticanReportSection.TWO, PopeSpace.No);
-        test.getCells()[15] = new FaithCell(15, 9, VaticanReportSection.TWO, PopeSpace.No);
-        test.getCells()[16] = new FaithCell(16, 9, VaticanReportSection.TWO, PopeSpace.TWO);
-        test.getCells()[17] = new FaithCell(17, 9, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[18] = new FaithCell(18, 12, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[19] = new FaithCell(19, 12, VaticanReportSection.THREE, PopeSpace.No);
-        test.getCells()[20] = new FaithCell(20, 12, VaticanReportSection.THREE, PopeSpace.No);
-        test.getCells()[21] = new FaithCell(21, 16, VaticanReportSection.THREE, PopeSpace.No);
-        test.getCells()[22] = new FaithCell(22, 16, VaticanReportSection.THREE, PopeSpace.No);
-        test.getCells()[23] = new FaithCell(23, 16, VaticanReportSection.THREE, PopeSpace.No);
-        test.getCells()[24] = new FaithCell(24, 20, VaticanReportSection.THREE, PopeSpace.THREE);
+        test.getCells()[0] = new FaithCell(0, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[1] = new FaithCell(1, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[2] = new FaithCell(2, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[3] = new FaithCell(3, 1, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[4] = new FaithCell(4, 1, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[5] = new FaithCell(5, 1, VaticanReportSectionEnum.ONE, PopeSpace.No);
+        test.getCells()[6] = new FaithCell(6, 2, VaticanReportSectionEnum.ONE, PopeSpace.No);
+        test.getCells()[7] = new FaithCell(7, 2, VaticanReportSectionEnum.ONE, PopeSpace.No);
+        test.getCells()[8] = new FaithCell(8, 2, VaticanReportSectionEnum.ONE, PopeSpace.ONE);
+        test.getCells()[9] = new FaithCell(9, 4, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[10] = new FaithCell(10, 4, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[11] = new FaithCell(11, 4, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[12] = new FaithCell(12, 6, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        test.getCells()[13] = new FaithCell(13, 6, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        test.getCells()[14] = new FaithCell(14, 6, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        test.getCells()[15] = new FaithCell(15, 9, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        test.getCells()[16] = new FaithCell(16, 9, VaticanReportSectionEnum.TWO, PopeSpace.TWO);
+        test.getCells()[17] = new FaithCell(17, 9, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[18] = new FaithCell(18, 12, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[19] = new FaithCell(19, 12, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        test.getCells()[20] = new FaithCell(20, 12, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        test.getCells()[21] = new FaithCell(21, 16, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        test.getCells()[22] = new FaithCell(22, 16, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        test.getCells()[23] = new FaithCell(23, 16, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        test.getCells()[24] = new FaithCell(24, 20, VaticanReportSectionEnum.THREE, PopeSpace.THREE);
 
-        test.stepAhead(players[2], 2);
+        test.stepAhead(players.get(2), players, 2);
         /*
             System.out.println("1: " + test.getPlayerONE());
             System.out.println("2: " + test.getPlayerTWO());
@@ -138,10 +139,10 @@ public class FaithTrackTest {
             System.out.println("4: " + test.getPlayerFOUR());
          */
 
-        assertEquals(test.getPlayerONE(),0);
-        assertEquals(test.getPlayerTWO(), 0);
-        assertEquals(test.getPlayerTHREE(), 2);
-        assertEquals(test.getPlayerFOUR(),0);
+        assertEquals(0, players.get(0).getFaithTrackPosition());
+        assertEquals(0, players.get(1).getFaithTrackPosition());
+        assertEquals(2, players.get(2).getFaithTrackPosition());
+        assertEquals(0, players.get(3).getFaithTrackPosition());
     }
 
     /**
@@ -152,39 +153,39 @@ public class FaithTrackTest {
     @Test
     public void allAheadTest() {
 
-        Player[] players = new Player[4];
-        players[0] = new Player("zero", 0, true);
-        players[1] = new Player("one", 1, false);
-        players[2] = new Player("two", 2, false);
-        players[3] = new Player("three", 3, false);
+        ArrayList<Player> players = new ArrayList <>();
+        players.add(new Player("zero", 0, true));
+        players.add(new Player("one", 1, false));
+        players.add(new Player("two", 2, false));
+        players.add(new Player("three", 3, false));
 
-        test.getCells()[0] = new FaithCell(0, 0, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[1] = new FaithCell(1, 0, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[2] = new FaithCell(2, 0, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[3] = new FaithCell(3, 1, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[4] = new FaithCell(4, 1, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[5] = new FaithCell(5, 1, VaticanReportSection.ONE, PopeSpace.No);
-        test.getCells()[6] = new FaithCell(6, 2, VaticanReportSection.ONE, PopeSpace.No);
-        test.getCells()[7] = new FaithCell(7, 2, VaticanReportSection.ONE, PopeSpace.No);
-        test.getCells()[8] = new FaithCell(8, 2, VaticanReportSection.ONE, PopeSpace.ONE);
-        test.getCells()[9] = new FaithCell(9, 4, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[10] = new FaithCell(10, 4, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[11] = new FaithCell(11, 4, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[12] = new FaithCell(12, 6, VaticanReportSection.TWO, PopeSpace.No);
-        test.getCells()[13] = new FaithCell(13, 6, VaticanReportSection.TWO, PopeSpace.No);
-        test.getCells()[14] = new FaithCell(14, 6, VaticanReportSection.TWO, PopeSpace.No);
-        test.getCells()[15] = new FaithCell(15, 9, VaticanReportSection.TWO, PopeSpace.No);
-        test.getCells()[16] = new FaithCell(16, 9, VaticanReportSection.TWO, PopeSpace.TWO);
-        test.getCells()[17] = new FaithCell(17, 9, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[18] = new FaithCell(18, 12, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[19] = new FaithCell(19, 12, VaticanReportSection.THREE, PopeSpace.No);
-        test.getCells()[20] = new FaithCell(20, 12, VaticanReportSection.THREE, PopeSpace.No);
-        test.getCells()[21] = new FaithCell(21, 16, VaticanReportSection.THREE, PopeSpace.No);
-        test.getCells()[22] = new FaithCell(22, 16, VaticanReportSection.THREE, PopeSpace.No);
-        test.getCells()[23] = new FaithCell(23, 16, VaticanReportSection.THREE, PopeSpace.No);
-        test.getCells()[24] = new FaithCell(24, 20, VaticanReportSection.THREE, PopeSpace.THREE);
+        test.getCells()[0] = new FaithCell(0, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[1] = new FaithCell(1, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[2] = new FaithCell(2, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[3] = new FaithCell(3, 1, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[4] = new FaithCell(4, 1, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[5] = new FaithCell(5, 1, VaticanReportSectionEnum.ONE, PopeSpace.No);
+        test.getCells()[6] = new FaithCell(6, 2, VaticanReportSectionEnum.ONE, PopeSpace.No);
+        test.getCells()[7] = new FaithCell(7, 2, VaticanReportSectionEnum.ONE, PopeSpace.No);
+        test.getCells()[8] = new FaithCell(8, 2, VaticanReportSectionEnum.ONE, PopeSpace.ONE);
+        test.getCells()[9] = new FaithCell(9, 4, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[10] = new FaithCell(10, 4, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[11] = new FaithCell(11, 4, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[12] = new FaithCell(12, 6, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        test.getCells()[13] = new FaithCell(13, 6, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        test.getCells()[14] = new FaithCell(14, 6, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        test.getCells()[15] = new FaithCell(15, 9, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        test.getCells()[16] = new FaithCell(16, 9, VaticanReportSectionEnum.TWO, PopeSpace.TWO);
+        test.getCells()[17] = new FaithCell(17, 9, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[18] = new FaithCell(18, 12, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[19] = new FaithCell(19, 12, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        test.getCells()[20] = new FaithCell(20, 12, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        test.getCells()[21] = new FaithCell(21, 16, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        test.getCells()[22] = new FaithCell(22, 16, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        test.getCells()[23] = new FaithCell(23, 16, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        test.getCells()[24] = new FaithCell(24, 20, VaticanReportSectionEnum.THREE, PopeSpace.THREE);
 
-        test.allAhead(players[2], players, 3);
+        test.allAhead(players.get(2), players, 3);
 
         /*
             System.out.println("1: " + test.getPlayerONE());
@@ -193,10 +194,10 @@ public class FaithTrackTest {
             System.out.println("4: " + test.getPlayerFOUR());
         */
 
-        assertEquals(test.getPlayerONE(),3);
-        assertEquals(test.getPlayerTWO(), 3);
-        assertEquals(test.getPlayerTHREE(), 0);
-        assertEquals(test.getPlayerFOUR(),3);
+        assertEquals(3, players.get(0).getFaithTrackPosition());
+        assertEquals(3, players.get(1).getFaithTrackPosition());
+        assertEquals(0, players.get(2).getFaithTrackPosition());
+        assertEquals(3, players.get(3).getFaithTrackPosition());
     }
 
 
@@ -209,43 +210,43 @@ public class FaithTrackTest {
     @Test
     public void checkFinishedTest() {
 
-        Player[] players = new Player[4];
-        players[0] = new Player("zero", 0, true);
-        players[1] = new Player("one", 1, false);
-        players[2] = new Player("two", 2, false);
-        players[3] = new Player("three", 3, false);
+        ArrayList<Player> players = new ArrayList <>();
+        players.add(new Player("zero", 0, true));
+        players.add(new Player("one", 1, false));
+        players.add(new Player("two", 2, false));
+        players.add(new Player("three", 3, false));
 
-        test.getCells()[0] = new FaithCell(0, 0, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[1] = new FaithCell(1, 0, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[2] = new FaithCell(2, 0, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[3] = new FaithCell(3, 1, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[4] = new FaithCell(4, 1, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[5] = new FaithCell(5, 1, VaticanReportSection.ONE, PopeSpace.No);
-        test.getCells()[6] = new FaithCell(6, 2, VaticanReportSection.ONE, PopeSpace.No);
-        test.getCells()[7] = new FaithCell(7, 2, VaticanReportSection.ONE, PopeSpace.No);
-        test.getCells()[8] = new FaithCell(8, 2, VaticanReportSection.ONE, PopeSpace.ONE);
-        test.getCells()[9] = new FaithCell(9, 4, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[10] = new FaithCell(10, 4, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[11] = new FaithCell(11, 4, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[12] = new FaithCell(12, 6, VaticanReportSection.TWO, PopeSpace.No);
-        test.getCells()[13] = new FaithCell(13, 6, VaticanReportSection.TWO, PopeSpace.No);
-        test.getCells()[14] = new FaithCell(14, 6, VaticanReportSection.TWO, PopeSpace.No);
-        test.getCells()[15] = new FaithCell(15, 9, VaticanReportSection.TWO, PopeSpace.No);
-        test.getCells()[16] = new FaithCell(16, 9, VaticanReportSection.TWO, PopeSpace.TWO);
-        test.getCells()[17] = new FaithCell(17, 9, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[18] = new FaithCell(18, 12, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[19] = new FaithCell(19, 12, VaticanReportSection.THREE, PopeSpace.No);
-        test.getCells()[20] = new FaithCell(20, 12, VaticanReportSection.THREE, PopeSpace.No);
-        test.getCells()[21] = new FaithCell(21, 16, VaticanReportSection.THREE, PopeSpace.No);
-        test.getCells()[22] = new FaithCell(22, 16, VaticanReportSection.THREE, PopeSpace.No);
-        test.getCells()[23] = new FaithCell(23, 16, VaticanReportSection.THREE, PopeSpace.No);
-        test.getCells()[24] = new FaithCell(24, 20, VaticanReportSection.THREE, PopeSpace.THREE);
+        test.getCells()[0] = new FaithCell(0, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[1] = new FaithCell(1, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[2] = new FaithCell(2, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[3] = new FaithCell(3, 1, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[4] = new FaithCell(4, 1, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[5] = new FaithCell(5, 1, VaticanReportSectionEnum.ONE, PopeSpace.No);
+        test.getCells()[6] = new FaithCell(6, 2, VaticanReportSectionEnum.ONE, PopeSpace.No);
+        test.getCells()[7] = new FaithCell(7, 2, VaticanReportSectionEnum.ONE, PopeSpace.No);
+        test.getCells()[8] = new FaithCell(8, 2, VaticanReportSectionEnum.ONE, PopeSpace.ONE);
+        test.getCells()[9] = new FaithCell(9, 4, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[10] = new FaithCell(10, 4, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[11] = new FaithCell(11, 4, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[12] = new FaithCell(12, 6, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        test.getCells()[13] = new FaithCell(13, 6, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        test.getCells()[14] = new FaithCell(14, 6, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        test.getCells()[15] = new FaithCell(15, 9, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        test.getCells()[16] = new FaithCell(16, 9, VaticanReportSectionEnum.TWO, PopeSpace.TWO);
+        test.getCells()[17] = new FaithCell(17, 9, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[18] = new FaithCell(18, 12, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[19] = new FaithCell(19, 12, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        test.getCells()[20] = new FaithCell(20, 12, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        test.getCells()[21] = new FaithCell(21, 16, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        test.getCells()[22] = new FaithCell(22, 16, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        test.getCells()[23] = new FaithCell(23, 16, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        test.getCells()[24] = new FaithCell(24, 20, VaticanReportSectionEnum.THREE, PopeSpace.THREE);
 
-        test.setPlayerONE(21);
-        assertFalse(test.checkFinishedTrack());
+        players.get(0).stepAhead(21);
+        assertFalse(test.checkFinishedTrack(players));
 
-        test.stepAhead(players[0],3);
-        assertTrue(test.checkFinishedTrack());
+        test.stepAhead(players.get(0), players, 3);
+        assertTrue(test.checkFinishedTrack(players));
     }
 
 
@@ -258,44 +259,44 @@ public class FaithTrackTest {
     @Test
     public void getFinalPointsTest() {
 
-        Player[] players = new Player[4];
-        players[0] = new Player("zero", 0, true);
-        players[1] = new Player("one", 1, false);
-        players[2] = new Player("two", 2, false);
-        players[3] = new Player("three", 3, false);
+        ArrayList<Player> players = new ArrayList <>();
+        players.add(new Player("zero", 0, true));
+        players.add(new Player("one", 1, false));
+        players.add(new Player("two", 2, false));
+        players.add(new Player("three", 3, false));
 
-        test.getCells()[0] = new FaithCell(0, 0, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[1] = new FaithCell(1, 0, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[2] = new FaithCell(2, 0, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[3] = new FaithCell(3, 1, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[4] = new FaithCell(4, 1, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[5] = new FaithCell(5, 1, VaticanReportSection.ONE, PopeSpace.No);
-        test.getCells()[6] = new FaithCell(6, 2, VaticanReportSection.ONE, PopeSpace.No);
-        test.getCells()[7] = new FaithCell(7, 2, VaticanReportSection.ONE, PopeSpace.No);
-        test.getCells()[8] = new FaithCell(8, 2, VaticanReportSection.ONE, PopeSpace.ONE);
-        test.getCells()[9] = new FaithCell(9, 4, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[10] = new FaithCell(10, 4, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[11] = new FaithCell(11, 4, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[12] = new FaithCell(12, 6, VaticanReportSection.TWO, PopeSpace.No);
-        test.getCells()[13] = new FaithCell(13, 6, VaticanReportSection.TWO, PopeSpace.No);
-        test.getCells()[14] = new FaithCell(14, 6, VaticanReportSection.TWO, PopeSpace.No);
-        test.getCells()[15] = new FaithCell(15, 9, VaticanReportSection.TWO, PopeSpace.No);
-        test.getCells()[16] = new FaithCell(16, 9, VaticanReportSection.TWO, PopeSpace.TWO);
-        test.getCells()[17] = new FaithCell(17, 9, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[18] = new FaithCell(18, 12, VaticanReportSection.No, PopeSpace.No);
-        test.getCells()[19] = new FaithCell(19, 12, VaticanReportSection.THREE, PopeSpace.No);
-        test.getCells()[20] = new FaithCell(20, 12, VaticanReportSection.THREE, PopeSpace.No);
-        test.getCells()[21] = new FaithCell(21, 16, VaticanReportSection.THREE, PopeSpace.No);
-        test.getCells()[22] = new FaithCell(22, 16, VaticanReportSection.THREE, PopeSpace.No);
-        test.getCells()[23] = new FaithCell(23, 16, VaticanReportSection.THREE, PopeSpace.No);
-        test.getCells()[24] = new FaithCell(24, 20, VaticanReportSection.THREE, PopeSpace.THREE);
+        test.getCells()[0] = new FaithCell(0, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[1] = new FaithCell(1, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[2] = new FaithCell(2, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[3] = new FaithCell(3, 1, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[4] = new FaithCell(4, 1, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[5] = new FaithCell(5, 1, VaticanReportSectionEnum.ONE, PopeSpace.No);
+        test.getCells()[6] = new FaithCell(6, 2, VaticanReportSectionEnum.ONE, PopeSpace.No);
+        test.getCells()[7] = new FaithCell(7, 2, VaticanReportSectionEnum.ONE, PopeSpace.No);
+        test.getCells()[8] = new FaithCell(8, 2, VaticanReportSectionEnum.ONE, PopeSpace.ONE);
+        test.getCells()[9] = new FaithCell(9, 4, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[10] = new FaithCell(10, 4, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[11] = new FaithCell(11, 4, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[12] = new FaithCell(12, 6, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        test.getCells()[13] = new FaithCell(13, 6, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        test.getCells()[14] = new FaithCell(14, 6, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        test.getCells()[15] = new FaithCell(15, 9, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        test.getCells()[16] = new FaithCell(16, 9, VaticanReportSectionEnum.TWO, PopeSpace.TWO);
+        test.getCells()[17] = new FaithCell(17, 9, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[18] = new FaithCell(18, 12, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[19] = new FaithCell(19, 12, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        test.getCells()[20] = new FaithCell(20, 12, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        test.getCells()[21] = new FaithCell(21, 16, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        test.getCells()[22] = new FaithCell(22, 16, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        test.getCells()[23] = new FaithCell(23, 16, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        test.getCells()[24] = new FaithCell(24, 20, VaticanReportSectionEnum.THREE, PopeSpace.THREE);
 
-        test.setPlayerONE(23);
-        test.stepAhead(players[0],1);
+        players.get(0).stepAhead(23);
+        test.stepAhead(players.get(0), players, 1);
 
-        test.setPlayerTWO(12);
-        test.setPlayerTHREE(22);
-        test.setPlayerFOUR(0);
+        players.get(1).stepAhead(12);
+        players.get(2).stepAhead(22);
+        players.get(3).stepAhead(0);
 
         /*
             System.out.println(test.getFinalPoints(players[0], 0));
@@ -304,21 +305,86 @@ public class FaithTrackTest {
             System.out.println(test.getFinalPoints(players[3], 9));
          */
 
-        assertEquals(20, test.getFinalPoints(players[0], 0));
-        assertEquals(22, test.getFinalPoints(players[1], 16));
-        assertEquals(40, test.getFinalPoints(players[2], 24));
-        assertEquals(9, test.getFinalPoints(players[3], 9));
+        assertEquals(20, test.getFinalPoints(players.get(0), players, 0));
+        assertEquals(22, test.getFinalPoints(players.get(1), players, 16));
+        assertEquals(40, test.getFinalPoints(players.get(2), players, 24));
+        assertEquals(9, test.getFinalPoints(players.get(3), players, 9));
 
         /*
          * In this example we can see that every time the player goes too far in the Faith Track the counter stays on
          * cell #24 (the last of the track
          */
 
-        test.setPlayerONE(23);
-        test.stepAhead(players[0],15);
-        assertEquals(20, test.getFinalPoints(players[0], 0));
+        players.get(0).stepAhead(23);;
+        test.stepAhead(players.get(0), players, 15);
+        assertEquals(20, test.getFinalPoints(players.get(0), players, 0));
+    }
 
+    /**
+     * In this test I check if the method "popeSpaceSector()" works properly by a simutaion of the Faith Track.
+     */
+    @Test
+    public void popeSpaceSectorTest(){
+        ArrayList<Player> players = new ArrayList <>();
+        players.add(new Player("zero", 0, true));
+        players.add(new Player("one", 1, false));
+        players.add(new Player("two", 2, false));
+        players.add(new Player("three", 3, false));
 
+        test.getCells()[0] = new FaithCell(0, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[1] = new FaithCell(1, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[2] = new FaithCell(2, 0, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[3] = new FaithCell(3, 1, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[4] = new FaithCell(4, 1, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[5] = new FaithCell(5, 1, VaticanReportSectionEnum.ONE, PopeSpace.No);
+        test.getCells()[6] = new FaithCell(6, 2, VaticanReportSectionEnum.ONE, PopeSpace.No);
+        test.getCells()[7] = new FaithCell(7, 2, VaticanReportSectionEnum.ONE, PopeSpace.No);
+        test.getCells()[8] = new FaithCell(8, 2, VaticanReportSectionEnum.ONE, PopeSpace.ONE);
+        test.getCells()[9] = new FaithCell(9, 4, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[10] = new FaithCell(10, 4, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[11] = new FaithCell(11, 4, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[12] = new FaithCell(12, 6, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        test.getCells()[13] = new FaithCell(13, 6, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        test.getCells()[14] = new FaithCell(14, 6, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        test.getCells()[15] = new FaithCell(15, 9, VaticanReportSectionEnum.TWO, PopeSpace.No);
+        test.getCells()[16] = new FaithCell(16, 9, VaticanReportSectionEnum.TWO, PopeSpace.TWO);
+        test.getCells()[17] = new FaithCell(17, 9, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[18] = new FaithCell(18, 12, VaticanReportSectionEnum.No, PopeSpace.No);
+        test.getCells()[19] = new FaithCell(19, 12, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        test.getCells()[20] = new FaithCell(20, 12, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        test.getCells()[21] = new FaithCell(21, 16, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        test.getCells()[22] = new FaithCell(22, 16, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        test.getCells()[23] = new FaithCell(23, 16, VaticanReportSectionEnum.THREE, PopeSpace.No);
+        test.getCells()[24] = new FaithCell(24, 20, VaticanReportSectionEnum.THREE, PopeSpace.THREE);
 
+        players.get(0).stepAhead(8);
+        players.get(1).stepAhead(6);
+        test.popeSpaceSector(players);
+
+        players.get(2).stepAhead(6);
+        test.popeSpaceSector(players);
+
+        players.get(3).stepAhead(6);
+        test.popeSpaceSector(players);
+
+        players.get(3).stepAhead(6);
+        test.popeSpaceSector(players);
+
+        players.get(1).stepAhead(6);
+        test.popeSpaceSector(players);
+
+        players.get(3).stepAhead(6);
+        test.popeSpaceSector(players);
+
+        players.get(3).stepAhead(6);
+        test.popeSpaceSector(players);
+
+        players.get(3).stepAhead(6);
+        test.popeSpaceSector(players);
+        players.get(3).victory();
+        assertEquals(2, players.get(0).getVictoryPoints());
+        assertEquals(5, players.get(1).getVictoryPoints());
+        assertEquals(0, players.get(2).getVictoryPoints());
+        assertEquals(7, players.get(3).getVictoryPoints());
     }
 }
