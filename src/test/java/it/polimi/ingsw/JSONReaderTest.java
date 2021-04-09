@@ -4,6 +4,8 @@ import it.polimi.ingsw.Model.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 public class JSONReaderTest {
 
     @Test
@@ -349,5 +351,13 @@ public class JSONReaderTest {
         for(int i = 0; i < 25; i++){
             assertEquals(cells[i].toString(), cellToTest[i].toString());
         }
+    }
+
+    @Test
+    public void ReadLeaderCardTest(){
+
+        ArrayList<LeaderCard> LeaderCards = JSONReader.ReadLeaderCards();
+        int size = LeaderCards.size();
+        System.out.println(size);
     }
 }

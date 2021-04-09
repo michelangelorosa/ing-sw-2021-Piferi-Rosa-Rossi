@@ -164,7 +164,7 @@ public class JSONReader {
         Marble[] marbles = Marble.values();
         ResourceType[] resources = ResourceType.values();
 
-        int cardsInDeck = 1;
+        int cardsInDeck = 0;
 
         try{
             JsonElement fileElement = JsonParser.parseReader(new FileReader(cards));
@@ -217,7 +217,7 @@ public class JSONReader {
                 //DISCOUNT
                 if(leaderAbility==0){
                     ResourceStack discount = new ResourceStack(leaderCardJsonObject.get("discountShields").getAsInt(),leaderCardJsonObject.get("discountServants").getAsInt(),leaderCardJsonObject.get("discountCoins").getAsInt(),leaderCardJsonObject.get("discountStones").getAsInt());
-                        cardToRead = new LeaderCard(cardId,victoryPoints,resourcesRequired,leaderRequirements,discount);
+                    cardToRead = new LeaderCard(cardId,victoryPoints,resourcesRequired,leaderRequirements,discount);
                     try{
                         LeaderCards.add(cardToRead);
                     }
@@ -230,7 +230,7 @@ public class JSONReader {
                     }
                 }
                 //WHITEMARBLE
-                else if(leaderAbility==1){
+                else if(leaderAbility==2){
                     int marbleInt = leaderCardJsonObject.get("marbleConversion").getAsInt();
                     cardToRead = new LeaderCard(cardId,victoryPoints,resourcesRequired,leaderRequirements,marbles[marbleInt]);
                     try{
@@ -245,7 +245,7 @@ public class JSONReader {
                     }
                 }
                 //PRODUCTIONPOWER
-                else if(leaderAbility==2){
+                else if(leaderAbility==3){
                     int faith = leaderCardJsonObject.get("outputFaith").getAsInt();
                     ResourceStack resourcesInput = new ResourceStack(leaderCardJsonObject.get("inputShields").getAsInt(),leaderCardJsonObject.get("inputServants").getAsInt(),leaderCardJsonObject.get("inputCoins").getAsInt(),leaderCardJsonObject.get("inputStones").getAsInt());
                     int jollyOut = leaderCardJsonObject.get("jollyOut").getAsInt();
@@ -262,7 +262,7 @@ public class JSONReader {
                     }
                 }
                 //EXTRADEPOT
-                else if(leaderAbility==3){
+                else if(leaderAbility==1){
                     //        public LeaderCard(int cardId, int victoryPoints, ResourceStack resourcesRequired, LeaderRequirements cards, ResourceType resource) {
                     int resourceInt = leaderCardJsonObject.get("depotType").getAsInt();
                     cardToRead = new LeaderCard(cardId,victoryPoints,resourcesRequired,leaderRequirements,resources[resourceInt]);
@@ -285,10 +285,8 @@ public class JSONReader {
             System.err.println("Error: Input file is corrupt!");
             e.printStackTrace();
         }
-
         if (cardsInDeck < 16)
             System.err.println("Error: Not enough cards in JSON file!");
-
         return LeaderCards;
     }
 

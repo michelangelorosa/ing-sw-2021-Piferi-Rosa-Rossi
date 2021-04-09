@@ -31,5 +31,51 @@ public class LeaderRequirements {
         this.greenCardLv3 = greenCardLv3;
     }
 
+    public int getBlueCardLv1() {
+        return blueCardLv1;
+    }
 
+    public int getPurpleCardLv1() {
+        return purpleCardLv1;
+    }
+
+    public int getYellowCardLv1() {
+        return yellowCardLv1;
+    }
+
+    public int getGreenCardLv1() {
+        return greenCardLv1;
+    }
+
+    public int getBlueCardLv2() {
+        return blueCardLv2;
+    }
+
+    public int getPurpleCardLv2() {
+        return purpleCardLv2;
+    }
+
+    public int getYellowCardLv2() {
+        return yellowCardLv2;
+    }
+
+    public int getGreenCardLv2() {
+        return greenCardLv2;
+    }
+
+    public int getBlueCardLv3() {
+        return blueCardLv3;
+    }
+
+    public int getPurpleCardLv3() {
+        return purpleCardLv3;
+    }
+
+    public int getYellowCardLv3() {
+        return yellowCardLv3;
+    }
+
+    public int getGreenCardLv3() {
+        return greenCardLv3;
+    }
 }
