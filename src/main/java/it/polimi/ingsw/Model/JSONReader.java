@@ -30,9 +30,9 @@ public class JSONReader {
     public static DevelopmentCard[] ReadDevelopmentCards() {
         File cards = new File("DevelopmentCards.json");
 
-        DevelopmentCard[] readCards = new DevelopmentCard[49];
+        DevelopmentCard[] readCards = new DevelopmentCard[48];
         DevelopmentCard cardToRead;
-        int cardsInDeck = 1;
+        int cardsInDeck = 0;
 
         Color[] colors = Color.values();
         Level[] levels = Level.values();
@@ -82,9 +82,9 @@ public class JSONReader {
             e.printStackTrace();
         }
 
-        if (cardsInDeck < 49)
+        if (cardsInDeck < 48)
             System.err.println("Error: Not enough cards in JSON file!");
-        else if (cardsInDeck > 49)
+        else if (cardsInDeck > 48)
             System.err.println("Error: Too many cards in JSON file!");
 
         return readCards;
@@ -113,7 +113,7 @@ public class JSONReader {
 
             //Extracting the number of cards in the deck
             int example = fileObject.get("NumberOfCells").getAsInt();
-            System.out.println("Number of cards in deck: "+ example);
+            //System.out.println("Number of cells in faithTrack: "+ example);
             //Extracting card values from JSON
             JsonArray jsonArrayCards = fileObject.get("FaithCell").getAsJsonArray();
 
