@@ -24,6 +24,27 @@ public class ResourceManager {
     }
 
     /**
+     * Getter for "warehouseDepots" array inside "warehouse" attribute in ResourceManagerClass.
+     */
+    public WarehouseDepot[] getWarehouseDepots() {
+        return this.warehouse.getWarehouseDepots();
+    }
+
+    /**
+     * Getter for "extraWarehouseDepot1" inside "warehouse" attribute in ResourceManagerClass.
+     */
+    public WarehouseDepot getExtraWarehouseDepotOne() {
+        return this.warehouse.getExtraWarehouseDepot1();
+    }
+
+    /**
+     * Getter for "extraWarehouseDepot2" inside "warehouse" attribute in ResourceManagerClass.
+     */
+    public WarehouseDepot getExtraWarehouseDepotTwo() {
+        return this.warehouse.getExtraWarehouseDepot2();
+    }
+
+    /**
      * Getter for "strongbox" attribute in ResourceManagerClass.
      */
     public Strongbox getStrongbox() {
@@ -125,6 +146,7 @@ public class ResourceManager {
      */
     public void payProductionOrCardPrice(ResourceStack resourceStack) {
         boolean cantPay = false;
+        ResourceStack supportStack = resourceStack.copyStack();
 
         // ---------- CREATES AN ARRAY CONTAINING ALL ResourceTypes (to cycle without counting the NONE type) ---------- //
         ResourceType[] resourceTypes = ResourceType.values();
@@ -145,14 +167,59 @@ public class ResourceManager {
 
             if(numberOfResources >= resourceStack.getResource(resourceTypes[i])) {
                 this.warehouse.removeResourcesByType(resourceStack.getResource(resourceTypes[i]), resourceTypes[i]);
-                resourceStack.setResource(0, resourceTypes[i]);
+                supportStack.setResource(0, resourceTypes[i]);
             } else {
                 this.warehouse.removeResourcesByType(numberOfResources, resourceTypes[i]);
-                resourceStack.removeResource(numberOfResources, resourceTypes[i]);
+                supportStack.removeResource(numberOfResources, resourceTypes[i]);
             }
         }
 
-        this.strongbox.removeFromAllTypes(resourceStack);
+        this.strongbox.removeFromAllTypes(supportStack);
+    }
+
+    /**
+     * This method is used to check if a specified card is buyable from the player.
+     * <p>
+     * The player is notified if he doesn't have enough resources to buy the card.
+     * @param developmentCard is the card the player wants to buy.
+     * @return true if the card is buyable.
+     */
+    public boolean cardIsBuyable(DevelopmentCard developmentCard, LeaderCard[] leaderCards) {
+        boolean isBuyable = true;
+        ResourceStack cardCost = developmentCard.getCost();
+        ResourceStack cardToBuyCost = cardCost.copyStack();
+        ResourceType[] resourceTypes = ResourceType.values();
+
+        for(LeaderCard leaderCard : leaderCards)
+            if(leaderCard.isActive() && leaderCard.getAction() == LeaderCardAction.DISCOUNT)
+                cardToBuyCost.removeFromAllTypes(leaderCard.getDiscount());
+
+        for(int i = 1; i <= 4; i++)
+            if(cardToBuyCost.getResource(resourceTypes[i]) > countAllResourcesByType(resourceTypes[i])) {
+                System.out.println("Not enough "+resourceTypes[i]+" to buy card!");
+                isBuyable = false;
+            }
+
+        return isBuyable;
+    }
+
+    /**
+     * This method is used to activate an extra Leader Depot of the type specified by a Leader Card.
+     * <p>
+     * **-- REQUIREMENTS --**: The LeaderCard's ability has to be of type "EXTRADEPOT" and ACTIVE, or else
+     * an Error message is displayed.
+     * <p>
+     * -- ASSUMPTION --: This method is to be called ONCE (when it's activated) for each LeaderCard the player
+     * possesses, only if the LeaderCard's ability is of type "EXTRADEPOT".
+     * @param leaderCard is the LeaderCard used to activate the depot
+     */
+    public void activateLeaderDepot(LeaderCard leaderCard) {
+        if(leaderCard.getAction() != LeaderCardAction.EXTRADEPOT)
+            System.err.println("Error: Needed EXTRADEPOT LeaderAbility to activate extra depot (was "+leaderCard.getAction()+" instead)");
+        else if(!leaderCard.isActive())
+            System.err.println("Error: EXTRADEPOT LeaderAbility has to be active to activate extra depot");
+        else
+            this.warehouse.activateLeaderDepot(leaderCard.getResource());
     }
 
 

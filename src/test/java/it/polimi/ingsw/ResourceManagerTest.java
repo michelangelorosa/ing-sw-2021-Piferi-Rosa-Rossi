@@ -428,4 +428,142 @@ public class ResourceManagerTest {
         assertEquals(18, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.COINS));
         assertEquals(16, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.STONES));
     }
+
+    /**
+     * Test for "cardIsBuyable" method in ResourceManager Class.
+     */
+    @Test
+    public void cardIsBuyableTest() {
+        // ---------- CREATION OF LEADER CARDS AND DEVELOPMENT CARDS TO TEST ---------- //
+        ResourceStack discount1 = new ResourceStack(1,1,0,0);
+        ResourceStack discount2 = new ResourceStack(0,0,1,1);
+
+        LeaderRequirements leaderRequirements;
+
+        LeaderCard discountCardOne;
+        LeaderCard discountCardTwo;
+        LeaderCard extraDepotOne;
+        LeaderCard whiteMarbleOne;
+
+        LeaderCard[] leaderCards;
+
+        leaderRequirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
+        discountCardOne = new LeaderCard(1, 1, discount1, leaderRequirements, discount1);
+        discountCardTwo = new LeaderCard(2, 1, discount2, leaderRequirements, discount2);
+        extraDepotOne = new LeaderCard(3, 3, discount1, leaderRequirements, ResourceType.COINS);
+        whiteMarbleOne = new LeaderCard(4, 4, discount1, leaderRequirements, Marble.BLUE);
+
+        DevelopmentCard card1 = new DevelopmentCard(Color.BLUE, Level.ONE, 1, 1, discount1, discount1, discount1, 1);
+        DevelopmentCard card2 = new DevelopmentCard(Color.BLUE, Level.ONE, 1, 1, discount2, discount2, discount2, 1);
+
+        ResourceStack cost = new ResourceStack(0, 0, 0, 3);
+        DevelopmentCard card3 = new DevelopmentCard(Color.BLUE, Level.ONE, 1, 1, cost, discount1, discount1, 1);
+
+
+        // ---------- SIMPLE TEST WITH NO DISCOUNT ABILITY LEADER CARDS ---------- //
+        leaderCards = new LeaderCard[2];
+        leaderCards[0] = extraDepotOne;
+        leaderCards[1] = whiteMarbleOne;
+
+        ResourceStack resourceStack = new ResourceStack(5, 2, 1, 3);
+        resourceManager.reset();
+        resourceManager.addMarketResourcesByType(3, ResourceType.COINS, resourceManager.getWarehouse().getWarehouseDepots()[0]);
+        resourceManager.addMarketResourcesByType(2, ResourceType.SHIELDS, resourceManager.getWarehouse().getWarehouseDepots()[1]);
+        resourceManager.getWarehouse().activateLeaderDepot(ResourceType.STONES);
+
+        resourceManager.addProductionResources(resourceStack);
+
+        assertTrue(resourceManager.cardIsBuyable(card1, leaderCards));
+        assertTrue(resourceManager.cardIsBuyable(card2, leaderCards));
+        assertTrue(resourceManager.cardIsBuyable(card3, leaderCards));
+
+        assertTrue(resourceManager.cardIsBuyable(card1, leaderCards));
+        assertTrue(resourceManager.cardIsBuyable(card2, leaderCards));
+        assertTrue(resourceManager.cardIsBuyable(card3, leaderCards));
+
+        resourceStack = new ResourceStack(0, 0, 0, 0);
+        resourceManager.reset();
+        resourceManager.addMarketResourcesByType(1, ResourceType.COINS, resourceManager.getWarehouse().getWarehouseDepots()[0]);
+        resourceManager.addMarketResourcesByType(2, ResourceType.STONES, resourceManager.getWarehouse().getWarehouseDepots()[1]);
+        resourceManager.addMarketResourcesByType(1, ResourceType.SHIELDS, resourceManager.getWarehouse().getWarehouseDepots()[2]);
+
+        resourceManager.addProductionResources(resourceStack);
+
+        leaderCards[0].setActive(true);
+        leaderCards[1].setActive(true);
+
+        assertFalse(resourceManager.cardIsBuyable(card3, leaderCards));
+
+        leaderCards = new LeaderCard[2];
+        leaderCards[0] = discountCardTwo;
+        leaderCards[1] = whiteMarbleOne;
+
+        assertFalse(resourceManager.cardIsBuyable(card3, leaderCards));
+
+        // ---------- TEST WITH ONE ACTIVE DISCOUNT ABILITY LEADER CARD ---------- //
+        leaderCards[0].setActive(true);
+
+        assertTrue(leaderCards[0].isActive());
+
+        assertTrue(resourceManager.cardIsBuyable(card3, leaderCards));
+
+        leaderCards = new LeaderCard[2];
+        leaderCards[0] = discountCardTwo;
+        leaderCards[1] = discountCardOne;
+
+        leaderCards[0].setActive(false);
+        leaderCards[1].setActive(false);
+
+        assertFalse(resourceManager.cardIsBuyable(card1, leaderCards));
+        assertFalse(resourceManager.cardIsBuyable(card3, leaderCards));
+
+        leaderCards[0].setActive(true);
+
+        assertFalse(resourceManager.cardIsBuyable(card1, leaderCards));
+        assertTrue(resourceManager.cardIsBuyable(card3, leaderCards));
+
+        // ---------- TEST WITH ONE ACTIVE DISCOUNT ABILITY LEADER CARD ---------- //
+        leaderCards[1].setActive(true);
+
+        assertTrue(resourceManager.cardIsBuyable(card1, leaderCards));
+        assertTrue(resourceManager.cardIsBuyable(card3, leaderCards));
+
+        // ---------- TEST WITH DEVELOPMENT CARDS DISCOUNTED DOWN TO ZERO COST ---------- //
+        resourceStack = new ResourceStack(0, 0, 0, 0);
+        resourceManager.reset();
+
+        resourceManager.addProductionResources(resourceStack);
+
+        assertTrue(resourceManager.cardIsBuyable(card1, leaderCards));
+        assertTrue(resourceManager.cardIsBuyable(card2, leaderCards));
+    }
+
+    /**
+     * Test for "activateLeaderDepot" method in ResourceManager Class.
+     */
+    @Test
+    public void activateLeaderDepotTest() {
+        ResourceStack stack = new ResourceStack(0,0,0,0);
+        LeaderRequirements leaderRequirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
+        LeaderCard extraDepot1 = new LeaderCard(1, 1, stack, leaderRequirements, ResourceType.COINS);
+        LeaderCard extraDepot2 = new LeaderCard(1, 1, stack, leaderRequirements, ResourceType.SHIELDS);
+
+        resourceManager.activateLeaderDepot(extraDepot1);
+        resourceManager.activateLeaderDepot(extraDepot2);
+
+        assertFalse(resourceManager.getWarehouse().isExtraWarehouseDepot1IsActive());
+        assertFalse(resourceManager.getWarehouse().isExtraWarehouseDepot2IsActive());
+
+        extraDepot1.setActive(true);
+        extraDepot2.setActive(true);
+
+        resourceManager.activateLeaderDepot(extraDepot1);
+        resourceManager.activateLeaderDepot(extraDepot2);
+
+        assertTrue(resourceManager.getWarehouse().isExtraWarehouseDepot1IsActive());
+        assertTrue(resourceManager.getWarehouse().isExtraWarehouseDepot2IsActive());
+
+        assertEquals(ResourceType.COINS ,resourceManager.getExtraWarehouseDepotOne().getResourceType());
+        assertEquals(ResourceType.SHIELDS ,resourceManager.getExtraWarehouseDepotTwo().getResourceType());
+    }
 }

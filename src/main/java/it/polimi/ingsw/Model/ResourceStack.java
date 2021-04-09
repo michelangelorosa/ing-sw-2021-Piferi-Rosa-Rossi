@@ -126,8 +126,8 @@ public class ResourceStack {
     }
 
     /**
-     * This method is used to add the resources of different ResourceStack
-     * @param resourceStack
+     * This method is used to add the resources of different ResourceStack.
+     * @param resourceStack is the stack containing the resources to add.
      */
     public void addToAllTypes(ResourceStack resourceStack){
         ResourceType[] types = ResourceType.values();
@@ -152,6 +152,45 @@ public class ResourceStack {
             this.stones -= resourcesToRemove;
     }
 
+    /**
+     * This method is used to remove the resources of different ResourceStack.
+     * @param resourceStack is the stack containing the resources to remove.
+     */
+    public void removeFromAllTypes(ResourceStack resourceStack) {
+        ResourceType[] types = ResourceType.values();
+        for(int i = 1; i < 5; i++){
+            if(this.getResource(types[i]) < resourceStack.getResource(types[i]))
+                this.setResource(0, types[i]);
+            else
+                this.removeResource(resourceStack.getResource(types[i]), types[i]);
+        }
+    }
+
+    /**
+     * This method is used to check if a Resource Stack is empty,
+     * @return true if the Resource Stack is empty.
+     */
+    public boolean isEmpty() {
+        ResourceType[] types = ResourceType.values();
+        for(int i = 1; i < 5; i++)
+            if(this.getResource(types[i]) != 0)
+                return false;
+        return true;
+    }
+
+    /**
+     * This method is used to create a copy of the ResourceStack-type object.
+     * @return a copy of the stack.
+     */
+    public ResourceStack copyStack() {
+        ResourceStack newStack = new ResourceStack(0, 0, 0, 0);
+        ResourceType[] resourceTypes = ResourceType.values();
+
+        for(int i = 1; i <= 4; i++) {
+            newStack.setResource(this.getResource(resourceTypes[i]), resourceTypes[i]);
+        }
+        return  newStack;
+    }
     /**
      * toString override method for ResourceStack Class.
      */

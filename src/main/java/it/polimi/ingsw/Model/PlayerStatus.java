@@ -9,7 +9,7 @@ public enum PlayerStatus {
     IN_GAME, IDLE, LOST, WON;
 
     /**
-     * This particular method uses an array of PlayerStatus instances containing each different marble
+     * This particular method uses an array of PlayerStatus instances containing each different player status
      * to return a particular playerStatus based on the integer given when calling the method.
      */
     private static final PlayerStatus[] playerStatuses = PlayerStatus.values();
