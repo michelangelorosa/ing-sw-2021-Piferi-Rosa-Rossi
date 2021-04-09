@@ -18,6 +18,7 @@ public class Player {
     private final boolean Inkwell;
     private PlayerStatus status;
     private int victoryPoints;
+    private int faithTrackPosition;
     //private final Board board;
 
     /**
@@ -29,6 +30,7 @@ public class Player {
         this.Inkwell = hasInkwell;
         this.status = PlayerStatus.IN_GAME;
         this.victoryPoints = 0;
+        this.faithTrackPosition = 0;
         //board = new Board();
     }
 
@@ -73,7 +75,32 @@ public class Player {
     public int getVictoryPoints() {
         return victoryPoints;
     }
+    /**
+     * Getter for "faithTrackPosition" attribute in Player Class.
+     */
+    public int getFaithTrackPosition() {
+        return faithTrackPosition;
+    }
 
+    /**
+     * This method is used to advance the player on the faith track.
+     * @param steps is the number of steps.
+     */
+    public void stepAhead(int steps){
+        this.faithTrackPosition += steps;
+    }
+
+    /**
+     * This method is used to see if any player reaches the last cell of the Faith Track
+     * @return true if the player wins
+     */
+    public boolean victory(){
+        if(this.faithTrackPosition >= 24){
+            this.faithTrackPosition = 24;
+            return true;
+        }
+        else return false;
+    }
     /**
      * This method adds victory points to the player's current amount.
      * @param victoryPoints is the number of victory points to add.

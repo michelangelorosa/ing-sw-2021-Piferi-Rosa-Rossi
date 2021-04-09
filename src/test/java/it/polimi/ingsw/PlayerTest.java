@@ -63,6 +63,16 @@ public class PlayerTest {
         assertEquals(PlayerStatus.IN_GAME, playerOne.getStatus());
     }
 
+
+    /**
+     * Test for the method "stepAhead" for Player Class.
+     */
+    @Test
+    public void stepAheadTest(){
+        playerOne.stepAhead(2);
+        assertEquals(2, playerOne.getFaithTrackPosition());
+    }
+
     /**
      * Test for "addVictoryPoints" method in Player Class.
      */
