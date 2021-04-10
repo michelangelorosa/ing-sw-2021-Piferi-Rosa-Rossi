@@ -61,4 +61,14 @@ public class CardSlot {
         if(levelOccupied == 0) return null;
         else return cards[levelOccupied - 1];
     }
+
+    public int sumType(Color color, Level level){
+        int count = 0;
+        for(int i = 0; i < 3; i++) {
+            if(cards[i] != null) {
+                if (cards[i].getColor() == color && cards[i].getLevel() == level) count++;
+            }
+        }
+        return count;
+    }
 }

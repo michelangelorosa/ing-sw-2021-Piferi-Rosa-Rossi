@@ -16,10 +16,19 @@ public class CardSlotTest {
     DevelopmentCard card3Test = new DevelopmentCard(Color.BLUE, Level.THREE, 3, 100, cost, input, output, 0);
     DevelopmentCard card4Test = new DevelopmentCard(Color.BLUE, Level.THREE, 4, 100, cost, input, output, 0);
 
+    /**
+     * Test to check if the constructor works properly
+     */
+
     @Test
-    public void costructorTest(){
+    public void constructorTest(){
         assertEquals(0, test.getLevelOccupied());
     }
+
+    /**
+     * Test to check if the method addCard works properly by adding five cards. The method recognize what card can and
+     * can not add to the slot.
+     */
 
     @Test
     public void addCardTest(){
@@ -39,6 +48,10 @@ public class CardSlotTest {
         assertEquals(3, test.getLevelOccupied());
     }
 
+    /**
+     * Test to watch if the method isFull works properly by trying to add a card in a full slot.
+     */
+
     @Test
     public void isFullTest(){
         test.addCard(card);
@@ -54,6 +67,10 @@ public class CardSlotTest {
         assertEquals(3, test.getLevelOccupied());
     }
 
+    /**
+     * Test to check if the method finalPoints works properly by adding 3 cards and watching the final points.
+     */
+
     @Test
     public void finalPointsTest(){
         test.addCard(card);
@@ -65,12 +82,14 @@ public class CardSlotTest {
         test.addCard(card3Test);
         assertEquals(3, test.getLevelOccupied());
 
-        int points = 0;
-
-        points = test.finalPoints();
+        int points = test.finalPoints();
 
         assertEquals(300, points);
     }
+
+    /**
+     * Test to watch if the method canAdd works properly by a series of tests.
+     */
 
     @Test
     public void canAddTest(){
@@ -90,16 +109,43 @@ public class CardSlotTest {
         assertTrue(test.canAdd(card2Test));
     }
 
+    /**
+     * Test to watch if the method getFirstCard works properly.
+     */
+
     @Test
     public void getFirstCardTest(){
-        test.addCard(card);
-        test.addCard(cardTest);
-        test.addCard(card3Test);
+        assertEquals(null, test.getFirstCard());
 
+        test.addCard(card);
+        assertEquals(card, test.getFirstCard());
+
+        test.addCard(cardTest);
+        assertEquals(cardTest, test.getFirstCard());
+
+        test.addCard(card3Test);
         assertEquals(card3Test, test.getFirstCard());
 
     }
 
+    /**
+     * Test to watch if the method sumType works properly by adding three cards to the slot.
+     */
+
+    @Test
+    public void sumTypeTest(){
+        test.addCard(card);
+        test.addCard(cardTest);
+        test.addCard(card3Test);
+        int BlueLv1 = test.sumType(Color.BLUE, Level.ONE);
+        int BlueLv2 = test.sumType(Color.BLUE, Level.TWO);
+        int BlueLv3 = test.sumType(Color.BLUE, Level.THREE);
+
+        assertEquals(1, BlueLv1);
+        assertEquals(1, BlueLv2);
+        assertEquals(1, BlueLv3);
+
+    }
 
 
 

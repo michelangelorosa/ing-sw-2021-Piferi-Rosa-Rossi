@@ -20,19 +20,19 @@ public class DevelopmentCardSlotsTest {
     ResourceStack cost1 = new ResourceStack(10, 20, 30, 40);
     ResourceStack input1 = new ResourceStack(20, 60, 130, 160);
     ResourceStack output1 = new ResourceStack(1, 1, 1, 1);
-    DevelopmentCard card1 = new DevelopmentCard(Color.BLUE, Level.ONE, 2, 10, cost1, input1, output1, 1);
+    DevelopmentCard card1 = new DevelopmentCard(Color.PURPLE, Level.ONE, 2, 10, cost1, input1, output1, 1);
     DevelopmentCard card1Test = new DevelopmentCard(Color.BLUE, Level.ONE, 2, 10, cost1, input1, output1, 1);
 
     ResourceStack cost2 = new ResourceStack(4, 4, 4, 4);
     ResourceStack input2 = new ResourceStack(4, 4, 4, 4);
     ResourceStack output2 = new ResourceStack(4, 4, 4, 4);
-    DevelopmentCard card2 = new DevelopmentCard(Color.BLUE, Level.TWO, 3, 11, cost2, input2, output2, 2);
+    DevelopmentCard card2 = new DevelopmentCard(Color.YELLOW, Level.TWO, 3, 11, cost2, input2, output2, 2);
     DevelopmentCard card2Test = new DevelopmentCard(Color.BLUE, Level.ONE, 3, 11, cost2, input2, output2, 2);
 
     ResourceStack cost3 = new ResourceStack(5, 5, 5, 5);
     ResourceStack input3 = new ResourceStack(5, 5, 5, 5);
     ResourceStack output3 = new ResourceStack(5, 5, 5, 5);
-    DevelopmentCard card3 = new DevelopmentCard(Color.BLUE, Level.THREE, 4, 12, cost3, input3, output3, 3);
+    DevelopmentCard card3 = new DevelopmentCard(Color.GREEN, Level.THREE, 4, 12, cost3, input3, output3, 3);
     DevelopmentCard card3Test = new DevelopmentCard(Color.BLUE, Level.ONE, 4, 12, cost3, input3, output3, 3);
 
     DevelopmentCardSlots slots = new DevelopmentCardSlots();
@@ -104,7 +104,46 @@ public class DevelopmentCardSlotsTest {
         assertEquals(card1, slots.getSlots()[0].getFirstCard());
         assertEquals(card1, slots.getSlots()[1].getFirstCard());
         assertEquals(card1, slots.getSlots()[2].getFirstCard());
+    }
 
+    /**
+     * Test to check if the method sumResources works properly by adding cards and look at the result..
+     */
 
+    @Test
+    public void sumResourcesTest(){
+        LeaderRequirements total ;//= new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
+
+        slots.addCard(1,card1);
+        slots.addCard(2,card1);
+        slots.addCard(1,card2);
+        slots.addCard(1,card3);
+        slots.addCard(0,card);
+        slots.addCard(2,card2);
+
+        total = slots.sumResources();
+
+        /*
+            System.out.println(" Blue 1: " + total.getBlueCardLv1() + " Blue 2: " + total.getBlueCardLv2() + " Blue 3: " + total.getBlueCardLv3());
+            System.out.println(" Purple 1: " + total.getPurpleCardLv1() + " Purple 2: " + total.getPurpleCardLv2() + " Purple 3: " + total.getPurpleCardLv3());
+            System.out.println(" Yellow 1: " + total.getYellowCardLv1() + " Yellow 2: " + total.getYellowCardLv2() + " Yellow 3: " + total.getYellowCardLv3());
+            System.out.println(" Green 1: " + total.getGreenCardLv1() + " Green 2: " + total.getGreenCardLv2() + " Green 3: " + total.getGreenCardLv3());
+         */
+
+        assertEquals(1, total.getBlueCardLv1());
+        assertEquals(0, total.getBlueCardLv2());
+        assertEquals(0, total.getBlueCardLv3());
+
+        assertEquals(2, total.getPurpleCardLv1());
+        assertEquals(0, total.getPurpleCardLv2());
+        assertEquals(0, total.getPurpleCardLv3());
+
+        assertEquals(0, total.getYellowCardLv1());
+        assertEquals(2, total.getYellowCardLv2());
+        assertEquals(0, total.getYellowCardLv3());
+
+        assertEquals(0, total.getGreenCardLv1());
+        assertEquals(0, total.getGreenCardLv2());
+        assertEquals(1, total.getGreenCardLv3());
     }
 }

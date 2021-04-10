@@ -58,6 +58,39 @@ public class DevelopmentCardSlots {
         return false;
     }
 
+    public LeaderRequirements sumResources(){
+        LeaderRequirements sum;
+        int blueCardLv1 = 0;
+        int purpleCardLv1 = 0;
+        int yellowCardLv1 = 0;
+        int greenCardLv1 = 0;
+        int blueCardLv2 = 0;
+        int purpleCardLv2 = 0;
+        int yellowCardLv2 = 0;
+        int greenCardLv2 = 0;
+        int blueCardLv3 = 0;
+        int purpleCardLv3 = 0;
+        int yellowCardLv3 = 0;
+        int greenCardLv3 = 0;
+        for(int i = 0; i < 3; i++){
+            blueCardLv1 += slots[i].sumType(Color.BLUE, Level.ONE);
+            blueCardLv2 += slots[i].sumType(Color.BLUE, Level.TWO);
+            blueCardLv3 += slots[i].sumType(Color.BLUE, Level.THREE);
+            purpleCardLv1 += slots[i].sumType(Color.PURPLE, Level.ONE);
+            purpleCardLv2 += slots[i].sumType(Color.PURPLE, Level.TWO);
+            purpleCardLv3 += slots[i].sumType(Color.PURPLE, Level.THREE);
+            yellowCardLv1 += slots[i].sumType(Color.YELLOW, Level.ONE);
+            yellowCardLv2 += slots[i].sumType(Color.YELLOW, Level.TWO);
+            yellowCardLv3 += slots[i].sumType(Color.YELLOW, Level.THREE);
+            greenCardLv1 += slots[i].sumType(Color.GREEN, Level.ONE);
+            greenCardLv2 += slots[i].sumType(Color.GREEN, Level.TWO);
+            greenCardLv3 += slots[i].sumType(Color.GREEN, Level.THREE);
+        }
+
+        sum = new LeaderRequirements(blueCardLv1, purpleCardLv1, yellowCardLv1, greenCardLv1, blueCardLv2, purpleCardLv2, yellowCardLv2, greenCardLv2, blueCardLv3, purpleCardLv3, yellowCardLv3, greenCardLv3);
+        return sum;
+    }
+
     public void addCard(int i, DevelopmentCard card){
         if(i == 0 || i == 1 || i == 2) slots[i].addCard(card);
         else System.err.println("ERROR");
