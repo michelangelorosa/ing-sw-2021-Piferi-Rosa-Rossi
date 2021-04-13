@@ -79,4 +79,14 @@ public class CardSlot {
         }
         return count;
     }
+
+    public int sumColors(Color color){
+        int count = 0;
+        for(int i = 0; i < 3; i++){
+            if(cards[i] != null){
+                if(cards[i].getColor() == color) count ++;
+            }
+        }
+        return count;
+    }
 }

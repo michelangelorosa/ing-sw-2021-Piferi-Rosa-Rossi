@@ -2,10 +2,10 @@ package it.polimi.ingsw.Model;
 
 public class FaithCell {
 
-    private VaticanReportSectionEnum vaticanReportSectionEnum;
-    private final PopeSpace popeSpace;
     private final int idCell;
     private int victoryPoints;
+    private VaticanReportSectionEnum vaticanReportSectionEnum;
+    private final PopeSpace popeSpace;
 
     public FaithCell(int idCell, int victoryPoints, VaticanReportSectionEnum vaticanReportSectionEnum, PopeSpace popeSpace) {
         this.vaticanReportSectionEnum = vaticanReportSectionEnum;

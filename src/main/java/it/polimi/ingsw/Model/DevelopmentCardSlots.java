@@ -8,6 +8,10 @@ public class DevelopmentCardSlots {
     private int cardsInSlot;
     private Level level;
 
+
+    /**
+     * DevelopmentCardSlot constructor.
+     */
     public DevelopmentCardSlots(){
         this.slots = new CardSlot[3];
         this.slots[0] = new CardSlot();
@@ -15,10 +19,20 @@ public class DevelopmentCardSlots {
         this.slots[2] = new CardSlot();
     }
 
+    /**
+     * Getter
+     * @return an array of CardSlot
+     */
     public CardSlot[] getSlots() {
         return slots;
     }
 
+    /**
+     * This method is used to sum all the production input by receiving an ArrayList of all the Cards that the player
+     * wants to use and create a new ResourceStack that contains the sum of the resources.
+     * @param inputs is the ArrayList of DevelopmentCards
+     * @return productionInput which is a ResourceStack that contains the sum of the resources needed
+     */
     private ResourceStack getProductionInput(ArrayList<DevelopmentCard> inputs){
         ResourceStack productionInput = new ResourceStack(0, 0, 0,0);
         for(DevelopmentCard card : inputs){
@@ -27,6 +41,12 @@ public class DevelopmentCardSlots {
         return productionInput;
     }
 
+    /**
+     * This method is used to sum all the production outputs by receiving an ArrayList of all the Cards that the player
+     * wants to use and create a new ResourceStack that contains the sum of the resources.
+     * @param outputs is the ArrayList of DevelopmentCards
+     * @return productionOutput which is a ResourceStack that contains the sum of the resources needed
+     */
     private ResourceStack getProductionOutput(ArrayList<DevelopmentCard> outputs){
         ResourceStack productionOutput = new ResourceStack(0, 0, 0,0);
         for(DevelopmentCard card : outputs){
@@ -42,6 +62,10 @@ public class DevelopmentCardSlots {
         return (slots[0].getLevelOccupied() + slots[1].getLevelOccupied() + slots[2].getLevelOccupied()) == 7;
     }
 
+    /**
+     * This method is use to count the final point
+     * @return points which is an int that contains the sum of the points of the player.
+     */
     public int totalPoints(){
         int points = 0;
         points += slots[0].finalPoints();
@@ -51,6 +75,12 @@ public class DevelopmentCardSlots {
         return points;
     }
 
+
+    /**
+     * This method is use to see if the player can or cannot add a card in the slot
+     * @param card is the Development card that the player wants to add
+     * @return true if there is a slot available, false if not
+     */
     public boolean canAdd(DevelopmentCard card){
         for(int i = 0; i < 3; i++){
             if(slots[i].canAdd(card)) return true;
@@ -58,6 +88,22 @@ public class DevelopmentCardSlots {
         return false;
     }
 
+    /**
+     * This method is use to see if the player can or cannot add a card in a particular slot.
+     * @param i is the number of the slot that the player wants.
+     * @param card is the Development card that the player wants to add
+     * @return true if the player can add the card in that slot, false if not
+     */
+    public boolean canAddInThisSlot(int i, DevelopmentCard card){
+        if(slots[i].canAdd(card)) return true;
+        else return false;
+    }
+
+
+    /**
+     * This method is used to count the number of cards, divided by color and level, on the player's board
+     * @return sum
+     */
     public LeaderRequirements sumResources(){
         LeaderRequirements sum;
         int blueCardLv1 = 0;
@@ -91,9 +137,34 @@ public class DevelopmentCardSlots {
         return sum;
     }
 
-    public void addCard(int i, DevelopmentCard card){
-        if(i == 0 || i == 1 || i == 2) slots[i].addCard(card);
-        else System.err.println("ERROR");
+    /**
+     * This method is used to count the number of cards, divided only by color, on the player's board
+     * @return sum
+     */
+    public LeaderRequirements sumColors(){
+        LeaderRequirements sum;
+        int blueCards = 0;
+        int purpleCards = 0;
+        int yellowCards = 0;
+        int greenCards = 0;
+
+        for(int i = 0; i < 3; i++){
+            blueCards += slots[i].sumColors(Color.BLUE);
+            purpleCards += slots[i].sumColors(Color.PURPLE);
+            yellowCards += slots[i].sumColors(Color.YELLOW);
+            greenCards += slots[i].sumColors(Color.GREEN);
+        }
+        sum = new LeaderRequirements(blueCards, purpleCards,yellowCards,greenCards);
+        return sum;
     }
 
+    /**
+     * This method use to add a card in a particular slot.
+     * @param i is the number of the slot I want to use.
+     * @param card Is the card I want to add.
+     */
+    public void addCard(int i, DevelopmentCard card) throws IllegalArgumentException{
+        if(i == 0 || i == 1 || i == 2) slots[i].addCard(card);
+        else throw new IllegalArgumentException("ERROR, the slot does not exists");
+    }
 }

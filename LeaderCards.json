@@ -107,7 +107,7 @@
       "victoryPoints": 3,
       "needsShields": 0,
       "needsServants": 0,
-      "needsCoins": 0,
+      "needsCoins": 5,
       "needsStones": 0,
       "needsBlueCardLv1": 0,
 		"needsPurpleCardLv1": 0,
@@ -121,7 +121,7 @@
 		"needsPurpleCardLv3": 0,
 		"needsYellowCardLv3": 0,
 		"needsGreenCardLv3": 0,
-		"depotType": 3
+		"depotType": 4
     },
     {
       "leaderAbility": 1,
@@ -143,7 +143,7 @@
 		"needsPurpleCardLv3": 0,
 		"needsYellowCardLv3": 0,
 		"needsGreenCardLv3": 0,
-      "depotType": 1
+      "depotType": 2
     },
     {
       "leaderAbility": 1,
@@ -165,7 +165,7 @@
 		"needsPurpleCardLv3": 0,
 		"needsYellowCardLv3": 0,
 		"needsGreenCardLv3": 0,
-		 "depotType": 0
+		 "depotType": 1
     },
     {
       "leaderAbility": 1,
@@ -187,7 +187,7 @@
 		"needsPurpleCardLv3": 0,
 		"needsYellowCardLv3": 0,
 		"needsGreenCardLv3": 0,
-      "depotType": 2
+      "depotType": 3
     },
     {
       "leaderAbility": 2,
@@ -209,7 +209,7 @@
 		"needsPurpleCardLv3": 0,
 		"needsYellowCardLv3": 0,
 		"needsGreenCardLv3": 0,
-      "marbleConversion": 1
+      "marbleConversion": 4
     },
     {
       "leaderAbility": 2,
@@ -231,7 +231,7 @@
 		"needsPurpleCardLv3": 0,
 		"needsYellowCardLv3": 0,
 		"needsGreenCardLv3": 0,
-      "marbleConversion": 0
+      "marbleConversion": 1
     },
     {
       "leaderAbility": 2,
@@ -253,7 +253,7 @@
 		"needsPurpleCardLv3": 0,
 		"needsYellowCardLv3": 0,
 		"needsGreenCardLv3": 0,
-      "marbleConversion": 3
+      "marbleConversion": 2
     },
     {
       "leaderAbility": 2,
@@ -275,7 +275,7 @@
 		"needsPurpleCardLv3": 0,
 		"needsYellowCardLv3": 0,
 		"needsGreenCardLv3": 0,
-      "marbleConversion": 2
+      "marbleConversion": 3
     },
     {
       "leaderAbility": 3,
@@ -385,5 +385,5 @@
       "jollyOut": 1,
       "outputFaith": 1
     }
-  ]
+ ]
 }

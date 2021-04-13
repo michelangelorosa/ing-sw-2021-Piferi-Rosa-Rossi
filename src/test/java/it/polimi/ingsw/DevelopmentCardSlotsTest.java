@@ -107,12 +107,12 @@ public class DevelopmentCardSlotsTest {
     }
 
     /**
-     * Test to check if the method sumResources works properly by adding cards and look at the result..
+     * Test to check if the method sumResources works properly by adding cards and look at the result.
      */
 
     @Test
     public void sumResourcesTest(){
-        LeaderRequirements total ;//= new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
+        LeaderRequirements total;
 
         slots.addCard(1,card1);
         slots.addCard(2,card1);
@@ -145,5 +145,47 @@ public class DevelopmentCardSlotsTest {
         assertEquals(0, total.getGreenCardLv1());
         assertEquals(0, total.getGreenCardLv2());
         assertEquals(1, total.getGreenCardLv3());
+    }
+
+
+    /**
+     * Test to watch is the method canAddInThisSlot works properly by looking at the first card in the slot.
+     */
+    @Test
+    public void canAddInThisSlotTest(){
+        if(slots.canAddInThisSlot(1, card1))slots.addCard(1,card1);
+        if(slots.canAddInThisSlot(2, card1)) slots.addCard(2,card1);
+        if(slots.canAddInThisSlot(1, card2)) slots.addCard(1,card2);
+        if(slots.canAddInThisSlot(1, card3))slots.addCard(1,card3);
+        if(slots.canAddInThisSlot(0, card3)) slots.addCard(0, card3);
+
+        assertEquals(card3, slots.getSlots()[1].getFirstCard());
+        assertEquals(card1, slots.getSlots()[2].getFirstCard());
+        assertEquals(null, slots.getSlots()[0].getFirstCard());
+    }
+
+    /**
+     * Test to watch if the method sumColor works properly by adding 6 cards in the DevelopmentCardSlots and looking
+     * at he result.
+     */
+    @Test
+    public void sumColorTest(){
+        LeaderRequirements total;
+
+        slots.addCard(1,card1);
+        slots.addCard(2,card1);
+        slots.addCard(1,card2);
+        slots.addCard(1,card3);
+        slots.addCard(0,card);
+        slots.addCard(2,card2);
+
+        total = slots.sumColors();
+
+        assertEquals(1, total.getNeedBlueCard());
+        assertEquals(2, total.getNeedPurpleCard());
+        assertEquals(2, total.getNeedYellowCard());
+        assertEquals(1, total.getNeedGreenCard());
+
+
     }
 }

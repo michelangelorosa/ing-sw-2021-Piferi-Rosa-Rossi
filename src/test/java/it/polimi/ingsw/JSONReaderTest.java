@@ -357,7 +357,137 @@ public class JSONReaderTest {
     public void ReadLeaderCardTest(){
 
         ArrayList<LeaderCard> LeaderCards = JSONReader.ReadLeaderCards();
-        int size = LeaderCards.size();
-        System.out.println(size);
+
+        LeaderCard[] cardsToTest = new LeaderCard[16];
+
+        ResourceStack resourcesRequired = new ResourceStack(0,0,0,0);
+        LeaderRequirements cards = new LeaderRequirements(0,0,1,1,0,0,0,0,0,0,0,0);
+        ResourceStack discount = new ResourceStack(0,1,0,0);
+        cardsToTest[0] = new LeaderCard(49, 2, resourcesRequired, cards, discount);
+
+        resourcesRequired = new ResourceStack(0,0,0,0);
+        cards = new LeaderRequirements(1,1,0,0,0,0,0,0,0,0,0,0);
+        discount = new ResourceStack(1,0,0,0);
+        cardsToTest[1] = new LeaderCard(50, 2, resourcesRequired, cards, discount);
+
+        resourcesRequired = new ResourceStack(0,0,0,0);
+        cards = new LeaderRequirements(1,0,0,1,0,0,0,0,0,0,0,0);
+        discount = new ResourceStack(0,0,0,1);
+        cardsToTest[2] = new LeaderCard(51, 2, resourcesRequired, cards, discount);
+
+        resourcesRequired = new ResourceStack(0,0,0,0);
+        cards = new LeaderRequirements(0,1,1,0,0,0,0,0,0,0,0,0);
+        discount = new ResourceStack(0,0,1,0);
+        cardsToTest[3] = new LeaderCard(52, 2, resourcesRequired, cards, discount);
+
+        resourcesRequired = new ResourceStack(0,0,5,0);
+        cards = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
+        ResourceType type = ResourceType.STONES;
+        cardsToTest[4] = new LeaderCard(53, 3, resourcesRequired, cards, type);
+
+        resourcesRequired = new ResourceStack(0,0,0,5);
+        cards = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
+        type = ResourceType.SERVANTS;
+        cardsToTest[5] = new LeaderCard(54, 3, resourcesRequired, cards, type);
+
+        resourcesRequired = new ResourceStack(0,5,0,0);
+        cards = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
+        type = ResourceType.SHIELDS;
+        cardsToTest[6] = new LeaderCard(55, 3, resourcesRequired, cards, type);
+
+        resourcesRequired = new ResourceStack(5,0,0,0);
+        cards = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
+        type = ResourceType.COINS;
+        cardsToTest[7] = new LeaderCard(56, 3, resourcesRequired, cards, type);
+
+        resourcesRequired = new ResourceStack(0,0,0,0);
+        cards = new LeaderRequirements(1,0,2,0,0,0,0,0,0,0,0,0);
+        Marble marble = Marble.PURPLE;
+        cardsToTest[8] = new LeaderCard(57, 5, resourcesRequired, cards, marble);
+
+        resourcesRequired = new ResourceStack(0,0,0,0);
+        cards = new LeaderRequirements(0,1,0,2,0,0,0,0,0,0,0,0);
+        marble = Marble.BLUE;
+        cardsToTest[9] = new LeaderCard(58, 5, resourcesRequired, cards, marble);
+
+        resourcesRequired = new ResourceStack(0,0,0,0);
+        cards = new LeaderRequirements(2,0,1,0,0,0,0,0,0,0,0,0);
+        marble = Marble.GREY;
+        cardsToTest[10] = new LeaderCard(59, 5, resourcesRequired, cards, marble);
+
+        resourcesRequired = new ResourceStack(0,0,0,0);
+        cards = new LeaderRequirements(0,2,0,1,0,0,0,0,0,0,0,0);
+        marble = Marble.YELLOW;
+        cardsToTest[11] = new LeaderCard(60, 5, resourcesRequired, cards, marble);
+
+        resourcesRequired = new ResourceStack(0,0,0,0);
+        cards = new LeaderRequirements(0,0,0,0,0,0,1,0,0,0,0,0);
+        ResourceStack input = new ResourceStack(1,0,0,0);
+        int jollyOut = 1;
+        int faithOut = 1;
+        cardsToTest[12] = new LeaderCard(61, 4, resourcesRequired, cards, input, jollyOut, faithOut);
+
+        resourcesRequired = new ResourceStack(0,0,0,0);
+        cards = new LeaderRequirements(0,0,0,0,1,0,0,0,0,0,0,0);
+        input = new ResourceStack(0,1,0,0);
+        jollyOut = 1;
+        faithOut = 1;
+        cardsToTest[13] = new LeaderCard(62, 4, resourcesRequired, cards, input, jollyOut, faithOut);
+
+        resourcesRequired = new ResourceStack(0,0,0,0);
+        cards = new LeaderRequirements(0,0,0,0,0,1,0,0,0,0,0,0);
+        input = new ResourceStack(0,0,0,1);
+        jollyOut = 1;
+        faithOut = 1;
+        cardsToTest[14] = new LeaderCard(63, 4, resourcesRequired, cards, input, jollyOut, faithOut);
+
+        resourcesRequired = new ResourceStack(0,0,0,0);
+        cards = new LeaderRequirements(0,0,0,0,0,0,0,1,0,0,0,0);
+        input = new ResourceStack(0,0,1,0);
+        jollyOut = 1;
+        faithOut = 1;
+        cardsToTest[15] = new LeaderCard(64, 4, resourcesRequired, cards, input, jollyOut, faithOut);
+
+        for(int i = 0; i < 16; i++){
+            assertEquals(cardsToTest[i].getCardId(), LeaderCards.get(i).getCardId());
+            assertEquals(cardsToTest[i].getVictoryPoints(), LeaderCards.get(i).getVictoryPoints());
+            assertEquals(cardsToTest[i].getAction(), LeaderCards.get(i).getAction());
+            assertEquals(cardsToTest[i].getFaith(), LeaderCards.get(i).getFaith());
+            assertEquals(cardsToTest[i].getCardsRequired().getBlueCardLv1(), LeaderCards.get(i).getCardsRequired().getBlueCardLv1());
+            assertEquals(cardsToTest[i].getCardsRequired().getBlueCardLv2(), LeaderCards.get(i).getCardsRequired().getBlueCardLv2());
+            assertEquals(cardsToTest[i].getCardsRequired().getBlueCardLv3(), LeaderCards.get(i).getCardsRequired().getBlueCardLv3());
+            assertEquals(cardsToTest[i].getCardsRequired().getPurpleCardLv1(), LeaderCards.get(i).getCardsRequired().getPurpleCardLv1());
+            assertEquals(cardsToTest[i].getCardsRequired().getPurpleCardLv2(), LeaderCards.get(i).getCardsRequired().getPurpleCardLv2());
+            assertEquals(cardsToTest[i].getCardsRequired().getPurpleCardLv3(), LeaderCards.get(i).getCardsRequired().getPurpleCardLv3());
+            assertEquals(cardsToTest[i].getCardsRequired().getYellowCardLv1(), LeaderCards.get(i).getCardsRequired().getYellowCardLv1());
+            assertEquals(cardsToTest[i].getCardsRequired().getYellowCardLv2(), LeaderCards.get(i).getCardsRequired().getYellowCardLv2());
+            assertEquals(cardsToTest[i].getCardsRequired().getYellowCardLv3(), LeaderCards.get(i).getCardsRequired().getYellowCardLv3());
+            assertEquals(cardsToTest[i].getCardsRequired().getGreenCardLv1(), LeaderCards.get(i).getCardsRequired().getGreenCardLv1());
+            assertEquals(cardsToTest[i].getCardsRequired().getGreenCardLv2(), LeaderCards.get(i).getCardsRequired().getGreenCardLv2());
+            assertEquals(cardsToTest[i].getCardsRequired().getGreenCardLv3(), LeaderCards.get(i).getCardsRequired().getGreenCardLv3());
+            if (i < 4) {
+                assertEquals(cardsToTest[i].getDiscount().getShields(), LeaderCards.get(i).getDiscount().getShields());
+                assertEquals(cardsToTest[i].getDiscount().getServants(), LeaderCards.get(i).getDiscount().getServants());
+                assertEquals(cardsToTest[i].getDiscount().getCoins(), LeaderCards.get(i).getDiscount().getCoins());
+                assertEquals(cardsToTest[i].getDiscount().getStones(), LeaderCards.get(i).getDiscount().getStones());
+            }
+
+            if (i > 11) {
+
+                assertEquals(cardsToTest[i].getInput().getShields(), LeaderCards.get(i).getInput().getShields());
+                assertEquals(cardsToTest[i].getInput().getServants(), LeaderCards.get(i).getInput().getServants());
+                assertEquals(cardsToTest[i].getInput().getCoins(), LeaderCards.get(i).getInput().getCoins());
+                assertEquals(cardsToTest[i].getInput().getStones(), LeaderCards.get(i).getInput().getStones());
+            }
+            if(i > 7 && i < 12){
+                assertEquals(cardsToTest[i].getMarble(), LeaderCards.get(i).getMarble());
+            }
+            if(i > 3 && i < 8){
+                assertEquals(cardsToTest[i].getResource(), LeaderCards.get(i).getResource());
+            }
+        }
+
+        //int size = LeaderCards.size();
+        //System.out.println(size);
     }
 }

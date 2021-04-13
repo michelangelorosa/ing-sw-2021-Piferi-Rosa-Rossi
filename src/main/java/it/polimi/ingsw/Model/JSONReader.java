@@ -16,9 +16,9 @@ import java.util.ArrayList;
 
 public class JSONReader {
 
-    public JSONReader () {
+     public JSONReader() {
 
-    }
+     }
 
      /**
       * "ReadDevelopmentCards" method reads a .json file containing all information about each card
@@ -27,267 +27,277 @@ public class JSONReader {
       * the file.
       */
 
-    public static DevelopmentCard[] ReadDevelopmentCards() {
-        File cards = new File("DevelopmentCards.json");
+     public static DevelopmentCard[] ReadDevelopmentCards() {
 
-        DevelopmentCard[] readCards = new DevelopmentCard[48];
-        DevelopmentCard cardToRead;
-        int cardsInDeck = 0;
+         /**
+          * A standard and handwritten file is overwritten whenever the player chooses to edit the game parameters.
+          */
 
-        Color[] colors = Color.values();
-        Level[] levels = Level.values();
+         File cards = new File("DevelopmentCards.json");
+         //File cards = new File("DevelopmentCard2.json");
 
-        int colorInt;
-        int levelInt;
-        int cardId;
-        int victoryPoints;
-        int outputFaith;
+         DevelopmentCard[] readCards = new DevelopmentCard[48];
+         DevelopmentCard cardToRead;
+         int cardsInDeck = 0;
 
-        try {
-            JsonElement fileElement = JsonParser.parseReader(new FileReader(cards));
-            JsonObject fileObject = fileElement.getAsJsonObject();
+         Color[] colors = Color.values();
+         Level[] levels = Level.values();
 
-            int example = fileObject.get("NumberOfCards").getAsInt();
+         int colorInt;
+         int levelInt;
+         int cardId;
+         int victoryPoints;
+         int outputFaith;
 
-            //Extracting card values from JSON
-            JsonArray jsonArrayCards = fileObject.get("DevelopmentCard").getAsJsonArray();
+         try {
+             JsonElement fileElement = JsonParser.parseReader(new FileReader(cards));
+             JsonObject fileObject = fileElement.getAsJsonObject();
 
-            for(JsonElement cardElement : jsonArrayCards) {
-                //Gets json objects
-                JsonObject developmentCardJsonObject = cardElement.getAsJsonObject();
+             //int example = fileObject.get("NumberOfCards").getAsInt();
 
-                //DevelopmentCard Data Extraction
-                colorInt = developmentCardJsonObject.get("color").getAsInt();
-                levelInt = developmentCardJsonObject.get("level").getAsInt();
-                cardId = developmentCardJsonObject.get("cardId").getAsInt();
-                victoryPoints = developmentCardJsonObject.get("victoryPoints").getAsInt();
+             //Extracting card values from JSON
+             JsonArray jsonArrayCards = fileObject.get("DevelopmentCard").getAsJsonArray();
 
-                ResourceStack cost = new ResourceStack(developmentCardJsonObject.get("costShields").getAsInt(), developmentCardJsonObject.get("costServants").getAsInt(), developmentCardJsonObject.get("costCoins").getAsInt(), developmentCardJsonObject.get("costStones").getAsInt());
-                ResourceStack input = new ResourceStack(developmentCardJsonObject.get("inputShields").getAsInt(), developmentCardJsonObject.get("inputServants").getAsInt(), developmentCardJsonObject.get("inputCoins").getAsInt(), developmentCardJsonObject.get("inputStones").getAsInt());
-                ResourceStack output = new ResourceStack(developmentCardJsonObject.get("outputShields").getAsInt(), developmentCardJsonObject.get("outputServants").getAsInt(), developmentCardJsonObject.get("outputCoins").getAsInt(), developmentCardJsonObject.get("outputStones").getAsInt());
-                outputFaith = developmentCardJsonObject.get("outputFaith").getAsInt();
+             for (JsonElement cardElement : jsonArrayCards) {
+                 //Gets json objects
+                 JsonObject developmentCardJsonObject = cardElement.getAsJsonObject();
 
-                //DevelopmentCard object creation and insertion into DevelopmentCard-type array.
-                cardToRead = new DevelopmentCard(colors[colorInt], levels[levelInt], cardId, victoryPoints, cost, input, output, outputFaith);
-                readCards[cardsInDeck] = cardToRead;
+                 //DevelopmentCard Data Extraction
+                 colorInt = developmentCardJsonObject.get("color").getAsInt();
+                 levelInt = developmentCardJsonObject.get("level").getAsInt();
+                 cardId = developmentCardJsonObject.get("cardId").getAsInt();
+                 victoryPoints = developmentCardJsonObject.get("victoryPoints").getAsInt();
 
-                cardsInDeck ++;
-            }
+                 ResourceStack cost = new ResourceStack(developmentCardJsonObject.get("costShields").getAsInt(), developmentCardJsonObject.get("costServants").getAsInt(), developmentCardJsonObject.get("costCoins").getAsInt(), developmentCardJsonObject.get("costStones").getAsInt());
+                 ResourceStack input = new ResourceStack(developmentCardJsonObject.get("inputShields").getAsInt(), developmentCardJsonObject.get("inputServants").getAsInt(), developmentCardJsonObject.get("inputCoins").getAsInt(), developmentCardJsonObject.get("inputStones").getAsInt());
+                 ResourceStack output = new ResourceStack(developmentCardJsonObject.get("outputShields").getAsInt(), developmentCardJsonObject.get("outputServants").getAsInt(), developmentCardJsonObject.get("outputCoins").getAsInt(), developmentCardJsonObject.get("outputStones").getAsInt());
+                 outputFaith = developmentCardJsonObject.get("outputFaith").getAsInt();
 
-        }catch (FileNotFoundException e) {
-            System.err.println("Error: Missing file!");
-            e.printStackTrace();
-        }catch (Exception e){
-            System.err.println("Error: Input file is corrupt!");
-            e.printStackTrace();
-        }
+                 //DevelopmentCard object creation and insertion into DevelopmentCard-type array.
+                 cardToRead = new DevelopmentCard(colors[colorInt], levels[levelInt], cardId, victoryPoints, cost, input, output, outputFaith);
+                 readCards[cardsInDeck] = cardToRead;
 
-        if (cardsInDeck < 48)
-            System.err.println("Error: Not enough cards in JSON file!");
-        else if (cardsInDeck > 48)
-            System.err.println("Error: Too many cards in JSON file!");
+                 cardsInDeck++;
+             }
 
-        return readCards;
-    }
+         } catch (FileNotFoundException e) {
+             System.err.println("Error: Missing file!");
+             e.printStackTrace();
+         } catch (Exception e) {
+             System.err.println("Error: Input file is corrupt!");
+             e.printStackTrace();
+         }
 
-    public static FaithCell[] ReadFaithCells() {
-        File cells = new File("FaithTrack.json");
+         if (cardsInDeck < 48)
+             System.err.println("Error: Not enough cards in JSON file!");
+         else if (cardsInDeck > 48)
+             System.err.println("Error: Too many cards in JSON file!");
 
-        FaithCell[] readCells = new FaithCell[25];
-        FaithCell cellToRead;
-        int cellsRead = 0;
+         return readCards;
+     }
 
-        VaticanReportSectionEnum[] vaticanReportSectionEnums = VaticanReportSectionEnum.values();
-        PopeSpace[] popeSpaces = PopeSpace.values();
+     public static FaithCell[] ReadFaithCells() {
+         /**
+          * A standard and handwritten file is overwritten whenever the player chooses to edit the game parameters.
+          */
 
-        int vaticanint;
 
-        int popeint;
+         File cells = new File("FaithTrack.json");
+         //File cells = new File("FaithCell2.json");
 
-        int idCell;
-        int victoryPoints;
 
-        try {
-            JsonElement fileElement = JsonParser.parseReader(new FileReader(cells));
-            JsonObject fileObject = fileElement.getAsJsonObject();
+         FaithCell[] readCells = new FaithCell[25];
+         FaithCell cellToRead;
+         int cellsRead = 0;
 
-            //Extracting the number of cards in the deck
-            int example = fileObject.get("NumberOfCells").getAsInt();
-            //System.out.println("Number of cells in faithTrack: "+ example);
-            //Extracting card values from JSON
-            JsonArray jsonArrayCards = fileObject.get("FaithCell").getAsJsonArray();
+         VaticanReportSectionEnum[] vaticanReportSectionEnums = VaticanReportSectionEnum.values();
+         PopeSpace[] popeSpaces = PopeSpace.values();
 
-            for(JsonElement cellElement : jsonArrayCards){
-                //Gets json objects
-                JsonObject faithCellJsonObject = cellElement.getAsJsonObject();
+         int vaticanint;
 
-                //DevelopmentCard Data Extraction
-                vaticanint = faithCellJsonObject.get("VaticanReportSection").getAsInt();
+         int popeint;
 
-                popeint = faithCellJsonObject.get("PopeSpace").getAsInt();
+         int idCell;
+         int victoryPoints;
 
-                idCell = faithCellJsonObject.get("IdCell").getAsInt();
-                victoryPoints = faithCellJsonObject.get("VictoryPoints").getAsInt();
+         try {
+             JsonElement fileElement = JsonParser.parseReader(new FileReader(cells));
+             JsonObject fileObject = fileElement.getAsJsonObject();
 
-                FaithCell cell = new FaithCell(idCell, victoryPoints, vaticanReportSectionEnums[vaticanint], popeSpaces[popeint]);
+             //Extracting the number of cards in the deck
+            // int example = fileObject.get("NumberOfCells").getAsInt();
+             //System.out.println("Number of cells in faithTrack: "+ example);
+             //Extracting card values from JSON
+             JsonArray jsonArrayCards = fileObject.get("FaithCell").getAsJsonArray();
 
-                //System.out.println("id: " + idCell + " points: " + victoryPoints + " pope Space: " +popeSpaces[popeint] + " vatican:" +vaticanReportSections[vaticanint]);
+             for (JsonElement cellElement : jsonArrayCards) {
+                 //Gets json objects
+                 JsonObject faithCellJsonObject = cellElement.getAsJsonObject();
 
-                readCells[cellsRead] = cell;
+                 //DevelopmentCard Data Extraction
+                 vaticanint = faithCellJsonObject.get("vaticanReportSection").getAsInt();
 
-                cellsRead ++;
-            }
+                 popeint = faithCellJsonObject.get("popeSpace").getAsInt();
 
-            //Print card
+                 idCell = faithCellJsonObject.get("idCell").getAsInt();
+                 victoryPoints = faithCellJsonObject.get("victoryPoints").getAsInt();
 
-        }catch (FileNotFoundException e){
-            System.err.println("Error: Missing file!");
-            e.printStackTrace();
-        }catch (Exception e){
-            System.err.println("Error: Input file is corrupt!");
-            e.printStackTrace();
-        }
+                 FaithCell cell = new FaithCell(idCell, victoryPoints, vaticanReportSectionEnums[vaticanint], popeSpaces[popeint]);
 
-        if (cellsRead < 25)
-            System.err.println("Error: Not enough cells in JSON file!");
-        else if (cellsRead > 25)
-            System.err.println("Error: Too many cells in JSON file!");
+                 //System.out.println("id: " + idCell + " points: " + victoryPoints + " pope Space: " +popeSpaces[popeint] + " vatican:" +vaticanReportSections[vaticanint]);
 
-        return readCells;
-    }
+                 readCells[cellsRead] = cell;
 
-    public static ArrayList<LeaderCard> ReadLeaderCards() {
-        File cards = new File("LeaderCards.json");
-        ArrayList<LeaderCard> LeaderCards = new ArrayList<>();
-        LeaderCard cardToRead;
+                 cellsRead++;
+             }
 
-        Marble[] marbles = Marble.values();
-        ResourceType[] resources = ResourceType.values();
+             //Print card
 
-        int cardsInDeck = 0;
+         } catch (FileNotFoundException e) {
+             System.err.println("Error: Missing file!");
+             e.printStackTrace();
+         } catch (Exception e) {
+             System.err.println("Error: Input file is corrupt!");
+             e.printStackTrace();
+         }
 
-        try{
-            JsonElement fileElement = JsonParser.parseReader(new FileReader(cards));
-            JsonObject fileObject = fileElement.getAsJsonObject();
+         if (cellsRead < 25)
+             System.err.println("Error: Not enough cells in JSON file!");
+         else if (cellsRead > 25)
+             System.err.println("Error: Too many cells in JSON file!");
 
-            int example = fileObject.get("NumberOfCards").getAsInt();
+         return readCells;
+     }
 
-            int blueCardLv1;
-            int purpleCardLv1;
-            int yellowCardLv1;
-            int greenCardLv1;
-            int blueCardLv2;
-            int purpleCardLv2;
-            int yellowCardLv2;
-            int greenCardLv2;
-            int blueCardLv3;
-            int purpleCardLv3;
-            int yellowCardLv3;
-            int greenCardLv3;
+     public static ArrayList<LeaderCard> ReadLeaderCards() {
 
-            //Extracting card values from JSON
-            JsonArray jsonArrayCards = fileObject.get("LeaderCard").getAsJsonArray();
-            for(JsonElement cardElement : jsonArrayCards) {
-                //Gets json object
-                JsonObject leaderCardJsonObject = cardElement.getAsJsonObject();
-                //LeaderCard Data Extraction
-                byte leaderAbility = leaderCardJsonObject.get("leaderAbility").getAsByte();
-                int cardId = leaderCardJsonObject.get("cardId").getAsInt();
-                int victoryPoints = leaderCardJsonObject.get("victoryPoints").getAsInt();
-                //Requirements in resources resourcesRequired
-                ResourceStack resourcesRequired = new ResourceStack(
-                        leaderCardJsonObject.get("needsShields").getAsInt(),
-                        leaderCardJsonObject.get("needsServants").getAsInt(),
-                        leaderCardJsonObject.get("needsCoins").getAsInt(),
-                        leaderCardJsonObject.get("needsStones").getAsInt());
-                //Reqirements in cards cards
-                LeaderRequirements leaderRequirements = new LeaderRequirements(
-                        leaderCardJsonObject.get("needsBlueCardLv1").getAsInt(),
-                        leaderCardJsonObject.get("needsPurpleCardLv1").getAsInt(),
-                        leaderCardJsonObject.get("needsYellowCardLv1").getAsInt(),
-                        leaderCardJsonObject.get("needsGreenCardLv1").getAsInt(),
-                        leaderCardJsonObject.get("needsBlueCardLv2").getAsInt(),
-                        leaderCardJsonObject.get("needsPurpleCardLv2").getAsInt(),
-                        leaderCardJsonObject.get("needsYellowCardLv2").getAsInt(),
-                        leaderCardJsonObject.get("needsGreenCardLv2").getAsInt(),
-                        leaderCardJsonObject.get("needsBlueCardLv3").getAsInt(),
-                        leaderCardJsonObject.get("needsPurpleCardLv3").getAsInt(),
-                        leaderCardJsonObject.get("needsYellowCardLv3").getAsInt(),
-                        leaderCardJsonObject.get("needsGreenCardLv3").getAsInt());
-                //DISCOUNT
-                if(leaderAbility==0){
-                    ResourceStack discount = new ResourceStack(leaderCardJsonObject.get("discountShields").getAsInt(),leaderCardJsonObject.get("discountServants").getAsInt(),leaderCardJsonObject.get("discountCoins").getAsInt(),leaderCardJsonObject.get("discountStones").getAsInt());
-                    cardToRead = new LeaderCard(cardId,victoryPoints,resourcesRequired,leaderRequirements,discount);
-                    try{
-                        LeaderCards.add(cardToRead);
-                    }
-                    catch (Exception e){
-                        System.err.println("Error: cardToRead error!");
-                        e.printStackTrace();
-                    }
-                    finally {
-                        cardsInDeck ++;
-                    }
-                }
-                //WHITEMARBLE
-                else if(leaderAbility==2){
-                    int marbleInt = leaderCardJsonObject.get("marbleConversion").getAsInt();
-                    cardToRead = new LeaderCard(cardId,victoryPoints,resourcesRequired,leaderRequirements,marbles[marbleInt]);
-                    try{
-                        LeaderCards.add(cardToRead);
-                    }
-                    catch (Exception e){
-                        System.err.println("Error: cardToRead error!");
-                        e.printStackTrace();
-                    }
-                    finally {
-                        cardsInDeck ++;
-                    }
-                }
-                //PRODUCTIONPOWER
-                else if(leaderAbility==3){
-                    int faith = leaderCardJsonObject.get("outputFaith").getAsInt();
-                    ResourceStack resourcesInput = new ResourceStack(leaderCardJsonObject.get("inputShields").getAsInt(),leaderCardJsonObject.get("inputServants").getAsInt(),leaderCardJsonObject.get("inputCoins").getAsInt(),leaderCardJsonObject.get("inputStones").getAsInt());
-                    int jollyOut = leaderCardJsonObject.get("jollyOut").getAsInt();
-                    cardToRead = new LeaderCard(cardId,victoryPoints,resourcesRequired,leaderRequirements,resourcesInput,jollyOut,faith);
-                    try{
-                        LeaderCards.add(cardToRead);
-                    }
-                    catch (Exception e){
-                        System.err.println("Error: cardToRead error!");
-                        e.printStackTrace();
-                    }
-                    finally {
-                        cardsInDeck ++;
-                    }
-                }
-                //EXTRADEPOT
-                else if(leaderAbility==1){
-                    //        public LeaderCard(int cardId, int victoryPoints, ResourceStack resourcesRequired, LeaderRequirements cards, ResourceType resource) {
-                    int resourceInt = leaderCardJsonObject.get("depotType").getAsInt();
-                    cardToRead = new LeaderCard(cardId,victoryPoints,resourcesRequired,leaderRequirements,resources[resourceInt]);
-                    try{
-                        LeaderCards.add(cardToRead);
-                    }
-                    catch (Exception e){
-                        System.err.println("Error: cardToRead error!");
-                        e.printStackTrace();
-                    }
-                    finally {
-                        cardsInDeck ++;
-                    }
-                }
-            }
-        }catch (FileNotFoundException e) {
-            System.err.println("Error: Missing file!");
-            e.printStackTrace();
-        }catch (Exception e){
-            System.err.println("Error: Input file is corrupt!");
-            e.printStackTrace();
-        }
-        if (cardsInDeck < 16)
-            System.err.println("Error: Not enough cards in JSON file!");
-        return LeaderCards;
-    }
+         /**
+          * A standard and handwritten file is overwritten whenever the player chooses to edit the game parameters.
+          */
 
-}
+         File cards = new File("LeaderCards.json");
+         //File cards = new File("LeaderCards2.json");
+         ArrayList<LeaderCard> LeaderCards = new ArrayList<>();
+         LeaderCard cardToRead;
+
+         Marble[] marbles = Marble.values();
+         ResourceType[] resources = ResourceType.values();
+
+         int cardsInDeck = 0;
+
+         try {
+             JsonElement fileElement = JsonParser.parseReader(new FileReader(cards));
+             JsonObject fileObject = fileElement.getAsJsonObject();
+
+            // int example = fileObject.get("NumberOfCards").getAsInt();
+
+             int blueCardLv1;
+             int purpleCardLv1;
+             int yellowCardLv1;
+             int greenCardLv1;
+             int blueCardLv2;
+             int purpleCardLv2;
+             int yellowCardLv2;
+             int greenCardLv2;
+             int blueCardLv3;
+             int purpleCardLv3;
+             int yellowCardLv3;
+             int greenCardLv3;
+
+             //Extracting card values from JSON
+             JsonArray jsonArrayCards = fileObject.get("LeaderCard").getAsJsonArray();
+             for (JsonElement cardElement : jsonArrayCards) {
+                 //Gets json object
+                 JsonObject leaderCardJsonObject = cardElement.getAsJsonObject();
+                 //LeaderCard Data Extraction
+                 byte leaderAbility = leaderCardJsonObject.get("leaderAbility").getAsByte();
+                 int cardId = leaderCardJsonObject.get("cardId").getAsInt();
+                 int victoryPoints = leaderCardJsonObject.get("victoryPoints").getAsInt();
+                 //Requirements in resources resourcesRequired
+                 ResourceStack resourcesRequired = new ResourceStack(
+                         leaderCardJsonObject.get("needsShields").getAsInt(),
+                         leaderCardJsonObject.get("needsServants").getAsInt(),
+                         leaderCardJsonObject.get("needsCoins").getAsInt(),
+                         leaderCardJsonObject.get("needsStones").getAsInt());
+                 //Reqirements in cards cards
+                 LeaderRequirements leaderRequirements = new LeaderRequirements(
+                         leaderCardJsonObject.get("needsBlueCardLv1").getAsInt(),
+                         leaderCardJsonObject.get("needsPurpleCardLv1").getAsInt(),
+                         leaderCardJsonObject.get("needsYellowCardLv1").getAsInt(),
+                         leaderCardJsonObject.get("needsGreenCardLv1").getAsInt(),
+                         leaderCardJsonObject.get("needsBlueCardLv2").getAsInt(),
+                         leaderCardJsonObject.get("needsPurpleCardLv2").getAsInt(),
+                         leaderCardJsonObject.get("needsYellowCardLv2").getAsInt(),
+                         leaderCardJsonObject.get("needsGreenCardLv2").getAsInt(),
+                         leaderCardJsonObject.get("needsBlueCardLv3").getAsInt(),
+                         leaderCardJsonObject.get("needsPurpleCardLv3").getAsInt(),
+                         leaderCardJsonObject.get("needsYellowCardLv3").getAsInt(),
+                         leaderCardJsonObject.get("needsGreenCardLv3").getAsInt());
+                 //DISCOUNT
+                 if (leaderAbility == 0) {
+                     ResourceStack discount = new ResourceStack(leaderCardJsonObject.get("discountShields").getAsInt(), leaderCardJsonObject.get("discountServants").getAsInt(), leaderCardJsonObject.get("discountCoins").getAsInt(), leaderCardJsonObject.get("discountStones").getAsInt());
+                     cardToRead = new LeaderCard(cardId, victoryPoints, resourcesRequired, leaderRequirements, discount);
+                     try {
+                         LeaderCards.add(cardToRead);
+                     } catch (Exception e) {
+                         System.err.println("Error: cardToRead error!");
+                         e.printStackTrace();
+                     } finally {
+                         cardsInDeck++;
+                     }
+                 }
+                 //WHITEMARBLE
+                 else if (leaderAbility == 2) {
+                     int marbleInt = leaderCardJsonObject.get("marbleConversion").getAsInt();
+                     cardToRead = new LeaderCard(cardId, victoryPoints, resourcesRequired, leaderRequirements, marbles[marbleInt]);
+                     try {
+                         LeaderCards.add(cardToRead);
+                     } catch (Exception e) {
+                         System.err.println("Error: cardToRead error!");
+                         e.printStackTrace();
+                     } finally {
+                         cardsInDeck++;
+                     }
+                 }
+                 //PRODUCTIONPOWER
+                 else if (leaderAbility == 3) {
+                     int faith = leaderCardJsonObject.get("outputFaith").getAsInt();
+                     ResourceStack resourcesInput = new ResourceStack(leaderCardJsonObject.get("inputShields").getAsInt(), leaderCardJsonObject.get("inputServants").getAsInt(), leaderCardJsonObject.get("inputCoins").getAsInt(), leaderCardJsonObject.get("inputStones").getAsInt());
+                     int jollyOut = leaderCardJsonObject.get("jollyOut").getAsInt();
+                     cardToRead = new LeaderCard(cardId, victoryPoints, resourcesRequired, leaderRequirements, resourcesInput, jollyOut, faith);
+                     try {
+                         LeaderCards.add(cardToRead);
+                     } catch (Exception e) {
+                         System.err.println("Error: cardToRead error!");
+                         e.printStackTrace();
+                     } finally {
+                         cardsInDeck++;
+                     }
+                 }
+                 //EXTRADEPOT
+                 else if (leaderAbility == 1) {
+                     //        public LeaderCard(int cardId, int victoryPoints, ResourceStack resourcesRequired, LeaderRequirements cards, ResourceType resource) {
+                     int resourceInt = leaderCardJsonObject.get("depotType").getAsInt();
+                     cardToRead = new LeaderCard(cardId, victoryPoints, resourcesRequired, leaderRequirements, resources[resourceInt]);
+                     try {
+                         LeaderCards.add(cardToRead);
+                     } catch (Exception e) {
+                         System.err.println("Error: cardToRead error!");
+                         e.printStackTrace();
+                     } finally {
+                         cardsInDeck++;
+                     }
+                 }
+             }
+         } catch (FileNotFoundException e) {
+             System.err.println("Error: Missing file!");
+             e.printStackTrace();
+         } catch (Exception e) {
+             System.err.println("Error: Input file is corrupt!");
+             e.printStackTrace();
+         }
+         if (cardsInDeck < 16)
+             System.err.println("Error: Not enough cards in JSON file!");
+         return LeaderCards;
+     }
+ }

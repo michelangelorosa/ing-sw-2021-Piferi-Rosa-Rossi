@@ -110,7 +110,7 @@ public class CardSlotTest {
     }
 
     /**
-     * Test to watch if the method getFirstCard works properly.
+     * Test to watch if the method "getFirstCard" works properly.
      */
 
     @Test
@@ -129,7 +129,7 @@ public class CardSlotTest {
     }
 
     /**
-     * Test to watch if the method sumType works properly by adding three cards to the slot.
+     * Test to watch if the method "sumType" works properly by adding three cards to the slot.
      */
 
     @Test
@@ -137,14 +137,26 @@ public class CardSlotTest {
         test.addCard(card);
         test.addCard(cardTest);
         test.addCard(card3Test);
-        int BlueLv1 = test.sumType(Color.BLUE, Level.ONE);
-        int BlueLv2 = test.sumType(Color.BLUE, Level.TWO);
-        int BlueLv3 = test.sumType(Color.BLUE, Level.THREE);
+        int blueLv1 = test.sumType(Color.BLUE, Level.ONE);
+        int blueLv2 = test.sumType(Color.BLUE, Level.TWO);
+        int blueLv3 = test.sumType(Color.BLUE, Level.THREE);
 
-        assertEquals(1, BlueLv1);
-        assertEquals(1, BlueLv2);
-        assertEquals(1, BlueLv3);
+        assertEquals(1, blueLv1);
+        assertEquals(1, blueLv2);
+        assertEquals(1, blueLv3);
 
+    }
+    /**
+     * Test to watch if the method "sumColors" works properly by adding three cards to the slot.
+     */
+    @Test
+    public void sumColorsTest(){
+        test.addCard(card);
+        test.addCard(cardTest);
+        test.addCard(card3Test);
+        int blueCards = test.sumColors(Color.BLUE);
+
+        assertEquals(3, blueCards);
     }
 
 
