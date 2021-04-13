@@ -19,7 +19,7 @@ public class Player {
     private PlayerStatus status;
     private int victoryPoints;
     private int faithTrackPosition;
-    //private final Board board;
+    private final Board board;
 
     /**
      * Constructor for Player Class.
@@ -31,7 +31,7 @@ public class Player {
         this.status = PlayerStatus.IN_GAME;
         this.victoryPoints = 0;
         this.faithTrackPosition = 0;
-        //board = new Board();
+        board = new Board();
     }
 
     /**
@@ -80,6 +80,10 @@ public class Player {
      */
     public int getFaithTrackPosition() {
         return faithTrackPosition;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 
     /**

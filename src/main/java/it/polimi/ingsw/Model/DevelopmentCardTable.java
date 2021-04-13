@@ -116,7 +116,30 @@ public class DevelopmentCardTable {
      */
     public DevelopmentCard getTopCardFromDeck(int row, int column) {
         DevelopmentCardDeck deck = getDeck(row, column);
-        return deck.getCards()[deck.getCardsInDeck() - 1];
+        if(!deck.isEmpty())
+            return deck.getCards()[deck.getCardsInDeck() - 1];
+        else {
+            System.out.println("This deck is empty. Choose another deck!");
+            return null;
+        }
+    }
+
+    public DevelopmentCard drawCardFromDeck(int row, int column) {
+        DevelopmentCardDeck deck = getDeck(row, column);
+        if(!deck.isEmpty())
+            return deck.drawCard();
+        else
+            return null;
+    }
+
+    public void updateCardToBuyCost(DevelopmentCard cardToBuy, LeaderCard[] leaderCards, ResourceManager resourceManager) {
+        ResourceStack cardCost = cardToBuy.getCost().copyStack();
+
+        for(LeaderCard leaderCard : leaderCards)
+            if(leaderCard.isActive() && leaderCard.getAction() == LeaderCardAction.DISCOUNT)
+                cardCost.removeFromAllTypes(leaderCard.getDiscount());
+
+        resourceManager.setTemporaryResourcesToPay(cardCost);
     }
 
     /**
@@ -147,7 +170,7 @@ public class DevelopmentCardTable {
             return null;
 
         if(!cardToBuyCost.isEmpty())
-            resourceManager.payProductionOrCardPrice(cardToBuyCost);
+            resourceManager.setTemporaryResourcesToPay(cardToBuyCost);
 
         return developmentCardDeck.drawCard();
     }

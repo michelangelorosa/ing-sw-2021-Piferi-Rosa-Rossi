@@ -157,6 +157,24 @@ public class Warehouse {
         return extraResources;
     }
 
+    public boolean canAddToDepot(ResourceType type, WarehouseDepot depot) {
+            if(depot.getResourceType() == ResourceType.NONE && this.areEmptyDepotsFillableByType(type))
+                return true;
+            if(depot.getResourceType() == type && !depot.isFull())
+                return true;
+
+            return false;
+    }
+
+    public boolean canRemoveFromDepot(WarehouseDepot depot){
+        return !depot.isEmpty();
+    }
+
+    public void removeResourceFromDepot(WarehouseDepot depot) {
+        if(!depot.isEmpty())
+            depot.removeResources(1);
+    }
+
     /**
      * This method is used to remove a number of resources of a certain type from the depot.
      * <p>
@@ -219,6 +237,42 @@ public class Warehouse {
 
         if(resourcesToRemove != 0)
             System.err.println("Error: Control Failure(2) -> Tried to remove more resources than stored");
+    }
+
+    public boolean canSwitchDepots(WarehouseDepot firstDepot, WarehouseDepot secondDepot) {
+        if(firstDepot.getStoredResources() > secondDepot.getMaxResources() || secondDepot.getStoredResources() > firstDepot.getMaxResources())
+            return false;
+
+        if(firstDepot.isFromLeaderCardAbility() && secondDepot.isFromLeaderCardAbility() && firstDepot.getResourceType() == secondDepot.getResourceType())
+            return true;
+
+        if(firstDepot.isFromLeaderCardAbility())
+            if(secondDepot.getResourceType() == firstDepot.getResourceType())
+                return true;
+            else if(secondDepot.getResourceType() == ResourceType.NONE && areEmptyDepotsFillableByType(firstDepot.getResourceType()))
+                return true;
+            else
+                return false;
+
+        if(secondDepot.isFromLeaderCardAbility())
+            if(firstDepot.getResourceType() == secondDepot.getResourceType())
+                return true;
+            else if(firstDepot.getResourceType() == ResourceType.NONE && areEmptyDepotsFillableByType(secondDepot.getResourceType()))
+                return true;
+            else
+                return false;
+
+        return true;
+    }
+
+    public void switchDepots(WarehouseDepot firstDepot, WarehouseDepot secondDepot) {
+        ResourceType tempType = firstDepot.getResourceType();
+        int tempStoredResources = firstDepot.getStoredResources();
+
+        firstDepot.setResourceType(secondDepot.getResourceType());
+        firstDepot.setStoredResources(secondDepot.getStoredResources());
+        secondDepot.setResourceType(tempType);
+        secondDepot.setStoredResources(tempStoredResources);
     }
 
     /**
@@ -313,6 +367,61 @@ public class Warehouse {
                 return false;
 
         return true;
+    }
+
+    public boolean canAddResource(ResourceType type) {
+        boolean canAdd = false;
+
+        if(emptyDepotExists() && areEmptyDepotsFillableByType(type))
+            canAdd = true;
+
+        for(int i = 0; i <= 2; i++)
+            if(this.warehouseDepots[i].getResourceType() == type && !this.warehouseDepots[i].isFull())
+                canAdd = true;
+
+        if(this.extraWarehouseDepot1IsActive && this.extraWarehouseDepot1.getResourceType() == type && !this.extraWarehouseDepot1.isFull())
+            canAdd = true;
+
+        if(this.extraWarehouseDepot2IsActive && this.extraWarehouseDepot2.getResourceType() == type && !this.extraWarehouseDepot2.isFull())
+            canAdd = true;
+
+        return canAdd;
+    }
+
+    public Warehouse copyWarehouse() {
+        Warehouse copy = new Warehouse();
+
+        for(int i = 0; i < 3; i++) {
+            copy.getWarehouseDepots()[i].setStoredResources(this.getWarehouseDepots()[i].getStoredResources());
+            copy.getWarehouseDepots()[i].setResourceType(this.getWarehouseDepots()[i].getResourceType());
+        }
+
+        if(this.isExtraWarehouseDepot1IsActive()) {
+            copy.activateLeaderDepot(this.getExtraWarehouseDepot1().getResourceType());
+            copy.getExtraWarehouseDepot1().setStoredResources(this.getExtraWarehouseDepot1().getStoredResources());
+        }
+        if(this.isExtraWarehouseDepot2IsActive()) {
+            copy.activateLeaderDepot(this.getExtraWarehouseDepot2().getResourceType());
+            copy.getExtraWarehouseDepot2().setStoredResources(this.getExtraWarehouseDepot2().getStoredResources());
+        }
+
+        return copy;
+    }
+
+    public void revertWarehouse(Warehouse warehouse) {
+        for(int i = 0; i < 3; i++) {
+            this.getWarehouseDepots()[i].setStoredResources(warehouse.getWarehouseDepots()[i].getStoredResources());
+            this.getWarehouseDepots()[i].setResourceType(warehouse.getWarehouseDepots()[i].getResourceType());
+        }
+
+        this.getExtraWarehouseDepot1().setStoredResources(warehouse.getExtraWarehouseDepot1().getStoredResources());
+        this.getExtraWarehouseDepot1().setResourceType(warehouse.getExtraWarehouseDepot1().getResourceType());
+
+        this.getExtraWarehouseDepot2().setStoredResources(warehouse.getExtraWarehouseDepot2().getStoredResources());
+        this.getExtraWarehouseDepot2().setResourceType(warehouse.getExtraWarehouseDepot2().getResourceType());
+
+        this.extraWarehouseDepot1IsActive = warehouse.isExtraWarehouseDepot1IsActive();
+        this.extraWarehouseDepot2IsActive = warehouse.isExtraWarehouseDepot2IsActive();
     }
 
 }

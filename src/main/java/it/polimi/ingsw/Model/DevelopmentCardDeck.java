@@ -117,6 +117,14 @@ public class DevelopmentCardDeck {
         return cards[--cardsInDeck];
     }
 
+    public DevelopmentCard getTopCard() throws IllegalArgumentException {
+        int position = cardsInDeck - 1;
+        if(isEmpty()) {
+            throw new IllegalArgumentException("Cannot get card from empty deck!");
+        }
+        return cards[position];
+    }
+
     public String toString() {
         return color+" "+level;
     }

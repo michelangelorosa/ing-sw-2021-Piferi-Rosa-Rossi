@@ -124,6 +124,8 @@ public class Market {
         this.marbles[row][2] = newMarbles[2];
         this.marbles[row][3] = newMarbles[3];
 
+        player.getBoard().getResourceManager().setTemporaryResourcesToPay(resourceStack);
+
         return resourceStack;
     }
 
@@ -195,6 +197,8 @@ public class Market {
         this.marbles[0][column] = newMarbles[0];
         this.marbles[1][column] = newMarbles[1];
         this.marbles[2][column] = newMarbles[2];
+
+        player.getBoard().getResourceManager().setTemporaryResourcesToPay(resourceStack);
 
         return resourceStack;
     }

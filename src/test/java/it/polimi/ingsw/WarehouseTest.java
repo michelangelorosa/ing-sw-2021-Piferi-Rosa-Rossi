@@ -166,6 +166,52 @@ public class WarehouseTest {
         assertSame(ResourceType.STONES,warehouse.getWarehouseDepots()[0].getResourceType());
     }
 
+    @Test
+    public void canAddToDepotTest() {
+        warehouse.getWarehouseDepots()[0].setResourceType(ResourceType.SHIELDS);
+        warehouse.getWarehouseDepots()[1].setResourceType(ResourceType.SERVANTS);
+        warehouse.getWarehouseDepots()[2].setResourceType(ResourceType.STONES);
+
+        warehouse.getWarehouseDepots()[0].addResources(3);
+        warehouse.getWarehouseDepots()[1].addResources(1);
+        warehouse.getWarehouseDepots()[2].addResources(0);
+
+        assertFalse(warehouse.canAddToDepot(ResourceType.COINS, warehouse.getWarehouseDepots()[0]));
+        assertFalse(warehouse.canAddToDepot(ResourceType.COINS, warehouse.getWarehouseDepots()[1]));
+        assertFalse(warehouse.canAddToDepot(ResourceType.COINS, warehouse.getWarehouseDepots()[2]));
+
+        assertTrue(warehouse.canAddToDepot(ResourceType.SERVANTS, warehouse.getWarehouseDepots()[1]));
+        assertTrue(warehouse.canAddToDepot(ResourceType.STONES, warehouse.getWarehouseDepots()[2]));
+        assertFalse(warehouse.canAddToDepot(ResourceType.SHIELDS, warehouse.getWarehouseDepots()[0]));
+
+        warehouse.activateLeaderDepot(ResourceType.COINS);
+
+        assertTrue(warehouse.canAddToDepot(ResourceType.COINS, warehouse.getExtraWarehouseDepot1()));
+        assertFalse(warehouse.canAddToDepot(ResourceType.SHIELDS, warehouse.getExtraWarehouseDepot1()));
+
+        warehouse.getWarehouseDepots()[2].setResourceType(ResourceType.NONE);
+        assertTrue(warehouse.canAddToDepot(ResourceType.COINS, warehouse.getWarehouseDepots()[2]));
+        assertFalse(warehouse.canAddToDepot(ResourceType.SHIELDS, warehouse.getWarehouseDepots()[2]));
+    }
+
+    @Test
+    public void removeResourcesFromDepotTest() {
+        warehouse.getWarehouseDepots()[0].setResourceType(ResourceType.SHIELDS);
+        warehouse.getWarehouseDepots()[0].addResources(3);
+
+        assertTrue(warehouse.canRemoveFromDepot(warehouse.getWarehouseDepots()[0]));
+        warehouse.removeResourceFromDepot(warehouse.getWarehouseDepots()[0]);
+        assertEquals(2, warehouse.getWarehouseDepots()[0].getStoredResources());
+        assertTrue(warehouse.canRemoveFromDepot(warehouse.getWarehouseDepots()[0]));
+        warehouse.removeResourceFromDepot(warehouse.getWarehouseDepots()[0]);
+        assertEquals(1, warehouse.getWarehouseDepots()[0].getStoredResources());
+        assertTrue(warehouse.canRemoveFromDepot(warehouse.getWarehouseDepots()[0]));
+        warehouse.removeResourceFromDepot(warehouse.getWarehouseDepots()[0]);
+        assertEquals(0, warehouse.getWarehouseDepots()[0].getStoredResources());
+
+        assertFalse(warehouse.canRemoveFromDepot(warehouse.getWarehouseDepots()[0]));
+    }
+
     /**
      * Test for "removeResourcesByType" method in Warehouse Class.
      */
@@ -502,5 +548,52 @@ public class WarehouseTest {
         assertFalse(warehouse.areEmptyDepotsFillableByType(ResourceType.STONES));
         assertTrue(warehouse.areEmptyDepotsFillableByType(ResourceType.SERVANTS));
         assertTrue(warehouse.areEmptyDepotsFillableByType(ResourceType.COINS));
+    }
+
+    @Test
+    public void canAddResourceTest() {
+        warehouse.getWarehouseDepots()[0].setResourceType(ResourceType.SHIELDS);
+        warehouse.getWarehouseDepots()[1].setResourceType(ResourceType.SERVANTS);
+        warehouse.getWarehouseDepots()[2].setResourceType(ResourceType.STONES);
+
+        warehouse.getWarehouseDepots()[0].addResources(3);
+        warehouse.getWarehouseDepots()[1].addResources(2);
+        warehouse.getWarehouseDepots()[2].addResources(1);
+
+        warehouse.activateLeaderDepot(ResourceType.COINS);
+        warehouse.addResources(2, ResourceType.COINS, warehouse.getExtraWarehouseDepot1());
+
+        assertFalse(warehouse.canAddResource(ResourceType.SHIELDS));
+        assertFalse(warehouse.canAddResource(ResourceType.SERVANTS));
+        assertFalse(warehouse.canAddResource(ResourceType.STONES));
+        assertFalse(warehouse.canAddResource(ResourceType.COINS));
+
+        warehouse.activateLeaderDepot(ResourceType.COINS);
+        assertTrue(warehouse.canAddResource(ResourceType.COINS));
+
+        warehouse.reset();
+
+        warehouse.getWarehouseDepots()[0].setResourceType(ResourceType.SHIELDS);
+        warehouse.getWarehouseDepots()[1].setResourceType(ResourceType.SERVANTS);
+        warehouse.getWarehouseDepots()[2].setResourceType(ResourceType.STONES);
+
+        warehouse.getWarehouseDepots()[0].addResources(2);
+        warehouse.getWarehouseDepots()[1].addResources(1);
+        warehouse.getWarehouseDepots()[2].addResources(0);
+
+        assertTrue(warehouse.canAddResource(ResourceType.SHIELDS));
+        assertTrue(warehouse.canAddResource(ResourceType.SERVANTS));
+        assertTrue(warehouse.canAddResource(ResourceType.STONES));
+        assertFalse(warehouse.canAddResource(ResourceType.COINS));
+
+        warehouse.getWarehouseDepots()[1].addResources(1);
+
+        warehouse.activateLeaderDepot(ResourceType.SERVANTS);
+
+        assertTrue(warehouse.canAddResource(ResourceType.SERVANTS));
+
+        warehouse.getExtraWarehouseDepot1().addResources(1);
+
+        assertTrue(warehouse.canAddResource(ResourceType.SERVANTS));
     }
 }

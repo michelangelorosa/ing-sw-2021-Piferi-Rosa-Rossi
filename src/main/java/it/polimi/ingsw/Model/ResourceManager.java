@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Model;
 
+import java.util.ArrayList;
+
 /**
  * ResourceManager Class contains both a Warehouse and a Strongbox type objects (as final
  * attributes). It is used to group all methods regarding resource management.
@@ -7,6 +9,7 @@ package it.polimi.ingsw.Model;
 public class ResourceManager {
     private final Warehouse warehouse;
     private final Strongbox strongbox;
+    private ResourceStack temporaryResourcesToPay;
 
     /**
      * Constructor for ResourceManagerClass.
@@ -14,6 +17,7 @@ public class ResourceManager {
     public ResourceManager() {
         warehouse = new Warehouse();
         strongbox = new Strongbox();
+        temporaryResourcesToPay = new ResourceStack(0,0,0,0);
     }
 
     /**
@@ -44,11 +48,27 @@ public class ResourceManager {
         return this.warehouse.getExtraWarehouseDepot2();
     }
 
+    public boolean isExtraDepotOneActive() {
+        return this.warehouse.isExtraWarehouseDepot1IsActive();
+    }
+
+    public boolean isExtraDepotTwoActive() {
+        return this.warehouse.isExtraWarehouseDepot2IsActive();
+    }
+
     /**
      * Getter for "strongbox" attribute in ResourceManagerClass.
      */
     public Strongbox getStrongbox() {
         return strongbox;
+    }
+
+    public ResourceStack getTemporaryResourcesToPay() {
+        return temporaryResourcesToPay;
+    }
+
+    public void setTemporaryResourcesToPay(ResourceStack temporaryResourcesToPay) {
+        this.temporaryResourcesToPay = temporaryResourcesToPay;
     }
 
     public void reset() {
@@ -136,45 +156,47 @@ public class ResourceManager {
         return this.warehouse.addResources(resourcesToAdd, type, depot);
     }
 
-    /**
-     * This method is used when the player wants to start a production to remove all resources that have to
-     * be payed before actually starting the process.
-     * <p>
-     * If the number of available resources is not enough to make up for the cost of the production, the
-     * player is notified via a message indicating which types of resources are insufficient.
-     * @param resourceStack is the set of resources to be extracted from the "Resource System" (Warehouse + Strongbox).
-     */
-    public void payProductionOrCardPrice(ResourceStack resourceStack) {
-        boolean cantPay = false;
-        ResourceStack supportStack = resourceStack.copyStack();
-
-        // ---------- CREATES AN ARRAY CONTAINING ALL ResourceTypes (to cycle without counting the NONE type) ---------- //
+    public boolean canAddMarketResources() {
         ResourceType[] resourceTypes = ResourceType.values();
 
-        // ---------- CYCLES THROUGH ALL TYPES TO CHECK IF THE RESOURCE SYSTEM HAS ENOUGH RESOURCES ---------- //
-        for(int i = 1; i <= 4; i++) {
-            if (resourceStack.getResource(resourceTypes[i]) > this.countAllResourcesByType(resourceTypes[i])) {
-                System.out.println("Number of "+resourceTypes[i]+" insufficient!");
-                cantPay = true;
-            }
-        } if(cantPay) return;
+        for(int i = 1; i <= 4; i++)
+            if (this.warehouse.canAddResource(resourceTypes[i]))
+                return true;
 
-        // ---------- CYCLES THROUGH ALL TYPES TO REMOVE THE RESOURCES ---------- //
-        int numberOfResources;
+        return false;
+    }
 
-        for(int i = 1; i <= 4; i++) {
-            numberOfResources = this.warehouse.countResourcesByType(resourceTypes[i]);
+    public boolean canAddToDepot(ResourceType type, WarehouseDepot depot) {
+        return this.warehouse.canAddToDepot(type, depot);
+    }
 
-            if(numberOfResources >= resourceStack.getResource(resourceTypes[i])) {
-                this.warehouse.removeResourcesByType(resourceStack.getResource(resourceTypes[i]), resourceTypes[i]);
-                supportStack.setResource(0, resourceTypes[i]);
-            } else {
-                this.warehouse.removeResourcesByType(numberOfResources, resourceTypes[i]);
-                supportStack.removeResource(numberOfResources, resourceTypes[i]);
-            }
-        }
+    public void addOneResourceToDepot(ResourceType type, WarehouseDepot depot) {
+        this.temporaryResourcesToPay.removeResource(1, type);
+        this.warehouse.addResources(1, type, depot);
+    }
 
-        this.strongbox.removeFromAllTypes(supportStack);
+    public void remainingResourcesToFaith(Player player, ArrayList<Player> players, FaithTrack faithTrack) {
+        ResourceType[] types = ResourceType.values();
+        int faith = this.temporaryResourcesToPay.totalResourcesToInt();
+        faithTrack.allAhead(player, players, faith);
+    }
+
+    public boolean hasPayed() {
+        return temporaryResourcesToPay.isEmpty();
+    }
+
+    public boolean resourceIsNeededToPay(ResourceType resourceType) {
+        return temporaryResourcesToPay.getResource(resourceType) > 0;
+    }
+
+    public void payOneResourceWarehouse(WarehouseDepot depot) {
+        temporaryResourcesToPay.removeResource(1, depot.getResourceType());
+        depot.removeResources(1);
+    }
+
+    public void payOneResourceStrongbox(ResourceType type) {
+        temporaryResourcesToPay.removeResource(1, type);
+        strongbox.removeResourcesByType(1, type);
     }
 
     /**
@@ -201,6 +223,25 @@ public class ResourceManager {
             }
 
         return isBuyable;
+    }
+
+    /**
+     * This method is used to check if a specified leader card is activatable from the player.
+     * <p>
+     * The player is notified if he doesn't have enough resources to activate the leader card.
+     * @param leaderCard is the card the player wants to activate.
+     * @return true if the card is activatable.
+     */
+    public boolean hasResourcesToActivateLeaderCard(LeaderCard leaderCard) {
+        ResourceStack resourcesNeeded = leaderCard.getResourcesRequired();
+        ResourceStack resourcesHad = this.countAllResources();
+        ResourceType[] resourceTypes = ResourceType.values();
+
+        for(int i = 1; i <= 4; i++)
+            if(resourcesHad.getResource(resourceTypes[i]) < resourcesNeeded.getResource(resourceTypes[i]))
+                return false;
+
+        return true;
     }
 
     /**

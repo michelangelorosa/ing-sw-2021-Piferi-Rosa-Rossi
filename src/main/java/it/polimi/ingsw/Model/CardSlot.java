@@ -33,11 +33,19 @@ public class CardSlot {
     }
 
     /**
-     * This method turns true if a slot has 3 cards
+     * This method returns true if a slot has 3 cards.
      * @return true/false
      */
     public boolean isFull(){
         return levelOccupied == 3;
+    }
+
+    /**
+     * This method returns true if a slot is empty.
+     * @return true/false
+     */
+    public boolean isEmpty() {
+        return levelOccupied == 0;
     }
 
 

@@ -191,6 +191,18 @@ public class ResourceStack {
         }
         return  newStack;
     }
+
+    public void revertBack(ResourceStack resourceStack) {
+        ResourceType[] resourceTypes = ResourceType.values();
+
+        for(int i = 1; i <= 4; i++) {
+            this.setResource(resourceStack.getResource(resourceTypes[i]), resourceTypes[i]);
+        }
+    }
+
+    public int totalResourcesToInt() {
+        return this.shields + this.servants + this.coins + this.stones;
+    }
     /**
      * toString override method for ResourceStack Class.
      */

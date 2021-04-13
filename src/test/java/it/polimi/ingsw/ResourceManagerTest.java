@@ -199,234 +199,74 @@ public class ResourceManagerTest {
 
     }
 
-    /**
-     * Test for "addMarketResourcesByType" method in ResourceManager Class.
-     * <p>
-     * Testing includes all possible errors.
-     */
     @Test
-    public void payProductionPriceTest() {
-        ResourceStack resourceStack = new ResourceStack(5, 2, 1, 3);
+    public void canAddMarketResources() {
         resourceManager.reset();
-        resourceManager.addMarketResourcesByType(3, ResourceType.COINS, resourceManager.getWarehouse().getWarehouseDepots()[0]);
-        resourceManager.addMarketResourcesByType(2, ResourceType.SHIELDS, resourceManager.getWarehouse().getWarehouseDepots()[1]);
-        resourceManager.getWarehouse().activateLeaderDepot(ResourceType.STONES);
+        assertTrue(resourceManager.canAddMarketResources());
+        resourceManager.addMarketResourcesByType(3, ResourceType.SHIELDS, resourceManager.getWarehouseDepots()[0]);
+        resourceManager.addMarketResourcesByType(2, ResourceType.COINS, resourceManager.getWarehouseDepots()[1]);
+        resourceManager.addMarketResourcesByType(1, ResourceType.SERVANTS, resourceManager.getWarehouseDepots()[2]);
+        assertFalse(resourceManager.canAddMarketResources());
 
-        resourceManager.addProductionResources(resourceStack);
+        resourceManager.getWarehouse().activateLeaderDepot(ResourceType.COINS);
+        assertTrue(resourceManager.canAddMarketResources());
+    }
 
-        // ---------- ERROR DISPLAY TEST ---------- //
-        resourceStack = new ResourceStack(5, 2, 4, 4);
-        resourceManager.payProductionOrCardPrice(resourceStack);
+    @Test
+    public void canAddToDepot() {
+        resourceManager.addMarketResourcesByType(3, ResourceType.SHIELDS, resourceManager.getWarehouseDepots()[0]);
+        assertFalse(resourceManager.canAddToDepot(ResourceType.SHIELDS, resourceManager.getWarehouseDepots()[0]));
+        assertFalse(resourceManager.canAddToDepot(ResourceType.COINS, resourceManager.getWarehouseDepots()[0]));
+        assertFalse(resourceManager.canAddToDepot(ResourceType.SHIELDS, resourceManager.getWarehouseDepots()[1]));
+        assertFalse(resourceManager.canAddToDepot(ResourceType.SHIELDS, resourceManager.getWarehouseDepots()[2]));
 
-        assertEquals(3, resourceManager.getWarehouse().getWarehouseDepots()[0].getStoredResources());
-        assertEquals(2, resourceManager.getWarehouse().getWarehouseDepots()[1].getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getWarehouseDepots()[2].getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getExtraWarehouseDepot1().getStoredResources());
+        assertTrue(resourceManager.canAddToDepot(ResourceType.COINS, resourceManager.getWarehouseDepots()[1]));
+    }
 
-        // ---------- WAREHOUSE EMPTYING TEST WITH ONE EXTRA DEPOT ---------- //
-        resourceStack = new ResourceStack(5, 2, 4, 0);
-        resourceManager.payProductionOrCardPrice(resourceStack);
-        assertEquals(0, resourceManager.getWarehouse().getWarehouseDepots()[0].getStoredResources());
-        assertEquals(ResourceType.NONE, resourceManager.getWarehouse().getWarehouseDepots()[0].getResourceType());
-        assertEquals(0, resourceManager.getWarehouse().getWarehouseDepots()[1].getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getWarehouseDepots()[2].getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getExtraWarehouseDepot1().getStoredResources());
+    @Test
+    public void addOneResourceToDepotTest() {
+        resourceManager.setTemporaryResourcesToPay(new ResourceStack(2, 1, 0, 0));
+        resourceManager.addOneResourceToDepot(ResourceType.SHIELDS, resourceManager.getWarehouseDepots()[0]);
+        assertEquals(1, resourceManager.getWarehouseDepots()[0].getStoredResources());
+        assertEquals(ResourceType.SHIELDS, resourceManager.getWarehouseDepots()[0].getResourceType());
+        assertEquals(1, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.SHIELDS));
+    }
 
-        assertEquals(2, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.SHIELDS));
-        assertEquals(0, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.SERVANTS));
+    @Test
+    public void hasPayedTest() {
+        assertTrue(resourceManager.hasPayed());
+        ResourceStack resource = new ResourceStack(0,0,0,1);
+        resourceManager.setTemporaryResourcesToPay(resource);
+        assertFalse(resourceManager.hasPayed());
+    }
+
+    @Test
+    public void resourceIsNeededToPayTest() {
+        ResourceStack resource = new ResourceStack(0,0,1,1);
+        resourceManager.setTemporaryResourcesToPay(resource);
+
+        assertFalse(resourceManager.resourceIsNeededToPay(ResourceType.SHIELDS));
+        assertFalse(resourceManager.resourceIsNeededToPay(ResourceType.SERVANTS));
+        assertTrue(resourceManager.resourceIsNeededToPay(ResourceType.COINS));
+        assertTrue(resourceManager.resourceIsNeededToPay(ResourceType.STONES));
+    }
+
+    @Test
+    public void payOneResourceTest() {
+        ResourceStack resource = new ResourceStack(1,0,1,1);
+        resourceManager.setTemporaryResourcesToPay(resource);
+        resourceManager.addMarketResourcesByType(2, ResourceType.SHIELDS, resourceManager.getWarehouseDepots()[0]);
+        resourceManager.addProductionResources(resource);
+
+        resourceManager.payOneResourceWarehouse(resourceManager.getWarehouseDepots()[0]);
+
+        assertEquals(0, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.SHIELDS));
+        assertEquals(1, resourceManager.getWarehouseDepots()[0].getStoredResources());
+
+        resourceManager.payOneResourceStrongbox(ResourceType.COINS);
+        assertEquals(0, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.COINS));
         assertEquals(0, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.COINS));
-        assertEquals(3, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.STONES));
 
-        resourceManager.reset();
-
-        resourceStack = new ResourceStack(1, 1, 1, 0);
-        resourceManager.reset();
-        resourceManager.addMarketResourcesByType(2, ResourceType.COINS, resourceManager.getWarehouse().getWarehouseDepots()[0]);
-        resourceManager.addMarketResourcesByType(2, ResourceType.SHIELDS, resourceManager.getWarehouse().getWarehouseDepots()[1]);
-        resourceManager.addMarketResourcesByType(1, ResourceType.STONES, resourceManager.getWarehouse().getWarehouseDepots()[2]);
-
-        resourceManager.getWarehouse().activateLeaderDepot(ResourceType.STONES);
-        resourceManager.addMarketResourcesByType(1, ResourceType.STONES, resourceManager.getWarehouse().getExtraWarehouseDepot1());
-
-        resourceManager.getWarehouse().activateLeaderDepot(ResourceType.SHIELDS);
-        resourceManager.addMarketResourcesByType(1, ResourceType.SHIELDS, resourceManager.getWarehouse().getExtraWarehouseDepot2());
-
-        resourceManager.addProductionResources(resourceStack);
-
-        // ---------- REMOVE ZERO RESOURCES TEST ---------- //
-        resourceStack = new ResourceStack(0,0,0,0);
-        resourceManager.payProductionOrCardPrice(resourceStack);
-        assertEquals(2, resourceManager.getWarehouse().getWarehouseDepots()[0].getStoredResources());
-        assertEquals(2, resourceManager.getWarehouse().getWarehouseDepots()[1].getStoredResources());
-        assertEquals(1, resourceManager.getWarehouse().getWarehouseDepots()[2].getStoredResources());
-        assertEquals(1, resourceManager.getWarehouse().getExtraWarehouseDepot1().getStoredResources());
-        assertEquals(1, resourceManager.getWarehouse().getExtraWarehouseDepot2().getStoredResources());
-
-        assertEquals(1, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.SHIELDS));
-        assertEquals(1, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.SERVANTS));
-        assertEquals(1, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.COINS));
-        assertEquals(0, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.STONES));
-
-        // ---------- GENERIC TEST WITH TWO EXTRA DEPOTS ---------- //
-        resourceStack = new ResourceStack(2,0,2,2);
-        resourceManager.payProductionOrCardPrice(resourceStack);
-        assertEquals(0, resourceManager.getWarehouse().getWarehouseDepots()[0].getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getWarehouseDepots()[1].getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getWarehouseDepots()[2].getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getExtraWarehouseDepot1().getStoredResources());
-        assertEquals(1, resourceManager.getWarehouse().getExtraWarehouseDepot2().getStoredResources());
-
-        assertEquals(1, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.SHIELDS));
-        assertEquals(1, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.SERVANTS));
-        assertEquals(1, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.COINS));
-        assertEquals(0, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.STONES));
-
-        // ---------- ALL ERROR DISPLAY TEST ---------- //
-        resourceStack = new ResourceStack(3,12,2,2);
-        resourceManager.payProductionOrCardPrice(resourceStack);
-
-        // ---------- EMPTYING WAREHOUSE AND STRONGBOX TEST ---------- //
-        resourceStack = new ResourceStack(2,1,1,0);
-        resourceManager.payProductionOrCardPrice(resourceStack);
-        assertEquals(0, resourceManager.getWarehouse().getWarehouseDepots()[0].getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getWarehouseDepots()[1].getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getWarehouseDepots()[2].getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getExtraWarehouseDepot1().getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getExtraWarehouseDepot2().getStoredResources());
-        assertEquals(ResourceType.NONE, resourceManager.getWarehouse().getWarehouseDepots()[0].getResourceType());
-        assertEquals(ResourceType.NONE, resourceManager.getWarehouse().getWarehouseDepots()[1].getResourceType());
-        assertEquals(ResourceType.NONE, resourceManager.getWarehouse().getWarehouseDepots()[2].getResourceType());
-        assertEquals(ResourceType.STONES, resourceManager.getWarehouse().getExtraWarehouseDepot1().getResourceType());
-        assertEquals(ResourceType.SHIELDS, resourceManager.getWarehouse().getExtraWarehouseDepot2().getResourceType());
-
-        assertEquals(0, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.SHIELDS));
-        assertEquals(0, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.SERVANTS));
-        assertEquals(0, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.COINS));
-        assertEquals(0, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.STONES));
-
-        // ---------- EMPTY WAREHOUSE AND STRONGBOX TEST ---------- //
-        resourceStack = new ResourceStack(2,1,1,0);
-        resourceManager.payProductionOrCardPrice(resourceStack);
-        assertEquals(0, resourceManager.getWarehouse().getWarehouseDepots()[0].getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getWarehouseDepots()[1].getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getWarehouseDepots()[2].getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getExtraWarehouseDepot1().getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getExtraWarehouseDepot2().getStoredResources());
-        assertEquals(ResourceType.NONE, resourceManager.getWarehouse().getWarehouseDepots()[0].getResourceType());
-        assertEquals(ResourceType.NONE, resourceManager.getWarehouse().getWarehouseDepots()[1].getResourceType());
-        assertEquals(ResourceType.NONE, resourceManager.getWarehouse().getWarehouseDepots()[2].getResourceType());
-        assertEquals(ResourceType.STONES, resourceManager.getWarehouse().getExtraWarehouseDepot1().getResourceType());
-        assertEquals(ResourceType.SHIELDS, resourceManager.getWarehouse().getExtraWarehouseDepot2().getResourceType());
-
-        assertEquals(0, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.SHIELDS));
-        assertEquals(0, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.SERVANTS));
-        assertEquals(0, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.COINS));
-        assertEquals(0, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.STONES));
-
-        // ---------- REMOVE NOTHING WITH EMPTY MANAGER TEST ---------- //
-        resourceStack = new ResourceStack(0,0,0,0);
-        resourceManager.payProductionOrCardPrice(resourceStack);
-        assertEquals(0, resourceManager.getWarehouse().getWarehouseDepots()[0].getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getWarehouseDepots()[1].getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getWarehouseDepots()[2].getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getExtraWarehouseDepot1().getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getExtraWarehouseDepot2().getStoredResources());
-        assertEquals(ResourceType.NONE, resourceManager.getWarehouse().getWarehouseDepots()[0].getResourceType());
-        assertEquals(ResourceType.NONE, resourceManager.getWarehouse().getWarehouseDepots()[1].getResourceType());
-        assertEquals(ResourceType.NONE, resourceManager.getWarehouse().getWarehouseDepots()[2].getResourceType());
-        assertEquals(ResourceType.STONES, resourceManager.getWarehouse().getExtraWarehouseDepot1().getResourceType());
-        assertEquals(ResourceType.SHIELDS, resourceManager.getWarehouse().getExtraWarehouseDepot2().getResourceType());
-
-        assertEquals(0, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.SHIELDS));
-        assertEquals(0, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.SERVANTS));
-        assertEquals(0, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.COINS));
-        assertEquals(0, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.STONES));
-
-        resourceManager.reset();
-
-        resourceStack = new ResourceStack(20, 20, 20, 20);
-        resourceManager.reset();
-        resourceManager.addMarketResourcesByType(3, ResourceType.COINS, resourceManager.getWarehouse().getWarehouseDepots()[0]);
-        resourceManager.addMarketResourcesByType(2, ResourceType.SHIELDS, resourceManager.getWarehouse().getWarehouseDepots()[1]);
-        resourceManager.getWarehouse().activateLeaderDepot(ResourceType.STONES);
-        resourceManager.addMarketResourcesByType(1, ResourceType.STONES, resourceManager.getWarehouse().getExtraWarehouseDepot1());
-
-        resourceManager.addProductionResources(resourceStack);
-
-        // ---------- SINGLE RESOURCE TYPE TEST ---------- //
-        resourceStack = new ResourceStack(5, 0, 0, 0);
-        resourceManager.payProductionOrCardPrice(resourceStack);
-        assertEquals(3, resourceManager.getWarehouse().getWarehouseDepots()[0].getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getWarehouseDepots()[1].getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getWarehouseDepots()[2].getStoredResources());
-        assertEquals(1, resourceManager.getWarehouse().getExtraWarehouseDepot1().getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getExtraWarehouseDepot2().getStoredResources());
-        assertEquals(ResourceType.COINS, resourceManager.getWarehouse().getWarehouseDepots()[0].getResourceType());
-        assertEquals(ResourceType.NONE, resourceManager.getWarehouse().getWarehouseDepots()[1].getResourceType());
-        assertEquals(ResourceType.NONE, resourceManager.getWarehouse().getWarehouseDepots()[2].getResourceType());
-        assertEquals(ResourceType.STONES, resourceManager.getWarehouse().getExtraWarehouseDepot1().getResourceType());
-
-        assertEquals(17, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.SHIELDS));
-        assertEquals(20, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.SERVANTS));
-        assertEquals(20, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.COINS));
-        assertEquals(20, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.STONES));
-
-        // ---------- SINGLE RESOURCE TYPE TEST ---------- //
-        resourceStack = new ResourceStack(0, 5, 0, 0);
-        resourceManager.payProductionOrCardPrice(resourceStack);
-
-        assertEquals(3, resourceManager.getWarehouse().getWarehouseDepots()[0].getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getWarehouseDepots()[1].getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getWarehouseDepots()[2].getStoredResources());
-        assertEquals(1, resourceManager.getWarehouse().getExtraWarehouseDepot1().getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getExtraWarehouseDepot2().getStoredResources());
-        assertEquals(ResourceType.COINS, resourceManager.getWarehouse().getWarehouseDepots()[0].getResourceType());
-        assertEquals(ResourceType.NONE, resourceManager.getWarehouse().getWarehouseDepots()[1].getResourceType());
-        assertEquals(ResourceType.NONE, resourceManager.getWarehouse().getWarehouseDepots()[2].getResourceType());
-        assertEquals(ResourceType.STONES, resourceManager.getWarehouse().getExtraWarehouseDepot1().getResourceType());
-
-        assertEquals(17, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.SHIELDS));
-        assertEquals(15, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.SERVANTS));
-        assertEquals(20, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.COINS));
-        assertEquals(20, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.STONES));
-
-        // ---------- SINGLE RESOURCE TYPE TEST ---------- //
-        resourceStack = new ResourceStack(0, 0, 5, 0);
-        resourceManager.payProductionOrCardPrice(resourceStack);
-
-        assertEquals(0, resourceManager.getWarehouse().getWarehouseDepots()[0].getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getWarehouseDepots()[1].getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getWarehouseDepots()[2].getStoredResources());
-        assertEquals(1, resourceManager.getWarehouse().getExtraWarehouseDepot1().getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getExtraWarehouseDepot2().getStoredResources());
-        assertEquals(ResourceType.NONE, resourceManager.getWarehouse().getWarehouseDepots()[0].getResourceType());
-        assertEquals(ResourceType.NONE, resourceManager.getWarehouse().getWarehouseDepots()[1].getResourceType());
-        assertEquals(ResourceType.NONE, resourceManager.getWarehouse().getWarehouseDepots()[2].getResourceType());
-        assertEquals(ResourceType.STONES, resourceManager.getWarehouse().getExtraWarehouseDepot1().getResourceType());
-
-        assertEquals(17, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.SHIELDS));
-        assertEquals(15, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.SERVANTS));
-        assertEquals(18, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.COINS));
-        assertEquals(20, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.STONES));
-
-        // ---------- SINGLE RESOURCE TYPE TEST ---------- //
-        resourceStack = new ResourceStack(0, 0, 0, 5);
-        resourceManager.payProductionOrCardPrice(resourceStack);
-
-        assertEquals(0, resourceManager.getWarehouse().getWarehouseDepots()[0].getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getWarehouseDepots()[1].getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getWarehouseDepots()[2].getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getExtraWarehouseDepot1().getStoredResources());
-        assertEquals(0, resourceManager.getWarehouse().getExtraWarehouseDepot2().getStoredResources());
-        assertEquals(ResourceType.NONE, resourceManager.getWarehouse().getWarehouseDepots()[0].getResourceType());
-        assertEquals(ResourceType.NONE, resourceManager.getWarehouse().getWarehouseDepots()[1].getResourceType());
-        assertEquals(ResourceType.NONE, resourceManager.getWarehouse().getWarehouseDepots()[2].getResourceType());
-        assertEquals(ResourceType.STONES, resourceManager.getWarehouse().getExtraWarehouseDepot1().getResourceType());
-
-        assertEquals(17, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.SHIELDS));
-        assertEquals(15, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.SERVANTS));
-        assertEquals(18, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.COINS));
-        assertEquals(16, resourceManager.getStrongbox().getStoredResources().getResource(ResourceType.STONES));
     }
 
     /**
