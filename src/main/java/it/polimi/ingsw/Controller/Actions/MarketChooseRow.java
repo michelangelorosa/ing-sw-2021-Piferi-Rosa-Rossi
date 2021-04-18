@@ -2,23 +2,18 @@ package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Model.*;
 
-public class MarketChooseRow {
-    private final ActionType action;
+public class MarketChooseRow extends Action implements ActionInterface {
     private final boolean row;
     private final int rowOrColumnNumber;
-    private final boolean leaderCard;
-    private final int leaderCardPosition;
 
-    public MarketChooseRow(boolean row, int rowOrColumnNumber, boolean leaderCard, int leaderCardPosition) {
-        this.action = ActionType.MARKET_CHOOSE_ROW;
+    public MarketChooseRow(boolean row, int rowOrColumnNumber) {
+        this.actionType = ActionType.MARKET_CHOOSE_ROW;
         this.row = row;
         this.rowOrColumnNumber = rowOrColumnNumber;
-        this.leaderCard = leaderCard;
-        this.leaderCardPosition = leaderCardPosition;
     }
 
     public ActionType getAction() {
-        return action;
+        return actionType;
     }
 
     public boolean isRow() {
@@ -29,14 +24,7 @@ public class MarketChooseRow {
         return rowOrColumnNumber;
     }
 
-    public boolean isLeaderCard() {
-        return leaderCard;
-    }
-
-    public int getLeaderCardPosition() {
-        return leaderCardPosition;
-    }
-
+    @Override
     public boolean isCorrect() throws IllegalArgumentException {
         if(rowOrColumnNumber < 0 || (row && rowOrColumnNumber > 2) || (!row && rowOrColumnNumber > 3))
             throw new IllegalArgumentException("Row or Column index out of bounds.");
@@ -44,35 +32,47 @@ public class MarketChooseRow {
         return true;
     }
 
-    public boolean canBeApplied(Player player) {
-        return !leaderCard || (player.getBoard().getLeaderCards()[leaderCardPosition].isActive() && player.getBoard().getLeaderCards()[leaderCardPosition].getAction() == LeaderCardAction.WHITEMARBLE);
+    @Override
+    public boolean canBeApplied(Game game) {
+        return true;
     }
 
-    public String marketChooseRow(ChooseLeaderCard choice, ResetWarehouse resetWarehouse, Game game) {
+    @Override
+    public String doAction(Game game, ChooseProductionOutput chooseProductionOutput, ChooseCardSlot chooseCardSlot, ResetWarehouse resetWarehouse) {
         this.isCorrect();
 
-        if(!this.canBeApplied(game.getCurrentPlayer()))
-            return "Leader Card is not active or not of right type";
-
-        LeaderCard leaderCard;
-        LeaderCard card1 = game.getCurrentPlayer().getBoard().getLeaderCards()[0];
-        LeaderCard card2 = game.getCurrentPlayer().getBoard().getLeaderCards()[1];
-
-        if(this.leaderCard)
-            leaderCard = game.getCurrentPlayer().getBoard().getLeaderCards()[this.leaderCardPosition];
-        else if(card1.isActive() && card1.getAction() == LeaderCardAction.WHITEMARBLE && card2.isActive() && card2.getAction() == LeaderCardAction.WHITEMARBLE)
-            leaderCard = choice.chooseLeaderCard(game);
-        else
-            leaderCard = null;
-
         if(this.row)
-            game.getMarket().rowToResources(this.getRowOrColumnNumber(), game.getCurrentPlayer(), leaderCard);
+            game.getMarket().rowToResources(this.getRowOrColumnNumber(), game.getCurrentPlayer());
         else
-            game.getMarket().columnToResources(this.getRowOrColumnNumber(), game.getCurrentPlayer(), leaderCard);
+            game.getMarket().columnToResources(this.getRowOrColumnNumber(), game.getCurrentPlayer());
 
         resetWarehouse.setBackupWarehouse(game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().copyWarehouse());
         resetWarehouse.setBackupResources(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().copyStack());
 
-        return "SUCCESS";
+        return this.leaderCardCheck(game);
+    }
+
+    public String leaderCardCheck(Game game) {
+        LeaderCard[] leaderCards = game.getCurrentPlayer().getBoard().getLeaderCards();
+
+        if(leaderCards[0].isActive() && leaderCards[0].getAction() == LeaderCardAction.WHITEMARBLE && leaderCards[1].isActive() && leaderCards[1].getAction() == LeaderCardAction.WHITEMARBLE)
+            return "Choose Leader Card";
+
+        else if(leaderCards[0].isActive() && leaderCards[0].getAction() == LeaderCardAction.WHITEMARBLE && (!leaderCards[1].isActive() || leaderCards[1].getAction() != LeaderCardAction.WHITEMARBLE)) {
+            while(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryWhiteMarbles() > 0)
+                game.getMarket().whiteMarbleToResource(game.getCurrentPlayer(), leaderCards[0]);
+            return "SUCCESS";
+        }
+
+        else if(leaderCards[1].isActive() && leaderCards[1].getAction() == LeaderCardAction.WHITEMARBLE && (!leaderCards[0].isActive() || leaderCards[0].getAction() != LeaderCardAction.WHITEMARBLE)) {
+            while(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryWhiteMarbles() > 0)
+                game.getMarket().whiteMarbleToResource(game.getCurrentPlayer(), leaderCards[1]);
+            return "SUCCESS";
+        }
+
+        else {
+            game.getCurrentPlayer().getBoard().getResourceManager().setTemporaryWhiteMarbles(0);
+            return "SUCCESS";
+        }
     }
 }

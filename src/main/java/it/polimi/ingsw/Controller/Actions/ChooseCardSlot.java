@@ -4,8 +4,7 @@ import it.polimi.ingsw.Model.DevelopmentCardDeck;
 import it.polimi.ingsw.Model.DevelopmentCardSlots;
 import it.polimi.ingsw.Model.Game;
 
-public class ChooseCardSlot {
-    private final ActionType actionType;
+public class ChooseCardSlot extends Action implements ActionInterface {
     private final int cardSlot;
     private int rowCardToBuy;
     private int columnCardToBuy;
@@ -39,13 +38,20 @@ public class ChooseCardSlot {
         this.columnCardToBuy = columnCardToBuy;
     }
 
+    @Override
     public boolean isCorrect() throws IllegalArgumentException {
         if(cardSlot < 0 || cardSlot > 2)
             throw new IllegalArgumentException("Card Slot index out of bounds.");
         return true;
     }
 
-    public String chooseCardSlot(Game game) {
+    @Override
+    public boolean canBeApplied(Game game) {
+        return true;
+    }
+
+    @Override
+    public String doAction(Game game, ChooseProductionOutput chooseProductionOutput, ChooseCardSlot chooseCardSlot, ResetWarehouse resetWarehouse) {
         this.isCorrect();
 
         DevelopmentCardSlots slots = game.getCurrentPlayer().getBoard().getDevelopmentCardSlots();

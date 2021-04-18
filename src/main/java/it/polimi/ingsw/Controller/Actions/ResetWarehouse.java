@@ -2,15 +2,15 @@ package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.ResourceStack;
+import it.polimi.ingsw.Model.ResourceType;
 import it.polimi.ingsw.Model.Warehouse;
 
-public class ResetWarehouse {
+public class ResetWarehouse extends Action implements ActionInterface {
     private Warehouse backupWarehouse;
     private ResourceStack backupResources;
 
-    public ResetWarehouse(Warehouse backupWarehouse, ResourceStack backupResources) {
-        this.backupWarehouse = backupWarehouse;
-        this.backupResources = backupResources;
+    public ResetWarehouse() {
+        this.actionType = ActionType.RESET_WAREHOUSE;
     }
 
     public Warehouse getBackupWarehouse() {
@@ -29,7 +29,18 @@ public class ResetWarehouse {
         this.backupResources = backupResources;
     }
 
-    public String doResetWarehouse(Game game) {
+    @Override
+    public boolean isCorrect() {
+        return true;
+    }
+
+    @Override
+    public boolean canBeApplied(Game game) {
+        return true;
+    }
+
+    @Override
+    public String doAction(Game game, ChooseProductionOutput chooseProductionOutput, ChooseCardSlot chooseCardSlot, ResetWarehouse resetWarehouse) {
         game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().revertWarehouse(this.backupWarehouse);
         game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().revertBack(this.backupResources);
 
@@ -37,5 +48,12 @@ public class ResetWarehouse {
         this.backupResources = game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().copyStack();
 
         return "SUCCESS";
+    }
+
+    public void emptyBackupResource() {
+        this.backupWarehouse.reset();
+        ResourceType[] resourceTypes = ResourceType.values();
+        for(int i = 1; i <= 4; i++)
+            this.getBackupResources().setResource(0, resourceTypes[i]);
     }
 }

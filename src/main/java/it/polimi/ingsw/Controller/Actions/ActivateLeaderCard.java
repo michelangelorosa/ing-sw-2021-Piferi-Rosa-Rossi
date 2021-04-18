@@ -7,8 +7,8 @@ import it.polimi.ingsw.Model.Game;
  * ActivateLeaderClass contains data and methods to resolve a Client request regarding Leader
  * Card activation.
  */
-public class ActivateLeaderCard {
-    private final ActionType actionType;
+public class ActivateLeaderCard extends Action implements ActionInterface {
+
     /** "leaderCard" is an int type attribute containing the card's position int the player's Leader Card deck. */
     private final int leaderCard;
 
@@ -34,6 +34,7 @@ public class ActivateLeaderCard {
      * @return true if the message is correct.
      * @throws IllegalArgumentException if "leaderCard" is not 0 nor 1.
      */
+    @Override
     public boolean isCorrect() throws IllegalArgumentException {
         if(leaderCard != 0 && leaderCard != 1)
             throw new IllegalArgumentException("Leader Card index out of bounds.");
@@ -45,6 +46,7 @@ public class ActivateLeaderCard {
      * @param game is the instance of the Game which is being played.
      * @return false if the Leader Card was already active, true if not.
      */
+    @Override
     public boolean canBeApplied(Game game) {
         if(game.getCurrentPlayer().getBoard().getLeaderCards()[this.leaderCard].isActive())
             return false;
@@ -57,7 +59,8 @@ public class ActivateLeaderCard {
      * @param game is the instance of the Game which is being played.
      * @return a String containing an error message or a SUCCESS statement.
      */
-    public String doActivateLeaderCard(Game game) {
+    @Override
+    public String doAction(Game game, ChooseProductionOutput chooseProductionOutput, ChooseCardSlot chooseCardSlot, ResetWarehouse resetWarehouse) {
         this.isCorrect();
         if(!this.canBeApplied(game))
             return "Leader Card has already been activated";

@@ -6,6 +6,7 @@ public class Board {
     private final ResourceManager resourceManager;
     private final DevelopmentCardSlots developmentCardSlots;
     private final LeaderCard[] leaderCards;
+    private BasicProduction basicProduction;
 
 
     public Board() {
@@ -26,7 +27,15 @@ public class Board {
         return leaderCards;
     }
 
-    public boolean canStartProduction(ArrayList<DevelopmentCard> developmentCards, ArrayList<LeaderCard> leaderCards, boolean wantsBasicProduction, ResourceType[] inputs) {
+    public BasicProduction getBasicProduction() {
+        return basicProduction;
+    }
+
+    public void setBasicProduction(BasicProduction basicProduction) {
+        this.basicProduction = basicProduction;
+    }
+
+    public boolean canStartProduction(ArrayList<DevelopmentCard> developmentCards, ArrayList<LeaderCard> leaderCards, boolean wantsBasicProduction, ArrayList<ResourceType> inputs) {
         ResourceStack totalInput = new ResourceStack(0, 0, 0, 0);
         ResourceType[] resourceTypes = ResourceType.values();
 
@@ -38,19 +47,20 @@ public class Board {
             for(LeaderCard leaderCard : leaderCards)
                 totalInput.addToAllTypes(leaderCard.getInput());
 
-       if(wantsBasicProduction)
-           for(ResourceType type : inputs)
+       if(wantsBasicProduction) {
+           for (ResourceType type : inputs)
                totalInput.addResource(1, type);
+           totalInput.addToAllTypes(this.basicProduction.getFixedInputs());
+       }
 
        for(int i = 1; i <= 4; i++)
            if(resourceManager.countAllResourcesByType(resourceTypes[i]) < totalInput.getResource(resourceTypes[i]))
                 return false;
 
-           this.resourceManager.setTemporaryResourcesToPay(totalInput);
        return true;
     }
 
-    public void getProductionCost(ArrayList<DevelopmentCard> developmentCards, ArrayList<LeaderCard> leaderCards, boolean wantsBasicProduction, ResourceType[] inputs) {
+    public void getProductionCost(ArrayList<DevelopmentCard> developmentCards, ArrayList<LeaderCard> leaderCards, boolean wantsBasicProduction, ArrayList<ResourceType> inputs) {
         ResourceStack totalInput = new ResourceStack(0,0,0,0);
 
         if(developmentCards != null && developmentCards.size() > 0)
@@ -61,14 +71,16 @@ public class Board {
             for (LeaderCard leaderCard : leaderCards)
                 totalInput.addToAllTypes(leaderCard.getInput());
 
-        if(wantsBasicProduction)
+        if(wantsBasicProduction) {
             for (ResourceType input : inputs)
                 totalInput.addResource(1, input);
+            totalInput.addToAllTypes(this.basicProduction.getFixedInputs());
+        }
 
         this.resourceManager.setTemporaryResourcesToPay(totalInput);
     }
 
-    public void getProductionOutput(Player player, ArrayList<DevelopmentCard> developmentCards, ArrayList<LeaderCard> leaderCards, ArrayList<ResourceType> leaderCardsJollies, boolean wantsBasicProduction, ResourceType output) {
+    public ResourceStack getFixedProductionOutput(Player player, ArrayList<DevelopmentCard> developmentCards, boolean wantsBasicProduction) {
         ResourceStack totalOutput = new ResourceStack(0,0,0,0);
         int outputFaithPoints = 0;
 
@@ -79,21 +91,17 @@ public class Board {
             }
         }
 
-        if(leaderCards != null && leaderCards.size() > 0) {
-            for(int i = 0; i < leaderCards.size(); i++) {
-                totalOutput.addResource(leaderCards.get(i).getJollyOut(), leaderCardsJollies.get(i));
-                outputFaithPoints += leaderCards.get(i).getFaith();
-            }
-        }
-
         if(wantsBasicProduction) {
-            totalOutput.addResource(1, output);
+            totalOutput.addToAllTypes(this.basicProduction.getFixedOutputs());
+            outputFaithPoints += this.basicProduction.getOutputFaith();
         }
 
         if(outputFaithPoints > 0)
             player.stepAhead(outputFaithPoints);
         if(!totalOutput.isEmpty())
-            this.resourceManager.addProductionResources(totalOutput);
+            return totalOutput;
+        else
+            return new ResourceStack(0,0,0,0);
     }
 
     public boolean canActivateLeaderCard(LeaderCard leaderCard) {

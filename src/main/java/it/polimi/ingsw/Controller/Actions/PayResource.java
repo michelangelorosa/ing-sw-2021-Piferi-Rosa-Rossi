@@ -2,8 +2,7 @@ package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Model.*;
 
-public class PayResource {
-    private final ActionType actionType;
+public class PayResource extends Action implements ActionInterface {
     private final boolean fromWarehouse;
     private final int depot;
     private final ResourceType resourceType;
@@ -31,6 +30,7 @@ public class PayResource {
         return resourceType;
     }
 
+    @Override
     public boolean isCorrect() throws IllegalArgumentException {
         if(depot < 0 || depot > 4)
             throw new IllegalArgumentException("Depot index out of bounds.");
@@ -44,7 +44,10 @@ public class PayResource {
         return true;
     }
 
-    public boolean canBeApplied(Player player) {
+    @Override
+    public boolean canBeApplied(Game game) {
+        Player player = game.getCurrentPlayer();
+
         if(!fromWarehouse)
             return true;
         else
@@ -55,10 +58,11 @@ public class PayResource {
             return true;
     }
 
-    public String payResource(Game game) {
+    @Override
+    public String doAction(Game game, ChooseProductionOutput chooseProductionOutput, ChooseCardSlot chooseCardSlot, ResetWarehouse resetWarehouse) {
         this.isCorrect();
 
-        if(!this.canBeApplied(game.getCurrentPlayer()))
+        if(!this.canBeApplied(game))
             return "Can't take resource from a non active depot";
 
         ResourceManager resourceManager = game.getCurrentPlayer().getBoard().getResourceManager();

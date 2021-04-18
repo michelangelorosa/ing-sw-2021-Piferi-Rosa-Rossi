@@ -7,8 +7,7 @@ import it.polimi.ingsw.Model.*;
  * a resource from the Market into his Warehouse.
  */
 
-public class AddResource {
-    private final ActionType actionType;
+public class AddResource extends Action implements ActionInterface {
     private final int depot;
     private final ResourceType resourceType;
 
@@ -30,13 +29,16 @@ public class AddResource {
         return resourceType;
     }
 
+    @Override
     public boolean isCorrect() throws IllegalArgumentException {
         if(resourceType == ResourceType.NONE || depot < 0 || depot > 4)
             throw new IllegalArgumentException("Depot index out of bounds.");
         return true;
     }
 
-    public boolean canBeApplied(Player player) {
+    @Override
+    public boolean canBeApplied(Game game) {
+        Player player = game.getCurrentPlayer();
         if(!player.getBoard().getResourceManager().isExtraDepotOneActive() && depot == 3)
             return false;
 
@@ -46,10 +48,11 @@ public class AddResource {
         else return true;
     }
 
-    public String addResource(Game game) {
+    @Override
+    public String doAction(Game game, ChooseProductionOutput chooseProductionOutput, ChooseCardSlot chooseCardSlot, ResetWarehouse resetWarehouse) {
         this.isCorrect();
 
-        if(!this.canBeApplied(game.getCurrentPlayer()))
+        if(!this.canBeApplied(game))
             return "Extra depot is not active";
 
         WarehouseDepot depot;

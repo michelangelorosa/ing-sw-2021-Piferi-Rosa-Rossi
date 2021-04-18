@@ -2,8 +2,7 @@ package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Model.*;
 
-public class SwitchDepot {
-    private final ActionType actionType;
+public class SwitchDepot extends Action implements ActionInterface {
     private final int firstDepot;
     private final int secondDepot;
 
@@ -25,6 +24,7 @@ public class SwitchDepot {
         return secondDepot;
     }
 
+    @Override
     public boolean isCorrect() throws IllegalArgumentException {
         if(firstDepot < 0 || firstDepot > 4)
             throw new IllegalArgumentException("First Depot index out of bounds.");
@@ -33,7 +33,9 @@ public class SwitchDepot {
         return true;
     }
 
-    public boolean canBeApplied(Player player) {
+    @Override
+    public boolean canBeApplied(Game game) {
+        Player player = game.getCurrentPlayer();
         if(!player.getBoard().getResourceManager().isExtraDepotOneActive() && (firstDepot == 3 || secondDepot == 3))
             return false;
         if(!player.getBoard().getResourceManager().isExtraDepotTwoActive() && (firstDepot == 4 || secondDepot == 4))
@@ -42,9 +44,10 @@ public class SwitchDepot {
         return true;
     }
 
-    public String switchDepot(Game game) {
+    @Override
+    public String doAction(Game game, ChooseProductionOutput chooseProductionOutput, ChooseCardSlot chooseCardSlot, ResetWarehouse resetWarehouse) {
         this.isCorrect();
-        if(!this.canBeApplied(game.getCurrentPlayer()))
+        if(!this.canBeApplied(game))
             return "Can't switch from/to non active depot";
 
         ResourceManager resourceManager = game.getCurrentPlayer().getBoard().getResourceManager();

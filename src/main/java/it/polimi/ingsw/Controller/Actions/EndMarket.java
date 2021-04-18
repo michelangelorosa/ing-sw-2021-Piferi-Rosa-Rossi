@@ -3,19 +3,27 @@ package it.polimi.ingsw.Controller.Actions;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.ResourceType;
 
-public class EndMarket {
+public class EndMarket extends Action implements ActionInterface {
 
     public EndMarket() {
-
+        this.actionType = ActionType.END_MARKET;
     }
 
-    public String remainingResourcesToFaith(Game game, ResetWarehouse resetWarehouse) {
+    @Override
+    public boolean isCorrect() {
+        return true;
+    }
+
+    @Override
+    public boolean canBeApplied(Game game) {
+        return true;
+    }
+
+    @Override
+    public String doAction(Game game, ChooseProductionOutput chooseProductionOutput, ChooseCardSlot chooseCardSlot, ResetWarehouse resetWarehouse) {
         ResourceType[] resourceTypes = ResourceType.values();
         game.getCurrentPlayer().getBoard().getResourceManager().remainingResourcesToFaith(game.getCurrentPlayer(), game.getPlayers(), game.getFaithTrack());
-
-        resetWarehouse.getBackupWarehouse().reset();
-        for(int i = 1; i <= 4; i++)
-            resetWarehouse.getBackupResources().setResource(0, resourceTypes[i]);
+        resetWarehouse.emptyBackupResource();
 
         return "SUCCESS";
     }

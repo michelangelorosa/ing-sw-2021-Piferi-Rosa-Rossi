@@ -5,8 +5,7 @@ import it.polimi.ingsw.Model.DevelopmentCardSlots;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.ResourceManager;
 
-public class BuyCard {
-    private final ActionType actionType;
+public class BuyCard extends Action implements ActionInterface{
     private final int row;
     private final int column;
 
@@ -28,6 +27,7 @@ public class BuyCard {
         return column;
     }
 
+    @Override
     public boolean isCorrect() throws IllegalArgumentException {
         if(row < 0 || row > 2)
             throw new IllegalArgumentException("Row index out of bounds.");
@@ -36,7 +36,13 @@ public class BuyCard {
         return true;
     }
 
-    public String startBuyCard(ChooseCardSlot chooseCardSlot, Game game) {
+    @Override
+    public boolean canBeApplied(Game game) {
+        return true;
+    }
+
+    @Override
+    public String doAction(Game game, ChooseProductionOutput chooseProductionOutput, ChooseCardSlot chooseCardSlot, ResetWarehouse resetWarehouse) {
         this.isCorrect();
 
         DevelopmentCard card;

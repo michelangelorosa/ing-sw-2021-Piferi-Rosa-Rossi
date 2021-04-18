@@ -24,8 +24,9 @@ public enum ActionType {
     END_PAY_PRODUCTION("end_pay_production"),
     CHOOSE_PRODUCTION_OUTPUT("choose_production_output"),
 
-    ACTIVATE_LEADERCARD("activate_leadercard");
+    ACTIVATE_LEADERCARD("activate_leadercard"),
 
+    END_TURN("end_turn");
     private String text;
 
     ActionType(String text) {
