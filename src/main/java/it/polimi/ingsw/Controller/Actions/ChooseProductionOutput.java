@@ -2,14 +2,15 @@ package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Model.*;
 
-public class ChooseProductionOutput {
-    private final ActionType actionType;
+import java.util.ArrayList;
+
+public class ChooseProductionOutput extends Action implements ActionInterface {
     private boolean firstLeaderCard;
     private boolean secondLeaderCard;
     private boolean basicProduction;
-    private ResourceType firstLeaderCardOutput;
-    private ResourceType secondLeaderCardOutput;
-    private ResourceType basicProductionOutput;
+    private ArrayList<ResourceType> firstLeaderCardOutput;
+    private ArrayList<ResourceType> secondLeaderCardOutput;
+    private ArrayList<ResourceType> basicProductionOutput;
 
     private ResourceStack output;
 
@@ -40,15 +41,15 @@ public class ChooseProductionOutput {
         return basicProduction;
     }
 
-    public ResourceType getFirstLeaderCardOutput() {
+    public ArrayList<ResourceType> getFirstLeaderCardOutput() {
         return firstLeaderCardOutput;
     }
 
-    public ResourceType getSecondLeaderCardOutput() {
+    public ArrayList<ResourceType> getSecondLeaderCardOutput() {
         return secondLeaderCardOutput;
     }
 
-    public ResourceType getBasicProductionOutput() {
+    public ArrayList<ResourceType> getBasicProductionOutput() {
         return basicProductionOutput;
     }
 
@@ -68,38 +69,70 @@ public class ChooseProductionOutput {
         this.basicProduction = basicProduction;
     }
 
-    public void setFirstLeaderCardOutput(ResourceType firstLeaderCardOutput) {
+    public void setFirstLeaderCardOutput(ArrayList<ResourceType> firstLeaderCardOutput) {
         this.firstLeaderCardOutput = firstLeaderCardOutput;
     }
 
-    public void setSecondLeaderCardOutput(ResourceType secondLeaderCardOutput) {
+    public void setSecondLeaderCardOutput(ArrayList<ResourceType> secondLeaderCardOutput) {
         this.secondLeaderCardOutput = secondLeaderCardOutput;
     }
 
-    public void setBasicProductionOutput(ResourceType basicProductionOutput) {
+    public void setBasicProductionOutput(ArrayList<ResourceType> basicProductionOutput) {
         this.basicProductionOutput = basicProductionOutput;
     }
 
+    @Override
     public boolean isCorrect() throws IllegalArgumentException {
-        if((firstLeaderCard && firstLeaderCardOutput == ResourceType.NONE) || (!firstLeaderCard && firstLeaderCardOutput != ResourceType.NONE))
-            throw new IllegalArgumentException("First Leader Card output Type out of bounds.");
-        if((secondLeaderCard && secondLeaderCardOutput == ResourceType.NONE) || (!secondLeaderCard && secondLeaderCardOutput != ResourceType.NONE))
-            throw new IllegalArgumentException("Second Leader output Card Type out of bounds.");
-        if((basicProduction && basicProductionOutput == ResourceType.NONE) || (!basicProduction && basicProductionOutput != ResourceType.NONE))
-            throw new IllegalArgumentException("Basic Production output Type out of bounds.");
+        if(firstLeaderCard)
+            for(ResourceType type : firstLeaderCardOutput)
+                if(type == ResourceType.NONE)
+                    throw new IllegalArgumentException("1- One resource was of type NONE.");
+
+        if(secondLeaderCard)
+            for(ResourceType type : secondLeaderCardOutput)
+                if(type == ResourceType.NONE)
+                    throw new IllegalArgumentException("2- One resource was of type NONE.");
+
+        if(basicProduction)
+            for(ResourceType type : basicProductionOutput)
+                if(type == ResourceType.NONE)
+                    throw new IllegalArgumentException("3- One resource was of type NONE.");
 
         return true;
     }
 
-    public String doChooseProductionOutput(Game game) {
+    @Override
+    public boolean canBeApplied(Game game) {
+        if(firstLeaderCard)
+            if(!(game.getCurrentPlayer().getBoard().getLeaderCards()[0].isActive()) || firstLeaderCardOutput.size() != game.getCurrentPlayer().getBoard().getLeaderCards()[0].getJollyOut() || game.getCurrentPlayer().getBoard().getLeaderCards()[0].getAction() != LeaderCardAction.PRODUCTIONPOWER)
+                return false;
+
+        if(secondLeaderCard)
+            if(!(game.getCurrentPlayer().getBoard().getLeaderCards()[1].isActive()) || secondLeaderCardOutput.size() != game.getCurrentPlayer().getBoard().getLeaderCards()[1].getJollyOut() || game.getCurrentPlayer().getBoard().getLeaderCards()[1].getAction() != LeaderCardAction.PRODUCTIONPOWER)
+                return false;
+
+        if(basicProduction)
+            if(basicProductionOutput.size() != game.getCurrentPlayer().getBoard().getBasicProduction().getJollyOut())
+                return false;
+
+        return true;
+    }
+
+    @Override
+    public String doAction(Game game, ChooseProductionOutput chooseProductionOutput, ChooseCardSlot chooseCardSlot, ResetWarehouse resetWarehouse) {
         this.isCorrect();
+        if(!this.canBeApplied(game))
+            return "Tried to use not valid Leader Cards or tried to get more resources than possible.";
 
         if(firstLeaderCard)
-            output.addResource(1, firstLeaderCardOutput);
+            for(ResourceType type : this.basicProductionOutput)
+                output.addResource(1, type);
         if(secondLeaderCard)
-            output.addResource(1, secondLeaderCardOutput);
+            for(ResourceType type : this.basicProductionOutput)
+                output.addResource(1, type);
         if(basicProduction)
-            output.addResource(1, basicProductionOutput);
+            for(ResourceType type : this.basicProductionOutput)
+                output.addResource(1, type);
 
         game.getCurrentPlayer().getBoard().getResourceManager().addProductionResources(output);
 
