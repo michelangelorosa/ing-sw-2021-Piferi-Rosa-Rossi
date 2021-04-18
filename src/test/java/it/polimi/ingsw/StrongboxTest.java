@@ -5,12 +5,17 @@ import static org.junit.Assert.*;
 import it.polimi.ingsw.Model.ResourceStack;
 import it.polimi.ingsw.Model.ResourceType;
 import it.polimi.ingsw.Model.Strongbox;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * Unit test for Strongbox Class.
  */
 public class StrongboxTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     Strongbox strongbox = new Strongbox();
 
     /**
@@ -144,20 +149,19 @@ public class StrongboxTest {
         strongbox.addResourcesByType(3, ResourceType.COINS);
         strongbox.addResourcesByType(4, ResourceType.STONES);
 
-        strongbox.addResourcesByType(3, ResourceType.SHIELDS);
-        strongbox.addResourcesByType(5, ResourceType.SERVANTS);
-        strongbox.addResourcesByType(11, ResourceType.COINS);
-        strongbox.addResourcesByType(0, ResourceType.STONES);
+        strongbox.removeOneResourcesByType(ResourceType.SHIELDS);
+        strongbox.removeOneResourcesByType(ResourceType.SERVANTS);
+        strongbox.removeOneResourcesByType(ResourceType.COINS);
+        strongbox.removeOneResourcesByType(ResourceType.STONES);
 
-        strongbox.removeResourcesByType(6, ResourceType.SHIELDS);
-        strongbox.removeResourcesByType(7, ResourceType.SERVANTS);
-        strongbox.removeResourcesByType(6, ResourceType.COINS);
-        strongbox.removeResourcesByType(1, ResourceType.STONES);
-
-        assertEquals(4, strongbox.countResourcesByType(ResourceType.SHIELDS));
-        assertEquals(0, strongbox.countResourcesByType(ResourceType.SERVANTS));
-        assertEquals(8, strongbox.countResourcesByType(ResourceType.COINS));
+        assertEquals(0, strongbox.countResourcesByType(ResourceType.SHIELDS));
+        assertEquals(1, strongbox.countResourcesByType(ResourceType.SERVANTS));
+        assertEquals(2, strongbox.countResourcesByType(ResourceType.COINS));
         assertEquals(3, strongbox.countResourcesByType(ResourceType.STONES));
+
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("Model: Strongbox does not have any SHIELDS left.");
+        strongbox.removeOneResourcesByType(ResourceType.SHIELDS);
     }
 
     /**

@@ -79,24 +79,17 @@ public class Strongbox {
     }
 
     /**
-     * This method is used to remove resources of a specified type to the strongbox.
-     * If the strongbox's number of resources of the specified type is lower than the number of resources that
-     * have to be removed, an error message is displayed and the method returns the number of resources that have
-     * yet to be removed (all of them).
-     * @param resourcesToRemove is the number of resources to remove.
+     * This method is used to remove one resource of a specified type to the strongbox.
+     * If the strongbox's number of resources of the specified type is equal or less than 0,
+     * an exception is thrown.
      * @param resourceType is the type of the resources which are to be added.
-     * @return 0 if resources have been removed successfully, else the number of resources which had to be
-     * removed.
+     * @exception IllegalArgumentException Thrown if the number of specified Type resource is 0.
      */
-    public int removeResourcesByType(int resourcesToRemove, ResourceType resourceType) {
-        if(this.countResourcesByType(resourceType) >= resourcesToRemove) {
-            this.storedResources.removeResource(resourcesToRemove, resourceType);
-            return 0;
-        }
-        else {
-            System.err.println("Error: Strongbox doesn't have that many " + resourceType);
-            return resourcesToRemove;
-        }
+    public void removeOneResourcesByType(ResourceType resourceType) throws IllegalArgumentException {
+        if(this.countResourcesByType(resourceType) <= 0)
+            throw new IllegalArgumentException("Model: Strongbox does not have any "+resourceType+" left.");
+
+        this.storedResources.removeResource(1, resourceType);
     }
 
     /**

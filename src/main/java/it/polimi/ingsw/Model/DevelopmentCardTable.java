@@ -110,8 +110,8 @@ public class DevelopmentCardTable {
 
     /**
      * This method returns the card at the top of the deck corresponding to the specified coordinates.
-     * @param row is the row corresponding to the deck.
-     * @param column is the column corresponding to the deck.
+     * @param row the deck's row index.
+     * @param column the deck's column index.
      * @return the requested Development Card.
      */
     public DevelopmentCard getTopCardFromDeck(int row, int column) {
@@ -124,6 +124,12 @@ public class DevelopmentCardTable {
         }
     }
 
+    /**
+     * This method is used to draw one card from a specified deck inside the Development Card Table.
+     * @param row the deck's row index.
+     * @param column the deck's column index.
+     * @return the requested Development Card.
+     */
     public DevelopmentCard drawCardFromDeck(int row, int column) {
         DevelopmentCardDeck deck = getDeck(row, column);
         if(!deck.isEmpty())
@@ -132,6 +138,13 @@ public class DevelopmentCardTable {
             return null;
     }
 
+    /**
+     * This method is used when a player wants to buy a specified Development Card to update the card's cost,
+     * preparing the player for the paying process.
+     * @param cardToBuy Development Card which the player wants to buy.
+     * @param leaderCards player's owned Leader Cards.
+     * @param resourceManager player's Resource Manager System.
+     */
     public void updateCardToBuyCost(DevelopmentCard cardToBuy, LeaderCard[] leaderCards, ResourceManager resourceManager) {
         ResourceStack cardCost = cardToBuy.getCost().copyStack();
 
@@ -140,39 +153,6 @@ public class DevelopmentCardTable {
                 cardCost.removeFromAllTypes(leaderCard.getDiscount());
 
         resourceManager.setTemporaryResourcesToPay(cardCost);
-    }
-
-    /**
-     * This method is used to buy a development card from a specified deck.
-     * <p>
-     * If the deck is empty or the player doesn't have enough resources to buy the card,
-     * he is notified and the method returns null;
-     * @param developmentCardDeck is the deck form which to buy the card.
-     * @param resourceManager is the resource manager of the player from which the payment is taken.
-     * @return the desired card if the deck is not full and the player has enough resources.
-     */
-    public DevelopmentCard buyCard(DevelopmentCardDeck developmentCardDeck, ResourceManager resourceManager, LeaderCard[] leaderCards) {
-        if(developmentCardDeck.isEmpty()) {
-            System.out.println("This deck is empty. Choose another deck!");
-            return null;
-        }
-        DevelopmentCard cardToBuy = developmentCardDeck.getCards()[developmentCardDeck.getCardsInDeck() - 1];
-
-        if(!resourceManager.cardIsBuyable(cardToBuy, leaderCards))
-            return null;
-        ResourceStack cardToBuyCost = cardToBuy.getCost().copyStack();
-
-        for(LeaderCard leaderCard : leaderCards)
-            if(leaderCard.isActive() && leaderCard.getAction() == LeaderCardAction.DISCOUNT)
-                cardToBuyCost.removeFromAllTypes(leaderCard.getDiscount());
-
-        if(!resourceManager.cardIsBuyable(cardToBuy, leaderCards))
-            return null;
-
-        if(!cardToBuyCost.isEmpty())
-            resourceManager.setTemporaryResourcesToPay(cardToBuyCost);
-
-        return developmentCardDeck.drawCard();
     }
 
 }

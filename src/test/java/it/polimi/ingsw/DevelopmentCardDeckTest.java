@@ -3,12 +3,16 @@ package it.polimi.ingsw;
 import static org.junit.Assert.*;
 
 import it.polimi.ingsw.Model.*;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * Unit test for DevelopmentCardDeck Class.
  */
 public class DevelopmentCardDeckTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     /**
      * Here a new DevelopmentCardDeck object is created along with four different DevelopmentCard objects.
@@ -154,18 +158,51 @@ public class DevelopmentCardDeckTest {
      */
     @Test
     public void drawCardTest() {
-
         DevelopmentCard cardToDraw;
-
         deck.addCard(card);
         deck.addCard(card1);
         deck.addCard(card2);
         deck.addCard(card3);
 
         cardToDraw = deck.drawCard();
-
         assertSame(card3, cardToDraw);
         assertEquals(3, deck.getCardsInDeck());
+
+        cardToDraw = deck.drawCard();
+        assertSame(card2, cardToDraw);
+        assertEquals(2, deck.getCardsInDeck());
+
+        cardToDraw = deck.drawCard();
+        assertSame(card1, cardToDraw);
+        assertEquals(1, deck.getCardsInDeck());
+
+        cardToDraw = deck.drawCard();
+        assertSame(card, cardToDraw);
+        assertEquals(0, deck.getCardsInDeck());
+
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("Cannot draw card from empty deck!");
+        cardToDraw = deck.drawCard();
+    }
+
+    /**
+     * Test for "getTopCard" method in DevelopmentCardDeck Class.
+     */
+    @Test
+    public void getTopCard() {
+        DevelopmentCard cardToGet;
+        deck.addCard(card);
+        deck.addCard(card1);
+        deck.addCard(card2);
+        deck.addCard(card3);
+
+        cardToGet = deck.getTopCard();
+        assertSame(card3, cardToGet);
+
+        DevelopmentCardDeck emptyDeck = new DevelopmentCardDeck(Color.GREEN, Level.TWO);
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("Cannot get card from empty deck!");
+        cardToGet = emptyDeck.getTopCard();
     }
 
     /**

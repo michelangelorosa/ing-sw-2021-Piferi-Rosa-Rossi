@@ -3,12 +3,17 @@ package it.polimi.ingsw;
 import static org.junit.Assert.*;
 
 import it.polimi.ingsw.Model.*;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * Unit test for ResourceManager Class.
  */
 public class ResourceManagerTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     ResourceManager resourceManager = new ResourceManager();
     ResourceType[] resourceTypes = ResourceType.values();
 
@@ -21,6 +26,60 @@ public class ResourceManagerTest {
             assertEquals(0, resourceManager.getWarehouse().countResourcesByType(resourceTypes[i]));
             assertEquals(0, resourceManager.getStrongbox().countResourcesByType(resourceTypes[i]));
         }
+    }
+
+    /**
+     * Setter and Getter test for ResourceManager Class.
+     */
+    @Test
+    public void setterGetterTest() {
+        ResourceStack resourceStack = new ResourceStack(1,2,3,4);
+        resourceManager.setTemporaryResourcesToPay(resourceStack);
+        resourceManager.setTemporaryWhiteMarbles(4);
+
+        assertEquals(1, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.SHIELDS));
+        assertEquals(2, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.SERVANTS));
+        assertEquals(3, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.COINS));
+        assertEquals(4, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.STONES));
+
+        assertEquals(4, resourceManager.getTemporaryWhiteMarbles());
+
+        for(int i = 0; i < 3; i ++) {
+            assertEquals(ResourceType.NONE, resourceManager.getWarehouseDepots()[i].getResourceType());
+            assertEquals(0, resourceManager.getWarehouseDepots()[i].getStoredResources());
+        }
+
+        assertEquals(ResourceType.NONE, resourceManager.getExtraWarehouseDepotOne().getResourceType());
+        assertEquals(0, resourceManager.getExtraWarehouseDepotOne().getStoredResources());
+        assertFalse(resourceManager.isExtraDepotOneActive());
+
+        assertEquals(ResourceType.NONE, resourceManager.getExtraWarehouseDepotTwo().getResourceType());
+        assertEquals(0, resourceManager.getExtraWarehouseDepotTwo().getStoredResources());
+        assertFalse(resourceManager.isExtraDepotTwoActive());
+
+    }
+
+    /**
+     * Test for "addWhiteMarble" and "removeWhiteMarble" method in ResourceManager Class.
+     */
+    @Test
+    public void addRemoveWhiteMarbleTest() {
+        assertEquals(0, resourceManager.getTemporaryWhiteMarbles());
+        resourceManager.addWhiteMarble();
+        assertEquals(1, resourceManager.getTemporaryWhiteMarbles());
+        resourceManager.addWhiteMarble();
+        assertEquals(2, resourceManager.getTemporaryWhiteMarbles());
+        resourceManager.addWhiteMarble();
+        assertEquals(3, resourceManager.getTemporaryWhiteMarbles());
+        resourceManager.removeWhiteMarble();
+        assertEquals(2, resourceManager.getTemporaryWhiteMarbles());
+        resourceManager.removeWhiteMarble();
+        assertEquals(1, resourceManager.getTemporaryWhiteMarbles());
+        resourceManager.removeWhiteMarble();
+        assertEquals(0, resourceManager.getTemporaryWhiteMarbles());
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("TemporaryWhiteMarbles number is already 0.");
+        resourceManager.removeWhiteMarble();
     }
 
     /**
@@ -172,11 +231,8 @@ public class ResourceManagerTest {
         resourceManager.getWarehouse().getExtraWarehouseDepot2().setStoredResources(0);
 
         assertEquals(1, resourceManager.addMarketResourcesByType(4, ResourceType.SHIELDS, resourceManager.getWarehouse().getWarehouseDepots()[0]));
-
         assertEquals(1, resourceManager.addMarketResourcesByType(1, ResourceType.COINS, resourceManager.getWarehouse().getExtraWarehouseDepot1()));
-
         assertEquals(4, resourceManager.addMarketResourcesByType(4, ResourceType.SHIELDS, resourceManager.getWarehouse().getExtraWarehouseDepot2()));
-
         assertEquals(2, resourceManager.addMarketResourcesByType(4, ResourceType.SHIELDS, resourceManager.getWarehouse().getExtraWarehouseDepot1()));
 
         this.resourceManager.reset();
@@ -190,11 +246,8 @@ public class ResourceManagerTest {
         assertEquals(2, resourceManager.addMarketResourcesByType(2, ResourceType.SHIELDS, resourceManager.getWarehouse().getWarehouseDepots()[1]));
 
         assertEquals(0, resourceManager.addMarketResourcesByType(1, ResourceType.SHIELDS, resourceManager.getWarehouse().getWarehouseDepots()[0]));
-
         assertEquals(0, resourceManager.addMarketResourcesByType(2, ResourceType.SERVANTS, resourceManager.getWarehouse().getWarehouseDepots()[1]));
-
         assertEquals(0, resourceManager.addMarketResourcesByType(1, ResourceType.COINS, resourceManager.getWarehouse().getWarehouseDepots()[2]));
-
         assertEquals(1, resourceManager.addMarketResourcesByType(1, ResourceType.COINS, resourceManager.getWarehouse().getWarehouseDepots()[2]));
 
     }
@@ -378,6 +431,27 @@ public class ResourceManagerTest {
         assertTrue(resourceManager.cardIsBuyable(card2, leaderCards));
     }
 
+    @Test
+    public void hasResourcesToActivateLeaderCardTest() {
+        ResourceStack cost = new ResourceStack(1,1,1,1);
+        LeaderRequirements leaderRequirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
+
+        LeaderCard leaderCard = new LeaderCard(1, 1, cost, leaderRequirements, cost);
+        ResourceStack resourceStack = new ResourceStack(5, 2, 1, 3);
+        resourceManager.reset();
+        assertFalse(resourceManager.hasResourcesToActivateLeaderCard(leaderCard));
+
+        resourceManager.addMarketResourcesByType(3, ResourceType.COINS, resourceManager.getWarehouse().getWarehouseDepots()[0]);
+        resourceManager.addMarketResourcesByType(2, ResourceType.SHIELDS, resourceManager.getWarehouse().getWarehouseDepots()[1]);
+        resourceManager.getWarehouse().activateLeaderDepot(ResourceType.STONES);
+
+        assertFalse(resourceManager.hasResourcesToActivateLeaderCard(leaderCard));
+
+        resourceManager.addProductionResources(resourceStack);
+
+        assertTrue(resourceManager.hasResourcesToActivateLeaderCard(leaderCard));
+    }
+
     /**
      * Test for "activateLeaderDepot" method in ResourceManager Class.
      */
@@ -388,7 +462,12 @@ public class ResourceManagerTest {
         LeaderCard extraDepot1 = new LeaderCard(1, 1, stack, leaderRequirements, ResourceType.COINS);
         LeaderCard extraDepot2 = new LeaderCard(1, 1, stack, leaderRequirements, ResourceType.SHIELDS);
 
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("EXTRADEPOT LeaderAbility has to be active to activate extra depot");
         resourceManager.activateLeaderDepot(extraDepot1);
+
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("EXTRADEPOT LeaderAbility has to be active to activate extra depot");
         resourceManager.activateLeaderDepot(extraDepot2);
 
         assertFalse(resourceManager.getWarehouse().isExtraWarehouseDepot1IsActive());

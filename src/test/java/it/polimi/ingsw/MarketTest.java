@@ -3,12 +3,17 @@ package it.polimi.ingsw;
 import static org.junit.Assert.*;
 
 import it.polimi.ingsw.Model.*;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * Unit test for Market Class.
  */
 public class MarketTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     Market market = new Market();
     FaithTrack faithTrack = new FaithTrack();
     Player player = new Player("antonio", 1, false);
@@ -32,7 +37,7 @@ public class MarketTest {
     }
 
     /**
-     * Test for "rowToResources" method in Market Class.
+     * Test for "rowToResources" and "whiteMarbleToResource" methods in Market Class.
      */
     @Test
     public void rowToResourcesTest() {
@@ -40,68 +45,68 @@ public class MarketTest {
 
         System.out.println(market.toString()+"   "+market.getExtraMarble()+System.lineSeparator());
 
-        ResourceStack stack = market.rowToResources(1, player, null);
+        market.rowToResources(1, player);
 
-        assertEquals(0, stack.getResource(ResourceType.SHIELDS));
-        assertEquals(0, stack.getResource(ResourceType.SERVANTS));
-        assertEquals(0, stack.getResource(ResourceType.COINS));
-        assertEquals(2, stack.getResource(ResourceType.STONES));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SHIELDS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SERVANTS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.COINS));
+        assertEquals(2, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.STONES));
 
         assertEquals(0, player.getFaithTrackPosition());
 
         System.out.println(market.toString()+"   "+market.getExtraMarble()+System.lineSeparator());
 
-        stack = market.rowToResources(0, player, null);
+        market.rowToResources(0, player);
 
-        assertEquals(2, stack.getResource(ResourceType.SHIELDS));
-        assertEquals(0, stack.getResource(ResourceType.SERVANTS));
-        assertEquals(1, stack.getResource(ResourceType.COINS));
-        assertEquals(0, stack.getResource(ResourceType.STONES));
+        assertEquals(2, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SHIELDS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SERVANTS));
+        assertEquals(1, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.COINS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.STONES));
 
         assertEquals(1, player.getFaithTrackPosition());
 
         System.out.println(market.toString()+"   "+market.getExtraMarble()+System.lineSeparator());
 
-        stack = market.rowToResources(2, player, null);
+        market.rowToResources(2, player);
 
-        assertEquals(0, stack.getResource(ResourceType.SHIELDS));
-        assertEquals(1, stack.getResource(ResourceType.SERVANTS));
-        assertEquals(1, stack.getResource(ResourceType.COINS));
-        assertEquals(0, stack.getResource(ResourceType.STONES));
-
-        assertEquals(3, player.getFaithTrackPosition());
-
-        System.out.println(market.toString()+"   "+market.getExtraMarble()+System.lineSeparator());
-
-
-
-        stack = market.rowToResources(1, player, null);
-
-        assertEquals(0, stack.getResource(ResourceType.SHIELDS));
-        assertEquals(0, stack.getResource(ResourceType.SERVANTS));
-        assertEquals(0, stack.getResource(ResourceType.COINS));
-        assertEquals(1, stack.getResource(ResourceType.STONES));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SHIELDS));
+        assertEquals(1, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SERVANTS));
+        assertEquals(1, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.COINS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.STONES));
 
         assertEquals(3, player.getFaithTrackPosition());
 
         System.out.println(market.toString()+"   "+market.getExtraMarble()+System.lineSeparator());
 
-        stack = market.rowToResources(0, player, null);
+
+
+        market.rowToResources(1, player);
+
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SHIELDS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SERVANTS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.COINS));
+        assertEquals(1, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.STONES));
+
+        assertEquals(3, player.getFaithTrackPosition());
+
         System.out.println(market.toString()+"   "+market.getExtraMarble()+System.lineSeparator());
 
-        assertEquals(1, stack.getResource(ResourceType.SHIELDS));
-        assertEquals(0, stack.getResource(ResourceType.SERVANTS));
-        assertEquals(1, stack.getResource(ResourceType.COINS));
-        assertEquals(1, stack.getResource(ResourceType.STONES));
+        market.rowToResources(0, player);
+        System.out.println(market.toString()+"   "+market.getExtraMarble()+System.lineSeparator());
+
+        assertEquals(1, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SHIELDS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SERVANTS));
+        assertEquals(1, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.COINS));
+        assertEquals(1, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.STONES));
 
         assertEquals(4, player.getFaithTrackPosition());
 
-        stack = market.rowToResources(2, player, null);
+        market.rowToResources(2, player);
 
-        assertEquals(1, stack.getResource(ResourceType.SHIELDS));
-        assertEquals(0, stack.getResource(ResourceType.SERVANTS));
-        assertEquals(1, stack.getResource(ResourceType.COINS));
-        assertEquals(0, stack.getResource(ResourceType.STONES));
+        assertEquals(1, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SHIELDS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SERVANTS));
+        assertEquals(1, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.COINS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.STONES));
 
         assertEquals(6, player.getFaithTrackPosition());
 
@@ -111,30 +116,39 @@ public class MarketTest {
         market2.testMethod();
 
         LeaderRequirements leaderRequirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
-        LeaderCard whiteMarbleOne = new LeaderCard(1, 1, stack, leaderRequirements, Marble.YELLOW);
-        LeaderCard whiteMarbleTwo = new LeaderCard(1, 1, stack, leaderRequirements, Marble.BLUE);
+        LeaderCard whiteMarbleOne = new LeaderCard(1, 1, player.getBoard().getResourceManager().getTemporaryResourcesToPay(), leaderRequirements, Marble.YELLOW);
+        LeaderCard whiteMarbleTwo = new LeaderCard(1, 1, player.getBoard().getResourceManager().getTemporaryResourcesToPay(), leaderRequirements, Marble.BLUE);
 
         whiteMarbleOne.setActive(true);
 
-        stack = market2.rowToResources(1, player, whiteMarbleOne);
+        market2.rowToResources(1, player);
 
-        assertEquals(0, stack.getResource(ResourceType.SHIELDS));
-        assertEquals(0, stack.getResource(ResourceType.SERVANTS));
-        assertEquals(2, stack.getResource(ResourceType.COINS));
-        assertEquals(2, stack.getResource(ResourceType.STONES));
+        while(player.getBoard().getResourceManager().getTemporaryWhiteMarbles() > 0)
+            market2.whiteMarbleToResource(player, whiteMarbleOne);
+
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SHIELDS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SERVANTS));
+        assertEquals(2, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.COINS));
+        assertEquals(2, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.STONES));
 
         whiteMarbleTwo.setActive(true);
 
-        stack = market2.rowToResources(1, player, whiteMarbleTwo);
+        market2.rowToResources(1, player);
+        while(player.getBoard().getResourceManager().getTemporaryWhiteMarbles() > 0)
+            market2.whiteMarbleToResource(player, whiteMarbleTwo);
 
-        assertEquals(3, stack.getResource(ResourceType.SHIELDS));
-        assertEquals(0, stack.getResource(ResourceType.SERVANTS));
-        assertEquals(0, stack.getResource(ResourceType.COINS));
-        assertEquals(1, stack.getResource(ResourceType.STONES));
+        assertEquals(3, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SHIELDS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SERVANTS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.COINS));
+        assertEquals(1, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.STONES));
+
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("No White Marbles to convert.");
+        market2.whiteMarbleToResource(player, whiteMarbleTwo);
     }
 
     /**
-     * Test for "columnToResources" method in Market Class.
+     * Test for "columnToResources" and "whiteMarbleToResource" methods in Market Class.
      */
     @Test
     public void columnToResourcesTest() {
@@ -142,45 +156,45 @@ public class MarketTest {
 
         System.out.println(market.toString()+"   "+market.getExtraMarble()+System.lineSeparator());
 
-        ResourceStack stack = market.columnToResources(1, player, null);
+        market.columnToResources(1, player);
 
-        assertEquals(0, stack.getResource(ResourceType.SHIELDS));
-        assertEquals(0, stack.getResource(ResourceType.SERVANTS));
-        assertEquals(1, stack.getResource(ResourceType.COINS));
-        assertEquals(1, stack.getResource(ResourceType.STONES));
-
-        assertEquals(1, player.getFaithTrackPosition());
-
-        System.out.println(market.toString()+"   "+market.getExtraMarble()+System.lineSeparator());
-
-        stack = market.columnToResources(0, player, null);
-
-        assertEquals(1, stack.getResource(ResourceType.SHIELDS));
-        assertEquals(1, stack.getResource(ResourceType.SERVANTS));
-        assertEquals(0, stack.getResource(ResourceType.COINS));
-        assertEquals(1, stack.getResource(ResourceType.STONES));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SHIELDS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SERVANTS));
+        assertEquals(1, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.COINS));
+        assertEquals(1, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.STONES));
 
         assertEquals(1, player.getFaithTrackPosition());
 
         System.out.println(market.toString()+"   "+market.getExtraMarble()+System.lineSeparator());
 
-        stack = market.columnToResources(2, player, null);
+        market.columnToResources(0, player);
 
-        assertEquals(0, stack.getResource(ResourceType.SHIELDS));
-        assertEquals(0, stack.getResource(ResourceType.SERVANTS));
-        assertEquals(1, stack.getResource(ResourceType.COINS));
-        assertEquals(0, stack.getResource(ResourceType.STONES));
+        assertEquals(1, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SHIELDS));
+        assertEquals(1, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SERVANTS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.COINS));
+        assertEquals(1, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.STONES));
+
+        assertEquals(1, player.getFaithTrackPosition());
+
+        System.out.println(market.toString()+"   "+market.getExtraMarble()+System.lineSeparator());
+
+        market.columnToResources(2, player);
+
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SHIELDS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SERVANTS));
+        assertEquals(1, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.COINS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.STONES));
 
         assertEquals(2, player.getFaithTrackPosition());
 
         System.out.println(market.toString()+"   "+market.getExtraMarble()+System.lineSeparator());
 
-        stack = market.columnToResources(3, player, null);
+        market.columnToResources(3, player);
 
-        assertEquals(1, stack.getResource(ResourceType.SHIELDS));
-        assertEquals(0, stack.getResource(ResourceType.SERVANTS));
-        assertEquals(0, stack.getResource(ResourceType.COINS));
-        assertEquals(0, stack.getResource(ResourceType.STONES));
+        assertEquals(1, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SHIELDS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SERVANTS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.COINS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.STONES));
 
         assertEquals(3, player.getFaithTrackPosition());
 
@@ -188,45 +202,45 @@ public class MarketTest {
 
 
 
-        stack = market.columnToResources(1, player, null);
+        market.columnToResources(1, player);
 
-        assertEquals(0, stack.getResource(ResourceType.SHIELDS));
-        assertEquals(0, stack.getResource(ResourceType.SERVANTS));
-        assertEquals(0, stack.getResource(ResourceType.COINS));
-        assertEquals(1, stack.getResource(ResourceType.STONES));
-
-        assertEquals(4, player.getFaithTrackPosition());
-
-        System.out.println(market.toString()+"   "+market.getExtraMarble()+System.lineSeparator());
-
-        stack = market.columnToResources(0, player, null);
-
-        assertEquals(0, stack.getResource(ResourceType.SHIELDS));
-        assertEquals(1, stack.getResource(ResourceType.SERVANTS));
-        assertEquals(1, stack.getResource(ResourceType.COINS));
-        assertEquals(1, stack.getResource(ResourceType.STONES));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SHIELDS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SERVANTS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.COINS));
+        assertEquals(1, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.STONES));
 
         assertEquals(4, player.getFaithTrackPosition());
 
         System.out.println(market.toString()+"   "+market.getExtraMarble()+System.lineSeparator());
 
-        stack = market.columnToResources(2, player, null);
+        market.columnToResources(0, player);
 
-        assertEquals(1, stack.getResource(ResourceType.SHIELDS));
-        assertEquals(0, stack.getResource(ResourceType.SERVANTS));
-        assertEquals(1, stack.getResource(ResourceType.COINS));
-        assertEquals(0, stack.getResource(ResourceType.STONES));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SHIELDS));
+        assertEquals(1, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SERVANTS));
+        assertEquals(1, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.COINS));
+        assertEquals(1, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.STONES));
 
         assertEquals(4, player.getFaithTrackPosition());
 
         System.out.println(market.toString()+"   "+market.getExtraMarble()+System.lineSeparator());
 
-        stack = market.columnToResources(3, player, null);
+        market.columnToResources(2, player);
 
-        assertEquals(0, stack.getResource(ResourceType.SHIELDS));
-        assertEquals(0, stack.getResource(ResourceType.SERVANTS));
-        assertEquals(0, stack.getResource(ResourceType.COINS));
-        assertEquals(0, stack.getResource(ResourceType.STONES));
+        assertEquals(1, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SHIELDS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SERVANTS));
+        assertEquals(1, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.COINS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.STONES));
+
+        assertEquals(4, player.getFaithTrackPosition());
+
+        System.out.println(market.toString()+"   "+market.getExtraMarble()+System.lineSeparator());
+
+        market.columnToResources(3, player);
+
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SHIELDS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SERVANTS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.COINS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.STONES));
 
         assertEquals(6, player.getFaithTrackPosition());
 
@@ -238,26 +252,35 @@ public class MarketTest {
         market2.testMethod();
 
         LeaderRequirements leaderRequirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
-        LeaderCard whiteMarbleOne = new LeaderCard(1, 1, stack, leaderRequirements, Marble.YELLOW);
-        LeaderCard whiteMarbleTwo = new LeaderCard(1, 1, stack, leaderRequirements, Marble.BLUE);
+        LeaderCard whiteMarbleOne = new LeaderCard(1, 1, player.getBoard().getResourceManager().getTemporaryResourcesToPay(), leaderRequirements, Marble.YELLOW);
+        LeaderCard whiteMarbleTwo = new LeaderCard(1, 1, player.getBoard().getResourceManager().getTemporaryResourcesToPay(), leaderRequirements, Marble.BLUE);
 
         whiteMarbleOne.setActive(true);
 
-        stack = market2.columnToResources(2, player, whiteMarbleOne);
+        market2.columnToResources(2, player);
 
-        assertEquals(0, stack.getResource(ResourceType.SHIELDS));
-        assertEquals(0, stack.getResource(ResourceType.SERVANTS));
-        assertEquals(2, stack.getResource(ResourceType.COINS));
-        assertEquals(0, stack.getResource(ResourceType.STONES));
+        while(player.getBoard().getResourceManager().getTemporaryWhiteMarbles() > 0)
+            market2.whiteMarbleToResource(player, whiteMarbleOne);
+
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SHIELDS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SERVANTS));
+        assertEquals(2, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.COINS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.STONES));
 
         whiteMarbleTwo.setActive(true);
 
-        stack = market2.columnToResources(3, player, whiteMarbleTwo);
+        market2.columnToResources(3, player);
 
-        assertEquals(2, stack.getResource(ResourceType.SHIELDS));
-        assertEquals(0, stack.getResource(ResourceType.SERVANTS));
-        assertEquals(0, stack.getResource(ResourceType.COINS));
-        assertEquals(0, stack.getResource(ResourceType.STONES));
+        while(player.getBoard().getResourceManager().getTemporaryWhiteMarbles() > 0)
+            market2.whiteMarbleToResource(player, whiteMarbleTwo);
 
+        assertEquals(2, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SHIELDS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SERVANTS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.COINS));
+        assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.STONES));
+
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("No White Marbles to convert.");
+        market2.whiteMarbleToResource(player, whiteMarbleTwo);
     }
 }

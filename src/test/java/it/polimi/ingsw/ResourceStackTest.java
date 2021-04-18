@@ -87,8 +87,11 @@ public class ResourceStackTest {
     public void addAllTypesTest(){
         stack.addToAllTypes(stack2);
         ResourceStack stack3 = new ResourceStack(3, 5, 7, 9);
+        assertEquals(stack3.toString(), stack.toString());
 
-        assertArrayEquals(stack3.toString().toCharArray(), stack.toString().toCharArray());
+        stack.addToAllTypes(stack2);
+        stack3 = new ResourceStack(5, 8, 11, 14);
+        assertEquals(stack3.toString(), stack.toString());
     }
 
     /**
@@ -160,6 +163,28 @@ public class ResourceStackTest {
     public void copyStackTest() {
         ResourceStack copiedStack = stack.copyStack();
         assertEquals(copiedStack.toString(), stack.toString());
+    }
+
+    /**
+     * Test for "revertBack" method in ResourceStack Class.
+     */
+    @Test
+    public void revertBackTest() {
+        stack.revertBack(stack2);
+        assertEquals(stack2.toString(), stack.toString());
+
+        ResourceStack stack3 = new ResourceStack(99,99,99,99);
+        stack2.revertBack(stack3);
+        assertEquals(stack3.toString(), stack2.toString());
+    }
+
+    /**
+     * Test for "totalResourcesToInt" method in ResourceStack Class.
+     */
+    @Test
+    public void totalResourcesToIntTest() {
+        assertEquals(10, stack.totalResourcesToInt());
+        assertEquals(14, stack2.totalResourcesToInt());
     }
 
     /**

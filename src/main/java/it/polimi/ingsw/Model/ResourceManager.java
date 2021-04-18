@@ -9,7 +9,13 @@ import java.util.ArrayList;
 public class ResourceManager {
     private final Warehouse warehouse;
     private final Strongbox strongbox;
+
+    /**
+     * Every time the player buys from the Market, buys a Development Card or activates his Production,
+     * temporary resources and white marbles are created to start the Add or Buy cycle.
+     */
     private ResourceStack temporaryResourcesToPay;
+    private int temporaryWhiteMarbles;
 
     /**
      * Constructor for ResourceManagerClass.
@@ -18,6 +24,7 @@ public class ResourceManager {
         warehouse = new Warehouse();
         strongbox = new Strongbox();
         temporaryResourcesToPay = new ResourceStack(0,0,0,0);
+        temporaryWhiteMarbles = 0;
     }
 
     /**
@@ -48,10 +55,16 @@ public class ResourceManager {
         return this.warehouse.getExtraWarehouseDepot2();
     }
 
+    /**
+     * Getter for "isExtraDepot1IsActive" inside "warehouse" attribute in ResourceManagerClass.
+     */
     public boolean isExtraDepotOneActive() {
         return this.warehouse.isExtraWarehouseDepot1IsActive();
     }
 
+    /**
+     * Getter for "isExtraDepot2IsActive" inside "warehouse" attribute in ResourceManagerClass.
+     */
     public boolean isExtraDepotTwoActive() {
         return this.warehouse.isExtraWarehouseDepot2IsActive();
     }
@@ -63,14 +76,54 @@ public class ResourceManager {
         return strongbox;
     }
 
+    /**
+     * Getter for "temporaryResourcesToPay" attribute in ResourceManagerClass.
+     */
     public ResourceStack getTemporaryResourcesToPay() {
         return temporaryResourcesToPay;
     }
 
+    /**
+     * Setter for "temporaryResourcesToPay" attribute in ResourceManagerClass.
+     */
     public void setTemporaryResourcesToPay(ResourceStack temporaryResourcesToPay) {
         this.temporaryResourcesToPay = temporaryResourcesToPay;
     }
 
+    /**
+     * Getter for "temporaryWhiteMarbles" attribute in ResourceManagerClass.
+     */
+    public int getTemporaryWhiteMarbles() {
+        return temporaryWhiteMarbles;
+    }
+
+    /**
+     * Setter for "temporaryResourcesToPay" attribute in ResourceManagerClass.
+     */
+    public void setTemporaryWhiteMarbles(int temporaryWhiteMarbles) {
+        this.temporaryWhiteMarbles = temporaryWhiteMarbles;
+    }
+
+
+    /**
+     * This method adds one white marble to the temporaryWhiteMarble counter.
+     */
+    public void addWhiteMarble() {
+        temporaryWhiteMarbles++;
+    }
+
+    /**
+     * This method removes one white marble from the temporaryWhiteMarble counter.
+     */
+    public void removeWhiteMarble() throws IllegalArgumentException {
+        temporaryWhiteMarbles--;
+        if(temporaryWhiteMarbles < 0)
+            throw new IllegalArgumentException("TemporaryWhiteMarbles number is already 0.");
+    }
+
+    /**
+     * This method is used to revert the Resource Manager to its initial conditions.
+     */
     public void reset() {
         this.warehouse.reset();
         this.strongbox.reset();
@@ -124,7 +177,7 @@ public class ResourceManager {
     }
 
     /**
-     * This method is used to add resources of a specified type coming from the market to a depot
+     * This method is used to add a number of resources of a specified type coming from the market to a depot
      * inside the Warehouse.
      * <p>
      * The method checks if it is possible to fit the specified type of resources inside the depot,
@@ -156,6 +209,10 @@ public class ResourceManager {
         return this.warehouse.addResources(resourcesToAdd, type, depot);
     }
 
+    /**
+     * This method is used to check if the player is able to fit any resource inside the Warehouse.
+     * @return true if at least one resources of any type fits.
+     */
     public boolean canAddMarketResources() {
         ResourceType[] resourceTypes = ResourceType.values();
 
@@ -166,10 +223,22 @@ public class ResourceManager {
         return false;
     }
 
+    /**
+     * This method is used to check if one Type of resource can fit inside a specified Depot.
+     * @param type ResourceType of the Resource to insert.
+     * @param depot WarehouseDepot where the Resource needs to be inserted.
+     * @return true if the resource can fit.
+     */
     public boolean canAddToDepot(ResourceType type, WarehouseDepot depot) {
         return this.warehouse.canAddToDepot(type, depot);
     }
 
+    /**
+     * This method is used to add one Resource of a specified Type inside a specified Depot.
+     * The Resource is also removed from the Temporary Resources to Pay
+     * @param type Type of the resource to be inserted
+     * @param depot Depot where the Resource will be inserted.
+     */
     public void addOneResourceToDepot(ResourceType type, WarehouseDepot depot) {
         this.temporaryResourcesToPay.removeResource(1, type);
         this.warehouse.addResources(1, type, depot);
@@ -196,7 +265,7 @@ public class ResourceManager {
 
     public void payOneResourceStrongbox(ResourceType type) {
         temporaryResourcesToPay.removeResource(1, type);
-        strongbox.removeResourcesByType(1, type);
+        strongbox.removeOneResourcesByType(type);
     }
 
     /**
@@ -254,11 +323,11 @@ public class ResourceManager {
      * possesses, only if the LeaderCard's ability is of type "EXTRADEPOT".
      * @param leaderCard is the LeaderCard used to activate the depot
      */
-    public void activateLeaderDepot(LeaderCard leaderCard) {
+    public void activateLeaderDepot(LeaderCard leaderCard) throws IllegalArgumentException {
         if(leaderCard.getAction() != LeaderCardAction.EXTRADEPOT)
-            System.err.println("Error: Needed EXTRADEPOT LeaderAbility to activate extra depot (was "+leaderCard.getAction()+" instead)");
+            throw new IllegalArgumentException("Needed EXTRADEPOT LeaderAbility to activate extra depot (was "+leaderCard.getAction()+" instead)");
         else if(!leaderCard.isActive())
-            System.err.println("Error: EXTRADEPOT LeaderAbility has to be active to activate extra depot");
+            throw new IllegalArgumentException("EXTRADEPOT LeaderAbility has to be active to activate extra depot");
         else
             this.warehouse.activateLeaderDepot(leaderCard.getResource());
     }

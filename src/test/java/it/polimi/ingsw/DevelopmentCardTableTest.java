@@ -78,49 +78,56 @@ public class DevelopmentCardTableTest {
      */
     @Test
     public void getTopCardFromDeckTest() {
-        DevelopmentCardDeck deck = table.getDeck(0,0);
         assertEquals("45 12 GREEN THREE 4 0 4 0 0 0 0 1 1 0 3 0 0", table.getTopCardFromDeck(0,0).toString());
-        deck.drawCard();
+        assertEquals("45 12 GREEN THREE 4 0 4 0 0 0 0 1 1 0 3 0 0", table.getTopCardFromDeck(0,0).toString());
+        table.getDeck(0,0).drawCard();
         assertEquals("41 11 GREEN THREE 7 0 0 0 0 1 0 0 0 0 1 0 3", table.getTopCardFromDeck(0,0).toString());
-        deck.drawCard();
-        assertEquals("37 10 GREEN THREE 5 2 0 0 0 1 1 0 2 0 0 2 1", table.getTopCardFromDeck(0,0).toString());
-        deck.drawCard();
-        assertEquals("33 9 GREEN THREE 6 0 0 0 0 0 2 0 0 0 0 3 2", table.getTopCardFromDeck(0,0).toString());
 
-        deck = table.getDeck(1,0);
         assertEquals("29 8 GREEN TWO 3 0 3 0 0 0 1 0 2 0 0 0 1", table.getTopCardFromDeck(1,0).toString());
-        deck.drawCard();
-        assertEquals("25 7 GREEN TWO 5 0 0 0 0 0 2 0 0 0 0 2 2", table.getTopCardFromDeck(1,0).toString());
-        deck.drawCard();
-        assertEquals("21 6 GREEN TWO 3 2 0 0 1 1 0 0 0 0 0 3 0", table.getTopCardFromDeck(1,0).toString());
-        deck.drawCard();
-        assertEquals("17 5 GREEN TWO 4 0 0 0 0 0 0 1 0 0 0 0 2", table.getTopCardFromDeck(1,0).toString());
+        assertEquals("29 8 GREEN TWO 3 0 3 0 0 0 1 0 2 0 0 0 1", table.getTopCardFromDeck(1,0).toString());
+        table.getDeck(1,0).drawCard();
+        assertEquals("25 7 GREEN TWO 5 0 0 0 0 0 2 0 0 0 0 2 2", table.drawCardFromDeck(1,0).toString());
 
-        deck = table.getDeck(1,3);
         assertEquals("30 8 PURPLE TWO 3 3 0 0 0 0 0 1 0 2 0 0 1", table.getTopCardFromDeck(1,3).toString());
-        deck.drawCard();
+        table.getDeck(1,3).drawCard();
         assertEquals("26 7 PURPLE TWO 0 5 0 0 0 0 0 2 0 0 2 0 2", table.getTopCardFromDeck(1,3).toString());
-        deck.drawCard();
+        table.getDeck(1,3).drawCard();
         assertEquals("22 6 PURPLE TWO 0 3 2 0 0 1 1 0 3 0 0 0 0", table.getTopCardFromDeck(1,3).toString());
-        deck.drawCard();
+        table.getDeck(1,3).drawCard();
         assertEquals("18 5 PURPLE TWO 0 4 0 0 0 0 1 0 0 0 0 0 2", table.getTopCardFromDeck(1,3).toString());
-
-        deck = table.getDeck(2,3);
-        assertEquals("14 4 PURPLE ONE 0 2 0 2 1 0 1 0 0 0 0 2 1", table.getTopCardFromDeck(2,3).toString());
-        deck.drawCard();
-        assertEquals("10 3 PURPLE ONE 0 3 0 0 0 0 2 0 1 1 0 1 0", table.getTopCardFromDeck(2,3).toString());
-        deck.drawCard();
-        assertEquals("6 2 PURPLE ONE 1 1 1 0 0 0 1 0 1 0 0 0 0", table.getTopCardFromDeck(2,3).toString());
-        deck.drawCard();
-        assertEquals("2 1 PURPLE ONE 0 2 0 0 0 0 0 1 0 0 0 0 1", table.getTopCardFromDeck(2,3).toString());
-
     }
 
     /**
-     * Test for "buyCard" method in DevelopmentCardTable Class.
+     * Test for "drawCardFromDeck" DevelopmentCardTable Class.
      */
     @Test
-    public void buyCardTest() {
+    public void drawCardFromDeckTest() {
+        assertEquals("45 12 GREEN THREE 4 0 4 0 0 0 0 1 1 0 3 0 0", table.drawCardFromDeck(0,0).toString());
+        assertEquals("41 11 GREEN THREE 7 0 0 0 0 1 0 0 0 0 1 0 3", table.drawCardFromDeck(0,0).toString());
+        assertEquals("37 10 GREEN THREE 5 2 0 0 0 1 1 0 2 0 0 2 1", table.drawCardFromDeck(0,0).toString());
+        assertEquals("33 9 GREEN THREE 6 0 0 0 0 0 2 0 0 0 0 3 2", table.drawCardFromDeck(0,0).toString());
+
+        assertEquals("29 8 GREEN TWO 3 0 3 0 0 0 1 0 2 0 0 0 1", table.drawCardFromDeck(1,0).toString());
+        assertEquals("25 7 GREEN TWO 5 0 0 0 0 0 2 0 0 0 0 2 2", table.drawCardFromDeck(1,0).toString());
+        assertEquals("21 6 GREEN TWO 3 2 0 0 1 1 0 0 0 0 0 3 0", table.drawCardFromDeck(1,0).toString());
+        assertEquals("17 5 GREEN TWO 4 0 0 0 0 0 0 1 0 0 0 0 2", table.drawCardFromDeck(1,0).toString());
+
+        assertEquals("30 8 PURPLE TWO 3 3 0 0 0 0 0 1 0 2 0 0 1", table.drawCardFromDeck(1,3).toString());
+        assertEquals("26 7 PURPLE TWO 0 5 0 0 0 0 0 2 0 0 2 0 2", table.drawCardFromDeck(1,3).toString());
+        assertEquals("22 6 PURPLE TWO 0 3 2 0 0 1 1 0 3 0 0 0 0", table.drawCardFromDeck(1,3).toString());
+        assertEquals("18 5 PURPLE TWO 0 4 0 0 0 0 1 0 0 0 0 0 2", table.drawCardFromDeck(1,3).toString());
+
+        assertEquals("14 4 PURPLE ONE 0 2 0 2 1 0 1 0 0 0 0 2 1", table.drawCardFromDeck(2,3).toString());
+        assertEquals("10 3 PURPLE ONE 0 3 0 0 0 0 2 0 1 1 0 1 0", table.drawCardFromDeck(2,3).toString());
+        assertEquals("6 2 PURPLE ONE 1 1 1 0 0 0 1 0 1 0 0 0 0", table.drawCardFromDeck(2,3).toString());
+        assertEquals("2 1 PURPLE ONE 0 2 0 0 0 0 0 1 0 0 0 0 1", table.drawCardFromDeck(2,3).toString());
+    }
+
+    /**
+     * Test for "updateCardToBuyCost" method in DevelopmentCardTable Class.
+     */
+    @Test
+    public void updateCardToBuyCost() {
         leaderRequirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
         discountCardOne = new LeaderCard(1, 1, discount1, leaderRequirements, discount1);
         discountCardTwo = new LeaderCard(2, 1, discount2, leaderRequirements, discount2);
@@ -131,154 +138,53 @@ public class DevelopmentCardTableTest {
         leaderCards[0] = extraDepotOne;
         leaderCards[1] = whiteMarbleOne;
 
-        ResourceManager resourceManager = new ResourceManager();
-        ResourceStack resourceStack = new ResourceStack(0, 1, 2, 3);
-        resourceManager.addMarketResourcesByType(3, ResourceType.COINS, resourceManager.getWarehouse().getWarehouseDepots()[0]);
-        resourceManager.addMarketResourcesByType(2, ResourceType.STONES, resourceManager.getWarehouse().getWarehouseDepots()[1]);
-
-        resourceManager.addProductionResources(resourceStack);
-
-        table.buyCard(table.getDeck(1,3), resourceManager, leaderCards);
-
-        assertEquals(0, resourceManager.countAllResourcesByType(ResourceType.SHIELDS));
-        assertEquals(1, resourceManager.countAllResourcesByType(ResourceType.SERVANTS));
-        assertEquals(5, resourceManager.countAllResourcesByType(ResourceType.COINS));
-        assertEquals(5, resourceManager.countAllResourcesByType(ResourceType.STONES));
-
-        resourceManager.addMarketResourcesByType(1, ResourceType.SERVANTS, resourceManager.getWarehouse().getWarehouseDepots()[2]);
-
-        assertEquals("14 4 PURPLE ONE 0 2 0 2 1 0 1 0 0 0 0 2 1", table.getDeck(2,3).getCards()[3].toString());
-        DevelopmentCard card = table.buyCard(table.getDeck(2,3), resourceManager, leaderCards);
-
-        assertEquals(0, resourceManager.countAllResourcesByType(ResourceType.SHIELDS));
-        assertEquals(0, resourceManager.countAllResourcesByType(ResourceType.SERVANTS));
-        assertEquals(5, resourceManager.countAllResourcesByType(ResourceType.COINS));
-        assertEquals(3, resourceManager.countAllResourcesByType(ResourceType.STONES));
-        assertEquals("14 4 PURPLE ONE 0 2 0 2 1 0 1 0 0 0 0 2 1", card.toString());
-
-        card = table.buyCard(table.getDeck(2,3), resourceManager, leaderCards);
-        assertEquals(0, resourceManager.countAllResourcesByType(ResourceType.SHIELDS));
-        assertEquals(0, resourceManager.countAllResourcesByType(ResourceType.SERVANTS));
-        assertEquals(5, resourceManager.countAllResourcesByType(ResourceType.COINS));
-        assertEquals(3, resourceManager.countAllResourcesByType(ResourceType.STONES));
-        assertNull(card);
-
-        resourceStack = new ResourceStack(0, 4, 0, 0);
-        resourceManager.addProductionResources(resourceStack);
-
-        card = table.buyCard(table.getDeck(2,3), resourceManager, leaderCards);
-
-        assertEquals(0, resourceManager.countAllResourcesByType(ResourceType.SHIELDS));
-        assertEquals(1, resourceManager.countAllResourcesByType(ResourceType.SERVANTS));
-        assertEquals(5, resourceManager.countAllResourcesByType(ResourceType.COINS));
-        assertEquals(3, resourceManager.countAllResourcesByType(ResourceType.STONES));
-        assertEquals("10 3 PURPLE ONE 0 3 0 0 0 0 2 0 1 1 0 1 0", card.toString());
-
-        resourceStack = new ResourceStack(1, 2, 1, 1);
-        resourceManager.addProductionResources(resourceStack);
-
-        card = table.buyCard(table.getDeck(2,3), resourceManager, leaderCards);
-
-        assertEquals(0, resourceManager.countAllResourcesByType(ResourceType.SHIELDS));
-        assertEquals(2, resourceManager.countAllResourcesByType(ResourceType.SERVANTS));
-        assertEquals(5, resourceManager.countAllResourcesByType(ResourceType.COINS));
-        assertEquals(4, resourceManager.countAllResourcesByType(ResourceType.STONES));
-        assertEquals("6 2 PURPLE ONE 1 1 1 0 0 0 1 0 1 0 0 0 0", card.toString());
-
-        card = table.buyCard(table.getDeck(2,3), resourceManager, leaderCards);
-
-        assertEquals(0, resourceManager.countAllResourcesByType(ResourceType.SHIELDS));
-        assertEquals(0, resourceManager.countAllResourcesByType(ResourceType.SERVANTS));
-        assertEquals(5, resourceManager.countAllResourcesByType(ResourceType.COINS));
-        assertEquals(4, resourceManager.countAllResourcesByType(ResourceType.STONES));
-        assertEquals("2 1 PURPLE ONE 0 2 0 0 0 0 0 1 0 0 0 0 1", card.toString());
-
-        card = table.buyCard(table.getDeck(2,3), resourceManager, leaderCards);
-        assertEquals(0, resourceManager.countAllResourcesByType(ResourceType.SHIELDS));
-        assertEquals(0, resourceManager.countAllResourcesByType(ResourceType.SERVANTS));
-        assertEquals(5, resourceManager.countAllResourcesByType(ResourceType.COINS));
-        assertEquals(4, resourceManager.countAllResourcesByType(ResourceType.STONES));
-        assertNull(card);
-
-        card = table.buyCard(table.getDeck(2,3), resourceManager, leaderCards);
-        assertEquals(0, resourceManager.countAllResourcesByType(ResourceType.SHIELDS));
-        assertEquals(0, resourceManager.countAllResourcesByType(ResourceType.SERVANTS));
-        assertEquals(5, resourceManager.countAllResourcesByType(ResourceType.COINS));
-        assertEquals(4, resourceManager.countAllResourcesByType(ResourceType.STONES));
-        assertNull(card);
-
-        card = table.buyCard(table.getDeck(2,3), resourceManager, leaderCards);
-        assertEquals(0, resourceManager.countAllResourcesByType(ResourceType.SHIELDS));
-        assertEquals(0, resourceManager.countAllResourcesByType(ResourceType.SERVANTS));
-        assertEquals(5, resourceManager.countAllResourcesByType(ResourceType.COINS));
-        assertEquals(4, resourceManager.countAllResourcesByType(ResourceType.STONES));
-        assertNull(card);
-
-        ResourceStack cardCost = new ResourceStack(3,2,0,0);
-        DevelopmentCard cardToBuy = new DevelopmentCard(Color.GREEN,Level.TWO, 29, 8, cardCost, cardCost, cardCost, 1);
-        DevelopmentCardDeck deck = new DevelopmentCardDeck(Color.GREEN, Level.TWO);
-        deck.addCard(cardToBuy);
-
-        leaderCards = new LeaderCard[2];
-        leaderCards[0] = discountCardOne;
-        leaderCards[1] = discountCardTwo;
-
-        leaderCards[0].setActive(false);
-        leaderCards[1].setActive(false);
-
-        resourceStack = new ResourceStack(1, 1, 0, 0);
-        resourceManager.reset();
-        resourceManager.addMarketResourcesByType(1, ResourceType.COINS, resourceManager.getWarehouse().getWarehouseDepots()[0]);
-        resourceManager.addMarketResourcesByType(1, ResourceType.STONES, resourceManager.getWarehouse().getWarehouseDepots()[1]);
-        resourceManager.addMarketResourcesByType(1, ResourceType.SHIELDS, resourceManager.getWarehouse().getWarehouseDepots()[2]);
-
-        resourceManager.addProductionResources(resourceStack);
-
-        card = table.buyCard(deck, resourceManager, leaderCards);
-        assertEquals(2, resourceManager.countAllResourcesByType(ResourceType.SHIELDS));
-        assertEquals(1, resourceManager.countAllResourcesByType(ResourceType.SERVANTS));
-        assertEquals(1, resourceManager.countAllResourcesByType(ResourceType.COINS));
-        assertEquals(1, resourceManager.countAllResourcesByType(ResourceType.STONES));
-        assertNull(card);
-
         leaderCards[0].setActive(true);
 
-        card = table.buyCard(deck, resourceManager, leaderCards);
-        assertEquals(0, resourceManager.countAllResourcesByType(ResourceType.SHIELDS));
-        assertEquals(0, resourceManager.countAllResourcesByType(ResourceType.SERVANTS));
-        assertEquals(1, resourceManager.countAllResourcesByType(ResourceType.COINS));
-        assertEquals(1, resourceManager.countAllResourcesByType(ResourceType.STONES));
-        assertEquals("29 8 GREEN TWO 3 2 0 0 3 2 0 0 3 2 0 0 1", card.toString());
+        ResourceManager resourceManager = new ResourceManager();
 
-        cardCost = new ResourceStack(1,1,0,0);
-        cardToBuy = new DevelopmentCard(Color.GREEN,Level.TWO, 29, 8, cardCost, cardCost, cardCost, 1);
-        deck.addCard(cardToBuy);
+        DevelopmentCard card = table.getTopCardFromDeck(0, 0);
 
-        ResourceStack cardCost2 = new ResourceStack(0,0,2,1);
-        DevelopmentCard cardToBuy2 = new DevelopmentCard(Color.GREEN,Level.TWO, 29, 8, cardCost2, cardCost, cardCost, 1);
-        deck.addCard(cardToBuy2);
+        table.updateCardToBuyCost(card, leaderCards, resourceManager);
 
-        card = table.buyCard(deck, resourceManager, leaderCards);
-        assertEquals(0, resourceManager.countAllResourcesByType(ResourceType.SHIELDS));
-        assertEquals(0, resourceManager.countAllResourcesByType(ResourceType.SERVANTS));
-        assertEquals(1, resourceManager.countAllResourcesByType(ResourceType.COINS));
-        assertEquals(1, resourceManager.countAllResourcesByType(ResourceType.STONES));
-        assertNull(card);
+        assertEquals(4, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.SHIELDS));
+        assertEquals(0, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.SERVANTS));
+        assertEquals(4, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.COINS));
+        assertEquals(0, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.STONES));
+
+        leaderCards[0] = discountCardOne;
+        leaderCards[1] = discountCardTwo;
+        table.updateCardToBuyCost(card, leaderCards, resourceManager);
+
+        assertEquals(4, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.SHIELDS));
+        assertEquals(0, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.SERVANTS));
+        assertEquals(4, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.COINS));
+        assertEquals(0, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.STONES));
+
+        leaderCards[0].setActive(true);
+        table.updateCardToBuyCost(card, leaderCards, resourceManager);
+
+        assertEquals(3, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.SHIELDS));
+        assertEquals(0, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.SERVANTS));
+        assertEquals(4, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.COINS));
+        assertEquals(0, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.STONES));
 
         leaderCards[1].setActive(true);
+        table.updateCardToBuyCost(card, leaderCards, resourceManager);
 
-        card = table.buyCard(deck, resourceManager, leaderCards);
-        assertEquals(0, resourceManager.countAllResourcesByType(ResourceType.SHIELDS));
-        assertEquals(0, resourceManager.countAllResourcesByType(ResourceType.SERVANTS));
-        assertEquals(0, resourceManager.countAllResourcesByType(ResourceType.COINS));
-        assertEquals(1, resourceManager.countAllResourcesByType(ResourceType.STONES));
-        assertEquals("29 8 GREEN TWO 0 0 2 1 1 1 0 0 1 1 0 0 1", card.toString());
+        assertEquals(3, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.SHIELDS));
+        assertEquals(0, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.SERVANTS));
+        assertEquals(3, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.COINS));
+        assertEquals(0, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.STONES));
 
-        card = table.buyCard(deck, resourceManager, leaderCards);
-        assertEquals(0, resourceManager.countAllResourcesByType(ResourceType.SHIELDS));
-        assertEquals(0, resourceManager.countAllResourcesByType(ResourceType.SERVANTS));
-        assertEquals(0, resourceManager.countAllResourcesByType(ResourceType.COINS));
-        assertEquals(1, resourceManager.countAllResourcesByType(ResourceType.STONES));
-        assertEquals("29 8 GREEN TWO 1 1 0 0 1 1 0 0 1 1 0 0 1", card.toString());
+        discount1 = new ResourceStack(5,5,5,5);
+        leaderCards[0] = new LeaderCard(1, 1, discount1, leaderRequirements, discount1);
+        leaderCards[0].setActive(true);
+
+        table.updateCardToBuyCost(card, leaderCards, resourceManager);
+
+        assertEquals(0, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.SHIELDS));
+        assertEquals(0, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.SERVANTS));
+        assertEquals(0, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.COINS));
+        assertEquals(0, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.STONES));
     }
 }

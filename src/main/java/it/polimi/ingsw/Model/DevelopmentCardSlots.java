@@ -167,4 +167,12 @@ public class DevelopmentCardSlots {
         if(i == 0 || i == 1 || i == 2) slots[i].addCard(card);
         else throw new IllegalArgumentException("ERROR, the slot does not exists");
     }
+
+    /**
+     * This method is used to count the total number of Development Cards on the Board
+     * @return the number of cards
+     */
+    public int countAllCards() {
+        return this.getSlots()[0].getLevelOccupied() + this.getSlots()[1].getLevelOccupied() + this.getSlots()[2].getLevelOccupied();
+    }
 }

@@ -61,56 +61,17 @@ public class Market {
      * white marbles if it is necessary.
      * @param row is the number indicating the row.
      * @param player is the player corresponding to the action (needed to update faith).
-     * @param leaderCard is the leader card containing the WHITEMARBLE ability. If the player does
-     * not have such card, the parameter should be null.
-     * @return a stack containing the transformed resources.
      */
-    public ResourceStack rowToResources(int row, Player player, LeaderCard leaderCard) {
+    public void rowToResources(int row, Player player) throws IllegalArgumentException {
+        player.getBoard().getResourceManager().setTemporaryWhiteMarbles(0);
+
         ResourceStack resourceStack = new ResourceStack(0,0,0,0);
-        if(row < 0 || row > 2) {
-            System.err.println("Error: Exceeding number of rows");
-            return resourceStack;
-        }
+        if(row < 0 || row > 2)
+            throw new IllegalArgumentException("Model: Row index out of bounds.");
 
-        int faithPoints = 0;
+        for(int j = 0; j <= 3; j++)
+            resourceStack.addResource(1, this.marbles[row][j].marbleToResource(player));
 
-        for(int j = 0; j <= 3; j++) {
-            switch(this.marbles[row][j]) {
-                case BLUE: resourceStack.addResource(1, ResourceType.SHIELDS);
-                    break;
-                case PURPLE: resourceStack.addResource(1, ResourceType.SERVANTS);
-                    break;
-                case YELLOW: resourceStack.addResource(1, ResourceType.COINS);
-                    break;
-                case GREY: resourceStack.addResource(1, ResourceType.STONES);
-                    break;
-                case RED: faithPoints += 1;
-                    break;
-
-                case WHITE:
-
-                    if(leaderCard != null && leaderCard.isActive())
-
-                        if(leaderCard.getAction() == LeaderCardAction.WHITEMARBLE) {
-                            switch (leaderCard.getMarble()) {
-                                case BLUE: resourceStack.addResource(1, ResourceType.SHIELDS);
-                                    break;
-                                case PURPLE: resourceStack.addResource(1, ResourceType.SERVANTS);
-                                    break;
-                                case YELLOW: resourceStack.addResource(1, ResourceType.COINS);
-                                    break;
-                                case GREY: resourceStack.addResource(1, ResourceType.STONES);
-                                    break;
-                                case RED: faithPoints += 1;
-                                    break;
-                            }
-
-                        } else System.err.println("Error: LeaderCard in Market must be WHITEMARBLE ability or null");
-
-                    break;
-            }
-        }
-        player.stepAhead(faithPoints);
 
         Marble[] newMarbles = new Marble[4];
         newMarbles[0] = this.marbles[row][1];
@@ -125,8 +86,6 @@ public class Market {
         this.marbles[row][3] = newMarbles[3];
 
         player.getBoard().getResourceManager().setTemporaryResourcesToPay(resourceStack);
-
-        return resourceStack;
     }
 
     /**
@@ -138,55 +97,17 @@ public class Market {
      * white marbles if it is necessary.
      * @param column is the number indicating the column.
      * @param player is the player corresponding to the action (needed to update faith).
-     * @param leaderCard is the leader card containing the WHITEMARBLE ability. If the player does
      * not have such card, the parameter should be null.
-     * @return a stack containing the transformed resources.
      */
-    public ResourceStack columnToResources(int column, Player player, LeaderCard leaderCard) {
+    public void columnToResources(int column, Player player) throws IllegalArgumentException{
+        player.getBoard().getResourceManager().setTemporaryWhiteMarbles(0);
+
         ResourceStack resourceStack = new ResourceStack(0,0,0,0);
-        if(column < 0 || column > 3) {
-            System.err.println("Error: Exceeding number of columns");
-            return resourceStack;
-        }
+        if(column < 0 || column > 3)
+            throw new IllegalArgumentException("Model: Column index out of bounds.");
 
-        int faithPoints = 0;
-
-        for(int i = 0; i <= 2; i++) {
-            switch(this.marbles[i][column]) {
-                case BLUE: resourceStack.addResource(1, ResourceType.SHIELDS);
-                    break;
-                case PURPLE: resourceStack.addResource(1, ResourceType.SERVANTS);
-                    break;
-                case YELLOW: resourceStack.addResource(1, ResourceType.COINS);
-                    break;
-                case GREY: resourceStack.addResource(1, ResourceType.STONES);
-                    break;
-                case RED: faithPoints += 1;
-                    break;
-
-                case WHITE:
-                    if(leaderCard != null && leaderCard.isActive())
-
-                        if(leaderCard.getAction() == LeaderCardAction.WHITEMARBLE) {
-                            switch (leaderCard.getMarble()) {
-                                case BLUE: resourceStack.addResource(1, ResourceType.SHIELDS);
-                                    break;
-                                case PURPLE: resourceStack.addResource(1, ResourceType.SERVANTS);
-                                    break;
-                                case YELLOW: resourceStack.addResource(1, ResourceType.COINS);
-                                    break;
-                                case GREY: resourceStack.addResource(1, ResourceType.STONES);
-                                    break;
-                                case RED: faithPoints += 1;
-                                    break;
-                            }
-
-                        } else System.err.println("Error: LeaderCard in Market must be WHITEMARBLE ability or null");
-
-                    break;
-            }
-        }
-        player.stepAhead(faithPoints);
+        for(int i = 0; i <= 2; i++)
+            resourceStack.addResource(1, this.marbles[i][column].marbleToResource(player));
 
         Marble[] newMarbles = new Marble[3];
         newMarbles[0] = this.marbles[1][column];
@@ -199,8 +120,18 @@ public class Market {
         this.marbles[2][column] = newMarbles[2];
 
         player.getBoard().getResourceManager().setTemporaryResourcesToPay(resourceStack);
+    }
 
-        return resourceStack;
+    public void whiteMarbleToResource(Player player, LeaderCard leaderCard) throws IllegalArgumentException {
+        if(player.getBoard().getResourceManager().getTemporaryWhiteMarbles() <= 0)
+            throw new IllegalArgumentException("No White Marbles to convert.");
+        else if(!leaderCard.isActive())
+            throw new IllegalArgumentException("Card has to be active to convert White Marble.");
+        else if(leaderCard.getAction() != LeaderCardAction.WHITEMARBLE)
+            throw new IllegalArgumentException("Card has to be of type WHITEMARBLE to convert White Marble.");
+
+        player.getBoard().getResourceManager().getTemporaryResourcesToPay().addResource(1, leaderCard.getMarble().marbleToResource(player));
+        player.getBoard().getResourceManager().removeWhiteMarble();
     }
 
     /**

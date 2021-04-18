@@ -192,6 +192,11 @@ public class ResourceStack {
         return  newStack;
     }
 
+    /**
+     * This method is used when Resetting a Resource Manager. It reverts the ResourceStack to
+     * another given in input.
+     * @param resourceStack Stack to revert to.
+     */
     public void revertBack(ResourceStack resourceStack) {
         ResourceType[] resourceTypes = ResourceType.values();
 
@@ -200,6 +205,10 @@ public class ResourceStack {
         }
     }
 
+    /**
+     * This method counts the total number of all Types of resources.
+     * @return the number of resources.
+     */
     public int totalResourcesToInt() {
         return this.shields + this.servants + this.coins + this.stones;
     }

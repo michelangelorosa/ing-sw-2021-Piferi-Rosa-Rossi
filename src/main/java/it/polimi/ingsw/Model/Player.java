@@ -113,4 +113,8 @@ public class Player {
         this.victoryPoints += victoryPoints;
     }
 
+    public boolean hasFinished() {
+        return this.getBoard().getDevelopmentCardSlots().countAllCards() >= 7 || this.getFaithTrackPosition() >= 25;
+    }
+
 }

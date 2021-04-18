@@ -105,4 +105,11 @@ public class LeaderRequirements {
     public int getNeedGreenCard() {
         return needGreenCard;
     }
+
+    public boolean hasRequirements(LeaderRequirements cardsHad) {
+        return  cardsHad.getBlueCardLv1() >= this.blueCardLv1 && cardsHad.getBlueCardLv2() >= this.blueCardLv2 && cardsHad.getBlueCardLv3() >= this.blueCardLv3 &&
+                cardsHad.getPurpleCardLv1() >= this.purpleCardLv1 && cardsHad.getPurpleCardLv2() >= this.purpleCardLv2 && cardsHad.getPurpleCardLv3() >= this.purpleCardLv3 &&
+                cardsHad.getYellowCardLv1() >= this.yellowCardLv1 && cardsHad.getYellowCardLv2() >= this.yellowCardLv2 && cardsHad.getYellowCardLv3() >= this.yellowCardLv3 &&
+                cardsHad.getGreenCardLv1() >= this.greenCardLv1 && cardsHad.getGreenCardLv2() >= this.greenCardLv2 && cardsHad.getGreenCardLv3() >= this.greenCardLv3;
+    }
 }
