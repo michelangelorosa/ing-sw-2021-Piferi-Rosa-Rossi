@@ -125,6 +125,15 @@ public class DevelopmentCardTable {
     }
 
     /**
+     * This method is used to shuffle each deck on the DevelopmentCardTable.
+     */
+    public void shuffleTable() {
+        for(int i = 0; i < 3; i++)
+            for(int j = 0; j < 4; j++)
+                this.decks[i][j].shuffle();
+    }
+
+    /**
      * This method is used to draw one card from a specified deck inside the Development Card Table.
      * @param row the deck's row index.
      * @param column the deck's column index.
