@@ -1,13 +1,13 @@
 package it.polimi.ingsw.Controller.Actions;
 
-import it.polimi.ingsw.Model.Board;
-import it.polimi.ingsw.Model.Game;
+import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.MessagesToClient.*;
 
 /**
  * ActivateLeaderClass contains data and methods to resolve a Client request regarding Leader
  * Card activation.
  */
-public class ActivateLeaderCard extends Action implements ActionInterface {
+public class ActivateLeaderCard extends Action {
 
     /** "leaderCard" is an int type attribute containing the card's position int the player's Leader Card deck. */
     private final int leaderCard;
@@ -62,16 +62,30 @@ public class ActivateLeaderCard extends Action implements ActionInterface {
     @Override
     public String doAction(Game game, ChooseProductionOutput chooseProductionOutput, ChooseCardSlot chooseCardSlot, ResetWarehouse resetWarehouse) {
         this.isCorrect();
-        if(!this.canBeApplied(game))
+        if(!this.canBeApplied(game)) {
+            this.response = "Leader Card has already been activated";
             return "Leader Card has already been activated";
+        }
 
         Board board = game.getCurrentPlayer().getBoard();
 
-        if(!board.canActivateLeaderCard(board.getLeaderCards()[this.leaderCard]))
+        if(!board.canActivateLeaderCard(board.getLeaderCards()[this.leaderCard])) {
+            this.response = "Not enough resources to activate Leader Card";
             return "Not enough resources to activate Leader Card";
+        }
         else {
             board.activateLeaderCard(board.getLeaderCards()[this.leaderCard]);
+            this.response = "SUCCESS";
             return "SUCCESS";
         }
+    }
+
+    @Override
+    public MessageToClient messagePrepare(Game game) {
+        ActivateLeaderCardMessage message = new ActivateLeaderCardMessage(game.getCurrentPlayerIndex());
+        message.setError(this.response);
+        message.setLeaderCardPosition(this.leaderCard);
+
+        return message;
     }
 }

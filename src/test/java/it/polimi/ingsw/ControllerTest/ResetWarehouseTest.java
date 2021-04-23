@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import it.polimi.ingsw.CommonTestMethods;
 import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
+import it.polimi.ingsw.Model.MessagesToClient.ResetWarehouseMessage;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -19,6 +21,8 @@ public class ResetWarehouseTest {
     ResourceStack backupResources = new ResourceStack(2,0,0,0);
     ResourceStack backupResources2 = new ResourceStack(2,2,5,7);
     ResourceStack resources = new ResourceStack(0,0,0,0);
+
+    MessageToClient messageToClient;
 
     /**Method to create a warehouse*/
     public Warehouse create(){
@@ -115,7 +119,21 @@ public class ResetWarehouseTest {
         assertEquals("2 COINS",game.getCurrentPlayer().getBoard().getResourceManager().getWarehouseDepots()[1].getStoredResources() + " " + game.getCurrentPlayer().getBoard().getResourceManager().getWarehouseDepots()[1].getResourceType());
         assertEquals("1 SERVANTS",game.getCurrentPlayer().getBoard().getResourceManager().getWarehouseDepots()[2].getStoredResources() + " " + game.getCurrentPlayer().getBoard().getResourceManager().getWarehouseDepots()[2].getResourceType());
         assertEquals("0 0 0 0", game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toString());
-        assertEquals("SUCCESS", reset.doAction(game, output, cardSlot, resetWarehouse).toString());
+        assertEquals("SUCCESS", reset.doAction(game, output, cardSlot, resetWarehouse));
+        messageToClient = reset.messagePrepare(game);
+
+        assertTrue(messageToClient instanceof ResetWarehouseMessage);
+        assertEquals(ActionType.RESET_WAREHOUSE, messageToClient.getActionDone());
+        assertEquals("SUCCESS", messageToClient.getError());
+        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(ActionType.ADD_RESOURCE, messageToClient.getPossibleActions().get(0));
+        assertEquals(ActionType.RESET_WAREHOUSE, messageToClient.getPossibleActions().get(1));
+        assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getPossibleActions().get(2));
+        assertEquals(ActionType.END_MARKET, messageToClient.getPossibleActions().get(3));
+        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse(), ((ResetWarehouseMessage)messageToClient).getWarehouse());
+        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay(), ((ResetWarehouseMessage)messageToClient).getTemporaryResources());
+
+
         assertEquals("2 0 0 0", game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toString());
         assertEquals("1 SHIELDS",game.getCurrentPlayer().getBoard().getResourceManager().getWarehouseDepots()[0].getStoredResources() + " " + game.getCurrentPlayer().getBoard().getResourceManager().getWarehouseDepots()[0].getResourceType());
         assertEquals("2 COINS",game.getCurrentPlayer().getBoard().getResourceManager().getWarehouseDepots()[1].getStoredResources() + " " + game.getCurrentPlayer().getBoard().getResourceManager().getWarehouseDepots()[1].getResourceType());

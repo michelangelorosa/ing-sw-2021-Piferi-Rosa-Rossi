@@ -244,25 +244,51 @@ public class ResourceManager {
         this.warehouse.addResources(1, type, depot);
     }
 
+    /**
+     * Method used to transform remaining resources of a market interaction into faith points
+     * for all non currently playing players.
+     * @param player Player who's playing now.
+     * @param players All player's of the current game.
+     * @param faithTrack Faith Track of the current game.
+     */
     public void remainingResourcesToFaith(Player player, ArrayList<Player> players, FaithTrack faithTrack) {
-        ResourceType[] types = ResourceType.values();
         int faith = this.temporaryResourcesToPay.totalResourcesToInt();
+        this.temporaryResourcesToPay = new ResourceStack(0,0,0,0);
         faithTrack.allAhead(player, players, faith);
     }
 
+    /**
+     * Method used is the player finished paying the correct amount when activating
+     * production o buying a card.
+     * @return True if the player has payed all.
+     */
     public boolean hasPayed() {
         return temporaryResourcesToPay.isEmpty();
     }
 
+    /**
+     * Method used to check if a specified Resource is needed to pay for the current
+     * transaction.
+     * @param resourceType Type the player specifies,
+     * @return True if the Resource Type is needed to pay.
+     */
     public boolean resourceIsNeededToPay(ResourceType resourceType) {
         return temporaryResourcesToPay.getResource(resourceType) > 0;
     }
 
+    /**
+     * Method used to pay one resource from a Warehouse Depot.
+     * @param depot Warehouse Depot to take the resource from.
+     */
     public void payOneResourceWarehouse(WarehouseDepot depot) {
         temporaryResourcesToPay.removeResource(1, depot.getResourceType());
         depot.removeResources(1);
     }
 
+    /**
+     * Method used to pay one resource from the Strongbox.
+     * @param type Resource Type the player wants to pay.
+     */
     public void payOneResourceStrongbox(ResourceType type) {
         temporaryResourcesToPay.removeResource(1, type);
         strongbox.removeOneResourcesByType(type);
@@ -287,6 +313,7 @@ public class ResourceManager {
 
         for(int i = 1; i <= 4; i++)
             if(cardToBuyCost.getResource(resourceTypes[i]) > countAllResourcesByType(resourceTypes[i])) {
+                System.out.println("Not enough "+resourceTypes[i]+" to buy card!");
                 isBuyable = false;
             }
 

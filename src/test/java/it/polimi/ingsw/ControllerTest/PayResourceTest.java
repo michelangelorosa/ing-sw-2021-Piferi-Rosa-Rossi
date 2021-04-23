@@ -23,7 +23,7 @@ public class PayResourceTest {
     /**getter test*/
     @Test
     public void getActionTypeTest(){
-        assertEquals(ActionType.PAY_RESOURCE, pay.getActionType());
+
     }
 
     /**Test to check if isFromWarehouse method works properly*/

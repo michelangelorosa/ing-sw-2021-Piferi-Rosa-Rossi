@@ -1,32 +1,52 @@
 package it.polimi.ingsw.Controller.Actions;
 
-import it.polimi.ingsw.Model.DevelopmentCard;
-import it.polimi.ingsw.Model.DevelopmentCardSlots;
-import it.polimi.ingsw.Model.Game;
-import it.polimi.ingsw.Model.ResourceManager;
+import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.MessagesToClient.*;
 
-public class BuyCard extends Action implements ActionInterface{
+/**
+ * BuyCard Class contains data and methods to resolve a Client's request when buying a card
+ * from the DevelopmentCardTable.
+ */
+public class
+BuyCard extends Action {
+    /** row and column attributes are the coordinates of the deck the player wants to buy the cards from */
     private final int row;
     private final int column;
 
+    /**
+     * Constructor for BuyCard Class.
+     */
     public BuyCard(int row, int column) {
         this.actionType = ActionType.BUY_CARD;
         this.row = row;
         this.column = column;
     }
 
+    /**
+     * Getter for "actionType" attribute in BuyCard Class.
+     */
     public ActionType getActionType() {
         return actionType;
     }
 
+    /**
+     * Getter for "row" attribute in BuyCard Class.
+     */
     public int getRow() {
         return row;
     }
 
+    /**
+     * Getter for "column" attribute in BuyCard Class.
+     */
     public int getColumn() {
         return column;
     }
 
+    /**
+     * Method used to check if the specified action is formally correct.
+     * @throws IllegalArgumentException if the row or column indexes are out of bounds.
+     */
     @Override
     public boolean isCorrect() throws IllegalArgumentException {
         if(row < 0 || row > 2)
@@ -36,29 +56,67 @@ public class BuyCard extends Action implements ActionInterface{
         return true;
     }
 
+    /**
+     * Method used to check if the specified action is logically correct.
+     * @return false if the Deck specified by the Client is Empty.
+     */
     @Override
     public boolean canBeApplied(Game game) {
-        return true;
+        return !game.getDevelopmentCardTable().getDeck(row, column).isEmpty();
     }
 
+    /**
+     * Method used to execute the action on the Model.
+     * @return "SUCCESS" if the action went right, another String if it went wrong.
+     */
     @Override
     public String doAction(Game game, ChooseProductionOutput chooseProductionOutput, ChooseCardSlot chooseCardSlot, ResetWarehouse resetWarehouse) {
         this.isCorrect();
 
+        if(!this.canBeApplied(game)) {
+            this.response = "This Deck is empty";
+            return "This Deck is empty";
+        }
         DevelopmentCard card;
         card = game.getDevelopmentCardTable().getTopCardFromDeck(this.row, this.column);
         ResourceManager resourceManager = game.getCurrentPlayer().getBoard().getResourceManager();
         DevelopmentCardSlots developmentCardSlots = game.getCurrentPlayer().getBoard().getDevelopmentCardSlots();
 
-        if(!resourceManager.cardIsBuyable(card, game.getCurrentPlayer().getBoard().getLeaderCards()))
+        if(!resourceManager.cardIsBuyable(card, game.getCurrentPlayer().getBoard().getLeaderCards())) {
+            this.response = "Not enough resources to buy Card";
             return "Not enough resources to buy Card";
-        else if (!developmentCardSlots.canAdd(card))
+        }
+        else if (!developmentCardSlots.canAdd(card)) {
+            this.response = "Card does not fit inside Personal Board";
             return "Card does not fit inside Personal Board";
+        }
         else {
             game.getCurrentPlayer().getBoard().getResourceManager().setTemporaryResourcesToPay(card.getCost());
             chooseCardSlot.setRowCardToBuy(this.row);
             chooseCardSlot.setColumnCardToBuy(this.column);
+            this.response = "SUCCESS";
             return "SUCCESS";
         }
+    }
+
+    /**
+     * Method used to prepare a messageToClient type object to be sent by the server to the client.
+     * @param game Current instance of the Game being played.
+     * @return A message to be sent to the client.
+     */
+    @Override
+    public MessageToClient messagePrepare(Game game) {
+        BuyCardMessage message = new BuyCardMessage(game.getCurrentPlayerIndex());
+        message.setError(this.response);
+        if(this.response.equals("SUCCESS"))
+            message.addPossibleAction(ActionType.PAY_RESOURCE_CARD);
+        else {
+            message.addPossibleAction(ActionType.ACTIVATE_PRODUCTION);
+            message.addPossibleAction(ActionType.BUY_CARD);
+            message.addPossibleAction(ActionType.MARKET_CHOOSE_ROW);
+            message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
+        }
+
+        return message;
     }
 }

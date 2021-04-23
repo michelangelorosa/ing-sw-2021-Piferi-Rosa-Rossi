@@ -4,6 +4,7 @@ import it.polimi.ingsw.Model.*;
 
 import java.util.ArrayList;
 
+
 /**
  * CommonTestMethods Class contains static methods to simplify complex Tests.
  */
@@ -16,7 +17,7 @@ public class CommonTestMethods {
     public static void gameInitOne(Game game) {
         playersInit(game);
         leaderCardInit(game);
-        }
+    }
 
     /**
      * Method to add four players to a game.
@@ -32,6 +33,7 @@ public class CommonTestMethods {
         game.getPlayers().add(player1);
         game.getPlayers().add(player2);
         game.getPlayers().add(player3);
+        game.setGameType(GameType.MULTIPLAYER);
     }
 
     /**
@@ -54,11 +56,11 @@ public class CommonTestMethods {
         LeaderCard whiteMarbleOne = new LeaderCard(2, 1, stack1, requirements, Marble.YELLOW);
         LeaderCard whiteMarbleTwo = new LeaderCard(3, 2, stack1, requirements, Marble.PURPLE);
 
-        LeaderCard productionOne = new LeaderCard(4, 3, stack2, requirements, stack1, 1, 1);
-        LeaderCard productionTwo = new LeaderCard(5, 1, stack2, requirements, stack2, 2, 0);
+        LeaderCard productionOne = new LeaderCard(4, 3, stack2, requirements, stack1, 3, 1);
+        LeaderCard productionTwo = new LeaderCard(5, 1, stack2, requirements, stack2, 3, 0);
 
-        LeaderCard extraDepotOne = new LeaderCard(6, 2, stack3, requirements, ResourceType.SHIELDS);
-        LeaderCard extraDepotTwo = new LeaderCard(7, 2, stack4, requirements, ResourceType.SERVANTS);
+        LeaderCard extraDepotOne = new LeaderCard(1, 2, stack3, requirements, ResourceType.SHIELDS);
+        LeaderCard extraDepotTwo = new LeaderCard(1, 2, stack4, requirements, ResourceType.SERVANTS);
 
         game.getLeaderCards().add(discountOne);
         game.getLeaderCards().add(discountTwo);
@@ -199,5 +201,4 @@ public class CommonTestMethods {
         leaderCards.add(card2);
         leaderCards.add(card3);
     }
-
 }

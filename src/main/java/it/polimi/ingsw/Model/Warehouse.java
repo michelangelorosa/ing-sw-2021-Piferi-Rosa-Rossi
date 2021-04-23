@@ -157,6 +157,12 @@ public class Warehouse {
         return extraResources;
     }
 
+    /**
+     * Method used to check if a specified resource can be added to a specified depot.
+     * @param type Type of the resource to be added.
+     * @param depot Depot where the player wants to add the resource
+     * @return True if the resource can be added.
+     */
     public boolean canAddToDepot(ResourceType type, WarehouseDepot depot) {
             if(depot.getResourceType() == ResourceType.NONE && this.areEmptyDepotsFillableByType(type))
                 return true;
@@ -166,10 +172,19 @@ public class Warehouse {
             return false;
     }
 
+    /**
+     * Method used to check if it is possible to remove resources from a depot.
+     * @param depot Depot the player wants to remove resources from.
+     * @return True if the depot is not empty.
+     */
     public boolean canRemoveFromDepot(WarehouseDepot depot){
         return !depot.isEmpty();
     }
 
+    /**
+     * Method used to remove a resource from a specified depot.
+     * @param depot Depot the player wants to remove resources from.
+     */
     public void removeResourceFromDepot(WarehouseDepot depot) {
         if(!depot.isEmpty())
             depot.removeResources(1);
@@ -265,6 +280,11 @@ public class Warehouse {
         return true;
     }
 
+    /**
+     * Method used to switch resources of two depots.
+     * @param firstDepot First Depot to switch.
+     * @param secondDepot Second Depot to switch.
+     */
     public void switchDepots(WarehouseDepot firstDepot, WarehouseDepot secondDepot) {
         ResourceType tempType = firstDepot.getResourceType();
         int tempStoredResources = firstDepot.getStoredResources();
@@ -369,6 +389,11 @@ public class Warehouse {
         return true;
     }
 
+    /**
+     * Method used to check if a player can add a specified type of resource to the Warehouse.
+     * @param type Type of resource the player wants to add.
+     * @return True id the resource can be added.
+     */
     public boolean canAddResource(ResourceType type) {
         boolean canAdd = false;
 
@@ -388,6 +413,10 @@ public class Warehouse {
         return canAdd;
     }
 
+    /**
+     * Method used to create a copy of the player's Warehouse.
+     * @return The copied Warehouse.
+     */
     public Warehouse copyWarehouse() {
         Warehouse copy = new Warehouse();
 
@@ -408,6 +437,10 @@ public class Warehouse {
         return copy;
     }
 
+    /**
+     * Method used to revert the Warehouse to a previous condition.
+     * @param warehouse Warehouse for the current warehouse to be reverted to.
+     */
     public void revertWarehouse(Warehouse warehouse) {
         for(int i = 0; i < 3; i++) {
             this.getWarehouseDepots()[i].setStoredResources(warehouse.getWarehouseDepots()[i].getStoredResources());

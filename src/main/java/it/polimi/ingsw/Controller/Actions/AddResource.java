@@ -1,59 +1,88 @@
 package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.MessagesToClient.*;
 
 /**
  * AddResource Class contains data and methods to resolve a Client request when adding
  * a resource from the Market into his Warehouse.
  */
-
-public class AddResource extends Action implements ActionInterface {
+public class AddResource extends Action {
     private final int depot;
     private final ResourceType resourceType;
 
+    /**
+     * Constructor for AddResource Class.
+     */
     public AddResource(int depot, ResourceType resourceType) {
         this.actionType = ActionType.ADD_RESOURCE;
         this.depot = depot;
         this.resourceType = resourceType;
     }
 
+    /**
+     * Getter for actionType attribute in AddResource Class.
+     */
     public ActionType getActionType() {
         return actionType;
     }
 
+    /**
+     * Getter for depot attribute in AddResource Class.
+     */
     public int getDepot() {
         return depot;
     }
 
+    /**
+     * Getter for resourceType attribute in AddResource Class.
+     */
     public ResourceType getResourceType() {
         return resourceType;
     }
 
+    /**
+     * Method used to check if the specified action is formally correct.
+     * @throws IllegalArgumentException if the depot index is out of bounds.
+     */
     @Override
     public boolean isCorrect() throws IllegalArgumentException {
-        if(resourceType == ResourceType.NONE || depot < 0 || depot > 4)
+        if(depot < 0 || depot > 4)
             throw new IllegalArgumentException("Depot index out of bounds.");
+        else if(resourceType == ResourceType.NONE)
+            throw new IllegalArgumentException("ResourceType can't be NONE.");
         return true;
     }
 
+    /**
+     * Method used to check if the specified action is logically correct.
+     * @return false if the player is referring to a inactive Leader Depot or if the
+     * specified Type of resource cannot be put inside a Leader Depot.
+     */
     @Override
     public boolean canBeApplied(Game game) {
         Player player = game.getCurrentPlayer();
-        if(!player.getBoard().getResourceManager().isExtraDepotOneActive() && depot == 3)
+        if((!player.getBoard().getResourceManager().isExtraDepotOneActive() || player.getBoard().getResourceManager().getExtraWarehouseDepotOne().getResourceType() != resourceType) && depot == 3)
             return false;
 
-        else if(!player.getBoard().getResourceManager().isExtraDepotTwoActive() && depot == 4)
+        else if((!player.getBoard().getResourceManager().isExtraDepotTwoActive() || player.getBoard().getResourceManager().getExtraWarehouseDepotTwo().getResourceType() != resourceType) && depot == 4)
             return false;
 
         else return true;
     }
 
+    /**
+     * Method used to execute the action on the Model.
+     * @return "SUCCESS" if the action went right, another String if it went wrong.
+     */
     @Override
     public String doAction(Game game, ChooseProductionOutput chooseProductionOutput, ChooseCardSlot chooseCardSlot, ResetWarehouse resetWarehouse) {
         this.isCorrect();
 
-        if(!this.canBeApplied(game))
-            return "Extra depot is not active";
+        if(!this.canBeApplied(game)) {
+            response = "Extra depot is not active or not of given type";
+            return "Extra depot is not active or not of given type";
+        }
 
         WarehouseDepot depot;
         ResourceManager resourceManager = game.getCurrentPlayer().getBoard().getResourceManager();
@@ -65,14 +94,38 @@ public class AddResource extends Action implements ActionInterface {
         else
             depot = resourceManager.getWarehouseDepots()[this.depot];
 
-        if(!resourceManager.canAddToDepot(this.resourceType, depot))
-            return "Can't add "+this.resourceType+" to a "+depot.getResourceType()+" depot";
-
+        if(!resourceManager.canAddToDepot(this.resourceType, depot)) {
+            response = "Can't add " + this.resourceType + " to this depot";
+            return "Can't add " + this.resourceType + " to this depot";
+        }
 
         else {
             resourceManager.addOneResourceToDepot(this.resourceType, depot);
+            response = "SUCCESS";
             return "SUCCESS";
         }
+    }
+
+    /**
+     * Method used to prepare a messageToClient type object to be sent by the server to the client.
+     * @param game Current instance of the Game being played.
+     * @return A message to be sent to the client.
+     */
+    @Override
+    public MessageToClient messagePrepare(Game game) {
+        AddMessage message = new AddMessage(game.getCurrentPlayerIndex());
+        message.setError(this.response);
+        message.addPossibleAction(ActionType.ADD_RESOURCE);
+        message.addPossibleAction(ActionType.SWITCH_DEPOT);
+        message.addPossibleAction(ActionType.RESET_WAREHOUSE);
+        message.addPossibleAction(ActionType.END_MARKET);
+
+        if(this.response.equals("SUCCESS")) {
+            message.setWarehouse(game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse());
+            message.setTemporaryResources(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay());
+        }
+
+        return message;
     }
 
 }

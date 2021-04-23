@@ -23,7 +23,7 @@ public class Board {
         this.resourceManager = new ResourceManager();
         this.developmentCardSlots = new DevelopmentCardSlots();
         this.leaderCards = new LeaderCard[2];
-        this.basicProduction = new BasicProduction(1, 2);
+        this.basicProduction = new BasicProduction(2, 1);
     }
 
     /**
@@ -108,11 +108,11 @@ public class Board {
 
         totalInput = this.productionInputAdder(developmentCards, leaderCards, wantsBasicProduction, inputs);
 
-       for(int i = 1; i <= 4; i++)
-           if(resourceManager.countAllResourcesByType(resourceTypes[i]) < totalInput.getResource(resourceTypes[i]))
+        for(int i = 1; i <= 4; i++)
+            if(resourceManager.countAllResourcesByType(resourceTypes[i]) < totalInput.getResource(resourceTypes[i]))
                 return false;
 
-       return true;
+        return true;
     }
 
     /**

@@ -16,7 +16,8 @@ public enum ActionType {
     END_MARKET("end_market"),
 
     BUY_CARD("buy_card"),
-    PAY_RESOURCE("pay_resource"),
+    PAY_RESOURCE_CARD("pay_resource_card"),
+    PAY_RESOURCE_PRODUCTION("pay_resource_production"),
     END_PAY_CARD("end_pay"),
     CHOOSE_CARD_SLOT("choose_card_slot"),
 
@@ -50,3 +51,4 @@ public enum ActionType {
         return null;
     }
 }
+

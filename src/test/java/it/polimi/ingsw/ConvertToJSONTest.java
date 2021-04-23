@@ -1,18 +1,19 @@
 package it.polimi.ingsw;
 
-import static org.junit.Assert.*;
-
 import it.polimi.ingsw.Model.*;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Scanner;
+
 
 public class ConvertToJSONTest {
 
     ConvertToJSON test = new ConvertToJSON();
-
+    DevelopmentCard[] cards = JSONReader.ReadDevelopmentCards();
+    ArrayList<LeaderCard> leaderCards = JSONReader.ReadLeaderCards();
+    VaticanReportSection[] vaticanReportSections = JSONReader.ReadVaticanReportSection();
+    FaithTrack track = new FaithTrack();
     /**
      * This test is used to see if the method "convertFaith" works properly by saving all the cells in one array from
      * the file FaithTrack.json.
@@ -20,8 +21,8 @@ public class ConvertToJSONTest {
      */
     @Test
     public void convertFaithTest() throws FileNotFoundException {
-        FaithCell[] cell = JSONReader.ReadFaithCells();
-        test.covertFaith(cell);
+
+        test.covertFaith(track.getCells(), vaticanReportSections);
     }
 
     /**
@@ -32,9 +33,7 @@ public class ConvertToJSONTest {
     @Test
     public void convertLeaderCardTest() throws FileNotFoundException {
 
-        ArrayList<LeaderCard> LeaderCards = JSONReader.ReadLeaderCards();
-
-        test.covertLeaderCard(LeaderCards);
+        test.covertLeaderCard(leaderCards);
     }
 
     /**
@@ -44,9 +43,15 @@ public class ConvertToJSONTest {
      */
     @Test
     public void convertDevelopmentCardTest() throws FileNotFoundException {
-        DevelopmentCard[] cards = JSONReader.ReadDevelopmentCards();
         test.covertDevelopmentCard(cards);
     }
 
+    @Test
+    public void convertStringTest() throws FileNotFoundException {
+        System.out.println(test.covertFaithString(track.getCells()));
+        System.out.println(test.covertVaticanString(vaticanReportSections));
+        System.out.println(test.covertDevelopmentCardString(cards));
+        System.out.println(test.covertLeaderCardString(leaderCards));
+    }
 
 }

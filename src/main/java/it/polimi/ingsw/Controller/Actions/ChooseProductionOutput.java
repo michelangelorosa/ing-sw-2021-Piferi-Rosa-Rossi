@@ -1,10 +1,15 @@
 package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.MessagesToClient.*;
 
 import java.util.ArrayList;
 
-public class ChooseProductionOutput extends Action implements ActionInterface {
+/**
+ * ChooseProductionOutput Class contains data and methods to be used when the player
+ * concluded payment for a Production to choose the Production output.
+ */
+public class ChooseProductionOutput extends Action {
     private boolean firstLeaderCard;
     private boolean secondLeaderCard;
     private boolean basicProduction;
@@ -14,6 +19,9 @@ public class ChooseProductionOutput extends Action implements ActionInterface {
 
     private ResourceStack output;
 
+    /**
+     * Constructor for ChooseProductionOutput Class.
+     */
     public ChooseProductionOutput() {
         this.actionType = ActionType.CHOOSE_PRODUCTION_OUTPUT;
         this.firstLeaderCard = false;
@@ -25,62 +33,109 @@ public class ChooseProductionOutput extends Action implements ActionInterface {
         this.output = new ResourceStack(0,0,0,0);
     }
 
+    /**
+     * Getter for "actionType" attribute in Action super class.
+     */
     public ActionType getActionType() {
         return actionType;
     }
 
+    /**
+     * Getter for "firstLeaderCard" attribute in ChooseProductionOutput Class.
+     */
     public boolean isFirstLeaderCard() {
         return firstLeaderCard;
     }
 
+    /**
+     * Getter for "secondLeaderCard" attribute in ChooseProductionOutput Class.
+     */
     public boolean isSecondLeaderCard() {
         return secondLeaderCard;
     }
 
+    /**
+     * Getter for "basicProduction" attribute in ChooseProductionOutput Class.
+     */
     public boolean isBasicProduction() {
         return basicProduction;
     }
 
+    /**
+     * Getter for "firstLeaderCardOutput" attribute in ChooseProductionOutput Class.
+     */
     public ArrayList<ResourceType> getFirstLeaderCardOutput() {
         return firstLeaderCardOutput;
     }
 
+    /**
+     * Getter for "secondLeaderCardOutput" attribute in ChooseProductionOutput Class.
+     */
     public ArrayList<ResourceType> getSecondLeaderCardOutput() {
         return secondLeaderCardOutput;
     }
 
+    /**
+     * Getter for "basicProductionOutput" attribute in ChooseProductionOutput Class.
+     */
     public ArrayList<ResourceType> getBasicProductionOutput() {
         return basicProductionOutput;
     }
 
+    /**
+     * Getter for "output" attribute in ChooseProductionOutput Class.
+     */
     public ResourceStack getOutput() {
         return output;
     }
 
+    /**
+     * Setter for firstLeaderCard attribute in ChooseProductionOutput Class.
+     */
     public void setFirstLeaderCard(boolean firstLeaderCard) {
         this.firstLeaderCard = firstLeaderCard;
     }
 
+    /**
+     * Setter for secondLeaderCard attribute in ChooseProductionOutput Class.
+     */
     public void setSecondLeaderCard(boolean secondLeaderCard) {
         this.secondLeaderCard = secondLeaderCard;
     }
 
+    /**
+     * Setter for basicProduction attribute in ChooseProductionOutput Class.
+     */
     public void setBasicProduction(boolean basicProduction) {
         this.basicProduction = basicProduction;
     }
 
+    /**
+     * Setter for firstLeaderCardOutput attribute in ChooseProductionOutput Class.
+     */
     public void setFirstLeaderCardOutput(ArrayList<ResourceType> firstLeaderCardOutput) {
         this.firstLeaderCardOutput = firstLeaderCardOutput;
     }
 
+    /**
+     * Setter for secondLeaderCardOutput attribute in ChooseProductionOutput Class.
+     */
     public void setSecondLeaderCardOutput(ArrayList<ResourceType> secondLeaderCardOutput) {
         this.secondLeaderCardOutput = secondLeaderCardOutput;
     }
 
+    /**
+     * Setter for basicProductionOutput attribute in ChooseProductionOutput Class.
+     */
     public void setBasicProductionOutput(ArrayList<ResourceType> basicProductionOutput) {
         this.basicProductionOutput = basicProductionOutput;
     }
 
+    /**
+     * This method checks if the input sent to the server is correct by assuring that the ArrayLists
+     * do not contain ResourceTypes equal to NONE.
+     * @throws IllegalArgumentException if on of the ResourceTypes is NONE.
+     */
     @Override
     public boolean isCorrect() throws IllegalArgumentException {
         if(firstLeaderCard)
@@ -101,6 +156,9 @@ public class ChooseProductionOutput extends Action implements ActionInterface {
         return true;
     }
 
+    /**
+     * Method used to check if the action is logically applicable.
+     */
     @Override
     public boolean canBeApplied(Game game) {
         if(firstLeaderCard)
@@ -118,24 +176,54 @@ public class ChooseProductionOutput extends Action implements ActionInterface {
         return true;
     }
 
+    /**
+     * Method used to execute the action on the Model.
+     * @return "SUCCESS" if the action went right, another String if it went wrong.
+     */
     @Override
     public String doAction(Game game, ChooseProductionOutput chooseProductionOutput, ChooseCardSlot chooseCardSlot, ResetWarehouse resetWarehouse) {
         this.isCorrect();
-        if(!this.canBeApplied(game))
+        if(!this.canBeApplied(game)) {
+            this.response = "Tried to use not valid Leader Cards or tried to get more resources than possible.";
             return "Tried to use not valid Leader Cards or tried to get more resources than possible.";
+        }
 
         if(firstLeaderCard)
-            for(ResourceType type : this.basicProductionOutput)
+            for(ResourceType type : this.firstLeaderCardOutput)
                 output.addResource(1, type);
         if(secondLeaderCard)
-            for(ResourceType type : this.basicProductionOutput)
+            for(ResourceType type : this.secondLeaderCardOutput)
                 output.addResource(1, type);
         if(basicProduction)
             for(ResourceType type : this.basicProductionOutput)
                 output.addResource(1, type);
 
-        game.getCurrentPlayer().getBoard().getResourceManager().addProductionResources(output);
+        if(!output.isEmpty())
+            game.getCurrentPlayer().getBoard().getResourceManager().addProductionResources(output);
 
+        output = new ResourceStack(0,0,0,0);
+
+        this.response = "SUCCESS";
         return "SUCCESS";
+    }
+
+    /**
+     * Method used to prepare a messageToClient type object to be sent by the server to the client.
+     * @param game Current instance of the Game being played.
+     * @return A message to be sent to the client.
+     */
+    @Override
+    public MessageToClient messagePrepare(Game game) {
+        ChoseProductionOutputMessage message = new ChoseProductionOutputMessage(game.getCurrentPlayerIndex());
+        message.setError(this.response);
+        if(this.response.equals("SUCCESS")) {
+            message.setStrongbox(game.getCurrentPlayer().getBoard().getResourceManager().getStrongbox());
+            message.addPossibleAction(ActionType.END_TURN);
+            message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
+        }
+        else
+            message.addPossibleAction(ActionType.CHOOSE_PRODUCTION_OUTPUT);
+
+        return message;
     }
 }

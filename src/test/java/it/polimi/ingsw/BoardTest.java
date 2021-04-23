@@ -33,8 +33,8 @@ public class BoardTest {
         assertEquals(0, board.getResourceManager().getExtraWarehouseDepotOne().getStoredResources());
         assertEquals(0, board.getResourceManager().getExtraWarehouseDepotTwo().getStoredResources());
 
-        assertEquals(1, board.getBasicProduction().getJollyIn());
-        assertEquals(2, board.getBasicProduction().getJollyOut());
+        assertEquals(2, board.getBasicProduction().getJollyIn());
+        assertEquals(1, board.getBasicProduction().getJollyOut());
         assertEquals(0, board.getBasicProduction().getOutputFaith());
         assertEquals("0 0 0 0", board.getBasicProduction().getFixedInputs().toString());
         assertEquals("0 0 0 0", board.getBasicProduction().getFixedOutputs().toString());
