@@ -81,7 +81,9 @@ public class Player {
     public int getFaithTrackPosition() {
         return faithTrackPosition;
     }
-
+    /**
+     * Getter for "board" attribute in Player Class.
+     */
     public Board getBoard() {
         return board;
     }
@@ -92,13 +94,14 @@ public class Player {
      */
     public void stepAhead(int steps){
         this.faithTrackPosition += steps;
+        endTrack();
     }
 
     /**
      * This method is used to see if any player reaches the last cell of the Faith Track
      * @return true if the player wins
      */
-    public boolean victory(){
+    public boolean endTrack(){
         if(this.faithTrackPosition >= 24){
             this.faithTrackPosition = 24;
             return true;
@@ -116,5 +119,4 @@ public class Player {
     public boolean hasFinished() {
         return this.getBoard().getDevelopmentCardSlots().countAllCards() >= 7 || this.getFaithTrackPosition() >= 25;
     }
-
 }

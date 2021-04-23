@@ -2,6 +2,8 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.Model.*;
 
+import java.util.ArrayList;
+
 /**
  * CommonTestMethods Class contains static methods to simplify complex Tests.
  */
@@ -14,7 +16,7 @@ public class CommonTestMethods {
     public static void gameInitOne(Game game) {
         playersInit(game);
         leaderCardInit(game);
-    }
+        }
 
     /**
      * Method to add four players to a game.
@@ -37,6 +39,8 @@ public class CommonTestMethods {
      * @param game Game to be initialized.
      */
     public static void leaderCardInit(Game game) {
+        game.setLeaderCards(new ArrayList<LeaderCard>());
+
         ResourceStack stack1 = new ResourceStack(1,1,0,0);
         ResourceStack stack2 = new ResourceStack(0,0,1,1);
         ResourceStack stack3 = new ResourceStack(1,1,1,1);
@@ -53,8 +57,8 @@ public class CommonTestMethods {
         LeaderCard productionOne = new LeaderCard(4, 3, stack2, requirements, stack1, 1, 1);
         LeaderCard productionTwo = new LeaderCard(5, 1, stack2, requirements, stack2, 2, 0);
 
-        LeaderCard extraDepotOne = new LeaderCard(1, 2, stack3, requirements, ResourceType.SHIELDS);
-        LeaderCard extraDepotTwo = new LeaderCard(1, 2, stack4, requirements, ResourceType.SERVANTS);
+        LeaderCard extraDepotOne = new LeaderCard(6, 2, stack3, requirements, ResourceType.SHIELDS);
+        LeaderCard extraDepotTwo = new LeaderCard(7, 2, stack4, requirements, ResourceType.SERVANTS);
 
         game.getLeaderCards().add(discountOne);
         game.getLeaderCards().add(discountTwo);
@@ -132,4 +136,68 @@ public class CommonTestMethods {
 
         player.getBoard().getDevelopmentCardSlots().addCard(2, card6);
     }
+
+    public static void giveResourcesToPlayer(Player player, int num1, int num2, int num3, ResourceType type1, ResourceType type2, ResourceType type3, ResourceStack stack) {
+        ResourceManager manager = player.getBoard().getResourceManager();
+        manager.reset();
+        manager.addMarketResourcesByType(num1, type1, manager.getWarehouseDepots()[0]);
+        manager.addMarketResourcesByType(num2, type2, manager.getWarehouseDepots()[1]);
+        manager.addMarketResourcesByType(num3, type3, manager.getWarehouseDepots()[2]);
+        manager.addProductionResources(stack);
+    }
+
+    public static void discountLeaderCardAdder(ArrayList<LeaderCard> leaderCards) {
+        LeaderRequirements leaderRequirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
+        ResourceStack required = new ResourceStack(0,0,0,0);
+        ResourceStack discount1 = new ResourceStack(1,1,0,0);
+        ResourceStack discount2 = new ResourceStack(0,0,1,1);
+        ResourceStack discount3 = new ResourceStack(3,0,0,0);
+
+        LeaderCard card1 = new LeaderCard(1, 1, required, leaderRequirements, discount1);
+        LeaderCard card2 = new LeaderCard(2, 2, required, leaderRequirements, discount2);
+        LeaderCard card3 = new LeaderCard(3, 3, required, leaderRequirements, discount3);
+        leaderCards.add(card1);
+        leaderCards.add(card2);
+        leaderCards.add(card3);
+    }
+
+    public static void whiteMarbleLeaderCardAdder(ArrayList<LeaderCard> leaderCards) {
+        LeaderRequirements leaderRequirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
+        ResourceStack required = new ResourceStack(0,0,0,0);
+
+        LeaderCard card1 = new LeaderCard(1, 1, required, leaderRequirements, Marble.BLUE);
+        LeaderCard card2 = new LeaderCard(2, 2, required, leaderRequirements, Marble.PURPLE);
+        LeaderCard card3 = new LeaderCard(3, 3, required, leaderRequirements, Marble.YELLOW);
+        leaderCards.add(card1);
+        leaderCards.add(card2);
+        leaderCards.add(card3);
+    }
+
+    public static void productionPowerLeaderCardAdder(ArrayList<LeaderCard> leaderCards) {
+        LeaderRequirements leaderRequirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
+        ResourceStack required = new ResourceStack(0,0,0,0);
+        ResourceStack input1 = new ResourceStack(1,1,0,0);
+        ResourceStack input2 = new ResourceStack(0,0,1,1);
+        ResourceStack input3 = new ResourceStack(3,0,0,0);
+
+        LeaderCard card1 = new LeaderCard(1, 1, required, leaderRequirements, input1, 1, 1);
+        LeaderCard card2 = new LeaderCard(2, 2, required, leaderRequirements, input2, 2, 2);
+        LeaderCard card3 = new LeaderCard(3, 3, required, leaderRequirements, input3, 3, 3);
+        leaderCards.add(card1);
+        leaderCards.add(card2);
+        leaderCards.add(card3);
+    }
+
+    public static void extraDepotLeaderCardAdder(ArrayList<LeaderCard> leaderCards) {
+        LeaderRequirements leaderRequirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
+        ResourceStack required = new ResourceStack(0,0,0,0);
+
+        LeaderCard card1 = new LeaderCard(1, 1, required, leaderRequirements, ResourceType.SHIELDS);
+        LeaderCard card2 = new LeaderCard(2, 2, required, leaderRequirements, ResourceType.COINS);
+        LeaderCard card3 = new LeaderCard(3, 3, required, leaderRequirements, ResourceType.SERVANTS);
+        leaderCards.add(card1);
+        leaderCards.add(card2);
+        leaderCards.add(card3);
+    }
+
 }

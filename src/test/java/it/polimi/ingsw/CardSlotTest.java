@@ -14,7 +14,7 @@ public class CardSlotTest {
     DevelopmentCard cardTest = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 100, cost, input, output, 0);
     DevelopmentCard card2Test = new DevelopmentCard(Color.BLUE, Level.ONE, 2, 100, cost, input, output, 0);
     DevelopmentCard card3Test = new DevelopmentCard(Color.BLUE, Level.THREE, 3, 100, cost, input, output, 0);
-    DevelopmentCard card4Test = new DevelopmentCard(Color.BLUE, Level.THREE, 4, 100, cost, input, output, 0);
+    DevelopmentCard card4Test = new DevelopmentCard(Color.PURPLE, Level.THREE, 4, 100, cost, input, output, 0);
 
     /**
      * Test to check if the constructor works properly
@@ -49,11 +49,15 @@ public class CardSlotTest {
     }
 
     /**
-     * Test to watch if the method isFull works properly by trying to add a card in a full slot.
+     * Test to watch if the methods isFull and isEmpty work properly by trying to add a card in a full slot.
      */
 
     @Test
-    public void isFullTest(){
+    public void isFullAndIsEmptyTest(){
+        test.addCard(cardTest);
+        assertEquals(true, test.isEmpty());
+        assertEquals(false, test.isFull());
+
         test.addCard(card);
         assertEquals(1, test.getLevelOccupied());
 
@@ -65,7 +69,11 @@ public class CardSlotTest {
 
         test.addCard(card4Test);
         assertEquals(3, test.getLevelOccupied());
+
+        assertEquals(true, test.isFull());
+        assertEquals(false, test.isEmpty());
     }
+
 
     /**
      * Test to check if the method finalPoints works properly by adding 3 cards and watching the final points.
@@ -153,12 +161,9 @@ public class CardSlotTest {
     public void sumColorsTest(){
         test.addCard(card);
         test.addCard(cardTest);
-        test.addCard(card3Test);
+        test.addCard(card4Test);
         int blueCards = test.sumColors(Color.BLUE);
 
-        assertEquals(3, blueCards);
+        assertEquals(2, blueCards);
     }
-
-
-
 }

@@ -18,10 +18,10 @@ public class PopeSpaceTest {
     @Test
     public void getterTest() {
 
-        assertSame(PopeSpace.No, PopeSpace.getPopeSpece(0));
-        assertSame(PopeSpace.ONE, PopeSpace.getPopeSpece(1));
-        assertSame(PopeSpace.TWO, PopeSpace.getPopeSpece(2));
-        assertSame(PopeSpace.THREE, PopeSpace.getPopeSpece(3));
+        assertSame(PopeSpace.No, PopeSpace.getPopeSpace(0));
+        assertSame(PopeSpace.ONE, PopeSpace.getPopeSpace(1));
+        assertSame(PopeSpace.TWO, PopeSpace.getPopeSpace(2));
+        assertSame(PopeSpace.THREE, PopeSpace.getPopeSpace(3));
 
     }
 }

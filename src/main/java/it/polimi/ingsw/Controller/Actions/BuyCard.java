@@ -55,6 +55,7 @@ public class BuyCard extends Action implements ActionInterface{
         else if (!developmentCardSlots.canAdd(card))
             return "Card does not fit inside Personal Board";
         else {
+            game.getCurrentPlayer().getBoard().getResourceManager().setTemporaryResourcesToPay(card.getCost());
             chooseCardSlot.setRowCardToBuy(this.row);
             chooseCardSlot.setColumnCardToBuy(this.column);
             return "SUCCESS";

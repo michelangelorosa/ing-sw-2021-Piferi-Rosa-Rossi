@@ -287,7 +287,6 @@ public class ResourceManager {
 
         for(int i = 1; i <= 4; i++)
             if(cardToBuyCost.getResource(resourceTypes[i]) > countAllResourcesByType(resourceTypes[i])) {
-                System.out.println("Not enough "+resourceTypes[i]+" to buy card!");
                 isBuyable = false;
             }
 

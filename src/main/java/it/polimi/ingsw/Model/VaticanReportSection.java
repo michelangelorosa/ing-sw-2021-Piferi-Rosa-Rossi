@@ -2,6 +2,7 @@ package it.polimi.ingsw.Model;
 
 public class VaticanReportSection {
 
+
     private final int begin;
     private final int end;
     private final int points;
@@ -14,6 +15,7 @@ public class VaticanReportSection {
 
     }
 
+    /**Getter for the VaticanReportSection class */
     public int getBegin() {
         return begin;
     }
@@ -24,5 +26,10 @@ public class VaticanReportSection {
 
     public int getPoints() {
         return points;
+    }
+
+    /**Method to check if the the vatican section is correct*/
+    public void isCorrect() throws  IllegalArgumentException{
+        if(begin < end || begin < 0 || end < 0 || begin > 25 || end > 25) throw new IllegalArgumentException("Vatican Report Section index out of bound");
     }
 }

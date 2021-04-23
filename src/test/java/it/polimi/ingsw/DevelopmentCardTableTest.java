@@ -98,19 +98,6 @@ public class DevelopmentCardTableTest {
     }
 
     /**
-     * Test for "shuffleTableTest" in DevelopmentCardTable Class.
-     * Checked by hand since it is randomized.
-     */
-    @Test
-    public void shuffleTableTest() {
-        table.shuffleTable();
-        for(int i = 0; i < 3; i++)
-            for(int j = 0; j < 4; j++)
-                for(DevelopmentCard card : table.getDeck(i, j).getCards())
-                    System.out.println(card);
-    }
-
-    /**
      * Test for "drawCardFromDeck" DevelopmentCardTable Class.
      */
     @Test

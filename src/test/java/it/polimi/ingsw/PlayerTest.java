@@ -2,8 +2,7 @@ package it.polimi.ingsw;
 
 import static org.junit.Assert.*;
 
-import it.polimi.ingsw.Model.Player;
-import it.polimi.ingsw.Model.PlayerStatus;
+import it.polimi.ingsw.Model.*;
 import org.junit.Test;
 
 /**
@@ -15,6 +14,9 @@ public class PlayerTest {
     Player playerTwo = new Player("nikola", 1, false);
     Player playerThree = new Player("roberto", 2, false);
     Player playerFour = new Player("giacomo", 3, false);
+
+    FaithTrack test = new FaithTrack();
+    FaithCell[] cells = JSONReader.ReadFaithCells();
 
     /**
      * Constructor and Getter test for Player Class.
@@ -69,8 +71,8 @@ public class PlayerTest {
      */
     @Test
     public void stepAheadTest(){
-        playerOne.stepAhead(2);
-        assertEquals(2, playerOne.getFaithTrackPosition());
+        playerOne.stepAhead(50);
+        assertEquals(24, playerOne.getFaithTrackPosition());
     }
 
     /**
@@ -79,9 +81,9 @@ public class PlayerTest {
     @Test
     public void victoryTest(){
         playerOne.stepAhead(26);
-        playerOne.victory();
+        playerOne.endTrack();
         assertEquals(24, playerOne.getFaithTrackPosition());
-        assertTrue(playerOne.victory());
+        assertTrue(playerOne.endTrack());
     }
 
     /**

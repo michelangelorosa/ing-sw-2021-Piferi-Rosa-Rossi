@@ -52,7 +52,6 @@ public class DevelopmentCardDeck {
      /**
       * Setter for "color" attribute in DevelopmentCardDeck
       */
-
     public void setColor(Color color) {
         this.color = color;
     }
@@ -117,6 +116,11 @@ public class DevelopmentCardDeck {
         return cards[--cardsInDeck];
     }
 
+     /**
+      * Method to get the first card in a deck.
+      * @return a DevelopmentCard
+      * @throws IllegalArgumentException
+      */
     public DevelopmentCard getTopCard() throws IllegalArgumentException {
         int position = cardsInDeck - 1;
         if(isEmpty()) {
@@ -125,6 +129,10 @@ public class DevelopmentCardDeck {
         return cards[position];
     }
 
+     /**
+      * A method to return a string with che color and the level of a card
+      * @return a string that contains the color and the level of the card
+      */
     @Override
     public String toString() {
         return color+" "+level;

@@ -2,14 +2,15 @@ package it.polimi.ingsw.Model;
 
 public class FaithCell {
 
+    /**Every card is characterized by an id and the point it gives*/
     private final int idCell;
     private int victoryPoints;
-    private VaticanReportSectionEnum vaticanReportSectionEnum;
-    private final PopeSpace popeSpace;
+    //private VaticanReportSectionEnum vaticanReportSectionEnum;
+    //private final PopeSpace popeSpace;
 
-    public FaithCell(int idCell, int victoryPoints, VaticanReportSectionEnum vaticanReportSectionEnum, PopeSpace popeSpace) {
-        this.vaticanReportSectionEnum = vaticanReportSectionEnum;
-        this.popeSpace = popeSpace;
+    public FaithCell(int idCell, int victoryPoints) {
+        //this.vaticanReportSectionEnum = vaticanReportSectionEnum;
+        //this.popeSpace = popeSpace;
         this.idCell = idCell;
         this.victoryPoints = victoryPoints;
     }
@@ -21,7 +22,7 @@ public class FaithCell {
     public int getVictoryPoints() {
         return victoryPoints;
     }
-
+/*
     public VaticanReportSectionEnum getVaticanReportSection() {
         return vaticanReportSectionEnum;
     }
@@ -33,13 +34,14 @@ public class FaithCell {
     public void setVaticanReportSection(VaticanReportSectionEnum vaticanReportSectionEnum) {
         this.vaticanReportSectionEnum = vaticanReportSectionEnum;
     }
+ */
 
     public void setVictoryPoints(int victoryPoints) {
         this.victoryPoints = victoryPoints;
     }
 
     public String toString() {
-        return idCell+" "+victoryPoints + " " + vaticanReportSectionEnum + " " +popeSpace;
+        return idCell+" "+victoryPoints;// + " " + vaticanReportSectionEnum + " " +popeSpace;
     }
 
 }

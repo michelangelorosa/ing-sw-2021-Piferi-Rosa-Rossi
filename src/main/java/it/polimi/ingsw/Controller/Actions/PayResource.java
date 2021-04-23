@@ -32,7 +32,7 @@ public class PayResource extends Action implements ActionInterface {
 
     @Override
     public boolean isCorrect() throws IllegalArgumentException {
-        if(depot < 0 || depot > 4)
+        if(fromWarehouse && depot < 0 || fromWarehouse && depot > 4)
             throw new IllegalArgumentException("Depot index out of bounds.");
 
         else if(fromWarehouse && resourceType != ResourceType.NONE)

@@ -13,6 +13,10 @@ public class ResetWarehouse extends Action implements ActionInterface {
         this.actionType = ActionType.RESET_WAREHOUSE;
     }
 
+    public ActionType getActionType(){
+        return this.actionType;
+    }
+
     public Warehouse getBackupWarehouse() {
         return backupWarehouse;
     }

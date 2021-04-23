@@ -185,7 +185,7 @@ public class DevelopmentCardDeckTest {
         cardToDraw = deck.drawCard();
     }
 
-    /**
+    /*
      * Test for "getTopCard" method in DevelopmentCardDeck Class.
      */
     @Test

@@ -48,7 +48,9 @@ public class CardSlot {
         return levelOccupied == 0;
     }
 
-
+    /** This method is use to calculate the points relative at the Card Slots
+     * @return an int which is the points relative at the cards on the slots
+     */
     public int finalPoints(){
         int points = 0;
         for(int i = 0; i < 3; i++){
@@ -58,6 +60,11 @@ public class CardSlot {
         return points;
     }
 
+    /**
+     * This method returns true if he can add the card i the slot
+     * @param card which is  the card that the player wants to add
+     * @return true if he can, false if he cannot
+     */
     public boolean canAdd(DevelopmentCard card){
         if(levelOccupied == 0 && card.getLevel() == Level.ONE) return true;
         if(levelOccupied == 1 && card.getLevel() == Level.TWO) return true;
@@ -65,11 +72,21 @@ public class CardSlot {
         else return false;
     }
 
+    /**
+     * This method is use to get the first card of the slot.
+     * @return the card on the top of the slot
+     */
     public DevelopmentCard getFirstCard(){
         if(levelOccupied == 0) return null;
         else return cards[levelOccupied - 1];
     }
 
+    /**
+     * Counts the number of card of a certain color and level.
+     * @param color the color of the card I want to count
+     * @param level the level of the card I want to count
+     * @return the result of the counter
+     */
     public int sumType(Color color, Level level){
         int count = 0;
         for(int i = 0; i < 3; i++) {
@@ -80,6 +97,11 @@ public class CardSlot {
         return count;
     }
 
+    /**
+     * Counts the number of card of a certain color.
+     * @param color the color of the card I want to count
+     * @return the result of the counter
+     */
     public int sumColors(Color color){
         int count = 0;
         for(int i = 0; i < 3; i++){

@@ -155,7 +155,7 @@ public class ActivateProduction extends Action implements ActionInterface {
         else {
             game.getCurrentPlayer().getBoard().getProductionCost(devCards, leaderCards, this.basicProduction, inputs);
 
-            chooseProductionOutput.getOutput().addToAllTypes(game.getCurrentPlayer().getBoard().getFixedProductionOutput(game.getCurrentPlayer(), devCards, this.basicProduction));
+            chooseProductionOutput.getOutput().addToAllTypes(game.getCurrentPlayer().getBoard().getFixedProductionOutput(game.getCurrentPlayer(), devCards, leaderCards, this.basicProduction));
 
             if(this.firstLeaderCard)
                 chooseProductionOutput.setFirstLeaderCard(true);

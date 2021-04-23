@@ -81,7 +81,7 @@ public class Board {
                 if(!leaderCard.isActive())
                     throw new IllegalArgumentException("Model.Board: Leader Card was not active.");
                 else if(leaderCard.getAction() != LeaderCardAction.PRODUCTIONPOWER)
-                    throw new IllegalArgumentException("Model.Board: Leader Card was not of type PRODUCTIONPOWER.");
+                    throw new IllegalArgumentException("Model.Board: Leader Card was not of type PRODUCTION POWER.");
                 else
                     totalInput.addToAllTypes(leaderCard.getInput());
             }

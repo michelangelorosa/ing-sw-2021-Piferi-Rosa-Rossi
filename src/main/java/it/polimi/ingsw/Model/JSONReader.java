@@ -96,14 +96,63 @@ public class JSONReader {
          return readCards;
      }
 
+     /**Json Reader for the vatican report section*/
+     public static VaticanReportSection[] ReadVaticanReportSection(){
+         File cells = new File("FaithCell2.json");
+
+
+         VaticanReportSection[] readSection = new VaticanReportSection[3];
+         VaticanReportSectionEnum[] vaticanReportSectionEnums = VaticanReportSectionEnum.values();
+         PopeSpace[] popeSpaces = PopeSpace.values();
+         int vaticans = 0;
+
+         int begin;
+         int end;
+         int points;
+
+         int idCell;
+         int victoryPoints;
+
+         try {
+             JsonElement fileElement = JsonParser.parseReader(new FileReader(cells));
+             JsonObject fileObject = fileElement.getAsJsonObject();
+
+
+             JsonArray jsonArrayVatican = fileObject.get("VaticanReportSection").getAsJsonArray();
+             for (JsonElement vaticanElement : jsonArrayVatican) {
+                 JsonObject vaticanJsonObject = vaticanElement.getAsJsonObject();
+                 begin = vaticanJsonObject.get("begin").getAsInt();
+                 end = vaticanJsonObject.get("end").getAsInt();
+                 points = vaticanJsonObject.get("points").getAsInt();
+
+                 VaticanReportSection vatican = new VaticanReportSection(begin, end, points);
+                 readSection[vaticans] = vatican;
+                 vaticans++;
+             }
+
+         } catch (FileNotFoundException e) {
+             System.err.println("Error: Missing file!");
+             e.printStackTrace();
+         } catch (Exception e) {
+             System.err.println("Error: Input file is corrupt!");
+             e.printStackTrace();
+         }
+
+         if (vaticans < 3)
+             System.err.println("Error: Not enough vatican sections in JSON file!");
+         else if (vaticans > 3)
+             System.err.println("Error: Too many vatican sections in JSON file!");
+
+         return readSection;
+     }
+
+     /**Json Reader for faith cells*/
      public static FaithCell[] ReadFaithCells() {
          /**
           * A standard and handwritten file is overwritten whenever the player chooses to edit the game parameters.
           */
-
-
-         File cells = new File("FaithTrack.json");
-         //File cells = new File("FaithCell2.json");
+         //File cells = new File("FaithTrack.json");
+         File cells = new File("FaithCell2.json");
 
 
          FaithCell[] readCells = new FaithCell[25];
@@ -113,9 +162,9 @@ public class JSONReader {
          VaticanReportSectionEnum[] vaticanReportSectionEnums = VaticanReportSectionEnum.values();
          PopeSpace[] popeSpaces = PopeSpace.values();
 
-         int vaticanint;
-
-         int popeint;
+         int begin;
+         int end;
+         int points;
 
          int idCell;
          int victoryPoints;
@@ -124,10 +173,6 @@ public class JSONReader {
              JsonElement fileElement = JsonParser.parseReader(new FileReader(cells));
              JsonObject fileObject = fileElement.getAsJsonObject();
 
-             //Extracting the number of cards in the deck
-            // int example = fileObject.get("NumberOfCells").getAsInt();
-             //System.out.println("Number of cells in faithTrack: "+ example);
-             //Extracting card values from JSON
              JsonArray jsonArrayCards = fileObject.get("FaithCell").getAsJsonArray();
 
              for (JsonElement cellElement : jsonArrayCards) {
@@ -135,23 +180,16 @@ public class JSONReader {
                  JsonObject faithCellJsonObject = cellElement.getAsJsonObject();
 
                  //DevelopmentCard Data Extraction
-                 vaticanint = faithCellJsonObject.get("vaticanReportSection").getAsInt();
-
-                 popeint = faithCellJsonObject.get("popeSpace").getAsInt();
 
                  idCell = faithCellJsonObject.get("idCell").getAsInt();
                  victoryPoints = faithCellJsonObject.get("victoryPoints").getAsInt();
 
-                 FaithCell cell = new FaithCell(idCell, victoryPoints, vaticanReportSectionEnums[vaticanint], popeSpaces[popeint]);
-
-                 //System.out.println("id: " + idCell + " points: " + victoryPoints + " pope Space: " +popeSpaces[popeint] + " vatican:" +vaticanReportSections[vaticanint]);
+                 FaithCell cell = new FaithCell(idCell, victoryPoints);//, vaticanReportSectionEnums[vaticanint], popeSpaces[popeint]);
 
                  readCells[cellsRead] = cell;
 
                  cellsRead++;
              }
-
-             //Print card
 
          } catch (FileNotFoundException e) {
              System.err.println("Error: Missing file!");
@@ -169,15 +207,15 @@ public class JSONReader {
          return readCells;
      }
 
+     /**Json Reade for Leader cards*/
      public static ArrayList<LeaderCard> ReadLeaderCards() {
 
          /**
           * A standard and handwritten file is overwritten whenever the player chooses to edit the game parameters.
           */
-
-         File cards = new File("LeaderCards.json");
-         //File cards = new File("LeaderCards2.json");
-         ArrayList<LeaderCard> LeaderCards = new ArrayList<>();
+         //File cards = new File("LeaderCards.json");
+         File cards = new File("LeaderCards2.json");
+         ArrayList<LeaderCard> leaderCards = new ArrayList<>();
          LeaderCard cardToRead;
 
          Marble[] marbles = Marble.values();
@@ -188,8 +226,6 @@ public class JSONReader {
          try {
              JsonElement fileElement = JsonParser.parseReader(new FileReader(cards));
              JsonObject fileObject = fileElement.getAsJsonObject();
-
-            // int example = fileObject.get("NumberOfCards").getAsInt();
 
              int blueCardLv1;
              int purpleCardLv1;
@@ -238,7 +274,7 @@ public class JSONReader {
                      ResourceStack discount = new ResourceStack(leaderCardJsonObject.get("discountShields").getAsInt(), leaderCardJsonObject.get("discountServants").getAsInt(), leaderCardJsonObject.get("discountCoins").getAsInt(), leaderCardJsonObject.get("discountStones").getAsInt());
                      cardToRead = new LeaderCard(cardId, victoryPoints, resourcesRequired, leaderRequirements, discount);
                      try {
-                         LeaderCards.add(cardToRead);
+                         leaderCards.add(cardToRead);
                      } catch (Exception e) {
                          System.err.println("Error: cardToRead error!");
                          e.printStackTrace();
@@ -251,7 +287,7 @@ public class JSONReader {
                      int marbleInt = leaderCardJsonObject.get("marbleConversion").getAsInt();
                      cardToRead = new LeaderCard(cardId, victoryPoints, resourcesRequired, leaderRequirements, marbles[marbleInt]);
                      try {
-                         LeaderCards.add(cardToRead);
+                         leaderCards.add(cardToRead);
                      } catch (Exception e) {
                          System.err.println("Error: cardToRead error!");
                          e.printStackTrace();
@@ -266,7 +302,7 @@ public class JSONReader {
                      int jollyOut = leaderCardJsonObject.get("jollyOut").getAsInt();
                      cardToRead = new LeaderCard(cardId, victoryPoints, resourcesRequired, leaderRequirements, resourcesInput, jollyOut, faith);
                      try {
-                         LeaderCards.add(cardToRead);
+                         leaderCards.add(cardToRead);
                      } catch (Exception e) {
                          System.err.println("Error: cardToRead error!");
                          e.printStackTrace();
@@ -280,7 +316,7 @@ public class JSONReader {
                      int resourceInt = leaderCardJsonObject.get("depotType").getAsInt();
                      cardToRead = new LeaderCard(cardId, victoryPoints, resourcesRequired, leaderRequirements, resources[resourceInt]);
                      try {
-                         LeaderCards.add(cardToRead);
+                         leaderCards.add(cardToRead);
                      } catch (Exception e) {
                          System.err.println("Error: cardToRead error!");
                          e.printStackTrace();
@@ -298,6 +334,49 @@ public class JSONReader {
          }
          if (cardsInDeck < 16)
              System.err.println("Error: Not enough cards in JSON file!");
-         return LeaderCards;
+         return leaderCards;
+     }
+
+     /**JSON Reader for the players name*/
+     public static ArrayList<Player> ReadPlayersName(){
+         File players = new File("NamePlayers.json");
+
+         ArrayList<Player> readPlayer = new ArrayList<>();
+         int count = 0;
+
+         String nickname;
+         int turnPosition = 0;
+         boolean hasInkwell;
+
+         try {
+             JsonElement fileElement = JsonParser.parseReader(new FileReader(players));
+             JsonObject fileObject = fileElement.getAsJsonObject();
+
+
+             JsonArray jsonArrayPlayer = fileObject.get("PlayersName").getAsJsonArray();
+             for (JsonElement playerElement : jsonArrayPlayer) {
+                 JsonObject playerJsonObject = playerElement.getAsJsonObject();
+
+                 nickname = playerJsonObject.get("nickname").getAsString();
+
+                 turnPosition = playerJsonObject.get("turnPosition").getAsInt();
+                 hasInkwell = playerJsonObject.get("Inkwell").getAsBoolean();
+
+                 Player player = new Player(nickname, turnPosition, hasInkwell);
+                 readPlayer.add(player);
+                 count++;
+             }
+
+         } catch (FileNotFoundException e) {
+             System.err.println("Error: Missing file!");
+             e.printStackTrace();
+         } catch (Exception e) {
+             System.err.println("Error: Input file is corrupt!");
+             e.printStackTrace();
+         }
+
+         if (count > 4)
+             System.err.println("Error: Too many players");
+         return readPlayer;
      }
  }

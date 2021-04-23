@@ -22,24 +22,24 @@ public class LeaderCardShuffle {
         return LeaderCards;
     }
     //Returns 4 different Leader Cards
-public static LeaderCard[] getLeaderShuffled(){
-    ArrayList<LeaderCard> LeaderCards = leaderCardsManager();
-    try{
-    int size = LeaderCards.size();
-    if(size<4)
-        return null;
-    LeaderCard[] cardsPicked = new LeaderCard[4];
-    for(int i=0;i<4;i++){
-        int rand = (int) (Math.random() * size);
-        cardsPicked[i]=LeaderCards.get(rand);
-        LeaderCards=leaderCardsManager(rand);
-        size--;
-    }
-        return cardsPicked;
-    }catch (ArrayIndexOutOfBoundsException e){
-        System.err.println("Error: no more Leader Cards!");
-        e.printStackTrace();
-    }
-        return null;
-    }
+    public static LeaderCard[] getLeaderShuffled(){
+        ArrayList<LeaderCard> LeaderCards = leaderCardsManager();
+        try{
+        int size = LeaderCards.size();
+        if(size<4)
+            return null;
+        LeaderCard[] cardsPicked = new LeaderCard[4];
+        for(int i=0;i<4;i++){
+            int rand = (int) (Math.random() * size);
+            cardsPicked[i]=LeaderCards.get(rand);
+            LeaderCards=leaderCardsManager(rand);
+            size--;
+        }
+            return cardsPicked;
+        }catch (ArrayIndexOutOfBoundsException e){
+            System.err.println("Error: no more Leader Cards!");
+            e.printStackTrace();
+        }
+            return null;
+        }
 }
