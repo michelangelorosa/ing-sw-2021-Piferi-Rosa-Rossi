@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model;
 
+import java.io.Serializable;
 import java.util.Random;
 
 /**
@@ -7,7 +8,9 @@ import java.util.Random;
  * object contains a 2D-array final attribute containing marbles and an extra marble to
  * push inside the market whenever a player buys resources.
  */
-public class Market {
+public class Market implements Serializable {
+    private static final long serialVersionUID = 0x1;
+
     private final Marble[][] marbles;
     private Marble extraMarble;
 

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -7,8 +8,10 @@ import java.util.Collections;
   * DevelopmentCardDeck Class contains three private attributes: an array of DevelopmentCards, a color and a level.
   * Another private integer attribute (cardsInDeck) is used to keep track of how many cards are in the deck.
   */
-public class DevelopmentCardDeck {
-    private DevelopmentCard[] cards;
+public class DevelopmentCardDeck implements Serializable {
+     private static final long serialVersionUID = 0x1;
+
+     private DevelopmentCard[] cards;
     private Color color;
     private Level level;
     private int cardsInDeck;

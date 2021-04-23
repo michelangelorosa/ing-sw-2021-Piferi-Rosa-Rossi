@@ -1,12 +1,15 @@
 package it.polimi.ingsw.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * ResourceManager Class contains both a Warehouse and a Strongbox type objects (as final
  * attributes). It is used to group all methods regarding resource management.
  */
-public class ResourceManager {
+public class ResourceManager implements Serializable {
+    private static final long serialVersionUID = 0x1;
+
     private final Warehouse warehouse;
     private final Strongbox strongbox;
 

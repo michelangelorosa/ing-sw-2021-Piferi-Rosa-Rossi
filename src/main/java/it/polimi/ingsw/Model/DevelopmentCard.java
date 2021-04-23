@@ -1,10 +1,13 @@
 package it.polimi.ingsw.Model;
 
+import java.io.Serializable;
+
 /**
  * DevelopmentCard Class describes the different attributes and methods
  * needed for the creation of a Development Card.
  */
-public class DevelopmentCard {
+public class DevelopmentCard implements Serializable {
+    private static final long serialVersionUID = 0x1;
 
     /**
      * Color and Level are enum type classes containing all possible colors and levels

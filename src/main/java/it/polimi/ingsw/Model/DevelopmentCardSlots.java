@@ -1,8 +1,10 @@
 package it.polimi.ingsw.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class DevelopmentCardSlots {
+public class DevelopmentCardSlots implements Serializable {
+    private static final long serialVersionUID = 0x1;
 
     private final CardSlot[] slots;
     private int cardsInSlot;

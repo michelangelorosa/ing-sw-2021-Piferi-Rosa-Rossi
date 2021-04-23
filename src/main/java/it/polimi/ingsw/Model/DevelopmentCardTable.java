@@ -1,13 +1,15 @@
 
 package it.polimi.ingsw.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * DevelopmentCardTable Class contains all 12 Development Card decks available for the player to buy.
  * All decks are stored in a 2D array of DevelopmentCardDeck-type object.
  */
-public class DevelopmentCardTable {
+public class DevelopmentCardTable implements Serializable {
+    private static final long serialVersionUID = 0x1;
 
     private final DevelopmentCardDeck[][] decks;
 

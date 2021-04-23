@@ -1,6 +1,9 @@
 package it.polimi.ingsw.Model;
 
-public class FaithCell {
+import java.io.Serializable;
+
+public class FaithCell implements Serializable{
+    private static final long serialVersionUID = 0x1;
 
     /**Every card is characterized by an id and the point it gives*/
     private final int idCell;

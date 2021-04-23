@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -8,7 +9,9 @@ import java.util.ArrayList;
  * warehouseDepot-type objects which are activated if the player has activated the relative Leader Card
  * ability (via the boolean attributes).
  */
-public class Warehouse {
+public class Warehouse implements Serializable {
+    private static final long serialVersionUID = 0x1;
+
     private final WarehouseDepot[] warehouseDepots;
     private final WarehouseDepot extraWarehouseDepot1;
     private final WarehouseDepot extraWarehouseDepot2;

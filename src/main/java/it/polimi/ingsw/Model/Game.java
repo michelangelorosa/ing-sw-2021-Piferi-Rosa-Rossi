@@ -98,34 +98,62 @@ public class Game {
     /**
      * Setter for "gameType" attribute in Game Class.
      */
-    public void setGameType(GameType gameType) {
+    private void setGameType(GameType gameType) {
         this.gameType = gameType;
     }
 
     /**
-     * Method used when a player wants to join the game.
-     * @param nickname Nickname of the player wanting to join.
-     * @throws IllegalArgumentException if the max number of players has already been reached.
+     * Method used when a player wants to join the game. Handles all the initialization of the game.
+     * @param clientNames ArrayList of nicknames that have successfully established a connection with the server.
+     * @throws IllegalArgumentException if the max number of players has been reached.
      */
-    public void join(String nickname) throws IllegalArgumentException {
-        if(players.size() == 4)
+    public void gameStart(ArrayList<String> clientNames) throws IllegalArgumentException {
+        int numberOfPlayers = clientNames.size();
+        if(numberOfPlayers==1)
+            setGameType(GameType.SINGLEPLAYER);
+        else
+            setGameType(GameType.MULTIPLAYER);
+        if(numberOfPlayers > 4)
             throw new IllegalArgumentException("Maximum number of players reached!");
 
-        Player newPlayer;
+        developmentCardTable.shuffleTable();
 
-        if(this.players.size() == 0)
-            newPlayer = new Player(nickname, 0, true);
-        else {
-            for(Player player : players)
-                if(player.getNickname().equals(nickname)) {
-                    System.out.println("Nickname already chosen, choose another nickname!");
-                    return;
+        Player newPlayer;
+        if(gameType==GameType.MULTIPLAYER){
+            int activePlayer= (int)(Math.random()*numberOfPlayers);
+
+            for(int i=0;i<numberOfPlayers;i++){
+            newPlayer = new Player(clientNames.get(activePlayer),i,i==0);
+            players.add(newPlayer);
+
+            if(activePlayer==numberOfPlayers)
+                activePlayer=0;
+            else activePlayer++;
+            if(i==1){
+                //TODO: una risorsa a scelta
+
+            }else
+                if(i==2)
+                {
+                    //TODO: una risorsa a scelta
+
+                    newPlayer.stepAhead(1);
                 }
-            this.gameType = GameType.MULTIPLAYER;
-            newPlayer = new Player(nickname, players.size(), false);
+                else if(i==3)
+                {
+                    //TODO: due risorse a scelta
+
+                    newPlayer.stepAhead(1);
+                }
+            }
+        }
+        else {//Singleplayer Init
+            newPlayer = new Player("Lorenzo il Magnifico",-1,false);
+            players.add(newPlayer);
+            newPlayer = new Player(clientNames.get(0),0,false);
+            players.add(newPlayer);
         }
 
-        players.add(newPlayer);
     }
 
     /**

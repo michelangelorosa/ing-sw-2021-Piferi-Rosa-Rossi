@@ -1,11 +1,15 @@
 package it.polimi.ingsw.Model;
 
+import java.io.Serializable;
+
 /**
  * Strongbox Class defines the contents and the behaviour of the strongbox inside the player's board.
  * Each strongbox contains a ResourceStack-type object which contains the numbers all the four
  * different resource types.
  */
-public class Strongbox {
+public class Strongbox implements Serializable {
+    private static final long serialVersionUID = 0x1;
+
     private final ResourceStack storedResources;
 
     /**

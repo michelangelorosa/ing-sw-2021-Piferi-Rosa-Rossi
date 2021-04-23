@@ -1,12 +1,16 @@
 package it.polimi.ingsw.Model;
 
- /**
+import java.io.Serializable;
+
+/**
   *  WarehouseDepot Class defines the single warehouse's depot. A WarehouseDepot-type Object contains:
   *  a private final int attribute indicating the max number of storable resources,
   *  a private int attribute indicating the current number of resources stored,
   *  a ResourceType-type private attribute indicating which type of resource is stored in the depot.
   */
-public class WarehouseDepot {
+public class WarehouseDepot implements Serializable {
+    private static final long serialVersionUID = 0x1;
+
     private final int maxResources;
     private int storedResources;
     private ResourceType resourceType;

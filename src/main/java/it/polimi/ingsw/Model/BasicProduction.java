@@ -1,9 +1,13 @@
 package it.polimi.ingsw.Model;
 
+import java.io.Serializable;
+
 /**
  * BasicProduction Class defines inputs and outputs of a basic production.
  */
-public class BasicProduction {
+public class BasicProduction implements Serializable {
+    private static final long serialVersionUID = 0x1;
+
     /** Fixed inputs and outputs can be added before playing the game */
     private final ResourceStack fixedInputs;
     private final ResourceStack fixedOutputs;

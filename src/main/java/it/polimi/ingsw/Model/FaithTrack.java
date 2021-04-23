@@ -1,8 +1,10 @@
 package it.polimi.ingsw.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class FaithTrack {
+public class FaithTrack implements Serializable {
+    private static final long serialVersionUID = 0x1;
     /**A FaithTrack is an array of Faith Cell*/
     private final FaithCell[] cells;
     /**The three vatican report sectios*/

@@ -1,10 +1,15 @@
 package it.polimi.ingsw.Model;
+
+import java.io.Serializable;
+
 /**
  * There are 4 types of Leader Card, depending on the type of special effect they apply on the Game.
  * All of them have the following attributes: a CardId for identification, victoryPoints for the score.
  * Type is a byte identifying the type
  *  */
-public class LeaderCard {
+public class LeaderCard implements Serializable {
+    private static final long serialVersionUID = 0x1;
+
     private final int cardId;
     private final int victoryPoints;
     private final LeaderCardAction action;

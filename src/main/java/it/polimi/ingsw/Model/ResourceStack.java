@@ -1,10 +1,14 @@
 package it.polimi.ingsw.Model;
 
+import java.io.Serializable;
+
 /**
  * ResourceStack Class contains four integer private attributes indicating the amount of each
  * different type of resource: shields, servants, coins, stones.
  */
-public class ResourceStack {
+public class ResourceStack implements Serializable{
+    private static final long serialVersionUID = 0x1;
+
     private int shields;
     private int servants;
     private int coins;

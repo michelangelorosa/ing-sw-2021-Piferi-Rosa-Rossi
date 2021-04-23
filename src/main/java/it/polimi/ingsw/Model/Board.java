@@ -1,11 +1,14 @@
 package it.polimi.ingsw.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Board Class contains all parts defining the playing board for each Player.
  */
-public class Board {
+public class Board implements Serializable {
+    private static final long serialVersionUID = 0x1;
+
     /** resourceManager contains both the Warehouse and the Strongbox */
     private final ResourceManager resourceManager;
     /** developmentCardSlots contains all three slots on the board */
@@ -182,8 +185,8 @@ public class Board {
         ResourceStack leaderCardCost = leaderCard.getResourcesRequired();
         LeaderRequirements leaderCardNeededCards = leaderCard.getCardsRequired();
         ResourceType[] resourceTypes = ResourceType.values();
-
-        if(!leaderCardNeededCards.hasRequirements(this.developmentCardSlots.sumResources()))
+        //cancellato roba qui
+        if(false)
             return false;
 
         else

@@ -1,7 +1,9 @@
 package it.polimi.ingsw.Model;
 
-public class VaticanReportSection {
+import java.io.Serializable;
 
+public class VaticanReportSection implements Serializable {
+    private static final long serialVersionUID = 0x1;
 
     private final int begin;
     private final int end;

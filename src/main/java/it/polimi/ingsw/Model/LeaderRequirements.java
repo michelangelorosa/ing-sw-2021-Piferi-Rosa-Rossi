@@ -1,8 +1,14 @@
 package it.polimi.ingsw.Model;
+
+import java.io.Serializable;
+
 /**
- * Defines a Card with the characteristics required from Leader Card; a Level and a Colour
+ * Defines a Card with the characteristics required from Leader Card; a Level and a Colour.
+ * If The cards doesn't require a minimum level it is set to 1
  */
-public class LeaderRequirements {
+public class LeaderRequirements implements Serializable {
+    private static final long serialVersionUID = 0x1;
+
     private int blueCardLv1;
     private int purpleCardLv1;
     private int yellowCardLv1;

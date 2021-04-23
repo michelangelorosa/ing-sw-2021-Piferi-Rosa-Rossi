@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Model;
 
+import java.io.Serializable;
+
 /**
  * Player Class defines attributes and methods of a player.
  * It consists in six attributes being respectively:
@@ -12,7 +14,9 @@ package it.polimi.ingsw.Model;
  *     <li>board: the player's personal board containing all objects of the game</li>
  * </ul>
  */
-public class Player {
+public class Player implements Serializable {
+    private static final long serialVersionUID = 0x1;
+
     private final String nickname;
     private final int turnPosition;
     private final boolean Inkwell;
