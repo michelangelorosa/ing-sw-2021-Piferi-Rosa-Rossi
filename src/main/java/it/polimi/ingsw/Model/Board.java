@@ -185,8 +185,8 @@ public class Board implements Serializable {
         ResourceStack leaderCardCost = leaderCard.getResourcesRequired();
         LeaderRequirements leaderCardNeededCards = leaderCard.getCardsRequired();
         ResourceType[] resourceTypes = ResourceType.values();
-        //cancellato roba qui
-        if(false)
+
+        if(!leaderCardNeededCards.hasRequirements(this.developmentCardSlots.sumResources()))
             return false;
 
         else

@@ -98,7 +98,7 @@ public class Game {
     /**
      * Setter for "gameType" attribute in Game Class.
      */
-    private void setGameType(GameType gameType) {
+    public void setGameType(GameType gameType) {
         this.gameType = gameType;
     }
 
@@ -228,6 +228,32 @@ public class Game {
                 }
                 else if(players.get(i).getVictoryPoints() < victoryPoints)
                     setLooser(players.get(i));
+    }
+
+    /**
+     * Method used when a player wants to join the game.
+     * @param nickname Nickname of the player wanting to join.
+     * @throws IllegalArgumentException if the max number of players has already been reached.
+     */
+    public void join(String nickname) throws IllegalArgumentException {
+        if(players.size() == 4)
+            throw new IllegalArgumentException("Maximum number of players reached!");
+
+        Player newPlayer;
+
+        if(this.players.size() == 0)
+            newPlayer = new Player(nickname, 0, true);
+        else {
+            for(Player player : players)
+                if(player.getNickname().equals(nickname)) {
+                    System.out.println("Nickname already chosen, choose another nickname!");
+                    return;
+                }
+            this.gameType = GameType.MULTIPLAYER;
+            newPlayer = new Player(nickname, players.size(), false);
+        }
+
+        players.add(newPlayer);
     }
 
 }
