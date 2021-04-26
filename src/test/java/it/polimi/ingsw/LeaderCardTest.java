@@ -3,12 +3,16 @@ import it.polimi.ingsw.Model.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-
+/**
+ * Unit tester for LeaderCard class
+ */
 
 public class LeaderCardTest {
-/*
-* Creating 4 different Leader Cards
-* */
+
+    /**
+     * Code required for the creation of 4 LeaderCards with the LeaderCard Constructor.
+     * Each Card is tested differently depending on its abilities
+     */
     int cardId1=43,cardId2=423,cardId3=41,cardId4=2,victoryPoints1=32,victoryPoints2=42,victoryPoints3=49,victoryPoints4=30,faith=3,jollyOut=9
         ,blueCardLv1=1,purpleCardLv1=2,yellowCardLv1=1,greenCardLv1=0,blueCardLv2=0,purpleCardLv2=0,yellowCardLv2=0,greenCardLv2=4,blueCardLv3=0,purpleCardLv3=0,yellowCardLv3=2,greenCardLv3=0;
     Marble marble = Marble.RED;
@@ -23,7 +27,9 @@ public class LeaderCardTest {
 
     LeaderCard leaderCard1 = new LeaderCard(cardId1,victoryPoints1,resourceStack1,leaderRequirements,resourceStackDiscount);
 
-    //Testing DISCOUNT type
+    /**
+     * Testing LeaderCards with Depot type
+      */
     @Test
     public void leaderDepotTest(){
         assertEquals(cardId1,leaderCard1.getCardId());
@@ -43,7 +49,10 @@ public class LeaderCardTest {
     }
 
     LeaderCard leaderCard2 = new LeaderCard(cardId2,victoryPoints2,resourceStack2,leaderRequirements,marble);
-    //Testing WHITEMARBLE type
+
+    /**
+     * Testing LeaderCards with WhiteMarble->Resource ability
+     */
     @Test
     public void whiteMarbleTest(){
         assertEquals(cardId2,leaderCard2.getCardId());
@@ -63,7 +72,10 @@ public class LeaderCardTest {
     }
 
     LeaderCard leaderCard3 = new LeaderCard(cardId3,victoryPoints3,resourceStack3,leaderRequirements,resourceStackInput,jollyOut,faith);
-    //Testing PRODUCTIONPOWER type
+
+    /**
+     * Testing LeaderCards that add a ProductionPower to the Player's board
+     */
     @Test
     public void productionPowerTest(){
         assertEquals(leaderCard3.getCardId(),cardId3);
@@ -83,7 +95,9 @@ public class LeaderCardTest {
     }
 
     LeaderCard leaderCard4 = new LeaderCard(cardId4,victoryPoints4,resourceStack4,leaderRequirements,resourceType);
-    //Testing EXTRADEPOT
+    /**
+     * Testing the LeaderCards that add a depot to the Player's board
+     */
     @Test
     public void extraDepotTest(){
         assertEquals(leaderCard4.getCardId(),cardId4);

@@ -12,7 +12,7 @@ public class SinglePlayer {
     /**
      * Constructor for Single Player
      */
-    SinglePlayer(){
+    public SinglePlayer(){
         this.token=SoloActionToken.BLACKCROSSPLUS2;
         this.tokens=tokenShuffle();
     }
@@ -26,7 +26,7 @@ public class SinglePlayer {
     public SoloActionToken[] actionTokenHandler(SoloActionToken actionToken,SoloActionToken[] soloActionToken,ArrayList<Player> players){
         Player lorenzo = players.get(0);
         Player player = players.get(1);
-        switch (token){
+        switch (actionToken){
             case DELETE2BLUE:{
 
                 return soloActionToken;
@@ -49,8 +49,8 @@ public class SinglePlayer {
                 return soloActionToken;
             }
             case BLACKCROSSSHUFFLE:{
-                    lorenzo.stepAhead(1);
 
+                    lorenzo.stepAhead(1);
                 return tokenShuffle();
             }
             default: return soloActionToken;
@@ -82,6 +82,9 @@ public class SinglePlayer {
     }
 
     /**
-     * Checks
+     * Returns the singlePlayer actionToken Array
      */
+    public SoloActionToken[] getTokens(SinglePlayer singlePlayer) {
+        return singlePlayer.tokens;
+    }
 }

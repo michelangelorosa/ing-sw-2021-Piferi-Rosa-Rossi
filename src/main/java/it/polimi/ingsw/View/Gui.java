@@ -22,7 +22,7 @@ public class Gui extends Application{
     public void start(Stage primaryStage) throws Exception{
 
         Parent root;
-        root = FXMLLoader.load(getClass().getResource("Assets/Fxml/Loser.fxml"));
+        root = FXMLLoader.load(getClass().getResource("Assets/Fxml/Intro.fxml"));
         //Creates a scene object
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
