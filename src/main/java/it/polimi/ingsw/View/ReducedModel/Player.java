@@ -3,6 +3,7 @@ package it.polimi.ingsw.View.ReducedModel;
 import it.polimi.ingsw.View.ReducedModel.Enums.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Player Class defines attributes and methods of a player.
@@ -29,6 +30,7 @@ public class Player implements Serializable {
     private BasicProduction basicProduction;
     private Warehouse warehouse;
     private Strongbox strongbox;
+    private DevelopmentCardSlots slots;
     private ResourceStack temporaryResources;
 
     /**
@@ -99,6 +101,10 @@ public class Player implements Serializable {
         return strongbox;
     }
 
+    public DevelopmentCardSlots getSlots() {
+        return slots;
+    }
+
     public ResourceStack getTemporaryResources() {
         return temporaryResources;
     }
@@ -119,11 +125,44 @@ public class Player implements Serializable {
         this.strongbox = strongbox;
     }
 
+    public void setSlots(DevelopmentCardSlots slots) {
+        this.slots = slots;
+    }
+
     public void setTemporaryResources(ResourceStack temporaryResources) {
         this.temporaryResources = temporaryResources;
     }
 
     public void setBasicProduction(BasicProduction basicProduction) {
         this.basicProduction = basicProduction;
+    }
+
+    public ArrayList<String> toCli() {
+        int i;
+        ArrayList<String> player = this.warehouse.toCli();
+        player.addAll(this.strongbox.toCli3());
+        ArrayList<String> basic = this.basicProduction.toCli();
+        ArrayList<String> slots = this.slots.toCli();
+
+        for(i = 0; i < 5; i++)
+            player.add(0, "                               ");
+        int j;
+        for(i = 1; i < 9; i++)
+            player.set(i, player.get(i) +" "+ basic.get(i-1));
+
+
+        player.set(0, "╔══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
+        for(i = 1; i < 5; i++)
+            player.set(i, " "+player.get(i) + "                                                              ");
+        for(i = 5; i < 9; i++)
+            player.set(i, " "+player.get(i) + "                                                                               ");
+
+        for(i = 0; i < slots.size(); i++) {
+            j = player.size() - slots.size() + i;
+            player.set(j, " "+player.get(j)+" "+slots.get(i));
+        }
+        player.add("╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝");
+
+        return player;
     }
 }

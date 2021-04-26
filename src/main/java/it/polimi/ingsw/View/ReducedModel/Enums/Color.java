@@ -16,19 +16,36 @@ public enum Color {
     private static final Color[] colors = Color.values();
     public static Color getColor(int i) { return Color.colors[i]; }
 
-    public String colorToString() {
+    public String backColorToString() {
         String string;
         switch(this) {
             case BLUE: string = ANSIColors.BACK_BLUE;
             break;
             case PURPLE: string = ANSIColors.BACK_PURPLE;
             break;
-            case YELLOW:   string = ANSIColors.BACK_YELLOW;
+            case YELLOW:   string = ANSIColors.BACK_DARK_YELLOW;
             break;
             case GREEN: string = ANSIColors.BACK_GREEN;
             break;
             default: string = null;
             break;
+        }
+        return string;
+    }
+
+    public String frontColorToString() {
+        String string;
+        switch(this) {
+            case BLUE: string = ANSIColors.FRONT_BLUE;
+                break;
+            case PURPLE: string = ANSIColors.FRONT_PURPLE;
+                break;
+            case YELLOW:   string = ANSIColors.FRONT_YELLOW;
+                break;
+            case GREEN: string = ANSIColors.FRONT_GREEN;
+                break;
+            default: string = null;
+                break;
         }
         return string;
     }

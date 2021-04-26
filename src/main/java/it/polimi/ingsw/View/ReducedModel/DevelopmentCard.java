@@ -121,24 +121,25 @@ public class DevelopmentCard implements Serializable {
     public ArrayList<String> toCli() {
         ArrayList<String> devCard = new ArrayList<>();
         ArrayList<String> level = this.cardLevelToCli();
-        String c = this.color.colorToString();
+        String c = this.color.backColorToString();
+        String fc = this.color.frontColorToString();
         String color = this.color.colorToChar();
         String r = ANSIColors.RESET;
 
-        devCard.add(c+"╔═══╦"+r+"═╦════════════════╦═"+c+"╦═══╗"+r);
-        devCard.add(c+"║ "+level.get(0)+" ║"+r+" ║ "+ ANSIColors.THREE_PER_EM +ANSIColors.SIX_PER_EM+this.cost.toCliSymbol(ResourceType.SHIELDS)+"   "+this.cost.toCliSymbol(ResourceType.SERVANTS)+"  ║ "+c+"║ "+level.get(0)+" ║"+r);
-        devCard.add(c+"║ "+level.get(1)+" ║"+r+" ║ "+ ANSIColors.THREE_PER_EM +ANSIColors.SIX_PER_EM+this.cost.toCliSymbol(ResourceType.COINS)+"   "+this.cost.toCliSymbol(ResourceType.STONES)+"  ║ "+c+"║ "+level.get(1)+" ║"+r);
+        devCard.add(c+"╔═══╦═╦════════════════╦═╦═══╗"+r);
+        devCard.add(c+"║ "+level.get(0)+" ║"+r+" ║  "+this.cost.toCliSymbol(ResourceType.SHIELDS)+"    "+this.cost.toCliSymbol(ResourceType.SERVANTS)+"  ║ "+c+"║ "+level.get(0)+" ║"+r);
+        devCard.add(c+"║ "+level.get(1)+" ║"+r+" ║  "+this.cost.toCliSymbol(ResourceType.COINS)+"    "+this.cost.toCliSymbol(ResourceType.STONES)+"  ║ "+c+"║ "+level.get(1)+" ║"+r);
         devCard.add(c+"║ "+level.get(2)+" ║"+r+" ╚════════════════╝ "+c+"║ "+level.get(2)+" ║"+r);
         devCard.add(c+"╠═══╝"+r+"                    "+c+"╚═══╣"+r);
         devCard.add("║   ╔═════════╦══════════╗   ║");
-        devCard.add("║   ║  " +ANSIColors.FOUR_PER_EM+this.input.toCliSymbol(ResourceType.SHIELDS)+"  ║ "+ANSIColors.FOUR_PER_EM+this.output.toCliSymbol(ResourceType.SHIELDS)+"    ║   ║");
-        devCard.add("║   ║  " +ANSIColors.FOUR_PER_EM+this.input.toCliSymbol(ResourceType.SERVANTS)+"  ║ "+ANSIColors.FOUR_PER_EM+this.output.toCliSymbol(ResourceType.SERVANTS)+"    ║   ║");
-        devCard.add("║   ║  " +ANSIColors.FOUR_PER_EM+this.input.toCliSymbol(ResourceType.COINS)+"  ║ "+ANSIColors.FOUR_PER_EM+this.output.toCliSymbol(ResourceType.COINS)+"    ║   ║");
-        devCard.add("║   ║  " +ANSIColors.FOUR_PER_EM+this.input.toCliSymbol(ResourceType.STONES)+"  ║ "+ANSIColors.FOUR_PER_EM+this.output.toCliSymbol(ResourceType.STONES)+"    ║   ║");
-        devCard.add("║   ║         ║ "+ANSIColors.FOUR_PER_EM+ANSIColors.SIX_PER_EM+ANSIColors.FOUR_PER_EM+ResourceType.faithPointsToCli(this.outputFaith)+"    ║   ║");
+        devCard.add("║   ║  " +this.input.toCliSymbol(ResourceType.SHIELDS)+"   ║  "+this.output.toCliSymbol(ResourceType.SHIELDS)+"    ║   ║");
+        devCard.add("║   ║  " +this.input.toCliSymbol(ResourceType.SERVANTS)+"   ║  "+this.output.toCliSymbol(ResourceType.SERVANTS)+"    ║   ║");
+        devCard.add("║   ║  " +this.input.toCliSymbol(ResourceType.COINS)+"   ║  "+this.output.toCliSymbol(ResourceType.COINS)+"    ║   ║");
+        devCard.add("║   ║  " +this.input.toCliSymbol(ResourceType.STONES)+"   ║  "+this.output.toCliSymbol(ResourceType.STONES)+"    ║   ║");
+        devCard.add("║   ║         ║  "+ResourceType.faithPointsToCli(this.outputFaith)+"    ║   ║");
         devCard.add("║   ╚═════════╩══════════╝   ║");
         devCard.add("║           ╔════╗           ║");
-        devCard.add("║ "+color+"         ║ "+this.victoryPointsToCli()+" ║     "+level.get(0)+" "+level.get(1)+" "+level.get(2)+" ║");
+        devCard.add("║ "+fc+color+r+"         ║ "+this.victoryPointsToCli()+" ║     "+fc+level.get(0)+" "+level.get(1)+" "+level.get(2)+r+" ║");
         devCard.add("╚═══════════╩════╩═══════════╝");
 
 

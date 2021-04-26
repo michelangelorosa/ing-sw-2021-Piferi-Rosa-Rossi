@@ -3,6 +3,7 @@ package it.polimi.ingsw.View.ReducedModel;
 import it.polimi.ingsw.View.ReducedModel.Enums.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class CardSlot implements Serializable {
     private static final long serialVersionUID = 0x1;
@@ -17,6 +18,8 @@ public class CardSlot implements Serializable {
         this.levelOccupied = 0;
         this.cards = new DevelopmentCard[3];
     }
+
+
 
     /**
      * Getter for levelOccupied
@@ -65,6 +68,12 @@ public class CardSlot implements Serializable {
         else return false;
     }
 
+    public void addCard(DevelopmentCard card){
+        if(isFull()) System.out.println("Slot is full, select another slot!");
+        else if(!canAdd(card)) System.out.println("Can't add a level " + card.getLevel() + " card in this slot!");
+        else cards[levelOccupied++] = card;
+    }
+
     /**
      * This method is use to get the first card of the slot.
      * @return the card on the top of the slot
@@ -103,5 +112,38 @@ public class CardSlot implements Serializable {
             }
         }
         return count;
+    }
+
+    public ArrayList<String> toCli() {
+        ArrayList<String> cardSlot = new ArrayList<>();
+        ArrayList<String> cardCli;
+        for(int j = 0; j < 4; j++)
+            cardSlot.add("                              ");
+
+        if(this.isEmpty()) {
+            for(int i = 0; i < 15; i++)
+                cardSlot.add("                              ");
+            return cardSlot;
+        }
+
+        DevelopmentCard card;
+        for(int i = 0; i < this.levelOccupied; i++) {
+            card = this.cards[i];
+            if(i == 0)
+                cardSlot.addAll(card.toCli());
+
+            else if(i == 1) {
+                cardCli = card.toCli();
+                for(int k = 2; k < cardSlot.size() - 2; k++)
+                    cardSlot.set(k, cardCli.get(k-2));
+            }
+            else if(i == 2) {
+                cardCli = card.toCli();
+                for(int k = 0; k < cardSlot.size() - 4; k++)
+                    cardSlot.set(k, cardCli.get(k));
+            }
+        }
+
+        return cardSlot;
     }
 }

@@ -3,6 +3,7 @@ package it.polimi.ingsw.View.ReducedModel;
 import it.polimi.ingsw.View.ReducedModel.Enums.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * BasicProduction Class defines inputs and outputs of a basic production.
@@ -31,6 +32,14 @@ public class BasicProduction implements Serializable {
         this.jollyIn = jollyIn;
         this.jollyOut = jollyOut;
         this.outputFaith = 0;
+    }
+
+    public BasicProduction(ResourceStack fixedInputs, ResourceStack fixedOutputs, int jollyIn, int jollyOut, int outputFaith) {
+        this.fixedInputs = fixedInputs;
+        this.fixedOutputs = fixedOutputs;
+        this.jollyIn = jollyIn;
+        this.jollyOut = jollyOut;
+        this.outputFaith = outputFaith;
     }
 
     /**
@@ -66,5 +75,38 @@ public class BasicProduction implements Serializable {
      */
     public int getOutputFaith() {
         return outputFaith;
+    }
+
+    public ArrayList<String> toCli() {
+        ArrayList<String> basic = new ArrayList<>();
+        String jolly1 = this.jollyToString(this.jollyIn);
+        String jolly2 = this.jollyToString(this.jollyOut);
+
+        if(this.fixedInputs.isEmpty() && this.fixedOutputs.isEmpty()) {
+
+            basic.add("╔══════╦══════╦════════════════╗");
+            basic.add("║      ║      ║ ░ BASIC      ░ ║");
+            basic.add("║      ║      ║ ░ PRODUCTION ░ ║");
+            basic.add("║ "+jolly1+" → "+jolly2+" ╠════════════════╝");
+            basic.add("║      ║      ║");
+            basic.add("║      ║      ║");
+            basic.add("║      ║      ║");
+            basic.add("╚══════╩══════╝");
+        }
+        else {
+            basic.add("╔══════╦══════╦════════════════╗");
+            basic.add("║ "+jolly1+" ║ "+jolly2+" ║ ░ BASIC      ░ ║");
+            basic.add("║ "+this.fixedInputs.toCliSymbol(ResourceType.SHIELDS)+ " ║ "+this.fixedOutputs.toCliSymbol(ResourceType.SHIELDS)+ " ║ ░ PRODUCTION ░ ║");
+            basic.add("║ "+this.fixedInputs.toCliSymbol(ResourceType.SERVANTS)+" → "+this.fixedOutputs.toCliSymbol(ResourceType.SERVANTS)+" ╠════════════════╝");
+            basic.add("║ "+this.fixedInputs.toCliSymbol(ResourceType.COINS)+   " → "+this.fixedOutputs.toCliSymbol(ResourceType.COINS)+   " ║");
+            basic.add("║ "+this.fixedInputs.toCliSymbol(ResourceType.STONES)+  " ║ "+this.fixedOutputs.toCliSymbol(ResourceType.STONES)+  " ║");
+            basic.add("║      ║ "+ResourceType.faithPointsToCli(this.outputFaith)+" ║");
+            basic.add("╚══════╩══════╝");
+        }
+        return basic;
+    }
+
+    public String jollyToString(int jolly) {
+        if(jolly > 9) return "?:"+jolly; else return "?: "+jolly;
     }
 }

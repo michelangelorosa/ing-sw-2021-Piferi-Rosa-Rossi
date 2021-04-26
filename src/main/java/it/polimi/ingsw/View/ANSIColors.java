@@ -19,7 +19,7 @@ public class ANSIColors {
 
     public static final String FRONT_BLACK = "\u001B[38;5;16m";
     public static final String FRONT_RED = "\u001B[31m";
-    public static final String FRONT_GREEN = "\u001B[32m";
+    public static final String FRONT_GREEN = "\u001B[38;2;0;153;0m";
     public static final String FRONT_CYAN = "\u001B[36m";
     public static final String FRONT_WHITE = "\u001B[37m";
 
@@ -30,14 +30,14 @@ public class ANSIColors {
     public static final String FRONT_BRIGHT_CYAN = "\u001B[96m";
     public static final String FRONT_BRIGHT_WHITE = "\u001B[38;5;255m";
 
-    public static final String BACK_BLUE  = "\u001B[48;5;17m";
+    public static final String BACK_BLUE  = "\u001B[48;2;46;92;184m";
     public static final String BACK_PURPLE = "\u001B[48;5;91m";
     public static final String BACK_YELLOW = "\u001B[103m";
     public static final String BACK_GREY = "\u001B[100m";
 
     public static final String BACK_BLACK = "\u001B[48;5;16m";
     public static final String BACK_RED = "\u001B[41m";
-    public static final String BACK_GREEN = "\u001B[42m";
+    public static final String BACK_GREEN = "\u001B[48;2;0;102;0m";
     public static final String BACK_CYAN = "\u001B[46m";
     public static final String BACK_WHITE = "\u001B[47m";
 
@@ -52,11 +52,11 @@ public class ANSIColors {
 
     public static final String BOLD = "\u001B[1m";
 
-    public static final String SHIELD = "\u26CA";
-    public static final String SERVANT = "\u265F";
-    public static final String COIN = "\u26C2";
-    public static final String STONE = "\u26F0";
-    public static final String FAITH = "\u2670";
+    public static final String SHIELD = "█";
+    public static final String SERVANT = "§";
+    public static final String COIN = "©";
+    public static final String STONE = "¤";
+    public static final String FAITH = "┼";
 
     public static final String BLANK = "\u2800";
 }

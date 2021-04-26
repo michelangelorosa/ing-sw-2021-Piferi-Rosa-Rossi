@@ -155,10 +155,179 @@ public class ToCliTest {
         DevelopmentCard card = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 10, cost, input, output, 10);
         for(String string : card.toCli())
             System.out.println(string);
+
+        cost = new ResourceStack(1, 1, 0, 0);
+        input = new ResourceStack(1, 1, 10, 1);
+        output = new ResourceStack(1, 4, 0, 1);
+        card = new DevelopmentCard(Color.PURPLE, Level.THREE, 1, 7, cost, input, output, 1);
+        for(String string : card.toCli())
+            System.out.println(string);
+
+        cost = new ResourceStack(99, 99, 99, 99);
+        input = new ResourceStack(99, 99, 99, 99);
+        output = new ResourceStack(99, 99, 99, 99);
+        card = new DevelopmentCard(Color.YELLOW, Level.ONE, 99, 99, cost, input, output, 99);
+        for(String string : card.toCli())
+            System.out.println(string);
+
+        cost = new ResourceStack(0, 0, 0, 0);
+        input = new ResourceStack(0, 0, 0, 0);
+        output = new ResourceStack(0, 0, 0, 0);
+        card = new DevelopmentCard(Color.GREEN, Level.THREE, 0, 0, cost, input, output, 0);
+        for(String string : card.toCli())
+            System.out.println(string);
+    }
+
+    @Test
+    public void cardSlotToCliTest() {
+        CardSlot cardSlot = new CardSlot();
+        ResourceStack cost = new ResourceStack(1, 1, 0, 0);
+        ResourceStack input = new ResourceStack(1, 1, 10, 1);
+        ResourceStack output = new ResourceStack(10, 10, 23, 0);
+        DevelopmentCard card1 = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 10, cost, input, output, 10);
+
+        cost = new ResourceStack(1, 1, 0, 0);
+        input = new ResourceStack(1, 1, 10, 1);
+        output = new ResourceStack(1, 4, 0, 1);
+        DevelopmentCard card2 = new DevelopmentCard(Color.PURPLE, Level.THREE, 1, 7, cost, input, output, 1);
+
+        cost = new ResourceStack(99, 99, 99, 99);
+        input = new ResourceStack(99, 99, 99, 99);
+        output = new ResourceStack(99, 99, 99, 99);
+        DevelopmentCard card3 = new DevelopmentCard(Color.YELLOW, Level.ONE, 99, 99, cost, input, output, 99);
+
+        cardSlot.addCard(card3);
+        for(String s : cardSlot.toCli())
+            System.out.println(s);
+
+        cardSlot.addCard(card1);
+        for(String s : cardSlot.toCli())
+            System.out.println(s);
+
+        cardSlot.addCard(card2);
+        for(String s : cardSlot.toCli())
+            System.out.println(s);
+    }
+
+    @Test
+    public void developmentCardSlotsToCliTest() {
+        DevelopmentCardSlots slots = new DevelopmentCardSlots();
+
+        ResourceStack cost = new ResourceStack(1, 1, 0, 0);
+        ResourceStack input = new ResourceStack(1, 1, 10, 1);
+        ResourceStack output = new ResourceStack(10, 10, 23, 0);
+        DevelopmentCard card1 = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 10, cost, input, output, 10);
+        DevelopmentCard card2 = new DevelopmentCard(Color.PURPLE, Level.THREE, 1, 7, cost, input, output, 1);
+        DevelopmentCard card3 = new DevelopmentCard(Color.YELLOW, Level.ONE, 99, 99, cost, input, output, 99);
+        DevelopmentCard card4 = new DevelopmentCard(Color.GREEN, Level.ONE, 99, 99, cost, input, output, 99);
+        DevelopmentCard card5 = new DevelopmentCard(Color.GREEN, Level.TWO, 99, 99, cost, input, output, 99);
+        DevelopmentCard card6 = new DevelopmentCard(Color.PURPLE, Level.THREE, 99, 99, cost, input, output, 99);
+        DevelopmentCard card7 = new DevelopmentCard(Color.BLUE, Level.ONE, 99, 99, cost, input, output, 99);
+
+        slots.getSlots()[0].addCard(card3);
+        slots.getSlots()[1].addCard(card7);
+        slots.getSlots()[1].addCard(card1);
+        slots.getSlots()[2].addCard(card4);
+        slots.getSlots()[2].addCard(card5);
+        slots.getSlots()[2].addCard(card6);
+
+        ArrayList<String> list = slots.toCli();
+        for(String s : list)
+            System.out.println(s);
+    }
+
+    @Test
+    public void basicProductionToCliTest() {
+        ResourceStack inputs = new ResourceStack(1, 2, 3, 10);
+        ResourceStack outputs = new ResourceStack(10, 0, 23, 0);
+
+        BasicProduction basic = new BasicProduction(inputs, outputs, 1, 2, 3);
+
+        for(String s : basic.toCli())
+            System.out.println(s);
+
+        basic = new BasicProduction(10, 23);
+        for(String s : basic.toCli())
+            System.out.println(s);
+    }
+
+    @Test
+    public void playerBoardToCliTest() {
+        Player player = playerCreator("Giacomo", 0);
+
+        for(String s : player.toCli())
+            System.out.println(s);
     }
 
     @Test
     public void CliTest() {
         System.out.println(ANSIColors.FRONT_BLUE + "\u26CA:8 " + ANSIColors.FRONT_PURPLE + "\u265F:3 "+ ANSIColors.FRONT_YELLOW + "\u26C2:3 "+ ANSIColors.FRONT_GREY + "\u26F0:3 ");
+    }
+
+    private static Player playerCreator(String nickname, int turnPosition) {
+        Player player = new Player(nickname, turnPosition, true);
+        ResourceStack input = new ResourceStack(0, 1, 2, 3);
+        BasicProduction basic = new BasicProduction(input, input, 10, 10, 9);
+
+        player.setBasicProduction(basic);
+        player.setWarehouse(warehouseCreator());
+        player.setStrongbox(strongboxCreator());
+        player.setSlots(slotsCreator());
+
+        return player;
+    }
+
+    private static Warehouse warehouseCreator() {
+        Warehouse warehouse = new Warehouse();
+        warehouse.getWarehouseDepots()[0].setResourceType(ResourceType.SHIELDS);
+        warehouse.getWarehouseDepots()[0].setStoredResources(3);
+        warehouse.getWarehouseDepots()[1].setResourceType(ResourceType.COINS);
+        warehouse.getWarehouseDepots()[1].setStoredResources(2);
+        warehouse.getWarehouseDepots()[2].setResourceType(ResourceType.SERVANTS);
+        warehouse.getWarehouseDepots()[2].setStoredResources(1);
+
+        warehouse.setExtraWarehouseDepot1IsActive(true);
+        warehouse.setExtraWarehouseDepot2IsActive(true);
+        warehouse.getExtraWarehouseDepot1().setResourceType(ResourceType.SERVANTS);
+        warehouse.getExtraWarehouseDepot2().setResourceType(ResourceType.COINS);
+        warehouse.getExtraWarehouseDepot1().setStoredResources(1);
+        warehouse.getExtraWarehouseDepot2().setStoredResources(2);
+
+        return warehouse;
+    }
+
+    private static Strongbox strongboxCreator() {
+        Strongbox strongbox = new Strongbox();
+
+        strongbox.getStoredResources().setResource(2, ResourceType.SHIELDS);
+        strongbox.getStoredResources().setResource(3, ResourceType.SERVANTS);
+        strongbox.getStoredResources().setResource(11, ResourceType.COINS);
+        strongbox.getStoredResources().setResource(44, ResourceType.STONES);
+
+        return strongbox;
+    }
+
+    private static DevelopmentCardSlots slotsCreator() {
+        DevelopmentCardSlots slots = new DevelopmentCardSlots();
+
+        ResourceStack cost = new ResourceStack(1, 1, 0, 0);
+        ResourceStack input = new ResourceStack(1, 1, 10, 1);
+        ResourceStack output = new ResourceStack(10, 10, 23, 0);
+        DevelopmentCard card1 = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 10, cost, input, output, 10);
+        DevelopmentCard card2 = new DevelopmentCard(Color.PURPLE, Level.THREE, 1, 7, cost, input, output, 1);
+        DevelopmentCard card3 = new DevelopmentCard(Color.YELLOW, Level.ONE, 99, 99, cost, input, output, 99);
+        DevelopmentCard card4 = new DevelopmentCard(Color.GREEN, Level.ONE, 99, 99, cost, input, output, 99);
+        DevelopmentCard card5 = new DevelopmentCard(Color.GREEN, Level.TWO, 99, 99, cost, input, output, 99);
+        DevelopmentCard card6 = new DevelopmentCard(Color.PURPLE, Level.THREE, 99, 99, cost, input, output, 99);
+        DevelopmentCard card7 = new DevelopmentCard(Color.BLUE, Level.ONE, 99, 99, cost, input, output, 99);
+
+        slots.getSlots()[0].addCard(card3);
+        slots.getSlots()[1].addCard(card7);
+        slots.getSlots()[1].addCard(card1);
+        slots.getSlots()[2].addCard(card4);
+        slots.getSlots()[2].addCard(card5);
+        slots.getSlots()[2].addCard(card6);
+
+        return slots;
     }
 }

@@ -54,4 +54,17 @@ public class DevelopmentCardSlots implements Serializable {
         if(slots[i].canAdd(card)) return true;
         else return false;
     }
+
+    public ArrayList<String> toCli() {
+        ArrayList<String> devSlots = this.slots[0].toCli();
+        devSlots.add(0, "╔════════════════════════════════════════════════════════════════════════════════════════════╗");
+        ArrayList<String> cardSlot2 = this.slots[1].toCli();
+        ArrayList<String> cardSlot3 = this.slots[2].toCli();
+
+        for(int i = 1; i < devSlots.size(); i++) {
+            devSlots.set(i, ("║" + devSlots.get(i) + " " + cardSlot2.get(i-1) + " " + cardSlot3.get(i-1) + "║"));
+        }
+        devSlots.add(devSlots.size(), "╚════════════════════════════════════════════════════════════════════════════════════════════╝");
+        return devSlots;
+    }
 }
