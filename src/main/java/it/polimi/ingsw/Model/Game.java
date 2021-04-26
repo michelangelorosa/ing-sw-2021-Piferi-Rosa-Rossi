@@ -255,5 +255,30 @@ public class Game {
 
         players.add(newPlayer);
     }
+/*
+    public void join(String nickname) {
+        if(players.size() == 4) {
+            System.out.println("Maximum number of players reached!");
+            return;
+        }
+
+        Player newPlayer;
+
+        if(this.players.size() == 0)
+            newPlayer = new Player(nickname, 0, true);
+        else {
+            for(Player player : players)
+                if(player.getNickname().equals(nickname)) {
+                    System.out.println("Nickname already chosen, choose another nickname!");
+                    return;
+                }
+            this.gameType = GameType.MULTIPLAYER;
+            newPlayer = new Player(nickname, players.size(), false);
+        }
+
+        players.add(newPlayer);
+    }
+
+ */
 
 }
