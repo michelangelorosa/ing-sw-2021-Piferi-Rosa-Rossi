@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.View.ANSIColors;
+
 /**
  * Color enum-type Class contains all possible colors a
  * Development Card (or Development Card Deck) can have.
