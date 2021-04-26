@@ -33,7 +33,6 @@ public class CommonTestMethods {
         game.getPlayers().add(player1);
         game.getPlayers().add(player2);
         game.getPlayers().add(player3);
-        game.setGameType(GameType.MULTIPLAYER);
     }
 
     /**
