@@ -2,15 +2,27 @@ package it.polimi.ingsw.ViewTest;
 
 import it.polimi.ingsw.View.ANSIColors;
 import it.polimi.ingsw.View.ReducedModel.*;
-import it.polimi.ingsw.View.ReducedModel.Enums.Color;
-import it.polimi.ingsw.View.ReducedModel.Enums.Level;
-import it.polimi.ingsw.View.ReducedModel.Enums.ResourceType;
+import it.polimi.ingsw.View.ReducedModel.Enums.*;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class ToCliTest {
     Strongbox strongbox = new Strongbox();
+
+    @Test
+    public void resourceStackToCliTest() {
+        ResourceStack resourceStack = new ResourceStack(1, 2, 3, 44);
+        for(String s : resourceStack.toCli())
+            System.out.println(s);
+
+        for(String s : resourceStack.toCliAdd())
+            System.out.println(s);
+
+        for(String s : resourceStack.toCliPay())
+            System.out.println(s);
+    }
 
     @Test
     public void strongboxCliTest() {
@@ -18,10 +30,6 @@ public class ToCliTest {
         strongbox.getStoredResources().setResource(0, ResourceType.SERVANTS);
         strongbox.getStoredResources().setResource(11, ResourceType.COINS);
         strongbox.getStoredResources().setResource(0, ResourceType.STONES);
-
-        System.out.println(strongbox.toCli());
-
-        System.out.println(strongbox.toCli2());
 
         ArrayList<String> strongboxString = strongbox.toCli3();
         for(String string : strongboxString)
@@ -217,7 +225,6 @@ public class ToCliTest {
         ResourceStack input = new ResourceStack(1, 1, 10, 1);
         ResourceStack output = new ResourceStack(10, 10, 23, 0);
         DevelopmentCard card1 = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 10, cost, input, output, 10);
-        DevelopmentCard card2 = new DevelopmentCard(Color.PURPLE, Level.THREE, 1, 7, cost, input, output, 1);
         DevelopmentCard card3 = new DevelopmentCard(Color.YELLOW, Level.ONE, 99, 99, cost, input, output, 99);
         DevelopmentCard card4 = new DevelopmentCard(Color.GREEN, Level.ONE, 99, 99, cost, input, output, 99);
         DevelopmentCard card5 = new DevelopmentCard(Color.GREEN, Level.TWO, 99, 99, cost, input, output, 99);
@@ -254,8 +261,270 @@ public class ToCliTest {
     @Test
     public void playerBoardToCliTest() {
         Player player = playerCreator("Giacomo", 0);
+        player.setTemporaryResources(new ResourceStack(1, 3, 55, 0));
 
         for(String s : player.toCli())
+            System.out.println(s);
+
+        for(String s : player.toCliAdd())
+            System.out.println(s);
+
+        for(String s : player.toCliPay())
+            System.out.println(s);
+    }
+
+    @Test
+    public void tableToCliTest() {
+        DevelopmentCardTable table = new DevelopmentCardTable(tableCreator());
+        ArrayList<String> tableString = table.toCli();
+
+        for(String s : tableString)
+            System.out.println(s);
+    }
+
+
+    @Test
+    public void faithCellToCliTest() {
+        FaithCell cell = new FaithCell(0, 15);
+
+        Game game = new Game();
+        Player player = new Player("antonio", 0, true);
+        Player player1 = new Player("Lorenzo il Magnifico", 1, false);
+        Player player2 = new Player("franco", 2, false);
+        Player player3 =  new Player("gianpiero", 3, false);
+
+        game.getPlayers().add(player);
+        game.getPlayers().add(player1);
+
+        ArrayList<String> cellString = cell.toCli(game);
+        for(String s : cellString)
+            System.out.println(s);
+
+        game.setGameType(GameType.MULTIPLAYER);
+
+        cellString = cell.toCli(game);
+        for(String s : cellString)
+            System.out.println(s);
+
+        game.getPlayers().add(player2);
+
+        cellString = cell.toCli(game);
+        for(String s : cellString)
+            System.out.println(s);
+
+        game.getPlayers().add(player3);
+
+        cellString = cell.toCli(game);
+        for(String s : cellString)
+            System.out.println(s);
+    }
+
+    @Test
+    public void vaticanSectionsToCliTest() {
+        VaticanReportSection section1 = new VaticanReportSection(0, 5, 30);
+        VaticanReportSection section2 = new VaticanReportSection(6, 18, 5);
+        VaticanReportSection section3 = new VaticanReportSection(19, 24, 1);
+
+        ArrayList<VaticanReportSection> sections = new ArrayList<>();
+        sections.add(section1);
+        sections.add(section2);
+        sections.add(section3);
+
+        FaithTrack track = new FaithTrack(sections);
+
+        ArrayList<String> trackString = track.sectionsToCli();
+
+        for(String s : trackString)
+            System.out.println(s);
+
+        section1 = new VaticanReportSection(1, 2, 30);
+        section2 = new VaticanReportSection(10, 18, 5);
+        section3 = new VaticanReportSection(23, 24, 1);
+
+        sections = new ArrayList<>();
+        sections.add(section1);
+        sections.add(section2);
+        sections.add(section3);
+
+        track = new FaithTrack(sections);
+
+        trackString = track.sectionsToCli();
+        for(String s : trackString)
+            System.out.println(s);
+
+        section1 = new VaticanReportSection(1, 1, 30);
+        section2 = new VaticanReportSection(10, 10, 5);
+        section3 = new VaticanReportSection(22, 22, 1);
+
+        sections = new ArrayList<>();
+        sections.add(section1);
+        sections.add(section2);
+        sections.add(section3);
+
+        track = new FaithTrack(sections);
+
+        trackString = track.sectionsToCli();
+        for(String s : trackString)
+            System.out.println(s);
+    }
+
+    @Test
+    public void faithTrackToCliTest() {
+        Random rand = new Random();
+
+        VaticanReportSection section1 = new VaticanReportSection(0, 5, 30);
+        VaticanReportSection section2 = new VaticanReportSection(6, 18, 5);
+        VaticanReportSection section3 = new VaticanReportSection(19, 24, 1);
+
+        ArrayList<VaticanReportSection> sections = new ArrayList<>();
+        sections.add(section1);
+        sections.add(section2);
+        sections.add(section3);
+
+        FaithTrack track = new FaithTrack(sections);
+
+        int vp;
+
+        for(int i = 0; i < 25; i++) {
+            vp = rand.nextInt(100);
+            track.getCells()[i] = new FaithCell(i, vp);
+        }
+
+        Game game = gameCreator(4);
+
+        ArrayList<String> trackString = track.toCli(game);
+        for(String s : trackString)
+            System.out.println(s);
+
+        track.setPopeSpaceONE(false);
+        trackString = track.toCli(game);
+        for(String s : trackString)
+            System.out.println(s);
+
+        track.setPopeSpaceTWO(false);
+        trackString = track.toCli(game);
+        for(String s : trackString)
+            System.out.println(s);
+
+        track.setPopeSpaceTHREE(false);
+        trackString = track.toCli(game);
+        for(String s : trackString)
+            System.out.println(s);
+
+
+        section1 = new VaticanReportSection(1, 2, 30);
+        section2 = new VaticanReportSection(10, 18, 5);
+        section3 = new VaticanReportSection(23, 24, 1);
+
+        sections = new ArrayList<>();
+        sections.add(section1);
+        sections.add(section2);
+        sections.add(section3);
+
+        track = new FaithTrack(sections);
+
+        for(int i = 0; i < 25; i++) {
+            vp = rand.nextInt(100);
+            track.getCells()[i] = new FaithCell(i, vp);
+        }
+
+        trackString = track.toCli(game);
+        for(String s : trackString)
+            System.out.println(s);
+
+        track.setPopeSpaceONE(false);
+        trackString = track.toCli(game);
+        for(String s : trackString)
+            System.out.println(s);
+
+        track.setPopeSpaceTWO(false);
+        trackString = track.toCli(game);
+        for(String s : trackString)
+            System.out.println(s);
+
+        track.setPopeSpaceTHREE(false);
+        trackString = track.toCli(game);
+        for(String s : trackString)
+            System.out.println(s);
+
+
+        section1 = new VaticanReportSection(0, 0, 30);
+        section2 = new VaticanReportSection(1, 1, 5);
+        section3 = new VaticanReportSection(22, 22, 1);
+
+        sections = new ArrayList<>();
+        sections.add(section1);
+        sections.add(section2);
+        sections.add(section3);
+
+        track = new FaithTrack(sections);
+
+        for(int i = 0; i < 25; i++) {
+            vp = rand.nextInt(100);
+            track.getCells()[i] = new FaithCell(i, vp);
+        }
+
+        trackString = track.toCli(game);
+        for(String s : trackString)
+            System.out.println(s);
+
+        track.setPopeSpaceONE(false);
+        trackString = track.toCli(game);
+        for(String s : trackString)
+            System.out.println(s);
+
+        track.setPopeSpaceTWO(false);
+        trackString = track.toCli(game);
+        for(String s : trackString)
+            System.out.println(s);
+
+        track.setPopeSpaceTHREE(false);
+        trackString = track.toCli(game);
+        for(String s : trackString)
+            System.out.println(s);
+    }
+
+    @Test
+    public void marbleToCli() {
+        Marble marble = Marble.WHITE;
+        for(String s : marble.toCli())
+            System.out.println(s);
+
+        marble = Marble.BLUE;
+        for(String s : marble.toCli())
+            System.out.println(s);
+
+        marble = Marble.PURPLE;
+        for(String s : marble.toCli())
+            System.out.println(s);
+
+        marble = Marble.YELLOW;
+        for(String s : marble.toCli())
+            System.out.println(s);
+
+        marble = Marble.GREY;
+        for(String s : marble.toCli())
+            System.out.println(s);
+
+        marble = Marble.RED;
+        for(String s : marble.toCli())
+            System.out.println(s);
+    }
+
+    @Test
+    public void marketToCliTest() {
+        Random rand = new Random();
+        Marble[] marbleValues = Marble.values();
+
+        Marble[][] marbles = new Marble[3][4];
+        for(int i = 0; i < 3; i++)
+            for(int j = 0; j < 4; j++)
+                marbles[i][j] = marbleValues[rand.nextInt(6)];
+
+        Market market = new Market(marbles);
+        market.setExtraMarble(marbleValues[rand.nextInt(6)]);
+
+        for(String s : market.toCli())
             System.out.println(s);
     }
 
@@ -314,7 +583,6 @@ public class ToCliTest {
         ResourceStack input = new ResourceStack(1, 1, 10, 1);
         ResourceStack output = new ResourceStack(10, 10, 23, 0);
         DevelopmentCard card1 = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 10, cost, input, output, 10);
-        DevelopmentCard card2 = new DevelopmentCard(Color.PURPLE, Level.THREE, 1, 7, cost, input, output, 1);
         DevelopmentCard card3 = new DevelopmentCard(Color.YELLOW, Level.ONE, 99, 99, cost, input, output, 99);
         DevelopmentCard card4 = new DevelopmentCard(Color.GREEN, Level.ONE, 99, 99, cost, input, output, 99);
         DevelopmentCard card5 = new DevelopmentCard(Color.GREEN, Level.TWO, 99, 99, cost, input, output, 99);
@@ -329,5 +597,57 @@ public class ToCliTest {
         slots.getSlots()[2].addCard(card6);
 
         return slots;
+    }
+
+    private static DevelopmentCardDeck[][] tableCreator() {
+        DevelopmentCardDeck[][] decks = new DevelopmentCardDeck[3][4];
+
+        Random rand = new Random();
+        Color[] colors = Color.values();
+        Level[] levels = Level.values();
+
+        ResourceStack cost;
+        ResourceStack input;
+        ResourceStack output;
+        DevelopmentCard card;
+
+        for(int i = 0; i < 3; i++)
+            for(int j = 0; j < 4; j++) {
+                Color color = colors[rand.nextInt(4)];
+                Level level = levels[rand.nextInt(3)];
+                decks[i][j] = new DevelopmentCardDeck(color, level);
+                for (int k = 0; k < 4; k++) {
+                    cost = new ResourceStack(rand.nextInt(11), rand.nextInt(11), rand.nextInt(11), rand.nextInt(11));
+                    input = new ResourceStack(rand.nextInt(11), rand.nextInt(11), rand.nextInt(11), rand.nextInt(11));
+                    output = new ResourceStack(rand.nextInt(11), rand.nextInt(11), rand.nextInt(11), rand.nextInt(11));
+                    card = new DevelopmentCard(color, level, 0, rand.nextInt(100), cost, input, output, rand.nextInt(50));
+                    decks[i][j].addCard(card);
+                }
+            }
+
+        return decks;
+    }
+
+    private static Game gameCreator(int numberOfPlayers) {
+        Game game = new Game();
+        Player player = new Player("antonio", 0, true);
+        Player player1 = new Player("Lorenzo il Magnifico", 1, false);
+        Player player2 = new Player("franco", 2, false);
+        Player player3 =  new Player("gianpiero", 3, false);
+
+        if(numberOfPlayers > 0) {
+            game.getPlayers().add(player);
+            if(numberOfPlayers > 1) {
+                game.getPlayers().add(player1);
+                if(numberOfPlayers > 2) {
+                    game.getPlayers().add(player2);
+                    if(numberOfPlayers > 3) {
+                        game.getPlayers().add(player3);
+                    }
+                }
+            }
+        }
+
+        return game;
     }
 }

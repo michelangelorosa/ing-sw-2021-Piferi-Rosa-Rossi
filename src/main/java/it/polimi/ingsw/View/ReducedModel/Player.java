@@ -165,4 +165,24 @@ public class Player implements Serializable {
 
         return player;
     }
+
+    public ArrayList<String> toCliAdd() {
+        ArrayList<String> warehouse = this.warehouse.toCli();
+        ArrayList<String> resources = this.temporaryResources.toCliAdd();
+
+        for(int i = 5; i < 12; i++)
+            warehouse.set(i, warehouse.get(i) + "      " + resources.get(i - 5));
+
+        return warehouse;
+    }
+
+    public ArrayList<String> toCliPay() {
+        ArrayList<String> warehouse = this.warehouse.toCli();
+        ArrayList<String> resources = this.temporaryResources.toCliPay();
+
+        for(int i = 5; i < 12; i++)
+            warehouse.set(i, warehouse.get(i) + "      " + resources.get(i - 5));
+
+        return warehouse;
+    }
 }

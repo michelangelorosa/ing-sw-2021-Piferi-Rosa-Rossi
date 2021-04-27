@@ -4,6 +4,7 @@ import it.polimi.ingsw.View.ANSIColors;
 import it.polimi.ingsw.View.ReducedModel.Enums.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * ResourceStack Class contains four integer private attributes indicating the amount of each
@@ -79,7 +80,7 @@ public class ResourceStack implements Serializable{
         return shields+" "+servants+" "+coins+" "+stones;
     }
 
-    public String toCli(ResourceType type) {
+    public String toCliWord(ResourceType type) {
         switch(type) {
             case SHIELDS: if(this.shields > 9) return ANSIColors.FRONT_BLUE +"SHIELDS:"+this.shields; else return ANSIColors.FRONT_BLUE +"SHIELDS: "+this.shields;
 
@@ -106,4 +107,43 @@ public class ResourceStack implements Serializable{
             default: return null;
         }
     }
+
+    public ArrayList<String> toCli() {
+        ArrayList<String> stack = new ArrayList<>();
+        stack.add("╔══════╦══════╦══════╦══════╗");
+        stack.add("║      ║      ║      ║      ║");
+        stack.add("║ "+this.toCliSymbol(ResourceType.SHIELDS)+" ║ "+this.toCliSymbol(ResourceType.SERVANTS)+" ║ "+this.toCliSymbol(ResourceType.COINS)+" ║ "+this.toCliSymbol(ResourceType.STONES)+" ║");
+        stack.add("║      ║      ║      ║      ║");
+        stack.add("╚══════╩══════╩══════╩══════╝");
+
+        return stack;
+    }
+
+    public ArrayList<String> toCliAdd() {
+        ArrayList<String> stack = this.toCli();
+        ArrayList<String> message = new ArrayList<>();
+
+        message.add( "╔═══════════════════════════╗");
+        message.add( "║ "+ANSIColors.FRONT_GREEN+"░░░ RESOURCES TO ADD  ░░░"+ANSIColors.RESET+" ║");
+        stack.set(0, "╠══════╦══════╦══════╦══════╣");
+
+        stack.addAll(0, message);
+
+        return stack;
+    }
+
+    public ArrayList<String> toCliPay() {
+        ArrayList<String> stack = this.toCli();
+        ArrayList<String> message = new ArrayList<>();
+
+        message.add( "╔═══════════════════════════╗");
+        message.add( "║ "+ANSIColors.FRONT_RED+"░░░ RESOURCES TO PAY  ░░░"+ANSIColors.RESET+" ║");
+        stack.set(0, "╠══════╦══════╦══════╦══════╣");
+
+        stack.addAll(0, message);
+
+        return stack;
+    }
+
+
 }

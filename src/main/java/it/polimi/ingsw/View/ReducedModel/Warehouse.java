@@ -236,4 +236,5 @@ public class Warehouse implements Serializable {
 
         return warehouse;
     }
+
 }

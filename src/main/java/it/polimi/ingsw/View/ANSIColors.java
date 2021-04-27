@@ -16,6 +16,7 @@ public class ANSIColors {
     public static final String FRONT_PURPLE = "\u001B[35m";
     public static final String FRONT_YELLOW = "\u001B[38;5;11m";
     public static final String FRONT_GREY = "\u001B[38;5;251m";
+    public static final String FRONT_DARK_GREY = "\u001B[38;2;77;77;77m";
 
     public static final String FRONT_BLACK = "\u001B[38;5;16m";
     public static final String FRONT_RED = "\u001B[31m";
@@ -29,6 +30,7 @@ public class ANSIColors {
     public static final String FRONT_BRIGHT_MAGENTA = "\u001B[95m";
     public static final String FRONT_BRIGHT_CYAN = "\u001B[96m";
     public static final String FRONT_BRIGHT_WHITE = "\u001B[38;5;255m";
+    public static final String FRONT_ORANGE = "\u001B[38;2;255;166;77m";
 
     public static final String BACK_BLUE  = "\u001B[48;2;46;92;184m";
     public static final String BACK_PURPLE = "\u001B[48;5;91m";

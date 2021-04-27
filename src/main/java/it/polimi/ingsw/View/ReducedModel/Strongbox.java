@@ -38,34 +38,14 @@ public class Strongbox implements Serializable {
         return storedResources.getResource(ResourceType.SHIELDS)+" "+storedResources.getResource(ResourceType.SERVANTS)+" "+storedResources.getResource(ResourceType.COINS)+" "+storedResources.getResource(ResourceType.STONES);
     }
 
-    public String toCli() {
-        return  "||===========================||\n" +
-                "||" + ANSIColors.BACK_BLACK + ANSIColors.FRONT_BRIGHT_WHITE+"         STRONGBOX         "+ ANSIColors.RESET + "||\n" +
-                "||===========================||\n" +
-                "|| " + this.storedResources.toCli(ResourceType.SHIELDS) + "    " + this.storedResources.toCli(ResourceType.SERVANTS) + " ||\n" +
-                "||                           ||\n" +
-                "|| " + this.storedResources.toCli(ResourceType.COINS) + "      " + this.storedResources.toCli(ResourceType.STONES) + "   ||\n" +
-                "||===========================||\n";
-    }
-
-    public String toCli2() {
-        return  ANSIColors.BACK_BROWN + "╔═════════════════════════════╗"+ ANSIColors.RESET +"\n" +
-                ANSIColors.BACK_BROWN + "║ "+ ANSIColors.FRONT_GREY +" ░░░░░░░" + ANSIColors.FRONT_BRIGHT_WHITE+ANSIColors.BOLD+" STRONGBOX "+ ANSIColors.RESET + ANSIColors.BACK_BROWN + ANSIColors.FRONT_GREY +"░░░░░░░ "+ ANSIColors.RESET + ANSIColors.BACK_BROWN +" ║" + ANSIColors.RESET + "\n" +
-                ANSIColors.BACK_BROWN + "╠═════════════════════════════╣"+ ANSIColors.RESET +"\n" +
-                ANSIColors.BACK_BROWN + "║ " + " " + this.storedResources.toCli(ResourceType.SHIELDS) + "    " + this.storedResources.toCli(ResourceType.SERVANTS) + " "+ ANSIColors.RESET + ANSIColors.BACK_BROWN + " ║"+ ANSIColors.RESET +"\n" +
-                ANSIColors.BACK_BROWN + "║ " +  "                           " + ANSIColors.BACK_BROWN + "║"+ ANSIColors.RESET + "\n" +
-                ANSIColors.BACK_BROWN + "║ " + " " + this.storedResources.toCli(ResourceType.COINS) + "      " + this.storedResources.toCli(ResourceType.STONES) + "   "+ ANSIColors.BACK_BROWN + " ║"+ ANSIColors.RESET +"\n" +
-                ANSIColors.BACK_BROWN + "╚═════════════════════════════╝"+ ANSIColors.RESET +"\n";
-    }
-
     public ArrayList<String> toCli3() {
         ArrayList<String> strongbox = new ArrayList<>();
         strongbox.add(ANSIColors.BACK_BROWN + "╔═════════════════════════════╗"+ ANSIColors.RESET);
         strongbox.add(ANSIColors.BACK_BROWN + "║ "+ ANSIColors.FRONT_GREY +"░░░░░░░░" + ANSIColors.FRONT_BRIGHT_WHITE+ANSIColors.BOLD+" STRONGBOX "+ ANSIColors.RESET + ANSIColors.BACK_BROWN + ANSIColors.FRONT_GREY +"░░░░░░░░"+ ANSIColors.RESET + ANSIColors.BACK_BROWN +" ║" + ANSIColors.RESET);
         strongbox.add(ANSIColors.BACK_BROWN + "╠═════════════════════════════╣"+ ANSIColors.RESET);
-        strongbox.add(ANSIColors.BACK_BROWN + "║ " + " " + this.storedResources.toCli(ResourceType.SHIELDS) + "    " + this.storedResources.toCli(ResourceType.SERVANTS) + " "+ ANSIColors.RESET + ANSIColors.BACK_BROWN + " ║"+ ANSIColors.RESET);
+        strongbox.add(ANSIColors.BACK_BROWN + "║ " + " " + this.storedResources.toCliWord(ResourceType.SHIELDS) + "    " + this.storedResources.toCliWord(ResourceType.SERVANTS) + " "+ ANSIColors.RESET + ANSIColors.BACK_BROWN + " ║"+ ANSIColors.RESET);
         strongbox.add(ANSIColors.BACK_BROWN + "║ " +  "                           " + ANSIColors.BACK_BROWN + " ║"+ ANSIColors.RESET);
-        strongbox.add(ANSIColors.BACK_BROWN + "║ " + " " + this.storedResources.toCli(ResourceType.COINS) + "      " + this.storedResources.toCli(ResourceType.STONES) + "   "+ ANSIColors.BACK_BROWN + " ║"+ ANSIColors.RESET);
+        strongbox.add(ANSIColors.BACK_BROWN + "║ " + " " + this.storedResources.toCliWord(ResourceType.COINS) + "      " + this.storedResources.toCliWord(ResourceType.STONES) + "   "+ ANSIColors.BACK_BROWN + " ║"+ ANSIColors.RESET);
         strongbox.add(ANSIColors.BACK_BROWN + "╚═════════════════════════════╝"+ ANSIColors.RESET);
 
         return strongbox;

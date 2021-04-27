@@ -30,4 +30,8 @@ public class VaticanReportSection implements Serializable {
         return points;
     }
 
+    public String pointsToCli() {
+        if(this.points > 9) return ((Integer)this.points).toString(); else return " " + ((Integer)this.points).toString();
+    }
+
 }

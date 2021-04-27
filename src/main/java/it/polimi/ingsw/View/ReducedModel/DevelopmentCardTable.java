@@ -4,6 +4,7 @@ package it.polimi.ingsw.View.ReducedModel;
 import it.polimi.ingsw.View.ReducedModel.Enums.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * DevelopmentCardTable Class contains all 12 Development Card decks available for the player to buy.
@@ -19,6 +20,10 @@ public class DevelopmentCardTable implements Serializable {
      */
     public DevelopmentCardTable() {
         this.decks = new DevelopmentCardDeck[3][4];
+    }
+
+    public DevelopmentCardTable(DevelopmentCardDeck[][] decks) {
+        this.decks = decks;
     }
 
     /**
@@ -59,5 +64,28 @@ public class DevelopmentCardTable implements Serializable {
             return deck.drawCard();
         else
             return null;
+    }
+
+    public ArrayList<String> toCli() {
+        ArrayList<String> table = new ArrayList<>();
+        ArrayList<String> column2 = new ArrayList<>();
+        ArrayList<String> column3 = new ArrayList<>();
+        ArrayList<String> column4 = new ArrayList<>();
+        int i, j;
+
+        for(i = 0; i < 3; i++) {
+            table.addAll(this.getTopCardFromDeck(i, 0).toCli());
+            column2.addAll(this.getTopCardFromDeck(i, 1).toCli());
+            column3.addAll(this.getTopCardFromDeck(i, 2).toCli());
+            column4.addAll(this.getTopCardFromDeck(i, 3).toCli());
+        }
+
+        for(i = 0; i < table.size(); i++)
+            table.set(i, "  " + table.get(i) + " " + column2.get(i) + " " + column3.get(i) + " " + column4.get(i));
+
+        table.add(0, "╔═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
+        table.add("╚═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝");
+
+        return table;
     }
 }
