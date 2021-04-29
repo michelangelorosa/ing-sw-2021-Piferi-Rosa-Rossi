@@ -32,6 +32,9 @@ public class Player implements Serializable {
     private Strongbox strongbox;
     private DevelopmentCardSlots slots;
     private ResourceStack temporaryResources;
+    private LeaderCard[] leaderCards;
+
+    private ArrayList<ActionType> possibleActions;
 
     /**
      * Constructor for Player Class.
@@ -46,6 +49,7 @@ public class Player implements Serializable {
         this.warehouse = new Warehouse();
         this.strongbox = new Strongbox();
         this.temporaryResources = new ResourceStack(0,0,0,0);
+        this.leaderCards = new LeaderCard[2];
     }
 
     /**
@@ -109,6 +113,14 @@ public class Player implements Serializable {
         return temporaryResources;
     }
 
+    public LeaderCard[] getLeaderCards() {
+        return leaderCards;
+    }
+
+    public ArrayList<ActionType> getPossibleActions() {
+        return possibleActions;
+    }
+
     public void setVictoryPoints(int victoryPoints) {
         this.victoryPoints = victoryPoints;
     }
@@ -135,6 +147,10 @@ public class Player implements Serializable {
 
     public void setBasicProduction(BasicProduction basicProduction) {
         this.basicProduction = basicProduction;
+    }
+
+    public void setPossibleActions(ArrayList<ActionType> possibleActions) {
+        this.possibleActions = possibleActions;
     }
 
     public ArrayList<String> toCli() {

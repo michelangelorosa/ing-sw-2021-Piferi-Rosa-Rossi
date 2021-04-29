@@ -529,6 +529,33 @@ public class ToCliTest {
     }
 
     @Test
+    public void tokenToCliTest() {
+        SoloActionToken token = SoloActionToken.DELETE2BLUE;
+        for(String s : token.toCli())
+            System.out.println(s);
+
+        token = SoloActionToken.DELETE2PURPLE;
+        for(String s : token.toCli())
+            System.out.println(s);
+
+        token = SoloActionToken.DELETE2YELLOW;
+        for(String s : token.toCli())
+            System.out.println(s);
+
+        token = SoloActionToken.DELETE2GREEN;
+        for(String s : token.toCli())
+            System.out.println(s);
+
+        token = SoloActionToken.BLACKCROSSPLUS2;
+        for(String s : token.toCli())
+            System.out.println(s);
+
+        token = SoloActionToken.BLACKCROSSSHUFFLE;
+        for(String s : token.toCli())
+            System.out.println(s);
+    }
+
+    @Test
     public void CliTest() {
         System.out.println(ANSIColors.FRONT_BLUE + "\u26CA:8 " + ANSIColors.FRONT_PURPLE + "\u265F:3 "+ ANSIColors.FRONT_YELLOW + "\u26C2:3 "+ ANSIColors.FRONT_GREY + "\u26F0:3 ");
     }

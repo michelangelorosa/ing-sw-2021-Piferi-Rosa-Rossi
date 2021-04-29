@@ -1,4 +1,4 @@
-package it.polimi.ingsw.View.MessagesToClient;
+package it.polimi.ingsw.View.ReducedModel.Enums;
 
 public enum ActionType {
     CHOOSE_ACTION("choose_action"),

@@ -1,5 +1,8 @@
 package it.polimi.ingsw.View.MessagesToClient;
 
+import it.polimi.ingsw.View.ReducedModel.Enums.ActionType;
+import it.polimi.ingsw.View.ReducedModel.Game;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -20,6 +23,10 @@ public class MessageToClient implements Serializable {
      * Default Constructor for MessageToClient Class.
      */
     public MessageToClient() {
+
+    }
+
+    public void updateView(Game game) {
 
     }
 }

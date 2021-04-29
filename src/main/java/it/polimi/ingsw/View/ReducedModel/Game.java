@@ -133,4 +133,5 @@ public class Game {
     public void setFaithTrack(FaithTrack faithTrack) {
         this.faithTrack = faithTrack;
     }
+
 }
