@@ -55,6 +55,10 @@ public class DevelopmentCardSlots implements Serializable {
         else return false;
     }
 
+    public void addCard(int slot, DevelopmentCard card) {
+        this.getSlots()[slot].addCard(card);
+    }
+
     public ArrayList<String> toCli() {
         ArrayList<String> devSlots = this.slots[0].toCli();
         devSlots.add(0, "╔════════════════════════════════════════════════════════════════════════════════════════════╗");

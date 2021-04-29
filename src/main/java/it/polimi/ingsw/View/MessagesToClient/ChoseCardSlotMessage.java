@@ -3,6 +3,7 @@ package it.polimi.ingsw.View.MessagesToClient;
 
 import it.polimi.ingsw.View.ReducedModel.Enums.ActionType;
 import it.polimi.ingsw.View.ReducedModel.Game;
+import it.polimi.ingsw.View.ReducedModel.Player;
 
 public class ChoseCardSlotMessage extends MessageToClient {
     /** row and column of the deck and the slot int position are required to update the Client's View */
@@ -24,6 +25,16 @@ public class ChoseCardSlotMessage extends MessageToClient {
      */
     @Override
     public void updateView(Game game) {
+        if(this.error.equals("SUCCESS")) {
+            for (Player player : game.getPlayers())
+                if (player.getTurnPosition() == this.playerId) {
+                    player.setPossibleActions(this.possibleActions);
+                    player.getSlots().addCard(this.slot, game.getDevelopmentCardTable().drawCardFromDeck(this.row, this.column));
+                }
 
+        }
+        else {
+            //TODO error message
+        }
     }
 }

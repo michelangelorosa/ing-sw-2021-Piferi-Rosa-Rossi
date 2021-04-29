@@ -73,6 +73,7 @@ public class ChooseLeaderCard extends Action {
         }
         else {
             response = "SUCCESS";
+            resetWarehouse.setBackupResources(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay());
             return "SUCCESS";
         }
     }

@@ -18,6 +18,13 @@ public class PaymentMessage extends MessageToClient {
      */
     @Override
     public void updateView(Game game) {
-
+        if(this.error.equals("HasToPay")) {
+            for(Player player : game.getPlayers()) {
+                player.setWarehouse(this.warehouse);
+                player.setStrongbox(this.strongbox);
+                player.setTemporaryResources(this.temporaryResources);
+                player.setPossibleActions(this.possibleActions);
+            }
+        }
     }
 }

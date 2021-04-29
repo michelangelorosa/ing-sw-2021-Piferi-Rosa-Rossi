@@ -3,6 +3,7 @@ package it.polimi.ingsw.View.MessagesToClient;
 import it.polimi.ingsw.View.ReducedModel.*;
 import it.polimi.ingsw.View.ReducedModel.Enums.ActionType;
 import it.polimi.ingsw.View.ReducedModel.Game;
+import it.polimi.ingsw.View.ReducedModel.Player;
 
 public class BoughtCardMessage extends MessageToClient {
     private Warehouse warehouse;
@@ -19,6 +20,14 @@ public class BoughtCardMessage extends MessageToClient {
      */
     @Override
     public void updateView(Game game) {
+        if(this.error.equals("SUCCESS")) {
+            for (Player player : game.getPlayers())
+                if (player.getTurnPosition() == this.playerId)
+                    player.setPossibleActions(this.possibleActions);
+        }
 
+        else {
+            //TODO error message
+        }
     }
 }

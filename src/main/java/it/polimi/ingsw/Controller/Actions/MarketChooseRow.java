@@ -11,6 +11,7 @@ public class MarketChooseRow extends Action {
     /** True if the player chose a Row, false if the player chose a Column */
     private final boolean row;
     private final int rowOrColumnNumber;
+    private ResourceStack temporaryResource;
 
     /**
      * Constructor for MarketChooseRow Class.
@@ -19,6 +20,7 @@ public class MarketChooseRow extends Action {
         this.actionType = ActionType.MARKET_CHOOSE_ROW;
         this.row = row;
         this.rowOrColumnNumber = rowOrColumnNumber;
+        this.temporaryResource = null;
     }
 
     /**
@@ -80,6 +82,9 @@ public class MarketChooseRow extends Action {
         resetWarehouse.setBackupResources(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().copyStack());
 
         this.response = this.leaderCardCheck(game);
+        if(this.response.equals("SUCCESS"))
+            this.temporaryResource = game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay();
+
         return response;
     }
 
@@ -123,6 +128,7 @@ public class MarketChooseRow extends Action {
         message.setError(this.response);
         message.setRow(this.row);
         message.setRowOrColumn(this.rowOrColumnNumber);
+        message.setTemporaryResources(this.temporaryResource);
         if(this.response.equals("SUCCESS")) {
             message.addPossibleAction(ActionType.ADD_RESOURCE);
             message.addPossibleAction(ActionType.RESET_WAREHOUSE);

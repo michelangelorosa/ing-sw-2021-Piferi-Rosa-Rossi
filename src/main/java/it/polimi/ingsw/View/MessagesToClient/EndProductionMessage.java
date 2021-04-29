@@ -1,9 +1,7 @@
 package it.polimi.ingsw.View.MessagesToClient;
 
-import it.polimi.ingsw.View.ReducedModel.Strongbox;
-import it.polimi.ingsw.View.ReducedModel.Warehouse;
-import it.polimi.ingsw.View.ReducedModel.Enums.ActionType;
-import it.polimi.ingsw.View.ReducedModel.Game;
+import it.polimi.ingsw.View.ReducedModel.Enums.*;
+import it.polimi.ingsw.View.ReducedModel.*;
 
 public class EndProductionMessage extends MessageToClient {
     private Warehouse warehouse;
@@ -20,6 +18,11 @@ public class EndProductionMessage extends MessageToClient {
      */
     @Override
     public void updateView(Game game) {
-
+        for(Player player : game.getPlayers())
+            if(player.getTurnPosition() == this.playerId) {
+                player.setWarehouse(this.warehouse);
+                player.setStrongbox(this.strongbox);
+                player.setPossibleActions(this.possibleActions);
+            }
     }
 }

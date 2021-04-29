@@ -2,6 +2,7 @@ package it.polimi.ingsw.View.MessagesToClient;
 
 import it.polimi.ingsw.View.ReducedModel.Enums.ActionType;
 import it.polimi.ingsw.View.ReducedModel.Game;
+import it.polimi.ingsw.View.ReducedModel.Player;
 
 import java.util.ArrayList;
 
@@ -23,6 +24,10 @@ public class EndMarketMessage extends MessageToClient {
      */
     @Override
     public void updateView(Game game) {
-
+        for(int i = 0; i < game.getPlayers().size(); i++) {
+            game.getPlayers().get(i).setFaithTrackPosition(this.playersFaithPosition.get(i));
+            if(game.getPlayers().get(i).getTurnPosition() == this.playerId)
+                game.getPlayers().get(i).setPossibleActions(this.possibleActions);
+        }
     }
 }

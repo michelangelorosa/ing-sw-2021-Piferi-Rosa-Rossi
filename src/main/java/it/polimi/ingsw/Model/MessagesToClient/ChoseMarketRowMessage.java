@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
+import it.polimi.ingsw.Model.ResourceStack;
 
 /**
  * ChoseMarketRowMessage Class defines a response to be sent to the client after
@@ -10,6 +11,7 @@ public class ChoseMarketRowMessage extends MessageToClient {
     /** A boolean and an int attributes define the row or column chosen by the client */
     private boolean isRow;
     private int rowOrColumn;
+    private ResourceStack temporaryResources;
 
     /**
      * Constructor for ChoseMarketRowMessage Class.
@@ -45,5 +47,13 @@ public class ChoseMarketRowMessage extends MessageToClient {
      */
     public int getRowOrColumn() {
         return rowOrColumn;
+    }
+
+    public ResourceStack getTemporaryResources() {
+        return temporaryResources;
+    }
+
+    public void setTemporaryResources(ResourceStack temporaryResources) {
+        this.temporaryResources = temporaryResources;
     }
 }

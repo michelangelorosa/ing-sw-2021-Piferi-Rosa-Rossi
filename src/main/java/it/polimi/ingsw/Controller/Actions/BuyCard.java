@@ -108,8 +108,10 @@ BuyCard extends Action {
     public MessageToClient messagePrepare(Game game) {
         BuyCardMessage message = new BuyCardMessage(game.getCurrentPlayerIndex());
         message.setError(this.response);
-        if(this.response.equals("SUCCESS"))
+        if(this.response.equals("SUCCESS")) {
             message.addPossibleAction(ActionType.PAY_RESOURCE_CARD);
+            message.setTemporaryResources(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay());
+        }
         else {
             message.addPossibleAction(ActionType.ACTIVATE_PRODUCTION);
             message.addPossibleAction(ActionType.BUY_CARD);

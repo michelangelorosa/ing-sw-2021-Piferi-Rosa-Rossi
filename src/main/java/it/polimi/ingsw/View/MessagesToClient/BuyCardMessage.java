@@ -3,8 +3,10 @@ package it.polimi.ingsw.View.MessagesToClient;
 import it.polimi.ingsw.View.ReducedModel.Enums.ActionType;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.Player;
+import it.polimi.ingsw.View.ReducedModel.ResourceStack;
 
 public class BuyCardMessage extends MessageToClient {
+    private ResourceStack temporaryResources;
 
     /**
      * Constructor for BuyCardMessage Class.
@@ -22,8 +24,10 @@ public class BuyCardMessage extends MessageToClient {
     public void updateView(Game game) {
         if(this.error.equals("SUCCESS"))
             for(Player player : game.getPlayers())
-                if(player.getTurnPosition() == this.playerId)
+                if(player.getTurnPosition() == this.playerId) {
                     player.setPossibleActions(this.possibleActions);
+                    player.setTemporaryResources(this.temporaryResources);
+                }
 
         else {
             //TODO error message
