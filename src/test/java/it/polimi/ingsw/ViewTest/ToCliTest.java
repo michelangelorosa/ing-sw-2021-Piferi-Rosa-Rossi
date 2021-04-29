@@ -12,24 +12,12 @@ public class ToCliTest {
     Strongbox strongbox = new Strongbox();
 
     @Test
-    public void resourceStackToCliTest() {
-        ResourceStack resourceStack = new ResourceStack(1, 2, 3, 44);
-        for(String s : resourceStack.toCli())
-            System.out.println(s);
-
-        for(String s : resourceStack.toCliAdd())
-            System.out.println(s);
-
-        for(String s : resourceStack.toCliPay())
-            System.out.println(s);
-    }
-
-    @Test
     public void strongboxCliTest() {
         strongbox.getStoredResources().setResource(0, ResourceType.SHIELDS);
         strongbox.getStoredResources().setResource(0, ResourceType.SERVANTS);
         strongbox.getStoredResources().setResource(11, ResourceType.COINS);
         strongbox.getStoredResources().setResource(0, ResourceType.STONES);
+
 
         ArrayList<String> strongboxString = strongbox.toCli3();
         for(String string : strongboxString)
@@ -225,6 +213,7 @@ public class ToCliTest {
         ResourceStack input = new ResourceStack(1, 1, 10, 1);
         ResourceStack output = new ResourceStack(10, 10, 23, 0);
         DevelopmentCard card1 = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 10, cost, input, output, 10);
+        DevelopmentCard card2 = new DevelopmentCard(Color.PURPLE, Level.THREE, 1, 7, cost, input, output, 1);
         DevelopmentCard card3 = new DevelopmentCard(Color.YELLOW, Level.ONE, 99, 99, cost, input, output, 99);
         DevelopmentCard card4 = new DevelopmentCard(Color.GREEN, Level.ONE, 99, 99, cost, input, output, 99);
         DevelopmentCard card5 = new DevelopmentCard(Color.GREEN, Level.TWO, 99, 99, cost, input, output, 99);
@@ -261,16 +250,218 @@ public class ToCliTest {
     @Test
     public void playerBoardToCliTest() {
         Player player = playerCreator("Giacomo", 0);
-        player.setTemporaryResources(new ResourceStack(1, 3, 55, 0));
 
         for(String s : player.toCli())
             System.out.println(s);
+    }
 
-        for(String s : player.toCliAdd())
+    @Test
+    public void CliTest() {
+        System.out.println(ANSIColors.FRONT_BLUE + "\u26CA:8 " + ANSIColors.FRONT_PURPLE + "\u265F:3 "+ ANSIColors.FRONT_YELLOW + "\u26C2:3 "+ ANSIColors.FRONT_GREY + "\u26F0:3 ");
+    }
+
+    private static Player playerCreator(String nickname, int turnPosition) {
+        Player player = new Player(nickname, turnPosition, true);
+        ResourceStack input = new ResourceStack(0, 1, 2, 3);
+        BasicProduction basic = new BasicProduction(input, input, 10, 10, 9);
+
+        player.setBasicProduction(basic);
+        player.setWarehouse(warehouseCreator());
+        player.setStrongbox(strongboxCreator());
+        player.setSlots(slotsCreator());
+
+        return player;
+    }
+
+    private static Warehouse warehouseCreator() {
+        Warehouse warehouse = new Warehouse();
+        warehouse.getWarehouseDepots()[0].setResourceType(ResourceType.SHIELDS);
+        warehouse.getWarehouseDepots()[0].setStoredResources(3);
+        warehouse.getWarehouseDepots()[1].setResourceType(ResourceType.COINS);
+        warehouse.getWarehouseDepots()[1].setStoredResources(2);
+        warehouse.getWarehouseDepots()[2].setResourceType(ResourceType.SERVANTS);
+        warehouse.getWarehouseDepots()[2].setStoredResources(1);
+
+        warehouse.setExtraWarehouseDepot1IsActive(true);
+        warehouse.setExtraWarehouseDepot2IsActive(true);
+        warehouse.getExtraWarehouseDepot1().setResourceType(ResourceType.SERVANTS);
+        warehouse.getExtraWarehouseDepot2().setResourceType(ResourceType.COINS);
+        warehouse.getExtraWarehouseDepot1().setStoredResources(1);
+        warehouse.getExtraWarehouseDepot2().setStoredResources(2);
+
+        return warehouse;
+    }
+
+    private static Strongbox strongboxCreator() {
+        Strongbox strongbox = new Strongbox();
+
+        strongbox.getStoredResources().setResource(2, ResourceType.SHIELDS);
+        strongbox.getStoredResources().setResource(3, ResourceType.SERVANTS);
+        strongbox.getStoredResources().setResource(11, ResourceType.COINS);
+        strongbox.getStoredResources().setResource(44, ResourceType.STONES);
+
+        return strongbox;
+    }
+
+    private static DevelopmentCardSlots slotsCreator() {
+        DevelopmentCardSlots slots = new DevelopmentCardSlots();
+
+        ResourceStack cost = new ResourceStack(1, 1, 0, 0);
+        ResourceStack input = new ResourceStack(1, 1, 10, 1);
+        ResourceStack output = new ResourceStack(10, 10, 23, 0);
+        DevelopmentCard card1 = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 10, cost, input, output, 10);
+        DevelopmentCard card2 = new DevelopmentCard(Color.PURPLE, Level.THREE, 1, 7, cost, input, output, 1);
+        DevelopmentCard card3 = new DevelopmentCard(Color.YELLOW, Level.ONE, 99, 99, cost, input, output, 99);
+        DevelopmentCard card4 = new DevelopmentCard(Color.GREEN, Level.ONE, 99, 99, cost, input, output, 99);
+        DevelopmentCard card5 = new DevelopmentCard(Color.GREEN, Level.TWO, 99, 99, cost, input, output, 99);
+        DevelopmentCard card6 = new DevelopmentCard(Color.PURPLE, Level.THREE, 99, 99, cost, input, output, 99);
+        DevelopmentCard card7 = new DevelopmentCard(Color.BLUE, Level.ONE, 99, 99, cost, input, output, 99);
+
+        slots.getSlots()[0].addCard(card3);
+        slots.getSlots()[1].addCard(card7);
+        slots.getSlots()[1].addCard(card1);
+        slots.getSlots()[2].addCard(card4);
+        slots.getSlots()[2].addCard(card5);
+        slots.getSlots()[2].addCard(card6);
+
+        return slots;
+    }
+    @Test
+    public void leaderCardToCli() {
+        Game game = new Game();
+        ArrayList<Player> players= new ArrayList<>();
+        Player player = new Player("Lello", 0, true);
+        Player player1 = new Player("Antonino", 1, false);
+        Player player2 = new Player("Marcantonio", 2, false);
+        players.add(player);
+        players.add(player1);
+        players.add(player2);
+        game.setPlayers(players);
+        game.setMyNickname("Lello");
+
+
+        ResourceStack resourceStack = new ResourceStack(1,4,3,2);
+        LeaderRequirements requirements = new LeaderRequirements(1,2,2,2,2,1,2,2,1,4,2,4);
+        ResourceStack discount = new ResourceStack(1,0,0,0);
+        LeaderCard card = new LeaderCard(49, 12, resourceStack, requirements, discount);
+        card.setActive(true);
+        game.getPlayers().get(0).getLeaderCards()[0] = card;
+
+        Marble marble = Marble.RED;
+        card = new LeaderCard(50, 12, resourceStack, requirements, marble);
+        card.setActive(false);
+        game.getPlayers().get(0).getLeaderCards()[1] = card;
+
+        card = new LeaderCard(51,4,resourceStack, requirements, ResourceType.COINS);
+        card.setActive(true);
+        game.getPlayers().get(1).getLeaderCards()[0] = card;
+
+        ResourceStack input = new ResourceStack(11,2,3,4);
+        card = new LeaderCard(52, 78, resourceStack, requirements, input, 5, 4);
+        game.getPlayers().get(1).getLeaderCards()[1] = card;
+
+        input = new ResourceStack(11,2,3,4);
+        card = new LeaderCard(52, 78, resourceStack, requirements, input, 5, 4);
+        game.getPlayers().get(2).getLeaderCards()[0] = card;
+
+        input = new ResourceStack(11,2,3,4);
+        card = new LeaderCard(52, 78, resourceStack, requirements, input, 5, 4);
+        game.getPlayers().get(2).getLeaderCards()[1] = card;
+
+        boolean up = false;
+        if(game.getMyNickname() == game.getCurrentPlayer().getNickname()) up = true;
+
+        for(String s : player1.leaderPrint(up))
             System.out.println(s);
 
-        for(String s : player.toCliPay())
+    }
+
+
+
+    @Test
+    public void boardTest(){
+        Game game = new Game();
+        ArrayList<Player> players= new ArrayList<>();
+        Player player = new Player("Lello", 0, true);
+        Player player1 = new Player("Antonino", 1, false);
+        Player player2 = new Player("Marcantonio", 2, false);
+        players.add(player);
+        players.add(player1);
+        players.add(player2);
+        game.setPlayers(players);
+        game.setMyNickname("Marcantonio");
+
+        ResourceStack input = new ResourceStack(0, 1, 2, 3);
+        BasicProduction basic = new BasicProduction(input, input, 10, 10, 9);
+
+        for(int i = 0; i < game.getPlayers().size(); i++) {
+            players.get(i).setBasicProduction(basic);
+            players.get(i).setWarehouse(warehouseCreator());
+            players.get(i).setStrongbox(strongboxCreator());
+            players.get(i).setSlots(slotsCreator());
+        }
+
+        ResourceStack resourceStack = new ResourceStack(1,4,3,2);
+        LeaderRequirements requirements = new LeaderRequirements(1,2,2,2,2,1,2,2,1,4,2,4);
+        ResourceStack discount = new ResourceStack(1,0,0,0);
+        LeaderCard card = new LeaderCard(49, 12, resourceStack, requirements, discount);
+        card.setActive(true);
+        game.getPlayers().get(0).getLeaderCards()[0] = card;
+
+        Marble marble = Marble.GREY;
+        card = new LeaderCard(50, 12, resourceStack, requirements, marble);
+        card.setActive(false);
+        game.getPlayers().get(0).getLeaderCards()[1] = card;
+
+        card = new LeaderCard(51,4,resourceStack, requirements, ResourceType.COINS);
+        card.setActive(true);
+        game.getPlayers().get(1).getLeaderCards()[0] = card;
+
+        input = new ResourceStack(11,2,3,4);
+        card = new LeaderCard(52, 78, resourceStack, requirements, input, 5, 4);
+        game.getPlayers().get(1).getLeaderCards()[1] = card;
+
+        input = new ResourceStack(11,2,3,4);
+        card = new LeaderCard(52, 78, resourceStack, requirements, input, 5, 4);
+        game.getPlayers().get(2).getLeaderCards()[0] = card;
+
+        input = new ResourceStack(11,2,3,4);
+        card = new LeaderCard(52, 78, resourceStack, requirements, input, 5, 4);
+        game.getPlayers().get(2).getLeaderCards()[1] = card;
+
+        game.boardToCli(game.getPlayers().get(2));
+
+        for(String s : game.boardToCli(game.getPlayers().get(2)))
             System.out.println(s);
+    }
+
+    private static DevelopmentCardDeck[][] tableCreator() {
+        DevelopmentCardDeck[][] decks = new DevelopmentCardDeck[3][4];
+
+        Random rand = new Random();
+        Color[] colors = Color.values();
+        Level[] levels = Level.values();
+
+        ResourceStack cost;
+        ResourceStack input;
+        ResourceStack output;
+        DevelopmentCard card;
+
+        for(int i = 0; i < 3; i++)
+            for(int j = 0; j < 4; j++) {
+                Color color = colors[rand.nextInt(4)];
+                Level level = levels[rand.nextInt(3)];
+                decks[i][j] = new DevelopmentCardDeck(color, level);
+                for (int k = 0; k < 4; k++) {
+                    cost = new ResourceStack(rand.nextInt(11), rand.nextInt(11), rand.nextInt(11), rand.nextInt(11));
+                    input = new ResourceStack(rand.nextInt(11), rand.nextInt(11), rand.nextInt(11), rand.nextInt(11));
+                    output = new ResourceStack(rand.nextInt(11), rand.nextInt(11), rand.nextInt(11), rand.nextInt(11));
+                    card = new DevelopmentCard(color, level, 0, rand.nextInt(100), cost, input, output, rand.nextInt(50));
+                    decks[i][j].addCard(card);
+                }
+            }
+
+        return decks;
     }
 
     @Test
@@ -528,133 +719,6 @@ public class ToCliTest {
             System.out.println(s);
     }
 
-    @Test
-    public void tokenToCliTest() {
-        SoloActionToken token = SoloActionToken.DELETE2BLUE;
-        for(String s : token.toCli())
-            System.out.println(s);
-
-        token = SoloActionToken.DELETE2PURPLE;
-        for(String s : token.toCli())
-            System.out.println(s);
-
-        token = SoloActionToken.DELETE2YELLOW;
-        for(String s : token.toCli())
-            System.out.println(s);
-
-        token = SoloActionToken.DELETE2GREEN;
-        for(String s : token.toCli())
-            System.out.println(s);
-
-        token = SoloActionToken.BLACKCROSSPLUS2;
-        for(String s : token.toCli())
-            System.out.println(s);
-
-        token = SoloActionToken.BLACKCROSSSHUFFLE;
-        for(String s : token.toCli())
-            System.out.println(s);
-    }
-
-    @Test
-    public void CliTest() {
-        System.out.println(ANSIColors.FRONT_BLUE + "\u26CA:8 " + ANSIColors.FRONT_PURPLE + "\u265F:3 "+ ANSIColors.FRONT_YELLOW + "\u26C2:3 "+ ANSIColors.FRONT_GREY + "\u26F0:3 ");
-    }
-
-    private static Player playerCreator(String nickname, int turnPosition) {
-        Player player = new Player(nickname, turnPosition, true);
-        ResourceStack input = new ResourceStack(0, 1, 2, 3);
-        BasicProduction basic = new BasicProduction(input, input, 10, 10, 9);
-
-        player.setBasicProduction(basic);
-        player.setWarehouse(warehouseCreator());
-        player.setStrongbox(strongboxCreator());
-        player.setSlots(slotsCreator());
-
-        return player;
-    }
-
-    private static Warehouse warehouseCreator() {
-        Warehouse warehouse = new Warehouse();
-        warehouse.getWarehouseDepots()[0].setResourceType(ResourceType.SHIELDS);
-        warehouse.getWarehouseDepots()[0].setStoredResources(3);
-        warehouse.getWarehouseDepots()[1].setResourceType(ResourceType.COINS);
-        warehouse.getWarehouseDepots()[1].setStoredResources(2);
-        warehouse.getWarehouseDepots()[2].setResourceType(ResourceType.SERVANTS);
-        warehouse.getWarehouseDepots()[2].setStoredResources(1);
-
-        warehouse.setExtraWarehouseDepot1IsActive(true);
-        warehouse.setExtraWarehouseDepot2IsActive(true);
-        warehouse.getExtraWarehouseDepot1().setResourceType(ResourceType.SERVANTS);
-        warehouse.getExtraWarehouseDepot2().setResourceType(ResourceType.COINS);
-        warehouse.getExtraWarehouseDepot1().setStoredResources(1);
-        warehouse.getExtraWarehouseDepot2().setStoredResources(2);
-
-        return warehouse;
-    }
-
-    private static Strongbox strongboxCreator() {
-        Strongbox strongbox = new Strongbox();
-
-        strongbox.getStoredResources().setResource(2, ResourceType.SHIELDS);
-        strongbox.getStoredResources().setResource(3, ResourceType.SERVANTS);
-        strongbox.getStoredResources().setResource(11, ResourceType.COINS);
-        strongbox.getStoredResources().setResource(44, ResourceType.STONES);
-
-        return strongbox;
-    }
-
-    private static DevelopmentCardSlots slotsCreator() {
-        DevelopmentCardSlots slots = new DevelopmentCardSlots();
-
-        ResourceStack cost = new ResourceStack(1, 1, 0, 0);
-        ResourceStack input = new ResourceStack(1, 1, 10, 1);
-        ResourceStack output = new ResourceStack(10, 10, 23, 0);
-        DevelopmentCard card1 = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 10, cost, input, output, 10);
-        DevelopmentCard card3 = new DevelopmentCard(Color.YELLOW, Level.ONE, 99, 99, cost, input, output, 99);
-        DevelopmentCard card4 = new DevelopmentCard(Color.GREEN, Level.ONE, 99, 99, cost, input, output, 99);
-        DevelopmentCard card5 = new DevelopmentCard(Color.GREEN, Level.TWO, 99, 99, cost, input, output, 99);
-        DevelopmentCard card6 = new DevelopmentCard(Color.PURPLE, Level.THREE, 99, 99, cost, input, output, 99);
-        DevelopmentCard card7 = new DevelopmentCard(Color.BLUE, Level.ONE, 99, 99, cost, input, output, 99);
-
-        slots.getSlots()[0].addCard(card3);
-        slots.getSlots()[1].addCard(card7);
-        slots.getSlots()[1].addCard(card1);
-        slots.getSlots()[2].addCard(card4);
-        slots.getSlots()[2].addCard(card5);
-        slots.getSlots()[2].addCard(card6);
-
-        return slots;
-    }
-
-    private static DevelopmentCardDeck[][] tableCreator() {
-        DevelopmentCardDeck[][] decks = new DevelopmentCardDeck[3][4];
-
-        Random rand = new Random();
-        Color[] colors = Color.values();
-        Level[] levels = Level.values();
-
-        ResourceStack cost;
-        ResourceStack input;
-        ResourceStack output;
-        DevelopmentCard card;
-
-        for(int i = 0; i < 3; i++)
-            for(int j = 0; j < 4; j++) {
-                Color color = colors[rand.nextInt(4)];
-                Level level = levels[rand.nextInt(3)];
-                decks[i][j] = new DevelopmentCardDeck(color, level);
-                for (int k = 0; k < 4; k++) {
-                    cost = new ResourceStack(rand.nextInt(11), rand.nextInt(11), rand.nextInt(11), rand.nextInt(11));
-                    input = new ResourceStack(rand.nextInt(11), rand.nextInt(11), rand.nextInt(11), rand.nextInt(11));
-                    output = new ResourceStack(rand.nextInt(11), rand.nextInt(11), rand.nextInt(11), rand.nextInt(11));
-                    card = new DevelopmentCard(color, level, 0, rand.nextInt(100), cost, input, output, rand.nextInt(50));
-                    decks[i][j].addCard(card);
-                }
-            }
-
-        return decks;
-    }
-
     private static Game gameCreator(int numberOfPlayers) {
         Game game = new Game();
         Player player = new Player("antonio", 0, true);
@@ -677,4 +741,38 @@ public class ToCliTest {
 
         return game;
     }
+
+    @Test
+    public void popeTilesToCliTest(){
+        VaticanReportSection section1 = new VaticanReportSection(0, 5, 2);
+        VaticanReportSection section2 = new VaticanReportSection(6, 18, 3);
+        VaticanReportSection section3 = new VaticanReportSection(19, 24, 4);
+
+        Game game = gameCreator(4);
+        FaithTrack track = new FaithTrack(section1, section2, section3);
+        gameCreator(4);
+
+        int vp;
+
+        for(int i = 0; i < 25; i++) {
+            vp = 15;
+            track.getCells()[i] = new FaithCell(i, vp);
+        }
+        game.setFaithTrack(track);
+
+        ArrayList<String> trackString = game.getCurrentPlayer().popeTileToCli();
+        for(String s : trackString)
+            System.out.println(s);
+
+    }
+
+
+
+
+
+
+
+
+
 }
+

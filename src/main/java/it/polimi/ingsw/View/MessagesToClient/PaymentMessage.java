@@ -1,8 +1,6 @@
 package it.polimi.ingsw.View.MessagesToClient;
 
-import it.polimi.ingsw.Model.ResourceStack;
-import it.polimi.ingsw.Model.Strongbox;
-import it.polimi.ingsw.Model.Warehouse;
+import it.polimi.ingsw.View.ReducedModel.*;
 import it.polimi.ingsw.View.ReducedModel.Game;
 
 public class PaymentMessage extends MessageToClient {

@@ -243,9 +243,26 @@ public class FaithTrackTest {
         players.add(new Player("two", 2, false));
         players.add(new Player("three", 3, false));
 
-        players.get(0).stepAhead(8);
+        players.get(0).getPopeTiles()[0] = new PopeTileClass(2);
+        players.get(1).getPopeTiles()[0] = new PopeTileClass(2);
+        players.get(2).getPopeTiles()[0] = new PopeTileClass(2);
+        players.get(3).getPopeTiles()[0] = new PopeTileClass(2);
+
+        players.get(0).getPopeTiles()[1] = new PopeTileClass(3);
+        players.get(1).getPopeTiles()[1] = new PopeTileClass(3);
+        players.get(2).getPopeTiles()[1] = new PopeTileClass(3);
+        players.get(3).getPopeTiles()[1] = new PopeTileClass(3);
+
+        players.get(0).getPopeTiles()[2] = new PopeTileClass(4);
+        players.get(1).getPopeTiles()[2] = new PopeTileClass(4);
+        players.get(2).getPopeTiles()[2] = new PopeTileClass(4);
+        players.get(3).getPopeTiles()[2] = new PopeTileClass(4);
+
+
         players.get(1).stepAhead(6);
+        players.get(0).stepAhead(8);
         test.popeSpaceSector(players);
+
 
         players.get(2).stepAhead(6);
         test.popeSpaceSector(players);
@@ -268,9 +285,26 @@ public class FaithTrackTest {
         players.get(3).stepAhead(6);
         test.popeSpaceSector(players);
         players.get(3).endTrack();
-        assertEquals(2, test.getTrackPoints(players.get(0)));
-        assertEquals(5, test.getTrackPoints(players.get(1)));
-        assertEquals(0, test.getTrackPoints(players.get(2)));
-        assertEquals(7, test.getTrackPoints(players.get(3)));
+        assertEquals(2, players.get(0).getVictoryPoints());
+        assertEquals(5, players.get(1).getVictoryPoints());
+        assertEquals(0, players.get(2).getVictoryPoints());
+        assertEquals(7, players.get(3).getVictoryPoints());
+
+        System.out.println(players.get(0).getPopeTiles()[0].getPopeTile());
+        System.out.println(players.get(1).getPopeTiles()[0].getPopeTile());
+        System.out.println(players.get(2).getPopeTiles()[0].getPopeTile());
+        System.out.println(players.get(3).getPopeTiles()[0].getPopeTile());
+        System.out.println(" ");
+        System.out.println(players.get(0).getPopeTiles()[1].getPopeTile());
+        System.out.println(players.get(1).getPopeTiles()[1].getPopeTile());
+        System.out.println(players.get(2).getPopeTiles()[1].getPopeTile());
+        System.out.println(players.get(3).getPopeTiles()[1].getPopeTile());
+        System.out.println(" ");
+        System.out.println(players.get(0).getPopeTiles()[2].getPopeTile());
+        System.out.println(players.get(1).getPopeTiles()[2].getPopeTile());
+        System.out.println(players.get(2).getPopeTiles()[2].getPopeTile());
+        System.out.println(players.get(3).getPopeTiles()[2].getPopeTile());
+
+
     }
 }

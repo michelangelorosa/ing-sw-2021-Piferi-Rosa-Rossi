@@ -24,6 +24,7 @@ public class Player implements Serializable {
     private int victoryPoints;
     private int faithTrackPosition;
     private final Board board;
+    private final PopeTileClass[] popeTiles;
 
     /**
      * Constructor for Player Class.
@@ -35,7 +36,12 @@ public class Player implements Serializable {
         this.status = PlayerStatus.IN_GAME;
         this.victoryPoints = 0;
         this.faithTrackPosition = 0;
-        board = new Board();
+        this.board = new Board();
+        this.popeTiles = new PopeTileClass[3];
+    }
+
+    public PopeTileClass[] getPopeTiles() {
+        return popeTiles;
     }
 
     /**

@@ -171,6 +171,7 @@ public class PayResource extends Action {
      * @param game Current instance of the Game being played.
      * @return null by default as it should be overridden.
      */
+    @Override
     public MessageToClient messagePrepare(Game game) {
         return null;
     }

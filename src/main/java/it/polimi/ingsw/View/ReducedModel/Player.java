@@ -33,8 +33,10 @@ public class Player implements Serializable {
     private DevelopmentCardSlots slots;
     private ResourceStack temporaryResources;
     private LeaderCard[] leaderCards;
+    private PopeTileClass[] popeTiles;
 
     private ArrayList<ActionType> possibleActions;
+
 
     /**
      * Constructor for Player Class.
@@ -50,6 +52,18 @@ public class Player implements Serializable {
         this.strongbox = new Strongbox();
         this.temporaryResources = new ResourceStack(0,0,0,0);
         this.leaderCards = new LeaderCard[2];
+        this.popeTiles = new PopeTileClass[3];
+        this.popeTiles[0] = new PopeTileClass(2);
+        this.popeTiles[1] = new PopeTileClass(3);
+        this.popeTiles[2] = new PopeTileClass(4);
+    }
+
+    public void setPopeTiles(PopeTileClass[] popeTiles) {
+        this.popeTiles = popeTiles;
+    }
+
+    public PopeTileClass[] getPopeTiles() {
+        return popeTiles;
     }
 
     /**
@@ -145,6 +159,11 @@ public class Player implements Serializable {
         this.temporaryResources = temporaryResources;
     }
 
+    public void printLeader(){
+        System.out.println(this.getLeaderCards()[0].getResourcesRequired().getResource(ResourceType.SHIELDS));
+        System.out.println(this.getLeaderCards()[1].getResourcesRequired().getResource(ResourceType.SHIELDS));
+    }
+
     public void setBasicProduction(BasicProduction basicProduction) {
         this.basicProduction = basicProduction;
     }
@@ -159,6 +178,7 @@ public class Player implements Serializable {
         player.addAll(this.strongbox.toCli3());
         ArrayList<String> basic = this.basicProduction.toCli();
         ArrayList<String> slots = this.slots.toCli();
+        ArrayList<String> popeTiles = popeTileToCli();
 
         for(i = 0; i < 5; i++)
             player.add(0, "                               ");
@@ -166,12 +186,22 @@ public class Player implements Serializable {
         for(i = 1; i < 9; i++)
             player.set(i, player.get(i) +" "+ basic.get(i-1));
 
+        for(i = 1; i < 9; i++) {
+            if (i == 1) player.set(i, player.get(i));
+            if(i > 4) player.set(i, player.get(i) + "                  " + popeTiles.get(i - 1));
+            else player.set(i, player.get(i) + " " + popeTiles.get(i - 1));
+        }
+
+        for(i = 9; i > 6; i--)
+            player.set(i, player.get(i));
+
+
 
         player.set(0, "╔══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
         for(i = 1; i < 5; i++)
-            player.set(i, " "+player.get(i) + "                                                              ");
+            player.set(i, " "+player.get(i) + "  ");
         for(i = 5; i < 9; i++)
-            player.set(i, " "+player.get(i) + "                                                                               ");
+            player.set(i, " "+player.get(i) + "  ");
 
         for(i = 0; i < slots.size(); i++) {
             j = player.size() - slots.size() + i;
@@ -200,5 +230,34 @@ public class Player implements Serializable {
             warehouse.set(i, warehouse.get(i) + "      " + resources.get(i - 5));
 
         return warehouse;
+    }
+
+    public ArrayList<String> leaderPrint(boolean up){
+        ArrayList<String> leaderCards = new ArrayList<>();
+        if (up) {
+            leaderCards.addAll(this.leaderCards[0].toCliUp());
+            leaderCards.add("                            ");
+            leaderCards.addAll(this.leaderCards[1].toCliUp());
+        } else{
+            if(this.getLeaderCards()[0].isActive()) leaderCards.addAll(this.leaderCards[0].toCliUp());
+            else leaderCards.addAll(this.leaderCards[0].toCliDown());
+            leaderCards.add("                            ");
+            if(this.getLeaderCards()[1].isActive()) leaderCards.addAll(this.leaderCards[1].toCliUp());
+            else leaderCards.addAll(this.leaderCards[1].toCliDown());
+        }
+        return leaderCards;
+    }
+
+    public ArrayList<String> popeTileToCli(){
+        ArrayList<String> pope1 = popeTiles[0].toCli(0);
+        ArrayList<String> pope2 = popeTiles[1].toCli(1);
+        ArrayList<String> pope3 = popeTiles[2].toCli(2);
+
+        for(int i = 0; i < 7; i++){
+            pope1.set(i, " " + pope1.get(i) +"  " + pope2.get(i) + "  " + pope3.get(i));
+        }
+        pope1.add(0, "░░░░░░░░░░░░░░░░░░░░░ POPE FAVOR TILES ░░░░░░░░░░░░░░░░░░░░░");
+
+        return pope1;
     }
 }

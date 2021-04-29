@@ -22,6 +22,7 @@ public class Game {
     private FaithTrack faithTrack;
 
     private final SoloActionToken[] tokens;
+    private String myNickname;
 
     /**
      * Constructor for Game Class.
@@ -35,6 +36,14 @@ public class Game {
         this.developmentCardTable = new DevelopmentCardTable();
         this.faithTrack = new FaithTrack();
         this.tokens = new SoloActionToken[6];
+    }
+
+    public String getMyNickname() {
+        return myNickname;
+    }
+
+    public void setMyNickname(String myNickname) {
+        this.myNickname = myNickname;
     }
 
     /**
@@ -134,4 +143,27 @@ public class Game {
         this.faithTrack = faithTrack;
     }
 
+    public ArrayList<String> boardToCli(Player player){
+        boolean up = false;
+        ArrayList<String> leader;
+        ArrayList<String> board;
+
+        if(this.myNickname.equals(player.getNickname())) up = true;
+        leader = player.leaderPrint(up);
+
+        board = player.toCli();
+
+        board.set(0, board.get(0) + " " + leader.get(0));
+
+        for(int i = 1; i <= board.size()-1; i++){
+            if(i == (board.size()-2)) board.set(i, board.get(i) + "  " + leader.get(i));
+            else if(i == (board.size()-1)) board.set(i, board.get(i) + " " + leader.get(i));
+            else if(i == 1) board.set(i, board.get(i) + " " + leader.get(i) );
+            else board.set(i, board.get(i) + "  " + leader.get(i));
+        }
+
+        if(!up) board.add(0, player.getNickname() + "'s board ");
+        else board.add(0, "My board");
+        return board;
+    }
 }

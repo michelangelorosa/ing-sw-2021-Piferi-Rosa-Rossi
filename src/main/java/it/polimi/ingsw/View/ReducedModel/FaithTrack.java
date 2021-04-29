@@ -1,5 +1,6 @@
 package it.polimi.ingsw.View.ReducedModel;
 
+import it.polimi.ingsw.Model.PlayerStatus;
 import it.polimi.ingsw.View.ANSIColors;
 
 import java.io.Serializable;
@@ -27,6 +28,28 @@ public class FaithTrack implements Serializable {
         this.ONE = null;
         this.TWO = null;
         this.THREE = null;
+    }
+
+    public FaithTrack(VaticanReportSection ONE, VaticanReportSection TWO, VaticanReportSection THREE){
+        this.cells = new FaithCell[25];
+        this.popeSpaceONE = true;
+        this.popeSpaceTWO = true;
+        this.popeSpaceTHREE = true;
+        this.ONE = ONE;
+        this.TWO = TWO;
+        this.THREE = THREE;
+    }
+
+    public VaticanReportSection getONE() {
+        return ONE;
+    }
+
+    public VaticanReportSection getTWO() {
+        return TWO;
+    }
+
+    public VaticanReportSection getTHREE() {
+        return THREE;
     }
 
     public FaithTrack(ArrayList<VaticanReportSection> sections) {
@@ -161,6 +184,10 @@ public class FaithTrack implements Serializable {
     public void setPopeSpaceTHREE(boolean popeSpaceTHREE) {
         this.popeSpaceTHREE = popeSpaceTHREE;
     }
+
+
+
+
 }
 
 

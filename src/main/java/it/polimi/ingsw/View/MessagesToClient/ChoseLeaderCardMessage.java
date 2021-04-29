@@ -1,6 +1,6 @@
 package it.polimi.ingsw.View.MessagesToClient;
 
-import it.polimi.ingsw.Model.ResourceStack;
+import it.polimi.ingsw.View.ReducedModel.*;
 import it.polimi.ingsw.View.ReducedModel.Enums.ActionType;
 import it.polimi.ingsw.View.ReducedModel.Game;
 

@@ -178,5 +178,4 @@ public class SwitchDepotTest {
         assertEquals(2, game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().getExtraWarehouseDepot1().getStoredResources());
         assertEquals(2, game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().getExtraWarehouseDepot2().getStoredResources());
     }
-
 }

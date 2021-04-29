@@ -91,18 +91,6 @@ public class DevelopmentCardSlots implements Serializable {
     }
 
     /**
-     * This method is use to see if the player can or cannot add a card in a particular slot.
-     * @param i is the number of the slot that the player wants.
-     * @param card is the Development card that the player wants to add
-     * @return true if the player can add the card in that slot, false if not
-     */
-    public boolean canAddInThisSlot(int i, DevelopmentCard card){
-        if(slots[i].canAdd(card)) return true;
-        else return false;
-    }
-
-
-    /**
      * This method is used to count the number of cards, divided by color and level, on the player's board
      * @return sum
      */
@@ -137,6 +125,17 @@ public class DevelopmentCardSlots implements Serializable {
 
         sum = new LeaderRequirements(blueCardLv1, purpleCardLv1, yellowCardLv1, greenCardLv1, blueCardLv2, purpleCardLv2, yellowCardLv2, greenCardLv2, blueCardLv3, purpleCardLv3, yellowCardLv3, greenCardLv3);
         return sum;
+    }
+
+    /**
+     * This method is use to see if the player can or cannot add a card in a particular slot.
+     * @param i is the number of the slot that the player wants.
+     * @param card is the Development card that the player wants to add
+     * @return true if the player can add the card in that slot, false if not
+     */
+    public boolean canAddInThisSlot(int i, DevelopmentCard card){
+        if(slots[i].canAdd(card)) return true;
+        else return false;
     }
 
     /**
