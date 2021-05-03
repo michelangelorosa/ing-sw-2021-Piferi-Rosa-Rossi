@@ -58,10 +58,10 @@ public class Server {
 
     }
 
-    public int getPORT() {
+    public int getPort() {
         return S_PORT;
     }
-    public void setPORT(int n) throws Exception {
+    public void setPort(int n) throws Exception {
         if(n>1024&n<65535)
             S_PORT=n;
         else{

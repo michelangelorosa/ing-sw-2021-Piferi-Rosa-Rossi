@@ -26,7 +26,9 @@ public class MessageToClient implements Serializable {
      * Default Constructor for MessageToClient Class.
      */
     public MessageToClient() {
-
+    this.actionDone=ActionType.ACTIVATE_LEADERCARD;
+    this.playerId=1;
+    this.error="Gino is a brony!";
     }
 
     /**

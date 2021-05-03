@@ -29,7 +29,7 @@ public class ClientConnection implements Runnable{
                 System.out.print("Got "+action);
 
                 if (action==0) {
-                    System.out.print("Enter name: ");
+                    System.out.print(" Enter name: ");
                     String name ="Giorgio";
                 } //Tutti gli switch case
                 else if(action==1){

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -41,9 +43,12 @@ public class ServerConnection implements Runnable {
             InputStream inputStream = socket.getInputStream();
             ObjectInputStream objectInputStream =new ObjectInputStream(inputStream);
 
+            MessageToClient messagetoclient = new MessageToClient();
+
             while (true) {
                 System.out.println("Sent request for name please! "+0);
                 objectOutputStream.writeInt(0);
+
                 objectOutputStream.flush();
                 String name = objectInputStream.readUTF();
 
