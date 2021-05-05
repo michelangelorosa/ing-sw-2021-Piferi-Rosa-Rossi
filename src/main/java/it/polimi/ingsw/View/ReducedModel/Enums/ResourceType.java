@@ -72,4 +72,20 @@ public enum ResourceType {
     public static String faithPointsToCli(int points) {
         if(points > 9) return ANSIColors.FRONT_RED+faithToCli()+":"+points+ANSIColors.RESET; else return ANSIColors.FRONT_RED+faithToCli()+": "+points+ANSIColors.RESET;
     }
+
+    public it.polimi.ingsw.Model.ResourceType viewToModel() {
+        switch(this) {
+            case SHIELDS:  return it.polimi.ingsw.Model.ResourceType.SHIELDS;
+
+            case SERVANTS: return it.polimi.ingsw.Model.ResourceType.SERVANTS;
+
+            case COINS:    return it.polimi.ingsw.Model.ResourceType.COINS;
+
+            case STONES:   return it.polimi.ingsw.Model.ResourceType.STONES;
+
+            case NONE:     return it.polimi.ingsw.Model.ResourceType.NONE;
+
+            default:       return null;
+        }
+    }
 }

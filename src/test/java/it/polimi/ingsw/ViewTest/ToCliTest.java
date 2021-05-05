@@ -8,6 +8,9 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Print tests for toCli methods in Reduced Model.
+ */
 public class ToCliTest {
     Strongbox strongbox = new Strongbox();
 
@@ -260,7 +263,7 @@ public class ToCliTest {
         System.out.println(ANSIColors.FRONT_BLUE + "\u26CA:8 " + ANSIColors.FRONT_PURPLE + "\u265F:3 "+ ANSIColors.FRONT_YELLOW + "\u26C2:3 "+ ANSIColors.FRONT_GREY + "\u26F0:3 ");
     }
 
-    private static Player playerCreator(String nickname, int turnPosition) {
+    public static Player playerCreator(String nickname, int turnPosition) {
         Player player = new Player(nickname, turnPosition, true);
         ResourceStack input = new ResourceStack(0, 1, 2, 3);
         BasicProduction basic = new BasicProduction(input, input, 10, 10, 9);
@@ -273,7 +276,7 @@ public class ToCliTest {
         return player;
     }
 
-    private static Warehouse warehouseCreator() {
+    public static Warehouse warehouseCreator() {
         Warehouse warehouse = new Warehouse();
         warehouse.getWarehouseDepots()[0].setResourceType(ResourceType.SHIELDS);
         warehouse.getWarehouseDepots()[0].setStoredResources(3);
@@ -292,7 +295,7 @@ public class ToCliTest {
         return warehouse;
     }
 
-    private static Strongbox strongboxCreator() {
+    public static Strongbox strongboxCreator() {
         Strongbox strongbox = new Strongbox();
 
         strongbox.getStoredResources().setResource(2, ResourceType.SHIELDS);
@@ -303,7 +306,7 @@ public class ToCliTest {
         return strongbox;
     }
 
-    private static DevelopmentCardSlots slotsCreator() {
+    public static DevelopmentCardSlots slotsCreator() {
         DevelopmentCardSlots slots = new DevelopmentCardSlots();
 
         ResourceStack cost = new ResourceStack(1, 1, 0, 0);
@@ -327,7 +330,7 @@ public class ToCliTest {
         return slots;
     }
     @Test
-    public void leaderCardToCli() {
+    public void leaderCardToCliTest() {
         Game game = new Game();
         ArrayList<Player> players= new ArrayList<>();
         Player player = new Player("Lello", 0, true);
@@ -338,7 +341,6 @@ public class ToCliTest {
         players.add(player2);
         game.setPlayers(players);
         game.setMyNickname("Lello");
-
 
         ResourceStack resourceStack = new ResourceStack(1,4,3,2);
         LeaderRequirements requirements = new LeaderRequirements(1,2,2,2,2,1,2,2,1,4,2,4);
@@ -369,7 +371,7 @@ public class ToCliTest {
         game.getPlayers().get(2).getLeaderCards()[1] = card;
 
         boolean up = false;
-        if(game.getMyNickname() == game.getCurrentPlayer().getNickname()) up = true;
+        if(game.getMyNickname().equals(game.getCurrentPlayer().getNickname())) up = true;
 
         for(String s : player1.leaderPrint(up))
             System.out.println(s);
@@ -435,7 +437,7 @@ public class ToCliTest {
             System.out.println(s);
     }
 
-    private static DevelopmentCardDeck[][] tableCreator() {
+    public static DevelopmentCardDeck[][] tableCreator() {
         DevelopmentCardDeck[][] decks = new DevelopmentCardDeck[3][4];
 
         Random rand = new Random();
@@ -765,14 +767,6 @@ public class ToCliTest {
             System.out.println(s);
 
     }
-
-
-
-
-
-
-
-
 
 }
 

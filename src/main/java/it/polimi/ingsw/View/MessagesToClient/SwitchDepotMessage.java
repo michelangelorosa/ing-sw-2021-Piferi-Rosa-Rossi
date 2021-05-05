@@ -2,6 +2,7 @@ package it.polimi.ingsw.View.MessagesToClient;
 
 import it.polimi.ingsw.View.ReducedModel.Enums.*;
 import it.polimi.ingsw.View.ReducedModel.*;
+import it.polimi.ingsw.Controller.Actions.ActionType;
 
 /**
  * SwitchDepotMessage Class contains data for a response message to be sent to the client

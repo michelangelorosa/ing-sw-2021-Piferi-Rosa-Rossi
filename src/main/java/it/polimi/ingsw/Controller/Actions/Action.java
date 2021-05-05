@@ -6,7 +6,7 @@ import it.polimi.ingsw.Model.MessagesToClient.*;
 /**
  * Action abstract Class defines common Data and Methods to perform an action on the model after a Client's request.
  */
-public abstract class Action {
+public class Action {
     protected ActionType actionType;
     protected String response = null;
 

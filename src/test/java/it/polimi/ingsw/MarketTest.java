@@ -32,8 +32,10 @@ public class MarketTest {
     @Test
     public void resetTest() {
         System.out.println(market.toString());
+        System.out.println(market.getExtraMarble());
         market.reset();
         System.out.println(market.toString());
+        System.out.println(market.getExtraMarble());
     }
 
     /**

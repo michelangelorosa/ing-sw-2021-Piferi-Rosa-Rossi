@@ -2,6 +2,7 @@ package it.polimi.ingsw.View.MessagesToClient;
 
 import it.polimi.ingsw.View.ReducedModel.*;
 import it.polimi.ingsw.View.ReducedModel.Game;
+import it.polimi.ingsw.Controller.Actions.ActionType;
 
 public class PaymentMessage extends MessageToClient {
     private Warehouse warehouse;

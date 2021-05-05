@@ -1,6 +1,7 @@
 package it.polimi.ingsw.View.ReducedModel;
 
 import it.polimi.ingsw.View.ReducedModel.Enums.*;
+import it.polimi.ingsw.Controller.Actions.ActionType;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ public class Player implements Serializable {
         this.status = PlayerStatus.IN_GAME;
         this.victoryPoints = 0;
         this.faithTrackPosition = 0;
+        this.basicProduction = new BasicProduction(2, 1);
         this.warehouse = new Warehouse();
         this.strongbox = new Strongbox();
         this.temporaryResources = new ResourceStack(0,0,0,0);

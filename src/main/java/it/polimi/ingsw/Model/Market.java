@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -41,18 +42,33 @@ public class Market implements Serializable {
      * inside the 2D-array.
      */
     public void reset() {
-        int upperBound = 6;
-        int randomNumber;
         Random rand = new Random();
-        Marble[] marbles = Marble.values();
+        int randomNumber;
+        ArrayList<Marble> marbles = new ArrayList<>();
+
+        for(int i = 0; i < 4; i++)
+            marbles.add(Marble.WHITE);
+
+        for(int i = 0; i < 2; i++)
+            marbles.add(Marble.BLUE);
+
+        for(int i = 0; i < 2; i++)
+            marbles.add(Marble.GREY);
+
+        for(int i = 0; i < 2; i++)
+            marbles.add(Marble.YELLOW);
+
+        for(int i = 0; i < 2; i++)
+            marbles.add(Marble.PURPLE);
+
+        marbles.add(Marble.RED);
 
         for(int j = 0; j <= 3; j++)
             for(int i = 0; i <= 2; i++) {
-                randomNumber = rand.nextInt(upperBound);
-                this.marbles[i][j] = marbles[randomNumber];
+                randomNumber = rand.nextInt(marbles.size());
+                this.marbles[i][j] = marbles.remove(randomNumber);
             }
-        randomNumber = rand.nextInt(upperBound);
-        this.extraMarble = marbles[randomNumber];
+        this.extraMarble = marbles.remove(0);
     }
 
     /**

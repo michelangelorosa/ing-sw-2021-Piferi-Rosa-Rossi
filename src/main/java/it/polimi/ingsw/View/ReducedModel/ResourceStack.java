@@ -73,6 +73,10 @@ public class ResourceStack implements Serializable{
         return true;
     }
 
+    public boolean hasResource(ResourceType type) {
+        return this.getResource(type) > 0;
+    }
+
     /**
      * toString override method for ResourceStack Class.
      */

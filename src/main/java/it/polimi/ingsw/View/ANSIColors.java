@@ -48,7 +48,7 @@ public class ANSIColors {
     public static final String BACK_BRIGHT_BLUE = "\u001B[104m";
     public static final String BACK_BRIGHT_MAGENTA = "\u001B[105m";
     public static final String BACK_BRIGHT_CYAN = "\u001B[106m";
-    public static final String BACK_BRIGHT_WHITE = "\u001B[107m";
+    public static final String BACK_BRIGHT_WHITE = "\u001B[48;5;255m";
     public static final String BACK_DARK_YELLOW = "\u001B[48;5;136m";
     public static final String BACK_BROWN = "\u001B[48;2;63;42;20m";
 
@@ -59,6 +59,12 @@ public class ANSIColors {
     public static final String COIN = "©";
     public static final String STONE = "¤";
     public static final String FAITH = "┼";
+
+    public static final String YOUR_TURN_COLOR = "\u001B[1m" + "\u001B[48;5;154m" + "\u001B[38;5;233m";
+
+    public static final String GAMEPLAY_ACTIONS = "\u001B[1m" + "\u001B[48;5;189m" + "\u001B[38;5;233m";
+
+    public static final String VISUALIZE = "\u001B[1m" + "\u001B[48;5;214m" + "\u001B[38;5;233m";
 
     public static final String BLANK = "\u2800";
 }

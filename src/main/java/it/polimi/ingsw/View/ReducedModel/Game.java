@@ -18,7 +18,7 @@ public class Game {
     private ArrayList<LeaderCard> leaderCards;
 
     private Market market;
-    private final DevelopmentCardTable developmentCardTable;
+    private DevelopmentCardTable developmentCardTable;
     private FaithTrack faithTrack;
 
     private final SoloActionToken[] tokens;
@@ -143,6 +143,10 @@ public class Game {
         this.faithTrack = faithTrack;
     }
 
+    public void setDevelopmentCardTable(DevelopmentCardTable developmentCardTable) {
+        this.developmentCardTable = developmentCardTable;
+    }
+
     public ArrayList<String> boardToCli(Player player){
         boolean up = false;
         ArrayList<String> leader;
@@ -165,5 +169,17 @@ public class Game {
         if(!up) board.add(0, player.getNickname() + "'s board ");
         else board.add(0, "My board");
         return board;
+    }
+
+    public ArrayList<String> myBoardToCli() {
+        return this.boardToCli(this.getMyPlayer());
+    }
+
+    public Player getMyPlayer() throws IllegalStateException{
+        for(Player player : this.players)
+            if(player.getNickname().equals(this.myNickname))
+                return player;
+
+        throw new IllegalStateException("THERE IS NO PLAYER WITH THIS NAME: " + this.getMyNickname() + " IN GAME!");
     }
 }
