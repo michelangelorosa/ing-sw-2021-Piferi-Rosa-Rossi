@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Controller.Actions;
 
+import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 
@@ -160,17 +161,18 @@ public class ChooseProductionOutput extends Action {
      * Method used to check if the action is logically applicable.
      */
     @Override
-    public boolean canBeApplied(Game game) {
+    public boolean canBeApplied(ActionController actionController) {
         if(firstLeaderCard)
-            if(!(game.getCurrentPlayer().getBoard().getLeaderCards()[0].isActive()) || firstLeaderCardOutput.size() != game.getCurrentPlayer().getBoard().getLeaderCards()[0].getJollyOut() || game.getCurrentPlayer().getBoard().getLeaderCards()[0].getAction() != LeaderCardAction.PRODUCTIONPOWER)
+            if(!(actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[0].isActive()) || firstLeaderCardOutput.size() != actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[0].getJollyOut() || actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[0].getAction() != LeaderCardAction.PRODUCTIONPOWER)
                 return false;
 
+
         if(secondLeaderCard)
-            if(!(game.getCurrentPlayer().getBoard().getLeaderCards()[1].isActive()) || secondLeaderCardOutput.size() != game.getCurrentPlayer().getBoard().getLeaderCards()[1].getJollyOut() || game.getCurrentPlayer().getBoard().getLeaderCards()[1].getAction() != LeaderCardAction.PRODUCTIONPOWER)
+            if(!(actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[1].isActive()) || secondLeaderCardOutput.size() != actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[1].getJollyOut() || actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[1].getAction() != LeaderCardAction.PRODUCTIONPOWER)
                 return false;
 
         if(basicProduction)
-            if(basicProductionOutput.size() != game.getCurrentPlayer().getBoard().getBasicProduction().getJollyOut())
+            if(basicProductionOutput.size() != actionController.getGame().getCurrentPlayer().getBoard().getBasicProduction().getJollyOut())
                 return false;
 
         return true;
@@ -181,9 +183,9 @@ public class ChooseProductionOutput extends Action {
      * @return "SUCCESS" if the action went right, another String if it went wrong.
      */
     @Override
-    public String doAction(Game game, ChooseProductionOutput chooseProductionOutput, ChooseCardSlot chooseCardSlot, ResetWarehouse resetWarehouse) {
+    public String doAction(ActionController actionController) {
         this.isCorrect();
-        if(!this.canBeApplied(game)) {
+        if(!this.canBeApplied(actionController)) {
             this.response = "Tried to use not valid Leader Cards or tried to get more resources than possible.";
             return "Tried to use not valid Leader Cards or tried to get more resources than possible.";
         }
@@ -199,7 +201,7 @@ public class ChooseProductionOutput extends Action {
                 output.addResource(1, type);
 
         if(!output.isEmpty())
-            game.getCurrentPlayer().getBoard().getResourceManager().addProductionResources(output);
+            actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().addProductionResources(output);
 
         output = new ResourceStack(0,0,0,0);
 
@@ -209,15 +211,14 @@ public class ChooseProductionOutput extends Action {
 
     /**
      * Method used to prepare a messageToClient type object to be sent by the server to the client.
-     * @param game Current instance of the Game being played.
      * @return A message to be sent to the client.
      */
     @Override
-    public MessageToClient messagePrepare(Game game) {
-        ChoseProductionOutputMessage message = new ChoseProductionOutputMessage(game.getCurrentPlayerIndex());
+    public MessageToClient messagePrepare(ActionController actionController) {
+        ChoseProductionOutputMessage message = new ChoseProductionOutputMessage(actionController.getGame().getCurrentPlayerIndex());
         message.setError(this.response);
         if(this.response.equals("SUCCESS")) {
-            message.setStrongbox(game.getCurrentPlayer().getBoard().getResourceManager().getStrongbox());
+            message.setStrongbox(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getStrongbox());
             message.addPossibleAction(ActionType.END_TURN);
             message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
         }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Controller.Actions;
 
+import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 
@@ -43,12 +44,11 @@ public class ActivateLeaderCard extends Action {
 
     /**
      * This method checks if the input sent to the server is logically applicable.
-     * @param game is the instance of the Game which is being played.
      * @return false if the Leader Card was already active, true if not.
      */
     @Override
-    public boolean canBeApplied(Game game) {
-        if(game.getCurrentPlayer().getBoard().getLeaderCards()[this.leaderCard].isActive())
+    public boolean canBeApplied(ActionController actionController) {
+        if(actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[this.leaderCard].isActive())
             return false;
 
         return true;
@@ -56,18 +56,17 @@ public class ActivateLeaderCard extends Action {
 
     /**
      * This method is used to actually activate the player's Leader Card.
-     * @param game is the instance of the Game which is being played.
      * @return a String containing an error message or a SUCCESS statement.
      */
     @Override
-    public String doAction(Game game, ChooseProductionOutput chooseProductionOutput, ChooseCardSlot chooseCardSlot, ResetWarehouse resetWarehouse) {
+    public String doAction(ActionController actionController) {
         this.isCorrect();
-        if(!this.canBeApplied(game)) {
+        if(!this.canBeApplied(actionController)) {
             this.response = "Leader Card has already been activated";
             return "Leader Card has already been activated";
         }
 
-        Board board = game.getCurrentPlayer().getBoard();
+        Board board = actionController.getGame().getCurrentPlayer().getBoard();
 
         if(!board.canActivateLeaderCard(board.getLeaderCards()[this.leaderCard])) {
             this.response = "Not enough resources to activate Leader Card";
@@ -80,9 +79,13 @@ public class ActivateLeaderCard extends Action {
         }
     }
 
+    /**
+     * Method used to prepare a messageToClient type object to be sent by the server to the client.
+     * @return A message to be sent to the client.
+     */
     @Override
-    public MessageToClient messagePrepare(Game game) {
-        ActivateLeaderCardMessage message = new ActivateLeaderCardMessage(game.getCurrentPlayerIndex());
+    public MessageToClient messagePrepare(ActionController actionController) {
+        ActivateLeaderCardMessage message = new ActivateLeaderCardMessage(actionController.getGame().getCurrentPlayerIndex());
         message.setError(this.response);
         message.setLeaderCardPosition(this.leaderCard);
 

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.View.ReducedModel;
 
-import it.polimi.ingsw.View.ReducedModel.Enums.*;
+import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Controller.Actions.ActionType;
 
 import java.io.Serializable;

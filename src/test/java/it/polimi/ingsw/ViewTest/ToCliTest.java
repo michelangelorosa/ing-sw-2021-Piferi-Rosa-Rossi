@@ -3,6 +3,15 @@ package it.polimi.ingsw.ViewTest;
 import it.polimi.ingsw.View.ANSIColors;
 import it.polimi.ingsw.View.ReducedModel.*;
 import it.polimi.ingsw.View.ReducedModel.Enums.*;
+
+import it.polimi.ingsw.Model.GameType;
+import it.polimi.ingsw.Model.Color;
+import it.polimi.ingsw.Model.Level;
+import it.polimi.ingsw.Model.ResourceType;
+
+
+import it.polimi.ingsw.View.ReducedModel.Enums.Marble;
+
 import org.junit.Test;
 
 import java.util.ArrayList;

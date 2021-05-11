@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Controller.Actions;
 
+import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 
@@ -61,8 +62,8 @@ BuyCard extends Action {
      * @return false if the Deck specified by the Client is Empty.
      */
     @Override
-    public boolean canBeApplied(Game game) {
-        return !game.getDevelopmentCardTable().getDeck(row, column).isEmpty();
+    public boolean canBeApplied(ActionController actionController) {
+        return !actionController.getGame().getDevelopmentCardTable().getDeck(row, column).isEmpty();
     }
 
     /**
@@ -70,19 +71,19 @@ BuyCard extends Action {
      * @return "SUCCESS" if the action went right, another String if it went wrong.
      */
     @Override
-    public String doAction(Game game, ChooseProductionOutput chooseProductionOutput, ChooseCardSlot chooseCardSlot, ResetWarehouse resetWarehouse) {
+    public String doAction(ActionController actionController) {
         this.isCorrect();
 
-        if(!this.canBeApplied(game)) {
+        if(!this.canBeApplied(actionController)) {
             this.response = "This Deck is empty";
             return "This Deck is empty";
         }
         DevelopmentCard card;
-        card = game.getDevelopmentCardTable().getTopCardFromDeck(this.row, this.column);
-        ResourceManager resourceManager = game.getCurrentPlayer().getBoard().getResourceManager();
-        DevelopmentCardSlots developmentCardSlots = game.getCurrentPlayer().getBoard().getDevelopmentCardSlots();
+        card = actionController.getGame().getDevelopmentCardTable().getTopCardFromDeck(this.row, this.column);
+        ResourceManager resourceManager = actionController.getGame().getCurrentPlayer().getBoard().getResourceManager();
+        DevelopmentCardSlots developmentCardSlots = actionController.getGame().getCurrentPlayer().getBoard().getDevelopmentCardSlots();
 
-        if(!resourceManager.cardIsBuyable(card, game.getCurrentPlayer().getBoard().getLeaderCards())) {
+        if(!resourceManager.cardIsBuyable(card, actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards())) {
             this.response = "Not enough resources to buy Card";
             return "Not enough resources to buy Card";
         }
@@ -91,9 +92,9 @@ BuyCard extends Action {
             return "Card does not fit inside Personal Board";
         }
         else {
-            game.getCurrentPlayer().getBoard().getResourceManager().setTemporaryResourcesToPay(card.getCost());
-            chooseCardSlot.setRowCardToBuy(this.row);
-            chooseCardSlot.setColumnCardToBuy(this.column);
+            actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().setTemporaryResourcesToPay(card.getCost());
+            actionController.getChooseCardSlot().setRowCardToBuy(this.row);
+            actionController.getChooseCardSlot().setColumnCardToBuy(this.column);
             this.response = "SUCCESS";
             return "SUCCESS";
         }
@@ -101,11 +102,11 @@ BuyCard extends Action {
 
     /**
      * Method used to prepare a messageToClient type object to be sent by the server to the client.
-     * @param game Current instance of the Game being played.
      * @return A message to be sent to the client.
      */
     @Override
-    public MessageToClient messagePrepare(Game game) {
+    public MessageToClient messagePrepare(ActionController actionController) {
+        Game game = actionController.getGame();
         BuyCardMessage message = new BuyCardMessage(game.getCurrentPlayerIndex());
         message.setError(this.response);
         if(this.response.equals("SUCCESS")) {

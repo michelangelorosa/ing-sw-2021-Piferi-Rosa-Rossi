@@ -2,6 +2,7 @@ package it.polimi.ingsw.ControllerTest;
 
 import static org.junit.Assert.*;
 
+import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 import it.polimi.ingsw.CommonTestMethods;
@@ -19,11 +20,9 @@ public class ActivateProductionTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    ResetWarehouse resetWarehouse = new ResetWarehouse();
-    ChooseProductionOutput chooseProductionOutput = new ChooseProductionOutput();
-    ChooseCardSlot chooseCardSlot = new ChooseCardSlot(0);
-    Game game = new Game();
     MessageToClient messageToClient;
+    ActionController actionController = new ActionController();
+    Game game = actionController.getGame();
 
     /**
      * Constructor and Getter Test for ActivateProduction Class.
@@ -94,8 +93,8 @@ public class ActivateProductionTest {
         inputs.add(ResourceType.COINS);
 
         ActivateProduction activateProduction = new ActivateProduction(true, true, true, true, true, true, inputs);
-        assertEquals("Leader Card not active or not required Type/Error in reading basic production inputs.", activateProduction.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse));
-        messageToClient = activateProduction.messagePrepare(game);
+        assertEquals("Leader Card not active or not required Type/Error in reading basic production inputs.", activateProduction.doAction(actionController));
+        messageToClient = activateProduction.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ActivateProductionMessage);
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getActionDone());
@@ -108,8 +107,8 @@ public class ActivateProductionTest {
 
 
         activateProduction = new ActivateProduction(true, true, true, true, false, true, inputs);
-        assertEquals("Leader Card not active or not required Type/Error in reading basic production inputs.", activateProduction.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse));
-        messageToClient = activateProduction.messagePrepare(game);
+        assertEquals("Leader Card not active or not required Type/Error in reading basic production inputs.", activateProduction.doAction(actionController));
+        messageToClient = activateProduction.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ActivateProductionMessage);
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getActionDone());
@@ -124,8 +123,8 @@ public class ActivateProductionTest {
         game.getCurrentPlayer().getBoard().activateLeaderCard(game.getCurrentPlayer().getBoard().getLeaderCards()[0]);
 
         activateProduction = new ActivateProduction(true, true, true, true, false, true, inputs);
-        assertEquals("Can't pick empty slot (1st)", activateProduction.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse));
-        messageToClient = activateProduction.messagePrepare(game);
+        assertEquals("Can't pick empty slot (1st)", activateProduction.doAction(actionController));
+        messageToClient = activateProduction.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ActivateProductionMessage);
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getActionDone());
@@ -143,9 +142,9 @@ public class ActivateProductionTest {
         CommonTestMethods.giveResourcesToPlayer(game.getCurrentPlayer(), 2, 2, 1, ResourceType.SHIELDS, ResourceType.COINS, ResourceType.SERVANTS, stack);
 
         activateProduction = new ActivateProduction(true, false, false, false, false, true, inputs);
-        assertEquals("SUCCESS", activateProduction.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse));
+        assertEquals("SUCCESS", activateProduction.doAction(actionController));
         assertEquals("0 0 3 1", game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toString());
-        messageToClient = activateProduction.messagePrepare(game);
+        messageToClient = activateProduction.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ActivateProductionMessage);
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getActionDone());
@@ -155,9 +154,9 @@ public class ActivateProductionTest {
 
 
         activateProduction = new ActivateProduction(true, false, false, true, false, true, inputs);
-        assertEquals("SUCCESS", activateProduction.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse));
+        assertEquals("SUCCESS", activateProduction.doAction(actionController));
         assertEquals("1 1 3 1", game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toString());
-        messageToClient = activateProduction.messagePrepare(game);
+        messageToClient = activateProduction.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ActivateProductionMessage);
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getActionDone());
@@ -167,9 +166,9 @@ public class ActivateProductionTest {
 
 
         activateProduction = new ActivateProduction(true, true, false, true, false, true, inputs);
-        assertEquals("Not enough Resources to start Production", activateProduction.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse));
+        assertEquals("Not enough Resources to start Production", activateProduction.doAction(actionController));
         assertEquals("1 1 3 1", game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toString());
-        messageToClient = activateProduction.messagePrepare(game);
+        messageToClient = activateProduction.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ActivateProductionMessage);
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getActionDone());
@@ -185,9 +184,9 @@ public class ActivateProductionTest {
         CommonTestMethods.giveResourcesToPlayer(game.getCurrentPlayer(), 2, 2, 1, ResourceType.SHIELDS, ResourceType.COINS, ResourceType.SERVANTS, stack);
 
         activateProduction = new ActivateProduction(true, true, false, true, false, true, inputs);
-        assertEquals("SUCCESS", activateProduction.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse));
+        assertEquals("SUCCESS", activateProduction.doAction(actionController));
         assertEquals("1 1 3 6", game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toString());
-        messageToClient = activateProduction.messagePrepare(game);
+        messageToClient = activateProduction.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ActivateProductionMessage);
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getActionDone());
@@ -197,9 +196,9 @@ public class ActivateProductionTest {
 
 
         activateProduction = new ActivateProduction(true, true, true, true, false, true, inputs);
-        assertEquals("SUCCESS", activateProduction.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse));
+        assertEquals("SUCCESS", activateProduction.doAction(actionController));
         assertEquals("3 2 4 6", game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toString());
-        messageToClient = activateProduction.messagePrepare(game);
+        messageToClient = activateProduction.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ActivateProductionMessage);
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getActionDone());
@@ -209,8 +208,8 @@ public class ActivateProductionTest {
 
 
         activateProduction = new ActivateProduction(true, true, true, true, true, true, inputs);
-        assertEquals("Leader Card not active or not required Type/Error in reading basic production inputs.", activateProduction.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse));
-        messageToClient = activateProduction.messagePrepare(game);
+        assertEquals("Leader Card not active or not required Type/Error in reading basic production inputs.", activateProduction.doAction(actionController));
+        messageToClient = activateProduction.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ActivateProductionMessage);
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getActionDone());
@@ -223,8 +222,8 @@ public class ActivateProductionTest {
 
 
         activateProduction = new ActivateProduction(false, false, false, false, false, false, inputs);
-        assertEquals("SUCCESS", activateProduction.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse));
-        messageToClient = activateProduction.messagePrepare(game);
+        assertEquals("SUCCESS", activateProduction.doAction(actionController));
+        messageToClient = activateProduction.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ActivateProductionMessage);
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getActionDone());

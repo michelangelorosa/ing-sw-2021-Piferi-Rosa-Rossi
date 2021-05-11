@@ -2,6 +2,7 @@ package it.polimi.ingsw.ControllerTest;
 
 import static org.junit.Assert.*;
 
+import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.CommonTestMethods;
 import it.polimi.ingsw.Controller.Actions.*;
@@ -14,10 +15,9 @@ import org.junit.Test;
  */
 public class EndMarketTest {
 
-    ResetWarehouse resetWarehouse = new ResetWarehouse();
-    ChooseProductionOutput chooseProductionOutput = new ChooseProductionOutput();
-    ChooseCardSlot chooseCardSlot = new ChooseCardSlot(0);
-    Game game = new Game();
+    ActionController actionController = new ActionController();
+    Game game = actionController.getGame();
+    ResetWarehouse resetWarehouse = actionController.getResetWarehouse();
     MessageToClient messageToClient;
 
     /**
@@ -30,39 +30,20 @@ public class EndMarketTest {
     }
 
     /**
-     * Test for "isCorrect" method in EndMarket Class.
-     */
-    @Test
-    public void isCorrectTest() {
-        EndMarket endMarket = new EndMarket();
-        assertTrue(endMarket.isCorrect());
-    }
-
-    /**
-     * Test for "canBeApplied" method in EndMarket Class.
-     */
-    @Test
-    public void canBeAppliedTest() {
-        EndMarket endMarket = new EndMarket();
-        assertTrue(endMarket.canBeApplied(game));
-    }
-
-    /**
      * Test for "doAction" and "messagePrepare" methods in EndMarket Class.
      */
     @Test
     public void doActionTest() {
         EndMarket endMarket = new EndMarket();
         CommonTestMethods.gameInitOne(game);
-        resetWarehouse = new ResetWarehouse();
         ResourceStack stack1 = new ResourceStack(1, 1, 1, 1);
         resetWarehouse.setBackupResources(stack1);
         resetWarehouse.setBackupWarehouse(new Warehouse());
 
         ResourceStack stack = new ResourceStack(2, 1, 0, 1);
         game.getCurrentPlayer().getBoard().getResourceManager().setTemporaryResourcesToPay(stack);
-        endMarket.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse);
-        messageToClient = endMarket.messagePrepare(game);
+        endMarket.doAction(actionController);
+        messageToClient = endMarket.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof EndMarketMessage);
         assertEquals(ActionType.END_MARKET, messageToClient.getActionDone());

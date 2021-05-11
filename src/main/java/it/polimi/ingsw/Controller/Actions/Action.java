@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Controller.Actions;
 
-import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 
 /**
@@ -20,32 +20,27 @@ public class Action {
 
     /**
      * Method used to check if the request is logically applicable inside the model.
-     * @param game Current instance of the Game being played.
+     * @param actionController Class used to compute Action messages coming from the Client.
      * @return false by default as it should always be overridden.
      */
-    public boolean canBeApplied(Game game){
-        return false;
-    }
+    public boolean canBeApplied(ActionController actionController) { return false; }
 
     /**
      * Method used to compute the request sent by the client inside the Model.
-     * @param game Current instance of the Game being played.
-     * @param chooseProductionOutput Needed to save Data for other possible player's requests.
-     * @param chooseCardSlot Needed to save Data for other possible player's requests.
-     * @param resetWarehouse Needed to save Data for other possible player's requests.
+     * @param actionController Class used to compute Action messages coming from the Client.
      * @return A String to be used later to create a message to send to the Client.
      */
-    public String doAction(Game game, ChooseProductionOutput chooseProductionOutput, ChooseCardSlot chooseCardSlot, ResetWarehouse resetWarehouse){
-        return "super class";
+    public String doAction(ActionController actionController) {
+        return null;
     }
 
     /**
      * Method used to prepare a message to be sent to the Client after a certain request. Each
      * Action SubClass creates a different MessageToClient-Object to be later serialized and sent.
-     * @param game Current instance of the Game being played.
+     * @param actionController Class used to compute Action messages coming from the Client.
      * @return null by default as it should always be overridden.
      */
-    public MessageToClient messagePrepare(Game game) {
+    public MessageToClient messagePrepare(ActionController actionController) {
         return null;
     }
 }

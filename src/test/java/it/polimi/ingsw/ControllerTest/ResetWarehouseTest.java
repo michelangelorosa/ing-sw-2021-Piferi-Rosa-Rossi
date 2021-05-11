@@ -3,6 +3,7 @@ package it.polimi.ingsw.ControllerTest;
 import static org.junit.Assert.*;
 
 import it.polimi.ingsw.CommonTestMethods;
+import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
@@ -15,7 +16,10 @@ public class ResetWarehouseTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    ResetWarehouse reset = new ResetWarehouse();
+    ActionController actionController = new ActionController();
+
+    Game game = actionController.getGame();
+    ResetWarehouse reset = actionController.getResetWarehouse();
     Warehouse backupWarehouse = new Warehouse();
     Warehouse warehouse = new Warehouse();
     ResourceStack backupResources = new ResourceStack(2,0,0,0);
@@ -58,8 +62,7 @@ public class ResetWarehouseTest {
     /**This test checks that the method returns true everytime*/
     @Test
     public void canBeAppliedTest(){
-        Game game = new Game();
-        assertTrue(reset.canBeApplied(game));
+        assertTrue(reset.canBeApplied(actionController));
     }
 
     /**
@@ -94,33 +97,28 @@ public class ResetWarehouseTest {
      */
     @Test
     public void doActionTest(){
-        Game game = new Game();
         CommonTestMethods.gameInitOne(game);
         PayResource pay = new PayResource(false, 0, ResourceType.SHIELDS);
         PayResource pay2 = new PayResource(true, 0, ResourceType.NONE);
         PayResource pay3 = new PayResource(false, 0, ResourceType.STONES);
 
-
-        ChooseProductionOutput output = new ChooseProductionOutput();
-        ChooseCardSlot cardSlot = new ChooseCardSlot(1);
         ResourceStack stack = new ResourceStack(1,3,0,2);
         game.getCurrentPlayer().getBoard().getResourceManager().setTemporaryResourcesToPay(backupResources);
         CommonTestMethods.giveResourcesToPlayer(game.getCurrentPlayer(), 1,2,1,ResourceType.SHIELDS, ResourceType.COINS, ResourceType.SERVANTS, stack);
         reset.setBackupWarehouse(game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().copyWarehouse());
         reset.setBackupResources(backupResources.copyStack());
-        ResetWarehouse resetWarehouse = reset;
 
-        assertEquals("HasToPay", pay.doAction(game, output, cardSlot, resetWarehouse));
+        assertEquals("HasToPay", pay.doAction(actionController));
         assertEquals("1 0 0 0", game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toString());
-        assertEquals("No SHIELDS left in Strongbox", pay.doAction(game, output, cardSlot, resetWarehouse));
-        assertEquals("This type of resource is not needed", pay3.doAction(game, output, cardSlot, resetWarehouse));
-        assertEquals("SUCCESS", pay2.doAction(game, output, cardSlot, resetWarehouse));
+        assertEquals("No SHIELDS left in Strongbox", pay.doAction(actionController));
+        assertEquals("This type of resource is not needed", pay3.doAction(actionController));
+        assertEquals("SUCCESS", pay2.doAction(actionController));
         assertEquals("0 NONE",game.getCurrentPlayer().getBoard().getResourceManager().getWarehouseDepots()[0].getStoredResources() + " " + game.getCurrentPlayer().getBoard().getResourceManager().getWarehouseDepots()[0].getResourceType());
         assertEquals("2 COINS",game.getCurrentPlayer().getBoard().getResourceManager().getWarehouseDepots()[1].getStoredResources() + " " + game.getCurrentPlayer().getBoard().getResourceManager().getWarehouseDepots()[1].getResourceType());
         assertEquals("1 SERVANTS",game.getCurrentPlayer().getBoard().getResourceManager().getWarehouseDepots()[2].getStoredResources() + " " + game.getCurrentPlayer().getBoard().getResourceManager().getWarehouseDepots()[2].getResourceType());
         assertEquals("0 0 0 0", game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toString());
-        assertEquals("SUCCESS", reset.doAction(game, output, cardSlot, resetWarehouse));
-        messageToClient = reset.messagePrepare(game);
+        assertEquals("SUCCESS", reset.doAction(actionController));
+        messageToClient = reset.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ResetWarehouseMessage);
         assertEquals(ActionType.RESET_WAREHOUSE, messageToClient.getActionDone());

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ControllerTest;
 
 import it.polimi.ingsw.CommonTestMethods;
+import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Controller.Actions.ChooseCardSlot;
 import it.polimi.ingsw.Controller.Actions.ChooseLeaderCard;
 import it.polimi.ingsw.Controller.Actions.ChooseProductionOutput;
@@ -19,10 +20,8 @@ public class ChooseLeaderCardTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    ResetWarehouse resetWarehouse = new ResetWarehouse();
-    ChooseProductionOutput chooseProductionOutput = new ChooseProductionOutput();
-    ChooseCardSlot chooseCardSlot = new ChooseCardSlot(0);
-    Game game = new Game();
+    ActionController actionController = new ActionController();
+    Game game = actionController.getGame();
 
     /**
      * Constructor and Getter test for ChooseLeaderCard Class.
@@ -64,14 +63,14 @@ public class ChooseLeaderCardTest {
         CommonTestMethods.givePlayerLeaderCards(game.getCurrentPlayer(), game.getLeaderCards().get(2), game.getLeaderCards().get(6));
 
         ChooseLeaderCard chooseLeaderCard = new ChooseLeaderCard(0);
-        assertFalse(chooseLeaderCard.canBeApplied(game));
+        assertFalse(chooseLeaderCard.canBeApplied(actionController));
         game.getCurrentPlayer().getBoard().activateLeaderCard(game.getCurrentPlayer().getBoard().getLeaderCards()[0]);
-        assertTrue(chooseLeaderCard.canBeApplied(game));
+        assertTrue(chooseLeaderCard.canBeApplied(actionController));
 
         chooseLeaderCard = new ChooseLeaderCard(1);
-        assertFalse(chooseLeaderCard.canBeApplied(game));
+        assertFalse(chooseLeaderCard.canBeApplied(actionController));
         game.getCurrentPlayer().getBoard().activateLeaderCard(game.getCurrentPlayer().getBoard().getLeaderCards()[1]);
-        assertFalse(chooseLeaderCard.canBeApplied(game));
+        assertFalse(chooseLeaderCard.canBeApplied(actionController));
     }
 
     /**
@@ -87,13 +86,13 @@ public class ChooseLeaderCardTest {
 
         String response;
 
-        response = chooseLeaderCard.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse);
+        response = chooseLeaderCard.doAction(actionController);
         assertEquals("Leader Card not active or not of type WHITE MARBLE", response);
 
         game.getCurrentPlayer().getBoard().activateLeaderCard(game.getCurrentPlayer().getBoard().getLeaderCards()[0]);
-        response = chooseLeaderCard.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse);
+        response = chooseLeaderCard.doAction(actionController);
         assertEquals("Another White Marble", response);
-        response = chooseLeaderCard.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse);
+        response = chooseLeaderCard.doAction(actionController);
         assertEquals("SUCCESS", response);
     }
 }

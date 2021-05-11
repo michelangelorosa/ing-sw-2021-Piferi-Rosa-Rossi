@@ -2,6 +2,7 @@ package it.polimi.ingsw.ControllerTest;
 
 import static org.junit.Assert.*;
 
+import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.CommonTestMethods;
 import it.polimi.ingsw.Controller.Actions.*;
@@ -13,10 +14,11 @@ import org.junit.Test;
  * Unit Test for EndTurn Class.
  */
 public class EndTurnTest {
-    ResetWarehouse resetWarehouse = new ResetWarehouse();
-    ChooseProductionOutput chooseProductionOutput = new ChooseProductionOutput();
-    ChooseCardSlot chooseCardSlot = new ChooseCardSlot(0);
-    Game game = new Game();
+    ActionController actionController = new ActionController();
+    ResetWarehouse resetWarehouse = actionController.getResetWarehouse();
+    ChooseProductionOutput chooseProductionOutput = actionController.getChooseProductionOutput();
+    ChooseCardSlot chooseCardSlot = actionController.getChooseCardSlot();
+    Game game = actionController.getGame();
     MessageToClient messageToClient;
 
     /**
@@ -26,24 +28,6 @@ public class EndTurnTest {
     public void constructorTest() {
         EndTurn endTurn = new EndTurn();
         assertEquals(ActionType.END_TURN, endTurn.getActionType());
-    }
-
-    /**
-     * Test for "isCorrect" method in EndTurn Class.
-     */
-    @Test
-    public void isCorrectTest() {
-        EndTurn endTurn = new EndTurn();
-        assertTrue(endTurn.isCorrect());
-    }
-
-    /**
-     * Test for "canBeApplied" method in EndTurn Class.
-     */
-    @Test
-    public void canBeAppliedTest() {
-        EndTurn endTurn = new EndTurn();
-        assertTrue(endTurn.canBeApplied(game));
     }
 
     /**
@@ -57,10 +41,10 @@ public class EndTurnTest {
         String response;
 
         EndTurn endTurn = new EndTurn();
-        response = endTurn.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse);
+        response = endTurn.doAction(actionController);
         assertEquals("SUCCESS", response);
         assertEquals("One", game.getCurrentPlayerNickname());
-        messageToClient = endTurn.messagePrepare(game);
+        messageToClient = endTurn.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof EndTurnMessage);
         assertEquals(ActionType.END_TURN, messageToClient.getActionDone());
@@ -73,9 +57,9 @@ public class EndTurnTest {
         assertEquals(1, ((EndTurnMessage)messageToClient).getNextPlayerId());
 
 
-        endTurn.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse);
+        endTurn.doAction(actionController);
         assertEquals("Three", game.getCurrentPlayerNickname());
-        messageToClient = endTurn.messagePrepare(game);
+        messageToClient = endTurn.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof EndTurnMessage);
         assertEquals(ActionType.END_TURN, messageToClient.getActionDone());
@@ -88,9 +72,9 @@ public class EndTurnTest {
         assertEquals(3, ((EndTurnMessage)messageToClient).getNextPlayerId());
 
 
-        endTurn.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse);
+        endTurn.doAction(actionController);
         assertEquals("Zero", game.getCurrentPlayerNickname());
-        messageToClient = endTurn.messagePrepare(game);
+        messageToClient = endTurn.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof EndTurnMessage);
         assertEquals(ActionType.END_TURN, messageToClient.getActionDone());

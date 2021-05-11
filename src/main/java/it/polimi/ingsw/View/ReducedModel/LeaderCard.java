@@ -1,7 +1,8 @@
 package it.polimi.ingsw.View.ReducedModel;
 
 import it.polimi.ingsw.View.ANSIColors;
-import it.polimi.ingsw.View.ReducedModel.Enums.*;
+import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.View.ReducedModel.Enums.Marble;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Controller.Actions;
 
+import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 
@@ -76,8 +77,8 @@ public class PayResource extends Action {
      * picked by the client is Active.
      */
     @Override
-    public boolean canBeApplied(Game game) {
-        Player player = game.getCurrentPlayer();
+    public boolean canBeApplied(ActionController actionController) {
+        Player player = actionController.getGame().getCurrentPlayer();
 
         if(!fromWarehouse)
             return true;
@@ -94,15 +95,15 @@ public class PayResource extends Action {
      * @return "SUCCESS" if the action went right, another String if it went wrong.
      */
     @Override
-    public String doAction(Game game, ChooseProductionOutput chooseProductionOutput, ChooseCardSlot chooseCardSlot, ResetWarehouse resetWarehouse) {
+    public String doAction(ActionController actionController) {
         this.isCorrect();
 
-        if(!this.canBeApplied(game)) {
+        if(!this.canBeApplied(actionController)) {
             response = "Can't take resource from a non active depot";
             return "Can't take resource from a non active depot";
         }
 
-        ResourceManager resourceManager = game.getCurrentPlayer().getBoard().getResourceManager();
+        ResourceManager resourceManager = actionController.getGame().getCurrentPlayer().getBoard().getResourceManager();
 
         if(this.fromWarehouse) {
             WarehouseDepot depot;
@@ -168,11 +169,29 @@ public class PayResource extends Action {
 
     /**
      * This method is overridden in Two other subclasses
-     * @param game Current instance of the Game being played.
      * @return null by default as it should be overridden.
      */
     @Override
-    public MessageToClient messagePrepare(Game game) {
+    public MessageToClient messagePrepare(ActionController actionController) {
         return null;
+    }
+
+    public PaymentMessage hasToPay(ActionController actionController, boolean card) {
+        PaymentMessage paymentMessage = new PaymentMessage(actionController.getGame().getCurrentPlayerIndex());
+        if(this.response.equals("HasToPay")) {
+            paymentMessage.setWarehouse(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse());
+            paymentMessage.setStrongbox(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getStrongbox());
+            paymentMessage.setTemporaryResources(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay());
+        }
+        paymentMessage.setError(this.response);
+        if(card) {
+            paymentMessage.addPossibleAction(ActionType.PAY_RESOURCE_PRODUCTION);
+            paymentMessage.setActionDone(ActionType.PAY_RESOURCE_PRODUCTION);
+        }
+        else {
+            paymentMessage.addPossibleAction(ActionType.PAY_RESOURCE_CARD);
+            paymentMessage.setActionDone(ActionType.PAY_RESOURCE_CARD);
+        }
+        return paymentMessage;
     }
 }

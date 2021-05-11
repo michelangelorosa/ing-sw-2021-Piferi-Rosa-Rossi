@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Controller.Actions;
 
+import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 
@@ -74,24 +75,15 @@ public class ChooseCardSlot extends Action {
     }
 
     /**
-     * Method used to check if the specified action is logically correct.
-     * @return true as there are no constraints regarding this Action.
-     */
-    @Override
-    public boolean canBeApplied(Game game) {
-        return true;
-    }
-
-    /**
      * Method used to execute the action on the Model.
      * @return "SUCCESS" if the action went right, another String if it went wrong.
      */
     @Override
-    public String doAction(Game game, ChooseProductionOutput chooseProductionOutput, ChooseCardSlot chooseCardSlot, ResetWarehouse resetWarehouse) {
+    public String doAction(ActionController actionController) {
         this.isCorrect();
 
-        DevelopmentCardSlots slots = game.getCurrentPlayer().getBoard().getDevelopmentCardSlots();
-        DevelopmentCardDeck deck = game.getDevelopmentCardTable().getDeck(this.rowCardToBuy, this.columnCardToBuy);
+        DevelopmentCardSlots slots = actionController.getGame().getCurrentPlayer().getBoard().getDevelopmentCardSlots();
+        DevelopmentCardDeck deck = actionController.getGame().getDevelopmentCardTable().getDeck(this.rowCardToBuy, this.columnCardToBuy);
 
         if(slots.getSlots()[this.cardSlot].canAdd(deck.getTopCard())) {
             slots.getSlots()[this.cardSlot].addCard(deck.drawCard());
@@ -107,11 +99,10 @@ public class ChooseCardSlot extends Action {
 
     /**
      * Method used to prepare a messageToClient type object to be sent by the server to the client.
-     * @param game Current instance of the Game being played.
      * @return A message to be sent to the client.
      */
-    public MessageToClient messagePrepare(Game game) {
-        ChoseCardSlotMessage message = new ChoseCardSlotMessage(game.getCurrentPlayerIndex());
+    public MessageToClient messagePrepare(ActionController actionController) {
+        ChoseCardSlotMessage message = new ChoseCardSlotMessage(actionController.getGame().getCurrentPlayerIndex());
         message.setRow(this.rowCardToBuy);
         message.setColumn(this.columnCardToBuy);
 

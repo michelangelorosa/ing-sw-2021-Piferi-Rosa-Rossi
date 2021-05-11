@@ -10,6 +10,7 @@ import it.polimi.ingsw.Model.MessagesToClient.*;
  */
 public class ActionController {
 
+    private final Game game;
     private final ModelToView modelToView = new ModelToView();
     private final ResetWarehouse resetWarehouse = new ResetWarehouse();
     private final ChooseCardSlot chooseCardSlot = new ChooseCardSlot(-1);
@@ -19,19 +20,25 @@ public class ActionController {
      * Constructor for ActionController Class.
      */
     public ActionController() {
-
+        this.game = new Game();
     }
 
     /**
      * Method used to compute the client's request.
      * @param action A generic action received by the server socket.
-     * @param game Instance of the game being played.
      */
-    public void doAction(Action action, Game game) {
-        action.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse);
-        MessageToClient message = action.messagePrepare(game);
+    public void doAction(Action action) {
+        action.doAction(this);
+        MessageToClient message = action.messagePrepare(this);
 
         modelToView.notify(message);
+    }
+
+    /**
+     * Getter for "game" attribute in ActionController Class.
+     */
+    public Game getGame() {
+        return game;
     }
 
     /**

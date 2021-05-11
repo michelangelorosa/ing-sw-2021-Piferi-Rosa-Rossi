@@ -1,6 +1,5 @@
 package it.polimi.ingsw.View.ReducedModel;
 
-import it.polimi.ingsw.Model.PlayerStatus;
 import it.polimi.ingsw.View.ANSIColors;
 
 import java.io.Serializable;

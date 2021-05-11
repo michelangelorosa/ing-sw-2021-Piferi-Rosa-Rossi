@@ -1,5 +1,9 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.View.ANSIColors;
+
+import java.util.ArrayList;
+
 /**
  * Marble colours, used in Market and LeaderCards
  */
@@ -12,7 +16,7 @@ public enum Marble {
     private static final Marble[] marble = Marble.values();
     public static Marble getMarble(int i) { return Marble.marble[i]; }
 
-    public ResourceType marbleToResource(Player player) {
+    protected ResourceType marbleToResource(Player player) {
         switch(this) {
             case WHITE: player.getBoard().getResourceManager().addWhiteMarble();
             break;
@@ -28,5 +32,40 @@ public enum Marble {
             break;
         }
         return null;
+    }
+
+    public ArrayList<String> toCli() {
+        ArrayList<String> marble = new ArrayList<>();
+
+        marble.add("    ░░▓▓▓▓░░    ");
+        marble.add("  ▓▓██▓▓████▓▓  ");
+        marble.add("▒▒▓▓  ▒▒▓▓████▓▓");
+        marble.add("██▓▓░░░░▓▓▓▓████");
+        marble.add("██▓▓▓▓▓▓▓▓▓▓████");
+        marble.add("████▓▓▓▓████████");
+        marble.add("░░████████████▓▓");
+        marble.add("  ▒▒████████▒▒  ");
+
+        String c = "";
+
+        switch(this) {
+            case WHITE: c = "";
+                break;
+            case BLUE: c = ANSIColors.FRONT_BLUE;
+                break;
+            case GREY: c = ANSIColors.FRONT_DARK_GREY;
+                break;
+            case YELLOW: c = ANSIColors.FRONT_YELLOW;
+                break;
+            case PURPLE: c = ANSIColors.FRONT_PURPLE;
+                break;
+            case RED: c = ANSIColors.FRONT_RED;
+                break;
+        }
+
+        for(int i = 0; i < marble.size(); i++)
+            marble.set(i, c + marble.get(i) + ANSIColors.RESET);
+
+        return marble;
     }
 }

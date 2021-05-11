@@ -2,6 +2,7 @@ package it.polimi.ingsw.ControllerTest;
 
 import static org.junit.Assert.*;
 
+import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 import it.polimi.ingsw.CommonTestMethods;
@@ -19,10 +20,8 @@ public class ChooseProductionOutputTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    ResetWarehouse resetWarehouse = new ResetWarehouse();
-    ChooseProductionOutput chooseProductionOutput1 = new ChooseProductionOutput();
-    ChooseCardSlot chooseCardSlot = new ChooseCardSlot(0);
-    Game game = new Game();
+    ActionController actionController = new ActionController();
+    Game game = actionController.getGame();
     MessageToClient messageToClient;
 
     /**
@@ -86,22 +85,22 @@ public class ChooseProductionOutputTest {
         CommonTestMethods.givePlayerLeaderCards(game.getCurrentPlayer(), game.getLeaderCards().get(0), game.getLeaderCards().get(1));
         game.getCurrentPlayer().getBoard().activateLeaderCard(game.getCurrentPlayer().getBoard().getLeaderCards()[0]);
         game.getCurrentPlayer().getBoard().activateLeaderCard(game.getCurrentPlayer().getBoard().getLeaderCards()[1]);
-        assertFalse(chooseProductionOutput.canBeApplied(game));
+        assertFalse(chooseProductionOutput.canBeApplied(actionController));
 
         CommonTestMethods.givePlayerLeaderCards(game.getCurrentPlayer(), game.getLeaderCards().get(4), game.getLeaderCards().get(1));
         game.getCurrentPlayer().getBoard().activateLeaderCard(game.getCurrentPlayer().getBoard().getLeaderCards()[0]);
         game.getCurrentPlayer().getBoard().activateLeaderCard(game.getCurrentPlayer().getBoard().getLeaderCards()[1]);
-        assertFalse(chooseProductionOutput.canBeApplied(game));
+        assertFalse(chooseProductionOutput.canBeApplied(actionController));
 
         CommonTestMethods.givePlayerLeaderCards(game.getCurrentPlayer(), game.getLeaderCards().get(4), game.getLeaderCards().get(5));
         game.getCurrentPlayer().getBoard().activateLeaderCard(game.getCurrentPlayer().getBoard().getLeaderCards()[0]);
         game.getCurrentPlayer().getBoard().activateLeaderCard(game.getCurrentPlayer().getBoard().getLeaderCards()[1]);
-        assertFalse(chooseProductionOutput.canBeApplied(game));
+        assertFalse(chooseProductionOutput.canBeApplied(actionController));
 
         ArrayList<ResourceType> resourceTypes = new ArrayList<>();
         resourceTypes.add(ResourceType.SHIELDS);
         chooseProductionOutput.setBasicProductionOutput(resourceTypes);
-        assertTrue(chooseProductionOutput.canBeApplied(game));
+        assertTrue(chooseProductionOutput.canBeApplied(actionController));
     }
 
     /**
@@ -117,10 +116,10 @@ public class ChooseProductionOutputTest {
 
         String response;
 
-        response = chooseProductionOutput.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse);
+        response = chooseProductionOutput.doAction(actionController);
         assertEquals("Tried to use not valid Leader Cards or tried to get more resources than possible.", response);
         assertEquals("0 0 0 0", game.getCurrentPlayer().getBoard().getResourceManager().getStrongbox().getStoredResources().toString());
-        messageToClient = chooseProductionOutput.messagePrepare(game);
+        messageToClient = chooseProductionOutput.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ChoseProductionOutputMessage);
         assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
@@ -134,10 +133,10 @@ public class ChooseProductionOutputTest {
         resourceTypes.add(ResourceType.SHIELDS);
         chooseProductionOutput.setBasicProductionOutput(resourceTypes);
 
-        response = chooseProductionOutput.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse);
+        response = chooseProductionOutput.doAction(actionController);
         assertEquals("SUCCESS", response);
         assertEquals("4 3 0 0", game.getCurrentPlayer().getBoard().getResourceManager().getStrongbox().getStoredResources().toString());
-        messageToClient = chooseProductionOutput.messagePrepare(game);
+        messageToClient = chooseProductionOutput.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ChoseProductionOutputMessage);
         assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
@@ -149,10 +148,10 @@ public class ChooseProductionOutputTest {
 
 
         chooseProductionOutput.setBasicProduction(false);
-        response = chooseProductionOutput.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse);
+        response = chooseProductionOutput.doAction(actionController);
         assertEquals("SUCCESS", response);
         assertEquals("7 6 0 0", game.getCurrentPlayer().getBoard().getResourceManager().getStrongbox().getStoredResources().toString());
-        messageToClient = chooseProductionOutput.messagePrepare(game);
+        messageToClient = chooseProductionOutput.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ChoseProductionOutputMessage);
         assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
@@ -164,10 +163,10 @@ public class ChooseProductionOutputTest {
 
 
         chooseProductionOutput.setSecondLeaderCard(false);
-        response = chooseProductionOutput.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse);
+        response = chooseProductionOutput.doAction(actionController);
         assertEquals("SUCCESS", response);
         assertEquals("10 6 0 0", game.getCurrentPlayer().getBoard().getResourceManager().getStrongbox().getStoredResources().toString());
-        messageToClient = chooseProductionOutput.messagePrepare(game);
+        messageToClient = chooseProductionOutput.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ChoseProductionOutputMessage);
         assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
@@ -179,10 +178,10 @@ public class ChooseProductionOutputTest {
 
 
         chooseProductionOutput.setFirstLeaderCard(false);
-        response = chooseProductionOutput.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse);
+        response = chooseProductionOutput.doAction(actionController);
         assertEquals("SUCCESS", response);
         assertEquals("10 6 0 0", game.getCurrentPlayer().getBoard().getResourceManager().getStrongbox().getStoredResources().toString());
-        messageToClient = chooseProductionOutput.messagePrepare(game);
+        messageToClient = chooseProductionOutput.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ChoseProductionOutputMessage);
         assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());

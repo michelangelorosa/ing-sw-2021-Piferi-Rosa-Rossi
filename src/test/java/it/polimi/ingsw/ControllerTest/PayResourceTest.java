@@ -1,10 +1,9 @@
 package it.polimi.ingsw.ControllerTest;
 
-import static it.polimi.ingsw.Controller.Actions.ActionType.BUY_CARD;
-import static it.polimi.ingsw.Controller.Actions.ActionType.CHOOSE_CARD_SLOT;
 import static org.junit.Assert.*;
 
 import it.polimi.ingsw.CommonTestMethods;
+import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Model.*;
 import org.junit.Rule;
@@ -19,6 +18,8 @@ public class PayResourceTest {
     PayResource pay3 = new PayResource(false, 0, ResourceType.STONES);
     PayResource pay4 = new PayResource(false, 0, ResourceType.COINS);
     PayResource pay5 = new PayResource(true, 3, ResourceType.NONE);
+
+    ActionController actionController = new ActionController();
 
     /**getter test*/
     @Test
@@ -74,18 +75,17 @@ public class PayResourceTest {
     /**Test to check if canBeApplied works properly*/
     @Test
     public void canBeAppliedTest(){
-        Game game = new Game();
+        Game game = actionController.getGame();
         CommonTestMethods.gameInitOne(game);
-        PayResource payTest = new PayResource(false, 1, ResourceType.SHIELDS);
     //When the resources comes from the strongbox, return true.
-        assertEquals(true, pay.canBeApplied(game));
+        assertTrue(pay.canBeApplied(actionController));
         WarehouseDepot warehouseDepot = new WarehouseDepot(2, true);
         game.getCurrentPlayer().getBoard().getResourceManager().addOneResourceToDepot(ResourceType.SHIELDS, warehouseDepot);
     //If the resource comes from an extraDepot but it is not active, return false.
-        assertEquals(false, pay5.canBeApplied(game));
+        assertFalse(pay5.canBeApplied(actionController));
     //If the resource comes from an extraDepot but it is active, return true.
         game.getCurrentPlayer().getBoard().activateLeaderCard(game.getLeaderCards().get(7));
-        assertEquals(true, pay5.canBeApplied(game));
+        assertTrue(pay5.canBeApplied(actionController));
     }
 
     /**
@@ -103,25 +103,22 @@ public class PayResourceTest {
      */
     @Test
     public void doActionTest(){
-        Game game = new Game();
+        Game game = actionController.getGame();
         CommonTestMethods.gameInitOne(game);
 
-        ChooseProductionOutput output = new ChooseProductionOutput();
-        ChooseCardSlot cardSlot = new ChooseCardSlot(1);
-        ResetWarehouse resetWarehouse = new ResetWarehouse();
         ResourceStack stack = new ResourceStack(5,3,0,2);
         ResourceStack temporary = new ResourceStack(2,0,0,0);
         game.getCurrentPlayer().getBoard().getResourceManager().setTemporaryResourcesToPay(temporary);
         CommonTestMethods.giveResourcesToPlayer(game.getCurrentPlayer(), 1,2,0,ResourceType.SHIELDS, ResourceType.COINS, ResourceType.SERVANTS, stack);
         assertEquals("2 0 0 0", game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toString());
 
-        assertEquals("HasToPay", pay.doAction(game, output, cardSlot, resetWarehouse));
+        assertEquals("HasToPay", pay.doAction(actionController));
         assertEquals("1 0 0 0", game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toString());
-        assertEquals("This type of resource is not needed", pay3.doAction(game, output, cardSlot, resetWarehouse));
+        assertEquals("This type of resource is not needed", pay3.doAction(actionController));
         assertEquals("1 0 0 0", game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toString());
-        assertEquals("No COINS left in Strongbox", pay4.doAction(game, output, cardSlot, resetWarehouse));
-        assertEquals("Can't take resource from a non active depot", pay5.doAction(game, output, cardSlot, resetWarehouse));
-        assertEquals("SUCCESS", pay2.doAction(game, output, cardSlot, resetWarehouse));
+        assertEquals("No COINS left in Strongbox", pay4.doAction(actionController));
+        assertEquals("Can't take resource from a non active depot", pay5.doAction(actionController));
+        assertEquals("SUCCESS", pay2.doAction(actionController));
 
         assertEquals(ResourceType.NONE, game.getCurrentPlayer().getBoard().getResourceManager().getWarehouseDepots()[0].getResourceType());
     }

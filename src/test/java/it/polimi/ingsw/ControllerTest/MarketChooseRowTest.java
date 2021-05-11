@@ -2,6 +2,7 @@ package it.polimi.ingsw.ControllerTest;
 
 import static org.junit.Assert.*;
 
+import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 import it.polimi.ingsw.CommonTestMethods;
 import it.polimi.ingsw.Controller.Actions.*;
@@ -14,10 +15,8 @@ import org.junit.rules.ExpectedException;
  * Unit Test for MarketChooseRow Class.
  */
 public class MarketChooseRowTest {
-    ResetWarehouse resetWarehouse = new ResetWarehouse();
-    ChooseProductionOutput chooseProductionOutput = new ChooseProductionOutput();
-    ChooseCardSlot chooseCardSlot = new ChooseCardSlot(0);
-    Game game = new Game();
+    ActionController actionController = new ActionController();
+    Game game = actionController.getGame();
     MessageToClient messageToClient;
 
     @Rule
@@ -67,15 +66,6 @@ public class MarketChooseRowTest {
     }
 
     /**
-     * Test for "canBeApplied" method in MarketChooseRow Class.
-     */
-    @Test
-    public void canBeAppliedTest() {
-        MarketChooseRow marketChooseRow = new MarketChooseRow(true, 2);
-        assertTrue(marketChooseRow.canBeApplied(game));
-    }
-
-    /**
      * Test for "doAction" and "messagePrepare" methods in MarketChooseRow Class.
      */
     @Test
@@ -88,11 +78,11 @@ public class MarketChooseRowTest {
 
         CommonTestMethods.givePlayerLeaderCards(game.getCurrentPlayer(), game.getLeaderCards().get(2), game.getLeaderCards().get(3));
         MarketChooseRow marketChooseRow = new MarketChooseRow(true, 0);
-        response = marketChooseRow.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse);
+        response = marketChooseRow.doAction(actionController);
         assertEquals("SUCCESS", response);
         assertEquals(1, game.getCurrentPlayer().getFaithTrackPosition());
         assertEquals("2 0 1 0", game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toString());
-        messageToClient = marketChooseRow.messagePrepare(game);
+        messageToClient = marketChooseRow.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ChoseMarketRowMessage);
         assertEquals(ActionType.MARKET_CHOOSE_ROW, messageToClient.getActionDone());
@@ -108,11 +98,11 @@ public class MarketChooseRowTest {
 
         marketChooseRow = new MarketChooseRow(true, 1);
         game.getCurrentPlayer().getBoard().activateLeaderCard(game.getCurrentPlayer().getBoard().getLeaderCards()[0]);
-        response = marketChooseRow.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse);
+        response = marketChooseRow.doAction(actionController);
         assertEquals("SUCCESS", response);
         assertEquals(1, game.getCurrentPlayer().getFaithTrackPosition());
         assertEquals("0 0 2 2", game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toString());
-        messageToClient = marketChooseRow.messagePrepare(game);
+        messageToClient = marketChooseRow.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ChoseMarketRowMessage);
         assertEquals(ActionType.MARKET_CHOOSE_ROW, messageToClient.getActionDone());
@@ -128,11 +118,11 @@ public class MarketChooseRowTest {
 
         game.getCurrentPlayer().getBoard().activateLeaderCard(game.getCurrentPlayer().getBoard().getLeaderCards()[1]);
         game.getMarket().testMethod();
-        response = marketChooseRow.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse);
+        response = marketChooseRow.doAction(actionController);
         assertEquals("Choose Leader Card", response);
         assertEquals(1, game.getCurrentPlayer().getFaithTrackPosition());
         assertEquals("0 0 0 2", game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toString());
-        messageToClient = marketChooseRow.messagePrepare(game);
+        messageToClient = marketChooseRow.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ChoseMarketRowMessage);
         assertEquals(ActionType.MARKET_CHOOSE_ROW, messageToClient.getActionDone());
@@ -148,11 +138,11 @@ public class MarketChooseRowTest {
         game.getCurrentPlayer().getBoard().activateLeaderCard(game.getCurrentPlayer().getBoard().getLeaderCards()[1]);
 
         marketChooseRow = new MarketChooseRow(false, 2);
-        response = marketChooseRow.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse);
+        response = marketChooseRow.doAction(actionController);
         assertEquals("SUCCESS", response);
         assertEquals(2, game.getCurrentPlayer().getFaithTrackPosition());
         assertEquals("0 0 1 0", game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toString());
-        messageToClient = marketChooseRow.messagePrepare(game);
+        messageToClient = marketChooseRow.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ChoseMarketRowMessage);
         assertEquals(ActionType.MARKET_CHOOSE_ROW, messageToClient.getActionDone());

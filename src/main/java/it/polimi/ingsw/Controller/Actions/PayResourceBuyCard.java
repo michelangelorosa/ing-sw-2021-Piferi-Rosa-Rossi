@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Controller.Actions;
 
+import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 
@@ -18,33 +19,21 @@ public class PayResourceBuyCard extends PayResource {
 
     /**
      * Method used to prepare a messageToClient type object to be sent by the server to the client.
-     * @param game Current instance of the Game being played.
      * @return A message to be sent to the client.
      */
     @Override
-    public MessageToClient messagePrepare(Game game) {
-        PaymentMessage paymentMessage;
+    public MessageToClient messagePrepare(ActionController actionController) {
         BoughtCardMessage boughtCardMessage;
 
         if(this.response.equals("SUCCESS")) {
-            boughtCardMessage = new BoughtCardMessage(game.getCurrentPlayerIndex());
-            boughtCardMessage.setWarehouse(game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse());
-            boughtCardMessage.setStrongbox(game.getCurrentPlayer().getBoard().getResourceManager().getStrongbox());
+            boughtCardMessage = new BoughtCardMessage(actionController.getGame().getCurrentPlayerIndex());
+            boughtCardMessage.setWarehouse(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse());
+            boughtCardMessage.setStrongbox(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getStrongbox());
             boughtCardMessage.addPossibleAction(ActionType.CHOOSE_CARD_SLOT);
             boughtCardMessage.setError(this.response);
             return boughtCardMessage;
         }
-        else {
-            paymentMessage = new PaymentMessage(game.getCurrentPlayerIndex());
-            if(this.response.equals("HasToPay")) {
-                paymentMessage.setWarehouse(game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse());
-                paymentMessage.setStrongbox(game.getCurrentPlayer().getBoard().getResourceManager().getStrongbox());
-                paymentMessage.setTemporaryResources(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay());
-            }
-            paymentMessage.setError(this.response);
-            paymentMessage.addPossibleAction(ActionType.PAY_RESOURCE_CARD);
-            paymentMessage.setActionDone(ActionType.PAY_RESOURCE_CARD);
-            return paymentMessage;
-        }
+        else
+            return this.hasToPay(actionController, true);
     }
 }

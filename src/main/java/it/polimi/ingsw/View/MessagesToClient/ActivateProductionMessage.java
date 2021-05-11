@@ -24,5 +24,5 @@ public class ActivateProductionMessage extends MessageToClient {
         else{
            //TODO error message
         }
-}
+    }
 }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Controller.Actions;
 
+import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 
@@ -86,18 +87,17 @@ public class ActivateProduction extends Action {
 
     /**
      * This method checks if the input sent to the server is logically applicable.
-     * @param game Is the game instance being played.
      * @return false if the Leader Card was already active, true if not.
      */
     @Override
-    public boolean canBeApplied(Game game) {
-        Player player = game.getCurrentPlayer();
+    public boolean canBeApplied(ActionController actionController) {
+        Player player = actionController.getGame().getCurrentPlayer();
         if(firstLeaderCard && (!player.getBoard().getLeaderCards()[0].isActive() || player.getBoard().getLeaderCards()[0].getAction() != LeaderCardAction.PRODUCTIONPOWER))
             return false;
 
         if(secondLeaderCard && (!player.getBoard().getLeaderCards()[1].isActive() || player.getBoard().getLeaderCards()[1].getAction() != LeaderCardAction.PRODUCTIONPOWER))
             return false;
-        if(basicProduction && basicProductionInputs.size() != game.getCurrentPlayer().getBoard().getBasicProduction().getJollyIn())
+        if(basicProduction && basicProductionInputs.size() != actionController.getGame().getCurrentPlayer().getBoard().getBasicProduction().getJollyIn())
             return false;
 
         return true;
@@ -105,15 +105,13 @@ public class ActivateProduction extends Action {
 
     /**
      * This method is used to actually activate production if the player has the correct requirements.
-     * @param game Instance of the game which is being played.
-     * @param chooseProductionOutput Object used to save the production's output for later use.
      * @return a String containing an error message or a SUCCESS statement.
      */
     @Override
-    public String doAction(Game game, ChooseProductionOutput chooseProductionOutput, ChooseCardSlot chooseCardSlot, ResetWarehouse resetWarehouse) {
+    public String doAction(ActionController actionController) {
         this.isCorrect();
 
-        if(!this.canBeApplied(game)) {
+        if(!this.canBeApplied(actionController)) {
             this.response = "Leader Card not active or not required Type/Error in reading basic production inputs.";
             return "Leader Card not active or not required Type/Error in reading basic production inputs.";
         }
@@ -123,7 +121,7 @@ public class ActivateProduction extends Action {
         ArrayList<LeaderCard> leaderCards = new ArrayList<>();
         ArrayList<ResourceType> inputs;
 
-        DevelopmentCardSlots slots = game.getCurrentPlayer().getBoard().getDevelopmentCardSlots();
+        DevelopmentCardSlots slots = actionController.getGame().getCurrentPlayer().getBoard().getDevelopmentCardSlots();
 
 
         if(this.firstSlot) {
@@ -151,36 +149,36 @@ public class ActivateProduction extends Action {
                 devCards.add(slots.getSlots()[2].getFirstCard());
         }
         if(this.firstLeaderCard)
-            leaderCards.add(game.getCurrentPlayer().getBoard().getLeaderCards()[0]);
+            leaderCards.add(actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[0]);
 
         if(this.secondLeaderCard)
-            leaderCards.add(game.getCurrentPlayer().getBoard().getLeaderCards()[1]);
+            leaderCards.add(actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[1]);
 
         if(this.basicProduction)
             inputs = this.basicProductionInputs;
         else
             inputs = null;
 
-        if(!game.getCurrentPlayer().getBoard().canStartProduction(devCards, leaderCards, this.basicProduction, inputs)) {
+        if(!actionController.getGame().getCurrentPlayer().getBoard().canStartProduction(devCards, leaderCards, this.basicProduction, inputs)) {
             this.response = "Not enough Resources to start Production";
             return "Not enough Resources to start Production";
         }
 
         else {
-            game.getCurrentPlayer().getBoard().getProductionCost(devCards, leaderCards, this.basicProduction, inputs);
+            actionController.getGame().getCurrentPlayer().getBoard().getProductionCost(devCards, leaderCards, this.basicProduction, inputs);
 
-            chooseProductionOutput.getOutput().addToAllTypes(game.getCurrentPlayer().getBoard().getFixedProductionOutput(game.getCurrentPlayer(), devCards, leaderCards, this.basicProduction));
+            actionController.getChooseProductionOutput().getOutput().addToAllTypes(actionController.getGame().getCurrentPlayer().getBoard().getFixedProductionOutput(actionController.getGame().getCurrentPlayer(), devCards, leaderCards, this.basicProduction));
 
             if(this.firstLeaderCard)
-                chooseProductionOutput.setFirstLeaderCard(true);
+                actionController.getChooseProductionOutput().setFirstLeaderCard(true);
 
             if(this.secondLeaderCard)
-                chooseProductionOutput.setSecondLeaderCard(true);
+                actionController.getChooseProductionOutput().setSecondLeaderCard(true);
 
             if(this.basicProduction)
-                chooseProductionOutput.setBasicProduction(true);
+                actionController.getChooseProductionOutput().setBasicProduction(true);
 
-            if(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().isEmpty())
+            if(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().isEmpty())
                 this.response = "No Payment";
             else
                 this.response = "SUCCESS";
@@ -190,12 +188,11 @@ public class ActivateProduction extends Action {
 
     /**
      * Method used to prepare a messageToClient type object to be sent by the server to the client.
-     * @param game Current instance of the Game being played.
      * @return A message to be sent to the client.
      */
     @Override
-    public MessageToClient messagePrepare(Game game) {
-        ActivateProductionMessage message = new ActivateProductionMessage(game.getCurrentPlayerIndex());
+    public MessageToClient messagePrepare(ActionController actionController) {
+        ActivateProductionMessage message = new ActivateProductionMessage(actionController.getGame().getCurrentPlayerIndex());
         message.setError(this.response);
 
         if(this.response.equals("SUCCESS")) {

@@ -4,6 +4,7 @@ import static it.polimi.ingsw.Controller.Actions.ActionType.CHOOSE_CARD_SLOT;
 import static org.junit.Assert.*;
 
 import it.polimi.ingsw.CommonTestMethods;
+import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.MessagesToClient.ChoseCardSlotMessage;
@@ -20,6 +21,7 @@ public class ChooseCardSlotTest {
     ChooseCardSlot slot2 = new ChooseCardSlot(2);
     ChooseCardSlot slotExtra1 = new ChooseCardSlot(3);
     ChooseCardSlot slotExtra2 = new ChooseCardSlot(4);
+    ActionController actionController = new ActionController();
 
     MessageToClient messageToClient;
 
@@ -53,19 +55,16 @@ public class ChooseCardSlotTest {
      */
     @Test
     public void doActionTest(){
-        Game game = new Game();
+        Game game = actionController.getGame();
         CommonTestMethods.gameInitOne(game);
-        ChooseProductionOutput output = new ChooseProductionOutput();
-        ChooseCardSlot cardSlot = new ChooseCardSlot(1);
-        ResetWarehouse resetWarehouse = new ResetWarehouse();
         String response;
 
         slot0.setRowCardToBuy(1);
         slot0.setColumnCardToBuy(1);
-        response = slot0.doAction(game, output, cardSlot, resetWarehouse);
+        response = slot0.doAction(actionController);
         assertEquals("Cannot put card in slot number 0", response);
         assertEquals(0, game.getCurrentPlayer().getBoard().getDevelopmentCardSlots().getSlots()[0].getLevelOccupied());
-        messageToClient = slot0.messagePrepare(game);
+        messageToClient = slot0.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ChoseCardSlotMessage);
         assertEquals(CHOOSE_CARD_SLOT, messageToClient.getActionDone());
@@ -79,9 +78,9 @@ public class ChooseCardSlotTest {
 
         slot1.setRowCardToBuy(2);
         slot1.setColumnCardToBuy(1);
-        assertEquals("SUCCESS", slot1.doAction(game, output, cardSlot, resetWarehouse));
+        assertEquals("SUCCESS", slot1.doAction(actionController));
         assertEquals(1, game.getCurrentPlayer().getBoard().getDevelopmentCardSlots().getSlots()[1].getLevelOccupied());
-        messageToClient = slot1.messagePrepare(game);
+        messageToClient = slot1.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ChoseCardSlotMessage);
         assertEquals(CHOOSE_CARD_SLOT, messageToClient.getActionDone());
@@ -96,9 +95,9 @@ public class ChooseCardSlotTest {
 
         slot1.setRowCardToBuy(1);
         slot1.setColumnCardToBuy(1);
-        assertEquals("SUCCESS", slot1.doAction(game, output, cardSlot, resetWarehouse));
+        assertEquals("SUCCESS", slot1.doAction(actionController));
         assertEquals(2, game.getCurrentPlayer().getBoard().getDevelopmentCardSlots().getSlots()[1].getLevelOccupied());
-        messageToClient = slot1.messagePrepare(game);
+        messageToClient = slot1.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ChoseCardSlotMessage);
         assertEquals(CHOOSE_CARD_SLOT, messageToClient.getActionDone());

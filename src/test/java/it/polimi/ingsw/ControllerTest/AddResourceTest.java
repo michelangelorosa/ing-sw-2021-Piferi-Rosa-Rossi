@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ControllerTest;
 
+import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.CommonTestMethods;
 import it.polimi.ingsw.Controller.Actions.*;
@@ -15,10 +16,8 @@ import static org.junit.Assert.*;
  * Unit Test for AddResource Class.
  */
 public class AddResourceTest {
-    ResetWarehouse resetWarehouse = new ResetWarehouse();
-    ChooseProductionOutput chooseProductionOutput = new ChooseProductionOutput();
-    ChooseCardSlot chooseCardSlot = new ChooseCardSlot(0);
-    Game game = new Game();
+    ActionController actionController = new ActionController();
+    Game game = actionController.getGame();
 
     MessageToClient messageToClient;
 
@@ -76,17 +75,17 @@ public class AddResourceTest {
         AddResource addResource = new AddResource(3, ResourceType.SHIELDS);
 
         CommonTestMethods.gameInitOne(game);
-        assertFalse(addResource.canBeApplied(game));
+        assertFalse(addResource.canBeApplied(actionController));
 
         game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().activateLeaderDepot(ResourceType.SHIELDS);
-        assertTrue(addResource.canBeApplied(game));
+        assertTrue(addResource.canBeApplied(actionController));
 
         game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().activateLeaderDepot(ResourceType.SERVANTS);
         addResource = new AddResource(4, ResourceType.COINS);
-        assertFalse(addResource.canBeApplied(game));
+        assertFalse(addResource.canBeApplied(actionController));
 
         addResource = new AddResource(4, ResourceType.SERVANTS);
-        assertTrue(addResource.canBeApplied(game));
+        assertTrue(addResource.canBeApplied(actionController));
     }
 
     /**
@@ -98,9 +97,9 @@ public class AddResourceTest {
         String response;
 
         AddResource addResource = new AddResource(0, ResourceType.SHIELDS);
-        response = addResource.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse);
+        response = addResource.doAction(actionController);
         assertEquals("SUCCESS", response);
-        messageToClient = addResource.messagePrepare(game);
+        messageToClient = addResource.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof AddMessage);
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getActionDone());
@@ -114,9 +113,9 @@ public class AddResourceTest {
         assertEquals(ActionType.END_MARKET, messageToClient.getPossibleActions().get(3));
 
 
-        response = addResource.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse);
+        response = addResource.doAction(actionController);
         assertEquals("SUCCESS", response);
-        messageToClient = addResource.messagePrepare(game);
+        messageToClient = addResource.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof AddMessage);
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getActionDone());
@@ -130,9 +129,9 @@ public class AddResourceTest {
         assertEquals(ActionType.END_MARKET, messageToClient.getPossibleActions().get(3));
 
         addResource = new AddResource(1, ResourceType.SHIELDS);
-        response = addResource.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse);
+        response = addResource.doAction(actionController);
         assertEquals("Can't add SHIELDS to this depot", response);
-        messageToClient = addResource.messagePrepare(game);
+        messageToClient = addResource.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof AddMessage);
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getActionDone());
@@ -147,9 +146,9 @@ public class AddResourceTest {
 
 
         addResource = new AddResource(2, ResourceType.SHIELDS);
-        response = addResource.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse);
+        response = addResource.doAction(actionController);
         assertEquals("Can't add SHIELDS to this depot", response);
-        messageToClient = addResource.messagePrepare(game);
+        messageToClient = addResource.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof AddMessage);
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getActionDone());
@@ -164,9 +163,9 @@ public class AddResourceTest {
 
 
         addResource = new AddResource(0, ResourceType.SERVANTS);
-        response = addResource.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse);
+        response = addResource.doAction(actionController);
         assertEquals("Can't add SERVANTS to this depot", response);
-        messageToClient = addResource.messagePrepare(game);
+        messageToClient = addResource.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof AddMessage);
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getActionDone());
@@ -181,14 +180,14 @@ public class AddResourceTest {
 
 
         addResource = new AddResource(1, ResourceType.SERVANTS);
-        response = addResource.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse);
+        response = addResource.doAction(actionController);
         assertEquals("SUCCESS", response);
 
         game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().activateLeaderDepot(ResourceType.SHIELDS);
         addResource = new AddResource(3, ResourceType.SERVANTS);
-        response = addResource.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse);
+        response = addResource.doAction(actionController);
         assertEquals("Extra depot is not active or not of given type", response);
-        messageToClient = addResource.messagePrepare(game);
+        messageToClient = addResource.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof AddMessage);
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getActionDone());
@@ -203,9 +202,9 @@ public class AddResourceTest {
 
 
         addResource = new AddResource(3, ResourceType.SHIELDS);
-        response = addResource.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse);
+        response = addResource.doAction(actionController);
         assertEquals("SUCCESS", response);
-        messageToClient = addResource.messagePrepare(game);
+        messageToClient = addResource.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof AddMessage);
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getActionDone());
@@ -219,9 +218,9 @@ public class AddResourceTest {
         assertEquals(ActionType.END_MARKET, messageToClient.getPossibleActions().get(3));
 
         addResource = new AddResource(4, ResourceType.SERVANTS);
-        response = addResource.doAction(game, chooseProductionOutput, chooseCardSlot, resetWarehouse);
+        response = addResource.doAction(actionController);
         assertEquals("Extra depot is not active or not of given type", response);
-        messageToClient = addResource.messagePrepare(game);
+        messageToClient = addResource.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof AddMessage);
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getActionDone());

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Controller.Actions;
 
+import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 
@@ -58,7 +59,7 @@ public class ResetWarehouse extends Action {
      * Method used to check if the action is logically applicable.
      */
     @Override
-    public boolean canBeApplied(Game game) {
+    public boolean canBeApplied(ActionController actionController) {
         return true;
     }
 
@@ -67,12 +68,12 @@ public class ResetWarehouse extends Action {
      * @return "SUCCESS" if the action went right, another String if it went wrong.
      */
     @Override
-    public String doAction(Game game, ChooseProductionOutput chooseProductionOutput, ChooseCardSlot chooseCardSlot, ResetWarehouse resetWarehouse) {
-        game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().revertWarehouse(this.backupWarehouse);
-        game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().revertBack(this.backupResources);
+    public String doAction(ActionController actionController) {
+        actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse().revertWarehouse(this.backupWarehouse);
+        actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().revertBack(this.backupResources);
 
-        this.backupWarehouse = game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().copyWarehouse();
-        this.backupResources = game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().copyStack();
+        this.backupWarehouse = actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse().copyWarehouse();
+        this.backupResources = actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().copyStack();
 
         this.response = "SUCCESS";
         return "SUCCESS";
@@ -90,14 +91,13 @@ public class ResetWarehouse extends Action {
 
     /**
      * Method used to prepare a messageToClient type object to be sent by the server to the client.
-     * @param game Current instance of the Game being played.
      * @return A message to be sent to the client.
      */
     @Override
-    public MessageToClient messagePrepare(Game game) {
-        ResetWarehouseMessage message = new ResetWarehouseMessage(game.getCurrentPlayerIndex());
-        message.setWarehouse(game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse());
-        message.setTemporaryResources(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay());
+    public MessageToClient messagePrepare(ActionController actionController) {
+        ResetWarehouseMessage message = new ResetWarehouseMessage(actionController.getGame().getCurrentPlayerIndex());
+        message.setWarehouse(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse());
+        message.setTemporaryResources(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay());
         message.setError(this.response);
         message.addPossibleAction(ActionType.ADD_RESOURCE);
         message.addPossibleAction(ActionType.RESET_WAREHOUSE);

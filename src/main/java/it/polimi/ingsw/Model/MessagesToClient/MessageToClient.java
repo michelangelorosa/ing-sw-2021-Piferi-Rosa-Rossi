@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
+import it.polimi.ingsw.View.ReducedModel.Game;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -71,5 +72,12 @@ public class MessageToClient implements Serializable {
      */
     public void addPossibleAction(ActionType type) {
         possibleActions.add(type);
+    }
+
+    //@ assignable \nothing;
+    //@ ensures game != null && (*Client's ReducedModel Game is updated based on the message received*);
+    //@ signal NullPointerException e && game == null;
+    public void updateView(Game game) throws NullPointerException {
+
     }
 }

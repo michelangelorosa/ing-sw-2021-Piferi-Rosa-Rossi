@@ -1,7 +1,7 @@
 package it.polimi.ingsw.View;
 
 import it.polimi.ingsw.Controller.Actions.*;
-import it.polimi.ingsw.View.ReducedModel.Enums.ResourceType;
+import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.Player;
 import it.polimi.ingsw.View.ReducedModel.Warehouse;
@@ -415,7 +415,7 @@ public class Cli {
                     else
                         notEnded = false;
                 }
-                chooseProductionOutput.setFirstLeaderCardOutput(resourceTypeArrayListConverter(firstLeaderOutputs));
+                chooseProductionOutput.setFirstLeaderCardOutput(firstLeaderOutputs);
             }
 
             notEnded = true;
@@ -428,7 +428,7 @@ public class Cli {
                     else
                         notEnded = false;
                 }
-                chooseProductionOutput.setSecondLeaderCardOutput(resourceTypeArrayListConverter(secondLeaderOutputs));
+                chooseProductionOutput.setSecondLeaderCardOutput(secondLeaderOutputs);
             }
 
             notEnded = true;
@@ -441,7 +441,7 @@ public class Cli {
                     else
                         notEnded = false;
                 }
-                chooseProductionOutput.setBasicProductionOutput(resourceTypeArrayListConverter(basicOutputs));
+                chooseProductionOutput.setBasicProductionOutput(basicOutputs);
             }
 
             if(InputController.checkChooseProductionOutput(basicProduction, firstLeaderCard, secondLeaderCard, basicOutputs, firstLeaderOutputs, secondLeaderOutputs, game))
@@ -644,31 +644,6 @@ public class Cli {
         }
     }
 
-    public void displayError(String s) {
-        ArrayList<String> error = new ArrayList<>();
-        String b = ANSIColors.BACK_BRIGHT_WHITE;
-        String fw = ANSIColors.FRONT_BRIGHT_WHITE;
-        String f = "\u001B[38;5;160m";
-        String br = "\u001B[48;5;160m";
-        String r = ANSIColors.RESET;
-
-        String line = br + fw + "╔";
-        String line2 = br + fw + "╚";
-        for(int i = 0; i < s.length() + 6; i++) {
-            line += "═";
-            line2 += "═";
-        }
-        line += "╗" + r;
-        line2 += "╝" + r;
-
-        error.add(line);
-        error.add(br + fw + "║" + b + f + ANSIColors.BOLD + " ! " + s + " ! " + r + br + fw + "║" + r);
-        error.add(line2);
-
-        printList(error);
-    }
-
-
     /**
      * Method needed to map the player's choice to the actual Action that has to be performed.
      */
@@ -860,18 +835,6 @@ public class Cli {
             } else
                 System.out.println("Please insert a valid Resource number");
         }
-    }
-
-    /**
-     * Method used to convert an ArrayList of View's ResourceType into an ArrayList of Model's ResourceType
-     * @param types ArrayList of ResourceTypes from the View's Package
-     * @return ArrayList of ResourceTypes from the Model's Package
-     */
-    private static ArrayList<it.polimi.ingsw.Model.ResourceType> resourceTypeArrayListConverter(ArrayList<ResourceType> types) {
-        ArrayList<it.polimi.ingsw.Model.ResourceType> typesModel = new ArrayList<>();
-        for(ResourceType type : types)
-            typesModel.add(type.viewToModel());
-        return typesModel;
     }
 
 }

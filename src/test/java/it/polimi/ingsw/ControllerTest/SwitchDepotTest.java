@@ -3,6 +3,7 @@ package it.polimi.ingsw.ControllerTest;
 import static org.junit.Assert.*;
 
 import it.polimi.ingsw.CommonTestMethods;
+import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
@@ -15,6 +16,8 @@ public class SwitchDepotTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+    ActionController actionController = new ActionController();
+    Game game = actionController.getGame();
     SwitchDepot depot = new SwitchDepot(0, 4);
     Warehouse warehouse = new Warehouse();
 
@@ -55,17 +58,16 @@ public class SwitchDepotTest {
      */
     @Test
     public void canBeAppliedTest(){
-        Game game = new Game();
         CommonTestMethods.gameInitOne(game);
         game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().addResources(2, ResourceType.SHIELDS, warehouse.getWarehouseDepots()[0]);
         game.getCurrentPlayer().getBoard().activateLeaderCard(game.getLeaderCards().get(7));
         game.getCurrentPlayer().getBoard().getResourceManager().getExtraWarehouseDepotOne().addResources(2);
         SwitchDepot switchDepot = new SwitchDepot(3, 1);
         SwitchDepot switchDepot2 = new SwitchDepot(4, 1);
-        assertTrue(switchDepot.canBeApplied(game));
+        assertTrue(switchDepot.canBeApplied(actionController));
         SwitchDepot switchDepot3 = new SwitchDepot(0, 1);
-        assertTrue(switchDepot3.canBeApplied(game));
-        assertFalse(switchDepot2.canBeApplied(game));
+        assertTrue(switchDepot3.canBeApplied(actionController));
+        assertFalse(switchDepot2.canBeApplied(actionController));
     }
 
     /**
@@ -76,12 +78,8 @@ public class SwitchDepotTest {
      */
     @Test
     public void doActionTest(){
-        Game game = new Game();
         CommonTestMethods.gameInitOne(game);
 
-        ChooseProductionOutput output = new ChooseProductionOutput();
-        ChooseCardSlot cardSlot = new ChooseCardSlot(1);
-        ResetWarehouse resetWarehouse = new ResetWarehouse();
         ResourceStack stack = new ResourceStack(0,0,0,0);
 
         CommonTestMethods.giveResourcesToPlayer(game.getCurrentPlayer(), 2, 2, 1, ResourceType.SHIELDS, ResourceType.COINS, ResourceType.SERVANTS, stack);
@@ -92,8 +90,8 @@ public class SwitchDepotTest {
         assertEquals(0, game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().getExtraWarehouseDepot1().getStoredResources());
         assertEquals(0, game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().getExtraWarehouseDepot2().getStoredResources());
 
-        assertEquals("Can't switch from/to non active depot", depot.doAction(game, output, cardSlot, resetWarehouse));
-        messageToClient = depot.messagePrepare(game);
+        assertEquals("Can't switch from/to non active depot", depot.doAction(actionController));
+        messageToClient = depot.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof SwitchDepotMessage);
         assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getActionDone());
@@ -117,8 +115,8 @@ public class SwitchDepotTest {
         assertEquals(2, game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().getExtraWarehouseDepot1().getStoredResources());
         assertEquals(1, game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().getExtraWarehouseDepot2().getStoredResources());
 
-        assertEquals("SUCCESS", depot.doAction(game, output, cardSlot, resetWarehouse));
-        messageToClient = depot.messagePrepare(game);
+        assertEquals("SUCCESS", depot.doAction(actionController));
+        messageToClient = depot.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof SwitchDepotMessage);
         assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getActionDone());
@@ -138,8 +136,8 @@ public class SwitchDepotTest {
         assertEquals(2, game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().getExtraWarehouseDepot2().getStoredResources());
 
         SwitchDepot switchDepot = new SwitchDepot(0, 1);
-        assertEquals( "SUCCESS", switchDepot.doAction(game, output, cardSlot, resetWarehouse));
-        messageToClient = depot.messagePrepare(game);
+        assertEquals( "SUCCESS", switchDepot.doAction(actionController));
+        messageToClient = depot.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof SwitchDepotMessage);
         assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getActionDone());
@@ -159,8 +157,8 @@ public class SwitchDepotTest {
 
         SwitchDepot switchDepot1 = new SwitchDepot(3, 1);
 
-        assertEquals("Cannot switch depots", switchDepot1.doAction(game, output, cardSlot, resetWarehouse));
-        messageToClient = switchDepot1.messagePrepare(game);
+        assertEquals("Cannot switch depots", switchDepot1.doAction(actionController));
+        messageToClient = switchDepot1.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof SwitchDepotMessage);
         assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getActionDone());

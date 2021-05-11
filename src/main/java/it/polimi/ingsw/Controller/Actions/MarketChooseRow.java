@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Controller.Actions;
 
+import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 
@@ -58,73 +59,63 @@ public class MarketChooseRow extends Action {
     }
 
     /**
-     * Method used to check if the action is logically applicable.
-     */
-    @Override
-    public boolean canBeApplied(Game game) {
-        return true;
-    }
-
-    /**
      * Method used to execute the action on the Model.
      * @return "SUCCESS" if the action went right, another String if it went wrong.
      */
     @Override
-    public String doAction(Game game, ChooseProductionOutput chooseProductionOutput, ChooseCardSlot chooseCardSlot, ResetWarehouse resetWarehouse) {
+    public String doAction(ActionController actionController) {
         this.isCorrect();
 
         if(this.row)
-            game.getMarket().rowToResources(this.getRowOrColumnNumber(), game.getCurrentPlayer());
+            actionController.getGame().getMarket().rowToResources(this.getRowOrColumnNumber(), actionController.getGame().getCurrentPlayer());
         else
-            game.getMarket().columnToResources(this.getRowOrColumnNumber(), game.getCurrentPlayer());
+            actionController.getGame().getMarket().columnToResources(this.getRowOrColumnNumber(), actionController.getGame().getCurrentPlayer());
 
-        resetWarehouse.setBackupWarehouse(game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().copyWarehouse());
-        resetWarehouse.setBackupResources(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().copyStack());
+        actionController.getResetWarehouse().setBackupWarehouse(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse().copyWarehouse());
+        actionController.getResetWarehouse().setBackupResources(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().copyStack());
 
-        this.response = this.leaderCardCheck(game);
+        this.response = this.leaderCardCheck(actionController);
         if(this.response.equals("SUCCESS"))
-            this.temporaryResource = game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay();
+            this.temporaryResource = actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay();
 
         return response;
     }
 
     /**
      * Method used to check if and how many Leader Cards of type WHITE MARBLE the player has.
-     * @param game Is the instance of the game used to get the current player.
      * @return "Choose Leader Card" if the player has two active WHITE MARBLE ability Leader Cards.
      */
-    public String leaderCardCheck(Game game) {
-        LeaderCard[] leaderCards = game.getCurrentPlayer().getBoard().getLeaderCards();
+    public String leaderCardCheck(ActionController actionController) {
+        LeaderCard[] leaderCards = actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards();
 
         if(leaderCards[0].isActive() && leaderCards[0].getAction() == LeaderCardAction.WHITEMARBLE && leaderCards[1].isActive() && leaderCards[1].getAction() == LeaderCardAction.WHITEMARBLE)
             return "Choose Leader Card";
 
         else if(leaderCards[0].isActive() && leaderCards[0].getAction() == LeaderCardAction.WHITEMARBLE && (!leaderCards[1].isActive() || leaderCards[1].getAction() != LeaderCardAction.WHITEMARBLE)) {
-            while(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryWhiteMarbles() > 0)
-                game.getMarket().whiteMarbleToResource(game.getCurrentPlayer(), leaderCards[0]);
+            while(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryWhiteMarbles() > 0)
+                actionController.getGame().getMarket().whiteMarbleToResource(actionController.getGame().getCurrentPlayer(), leaderCards[0]);
             return "SUCCESS";
         }
 
         else if(leaderCards[1].isActive() && leaderCards[1].getAction() == LeaderCardAction.WHITEMARBLE && (!leaderCards[0].isActive() || leaderCards[0].getAction() != LeaderCardAction.WHITEMARBLE)) {
-            while(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryWhiteMarbles() > 0)
-                game.getMarket().whiteMarbleToResource(game.getCurrentPlayer(), leaderCards[1]);
+            while(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryWhiteMarbles() > 0)
+                actionController.getGame().getMarket().whiteMarbleToResource(actionController.getGame().getCurrentPlayer(), leaderCards[1]);
             return "SUCCESS";
         }
 
         else {
-            game.getCurrentPlayer().getBoard().getResourceManager().setTemporaryWhiteMarbles(0);
+            actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().setTemporaryWhiteMarbles(0);
             return "SUCCESS";
         }
     }
 
     /**
      * Method used to prepare a messageToClient type object to be sent by the server to the client.
-     * @param game Current instance of the Game being played.
      * @return A message to be sent to the client.
      */
     @Override
-    public MessageToClient messagePrepare(Game game) {
-        ChoseMarketRowMessage message = new ChoseMarketRowMessage(game.getCurrentPlayerIndex());
+    public MessageToClient messagePrepare(ActionController actionController) {
+        ChoseMarketRowMessage message = new ChoseMarketRowMessage(actionController.getGame().getCurrentPlayerIndex());
         message.setError(this.response);
         message.setRow(this.row);
         message.setRowOrColumn(this.rowOrColumnNumber);

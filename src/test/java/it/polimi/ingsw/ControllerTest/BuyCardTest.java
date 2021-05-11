@@ -4,6 +4,7 @@ import static it.polimi.ingsw.Controller.Actions.ActionType.*;
 import static org.junit.Assert.*;
 
 import it.polimi.ingsw.CommonTestMethods;
+import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.MessagesToClient.BuyCardMessage;
@@ -17,6 +18,8 @@ public class BuyCardTest {
     public ExpectedException thrown = ExpectedException.none();
 
     BuyCard card = new BuyCard(2, 0);
+    ActionController actionController = new ActionController();
+    Game game = actionController.getGame();
     MessageToClient messageToClient;
 
     /**Test to check if the method getAction works properly*/
@@ -54,17 +57,13 @@ public class BuyCardTest {
      */
     @Test
     public void doAction(){
-        Game game = new Game();
         CommonTestMethods.gameInitOne(game);
-        ChooseProductionOutput output = new ChooseProductionOutput();
-        ChooseCardSlot cardSlot = new ChooseCardSlot(1);
-        ResetWarehouse resetWarehouse = new ResetWarehouse();
         String response;
         CommonTestMethods.givePlayerLeaderCards(game.getCurrentPlayer(), game.getLeaderCards().get(2), game.getLeaderCards().get(1));
 
-        response = card.doAction(game, output, cardSlot, resetWarehouse);
+        response = card.doAction(actionController);
         assertEquals("Not enough resources to buy Card", response);
-        messageToClient = card.messagePrepare(game);
+        messageToClient = card.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof BuyCardMessage);
         assertEquals(ActionType.BUY_CARD, messageToClient.getActionDone());
@@ -79,10 +78,10 @@ public class BuyCardTest {
         ResourceStack stack = new ResourceStack(5,3,3,0);
         CommonTestMethods.giveResourcesToPlayer(game.getCurrentPlayer(), 1,12,1,ResourceType.SHIELDS, ResourceType.COINS, ResourceType.STONES, stack);
         BuyCard secondCard = new BuyCard(0,0);
-        response = card.doAction(game, output, cardSlot, resetWarehouse);
+        response = card.doAction(actionController);
         assertEquals("2 0 2 0", game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toString());
         assertEquals("SUCCESS", response);
-        messageToClient = card.messagePrepare(game);
+        messageToClient = card.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof BuyCardMessage);
         assertEquals(ActionType.BUY_CARD, messageToClient.getActionDone());
@@ -91,8 +90,8 @@ public class BuyCardTest {
         assertEquals(ActionType.PAY_RESOURCE_CARD, messageToClient.getPossibleActions().get(0));
 
 
-        assertEquals("Card does not fit inside Personal Board", secondCard.doAction(game, output, cardSlot, resetWarehouse));
-        messageToClient = secondCard.messagePrepare(game);
+        assertEquals("Card does not fit inside Personal Board", secondCard.doAction(actionController));
+        messageToClient = secondCard.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof BuyCardMessage);
         assertEquals(ActionType.BUY_CARD, messageToClient.getActionDone());

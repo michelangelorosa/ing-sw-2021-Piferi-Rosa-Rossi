@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Controller.Actions;
 
+import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 
@@ -25,42 +26,26 @@ public class EndTurn extends Action {
     }
 
     /**
-     * Method written because of interface implementation.
-     */
-    @Override
-    public boolean isCorrect() {
-        return true;
-    }
-
-    /**
-     * Method written because of interface implementation.
-     */
-    @Override
-    public boolean canBeApplied(Game game) {
-        return true;
-    }
-
-    /**
      * Method used to execute the action on the Model.
      * @return "SUCCESS" if the action went right, another String if it went wrong.
      */
     @Override
-    public String doAction(Game game, ChooseProductionOutput chooseProductionOutput, ChooseCardSlot chooseCardSlot, ResetWarehouse resetWarehouse) {
+    public String doAction(ActionController actionController) {
         int idlePlayers = 0;
-        this.currentPlayer = game.getCurrentPlayerIndex();
-        if(game.getGameType() == GameType.MULTIPLAYER) {
-            for(Player player : game.getPlayers())
+        this.currentPlayer = actionController.getGame().getCurrentPlayerIndex();
+        if(actionController.getGame().getGameType() == GameType.MULTIPLAYER) {
+            for(Player player : actionController.getGame().getPlayers())
                 if(player.getStatus() == PlayerStatus.IDLE)
                     idlePlayers ++;
 
-            if(idlePlayers == game.getPlayers().size()) {
+            if(idlePlayers == actionController.getGame().getPlayers().size()) {
                 this.response = "ALL PLAYERS DISCONNECTED";
                 return "ALL PLAYERS DISCONNECTED";
             }
             else {
-                game.nextPlayer();
-                while(game.getCurrentPlayer().getStatus() == PlayerStatus.IDLE)
-                    game.nextPlayer();
+                actionController.getGame().nextPlayer();
+                while(actionController.getGame().getCurrentPlayer().getStatus() == PlayerStatus.IDLE)
+                    actionController.getGame().nextPlayer();
             }
         }
 
@@ -70,14 +55,13 @@ public class EndTurn extends Action {
 
     /**
      * Method used to prepare a messageToClient type object to be sent by the server to the client.
-     * @param game Current instance of the Game being played.
      * @return A message to be sent to the client.
      */
     @Override
-    public MessageToClient messagePrepare(Game game) {
+    public MessageToClient messagePrepare(ActionController actionController) {
         EndTurnMessage message = new EndTurnMessage(this.currentPlayer);
         message.setError(this.response);
-        message.setNextPlayerId(game.getCurrentPlayerIndex());
+        message.setNextPlayerId(actionController.getGame().getCurrentPlayerIndex());
 
         message.addPossibleAction(ActionType.ACTIVATE_PRODUCTION);
         message.addPossibleAction(ActionType.BUY_CARD);

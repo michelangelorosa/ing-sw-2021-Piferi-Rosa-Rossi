@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Controller.Actions;
 
+import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 
@@ -60,8 +61,8 @@ public class SwitchDepot extends Action {
      * picked by the client is Active.
      */
     @Override
-    public boolean canBeApplied(Game game) {
-        Player player = game.getCurrentPlayer();
+    public boolean canBeApplied(ActionController actionController) {
+        Player player = actionController.getGame().getCurrentPlayer();
         if(!player.getBoard().getResourceManager().isExtraDepotOneActive() && (firstDepot == 3 || secondDepot == 3))
             return false;
         if(!player.getBoard().getResourceManager().isExtraDepotTwoActive() && (firstDepot == 4 || secondDepot == 4))
@@ -75,14 +76,14 @@ public class SwitchDepot extends Action {
      * @return "SUCCESS" if the action went right, another String if it went wrong.
      */
     @Override
-    public String doAction(Game game, ChooseProductionOutput chooseProductionOutput, ChooseCardSlot chooseCardSlot, ResetWarehouse resetWarehouse) {
+    public String doAction(ActionController actionController) {
         this.isCorrect();
-        if(!this.canBeApplied(game)) {
+        if(!this.canBeApplied(actionController)) {
             this.response = "Can't switch from/to non active depot";
             return "Can't switch from/to non active depot";
         }
 
-        ResourceManager resourceManager = game.getCurrentPlayer().getBoard().getResourceManager();
+        ResourceManager resourceManager = actionController.getGame().getCurrentPlayer().getBoard().getResourceManager();
         WarehouseDepot firstDepot, secondDepot;
 
         if(this.firstDepot == 3)
@@ -113,14 +114,13 @@ public class SwitchDepot extends Action {
 
     /**
      * Method used to prepare a messageToClient type object to be sent by the server to the client.
-     * @param game Current instance of the Game being played.
      * @return A message to be sent to the client.
      */
     @Override
-    public MessageToClient messagePrepare(Game game) {
-        SwitchDepotMessage message = new SwitchDepotMessage(game.getCurrentPlayerIndex());
+    public MessageToClient messagePrepare(ActionController actionController) {
+        SwitchDepotMessage message = new SwitchDepotMessage(actionController.getGame().getCurrentPlayerIndex());
         if(this.response.equals("SUCCESS"))
-            message.setWarehouse(game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse());
+            message.setWarehouse(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse());
         message.setError(this.response);
         message.addPossibleAction(ActionType.ADD_RESOURCE);
         message.addPossibleAction(ActionType.RESET_WAREHOUSE);

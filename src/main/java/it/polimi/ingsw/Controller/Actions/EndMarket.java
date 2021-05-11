@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Controller.Actions;
 
+import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 
@@ -26,29 +27,13 @@ public class EndMarket extends Action {
     }
 
     /**
-     * Method written because of interface implementation.
-     */
-    @Override
-    public boolean isCorrect() {
-        return true;
-    }
-
-    /**
-     * Method written because of interface implementation.
-     */
-    @Override
-    public boolean canBeApplied(Game game) {
-        return true;
-    }
-
-    /**
      * Method used to execute the action on the Model.
      * @return "SUCCESS" if the action went right, another String if it went wrong.
      */
     @Override
-    public String doAction(Game game, ChooseProductionOutput chooseProductionOutput, ChooseCardSlot chooseCardSlot, ResetWarehouse resetWarehouse) {
-        game.getCurrentPlayer().getBoard().getResourceManager().remainingResourcesToFaith(game.getCurrentPlayer(), game.getPlayers(), game.getFaithTrack());
-        resetWarehouse.emptyBackupResource();
+    public String doAction(ActionController actionController) {
+        actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().remainingResourcesToFaith(actionController.getGame().getCurrentPlayer(), actionController.getGame().getPlayers(), actionController.getGame().getFaithTrack());
+        actionController.getResetWarehouse().emptyBackupResource();
 
         this.response = "SUCCESS";
         return "SUCCESS";
@@ -56,15 +41,14 @@ public class EndMarket extends Action {
 
     /**
      * Method used to prepare a messageToClient type object to be sent by the server to the client.
-     * @param game Current instance of the Game being played.
      * @return A message to be sent to the client.
      */
     @Override
-    public MessageToClient messagePrepare(Game game) {
-        EndMarketMessage message = new EndMarketMessage(game.getCurrentPlayerIndex());
+    public MessageToClient messagePrepare(ActionController actionController) {
+        EndMarketMessage message = new EndMarketMessage(actionController.getGame().getCurrentPlayerIndex());
         ArrayList<Integer> faithPositions = new ArrayList<>();
 
-        for(Player player : game.getPlayers())
+        for(Player player : actionController.getGame().getPlayers())
             faithPositions.add(player.getFaithTrackPosition());
 
         message.setPlayersFaithPosition(faithPositions);

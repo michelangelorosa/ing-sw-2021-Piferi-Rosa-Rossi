@@ -14,7 +14,6 @@ public class AddMessage extends MessageToClient {
 
     /**
      * Constructor for AddMessage Class.
-     * @param playerId
      */
     public AddMessage(int playerId) {
         this.actionDone = ActionType.ADD_RESOURCE;
@@ -48,4 +47,26 @@ public class AddMessage extends MessageToClient {
     public ResourceStack getTemporaryResources() {
         return temporaryResources;
     }
+
+    /*
+
+     TODO import view methods
+    /**
+     * Method used to update the client's view.
+     * @param game Game being played by the client.
+     */
+    /*@Override
+    public void updateView(it.polimi.ingsw.View.ReducedModel.Game game) {
+        if(this.error.equals("SUCCESS"))
+            for(it.polimi.ingsw.View.ReducedModel.Player player : game.getPlayers())
+                if(player.getTurnPosition() == this.playerId) {
+                    player.setWarehouse(this.warehouse);
+                    player.setTemporaryResources(this.temporaryResources);
+                    player.setPossibleActions(this.possibleActions);
+                }
+                else {
+                    //TODO error message
+                }
+    } */
+
 }

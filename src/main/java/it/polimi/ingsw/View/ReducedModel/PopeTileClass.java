@@ -2,9 +2,7 @@ package it.polimi.ingsw.View.ReducedModel;
 
 
 import it.polimi.ingsw.View.ANSIColors;
-import it.polimi.ingsw.View.ReducedModel.Enums.PopeTile;
-import it.polimi.ingsw.View.ReducedModel.Game;
-import it.polimi.ingsw.View.ReducedModel.VaticanReportSection;
+import it.polimi.ingsw.Model.*;
 
 import java.util.ArrayList;
 

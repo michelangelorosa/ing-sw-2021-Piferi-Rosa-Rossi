@@ -10,14 +10,12 @@ import it.polimi.ingsw.Model.*;
 public class Controller implements Observer<Action> {
     /** actionController computes the actions on a certain game instance */
     private final ActionController actionController;
-    private final Game game;
 
     /**
      * Constructor for Controller Class.
      */
-    public Controller(Game game) {
+    public Controller() {
         this.actionController = new ActionController();
-        this.game = game;
     }
 
     /**
@@ -27,6 +25,6 @@ public class Controller implements Observer<Action> {
      */
     @Override
     public void update(Action action) {
-        actionController.doAction(action, game);
+        actionController.doAction(action);
     }
 }

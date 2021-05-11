@@ -4,7 +4,11 @@ import static org.junit.Assert.*;
 
 import it.polimi.ingsw.View.InputController;
 import it.polimi.ingsw.View.ReducedModel.*;
-import it.polimi.ingsw.View.ReducedModel.Enums.*;
+import it.polimi.ingsw.Model.ResourceType;
+
+
+import it.polimi.ingsw.View.ReducedModel.Enums.Marble;
+
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -434,8 +438,8 @@ public class InputControllerTest {
         LeaderCard productionOne = new LeaderCard(4, 3, stack2, requirements, stack1, 3, 1);
         LeaderCard productionTwo = new LeaderCard(5, 1, stack2, requirements, stack2, 3, 0);
 
-        LeaderCard extraDepotOne = new LeaderCard(1, 2, stack3, requirements, it.polimi.ingsw.View.ReducedModel.Enums.ResourceType.SHIELDS);
-        LeaderCard extraDepotTwo = new LeaderCard(1, 2, stack4, requirements, it.polimi.ingsw.View.ReducedModel.Enums.ResourceType.SERVANTS);
+        LeaderCard extraDepotOne = new LeaderCard(1, 2, stack3, requirements, ResourceType.SHIELDS);
+        LeaderCard extraDepotTwo = new LeaderCard(1, 2, stack4, requirements, ResourceType.SERVANTS);
 
         game.getLeaderCards().add(discountOne);
         game.getLeaderCards().add(discountTwo);

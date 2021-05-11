@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Controller.Actions;
 
+import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 
@@ -60,8 +61,8 @@ public class AddResource extends Action {
      * specified Type of resource cannot be put inside a Leader Depot.
      */
     @Override
-    public boolean canBeApplied(Game game) {
-        Player player = game.getCurrentPlayer();
+    public boolean canBeApplied(ActionController actionController) {
+        Player player = actionController.getGame().getCurrentPlayer();
         if((!player.getBoard().getResourceManager().isExtraDepotOneActive() || player.getBoard().getResourceManager().getExtraWarehouseDepotOne().getResourceType() != resourceType) && depot == 3)
             return false;
 
@@ -76,16 +77,16 @@ public class AddResource extends Action {
      * @return "SUCCESS" if the action went right, another String if it went wrong.
      */
     @Override
-    public String doAction(Game game, ChooseProductionOutput chooseProductionOutput, ChooseCardSlot chooseCardSlot, ResetWarehouse resetWarehouse) {
+    public String doAction(ActionController actionController) {
         this.isCorrect();
 
-        if(!this.canBeApplied(game)) {
+        if(!this.canBeApplied(actionController)) {
             response = "Extra depot is not active or not of given type";
             return "Extra depot is not active or not of given type";
         }
 
         WarehouseDepot depot;
-        ResourceManager resourceManager = game.getCurrentPlayer().getBoard().getResourceManager();
+        ResourceManager resourceManager = actionController.getGame().getCurrentPlayer().getBoard().getResourceManager();
 
         if(this.depot == 3)
             depot = resourceManager.getExtraWarehouseDepotOne();
@@ -108,12 +109,11 @@ public class AddResource extends Action {
 
     /**
      * Method used to prepare a messageToClient type object to be sent by the server to the client.
-     * @param game Current instance of the Game being played.
      * @return A message to be sent to the client.
      */
     @Override
-    public MessageToClient messagePrepare(Game game) {
-        AddMessage message = new AddMessage(game.getCurrentPlayerIndex());
+    public MessageToClient messagePrepare(ActionController actionController) {
+        AddMessage message = new AddMessage(actionController.getGame().getCurrentPlayerIndex());
         message.setError(this.response);
         message.addPossibleAction(ActionType.ADD_RESOURCE);
         message.addPossibleAction(ActionType.SWITCH_DEPOT);
@@ -121,8 +121,8 @@ public class AddResource extends Action {
         message.addPossibleAction(ActionType.END_MARKET);
 
         if(this.response.equals("SUCCESS")) {
-            message.setWarehouse(game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse());
-            message.setTemporaryResources(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay());
+            message.setWarehouse(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse());
+            message.setTemporaryResources(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay());
         }
 
         return message;
