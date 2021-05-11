@@ -1,5 +1,9 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Model.Enums.GameType;
+import it.polimi.ingsw.Model.Enums.PlayerStatus;
+import it.polimi.ingsw.Model.Enums.SoloActionToken;
+
 import java.util.ArrayList;
 
 /**

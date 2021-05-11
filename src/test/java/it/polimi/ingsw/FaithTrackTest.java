@@ -3,6 +3,7 @@ package it.polimi.ingsw;
 import static org.junit.Assert.*;
 
 import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import org.junit.Test;
 
 import java.util.ArrayList;

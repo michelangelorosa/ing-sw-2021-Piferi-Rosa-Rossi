@@ -3,6 +3,8 @@ package it.polimi.ingsw;
 import static org.junit.Assert.*;
 
 import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.Enums.Color;
+import it.polimi.ingsw.Model.Enums.Level;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

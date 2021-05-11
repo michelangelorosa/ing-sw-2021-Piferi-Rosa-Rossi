@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.Model.Enums;
 
 import it.polimi.ingsw.View.ANSIColors;
 
@@ -73,17 +73,17 @@ public enum ResourceType {
         if(points > 9) return ANSIColors.FRONT_RED+faithToCli()+":"+points+ANSIColors.RESET; else return ANSIColors.FRONT_RED+faithToCli()+": "+points+ANSIColors.RESET;
     }
 
-    public it.polimi.ingsw.Model.ResourceType viewToModel() {
+    public ResourceType viewToModel() {
         switch(this) {
-            case SHIELDS:  return it.polimi.ingsw.Model.ResourceType.SHIELDS;
+            case SHIELDS:  return ResourceType.SHIELDS;
 
-            case SERVANTS: return it.polimi.ingsw.Model.ResourceType.SERVANTS;
+            case SERVANTS: return ResourceType.SERVANTS;
 
-            case COINS:    return it.polimi.ingsw.Model.ResourceType.COINS;
+            case COINS:    return ResourceType.COINS;
 
-            case STONES:   return it.polimi.ingsw.Model.ResourceType.STONES;
+            case STONES:   return ResourceType.STONES;
 
-            case NONE:     return it.polimi.ingsw.Model.ResourceType.NONE;
+            case NONE:     return ResourceType.NONE;
 
             default:       return null;
         }

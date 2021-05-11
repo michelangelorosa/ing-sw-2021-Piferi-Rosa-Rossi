@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Model.Enums.PlayerStatus;
+
 import java.io.Serializable;
 
 /**

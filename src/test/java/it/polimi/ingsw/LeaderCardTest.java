@@ -1,5 +1,8 @@
 package it.polimi.ingsw;
 import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.Enums.LeaderCardAction;
+import it.polimi.ingsw.Model.Enums.Marble;
+import it.polimi.ingsw.Model.Enums.ResourceType;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -34,7 +37,7 @@ public class LeaderCardTest {
     public void leaderDepotTest(){
         assertEquals(cardId1,leaderCard1.getCardId());
         assertEquals(victoryPoints1,leaderCard1.getVictoryPoints());
-        assertEquals(leaderCard1.getAction(),LeaderCardAction.DISCOUNT);
+        assertEquals(leaderCard1.getAction(), LeaderCardAction.DISCOUNT);
         assertFalse(leaderCard1.isActive());
         assertSame(leaderCard1.getResourcesRequired(),resourceStack1);
         assertSame(leaderCard1.getCardsRequired(),leaderRequirements);

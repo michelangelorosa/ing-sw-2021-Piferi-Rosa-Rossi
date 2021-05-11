@@ -6,6 +6,7 @@ import it.polimi.ingsw.CommonTestMethods;
 import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.Enums.ResourceType;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

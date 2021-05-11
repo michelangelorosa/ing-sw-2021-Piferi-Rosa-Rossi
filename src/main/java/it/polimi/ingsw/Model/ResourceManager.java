@@ -1,5 +1,8 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Model.Enums.LeaderCardAction;
+import it.polimi.ingsw.Model.Enums.ResourceType;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 

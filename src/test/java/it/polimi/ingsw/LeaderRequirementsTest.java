@@ -1,9 +1,11 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.Enums.Color;
+import it.polimi.ingsw.Model.Enums.Level;
+import it.polimi.ingsw.Model.Enums.Marble;
+import it.polimi.ingsw.Model.Enums.ResourceType;
 import org.junit.Test;
-
-import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -11,7 +13,7 @@ public class LeaderRequirementsTest {
     int blueCardLv1=1,purpleCardLv1=2,yellowCardLv1=1,greenCardLv1=0,blueCardLv2=0,purpleCardLv2=0,yellowCardLv2=0,greenCardLv2=4,blueCardLv3=0,purpleCardLv3=0,yellowCardLv3=2,greenCardLv3=0;
     LeaderRequirements leaderRequirements = new LeaderRequirements(blueCardLv1,purpleCardLv1,yellowCardLv1,greenCardLv1,blueCardLv2,purpleCardLv2,yellowCardLv2,greenCardLv2,blueCardLv3,purpleCardLv3,yellowCardLv3,greenCardLv3);
     ResourceStack resourceStack = new ResourceStack(1,4,6,7);
-    LeaderCard leaderCard = new LeaderCard(0,0,resourceStack,leaderRequirements,Marble.WHITE);
+    LeaderCard leaderCard = new LeaderCard(0,0,resourceStack,leaderRequirements, Marble.WHITE);
     //Testing from LeaderCard and single inputs
     @Test
     public void leaderRequirementsTest(){

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.Model.Enums;
 
 /**
  * Four Leader Card actions, byte based

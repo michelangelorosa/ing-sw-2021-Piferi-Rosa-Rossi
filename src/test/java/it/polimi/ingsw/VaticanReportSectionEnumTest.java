@@ -2,7 +2,7 @@ package it.polimi.ingsw;
 
 import static org.junit.Assert.*;
 
-import it.polimi.ingsw.Model.VaticanReportSectionEnum;
+import it.polimi.ingsw.Model.Enums.VaticanReportSectionEnum;
 import org.junit.Test;
 
 /**

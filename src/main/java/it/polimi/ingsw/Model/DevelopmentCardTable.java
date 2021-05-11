@@ -1,8 +1,11 @@
 
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Model.Enums.Color;
+import it.polimi.ingsw.Model.Enums.LeaderCardAction;
+import it.polimi.ingsw.Model.Enums.Level;
+
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * DevelopmentCardTable Class contains all 12 Development Card decks available for the player to buy.

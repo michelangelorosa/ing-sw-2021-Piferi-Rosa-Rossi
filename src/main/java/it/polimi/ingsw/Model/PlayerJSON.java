@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Model.Enums.PlayerStatus;
+
 public class PlayerJSON {
     private final String nickname;
     private final int turnPosition;

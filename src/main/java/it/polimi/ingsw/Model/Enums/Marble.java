@@ -1,5 +1,6 @@
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.Model.Enums;
 
+import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.View.ANSIColors;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public enum Marble {
     private static final Marble[] marble = Marble.values();
     public static Marble getMarble(int i) { return Marble.marble[i]; }
 
-    protected ResourceType marbleToResource(Player player) {
+    public ResourceType marbleToResource(Player player) {
         switch(this) {
             case WHITE: player.getBoard().getResourceManager().addWhiteMarble();
             break;

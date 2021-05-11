@@ -1,6 +1,6 @@
 package it.polimi.ingsw.View.ReducedModel;
 
-import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.Enums.Level;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -3,7 +3,7 @@ package it.polimi.ingsw;
 import static org.junit.Assert.*;
 
 import it.polimi.ingsw.Model.ResourceStack;
-import it.polimi.ingsw.Model.ResourceType;
+import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.Model.Strongbox;
 import org.junit.Rule;
 import org.junit.Test;

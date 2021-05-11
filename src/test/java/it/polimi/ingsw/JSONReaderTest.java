@@ -2,6 +2,11 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.Model.*;
 import static org.junit.Assert.*;
+
+import it.polimi.ingsw.Model.Enums.Color;
+import it.polimi.ingsw.Model.Enums.Level;
+import it.polimi.ingsw.Model.Enums.Marble;
+import it.polimi.ingsw.Model.Enums.ResourceType;
 import org.junit.Test;
 
 import java.util.ArrayList;

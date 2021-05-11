@@ -2,7 +2,7 @@ package it.polimi.ingsw;
 
 import static org.junit.Assert.*;
 
-import it.polimi.ingsw.Model.Color;
+import it.polimi.ingsw.Model.Enums.Color;
 import org.junit.Test;
 
 /**

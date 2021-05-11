@@ -1,8 +1,8 @@
 package it.polimi.ingsw.View.ReducedModel;
 
 
+import it.polimi.ingsw.Model.Enums.PopeTile;
 import it.polimi.ingsw.View.ANSIColors;
-import it.polimi.ingsw.Model.*;
 
 import java.util.ArrayList;
 

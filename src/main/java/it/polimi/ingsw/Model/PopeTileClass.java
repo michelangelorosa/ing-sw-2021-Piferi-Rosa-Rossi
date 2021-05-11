@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Model.Enums.PopeTile;
+
 public class PopeTileClass {
     private PopeTile popeTile;
     private final int victoryPoints;

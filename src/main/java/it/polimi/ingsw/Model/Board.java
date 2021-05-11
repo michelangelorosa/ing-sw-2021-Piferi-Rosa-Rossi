@@ -2,6 +2,7 @@ package it.polimi.ingsw.Model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import it.polimi.ingsw.Model.Enums.*;
 
 /**
  * Board Class contains all parts defining the playing board for each Player.

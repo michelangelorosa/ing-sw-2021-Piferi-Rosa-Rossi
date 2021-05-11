@@ -2,7 +2,7 @@ package it.polimi.ingsw;
 
 import static org.junit.Assert.*;
 
-import it.polimi.ingsw.Model.PopeSpace;
+import it.polimi.ingsw.Model.Enums.PopeSpace;
 import org.junit.Test;
 
 /**

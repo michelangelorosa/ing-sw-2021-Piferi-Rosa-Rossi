@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Model.Enums.SoloActionToken;
+
 import java.util.ArrayList;
 
 /**

@@ -1,7 +1,8 @@
 package it.polimi.ingsw.View.ReducedModel;
 
-import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Controller.Actions.ActionType;
+import it.polimi.ingsw.Model.Enums.PlayerStatus;
+import it.polimi.ingsw.Model.Enums.ResourceType;
 
 import java.io.Serializable;
 import java.util.ArrayList;

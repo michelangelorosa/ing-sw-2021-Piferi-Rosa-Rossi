@@ -1,6 +1,7 @@
 package it.polimi.ingsw.View.ReducedModel;
 
-import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.Enums.GameType;
+import it.polimi.ingsw.Model.Enums.SoloActionToken;
 
 import java.util.ArrayList;
 

@@ -2,7 +2,7 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Model.SinglePlayer;
-import it.polimi.ingsw.Model.SoloActionToken;
+import it.polimi.ingsw.Model.Enums.SoloActionToken;
 import org.junit.Test;
 
 import java.util.ArrayList;

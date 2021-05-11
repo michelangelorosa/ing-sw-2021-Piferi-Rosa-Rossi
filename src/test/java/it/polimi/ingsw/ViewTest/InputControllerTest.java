@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import it.polimi.ingsw.View.InputController;
 import it.polimi.ingsw.View.ReducedModel.*;
-import it.polimi.ingsw.Model.ResourceType;
+import it.polimi.ingsw.Model.Enums.ResourceType;
 
 
 import it.polimi.ingsw.View.ReducedModel.Enums.Marble;

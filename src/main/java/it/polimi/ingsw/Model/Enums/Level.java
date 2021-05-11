@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.Model.Enums;
 
 /**
  * Level enum-type Class contains all possible levels a

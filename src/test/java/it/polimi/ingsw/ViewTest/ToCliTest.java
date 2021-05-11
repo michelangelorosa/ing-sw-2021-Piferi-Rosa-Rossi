@@ -2,12 +2,11 @@ package it.polimi.ingsw.ViewTest;
 
 import it.polimi.ingsw.View.ANSIColors;
 import it.polimi.ingsw.View.ReducedModel.*;
-import it.polimi.ingsw.View.ReducedModel.Enums.*;
 
-import it.polimi.ingsw.Model.GameType;
-import it.polimi.ingsw.Model.Color;
-import it.polimi.ingsw.Model.Level;
-import it.polimi.ingsw.Model.ResourceType;
+import it.polimi.ingsw.Model.Enums.GameType;
+import it.polimi.ingsw.Model.Enums.Color;
+import it.polimi.ingsw.Model.Enums.Level;
+import it.polimi.ingsw.Model.Enums.ResourceType;
 
 
 import it.polimi.ingsw.View.ReducedModel.Enums.Marble;

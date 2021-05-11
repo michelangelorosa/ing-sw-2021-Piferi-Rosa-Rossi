@@ -7,6 +7,7 @@ import it.polimi.ingsw.CommonTestMethods;
 import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.Model.MessagesToClient.BuyCardMessage;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
 import org.junit.Rule;
@@ -76,7 +77,7 @@ public class BuyCardTest {
 
 
         ResourceStack stack = new ResourceStack(5,3,3,0);
-        CommonTestMethods.giveResourcesToPlayer(game.getCurrentPlayer(), 1,12,1,ResourceType.SHIELDS, ResourceType.COINS, ResourceType.STONES, stack);
+        CommonTestMethods.giveResourcesToPlayer(game.getCurrentPlayer(), 1,12,1, ResourceType.SHIELDS, ResourceType.COINS, ResourceType.STONES, stack);
         BuyCard secondCard = new BuyCard(0,0);
         response = card.doAction(actionController);
         assertEquals("2 0 2 0", game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toString());

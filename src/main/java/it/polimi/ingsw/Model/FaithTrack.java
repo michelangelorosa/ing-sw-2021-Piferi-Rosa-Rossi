@@ -1,5 +1,8 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Model.Enums.PlayerStatus;
+import it.polimi.ingsw.Model.Enums.PopeTile;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 

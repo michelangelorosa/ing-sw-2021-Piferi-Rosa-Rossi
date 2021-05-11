@@ -5,7 +5,8 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.io.*;
-import it.polimi.ingsw.Model.*;
+
+import it.polimi.ingsw.Model.Enums.*;
 
 public class ConvertToJSON {
     public ConvertToJSON() {

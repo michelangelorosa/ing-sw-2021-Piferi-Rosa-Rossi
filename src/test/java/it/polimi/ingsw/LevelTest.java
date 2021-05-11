@@ -1,6 +1,6 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.Model.Level;
+import it.polimi.ingsw.Model.Enums.Level;
 import org.junit.Test;
 
 import static org.junit.Assert.assertSame;

@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 import it.polimi.ingsw.CommonTestMethods;
 import it.polimi.ingsw.Controller.Actions.*;

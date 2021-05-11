@@ -1,7 +1,7 @@
 package it.polimi.ingsw.View;
 
 import it.polimi.ingsw.Controller.Actions.*;
-import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.Player;
 import it.polimi.ingsw.View.ReducedModel.Warehouse;
@@ -171,7 +171,7 @@ public class Cli {
         boolean decision;
         String choice;
         ArrayList<ResourceType> basicProductionInputs = null;
-        ArrayList<it.polimi.ingsw.Model.ResourceType> basicProductionInputsModel = null;
+        ArrayList<ResourceType> basicProductionInputsModel = null;
 
         printList(game.myBoardToCli());
 
