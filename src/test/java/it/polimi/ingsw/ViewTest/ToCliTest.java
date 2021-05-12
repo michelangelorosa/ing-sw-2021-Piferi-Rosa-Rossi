@@ -3,13 +3,8 @@ package it.polimi.ingsw.ViewTest;
 import it.polimi.ingsw.View.ANSIColors;
 import it.polimi.ingsw.View.ReducedModel.*;
 
-import it.polimi.ingsw.Model.Enums.GameType;
-import it.polimi.ingsw.Model.Enums.Color;
-import it.polimi.ingsw.Model.Enums.Level;
-import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.Model.Enums.*;
 
-
-import it.polimi.ingsw.View.ReducedModel.Enums.Marble;
 
 import org.junit.Test;
 
@@ -224,7 +219,6 @@ public class ToCliTest {
         ResourceStack input = new ResourceStack(1, 1, 10, 1);
         ResourceStack output = new ResourceStack(10, 10, 23, 0);
         DevelopmentCard card1 = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 10, cost, input, output, 10);
-        DevelopmentCard card2 = new DevelopmentCard(Color.PURPLE, Level.THREE, 1, 7, cost, input, output, 1);
         DevelopmentCard card3 = new DevelopmentCard(Color.YELLOW, Level.ONE, 99, 99, cost, input, output, 99);
         DevelopmentCard card4 = new DevelopmentCard(Color.GREEN, Level.ONE, 99, 99, cost, input, output, 99);
         DevelopmentCard card5 = new DevelopmentCard(Color.GREEN, Level.TWO, 99, 99, cost, input, output, 99);
@@ -321,7 +315,6 @@ public class ToCliTest {
         ResourceStack input = new ResourceStack(1, 1, 10, 1);
         ResourceStack output = new ResourceStack(10, 10, 23, 0);
         DevelopmentCard card1 = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 10, cost, input, output, 10);
-        DevelopmentCard card2 = new DevelopmentCard(Color.PURPLE, Level.THREE, 1, 7, cost, input, output, 1);
         DevelopmentCard card3 = new DevelopmentCard(Color.YELLOW, Level.ONE, 99, 99, cost, input, output, 99);
         DevelopmentCard card4 = new DevelopmentCard(Color.GREEN, Level.ONE, 99, 99, cost, input, output, 99);
         DevelopmentCard card5 = new DevelopmentCard(Color.GREEN, Level.TWO, 99, 99, cost, input, output, 99);

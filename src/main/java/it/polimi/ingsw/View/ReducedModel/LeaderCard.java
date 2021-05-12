@@ -1,9 +1,7 @@
 package it.polimi.ingsw.View.ReducedModel;
 
-import it.polimi.ingsw.Model.Enums.LeaderCardAction;
-import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.Model.Enums.*;
 import it.polimi.ingsw.View.ANSIColors;
-import it.polimi.ingsw.View.ReducedModel.Enums.Marble;
 
 import java.io.Serializable;
 import java.util.ArrayList;
