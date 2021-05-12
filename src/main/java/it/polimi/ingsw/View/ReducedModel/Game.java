@@ -152,6 +152,7 @@ public class Game {
         boolean up = false;
         ArrayList<String> leader;
         ArrayList<String> board;
+        ArrayList<String> faithTrack = this.faithTrack.toCli(this);
 
         if(this.myNickname.equals(player.getNickname())) up = true;
         leader = player.leaderPrint(up);
@@ -169,6 +170,13 @@ public class Game {
 
         if(!up) board.add(0, player.getNickname() + "'s board ");
         else board.add(0, "My board");
+
+        board.add(0, "                                                                                                                                                             ");
+
+        board.addAll(0, faithTrack);
+        board.add(0, "                                                                                                                                                             ");
+        board.add(0, " - Faith Track - ");
+
         return board;
     }
 

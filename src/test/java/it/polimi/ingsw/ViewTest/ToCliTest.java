@@ -390,7 +390,28 @@ public class ToCliTest {
 
     @Test
     public void boardTest(){
+        Random rand = new Random();
+
+        VaticanReportSection section1 = new VaticanReportSection(0, 5, 30);
+        VaticanReportSection section2 = new VaticanReportSection(6, 18, 5);
+        VaticanReportSection section3 = new VaticanReportSection(19, 24, 1);
+
+        ArrayList<VaticanReportSection> sections = new ArrayList<>();
+        sections.add(section1);
+        sections.add(section2);
+        sections.add(section3);
+
+        FaithTrack track = new FaithTrack(sections);
+
+        int vp;
+
+        for(int i = 0; i < 25; i++) {
+            vp = rand.nextInt(100);
+            track.getCells()[i] = new FaithCell(i, vp);
+        }
+
         Game game = new Game();
+        game.setFaithTrack(track);
         ArrayList<Player> players= new ArrayList<>();
         Player player = new Player("Lello", 0, true);
         Player player1 = new Player("Antonino", 1, false);

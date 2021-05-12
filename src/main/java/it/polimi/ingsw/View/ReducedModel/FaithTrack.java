@@ -87,6 +87,9 @@ public class FaithTrack implements Serializable {
 
         track.addAll(0, sections);
 
+        for(int i = 0; i < track.size(); i++) {
+            track.set(i, "   " + track.get(i) + "    ");
+        }
         return track;
     }
 
