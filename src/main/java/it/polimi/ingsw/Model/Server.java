@@ -62,7 +62,7 @@ public class Server {
         return S_PORT;
     }
     public void setPort(int n) throws Exception {
-        if(n>1024&n<65535)
+        if(n > 1024 && n < 65535)
             S_PORT=n;
         else{
             throw new Exception("Reserved port!");

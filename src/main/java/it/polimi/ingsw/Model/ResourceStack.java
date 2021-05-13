@@ -224,4 +224,9 @@ public class ResourceStack implements Serializable{
     public String toString() {
         return shields+" "+servants+" "+coins+" "+stones;
     }
+
+    /**Method for converting model classes to view classes*/
+    public it.polimi.ingsw.View.ReducedModel.ResourceStack toView() {
+        return new it.polimi.ingsw.View.ReducedModel.ResourceStack(this.shields, this.servants, this.coins, this.stones);
+    }
 }

@@ -187,9 +187,6 @@ public class FaithTrack implements Serializable {
         this.popeSpaceTHREE = popeSpaceTHREE;
     }
 
-
-
-
 }
 
 

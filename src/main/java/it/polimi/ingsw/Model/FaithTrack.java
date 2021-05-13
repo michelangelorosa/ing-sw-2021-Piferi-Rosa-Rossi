@@ -161,6 +161,24 @@ public class FaithTrack implements Serializable {
             }
         }
     }
+
+    /**Method for converting model classes to view classes*/
+    public it.polimi.ingsw.View.ReducedModel.FaithTrack toView() {
+        it.polimi.ingsw.View.ReducedModel.FaithTrack track = new it.polimi.ingsw.View.ReducedModel.FaithTrack();
+
+        for(int i = 0; i < 25; i++) this.cells[i].toView();
+
+        this.ONE.toView();
+        this.TWO.toView();
+        this.THREE.toView();
+
+        track.setPopeSpaceONE(this.popeSpaceONE);
+        track.setPopeSpaceTWO(this.popeSpaceTWO);
+        track.setPopeSpaceTHREE(this.popeSpaceTHREE);
+
+        return track;
+    }
+
 }
 
 

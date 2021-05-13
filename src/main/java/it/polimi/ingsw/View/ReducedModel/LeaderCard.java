@@ -125,58 +125,12 @@ public class LeaderCard implements Serializable {
         return resource;
     }
 
-
-   /* public ArrayList<String> toCli(Game game, Player player) {
-        ArrayList<String> leadCard = new ArrayList<>();
-        //ArrayList<String> cards = this.cardLevelToCli();
-        //String c = this.color.colorToString();
-        //String color = this.color.colorToChar();
-        String r = ANSIColors.RESET;
-        String name = " ";
-            name = " ";
-
-            if (game.getMyNickname() == player.getNickname() || this.active) {
-                leadCard.add("╔══════════════════════════╗" + r);
-                leadCard.add("║ " + ANSIColors.FRONT_BLUE + "B " + ANSIColors.FRONT_PURPLE + "   P " + ANSIColors.FRONT_YELLOW + "   Y  " + ANSIColors.FRONT_BRIGHT_GREEN + "  G    " + this.getResourcesRequired().toCliSymbol(ResourceType.SHIELDS) + " ║" + r);
-                leadCard.add("║ " + ANSIColors.FRONT_BLUE + this.cardsRequired.getBlueCardLv1() + "    " + ANSIColors.FRONT_PURPLE + this.cardsRequired.getPurpleCardLv1() + "    " + ANSIColors.FRONT_YELLOW + this.cardsRequired.getYellowCardLv1() + "    " + ANSIColors.FRONT_BRIGHT_GREEN + this.cardsRequired.getGreenCardLv1() + "    " + this.getResourcesRequired().toCliSymbol(ResourceType.SERVANTS) + " ║" + r);
-                leadCard.add("║ " + ANSIColors.FRONT_BLUE + this.cardsRequired.getBlueCardLv2() + "    " + ANSIColors.FRONT_PURPLE + this.cardsRequired.getPurpleCardLv2() + "    " + ANSIColors.FRONT_YELLOW + this.cardsRequired.getYellowCardLv2() + "    " + ANSIColors.FRONT_BRIGHT_GREEN + this.cardsRequired.getGreenCardLv2() + "    " + this.getResourcesRequired().toCliSymbol(ResourceType.COINS) + " ║" + r);
-                leadCard.add("║ " + ANSIColors.FRONT_BLUE + this.cardsRequired.getBlueCardLv3() + "    " + ANSIColors.FRONT_PURPLE + this.cardsRequired.getPurpleCardLv3() + "    " + ANSIColors.FRONT_YELLOW + this.cardsRequired.getYellowCardLv3() + "    " + ANSIColors.FRONT_BRIGHT_GREEN + this.cardsRequired.getGreenCardLv3() + "    " + this.getResourcesRequired().toCliSymbol(ResourceType.STONES) + " ║" + r);
-                leadCard.add("╠══════════════════════════╣" + r);
-                leadCard.add(printAbility() + r);
-                leadCard.add("╠══════════════════════════╣" + r);
-                leadCard.add(printEffect().get(0) + r);
-                leadCard.add(printEffect().get(1) + r);
-                leadCard.add(printEffect().get(2) + r);
-                leadCard.add(printEffect().get(3) + r);
-                leadCard.add("╠════╗        ╔════════════╣" + r);
-                leadCard.add("║ " + victoryPointsToCli() + " ║        ║ " + state() + " ║" + r);
-                leadCard.add("╚════╩════════╩════════════╝");
-            } else {
-                leadCard.add("╔══════════════════════════╗" + r);
-                leadCard.add("║          __      _       ║");
-                leadCard.add("║         /__\\__  //       ║");
-                leadCard.add("║        //_____\\///       ║");
-                leadCard.add("║       _| /-_-\\)|/_       ║");
-                leadCard.add("║      (___\\ _ //___\\      ║");
-                leadCard.add("║      (  |\\\\_/// * \\\\     ║");
-                leadCard.add("║       \\_| \\_((*   *))    ║");
-                leadCard.add("║       ( |__|_\\\\  *////     ║");
-      /*        leadCard.add("║       (o/  _  \\_*_/      ║");
-                leadCard.add("║       //\\__|__/\\         ║");
-                leadCard.add("║      // |  | |  |        ║");
-                leadCard.add("║     //  _\\ | |___)       ║");
-                leadCard.add("║    //  (___|             ║");
-                leadCard.add("╚══════════════════════════╝");
-            }
-            return leadCard;
-    }
-    */
-
-
     public String victoryPointsToCli() {
-        Integer points = this.victoryPoints;
-        if(this.victoryPoints > 9) return points.toString(); else return "0" + points.toString();
+        int points = this.victoryPoints;
+        if(this.victoryPoints > 9) return Integer.toString(points); else return "0" + Integer.toString(points);
     }
+
+
 
     public String printAbility(){
         if(this.action == LeaderCardAction.DISCOUNT) return "║         "+ this.action +"         ║";
@@ -254,7 +208,7 @@ public class LeaderCard implements Serializable {
     }
 
     public String state(){
-        if(this.active == true) return ANSIColors.FRONT_GREEN + "  ACTIVE  " + ANSIColors.RESET;
+        if(this.active) return ANSIColors.FRONT_GREEN + "  ACTIVE  " + ANSIColors.RESET;
         else return ANSIColors.FRONT_BRIGHT_RED + "NOT ACTIVE" + ANSIColors.RESET;
     }
 
@@ -263,10 +217,10 @@ public class LeaderCard implements Serializable {
         String r = ANSIColors.RESET;
 
         leadCard.add("╔══════════════════════════╗" + r);
-        leadCard.add("║ " + ANSIColors.FRONT_BLUE + "B " + ANSIColors.FRONT_PURPLE + "   P " + ANSIColors.FRONT_YELLOW + "   Y  " + ANSIColors.FRONT_BRIGHT_GREEN + "  G    " + this.getResourcesRequired().toCliSymbol(ResourceType.SHIELDS) + " ║" + r);
-        leadCard.add("║ " + ANSIColors.FRONT_BLUE + this.cardsRequired.getBlueCardLv1() + "    " + ANSIColors.FRONT_PURPLE + this.cardsRequired.getPurpleCardLv1() + "    " + ANSIColors.FRONT_YELLOW + this.cardsRequired.getYellowCardLv1() + "    " + ANSIColors.FRONT_BRIGHT_GREEN + this.cardsRequired.getGreenCardLv1() + "    " + this.getResourcesRequired().toCliSymbol(ResourceType.SERVANTS) + " ║" + r);
-        leadCard.add("║ " + ANSIColors.FRONT_BLUE + this.cardsRequired.getBlueCardLv2() + "    " + ANSIColors.FRONT_PURPLE + this.cardsRequired.getPurpleCardLv2() + "    " + ANSIColors.FRONT_YELLOW + this.cardsRequired.getYellowCardLv2() + "    " + ANSIColors.FRONT_BRIGHT_GREEN + this.cardsRequired.getGreenCardLv2() + "    " + this.getResourcesRequired().toCliSymbol(ResourceType.COINS) + " ║" + r);
-        leadCard.add("║ " + ANSIColors.FRONT_BLUE + this.cardsRequired.getBlueCardLv3() + "    " + ANSIColors.FRONT_PURPLE + this.cardsRequired.getPurpleCardLv3() + "    " + ANSIColors.FRONT_YELLOW + this.cardsRequired.getYellowCardLv3() + "    " + ANSIColors.FRONT_BRIGHT_GREEN + this.cardsRequired.getGreenCardLv3() + "    " + this.getResourcesRequired().toCliSymbol(ResourceType.STONES) + " ║" + r);
+        leadCard.add(printResources().get(0));
+        leadCard.add(printResources().get(1));
+        leadCard.add(printResources().get(2));
+        leadCard.add(printResources().get(3));
         leadCard.add("╠══════════════════════════╣" + r);
         leadCard.add(printAbility() + r);
         leadCard.add("╠══════════════════════════╣" + r);
@@ -301,6 +255,48 @@ public class LeaderCard implements Serializable {
         leadCard.add("║    //  (___|           "+c+"D "+r+"║");
         leadCard.add("╚══════════════════════════╝");
         return leadCard;
+    }
+
+    public ArrayList<String> printResources(){
+        ArrayList<String> leadCard = new ArrayList<>();
+        String r = ANSIColors.RESET;
+
+        if(!cardsRequired.getGeneric()){
+            leadCard.add("║ " + ANSIColors.FRONT_BLUE + " B " + ANSIColors.FRONT_PURPLE + "  P " + ANSIColors.FRONT_YELLOW + "   Y  " + ANSIColors.FRONT_BRIGHT_GREEN + "  G    " + this.getResourcesRequired().toCliSymbol(ResourceType.SHIELDS) + " ║" + r);
+            leadCard.add("║ " + ANSIColors.FRONT_BLUE + resourceToCli("BlueLv1") + "  " + ANSIColors.FRONT_PURPLE + resourceToCli("PurpleLv1") + "   " + ANSIColors.FRONT_YELLOW + resourceToCli("YellowLv1") + "   " + ANSIColors.FRONT_BRIGHT_GREEN + resourceToCli("GreenLv1") + "    " + this.getResourcesRequired().toCliSymbol(ResourceType.SERVANTS) + " ║" + r);
+            leadCard.add("║ " + ANSIColors.FRONT_BLUE + resourceToCli("BlueLv2") + "  " + ANSIColors.FRONT_PURPLE + resourceToCli("PurpleLv2") + "   " + ANSIColors.FRONT_YELLOW + resourceToCli("YellowLv2") + "   " + ANSIColors.FRONT_BRIGHT_GREEN + resourceToCli("GreenLv2") + "    " + this.getResourcesRequired().toCliSymbol(ResourceType.COINS) + " ║" + r);
+            leadCard.add("║ " + ANSIColors.FRONT_BLUE + resourceToCli("BlueLv3") + "  " + ANSIColors.FRONT_PURPLE + resourceToCli("PurpleLv3") + "   " + ANSIColors.FRONT_YELLOW + resourceToCli("YellowLv3") + "   " + ANSIColors.FRONT_BRIGHT_GREEN + resourceToCli("GreenLv3") + "    " + this.getResourcesRequired().toCliSymbol(ResourceType.STONES) + " ║" + r);
+        }
+        else{
+            leadCard.add("║ " + ANSIColors.FRONT_BLUE + "  BLUE     " + ANSIColors.FRONT_BLUE + resourceToCli("Blue") + "     " + this.getResourcesRequired().toCliSymbol(ResourceType.SHIELDS) + "   ║" + r);
+            leadCard.add("║ " + ANSIColors.FRONT_PURPLE + "  PURPLE   " + ANSIColors.FRONT_PURPLE  + resourceToCli("Purple") + "     "+ this.getResourcesRequired().toCliSymbol(ResourceType.SERVANTS) + "   ║" + r);
+            leadCard.add("║ " + ANSIColors.FRONT_YELLOW + "  YELLOW   " + ANSIColors.FRONT_YELLOW  + resourceToCli("Yellow") + "     "+ this.getResourcesRequired().toCliSymbol(ResourceType.COINS) + "   ║" + r);
+            leadCard.add("║ " + ANSIColors.FRONT_BRIGHT_GREEN + "  GREEN    " + ANSIColors.FRONT_BRIGHT_GREEN  + resourceToCli("Green") + "     "+ this.getResourcesRequired().toCliSymbol(ResourceType.STONES) + "   ║" + r);}
+        return leadCard;
+    }
+
+    public String resourceToCli(String input){
+        int resource = 0;
+        if(input.equals("BlueLv1")) resource = this.cardsRequired.getBlueCardLv1();
+        else if(input.equals("BlueLv2")) resource = this.cardsRequired.getBlueCardLv2();
+        else if(input.equals("BlueLv3")) resource = this.cardsRequired.getBlueCardLv3();
+        else if(input.equals("PurpleLv1")) resource = this.cardsRequired.getPurpleCardLv1();
+        else if(input.equals("PurpleLv2")) resource = this.cardsRequired.getPurpleCardLv2();
+        else if(input.equals("PurpleLv3")) resource = this.cardsRequired.getPurpleCardLv3();
+        else if(input.equals("YellowLv1")) resource = this.cardsRequired.getYellowCardLv1();
+        else if(input.equals("YellowLv2")) resource = this.cardsRequired.getYellowCardLv2();
+        else if(input.equals("YellowLv3")) resource = this.cardsRequired.getYellowCardLv3();
+        else if(input.equals("GreenLv1")) resource = this.cardsRequired.getGreenCardLv1();
+        else if(input.equals("GreenLv2")) resource = this.cardsRequired.getGreenCardLv2();
+        else if(input.equals("GreenLv3")) resource = this.cardsRequired.getGreenCardLv3();
+        else if(input.equals("Blue")) resource = this.cardsRequired.getNeedBlueCard();
+        else if(input.equals("Purple")) resource = this.cardsRequired.getNeedPurpleCard();
+        else if(input.equals("Yellow")) resource = this.cardsRequired.getNeedYellowCard();
+        else if(input.equals("Green")) resource = this.cardsRequired.getNeedGreenCard();
+
+        if(resource < 9) return " " + resource;
+        else return ""+resource;
+
     }
 /*
     public void printD(LeaderCard card){

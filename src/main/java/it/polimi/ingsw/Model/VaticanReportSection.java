@@ -34,4 +34,9 @@ public class VaticanReportSection implements Serializable {
     public void isCorrect() throws  IllegalArgumentException{
         if(begin < end || begin < 0 || end < 0 || begin > 25 || end > 25) throw new IllegalArgumentException("Vatican Report Section index out of bound");
     }
+
+    /**Method for converting model classes to view classes*/
+    public it.polimi.ingsw.View.ReducedModel.VaticanReportSection toView() {
+        return new it.polimi.ingsw.View.ReducedModel.VaticanReportSection(this.begin, this.end, this.points);
+    }
 }

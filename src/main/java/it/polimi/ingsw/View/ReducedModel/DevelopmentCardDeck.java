@@ -14,7 +14,7 @@ import java.util.Collections;
 public class DevelopmentCardDeck implements Serializable {
     private static final long serialVersionUID = 0x1;
 
-    private DevelopmentCard[] cards;
+   private DevelopmentCard[] cards;
    private Color color;
    private Level level;
    private int cardsInDeck;
@@ -76,6 +76,13 @@ public class DevelopmentCardDeck implements Serializable {
      */
     public int getCardsInDeck() {
         return cardsInDeck;
+    }
+
+    /**
+     * Setter for "cardsInDeck" attribute in DevelopmentCardDeck
+     */
+    public void setCardsInDeck(int cardsInDeck) {
+        this.cardsInDeck = cardsInDeck;
     }
 
     /**

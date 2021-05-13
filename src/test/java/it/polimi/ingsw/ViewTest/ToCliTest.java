@@ -1,5 +1,7 @@
+
 package it.polimi.ingsw.ViewTest;
 
+import it.polimi.ingsw.Model.Enums.*;
 import it.polimi.ingsw.View.ANSIColors;
 import it.polimi.ingsw.View.ReducedModel.*;
 
@@ -371,8 +373,7 @@ public class ToCliTest {
         card = new LeaderCard(52, 78, resourceStack, requirements, input, 5, 4);
         game.getPlayers().get(2).getLeaderCards()[1] = card;
 
-        boolean up = false;
-        if(game.getMyNickname().equals(game.getCurrentPlayer().getNickname())) up = true;
+        boolean up = game.getMyNickname().equals(game.getCurrentPlayer().getNickname());
 
         for(String s : player1.leaderPrint(up))
             System.out.println(s);
@@ -413,7 +414,7 @@ public class ToCliTest {
         players.add(player1);
         players.add(player2);
         game.setPlayers(players);
-        game.setMyNickname("Marcantonio");
+        game.setMyNickname("Lello");
 
         ResourceStack input = new ResourceStack(0, 1, 2, 3);
         BasicProduction basic = new BasicProduction(input, input, 10, 10, 9);
@@ -426,13 +427,14 @@ public class ToCliTest {
         }
 
         ResourceStack resourceStack = new ResourceStack(1,4,3,2);
-        LeaderRequirements requirements = new LeaderRequirements(1,2,2,2,2,1,2,2,1,4,2,4);
+        LeaderRequirements requirements = new LeaderRequirements(11,2,3,22,1,24,3,2,3,44,2,3);
         ResourceStack discount = new ResourceStack(1,0,0,0);
         LeaderCard card = new LeaderCard(49, 12, resourceStack, requirements, discount);
         card.setActive(true);
         game.getPlayers().get(0).getLeaderCards()[0] = card;
 
         Marble marble = Marble.GREY;
+        requirements = new LeaderRequirements(11,2,3,22,1,24,3,2,3,44,2,3);
         card = new LeaderCard(50, 12, resourceStack, requirements, marble);
         card.setActive(false);
         game.getPlayers().get(0).getLeaderCards()[1] = card;
@@ -442,6 +444,7 @@ public class ToCliTest {
         game.getPlayers().get(1).getLeaderCards()[0] = card;
 
         input = new ResourceStack(11,2,3,4);
+        requirements = new LeaderRequirements(1, 2, 1,12);
         card = new LeaderCard(52, 78, resourceStack, requirements, input, 5, 4);
         game.getPlayers().get(1).getLeaderCards()[1] = card;
 
@@ -450,12 +453,17 @@ public class ToCliTest {
         game.getPlayers().get(2).getLeaderCards()[0] = card;
 
         input = new ResourceStack(11,2,3,4);
+        requirements = new LeaderRequirements(11,2,3,22,1,24,3,2,3,44,2,3);
         card = new LeaderCard(52, 78, resourceStack, requirements, input, 5, 4);
+        card.setActive(true);
         game.getPlayers().get(2).getLeaderCards()[1] = card;
 
         game.boardToCli(game.getPlayers().get(2));
 
-        for(String s : game.boardToCli(game.getPlayers().get(2)))
+        players.get(2).getPopeTiles()[0].setPopeTile(PopeTile.UP);
+        players.get(2).getPopeTiles()[1].setPopeTile(PopeTile.No);
+
+        for(String s : game.boardToCli(game.getPlayers().get(1)))
             System.out.println(s);
     }
 
@@ -788,6 +796,17 @@ public class ToCliTest {
         for(String s : trackString)
             System.out.println(s);
 
+    }
+
+    @Test
+    public void popeTilesTest(){
+        Player player = new Player("gianni", 1, true);
+        for(int i = 0; i < 3; i++) {
+            player.getPopeTiles()[i].setPopeTile(PopeTile.No);
+        }
+        ArrayList<String> popeTiles = player.popeTileToCli();
+        for(String s : popeTiles)
+            System.out.println(s);
     }
 
 }

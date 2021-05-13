@@ -1,7 +1,7 @@
 package it.polimi.ingsw.View.MessagesToClient;
 
 import it.polimi.ingsw.View.ReducedModel.*;
-import it.polimi.ingsw.View.ReducedModel.Enums.*;
+import it.polimi.ingsw.Model.Enums.*;
 import it.polimi.ingsw.Controller.Actions.ActionType;
 
 public class ChoseProductionOutputMessage extends MessageToClient {

@@ -3,6 +3,7 @@ package it.polimi.ingsw.View.ReducedModel;
 import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.View.ANSIfont;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -158,6 +159,10 @@ public class Player implements Serializable {
         this.slots = slots;
     }
 
+    public void setLeaderCards(LeaderCard[] leaderCards) {
+        this.leaderCards = leaderCards;
+    }
+
     public void setTemporaryResources(ResourceStack temporaryResources) {
         this.temporaryResources = temporaryResources;
     }
@@ -184,7 +189,8 @@ public class Player implements Serializable {
         ArrayList<String> popeTiles = popeTileToCli();
 
         for(i = 0; i < 5; i++)
-            player.add(0, "                               ");
+            if(i == 2) player.add(i, "    "+ ANSIfont.BOLD +ANSIfont.ITALIC +"Masters of Renaissance"+ANSIfont.RESET+"     ");
+            else player.add(i, "                               ");
         int j;
         for(i = 1; i < 9; i++)
             player.set(i, player.get(i) +" "+ basic.get(i-1));

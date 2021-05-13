@@ -30,7 +30,7 @@ public class CardSlot implements Serializable {
     /**
      *In this method firstly I check if the slot is full or if I can't add the card in this slot. If I can add the card
      * I memorize it in the array cards.
-     * @param card
+     * @param card is the card to add
      */
 
     public void addCard(DevelopmentCard card){
@@ -75,8 +75,7 @@ public class CardSlot implements Serializable {
     public boolean canAdd(DevelopmentCard card){
         if(levelOccupied == 0 && card.getLevel() == Level.ONE) return true;
         if(levelOccupied == 1 && card.getLevel() == Level.TWO) return true;
-        if(levelOccupied == 2 && card.getLevel() == Level.THREE) return true;
-        else return false;
+        return levelOccupied == 2 && card.getLevel() == Level.THREE;
     }
 
     /**
@@ -117,5 +116,19 @@ public class CardSlot implements Serializable {
             }
         }
         return count;
+    }
+
+    public DevelopmentCard[] getCards() {
+        return cards;
+    }
+
+    /**Method for converting model classes to view classes*/
+    public it.polimi.ingsw.View.ReducedModel.CardSlot toView() {
+        it.polimi.ingsw.View.ReducedModel.CardSlot cardSlot = new it.polimi.ingsw.View.ReducedModel.CardSlot();
+        cardSlot.setLevelOccupied(this.levelOccupied);
+        for(int i = 0; i < 4; i++)
+            cardSlot.getDevelopmentCards()[i] = this.cards[i].toView();
+
+        return cardSlot;
     }
 }

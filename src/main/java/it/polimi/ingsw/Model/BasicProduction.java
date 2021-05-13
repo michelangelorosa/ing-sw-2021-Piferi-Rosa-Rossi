@@ -81,4 +81,20 @@ public class BasicProduction implements Serializable {
     public int getOutputFaith() {
         return outputFaith;
     }
+
+    /**Method for converting model classes to view classes*/
+    public it.polimi.ingsw.View.ReducedModel.BasicProduction toView() {
+        it.polimi.ingsw.View.ReducedModel.BasicProduction basicProduction;
+
+        if(this.fixedInputs == null && this.fixedOutputs == null && this.outputFaith == 0) {
+            basicProduction = new it.polimi.ingsw.View.ReducedModel.BasicProduction(this.jollyIn, this.jollyOut);
+        }
+        else{
+            it.polimi.ingsw.View.ReducedModel.ResourceStack input = new it.polimi.ingsw.View.ReducedModel.ResourceStack(this.getFixedInputs().getShields(), this.getFixedInputs().getServants(), this.getFixedInputs().getCoins(), this.getFixedInputs().getStones());
+            it.polimi.ingsw.View.ReducedModel.ResourceStack output = new it.polimi.ingsw.View.ReducedModel.ResourceStack(this.getFixedOutputs().getShields(), this.getFixedOutputs().getServants(), this.getFixedOutputs().getCoins(), this.getFixedOutputs().getStones());
+
+            basicProduction = new it.polimi.ingsw.View.ReducedModel.BasicProduction(input, output, this.jollyIn, this.jollyOut, this.outputFaith);
+        }
+        return basicProduction;
+    }
 }

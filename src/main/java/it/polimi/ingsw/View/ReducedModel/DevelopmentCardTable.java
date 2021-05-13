@@ -50,6 +50,10 @@ public class DevelopmentCardTable implements Serializable {
         }
     }
 
+    public DevelopmentCardDeck[][] getDecks() {
+        return decks;
+    }
+
     /**
      * This method is used to draw one card from a specified deck inside the Development Card Table.
      * @param row the deck's row index.

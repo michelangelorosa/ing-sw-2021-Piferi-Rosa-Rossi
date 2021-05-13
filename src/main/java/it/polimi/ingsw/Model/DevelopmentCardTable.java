@@ -169,4 +169,23 @@ public class DevelopmentCardTable implements Serializable {
         resourceManager.setTemporaryResourcesToPay(cardCost);
     }
 
+    public it.polimi.ingsw.View.ReducedModel.DevelopmentCardTable toView(){
+        it.polimi.ingsw.View.ReducedModel.DevelopmentCardTable table = new it.polimi.ingsw.View.ReducedModel.DevelopmentCardTable();
+
+        table.getDecks()[0][0] = this.decks[0][0].toView();
+        table.getDecks()[0][0] = this.decks[0][1].toView();
+        table.getDecks()[0][0] = this.decks[0][2].toView();
+        table.getDecks()[0][0] = this.decks[0][3].toView();
+        table.getDecks()[0][0] = this.decks[1][0].toView();
+        table.getDecks()[0][0] = this.decks[1][1].toView();
+        table.getDecks()[0][0] = this.decks[1][2].toView();
+        table.getDecks()[0][0] = this.decks[1][3].toView();
+        table.getDecks()[0][0] = this.decks[2][0].toView();
+        table.getDecks()[0][0] = this.decks[2][1].toView();
+        table.getDecks()[0][0] = this.decks[2][2].toView();
+        table.getDecks()[0][0] = this.decks[2][3].toView();
+
+        return table;
+    }
+
 }

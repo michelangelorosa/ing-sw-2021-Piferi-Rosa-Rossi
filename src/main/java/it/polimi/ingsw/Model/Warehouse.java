@@ -171,10 +171,7 @@ public class Warehouse implements Serializable {
     public boolean canAddToDepot(ResourceType type, WarehouseDepot depot) {
             if(depot.getResourceType() == ResourceType.NONE && this.areEmptyDepotsFillableByType(type))
                 return true;
-            if(depot.getResourceType() == type && !depot.isFull())
-                return true;
-
-            return false;
+        return depot.getResourceType() == type && !depot.isFull();
     }
 
     /**
@@ -269,18 +266,12 @@ public class Warehouse implements Serializable {
         if(firstDepot.isFromLeaderCardAbility())
             if(secondDepot.getResourceType() == firstDepot.getResourceType())
                 return true;
-            else if(secondDepot.getResourceType() == ResourceType.NONE && areEmptyDepotsFillableByType(firstDepot.getResourceType()))
-                return true;
-            else
-                return false;
+            else return secondDepot.getResourceType() == ResourceType.NONE && areEmptyDepotsFillableByType(firstDepot.getResourceType());
 
         if(secondDepot.isFromLeaderCardAbility())
             if(firstDepot.getResourceType() == secondDepot.getResourceType())
                 return true;
-            else if(firstDepot.getResourceType() == ResourceType.NONE && areEmptyDepotsFillableByType(secondDepot.getResourceType()))
-                return true;
-            else
-                return false;
+            else return firstDepot.getResourceType() == ResourceType.NONE && areEmptyDepotsFillableByType(secondDepot.getResourceType());
 
         return true;
     }
@@ -400,10 +391,7 @@ public class Warehouse implements Serializable {
      * @return True id the resource can be added.
      */
     public boolean canAddResource(ResourceType type) {
-        boolean canAdd = false;
-
-        if(emptyDepotExists() && areEmptyDepotsFillableByType(type))
-            canAdd = true;
+        boolean canAdd = emptyDepotExists() && areEmptyDepotsFillableByType(type);
 
         for(int i = 0; i <= 2; i++)
             if(this.warehouseDepots[i].getResourceType() == type && !this.warehouseDepots[i].isFull())
@@ -460,6 +448,27 @@ public class Warehouse implements Serializable {
 
         this.extraWarehouseDepot1IsActive = warehouse.isExtraWarehouseDepot1IsActive();
         this.extraWarehouseDepot2IsActive = warehouse.isExtraWarehouseDepot2IsActive();
+    }
+
+    /**Method for converting model classes to view classes*/
+    public it.polimi.ingsw.View.ReducedModel.Warehouse toView() {
+        it.polimi.ingsw.View.ReducedModel.Warehouse warehouse = new it.polimi.ingsw.View.ReducedModel.Warehouse();
+
+        warehouse.getWarehouseDepots()[0].setResourceType(this.warehouseDepots[0].getResourceType());
+        warehouse.getWarehouseDepots()[1].setResourceType(this.warehouseDepots[1].getResourceType());
+        warehouse.getWarehouseDepots()[2].setResourceType(this.warehouseDepots[2].getResourceType());
+
+        warehouse.getWarehouseDepots()[0].setStoredResources(this.warehouseDepots[0].getStoredResources());
+        warehouse.getWarehouseDepots()[1].setStoredResources(this.warehouseDepots[1].getStoredResources());
+        warehouse.getWarehouseDepots()[2].setStoredResources(this.warehouseDepots[2].getStoredResources());
+
+        warehouse.getExtraWarehouseDepot1().setResourceType(this.extraWarehouseDepot1.getResourceType());
+        warehouse.getExtraWarehouseDepot2().setResourceType(this.extraWarehouseDepot2.getResourceType());
+
+        warehouse.setExtraWarehouseDepot1IsActive(this.extraWarehouseDepot1IsActive);
+        warehouse.setExtraWarehouseDepot2IsActive(this.extraWarehouseDepot2IsActive);
+
+        return warehouse;
     }
 
 }

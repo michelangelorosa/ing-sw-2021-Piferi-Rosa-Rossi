@@ -8,43 +8,35 @@ public class FaithCell implements Serializable{
     /**Every card is characterized by an id and the point it gives*/
     private final int idCell;
     private int victoryPoints;
-    //private VaticanReportSectionEnum vaticanReportSectionEnum;
-    //private final PopeSpace popeSpace;
 
+    /**FaithCell's constructor*/
     public FaithCell(int idCell, int victoryPoints) {
-        //this.vaticanReportSectionEnum = vaticanReportSectionEnum;
-        //this.popeSpace = popeSpace;
         this.idCell = idCell;
         this.victoryPoints = victoryPoints;
     }
 
+    /**Getter for idCell*/
     public int getIdCell() {
         return idCell;
     }
 
+    /**Getter for victoryPoints*/
     public int getVictoryPoints() {
         return victoryPoints;
     }
-/*
-    public VaticanReportSectionEnum getVaticanReportSection() {
-        return vaticanReportSectionEnum;
-    }
 
-    public PopeSpace getPopeSpace() {
-        return popeSpace;
-    }
-
-    public void setVaticanReportSection(VaticanReportSectionEnum vaticanReportSectionEnum) {
-        this.vaticanReportSectionEnum = vaticanReportSectionEnum;
-    }
- */
-
+    /**Setter for victoryPoints*/
     public void setVictoryPoints(int victoryPoints) {
         this.victoryPoints = victoryPoints;
     }
 
     public String toString() {
-        return idCell+" "+victoryPoints;// + " " + vaticanReportSectionEnum + " " +popeSpace;
+        return idCell+" "+victoryPoints;
+    }
+
+    /**Method for converting model classes to view classes*/
+    public it.polimi.ingsw.View.ReducedModel.FaithCell toView() {
+        return new it.polimi.ingsw.View.ReducedModel.FaithCell(this.idCell, this.victoryPoints);
     }
 
 }

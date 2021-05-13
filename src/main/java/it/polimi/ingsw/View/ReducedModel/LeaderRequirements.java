@@ -25,7 +25,9 @@ public class LeaderRequirements implements Serializable {
     private int needPurpleCard;
     private int needYellowCard;
     private int needGreenCard;
+    private boolean generic;
 
+    /**Constructor for the requirements that needs a specific number of card of a specific level*/
     public LeaderRequirements(int blueCardLv1, int purpleCardLv1, int yellowCardLv1, int greenCardLv1, int blueCardLv2, int purpleCardLv2, int yellowCardLv2, int greenCardLv2, int blueCardLv3, int purpleCardLv3, int yellowCardLv3, int greenCardLv3) {
         this.blueCardLv1 = blueCardLv1;
         this.purpleCardLv1 = purpleCardLv1;
@@ -39,15 +41,19 @@ public class LeaderRequirements implements Serializable {
         this.purpleCardLv3 = purpleCardLv3;
         this.yellowCardLv3 = yellowCardLv3;
         this.greenCardLv3 = greenCardLv3;
+        this.generic = false;
     }
 
+    /**Constructor for */
     public LeaderRequirements(int needBlueCard, int needPurpleCard, int needYellowCard, int needGreenCard){
         this.needBlueCard = needBlueCard;
         this.needPurpleCard = needPurpleCard;
         this.needYellowCard = needYellowCard;
         this.needGreenCard = needGreenCard;
+        this.generic = true;
     }
 
+    /**Getters*/
     public int getBlueCardLv1() {
         return blueCardLv1;
     }
@@ -112,4 +118,7 @@ public class LeaderRequirements implements Serializable {
         return needGreenCard;
     }
 
+    public boolean getGeneric(){
+        return generic;
+    }
 }

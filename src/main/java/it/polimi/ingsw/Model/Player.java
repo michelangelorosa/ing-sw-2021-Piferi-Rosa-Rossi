@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
+import it.polimi.ingsw.View.ReducedModel.LeaderCard;
 
 import java.io.Serializable;
 
@@ -130,5 +131,24 @@ public class Player implements Serializable {
 
     public boolean hasFinished() {
         return this.getBoard().getDevelopmentCardSlots().countAllCards() >= 7 || this.getFaithTrackPosition() >= 25;
+    }
+
+    /**Method for converting model classes to view classes*/
+    public it.polimi.ingsw.View.ReducedModel.Player toView() {
+        it.polimi.ingsw.View.ReducedModel.Player player = new it.polimi.ingsw.View.ReducedModel.Player(this.nickname, this.turnPosition, this.Inkwell);
+        player.setVictoryPoints(this.victoryPoints);
+        player.setFaithTrackPosition(this.faithTrackPosition);
+        player.setBasicProduction(this.board.getBasicProduction().toView());
+        player.setWarehouse(this.board.getResourceManager().getWarehouse().toView());
+        player.setStrongbox(this.board.getResourceManager().getStrongbox().toView());
+
+        it.polimi.ingsw.View.ReducedModel.PopeTileClass[] popeTileClasses = new it.polimi.ingsw.View.ReducedModel.PopeTileClass[3];
+        for(int i = 0; i < 3; i++) popeTileClasses[i] = this.popeTiles[i].toView();
+        player.setPopeTiles(popeTileClasses);
+
+        it.polimi.ingsw.View.ReducedModel.LeaderCard[] leaderCards = new LeaderCard[2];
+
+
+        return player;
     }
 }

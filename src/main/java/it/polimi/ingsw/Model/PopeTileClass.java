@@ -23,6 +23,11 @@ public class PopeTileClass {
         return victoryPoints;
     }
 
+    /**Method for converting model classes to view classes*/
+    public it.polimi.ingsw.View.ReducedModel.PopeTileClass toView() {
+        it.polimi.ingsw.View.ReducedModel.PopeTileClass popeTileClass = new it.polimi.ingsw.View.ReducedModel.PopeTileClass(this.victoryPoints);
+        popeTileClass.setPopeTile(this.popeTile);
 
-
+        return popeTileClass;
+    }
 }

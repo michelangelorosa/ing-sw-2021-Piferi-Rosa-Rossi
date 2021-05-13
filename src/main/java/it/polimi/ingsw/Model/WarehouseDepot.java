@@ -115,11 +115,11 @@ public class WarehouseDepot implements Serializable {
 
     }
 
+    /**Method for converting model classes to view classes*/
     public it.polimi.ingsw.View.ReducedModel.WarehouseDepot toView() {
         it.polimi.ingsw.View.ReducedModel.WarehouseDepot depot = new it.polimi.ingsw.View.ReducedModel.WarehouseDepot(this.maxResources, this.isFromLeaderCardAbility);
         depot.setStoredResources(this.storedResources);
-        //TODO convert model objects to view objects
-        //depot.setResourceType(this.resourceType);
+        depot.setResourceType(this.resourceType);
         return depot;
     }
 

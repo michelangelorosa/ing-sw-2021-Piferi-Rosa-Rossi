@@ -98,6 +98,7 @@ public class ResourceStack implements Serializable{
         }
     }
 
+    /**Method to print the symbols of the cli*/
     public String toCliSymbol(ResourceType type) {
         switch(type) {
             case SHIELDS: if(this.shields > 9) return ANSIColors.FRONT_BLUE +ANSIColors.SHIELD+":"+this.shields+ANSIColors.RESET; else return ANSIColors.FRONT_BLUE +ANSIColors.SHIELD+": "+this.shields+ANSIColors.RESET;
@@ -112,6 +113,7 @@ public class ResourceStack implements Serializable{
         }
     }
 
+    /**Method to save in an ArrayList the resourceStack*/
     public ArrayList<String> toCli() {
         ArrayList<String> stack = new ArrayList<>();
         stack.add("╔══════╦══════╦══════╦══════╗");
@@ -123,6 +125,7 @@ public class ResourceStack implements Serializable{
         return stack;
     }
 
+    /**Method to save in an ArrayList */
     public ArrayList<String> toCliAdd() {
         ArrayList<String> stack = this.toCli();
         ArrayList<String> message = new ArrayList<>();

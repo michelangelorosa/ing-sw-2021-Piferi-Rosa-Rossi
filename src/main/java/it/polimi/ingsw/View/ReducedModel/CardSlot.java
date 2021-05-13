@@ -20,7 +20,16 @@ public class CardSlot implements Serializable {
         this.cards = new DevelopmentCard[3];
     }
 
+    public DevelopmentCard[] getDevelopmentCards() {
+        return cards;
+    }
 
+    /**
+     * Setter for levelOccupied
+     */
+    public void setLevelOccupied(int levelOccupied) {
+        this.levelOccupied = levelOccupied;
+    }
 
     /**
      * Getter for levelOccupied

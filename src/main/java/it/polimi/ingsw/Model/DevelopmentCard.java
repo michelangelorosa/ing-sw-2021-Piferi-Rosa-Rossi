@@ -152,4 +152,8 @@ public class DevelopmentCard implements Serializable {
         return cardId+" "+victoryPoints+" "+color+" "+level+" "+cost+" "+input+" "+output+" "+outputFaith;
     }
 
+    /**Method for converting model classes to view classes*/
+    public it.polimi.ingsw.View.ReducedModel.DevelopmentCard toView() {
+        return new it.polimi.ingsw.View.ReducedModel.DevelopmentCard(this.color, this.level, this.cardId, this.victoryPoints, this.cost.toView(), this.input.toView(), this.output.toView(), this.outputFaith);
+    }
 }

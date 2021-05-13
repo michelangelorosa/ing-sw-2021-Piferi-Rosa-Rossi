@@ -1,5 +1,6 @@
 package it.polimi.ingsw.View.ReducedModel;
 
+import it.polimi.ingsw.View.ANSIfont;
 import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.Enums.SoloActionToken;
 
@@ -168,8 +169,8 @@ public class Game {
             else board.set(i, board.get(i) + "  " + leader.get(i));
         }
 
-        if(!up) board.add(0, player.getNickname() + "'s board ");
-        else board.add(0, "My board");
+        if(!up) board.add(0, ANSIfont.ITALIC + player.getNickname() + ANSIfont.RESET+"'s board ");
+        else board.add(0, ANSIfont.ITALIC + "My board"+ANSIfont.RESET);
 
         board.add(0, "                                                                                                                                                             ");
 

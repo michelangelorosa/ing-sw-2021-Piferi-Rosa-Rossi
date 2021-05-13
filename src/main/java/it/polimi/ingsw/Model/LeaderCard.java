@@ -73,55 +73,83 @@ public class LeaderCard implements Serializable {
         this.resource = resource;
     }
 
+    /**Setter for Active*/
     public void setActive(boolean active) {
         this.active = active;
     }
 
+    /**Getter for cardId*/
     public int getCardId() {
         return cardId;
     }
 
+    /**Getter for victoryPoints*/
     public int getVictoryPoints() {
         return victoryPoints;
     }
 
+    /**Getter for Action*/
     public LeaderCardAction getAction() {
         return action;
     }
 
+    /**Getter for Active*/
     public boolean isActive() {
         return active;
     }
 
+    /**Getter for ResourceRequired*/
     public ResourceStack getResourcesRequired() {
         return resourcesRequired;
     }
 
+    /**Getter for cardsRequired*/
     public LeaderRequirements getCardsRequired() {
         return cardsRequired;
     }
 
+    /**Getter for discount*/
     public ResourceStack getDiscount() {
         return discount;
     }
 
+    /**Getter for marble*/
     public Marble getMarble() {
         return marble;
     }
 
+    /**Getter for input*/
     public ResourceStack getInput() {
         return input;
     }
 
+    /**Getter for faith*/
     public int getFaith() {
         return faith;
     }
 
+    /**Getter for jollyOut*/
     public int getJollyOut() {
         return jollyOut;
     }
 
+    /**Getter for Resource*/
     public ResourceType getResource() {
         return resource;
+    }
+
+    public it.polimi.ingsw.View.ReducedModel.LeaderCard toView(){
+        it.polimi.ingsw.View.ReducedModel.LeaderCard leaderCard;
+        if(this.action == LeaderCardAction.DISCOUNT){
+            leaderCard = new it.polimi.ingsw.View.ReducedModel.LeaderCard(this.cardId, this.victoryPoints, this.resourcesRequired.toView(), this.cardsRequired.toView(), this.discount.toView());
+        }
+        else if(this.action == LeaderCardAction.PRODUCTIONPOWER){
+            leaderCard = new it.polimi.ingsw.View.ReducedModel.LeaderCard(this.cardId, this.victoryPoints, this.resourcesRequired.toView(), this.cardsRequired.toView(), this.input.toView(), this.jollyOut, this.faith);
+        }
+        else {//(this.action == LeaderCardAction.EXTRADEPOT) {
+            leaderCard = new it.polimi.ingsw.View.ReducedModel.LeaderCard(this.cardId, this.victoryPoints, this.resourcesRequired.toView(), this.cardsRequired.toView(), this.resource);
+        }
+        //else leaderCard = new it.polimi.ingsw.View.ReducedModel.LeaderCard(this.cardId, this.victoryPoints, this.resourcesRequired.toView(), this.cardsRequired.toView(), this.marble);
+        return leaderCard;
     }
 }
