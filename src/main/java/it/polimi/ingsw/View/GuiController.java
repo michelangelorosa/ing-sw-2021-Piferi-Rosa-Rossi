@@ -1,8 +1,8 @@
 package it.polimi.ingsw.View;
 
-import it.polimi.ingsw.View.ReducedModel.Enums.Marble;
-import it.polimi.ingsw.View.ReducedModel.Enums.ResourceType;
-import it.polimi.ingsw.View.ReducedModel.Enums.SoloActionToken;
+import it.polimi.ingsw.Model.Enums.Marble;
+import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.Model.Enums.SoloActionToken;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -144,10 +144,10 @@ public class GuiController {
      * @throws Exception
      */
     public void leaderCardSelection(ActionEvent event) throws Exception{
-        Image card1 = getImage(54,true);
-        Image card2 = getImage(545,true);
-        Image card3 = getImage(14,false);
-        Image card4 = getImage(4,true);
+        Image card1 = getImage(64,true);
+        Image card2 = getImage(63,true);
+        Image card3 = getImage(62,true);
+        Image card4 = getImage(61,true);
 
 
         Parent leaderCard;
@@ -313,5 +313,4 @@ public class GuiController {
             return null;
         return new Image(getClass().getResource(source+token).toExternalForm());
     }
-
 }
