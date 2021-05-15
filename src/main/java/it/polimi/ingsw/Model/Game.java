@@ -19,6 +19,7 @@ public class Game {
     /** ArrayList containing all Leader Cards of the game */
     private ArrayList<LeaderCard> leaderCards;
 
+
     private final Market market;
     private final DevelopmentCardTable developmentCardTable;
     private final FaithTrack faithTrack;

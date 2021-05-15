@@ -38,7 +38,6 @@ public class ClientExceptionHandler {
      * @param address the address the user has inserted
      */
     public boolean addressValidator(String address) throws Exception {
-        boolean valid;
         String PATTERN = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
         if (address.matches(PATTERN)||address.equals("localhost")){
             System.out.println("Server ok");

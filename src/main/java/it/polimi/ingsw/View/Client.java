@@ -4,32 +4,117 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.Socket;
-import java.util.Scanner;
-/** This is the Client, and it handles all the Outputs to the server in this class,
- * for testing purposes, for now, the connection is hardcoded to localhost:8765
- * For listening the inputStream from the server it calls clientConnection in a new Thread
+import java.util.*;
+
+/** The client handles the opening of the desired interface and than handles the connection to the server
  */
 public class Client {
-    static private String serverAddress="localhost";
-    static private int serverPort=8765;
+    static private String serverAddress;
+    static private int serverPort;
+    private String user;
+    private boolean token;
+    private boolean myTurn;
+    private ClientConnection clientConnection;
 
-    public static void main(String[] args) throws Exception {
+    /**
+     * Default constructor
+     * @param serverAddress The address to connect to
+     * @param serverPort    The port to connect to
+     * @param user          The nickname of the player
+     * @param token         The player's token, with a token the player is allowed to perform one of the three moves allowed by the rules for each turn (buy/market/production)
+     * @param myTurn        If it's the player's turn it is allowed to send messages to the server and actively interact with the server
+     */
+    public Client(String serverAddress, int serverPort, String user,boolean token,boolean myTurn){
+        this.serverAddress = serverAddress;
+        this.serverPort = serverPort;
+        this.user = user;
+        this.token = token;
+        this.myTurn = myTurn;
+    }
 
+    /**
+     * Launches the client, if a command line argument "--cli" or "--CLI" is provided the game is started in CLI mode, otherwise in GUI
+     * @param args          Command Line Arguments
+     */
+    public void main(String[] args){
+       try{
+        if (args[0].toLowerCase(Locale.ROOT).equals("--cli")) {
+            //LAUNCH CLI
+        } else {
+            //LAUNCH GUI
+        }
+       }catch (Exception e) {
+       System.err.println("Unable to start a Graphical Interface, shutting down");
+       System.exit(-1);
+       }
+    }
+
+    /**
+     * Once the user is able to interact with the game this method is called to try to establish a connection with the server for both listening and writing on the socket
+     * @param serverAddress     String with an address to connect to
+     * @param serverPort        Port where to establish a connection
+     */
+    public void startUp(String serverAddress,Integer serverPort){
         try {
+            //serverAddress and serverPort have to be provided by the user
+
             Socket socket = new Socket(serverAddress, serverPort);
             System.out.println("Connected to server!");
 
-            ClientConnection clientConnection = new ClientConnection(socket);
+            ClientConnection clientConnection = new ClientConnection(this);
             new Thread(clientConnection).start();
 
-            OutputStream outputStream = socket.getOutputStream();
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-
-            while (true) {
-                //Gestione OutputStream
-            }
         } catch (IOException e) {
             e.printStackTrace();
-        }
+            System.err.println("Error in creating connection!");
+            Thread.currentThread().interrupt();
+            System.exit(-1);        }
     }
+
+    /**
+     * To get the user's name
+     * @return      String username
+     */
+    public String getUser(){
+        return user;
+    }
+
+    /**
+     * Sets the username of the Player. Has to be set from graphical interface once the username is validated and accepted by the server
+     * @param user
+     */
+    public void setUser(String user){
+        this.user=user;
+    }
+
+    /**
+     * Sets the token value; it has to be set <b>true</b> every time it's the player's turn and <b>false</b> once the token is used
+     * @param token
+     */
+    public void setToken(boolean token) {
+        this.token = token;
+    }
+
+    /**
+     * Sets if it's the user's turn, otherwise the client won't be allowed to send messages
+     * @param myTurn
+     */
+    public void setMyTurn(boolean myTurn) {
+        this.myTurn = myTurn;
+    }
+
+    /**
+     * @return the server the Client is connected to
+     */
+    public String getServer(){
+        return serverAddress;
+    }
+    /**
+     * @return the port the Client is connected to
+     */
+    public int getPort(){
+        return serverPort;
+    }
+
+
 }

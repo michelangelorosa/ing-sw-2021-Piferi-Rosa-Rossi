@@ -30,16 +30,17 @@ public class ServerConnection implements Runnable {
     @Override
     public void run() {
         System.out.println("Server Connection Connected to " + socket.getInetAddress());
+
         Set<String> names = Server.getNames();
         Set<Socket> socketSet = Server.getSockets();
-        try {
 
+        try {
             // get the output stream from the socket.
             OutputStream outputStream = socket.getOutputStream();
             // create an object output stream from the output stream so we can send an object through it
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
 
-            // Input
+            //Again, for the input
             InputStream inputStream = socket.getInputStream();
             ObjectInputStream objectInputStream =new ObjectInputStream(inputStream);
 
@@ -47,35 +48,35 @@ public class ServerConnection implements Runnable {
 
             while (true) {
                 System.out.println("Sent request for name please! "+0);
+                //Sends a request for a username
                 objectOutputStream.writeInt(0);
-
                 objectOutputStream.flush();
+
                 String name = objectInputStream.readUTF();
 
                 if (name == null) {
-                    //TODO: notify, please enter a name
-                    System.out.println("Name is null!");
+                    System.err.println("Name is null! Disconnetting user "+socket.toString());
                     return;
                 }
                 synchronized (names) {
-                    if (!name.isBlank() && !names.contains(name)) {
-                        System.out.println("Name is ok!");
-                        names.add(name);
-                        Server.setNames(names);
+                    if (Server.setName(name)) {
+                        System.out.println(name+"'s name is ok!");
                         //TODO add new player
                         break;
-                    } else if (names.contains(name)) {
-                        System.out.println("Name is already in use!");
+                    } else if (!name.isBlank()) {
+                        System.err.println("Name is already in use!");
                         //TODO: Reload from saved state
                         break;
                     }
                 }
             }
             //Letting everybody know they have a new friend
+            /*
             objectOutputStream.writeInt(1);
             System.out.println("Sent reply with "+names.toString());
             objectOutputStream.writeUTF(names.toString());
             objectOutputStream.flush();
+            */
 
             //Accepts messages from client and broadcasts them
             while (true) {
