@@ -27,4 +27,8 @@ public class Controller implements Observer<Action> {
     public void update(Action action) {
         actionController.doAction(action);
     }
+
+    public ActionController getActionController() {
+        return actionController;
+    }
 }

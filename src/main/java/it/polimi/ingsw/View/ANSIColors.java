@@ -3,6 +3,8 @@ package it.polimi.ingsw.View;
 public class ANSIColors {
     public final static String RESET = "\u001B[0m";
 
+    public final static String TITLE_COLOR_BACK = "\u001B[48;2;21;0;81m";
+    public final static String TITLE_COLOR_FRONT = "\u001B[38;2;204;204;0m";
     public final static String SPACE = "\u0020";
     public final static String EN_QUAD = "\u2000";
     public final static String EM_QUAD = "\u2001";

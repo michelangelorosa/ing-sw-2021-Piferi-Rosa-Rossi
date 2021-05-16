@@ -5,6 +5,7 @@ import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.Player;
 import it.polimi.ingsw.View.ReducedModel.Warehouse;
+import it.polimi.ingsw.View.ReducedModel.LeaderCard;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -13,14 +14,101 @@ import java.util.Scanner;
  * Cli Class contains all methods to let the Player decide which action he wants to perform, then
  * generate and Action Message to send to the Server accordingly.
  */
-public class Cli {
+public class Cli implements UserInterface{
     /** A Scanner is used to take input from the player */
-    Scanner sc = new Scanner(System.in);
+    private final Scanner sc = new Scanner(System.in);
 
     /** Booleans are needed to choose Production Outputs when the player has finished paying for a production */
     private boolean firstLeaderCard = false;
     private boolean secondLeaderCard = false;
     private boolean basicProduction = false;
+
+    /**
+     * Method used on startup by the client (if in Cli mode) to print the game title and get
+     * the Server address and port as input from the user.
+     * @return An ArrayList of Objects containing the address String and the port int.
+     */
+    @Override
+    public ArrayList<Object> init() {
+        Scanner sc = new Scanner(System.in);
+        String choice;
+        String choice2;
+        int intChoice2;
+        boolean notEnded = true;
+        String fc = ANSIColors.TITLE_COLOR_FRONT;
+        System.out.println("\n"  + fc + ANSIfont.BOLD +
+                " _____ ______   ________  ________  _________  _______   ________  ________           ________  ________      ________  _______   ________   ________  ___  ________   ________  ________  ________   ________  _______      \n" +
+                "|\\   _ \\  _   \\|\\   __  \\|\\   ____\\|\\___   ___\\\\  ___ \\ |\\   __  \\|\\   ____\\         |\\   __  \\|\\  _____\\    |\\   __  \\|\\  ___ \\ |\\   ___  \\|\\   __  \\|\\  \\|\\   ____\\ |\\   ____\\|\\   __  \\|\\   ___  \\|\\   ____\\|\\  ___ \\     \n" +
+                "\\ \\  \\\\\\__\\ \\  \\ \\  \\|\\  \\ \\  \\___|\\|___ \\  \\_\\ \\   __/|\\ \\  \\|\\  \\ \\  \\___|_        \\ \\  \\|\\  \\ \\  \\__/     \\ \\  \\|\\  \\ \\   __/|\\ \\  \\\\ \\  \\ \\  \\|\\  \\ \\  \\ \\  \\___|_\\ \\  \\___|\\ \\  \\|\\  \\ \\  \\\\ \\  \\ \\  \\___|\\ \\   __/|    \n" +
+                " \\ \\  \\\\|__| \\  \\ \\   __  \\ \\_____  \\   \\ \\  \\ \\ \\  \\_|/_\\ \\   _  _\\ \\_____  \\        \\ \\  \\\\\\  \\ \\   __\\     \\ \\   _  _\\ \\  \\_|/_\\ \\  \\\\ \\  \\ \\   __  \\ \\  \\ \\_____  \\\\ \\_____  \\ \\   __  \\ \\  \\\\ \\  \\ \\  \\    \\ \\  \\_|/__  \n" +
+                "  \\ \\  \\    \\ \\  \\ \\  \\ \\  \\|____|\\  \\   \\ \\  \\ \\ \\  \\_|\\ \\ \\  \\\\  \\\\|____|\\  \\        \\ \\  \\\\\\  \\ \\  \\_|      \\ \\  \\\\  \\\\ \\  \\_|\\ \\ \\  \\\\ \\  \\ \\  \\ \\  \\ \\  \\|____|\\  \\\\|____|\\  \\ \\  \\ \\  \\ \\  \\\\ \\  \\ \\  \\____\\ \\  \\_|\\ \\ \n" +
+                "   \\ \\__\\    \\ \\__\\ \\__\\ \\__\\____\\_\\  \\   \\ \\__\\ \\ \\_______\\ \\__\\\\ _\\ ____\\_\\  \\        \\ \\_______\\ \\__\\        \\ \\__\\\\ _\\\\ \\_______\\ \\__\\\\ \\__\\ \\__\\ \\__\\ \\__\\____\\_\\  \\ ____\\_\\  \\ \\__\\ \\__\\ \\__\\\\ \\__\\ \\_______\\ \\_______\\\n" +
+                "    \\|__|     \\|__|\\|__|\\|__|\\_________\\   \\|__|  \\|_______|\\|__|\\|__|\\_________\\        \\|_______|\\|__|         \\|__|\\|__|\\|_______|\\|__| \\|__|\\|__|\\|__|\\|__|\\_________\\\\_________\\|__|\\|__|\\|__| \\|__|\\|_______|\\|_______|\n" +
+                "                            \\|_________|                             \\|_________|                                                                             \\|_________\\|_________|                                        \n\n" + ANSIColors.RESET);
+
+        System.out.println();
+
+        do {
+            System.out.print("\nInsert the Server Address: ");
+            choice = sc.nextLine();
+            System.out.print("\nInsert a port number: ");
+            choice2 = sc.nextLine();
+            System.out.println();
+            try {
+                intChoice2 = Integer.parseInt(choice2);
+            }
+            catch (NumberFormatException e) {
+                intChoice2 = -1;
+            }
+            if(!InputController.addressValidator(choice))
+                displayError(InputController.getError());
+            else if(!InputController.portValidator(intChoice2))
+                displayError(InputController.getError());
+            else
+                notEnded = false;
+        } while(notEnded);
+
+        ArrayList<Object> objects = new ArrayList<>();
+        objects.add(choice);
+        objects.add(intChoice2);
+
+        return objects;
+    }
+
+    public Action initialChooseLeaderCards(ArrayList<LeaderCard> leaderCards) throws IllegalArgumentException{
+        if(leaderCards.size() != 4)
+            throw new IllegalArgumentException("Number of Leader Cards to choose from is" + leaderCards.size() + ", should be 4");
+
+        String choice;
+        String choice2;
+        int firstLeaderCard;
+        int secondLeaderCard;
+
+        System.out.println(ANSIColors.YOUR_TURN_COLOR + " - IT'S YOUR TURN! - " + ANSIColors.RESET);
+        System.out.println("Please choose two Leader Cards (numbered 1 to 4 from left to right");
+
+        while(true) {
+            choice = sc.nextLine();
+            if(choice.equals("1") || choice.equals("2") || choice.equals("3") || choice.equals("4")) {
+                firstLeaderCard = Integer.parseInt(choice) - 1;
+                break;
+            }
+            else
+                System.out.println("Please pick a number between 1 and 4");
+        }
+
+        while(true) {
+            choice2 = sc.nextLine();
+            if(choice2.equals(choice))
+                System.out.println("You can't choose the same Leader Card twice!");
+            else if(choice2.equals("1") || choice2.equals("2") || choice2.equals("3") || choice2.equals("4")) {
+                secondLeaderCard = Integer.parseInt(choice) - 1;
+                return new InitChooseLeaderCards(leaderCards.get(firstLeaderCard), leaderCards.get(secondLeaderCard));
+            }
+            else
+                System.out.println("Please pick a number between 1 and 4");
+        }
+    }
 
     /**
      * actionPicker method is used by the player to choose which action he wants to perform.
@@ -84,14 +172,14 @@ public class Cli {
     /**
      * Method used to print the client's own Board
      */
-    public void printYourBoard(Game game) {
+    private void printYourBoard(Game game) {
         printList(game.myBoardToCli());
     }
 
     /**
      * Method used to print the board of a specified Player.
      */
-    public void printPlayerBoard(Game game) {
+    private void printPlayerBoard(Game game) {
         String choice;
         int choiceInt;
         System.out.println("\nWhich player's Board do you to see? (Select corresponding number, 0 to go back)");
@@ -117,14 +205,14 @@ public class Cli {
     /**
      * Method used to print the Market.
      */
-    public void printMarket(Game game) {
+    private void printMarket(Game game) {
         printList(game.getMarket().toCli());
     }
 
     /**
      * Method used to print the Development Card Table.
      */
-    public void printDevTable(Game game) {
+    private void printDevTable(Game game) {
         printList(game.getDevelopmentCardTable().toCli());
     }
 
@@ -599,7 +687,7 @@ public class Cli {
      * Method used by the player to generate a PayResourceProduction message.
      * @return The requested action.
      */
-    public Action payResourceProduction(Game game) {
+    public PayResourceProduction payResourceProduction(Game game) {
         return ((PayResourceProduction)payResource(game));
     }
 
@@ -607,7 +695,7 @@ public class Cli {
      * Method used by the player to generate an PayResourceBuyCard message.
      * @return The requested action.
      */
-    public Action payResourceBuyCard(Game game) {
+    public PayResourceBuyCard payResourceBuyCard(Game game) {
         return ((PayResourceBuyCard)payResource(game));
     }
 
@@ -835,6 +923,14 @@ public class Cli {
             } else
                 System.out.println("Please insert a valid Resource number");
         }
+    }
+
+    /**
+     * Displays an Alert Box for the user to see if the game is set to Cli Mode.
+     * @param s the message to display
+     */
+    public void displayError(String s) {
+        System.out.println(ANSIfont.BOLD + "\u001B[38;5;160m" + s + ANSIColors.RESET);
     }
 
 }

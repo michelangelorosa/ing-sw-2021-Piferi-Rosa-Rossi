@@ -336,6 +336,7 @@ public class ToCliTest {
     public void leaderCardToCliTest() {
         Game game = new Game();
         ArrayList<Player> players= new ArrayList<>();
+        ArrayList<LeaderCard> leaderCards = new ArrayList<>();
         Player player = new Player("Lello", 0, true);
         Player player1 = new Player("Antonino", 1, false);
         Player player2 = new Player("Marcantonio", 2, false);
@@ -349,20 +350,25 @@ public class ToCliTest {
         LeaderRequirements requirements = new LeaderRequirements(1,2,2,2,2,1,2,2,1,4,2,4);
         ResourceStack discount = new ResourceStack(1,0,0,0);
         LeaderCard card = new LeaderCard(49, 12, resourceStack, requirements, discount);
+        leaderCards.add(card);
+
         card.setActive(true);
         game.getPlayers().get(0).getLeaderCards()[0] = card;
 
         Marble marble = Marble.RED;
         card = new LeaderCard(50, 12, resourceStack, requirements, marble);
+        leaderCards.add(card);
         card.setActive(false);
         game.getPlayers().get(0).getLeaderCards()[1] = card;
 
         card = new LeaderCard(51,4,resourceStack, requirements, ResourceType.COINS);
+        leaderCards.add(card);
         card.setActive(true);
         game.getPlayers().get(1).getLeaderCards()[0] = card;
 
         ResourceStack input = new ResourceStack(11,2,3,4);
         card = new LeaderCard(52, 78, resourceStack, requirements, input, 5, 4);
+        leaderCards.add(card);
         game.getPlayers().get(1).getLeaderCards()[1] = card;
 
         input = new ResourceStack(11,2,3,4);
@@ -378,6 +384,30 @@ public class ToCliTest {
         for(String s : player1.leaderPrint(up))
             System.out.println(s);
 
+        for(String s : game.initLeaderCardsToCli(leaderCards))
+            System.out.println(s);
+    }
+
+    @Test
+    public void leaderCardsToCliTest() {
+        ResourceStack resourceStack = new ResourceStack(1,4,3,2);
+        LeaderRequirements requirements = new LeaderRequirements(1,2,2,2,2,1,2,2,1,4,2,4);
+
+        LeaderCard card = new LeaderCard(50, 12, resourceStack, requirements, Marble.BLUE);
+        LeaderCard card1 = new LeaderCard(50, 12, resourceStack, requirements, Marble.PURPLE);
+        LeaderCard card2 = new LeaderCard(50, 12, resourceStack, requirements, Marble.YELLOW);
+        LeaderCard card3 = new LeaderCard(50, 12, resourceStack, requirements, Marble.RED);
+
+        ArrayList<LeaderCard> leaderCards = new ArrayList<>();
+        leaderCards.add(card);
+        leaderCards.add(card1);
+        leaderCards.add(card2);
+        leaderCards.add(card3);
+
+        Game game = new Game();
+
+        for(String s : game.initLeaderCardsToCli(leaderCards))
+            System.out.println(s);
     }
 
 

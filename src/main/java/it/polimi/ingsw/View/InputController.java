@@ -35,6 +35,44 @@ public abstract class InputController {
     }
 
     /**
+     * Checks if the client is trying to connect to an illegal address
+     * @param address the address the user has inserted
+     */
+    public static boolean addressValidator(String address) {
+        String PATTERN = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
+        if (address.matches(PATTERN)||address.equals("localhost")){
+            return true;
+        }
+        error ="Please enter a valid ipv4 address!";
+
+        return false;
+    }
+
+    /**
+     * Checks if the user wants to connect to a reserved port or an illegal port
+     * @param port the port the user is trying to establish a connection to
+     */
+    public static boolean portValidator(int port) {
+        error = "Please enter a valid port number!";
+        if(port<=1024||port>65535) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Checks if the user has provided a valid name
+     * @param name the string the user wants to set as a username
+     */
+    public static boolean nameValidator(String name) {
+        if(name.isEmpty()||name.isBlank()||name.length()>16){
+            error = "Please insert a valid username with maximum 16 characters!";
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Checker for ActivateLeaderCard message.
      */
     public static boolean checkActivateLeaderCard(int i, Game game) {
