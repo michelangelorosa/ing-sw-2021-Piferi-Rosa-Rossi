@@ -103,4 +103,33 @@ public class LeaderRequirementsTest {
 
         System.out.println(leaderCardNeededCards.hasRequirements(resources));
     }
+
+    /**Test for toView method*/
+    @Test
+    public void toViewTest(){
+        it.polimi.ingsw.View.ReducedModel.LeaderRequirements leaderView;
+
+        leaderView = leaderRequirements.toView();
+
+        assertEquals(blueCardLv1, leaderView.getBlueCardLv1());
+        assertEquals(blueCardLv2, leaderView.getBlueCardLv2());
+        assertEquals(blueCardLv3, leaderView.getBlueCardLv3());
+        assertEquals(purpleCardLv1, leaderView.getPurpleCardLv1());
+        assertEquals(purpleCardLv2, leaderView.getPurpleCardLv2());
+        assertEquals(purpleCardLv3, leaderView.getPurpleCardLv3());
+        assertEquals(yellowCardLv1, leaderView.getYellowCardLv1());
+        assertEquals(yellowCardLv2, leaderView.getYellowCardLv2());
+        assertEquals(yellowCardLv3, leaderView.getYellowCardLv3());
+        assertEquals(greenCardLv1, leaderView.getGreenCardLv1());
+        assertEquals(greenCardLv2, leaderView.getGreenCardLv2());
+        assertEquals(greenCardLv3, leaderView.getGreenCardLv3());
+
+        leaderRequirements = new LeaderRequirements(1,15,19,99);
+        leaderView = leaderRequirements.toView();
+
+        assertEquals(leaderRequirements.getNeedBlueCard(), leaderView.getNeedBlueCard());
+        assertEquals(leaderRequirements.getNeedPurpleCard(), leaderView.getNeedPurpleCard());
+        assertEquals(leaderRequirements.getNeedYellowCard(), leaderView.getNeedYellowCard());
+        assertEquals(leaderRequirements.getNeedGreenCard(), leaderView.getNeedGreenCard());
+    }
 }

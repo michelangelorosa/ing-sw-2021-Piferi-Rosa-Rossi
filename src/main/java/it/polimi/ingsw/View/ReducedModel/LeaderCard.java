@@ -127,7 +127,7 @@ public class LeaderCard implements Serializable {
 
     public String victoryPointsToCli() {
         int points = this.victoryPoints;
-        if(this.victoryPoints > 9) return Integer.toString(points); else return "0" + Integer.toString(points);
+        if(this.victoryPoints > 9) return Integer.toString(points); else return "0" + points;
     }
 
 
@@ -195,7 +195,7 @@ public class LeaderCard implements Serializable {
     }
 
     public String printMarble(){
-        if(this.marble == Marble.BLUE)return "║     ║  ⚪ → "+ ANSIColors.FRONT_BLUE+this.marble + ANSIColors.RESET+"   ║     ║";
+        if(this.marble == Marble.BLUE)return "║     ║  ◯ → "+ ANSIColors.FRONT_BLUE+this.marble + ANSIColors.RESET+"   ║     ║";
         if(this.marble == Marble.PURPLE)return "║     ║ ⚪ → "+ ANSIColors.FRONT_PURPLE+this.marble + ANSIColors.RESET+"  ║     ║";
         if(this.marble == Marble.YELLOW)return "║     ║ ⚪ → "+ ANSIColors.FRONT_YELLOW+this.marble + ANSIColors.RESET+"  ║     ║";
         if(this.marble == Marble.GREY)return "║     ║  ⚪ → "+ ANSIColors.FRONT_GREY+this.marble + ANSIColors.RESET+"   ║     ║";
@@ -277,22 +277,56 @@ public class LeaderCard implements Serializable {
 
     public String resourceToCli(String input){
         int resource = 0;
-        if(input.equals("BlueLv1")) resource = this.cardsRequired.getBlueCardLv1();
-        else if(input.equals("BlueLv2")) resource = this.cardsRequired.getBlueCardLv2();
-        else if(input.equals("BlueLv3")) resource = this.cardsRequired.getBlueCardLv3();
-        else if(input.equals("PurpleLv1")) resource = this.cardsRequired.getPurpleCardLv1();
-        else if(input.equals("PurpleLv2")) resource = this.cardsRequired.getPurpleCardLv2();
-        else if(input.equals("PurpleLv3")) resource = this.cardsRequired.getPurpleCardLv3();
-        else if(input.equals("YellowLv1")) resource = this.cardsRequired.getYellowCardLv1();
-        else if(input.equals("YellowLv2")) resource = this.cardsRequired.getYellowCardLv2();
-        else if(input.equals("YellowLv3")) resource = this.cardsRequired.getYellowCardLv3();
-        else if(input.equals("GreenLv1")) resource = this.cardsRequired.getGreenCardLv1();
-        else if(input.equals("GreenLv2")) resource = this.cardsRequired.getGreenCardLv2();
-        else if(input.equals("GreenLv3")) resource = this.cardsRequired.getGreenCardLv3();
-        else if(input.equals("Blue")) resource = this.cardsRequired.getNeedBlueCard();
-        else if(input.equals("Purple")) resource = this.cardsRequired.getNeedPurpleCard();
-        else if(input.equals("Yellow")) resource = this.cardsRequired.getNeedYellowCard();
-        else if(input.equals("Green")) resource = this.cardsRequired.getNeedGreenCard();
+        switch (input) {
+            case "BlueLv1":
+                resource = this.cardsRequired.getBlueCardLv1();
+                break;
+            case "BlueLv2":
+                resource = this.cardsRequired.getBlueCardLv2();
+                break;
+            case "BlueLv3":
+                resource = this.cardsRequired.getBlueCardLv3();
+                break;
+            case "PurpleLv1":
+                resource = this.cardsRequired.getPurpleCardLv1();
+                break;
+            case "PurpleLv2":
+                resource = this.cardsRequired.getPurpleCardLv2();
+                break;
+            case "PurpleLv3":
+                resource = this.cardsRequired.getPurpleCardLv3();
+                break;
+            case "YellowLv1":
+                resource = this.cardsRequired.getYellowCardLv1();
+                break;
+            case "YellowLv2":
+                resource = this.cardsRequired.getYellowCardLv2();
+                break;
+            case "YellowLv3":
+                resource = this.cardsRequired.getYellowCardLv3();
+                break;
+            case "GreenLv1":
+                resource = this.cardsRequired.getGreenCardLv1();
+                break;
+            case "GreenLv2":
+                resource = this.cardsRequired.getGreenCardLv2();
+                break;
+            case "GreenLv3":
+                resource = this.cardsRequired.getGreenCardLv3();
+                break;
+            case "Blue":
+                resource = this.cardsRequired.getNeedBlueCard();
+                break;
+            case "Purple":
+                resource = this.cardsRequired.getNeedPurpleCard();
+                break;
+            case "Yellow":
+                resource = this.cardsRequired.getNeedYellowCard();
+                break;
+            case "Green":
+                resource = this.cardsRequired.getNeedGreenCard();
+                break;
+        }
 
         if(resource < 9) return " " + resource;
         else return ""+resource;

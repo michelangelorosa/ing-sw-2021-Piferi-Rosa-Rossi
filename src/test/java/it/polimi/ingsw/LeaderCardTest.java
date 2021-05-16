@@ -35,7 +35,7 @@ public class LeaderCardTest {
       */
     @Test
     public void leaderDepotTest(){
-        assertEquals(cardId1,leaderCard1.getCardId());
+        System.out.println(leaderCard1.getCardId());
         assertEquals(victoryPoints1,leaderCard1.getVictoryPoints());
         assertEquals(leaderCard1.getAction(), LeaderCardAction.DISCOUNT);
         assertFalse(leaderCard1.isActive());
@@ -117,5 +117,153 @@ public class LeaderCardTest {
         assertSame(leaderCard4.getResource(),resourceType);
         leaderCard4.setActive(true);
         assertTrue(leaderCard4.isActive());
+    }
+
+    /**Test for toView method*/
+    @Test
+    public void toViewTest(){
+
+        it.polimi.ingsw.View.ReducedModel.LeaderCard leaderView;
+        leaderView = leaderCard1.toView();
+
+            assertEquals(cardId1, leaderView.getCardId());
+            assertEquals(victoryPoints1, leaderView.getVictoryPoints());
+            assertEquals(LeaderCardAction.DISCOUNT, leaderView.getAction());
+            assertFalse(leaderView.isActive());
+            assertSame(resourceStack1.getShields(), leaderView.getResourcesRequired().getResource(ResourceType.SHIELDS));
+            assertSame(resourceStack1.getServants(), leaderView.getResourcesRequired().getResource(ResourceType.SERVANTS));
+            assertSame(resourceStack1.getCoins(), leaderView.getResourcesRequired().getResource(ResourceType.COINS));
+            assertSame(resourceStack1.getStones(), leaderView.getResourcesRequired().getResource(ResourceType.STONES));
+            assertSame(leaderRequirements.getBlueCardLv1(), leaderView.getCardsRequired().getBlueCardLv1());
+            assertSame(leaderRequirements.getBlueCardLv2(), leaderView.getCardsRequired().getBlueCardLv2());
+            assertSame(leaderRequirements.getBlueCardLv3(), leaderView.getCardsRequired().getBlueCardLv3());
+            assertSame(leaderRequirements.getPurpleCardLv1(), leaderView.getCardsRequired().getPurpleCardLv1());
+            assertSame(leaderRequirements.getPurpleCardLv2(), leaderView.getCardsRequired().getPurpleCardLv2());
+            assertSame(leaderRequirements.getPurpleCardLv3(), leaderView.getCardsRequired().getPurpleCardLv3());
+            assertSame(leaderRequirements.getYellowCardLv1(), leaderView.getCardsRequired().getYellowCardLv1());
+            assertSame(leaderRequirements.getYellowCardLv2(), leaderView.getCardsRequired().getYellowCardLv2());
+            assertSame(leaderRequirements.getYellowCardLv3(), leaderView.getCardsRequired().getYellowCardLv3());
+            assertSame(leaderRequirements.getGreenCardLv1(), leaderView.getCardsRequired().getGreenCardLv1());
+            assertSame(leaderRequirements.getGreenCardLv2(), leaderView.getCardsRequired().getGreenCardLv2());
+            assertSame(leaderRequirements.getGreenCardLv3(), leaderView.getCardsRequired().getGreenCardLv3());
+            assertSame(leaderRequirements.getNeedBlueCard(), leaderView.getCardsRequired().getNeedBlueCard());
+            assertSame(leaderRequirements.getNeedPurpleCard(), leaderView.getCardsRequired().getNeedPurpleCard());
+            assertSame(leaderRequirements.getNeedYellowCard(), leaderView.getCardsRequired().getNeedYellowCard());
+            assertSame(leaderRequirements.getNeedGreenCard(), leaderView.getCardsRequired().getNeedGreenCard());
+            assertSame(resourceStackDiscount.getShields(), leaderView.getDiscount().getResource(ResourceType.SHIELDS));
+            assertSame(resourceStackDiscount.getServants(), leaderView.getDiscount().getResource(ResourceType.SERVANTS));
+            assertSame(resourceStackDiscount.getCoins(), leaderView.getDiscount().getResource(ResourceType.COINS));
+            assertSame(resourceStackDiscount.getStones(), leaderView.getDiscount().getResource(ResourceType.STONES));
+            assertNull(leaderView.getMarble());
+            assertNull(leaderView.getInput());
+            assertEquals(0, leaderView.getJollyOut());
+            assertEquals(0, leaderView.getFaith());
+            assertNull(leaderView.getResource());
+
+
+
+        leaderView = leaderCard2.toView();
+
+            assertEquals(cardId2, leaderView.getCardId());
+            assertEquals(victoryPoints2, leaderView.getVictoryPoints());
+            assertEquals(LeaderCardAction.WHITEMARBLE, leaderView.getAction());
+            assertFalse(leaderView.isActive());
+            assertSame(resourceStack2.getShields(), leaderView.getResourcesRequired().getResource(ResourceType.SHIELDS));
+            assertSame(resourceStack2.getServants(), leaderView.getResourcesRequired().getResource(ResourceType.SERVANTS));
+            assertSame(resourceStack2.getCoins(), leaderView.getResourcesRequired().getResource(ResourceType.COINS));
+            assertSame(resourceStack2.getStones(), leaderView.getResourcesRequired().getResource(ResourceType.STONES));
+            assertSame(leaderRequirements.getBlueCardLv1(), leaderView.getCardsRequired().getBlueCardLv1());
+            assertSame(leaderRequirements.getBlueCardLv2(), leaderView.getCardsRequired().getBlueCardLv2());
+            assertSame(leaderRequirements.getBlueCardLv3(), leaderView.getCardsRequired().getBlueCardLv3());
+            assertSame(leaderRequirements.getPurpleCardLv1(), leaderView.getCardsRequired().getPurpleCardLv1());
+            assertSame(leaderRequirements.getPurpleCardLv2(), leaderView.getCardsRequired().getPurpleCardLv2());
+            assertSame(leaderRequirements.getPurpleCardLv3(), leaderView.getCardsRequired().getPurpleCardLv3());
+            assertSame(leaderRequirements.getYellowCardLv1(), leaderView.getCardsRequired().getYellowCardLv1());
+            assertSame(leaderRequirements.getYellowCardLv2(), leaderView.getCardsRequired().getYellowCardLv2());
+            assertSame(leaderRequirements.getYellowCardLv3(), leaderView.getCardsRequired().getYellowCardLv3());
+            assertSame(leaderRequirements.getGreenCardLv1(), leaderView.getCardsRequired().getGreenCardLv1());
+            assertSame(leaderRequirements.getGreenCardLv2(), leaderView.getCardsRequired().getGreenCardLv2());
+            assertSame(leaderRequirements.getGreenCardLv3(), leaderView.getCardsRequired().getGreenCardLv3());
+            assertSame(leaderRequirements.getNeedBlueCard(), leaderView.getCardsRequired().getNeedBlueCard());
+            assertSame(leaderRequirements.getNeedPurpleCard(), leaderView.getCardsRequired().getNeedPurpleCard());
+            assertSame(leaderRequirements.getNeedYellowCard(), leaderView.getCardsRequired().getNeedYellowCard());
+            assertSame(leaderRequirements.getNeedGreenCard(), leaderView.getCardsRequired().getNeedGreenCard());
+            assertNull(leaderView.getDiscount());
+            assertSame(marble, leaderView.getMarble());
+            assertNull(leaderView.getInput());
+            assertEquals(0, leaderView.getJollyOut());
+            assertEquals(0, leaderView.getFaith());
+            assertNull(leaderView.getResource());
+
+
+        leaderView = leaderCard3.toView();
+
+            assertEquals(cardId3, leaderView.getCardId());
+            assertEquals(victoryPoints3, leaderView.getVictoryPoints());
+            assertEquals(LeaderCardAction.PRODUCTIONPOWER, leaderView.getAction());
+            assertFalse(leaderView.isActive());
+            assertSame(resourceStack3.getShields(), leaderView.getResourcesRequired().getResource(ResourceType.SHIELDS));
+            assertSame(resourceStack3.getServants(), leaderView.getResourcesRequired().getResource(ResourceType.SERVANTS));
+            assertSame(resourceStack3.getCoins(), leaderView.getResourcesRequired().getResource(ResourceType.COINS));
+            assertSame(resourceStack3.getStones(), leaderView.getResourcesRequired().getResource(ResourceType.STONES));
+            assertSame(leaderRequirements.getBlueCardLv1(), leaderView.getCardsRequired().getBlueCardLv1());
+            assertSame(leaderRequirements.getBlueCardLv2(), leaderView.getCardsRequired().getBlueCardLv2());
+            assertSame(leaderRequirements.getBlueCardLv3(), leaderView.getCardsRequired().getBlueCardLv3());
+            assertSame(leaderRequirements.getPurpleCardLv1(), leaderView.getCardsRequired().getPurpleCardLv1());
+            assertSame(leaderRequirements.getPurpleCardLv2(), leaderView.getCardsRequired().getPurpleCardLv2());
+            assertSame(leaderRequirements.getPurpleCardLv3(), leaderView.getCardsRequired().getPurpleCardLv3());
+            assertSame(leaderRequirements.getYellowCardLv1(), leaderView.getCardsRequired().getYellowCardLv1());
+            assertSame(leaderRequirements.getYellowCardLv2(), leaderView.getCardsRequired().getYellowCardLv2());
+            assertSame(leaderRequirements.getYellowCardLv3(), leaderView.getCardsRequired().getYellowCardLv3());
+            assertSame(leaderRequirements.getGreenCardLv1(), leaderView.getCardsRequired().getGreenCardLv1());
+            assertSame(leaderRequirements.getGreenCardLv2(), leaderView.getCardsRequired().getGreenCardLv2());
+            assertSame(leaderRequirements.getGreenCardLv3(), leaderView.getCardsRequired().getGreenCardLv3());
+            assertSame(leaderRequirements.getNeedBlueCard(), leaderView.getCardsRequired().getNeedBlueCard());
+            assertSame(leaderRequirements.getNeedPurpleCard(), leaderView.getCardsRequired().getNeedPurpleCard());
+            assertSame(leaderRequirements.getNeedYellowCard(), leaderView.getCardsRequired().getNeedYellowCard());
+            assertSame(leaderRequirements.getNeedGreenCard(), leaderView.getCardsRequired().getNeedGreenCard());
+            assertNull(leaderView.getDiscount());
+            assertNull(leaderView.getMarble());
+            assertSame(resourceStackInput.getShields(), leaderView.getInput().getResource(ResourceType.SHIELDS));
+            assertSame(resourceStackInput.getServants(), leaderView.getInput().getResource(ResourceType.SERVANTS));
+            assertSame(resourceStackInput.getCoins(), leaderView.getInput().getResource(ResourceType.COINS));
+            assertSame(resourceStackInput.getStones(), leaderView.getInput().getResource(ResourceType.STONES));
+            assertSame(jollyOut, leaderView.getJollyOut());
+            assertSame(faith, leaderView.getFaith());
+            assertNull(leaderView.getResource());
+
+        leaderView = leaderCard4.toView();
+
+            assertEquals(cardId4, leaderView.getCardId());
+            assertEquals(victoryPoints4, leaderView.getVictoryPoints());
+            assertEquals(LeaderCardAction.EXTRADEPOT, leaderView.getAction());
+            assertFalse(leaderView.isActive());
+            assertSame(resourceStack4.getShields(), leaderView.getResourcesRequired().getResource(ResourceType.SHIELDS));
+            assertSame(resourceStack4.getServants(), leaderView.getResourcesRequired().getResource(ResourceType.SERVANTS));
+            assertSame(resourceStack4.getCoins(), leaderView.getResourcesRequired().getResource(ResourceType.COINS));
+            assertSame(resourceStack4.getStones(), leaderView.getResourcesRequired().getResource(ResourceType.STONES));
+            assertSame(leaderRequirements.getBlueCardLv1(), leaderView.getCardsRequired().getBlueCardLv1());
+            assertSame(leaderRequirements.getBlueCardLv2(), leaderView.getCardsRequired().getBlueCardLv2());
+            assertSame(leaderRequirements.getBlueCardLv3(), leaderView.getCardsRequired().getBlueCardLv3());
+            assertSame(leaderRequirements.getPurpleCardLv1(), leaderView.getCardsRequired().getPurpleCardLv1());
+            assertSame(leaderRequirements.getPurpleCardLv2(), leaderView.getCardsRequired().getPurpleCardLv2());
+            assertSame(leaderRequirements.getPurpleCardLv3(), leaderView.getCardsRequired().getPurpleCardLv3());
+            assertSame(leaderRequirements.getYellowCardLv1(), leaderView.getCardsRequired().getYellowCardLv1());
+            assertSame(leaderRequirements.getYellowCardLv2(), leaderView.getCardsRequired().getYellowCardLv2());
+            assertSame(leaderRequirements.getYellowCardLv3(), leaderView.getCardsRequired().getYellowCardLv3());
+            assertSame(leaderRequirements.getGreenCardLv1(), leaderView.getCardsRequired().getGreenCardLv1());
+            assertSame(leaderRequirements.getGreenCardLv2(), leaderView.getCardsRequired().getGreenCardLv2());
+            assertSame(leaderRequirements.getGreenCardLv3(), leaderView.getCardsRequired().getGreenCardLv3());
+            assertSame(leaderRequirements.getNeedBlueCard(), leaderView.getCardsRequired().getNeedBlueCard());
+            assertSame(leaderRequirements.getNeedPurpleCard(), leaderView.getCardsRequired().getNeedPurpleCard());
+            assertSame(leaderRequirements.getNeedYellowCard(), leaderView.getCardsRequired().getNeedYellowCard());
+            assertSame(leaderRequirements.getNeedGreenCard(), leaderView.getCardsRequired().getNeedGreenCard());
+            assertNull(leaderView.getDiscount());
+            assertNull(leaderView.getMarble());
+            assertNull(leaderView.getInput());
+            assertEquals(0, leaderView.getJollyOut());
+            assertEquals(0, leaderView.getFaith());
+            assertSame(resourceType, leaderView.getResource());
+
     }
 }

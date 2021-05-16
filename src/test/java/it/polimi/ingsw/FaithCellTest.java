@@ -79,4 +79,17 @@ public class FaithCellTest {
 
         assertArrayEquals(testString.toCharArray(), cells[21].toString().toCharArray());
     }
+
+
+    /**Test for toView method*/
+    @Test
+    public void toViewTest(){
+        it.polimi.ingsw.View.ReducedModel.FaithCell[] faithCellView = new it.polimi.ingsw.View.ReducedModel.FaithCell[25];
+
+        for(int i = 0; i < 25; i++){
+            faithCellView[i] = cellToTest[i].toView();
+            assertEquals(cellToTest[i].getIdCell(), faithCellView[i].getIdCell());
+            assertEquals(cellToTest[i].getVictoryPoints(), faithCellView[i].getVictoryPoints());
+        }
+    }
 }

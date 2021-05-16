@@ -287,4 +287,19 @@ public class MarketTest {
         thrown.expectMessage("No White Marbles to convert.");
         market2.whiteMarbleToResource(player, whiteMarbleTwo);
     }
+
+    /**Test for toView method*/
+    @Test
+    public void toViewTest(){
+        it.polimi.ingsw.View.ReducedModel.Market marketView;
+
+        marketView = market.toView();
+
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 4; j++){
+                assertEquals(market.getMarbles()[i][j], marketView.getMarbles()[i][j]);
+            }
+        }
+
+    }
 }

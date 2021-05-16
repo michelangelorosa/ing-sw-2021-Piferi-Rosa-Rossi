@@ -57,8 +57,8 @@ public class CardSlotTest {
     @Test
     public void isFullAndIsEmptyTest(){
         test.addCard(cardTest);
-        assertEquals(true, test.isEmpty());
-        assertEquals(false, test.isFull());
+        assertTrue(test.isEmpty());
+        assertFalse(test.isFull());
 
         test.addCard(card);
         assertEquals(1, test.getLevelOccupied());
@@ -72,8 +72,8 @@ public class CardSlotTest {
         test.addCard(card4Test);
         assertEquals(3, test.getLevelOccupied());
 
-        assertEquals(true, test.isFull());
-        assertEquals(false, test.isEmpty());
+        assertTrue(test.isFull());
+        assertFalse(test.isEmpty());
     }
 
 
@@ -125,7 +125,7 @@ public class CardSlotTest {
 
     @Test
     public void getFirstCardTest(){
-        assertEquals(null, test.getFirstCard());
+        assertNull(test.getFirstCard());
 
         test.addCard(card);
         assertEquals(card, test.getFirstCard());
@@ -167,5 +167,20 @@ public class CardSlotTest {
         int blueCards = test.sumColors(Color.BLUE);
 
         assertEquals(2, blueCards);
+    }
+
+    /**Test for toView method*/
+    @Test
+    public void toViewTest(){
+        it.polimi.ingsw.View.ReducedModel.CardSlot slotView;
+        slotView = test.toView();
+        assertEquals(0, slotView.getLevelOccupied());
+
+        test.addCard(card);
+        test.addCard(cardTest);
+        test.addCard(card2Test);
+        test.addCard(card3Test);
+        slotView = test.toView();
+        assertEquals(3, slotView.getLevelOccupied());
     }
 }

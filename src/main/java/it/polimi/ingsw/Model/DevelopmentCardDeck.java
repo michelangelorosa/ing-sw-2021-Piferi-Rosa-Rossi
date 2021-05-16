@@ -135,11 +135,26 @@ public class DevelopmentCardDeck implements Serializable {
      /**Method for converting model classes to view classes*/
      public it.polimi.ingsw.View.ReducedModel.DevelopmentCardDeck toView() {
          it.polimi.ingsw.View.ReducedModel.DevelopmentCardDeck developmentCardDeck = new it.polimi.ingsw.View.ReducedModel.DevelopmentCardDeck(this.color, this.level);
-         developmentCardDeck.getCards()[0] = this.cards[0].toView();
-         developmentCardDeck.getCards()[1] = this.cards[1].toView();
-         developmentCardDeck.getCards()[2] = this.cards[2].toView();
-         developmentCardDeck.getCards()[3] = this.cards[3].toView();
-
+         switch (cardsInDeck){
+             case 1:
+                 developmentCardDeck.getCards()[0] = this.cards[0].toView();
+                break;
+             case 2:
+                 developmentCardDeck.getCards()[0] = this.cards[0].toView();
+                 developmentCardDeck.getCards()[1] = this.cards[1].toView();
+                 break;
+             case 3:
+                 developmentCardDeck.getCards()[0] = this.cards[0].toView();
+                 developmentCardDeck.getCards()[1] = this.cards[1].toView();
+                 developmentCardDeck.getCards()[2] = this.cards[2].toView();
+                 break;
+             case 4:
+                 developmentCardDeck.getCards()[0] = this.cards[0].toView();
+                 developmentCardDeck.getCards()[1] = this.cards[1].toView();
+                 developmentCardDeck.getCards()[2] = this.cards[2].toView();
+                 developmentCardDeck.getCards()[3] = this.cards[3].toView();
+                 break;
+         }
          developmentCardDeck.setCardsInDeck(this.cardsInDeck);
 
          return developmentCardDeck;

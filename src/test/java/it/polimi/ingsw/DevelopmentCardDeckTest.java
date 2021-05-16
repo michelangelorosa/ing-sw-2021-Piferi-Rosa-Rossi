@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Enums.Color;
 import it.polimi.ingsw.Model.Enums.Level;
+import it.polimi.ingsw.Model.Enums.ResourceType;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -185,6 +186,8 @@ public class DevelopmentCardDeckTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Cannot draw card from empty deck!");
         cardToDraw = deck.drawCard();
+        assertSame(card, cardToDraw);
+        assertEquals(0, deck.getCardsInDeck());
     }
 
     /*
@@ -205,6 +208,7 @@ public class DevelopmentCardDeckTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Cannot get card from empty deck!");
         cardToGet = emptyDeck.getTopCard();
+        assertSame(card3, cardToGet);
     }
 
     /**
@@ -216,5 +220,24 @@ public class DevelopmentCardDeckTest {
         String testString = "BLUE ONE";
 
         assertArrayEquals(testString.toCharArray(), deck.toString().toCharArray());
+    }
+
+    /**Test for toView method*/
+    @Test
+    public void toViewTest(){
+        it.polimi.ingsw.View.ReducedModel.DevelopmentCardDeck deckView;
+
+        deck.addCard(card);
+        deck.addCard(card1);
+        deck.addCard(card3);
+
+        deckView = deck.toView();
+
+        assertSame(Color.BLUE, deckView.getColor());
+        assertSame(Level.ONE, deckView.getLevel());
+        assertEquals(deck.getCards()[0].getInput().getStones(), deckView.getCards()[0].getInput().getResource(ResourceType.STONES));
+        assertEquals(deck.getCards()[1].getInput().getStones(), deckView.getCards()[1].getInput().getResource(ResourceType.STONES));
+        assertEquals(deck.getCards()[2].getCost().getCoins(), deckView.getCards()[2].getCost().getResource(ResourceType.COINS));
+        assertEquals(deck.getCardsInDeck(), deckView.getCardsInDeck());
     }
 }

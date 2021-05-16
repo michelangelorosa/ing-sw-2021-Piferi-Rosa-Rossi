@@ -90,6 +90,38 @@ public class WarehouseDepotTest {
         assertEquals(0,leaderDepot.getStoredResources());
         assertSame(ResourceType.NONE, depot.getResourceType());
         assertSame(ResourceType.SHIELDS, leaderDepot.getResourceType());
+    }
 
+    /**Test for toView method*/
+    @Test
+    public void toViewTest(){
+
+        it.polimi.ingsw.View.ReducedModel.WarehouseDepot depotView;
+        it.polimi.ingsw.View.ReducedModel.WarehouseDepot depotViewLeader;
+
+        depotView = depot.toView();
+        depotViewLeader = leaderDepot.toView();
+
+        assertSame(ResourceType.NONE, depotView.getResourceType());
+        assertEquals(3,depotView.getMaxResources());
+        assertFalse(depotView.isFromLeaderCardAbility());
+        assertTrue(depotViewLeader.isFromLeaderCardAbility());
+
+        depot.addResources(3);
+        depot.setResourceType(ResourceType.SHIELDS);
+
+        depotView = depot.toView();
+
+        assertEquals(3, depotView.getStoredResources());
+        assertSame(ResourceType.SHIELDS, depotView.getResourceType());
+        assertEquals(3, depotView.getStoredResources());
+
+        depot.removeResources(1);
+
+        depotView = depot.toView();
+
+        assertEquals(2, depotView.getStoredResources());
+        assertSame(ResourceType.SHIELDS, depotView.getResourceType());
+        assertEquals(2, depotView.getStoredResources());
     }
 }

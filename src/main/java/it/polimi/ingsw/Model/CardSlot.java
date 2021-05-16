@@ -126,9 +126,9 @@ public class CardSlot implements Serializable {
     public it.polimi.ingsw.View.ReducedModel.CardSlot toView() {
         it.polimi.ingsw.View.ReducedModel.CardSlot cardSlot = new it.polimi.ingsw.View.ReducedModel.CardSlot();
         cardSlot.setLevelOccupied(this.levelOccupied);
-        for(int i = 0; i < 4; i++)
-            cardSlot.getDevelopmentCards()[i] = this.cards[i].toView();
-
+        for(int i = 0; i < 3; i++){
+            if(this.cards[i] != null) cardSlot.getDevelopmentCards()[i] = this.cards[i].toView();
+        }
         return cardSlot;
     }
 }

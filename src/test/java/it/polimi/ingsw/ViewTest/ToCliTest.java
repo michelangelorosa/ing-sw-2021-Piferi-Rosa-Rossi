@@ -384,8 +384,8 @@ public class ToCliTest {
         for(String s : player1.leaderPrint(up))
             System.out.println(s);
 
-        for(String s : game.initLeaderCardsToCli(leaderCards))
-            System.out.println(s);
+        //for(String s : game.initLeaderCardsToCli(leaderCards))
+            //System.out.println(s);
     }
 
     @Test
@@ -406,8 +406,8 @@ public class ToCliTest {
 
         Game game = new Game();
 
-        for(String s : game.initLeaderCardsToCli(leaderCards))
-            System.out.println(s);
+        //for(String s : game.initLeaderCardsToCli(leaderCards))
+            //System.out.println(s);
     }
 
 

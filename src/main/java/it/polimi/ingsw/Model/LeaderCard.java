@@ -138,6 +138,26 @@ public class LeaderCard implements Serializable {
         return resource;
     }
 
+    public static LeaderCard toModel(it.polimi.ingsw.View.ReducedModel.LeaderCard viewLeaderCard) {
+        ResourceStack resourceRequired = new ResourceStack(viewLeaderCard.getResourcesRequired().getResource(ResourceType.SHIELDS), viewLeaderCard.getResourcesRequired().getResource(ResourceType.SERVANTS), viewLeaderCard.getResourcesRequired().getResource(ResourceType.COINS), viewLeaderCard.getResourcesRequired().getResource(ResourceType.STONES));
+        it.polimi.ingsw.View.ReducedModel.LeaderRequirements viewCardsRequired = viewLeaderCard.getCardsRequired();
+        LeaderRequirements cardsRequired = new LeaderRequirements(viewCardsRequired.getBlueCardLv1(), viewCardsRequired.getPurpleCardLv1(), viewCardsRequired.getYellowCardLv1(), viewCardsRequired.getGreenCardLv1(), viewCardsRequired.getBlueCardLv2(), viewCardsRequired.getPurpleCardLv2(), viewCardsRequired.getYellowCardLv2(), viewCardsRequired.getGreenCardLv2(), viewCardsRequired.getBlueCardLv3(), viewCardsRequired.getPurpleCardLv3(), viewCardsRequired.getYellowCardLv3(), viewCardsRequired.getGreenCardLv3());
+
+        switch(viewLeaderCard.getAction()) {
+            case DISCOUNT: ResourceStack discount = new ResourceStack(viewLeaderCard.getDiscount().getResource(ResourceType.SHIELDS), viewLeaderCard.getDiscount().getResource(ResourceType.SERVANTS), viewLeaderCard.getDiscount().getResource(ResourceType.COINS), viewLeaderCard.getDiscount().getResource(ResourceType.STONES));
+                return new LeaderCard(viewLeaderCard.getCardId(), viewLeaderCard.getVictoryPoints(), resourceRequired, cardsRequired, discount);
+
+            case EXTRADEPOT: return new LeaderCard(viewLeaderCard.getCardId(), viewLeaderCard.getVictoryPoints(), resourceRequired, cardsRequired, viewLeaderCard.getResource());
+
+            case WHITEMARBLE: return new LeaderCard(viewLeaderCard.getCardId(), viewLeaderCard.getVictoryPoints(), resourceRequired, cardsRequired, viewLeaderCard.getMarble());
+
+            case PRODUCTIONPOWER: ResourceStack input = new ResourceStack(viewLeaderCard.getInput().getResource(ResourceType.SHIELDS), viewLeaderCard.getInput().getResource(ResourceType.SERVANTS), viewLeaderCard.getInput().getResource(ResourceType.COINS), viewLeaderCard.getInput().getResource(ResourceType.STONES));
+                return new LeaderCard(viewLeaderCard.getCardId(), viewLeaderCard.getVictoryPoints(), resourceRequired, cardsRequired, input, viewLeaderCard.getJollyOut(), viewLeaderCard.getFaith());
+
+            default: return null;
+        }
+    }
+
     public it.polimi.ingsw.View.ReducedModel.LeaderCard toView(){
         it.polimi.ingsw.View.ReducedModel.LeaderCard leaderCard;
         if(this.action == LeaderCardAction.DISCOUNT){
@@ -146,10 +166,10 @@ public class LeaderCard implements Serializable {
         else if(this.action == LeaderCardAction.PRODUCTIONPOWER){
             leaderCard = new it.polimi.ingsw.View.ReducedModel.LeaderCard(this.cardId, this.victoryPoints, this.resourcesRequired.toView(), this.cardsRequired.toView(), this.input.toView(), this.jollyOut, this.faith);
         }
-        else {//(this.action == LeaderCardAction.EXTRADEPOT) {
+        else if(this.action == LeaderCardAction.EXTRADEPOT){
             leaderCard = new it.polimi.ingsw.View.ReducedModel.LeaderCard(this.cardId, this.victoryPoints, this.resourcesRequired.toView(), this.cardsRequired.toView(), this.resource);
         }
-        //else leaderCard = new it.polimi.ingsw.View.ReducedModel.LeaderCard(this.cardId, this.victoryPoints, this.resourcesRequired.toView(), this.cardsRequired.toView(), this.marble);
+        else leaderCard = new it.polimi.ingsw.View.ReducedModel.LeaderCard(this.cardId, this.victoryPoints, this.resourcesRequired.toView(), this.cardsRequired.toView(), this.marble);
         return leaderCard;
     }
 }

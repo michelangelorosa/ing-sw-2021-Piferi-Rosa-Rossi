@@ -139,7 +139,7 @@ public class LeaderRequirements implements Serializable {
         if(this.generic) {
             leaderRequirements = new it.polimi.ingsw.View.ReducedModel.LeaderRequirements(this.needBlueCard, this.needPurpleCard, this.needYellowCard, this.needGreenCard);
         }
-        else leaderRequirements = new it.polimi.ingsw.View.ReducedModel.LeaderRequirements(this.blueCardLv1, this.blueCardLv2, this.blueCardLv3, this.purpleCardLv1, this.purpleCardLv2, this.purpleCardLv3, this.yellowCardLv1, this.yellowCardLv2, this.yellowCardLv3, this.greenCardLv1, this.greenCardLv2, this.greenCardLv3);
+        else leaderRequirements = new it.polimi.ingsw.View.ReducedModel.LeaderRequirements(this.blueCardLv1, this.purpleCardLv1, this.yellowCardLv1, this.greenCardLv1, this.blueCardLv2, this.purpleCardLv2, this.yellowCardLv2, this.greenCardLv2, this.blueCardLv3, this.purpleCardLv3, this.yellowCardLv3, this.greenCardLv3);
         return leaderRequirements;
     }
 }

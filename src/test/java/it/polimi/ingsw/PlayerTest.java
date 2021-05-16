@@ -95,4 +95,20 @@ public class PlayerTest {
         playerOne.addVictoryPoints(21);
         assertEquals(21, playerOne.getVictoryPoints());
     }
+
+    /**Test for toView method*/
+    @Test
+    public void toViewTest(){
+        it.polimi.ingsw.View.ReducedModel.Player playerView;
+
+        playerView = playerOne.toView();
+
+        assertEquals("alberto", playerView.getNickname());
+        assertEquals(0, playerView.getTurnPosition());
+        assertTrue(playerView.hasInkwell());
+        assertEquals(PlayerStatus.IN_GAME, playerView.getStatus());
+        assertEquals(0, playerView.getVictoryPoints());
+        assertEquals(3, playerView.getPopeTiles()[1].getVictoryPoints());
+
+    }
 }

@@ -173,4 +173,30 @@ public class StrongboxTest {
         assertEquals(string, strongbox.toString());
     }
 
+    /**Test for toView method*/
+    @Test
+    public void toViewTest(){
+
+        it.polimi.ingsw.View.ReducedModel.Strongbox strongboxView;
+
+        strongboxView = strongbox.toView();
+
+        assertEquals(0,strongboxView.getStoredResources().getResource(ResourceType.SHIELDS));
+        assertEquals(0,strongboxView.getStoredResources().getResource(ResourceType.SERVANTS));
+        assertEquals(0,strongboxView.getStoredResources().getResource(ResourceType.COINS));
+        assertEquals(0,strongboxView.getStoredResources().getResource(ResourceType.STONES));
+
+        strongbox.addResourcesByType(1, ResourceType.SHIELDS);
+        strongbox.addResourcesByType(2, ResourceType.SERVANTS);
+        strongbox.addResourcesByType(3, ResourceType.COINS);
+        strongbox.addResourcesByType(4, ResourceType.STONES);
+
+        strongboxView = strongbox.toView();
+
+        assertEquals(1,strongboxView.getStoredResources().getResource(ResourceType.SHIELDS));
+        assertEquals(2,strongboxView.getStoredResources().getResource(ResourceType.SERVANTS));
+        assertEquals(3,strongboxView.getStoredResources().getResource(ResourceType.COINS));
+        assertEquals(4,strongboxView.getStoredResources().getResource(ResourceType.STONES));
+    }
+
 }

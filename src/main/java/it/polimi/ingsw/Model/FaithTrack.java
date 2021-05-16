@@ -59,6 +59,30 @@ public class FaithTrack implements Serializable {
         return popeSpaceTHREE;
     }
 
+    public VaticanReportSection getONE() {
+        return ONE;
+    }
+
+    public VaticanReportSection getTWO() {
+        return TWO;
+    }
+
+    public VaticanReportSection getTHREE() {
+        return THREE;
+    }
+
+    public void setPopeSpaceONE(boolean popeSpaceONE) {
+        this.popeSpaceONE = popeSpaceONE;
+    }
+
+    public void setPopeSpaceTWO(boolean popeSpaceTWO) {
+        this.popeSpaceTWO = popeSpaceTWO;
+    }
+
+    public void setPopeSpaceTHREE(boolean popeSpaceTHREE) {
+        this.popeSpaceTHREE = popeSpaceTHREE;
+    }
+
     /**
      * In this method all the players except for one, go ahead in the Faith Track.
      * This happens if the player is still on for the game.
@@ -164,13 +188,19 @@ public class FaithTrack implements Serializable {
 
     /**Method for converting model classes to view classes*/
     public it.polimi.ingsw.View.ReducedModel.FaithTrack toView() {
-        it.polimi.ingsw.View.ReducedModel.FaithTrack track = new it.polimi.ingsw.View.ReducedModel.FaithTrack();
+        it.polimi.ingsw.View.ReducedModel.FaithTrack track = new it.polimi.ingsw.View.ReducedModel.FaithTrack(this.ONE.toView(), this.TWO.toView(), this.THREE.toView());
 
-        for(int i = 0; i < 25; i++) this.cells[i].toView();
+        for(int i = 0; i < 25; i++) track.getCells()[i] = this.cells[i].toView();
 
-        this.ONE.toView();
-        this.TWO.toView();
-        this.THREE.toView();
+        track.setPopeSpaceONE(this.popeSpaceONE);
+        track.setPopeSpaceTWO(this.popeSpaceTWO);
+        track.setPopeSpaceTHREE(this.popeSpaceTHREE);
+
+        return track;
+    }
+
+    public it.polimi.ingsw.View.ReducedModel.FaithTrack toViewUpdate() {
+        it.polimi.ingsw.View.ReducedModel.FaithTrack track = new it.polimi.ingsw.View.ReducedModel.FaithTrack(this.ONE.toView(), this.TWO.toView(), this.THREE.toView());
 
         track.setPopeSpaceONE(this.popeSpaceONE);
         track.setPopeSpaceTWO(this.popeSpaceTWO);

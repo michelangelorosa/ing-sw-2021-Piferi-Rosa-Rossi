@@ -44,6 +44,13 @@ public class WarehouseDepot implements Serializable {
     }
 
     /**
+     * Getter for "isFromLeaderCardAbility" attribute in WarehouseDepot Class.
+     */
+    public boolean isFromLeaderCardAbility() {
+        return isFromLeaderCardAbility;
+    }
+
+    /**
      * Getter for "resourceType" attribute in WarehouseDepot Class.
      */
     public ResourceType getResourceType() {

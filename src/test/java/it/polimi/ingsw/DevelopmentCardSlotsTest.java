@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Enums.Color;
 import it.polimi.ingsw.Model.Enums.Level;
+import it.polimi.ingsw.Model.Enums.ResourceType;
 import org.junit.Test;
 
 public class DevelopmentCardSlotsTest {
@@ -147,7 +148,7 @@ public class DevelopmentCardSlotsTest {
 
         assertEquals(card3, slots.getSlots()[1].getFirstCard());
         assertEquals(card1, slots.getSlots()[2].getFirstCard());
-        assertEquals(null, slots.getSlots()[0].getFirstCard());
+        assertNull(slots.getSlots()[0].getFirstCard());
     }
 
     /**
@@ -171,7 +172,29 @@ public class DevelopmentCardSlotsTest {
         assertEquals(2, total.getNeedPurpleCard());
         assertEquals(2, total.getNeedYellowCard());
         assertEquals(1, total.getNeedGreenCard());
+    }
 
+    /**Test for toView method*/
+    @Test
+    public void toViewTest(){
+        it.polimi.ingsw.View.ReducedModel.DevelopmentCardSlots slotsView;
 
+        slots.addCard(1,card1);
+        slots.addCard(2,card1);
+        slots.addCard(1,card2);
+        slots.addCard(1,card3);
+        slots.addCard(0,card);
+        slots.addCard(2,card2);
+
+        slotsView = slots.toView();
+
+        assertEquals(slots.getSlots()[0].getFirstCard().getCardId(), slotsView.getSlots()[0].getFirstCard().getCardId());
+        assertEquals(slots.getSlots()[1].getFirstCard().getCardId(), slotsView.getSlots()[1].getFirstCard().getCardId());
+        assertEquals(slots.getSlots()[2].getFirstCard().getCardId(), slotsView.getSlots()[2].getFirstCard().getCardId());
+
+        assertEquals(slots.getSlots()[0].getFirstCard().getInput().getResource(ResourceType.SHIELDS), slotsView.getSlots()[0].getFirstCard().getInput().getResource(ResourceType.SHIELDS));
+        assertEquals(slots.getSlots()[1].getFirstCard().getInput().getResource(ResourceType.COINS), slotsView.getSlots()[1].getFirstCard().getInput().getResource(ResourceType.COINS));
+        assertEquals(slots.getSlots()[2].getFirstCard().getInput().getResource(ResourceType.SERVANTS), slotsView.getSlots()[2].getFirstCard().getInput().getResource(ResourceType.SERVANTS));
+        assertEquals(slots.getSlots()[0].getFirstCard().getInput().getResource(ResourceType.STONES), slotsView.getSlots()[0].getFirstCard().getInput().getResource(ResourceType.STONES));
     }
 }

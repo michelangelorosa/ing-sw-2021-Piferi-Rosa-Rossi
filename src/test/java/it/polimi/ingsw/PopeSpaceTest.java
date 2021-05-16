@@ -22,6 +22,14 @@ public class PopeSpaceTest {
         assertSame(PopeSpace.ONE, PopeSpace.getPopeSpace(1));
         assertSame(PopeSpace.TWO, PopeSpace.getPopeSpace(2));
         assertSame(PopeSpace.THREE, PopeSpace.getPopeSpace(3));
+    }
 
+    /**Test for toView method*/
+    @Test
+    public void toViewTest(){
+        it.polimi.ingsw.View.ReducedModel.PopeTileClass popeTileClassView;
+        it.polimi.ingsw.Model.PopeTileClass popeTileClass = new it.polimi.ingsw.Model.PopeTileClass(7);
+        popeTileClassView = popeTileClass.toView();
+        assertSame(7, popeTileClassView.getVictoryPoints());
     }
 }

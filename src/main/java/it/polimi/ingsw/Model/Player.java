@@ -41,6 +41,9 @@ public class Player implements Serializable {
         this.faithTrackPosition = 0;
         this.board = new Board();
         this.popeTiles = new PopeTileClass[3];
+        this.popeTiles[0] = new PopeTileClass(2);
+        this.popeTiles[1] = new PopeTileClass(3);
+        this.popeTiles[2] = new PopeTileClass(4);
     }
 
     public PopeTileClass[] getPopeTiles() {
@@ -143,7 +146,10 @@ public class Player implements Serializable {
         player.setStrongbox(this.board.getResourceManager().getStrongbox().toView());
 
         it.polimi.ingsw.View.ReducedModel.PopeTileClass[] popeTileClasses = new it.polimi.ingsw.View.ReducedModel.PopeTileClass[3];
-        for(int i = 0; i < 3; i++) popeTileClasses[i] = this.popeTiles[i].toView();
+        for(int i = 0; i < 3; i++)
+        {
+            popeTileClasses[i] = this.popeTiles[i].toView();
+        }
         player.setPopeTiles(popeTileClasses);
 
         it.polimi.ingsw.View.ReducedModel.LeaderCard[] leaderCards = new LeaderCard[2];

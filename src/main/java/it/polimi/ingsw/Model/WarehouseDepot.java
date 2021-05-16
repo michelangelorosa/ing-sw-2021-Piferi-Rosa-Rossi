@@ -112,7 +112,6 @@ public class WarehouseDepot implements Serializable {
 
         if(storedResources == 0 && !isFromLeaderCardAbility)
             this.resourceType = ResourceType.NONE;
-
     }
 
     /**Method for converting model classes to view classes*/

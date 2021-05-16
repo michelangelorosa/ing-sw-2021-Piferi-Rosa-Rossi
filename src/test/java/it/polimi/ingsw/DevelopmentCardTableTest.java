@@ -189,4 +189,17 @@ public class DevelopmentCardTableTest {
         assertEquals(0, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.COINS));
         assertEquals(0, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.STONES));
     }
+
+    /**Test for toView method*/
+    @Test
+    public void toViewTest(){
+        it.polimi.ingsw.View.ReducedModel.DevelopmentCardTable tableView;
+
+        tableView = table.toView();
+
+        for(int column = 0; column <= 3; column++)
+            for(int row = 0; row <= 2; row++){
+                assertEquals(table.getDeck(row, column).toString(), tableView.getDeck(row, column).toString());
+            }
+    }
 }

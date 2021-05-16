@@ -66,6 +66,18 @@ public class FaithTrack implements Serializable {
         return cells;
     }
 
+    public boolean isPopeSpaceONE() {
+        return popeSpaceONE;
+    }
+
+    public boolean isPopeSpaceTWO() {
+        return popeSpaceTWO;
+    }
+
+    public boolean isPopeSpaceTHREE() {
+        return popeSpaceTHREE;
+    }
+
     /**Points relative to the player's position in the FaithTrack*/
     public int getTrackPoints(Player player){
         return player.getVictoryPoints();

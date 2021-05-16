@@ -596,4 +596,22 @@ public class WarehouseTest {
 
         assertTrue(warehouse.canAddResource(ResourceType.SERVANTS));
     }
+
+    /**Test for toView method*/
+    @Test
+    public void toViewTest(){
+        it.polimi.ingsw.View.ReducedModel.Warehouse warehouseView;
+
+        warehouse.getWarehouseDepots()[0].setResourceType(ResourceType.SHIELDS);
+        warehouse.getWarehouseDepots()[2].setResourceType(ResourceType.STONES);
+        warehouse.getWarehouseDepots()[0].addResources(3);
+        warehouse.getWarehouseDepots()[2].addResources(1);
+
+        warehouseView = warehouse.toView();
+
+        assertFalse(warehouseView.areEmptyDepotsFillableByType(ResourceType.SHIELDS));
+        assertFalse(warehouseView.areEmptyDepotsFillableByType(ResourceType.STONES));
+        assertTrue(warehouseView.areEmptyDepotsFillableByType(ResourceType.SERVANTS));
+        assertTrue(warehouseView.areEmptyDepotsFillableByType(ResourceType.COINS));
+    }
 }

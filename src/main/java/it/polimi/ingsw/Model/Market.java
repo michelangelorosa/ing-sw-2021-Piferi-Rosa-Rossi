@@ -175,4 +175,24 @@ public class Market implements Serializable {
         this.marbles[2][0] = Marble.PURPLE; this.marbles[2][1] = Marble.RED; this.marbles[2][2] = Marble.YELLOW; this.marbles[2][3] = Marble.RED;
         this.extraMarble = Marble.WHITE;
     }
+
+    public it.polimi.ingsw.View.ReducedModel.Market toView(){
+        it.polimi.ingsw.View.ReducedModel.Market marketView = new it.polimi.ingsw.View.ReducedModel.Market();
+
+        marketView.getMarbles()[0][0] = this.marbles[0][0];
+        marketView.getMarbles()[0][1] = this.marbles[0][1];
+        marketView.getMarbles()[0][2] = this.marbles[0][2];
+        marketView.getMarbles()[0][3] = this.marbles[0][3];
+        marketView.getMarbles()[1][0] = this.marbles[1][0];
+        marketView.getMarbles()[1][1] = this.marbles[1][1];
+        marketView.getMarbles()[1][2] = this.marbles[1][2];
+        marketView.getMarbles()[1][3] = this.marbles[1][3];
+        marketView.getMarbles()[2][0] = this.marbles[2][0];
+        marketView.getMarbles()[2][1] = this.marbles[2][1];
+        marketView.getMarbles()[2][2] = this.marbles[2][2];
+        marketView.getMarbles()[2][3] = this.marbles[2][3];
+
+
+        return marketView;
+    }
 }

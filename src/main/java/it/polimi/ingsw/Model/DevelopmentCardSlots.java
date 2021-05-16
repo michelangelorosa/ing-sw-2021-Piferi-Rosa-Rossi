@@ -137,8 +137,7 @@ public class DevelopmentCardSlots implements Serializable {
      * @return true if the player can add the card in that slot, false if not
      */
     public boolean canAddInThisSlot(int i, DevelopmentCard card){
-        if(slots[i].canAdd(card)) return true;
-        else return false;
+        return slots[i].canAdd(card);
     }
 
     /**
@@ -178,5 +177,17 @@ public class DevelopmentCardSlots implements Serializable {
      */
     public int countAllCards() {
         return this.getSlots()[0].getLevelOccupied() + this.getSlots()[1].getLevelOccupied() + this.getSlots()[2].getLevelOccupied();
+    }
+
+    public it.polimi.ingsw.View.ReducedModel.DevelopmentCardSlots toView(){
+
+        it.polimi.ingsw.View.ReducedModel.DevelopmentCardSlots slotsView = new it.polimi.ingsw.View.ReducedModel.DevelopmentCardSlots();
+
+        for(int i = 0; i < 3; i++) {
+            slotsView.getSlots()[i] = new it.polimi.ingsw.View.ReducedModel.CardSlot();
+            slotsView.getSlots()[i] = this.slots[i].toView();
+        }
+
+        return slotsView;
     }
 }

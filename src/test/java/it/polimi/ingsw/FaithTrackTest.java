@@ -211,12 +211,6 @@ public class FaithTrackTest {
 
         test.addFinalPoints(players);
 
-        System.out.println(players.get(0).getVictoryPoints());
-        System.out.println(players.get(1).getVictoryPoints());
-        System.out.println(players.get(2).getVictoryPoints());
-        System.out.println(players.get(3).getVictoryPoints());
-
-
         assertEquals(20, players.get(0).getVictoryPoints());
         assertEquals(6, players.get(1).getVictoryPoints());
         assertEquals(16, players.get(2).getVictoryPoints());
@@ -243,22 +237,6 @@ public class FaithTrackTest {
         players.add(new Player("one", 1, false));
         players.add(new Player("two", 2, false));
         players.add(new Player("three", 3, false));
-
-        players.get(0).getPopeTiles()[0] = new PopeTileClass(2);
-        players.get(1).getPopeTiles()[0] = new PopeTileClass(2);
-        players.get(2).getPopeTiles()[0] = new PopeTileClass(2);
-        players.get(3).getPopeTiles()[0] = new PopeTileClass(2);
-
-        players.get(0).getPopeTiles()[1] = new PopeTileClass(3);
-        players.get(1).getPopeTiles()[1] = new PopeTileClass(3);
-        players.get(2).getPopeTiles()[1] = new PopeTileClass(3);
-        players.get(3).getPopeTiles()[1] = new PopeTileClass(3);
-
-        players.get(0).getPopeTiles()[2] = new PopeTileClass(4);
-        players.get(1).getPopeTiles()[2] = new PopeTileClass(4);
-        players.get(2).getPopeTiles()[2] = new PopeTileClass(4);
-        players.get(3).getPopeTiles()[2] = new PopeTileClass(4);
-
 
         players.get(1).stepAhead(6);
         players.get(0).stepAhead(8);
@@ -305,7 +283,38 @@ public class FaithTrackTest {
         System.out.println(players.get(1).getPopeTiles()[2].getPopeTile());
         System.out.println(players.get(2).getPopeTiles()[2].getPopeTile());
         System.out.println(players.get(3).getPopeTiles()[2].getPopeTile());
+    }
 
+    /**Test for toView method*/
+    @Test
+    public void toViewTest(){
+        it.polimi.ingsw.View.ReducedModel.FaithTrack trackView;
 
+        ArrayList<Player> players = new ArrayList <>();
+        players.add(new Player("zero", 0, true));
+        players.add(new Player("one", 1, false));
+        players.add(new Player("two", 2, false));
+        players.add(new Player("three", 3, false));
+
+        trackView = test.toView();
+
+        assertEquals(5, trackView.getONE().getBegin());
+        assertEquals(8, trackView.getONE().getEnd());
+        assertEquals(2, trackView.getONE().getPoints());
+        players.get(0).stepAhead(8);
+        test.popeSpaceSector(players);
+        assertTrue(trackView.isPopeSpaceONE());
+        assertTrue(trackView.isPopeSpaceTWO());
+        assertTrue(trackView.isPopeSpaceTHREE());
+        trackView = test.toView();
+        assertFalse(trackView.isPopeSpaceONE());
+        assertTrue(trackView.isPopeSpaceTWO());
+        assertTrue(trackView.isPopeSpaceTHREE());
+        players.get(2).stepAhead(17);
+        test.popeSpaceSector(players);
+        trackView = test.toView();
+        assertFalse(trackView.isPopeSpaceONE());
+        assertFalse(trackView.isPopeSpaceTWO());
+        assertTrue(trackView.isPopeSpaceTHREE());
     }
 }
