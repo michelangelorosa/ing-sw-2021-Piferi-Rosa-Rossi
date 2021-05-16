@@ -111,7 +111,7 @@ BuyCard extends Action {
         message.setError(this.response);
         if(this.response.equals("SUCCESS")) {
             message.addPossibleAction(ActionType.PAY_RESOURCE_CARD);
-            message.setTemporaryResources(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay());
+            message.setTemporaryResources(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toView());
         }
         else {
             message.addPossibleAction(ActionType.ACTIVATE_PRODUCTION);

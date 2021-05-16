@@ -106,8 +106,8 @@ public class AddResourceTest {
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getActionDone());
         assertEquals("SUCCESS", messageToClient.getError());
         assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
-        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse(), ((AddMessage) messageToClient).getWarehouse());
-        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay(), ((AddMessage) messageToClient).getTemporaryResources());
+        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().toView().getWarehouseDepots()[0].getStoredResources(), ((AddMessage) messageToClient).getWarehouse().getWarehouseDepots()[0].getStoredResources());
+        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toView().getResource(ResourceType.SHIELDS), ((AddMessage) messageToClient).getTemporaryResources().getResource(ResourceType.SHIELDS));
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getPossibleActions().get(1));
         assertEquals(ActionType.RESET_WAREHOUSE, messageToClient.getPossibleActions().get(2));
@@ -122,8 +122,8 @@ public class AddResourceTest {
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getActionDone());
         assertEquals("SUCCESS", messageToClient.getError());
         assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
-        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse(), ((AddMessage) messageToClient).getWarehouse());
-        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay(), ((AddMessage) messageToClient).getTemporaryResources());
+        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().toView().getWarehouseDepots()[1].getResourceType(), ((AddMessage) messageToClient).getWarehouse().getWarehouseDepots()[1].getResourceType());
+        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toView().getResource(ResourceType.COINS), ((AddMessage) messageToClient).getTemporaryResources().getResource(ResourceType.COINS));
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getPossibleActions().get(1));
         assertEquals(ActionType.RESET_WAREHOUSE, messageToClient.getPossibleActions().get(2));
@@ -211,8 +211,8 @@ public class AddResourceTest {
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getActionDone());
         assertEquals("SUCCESS", messageToClient.getError());
         assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
-        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse(), ((AddMessage) messageToClient).getWarehouse());
-        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay(), ((AddMessage) messageToClient).getTemporaryResources());
+        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().toView().getWarehouseDepots()[2].isFromLeaderCardAbility(), ((AddMessage) messageToClient).getWarehouse().getWarehouseDepots()[2].isFromLeaderCardAbility());
+        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toView().toString(), ((AddMessage) messageToClient).getTemporaryResources().toString());
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getPossibleActions().get(1));
         assertEquals(ActionType.RESET_WAREHOUSE, messageToClient.getPossibleActions().get(2));

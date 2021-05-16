@@ -9,8 +9,8 @@ import it.polimi.ingsw.Model.*;
  */
 public class AddMessage extends MessageToClient {
     /** warehouse and temporaryResources attributes are needed to update the client's View */
-    private Warehouse warehouse;
-    private ResourceStack temporaryResources;
+    private it.polimi.ingsw.View.ReducedModel.Warehouse warehouse;
+    private it.polimi.ingsw.View.ReducedModel.ResourceStack temporaryResources;
 
     /**
      * Constructor for AddMessage Class.
@@ -23,28 +23,28 @@ public class AddMessage extends MessageToClient {
     /**
      * Setter for "warehouse" attribute in AddMessage Class.
      */
-    public void setWarehouse(Warehouse warehouse) {
+    public void setWarehouse(it.polimi.ingsw.View.ReducedModel.Warehouse warehouse) {
         this.warehouse = warehouse;
     }
 
     /**
      * Setter for "temporaryResources" attribute in AddMessage Class.
      */
-    public void setTemporaryResources(ResourceStack temporaryResources) {
+    public void setTemporaryResources(it.polimi.ingsw.View.ReducedModel.ResourceStack temporaryResources) {
         this.temporaryResources = temporaryResources;
     }
 
     /**
      * Getter for "warehouse" attribute in AddMessage Class.
      */
-    public Warehouse getWarehouse() {
+    public it.polimi.ingsw.View.ReducedModel.Warehouse getWarehouse() {
         return warehouse;
     }
 
     /**
      * Getter for "temporaryResources" attribute in AddMessage Class.
      */
-    public ResourceStack getTemporaryResources() {
+    public it.polimi.ingsw.View.ReducedModel.ResourceStack getTemporaryResources() {
         return temporaryResources;
     }
 

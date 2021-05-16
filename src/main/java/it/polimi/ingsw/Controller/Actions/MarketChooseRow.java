@@ -120,7 +120,7 @@ public class MarketChooseRow extends Action {
         message.setError(this.response);
         message.setRow(this.row);
         message.setRowOrColumn(this.rowOrColumnNumber);
-        message.setTemporaryResources(this.temporaryResource);
+        message.setTemporaryResources(this.temporaryResource.toView());
         if(this.response.equals("SUCCESS")) {
             message.addPossibleAction(ActionType.ADD_RESOURCE);
             message.addPossibleAction(ActionType.RESET_WAREHOUSE);

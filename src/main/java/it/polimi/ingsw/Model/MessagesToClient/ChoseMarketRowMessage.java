@@ -11,7 +11,7 @@ public class ChoseMarketRowMessage extends MessageToClient {
     /** A boolean and an int attributes define the row or column chosen by the client */
     private boolean isRow;
     private int rowOrColumn;
-    private ResourceStack temporaryResources;
+    private it.polimi.ingsw.View.ReducedModel.ResourceStack temporaryResources;
 
     /**
      * Constructor for ChoseMarketRowMessage Class.
@@ -49,11 +49,11 @@ public class ChoseMarketRowMessage extends MessageToClient {
         return rowOrColumn;
     }
 
-    public ResourceStack getTemporaryResources() {
+    public it.polimi.ingsw.View.ReducedModel.ResourceStack getTemporaryResources() {
         return temporaryResources;
     }
 
-    public void setTemporaryResources(ResourceStack temporaryResources) {
+    public void setTemporaryResources(it.polimi.ingsw.View.ReducedModel.ResourceStack temporaryResources) {
         this.temporaryResources = temporaryResources;
     }
 }

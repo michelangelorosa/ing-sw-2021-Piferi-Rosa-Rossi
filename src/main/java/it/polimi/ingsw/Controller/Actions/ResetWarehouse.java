@@ -97,8 +97,8 @@ public class ResetWarehouse extends Action {
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {
         ResetWarehouseMessage message = new ResetWarehouseMessage(actionController.getGame().getCurrentPlayerIndex());
-        message.setWarehouse(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse());
-        message.setTemporaryResources(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay());
+        message.setWarehouse(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse().toView());
+        message.setTemporaryResources(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toView());
         message.setError(this.response);
         message.addPossibleAction(ActionType.ADD_RESOURCE);
         message.addPossibleAction(ActionType.RESET_WAREHOUSE);

@@ -244,15 +244,15 @@ public class Player implements Serializable {
     public ArrayList<String> leaderPrint(boolean up){
         ArrayList<String> leaderCards = new ArrayList<>();
         if (up) {
-            leaderCards.addAll(this.leaderCards[0].toCliUp());
-            leaderCards.add("                            ");
             leaderCards.addAll(this.leaderCards[1].toCliUp());
-        } else{
-            if(this.getLeaderCards()[0].isActive()) leaderCards.addAll(this.leaderCards[0].toCliUp());
-            else leaderCards.addAll(this.leaderCards[0].toCliDown());
             leaderCards.add("                            ");
+            leaderCards.addAll(this.leaderCards[0].toCliUp());
+        } else{
             if(this.getLeaderCards()[1].isActive()) leaderCards.addAll(this.leaderCards[1].toCliUp());
             else leaderCards.addAll(this.leaderCards[1].toCliDown());
+            leaderCards.add("                            ");
+            if(this.getLeaderCards()[0].isActive()) leaderCards.addAll(this.leaderCards[0].toCliUp());
+            else leaderCards.addAll(this.leaderCards[0].toCliDown());
         }
         return leaderCards;
     }

@@ -8,7 +8,7 @@ import it.polimi.ingsw.Model.ResourceStack;
  * after a BuyCard request.
  */
 public class BuyCardMessage extends MessageToClient{
-    ResourceStack temporaryResources;
+    it.polimi.ingsw.View.ReducedModel.ResourceStack temporaryResources;
 
     /**
      * Constructor for BuyCardMessage Class.
@@ -18,11 +18,11 @@ public class BuyCardMessage extends MessageToClient{
         this.playerId = playerId;
     }
 
-    public ResourceStack getTemporaryResources() {
+    public it.polimi.ingsw.View.ReducedModel.ResourceStack getTemporaryResources() {
         return temporaryResources;
     }
 
-    public void setTemporaryResources(ResourceStack temporaryResources) {
+    public void setTemporaryResources(it.polimi.ingsw.View.ReducedModel.ResourceStack temporaryResources) {
         this.temporaryResources = temporaryResources;
     }
 }

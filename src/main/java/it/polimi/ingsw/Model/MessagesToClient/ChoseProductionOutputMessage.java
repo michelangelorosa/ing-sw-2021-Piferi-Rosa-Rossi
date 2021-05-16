@@ -9,7 +9,7 @@ import it.polimi.ingsw.Model.*;
  */
 public class ChoseProductionOutputMessage extends MessageToClient {
     /** The player's strongbox is needed to update the client's View */
-    private Strongbox strongbox;
+    private it.polimi.ingsw.View.ReducedModel.Strongbox strongbox;
 
     /**
      * Constructor for ChooseProductionOutputMessage Class.
@@ -22,14 +22,14 @@ public class ChoseProductionOutputMessage extends MessageToClient {
     /**
      * Setter for "strongbox" attribute in ChooseProductionOutputMessage Class.
      */
-    public void setStrongbox(Strongbox strongbox) {
+    public void setStrongbox(it.polimi.ingsw.View.ReducedModel.Strongbox strongbox) {
         this.strongbox = strongbox;
     }
 
     /**
      * Getter for "strongbox" attribute in ChooseProductionOutputMessage Class.
      */
-    public Strongbox getStrongbox() {
+    public it.polimi.ingsw.View.ReducedModel.Strongbox getStrongbox() {
         return strongbox;
     }
 }

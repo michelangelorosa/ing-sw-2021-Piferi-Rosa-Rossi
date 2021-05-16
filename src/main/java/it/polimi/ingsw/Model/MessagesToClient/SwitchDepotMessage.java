@@ -9,7 +9,7 @@ import it.polimi.ingsw.Model.*;
  */
 public class SwitchDepotMessage extends MessageToClient {
     /** A warehouse is needed to update the Client's View */
-    private Warehouse warehouse;
+    private it.polimi.ingsw.View.ReducedModel.Warehouse warehouse;
 
     /**
      * Constructor for SwitchDepotMessage Class.
@@ -22,14 +22,14 @@ public class SwitchDepotMessage extends MessageToClient {
     /**
      * Setter for "warehouse" attribute in SwitchDepotMessage Class.
      */
-    public void setWarehouse(Warehouse warehouse) {
+    public void setWarehouse(it.polimi.ingsw.View.ReducedModel.Warehouse warehouse) {
         this.warehouse = warehouse;
     }
 
     /**
      * Getter for "warehouse" attribute in SwitchDepotMessage Class.
      */
-    public Warehouse getWarehouse() {
+    public it.polimi.ingsw.View.ReducedModel.Warehouse getWarehouse() {
         return warehouse;
     }
 }

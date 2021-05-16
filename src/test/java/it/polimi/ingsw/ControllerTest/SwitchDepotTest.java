@@ -127,7 +127,7 @@ public class SwitchDepotTest {
         assertEquals(ActionType.RESET_WAREHOUSE, messageToClient.getPossibleActions().get(1));
         assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getPossibleActions().get(2));
         assertEquals(ActionType.END_MARKET, messageToClient.getPossibleActions().get(3));
-        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse(), ((SwitchDepotMessage)messageToClient).getWarehouse());
+        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().toView().getWarehouseDepots()[1].getResourceType(), ((SwitchDepotMessage)messageToClient).getWarehouse().getWarehouseDepots()[1].getResourceType());
 
 
         assertEquals(1, game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().getWarehouseDepots()[0].getStoredResources());
@@ -148,7 +148,7 @@ public class SwitchDepotTest {
         assertEquals(ActionType.RESET_WAREHOUSE, messageToClient.getPossibleActions().get(1));
         assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getPossibleActions().get(2));
         assertEquals(ActionType.END_MARKET, messageToClient.getPossibleActions().get(3));
-        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse(), ((SwitchDepotMessage)messageToClient).getWarehouse());
+        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().toView().isFull(), ((SwitchDepotMessage)messageToClient).getWarehouse().isFull());
 
         assertEquals(2, game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().getWarehouseDepots()[0].getStoredResources());
         assertEquals(1, game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().getWarehouseDepots()[1].getStoredResources());

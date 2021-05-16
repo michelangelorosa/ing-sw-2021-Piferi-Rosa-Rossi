@@ -444,7 +444,7 @@ public class ToCliTest {
         players.add(player1);
         players.add(player2);
         game.setPlayers(players);
-        game.setMyNickname("Lello");
+        game.setMyNickname("Antonino");
 
         ResourceStack input = new ResourceStack(0, 1, 2, 3);
         BasicProduction basic = new BasicProduction(input, input, 10, 10, 9);

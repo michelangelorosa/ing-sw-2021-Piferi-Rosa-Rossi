@@ -89,7 +89,7 @@ public class ChooseLeaderCard extends Action {
         ChoseLeaderCardMessage message = new ChoseLeaderCardMessage(actionController.getGame().getCurrentPlayerIndex());
         message.setError(this.response);
         if(this.response.equals("SUCCESS")) {
-            message.setTemporaryResources(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay());
+            message.setTemporaryResources(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toView());
             message.addPossibleAction(ActionType.ADD_RESOURCE);
             message.addPossibleAction(ActionType.SWITCH_DEPOT);
             message.addPossibleAction(ActionType.RESET_WAREHOUSE);

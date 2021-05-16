@@ -5,7 +5,7 @@ import it.polimi.ingsw.Model.ResourceStack;
 
 public class ChoseLeaderCardMessage extends MessageToClient {
     /**ChoseLeaderCardMessage need a temporary resource stack*/
-    ResourceStack temporaryResources;
+    it.polimi.ingsw.View.ReducedModel.ResourceStack temporaryResources;
 
     /**ChoseLeaderCardMessage's constructor*/
     public ChoseLeaderCardMessage(int playerId) {
@@ -14,7 +14,7 @@ public class ChoseLeaderCardMessage extends MessageToClient {
     }
 
     /**Setter for Temporary resource*/
-    public void setTemporaryResources(ResourceStack temporaryResources) {
+    public void setTemporaryResources(it.polimi.ingsw.View.ReducedModel.ResourceStack temporaryResources) {
         this.temporaryResources = temporaryResources;
     }
 }

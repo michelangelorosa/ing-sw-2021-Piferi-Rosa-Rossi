@@ -8,8 +8,8 @@ import it.polimi.ingsw.Model.*;
  * after a ResetWarehouse request.
  */
 public class ResetWarehouseMessage extends MessageToClient {
-    private Warehouse warehouse;
-    private ResourceStack temporaryResources;
+    private it.polimi.ingsw.View.ReducedModel.Warehouse warehouse;
+    private it.polimi.ingsw.View.ReducedModel.ResourceStack temporaryResources;
 
     /**
      * Constructor for ResetWarehouseMessage Class.
@@ -22,28 +22,28 @@ public class ResetWarehouseMessage extends MessageToClient {
     /**
      * Setter for "warehouse" attribute in ResetWarehouseMessage Class.
      */
-    public void setWarehouse(Warehouse warehouse) {
+    public void setWarehouse(it.polimi.ingsw.View.ReducedModel.Warehouse warehouse) {
         this.warehouse = warehouse;
     }
 
     /**
      * Setter for "temporaryResources" attribute in ResetWarehouseMessage Class.
      */
-    public void setTemporaryResources(ResourceStack temporaryResources) {
+    public void setTemporaryResources(it.polimi.ingsw.View.ReducedModel.ResourceStack temporaryResources) {
         this.temporaryResources = temporaryResources;
     }
 
     /**
      * Getter for "warehouse" attribute in ResetWarehouseMessage Class.
      */
-    public Warehouse getWarehouse() {
+    public it.polimi.ingsw.View.ReducedModel.Warehouse getWarehouse() {
         return warehouse;
     }
 
     /**
      * Getter for "temporaryResources" attribute in ResetWarehouseMessage Class.
      */
-    public ResourceStack getTemporaryResources() {
+    public it.polimi.ingsw.View.ReducedModel.ResourceStack getTemporaryResources() {
         return temporaryResources;
     }
 }
