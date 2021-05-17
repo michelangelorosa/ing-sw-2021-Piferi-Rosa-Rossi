@@ -60,6 +60,7 @@ public class Player implements Serializable {
         this.popeTiles[0] = new PopeTileClass(2);
         this.popeTiles[1] = new PopeTileClass(3);
         this.popeTiles[2] = new PopeTileClass(4);
+        this.possibleActions = new ArrayList<>();
     }
 
     public void setPopeTiles(PopeTileClass[] popeTiles) {

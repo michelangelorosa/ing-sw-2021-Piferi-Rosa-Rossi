@@ -7,6 +7,7 @@ import it.polimi.ingsw.View.ReducedModel.Player;
 import it.polimi.ingsw.View.ReducedModel.Warehouse;
 import it.polimi.ingsw.View.ReducedModel.LeaderCard;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -85,6 +86,9 @@ public class Cli implements UserInterface{
         int secondLeaderCard;
 
         System.out.println(ANSIColors.YOUR_TURN_COLOR + " - IT'S YOUR TURN! - " + ANSIColors.RESET);
+        for(String s : initLeaderCardsToCli(leaderCards))
+            System.out.println(s);
+        System.out.println();
         System.out.println("Please choose two Leader Cards (numbered 1 to 4 from left to right");
 
         while(true) {
@@ -102,7 +106,7 @@ public class Cli implements UserInterface{
             if(choice2.equals(choice))
                 System.out.println("You can't choose the same Leader Card twice!");
             else if(choice2.equals("1") || choice2.equals("2") || choice2.equals("3") || choice2.equals("4")) {
-                secondLeaderCard = Integer.parseInt(choice) - 1;
+                secondLeaderCard = Integer.parseInt(choice2) - 1;
                 return new InitChooseLeaderCards(leaderCards.get(firstLeaderCard), leaderCards.get(secondLeaderCard));
             }
             else
@@ -245,7 +249,7 @@ public class Cli implements UserInterface{
                 System.out.println("Please insert a valid number");
         }
 
-        return new ActivateLeaderCard(choiceInt);
+        return new ActivateLeaderCard(choiceInt - 1);
     }
 
     /**
@@ -265,7 +269,7 @@ public class Cli implements UserInterface{
 
         System.out.println("\u001B[1m" + "Write 0 at any time to go back" + ANSIColors.RESET);
         System.out.println("\nDo you want to use Development Cards? (y/n)");
-        choice = stringAssign();
+        choice = stringAssign(sc);
         if(choice.equals("0"))
             return null;
         else
@@ -274,21 +278,21 @@ public class Cli implements UserInterface{
         if(decision) {
             System.out.println("Which cards do you want to use?");
             System.out.println("First slot (left): (y/n)");
-            choice = stringAssign();
+            choice = stringAssign(sc);
             if(choice.equals("0"))
                 return null;
             else
                 firstSlot = boolDecider(choice);
 
             System.out.println("Second slot (center): (y/n)");
-            choice = stringAssign();
+            choice = stringAssign(sc);
             if(choice.equals("0"))
                 return null;
             else
                 secondSlot = boolDecider(choice);
 
             System.out.println("Third slot (right): (y/n)");
-            choice = stringAssign();
+            choice = stringAssign(sc);
             if(choice.equals("0"))
                 return null;
             else
@@ -296,20 +300,20 @@ public class Cli implements UserInterface{
         }
 
         System.out.println("\nDo you want to use Leader Cards? (y/n)");
-        choice = stringAssign();
+        choice = stringAssign(sc);
         decision = boolDecider(choice);
 
         if(decision) {
             System.out.println("Which leader cards do you want to use?");
             System.out.println("First leader card (below): (y/n)");
-            choice = stringAssign();
+            choice = stringAssign(sc);
             if(choice.equals("0"))
                 return null;
             else
                 firstLeaderCard = boolDecider(choice);
 
             System.out.println("Second leader card (above): (y/n)");
-            choice = stringAssign();
+            choice = stringAssign(sc);
             if(choice.equals("0"))
                 return null;
             else
@@ -317,14 +321,14 @@ public class Cli implements UserInterface{
         }
 
         System.out.println("\nDo you want to use Basic Production? (y/n)");
-        choice = stringAssign();
+        choice = stringAssign(sc);
         basicProduction = boolDecider(choice);
 
         if(basicProduction) {
             int jollyIn = game.getMyPlayer().getBasicProduction().getJollyIn();
 
             System.out.println("Which resources do you want to use as inputs? (One by one, " + jollyIn + " needed)");
-            basicProductionInputs = typesFiller(jollyIn);
+            basicProductionInputs = typesFiller(jollyIn, sc);
 
             if(basicProductionInputs == null)
                 return null;
@@ -366,11 +370,11 @@ public class Cli implements UserInterface{
         while(true) {
             System.out.println("\nWhich depot do you want to add the resource to?");
 
-            depot = depotIntIterator(game, false);
+            depot = depotIntIterator(game, false, sc);
 
             System.out.println("\nSelect a resource type: (write corresponding number)");
 
-            type = resourceIntIterator();
+            type = resourceIntIterator(sc);
 
             if(InputController.checkAddResource(depot - 1, type, game)) {
                 return new AddResource(depot - 1, type.viewToModel());
@@ -488,6 +492,8 @@ public class Cli implements UserInterface{
 
         boolean notCorrect = true;
 
+        printList(game.myBoardToCli());
+        System.out.println("Choose Production Output");
         while(notCorrect) {
             boolean notEnded = true;
             ArrayList<ResourceType> firstLeaderOutputs = new ArrayList<>();
@@ -497,7 +503,7 @@ public class Cli implements UserInterface{
             if (this.firstLeaderCard) {
                 System.out.println("First Leader Card, select resources you want to add one by one: ");
                 while (notEnded) {
-                    firstLeaderOutputs = typesFiller(game.getMyPlayer().getLeaderCards()[0].getJollyOut());
+                    firstLeaderOutputs = typesFiller(game.getMyPlayer().getLeaderCards()[0].getJollyOut(), sc);
                     if (firstLeaderOutputs == null)
                         System.out.println("You have to choose which resources you want to add");
                     else
@@ -510,7 +516,7 @@ public class Cli implements UserInterface{
             if (this.secondLeaderCard) {
                 System.out.println("Second Leader Card, select resources you want to add one by one: ");
                 while (notEnded) {
-                    secondLeaderOutputs = typesFiller(game.getMyPlayer().getLeaderCards()[1].getJollyOut());
+                    secondLeaderOutputs = typesFiller(game.getMyPlayer().getLeaderCards()[1].getJollyOut(), sc);
                     if (secondLeaderOutputs == null)
                         System.out.println("You have to choose which resources you want to add");
                     else
@@ -523,7 +529,7 @@ public class Cli implements UserInterface{
             if (this.basicProduction) {
                 System.out.println("Basic Production, select resources you want to add one by one: ");
                 while (notEnded) {
-                    basicOutputs = typesFiller(game.getMyPlayer().getBasicProduction().getJollyOut());
+                    basicOutputs = typesFiller(game.getMyPlayer().getBasicProduction().getJollyOut(), sc);
                     if (basicOutputs == null)
                         System.out.println("You have to choose which resources you want to add");
                     else
@@ -541,9 +547,6 @@ public class Cli implements UserInterface{
                 chooseProductionOutput.setBasicProductionOutput(null);
             }
 
-            this.firstLeaderCard = false;
-            this.secondLeaderCard = false;
-            this.basicProduction = false;
         }
 
         return chooseProductionOutput;
@@ -639,31 +642,39 @@ public class Cli implements UserInterface{
     public Action payResource(Game game) {
         boolean fromWarehouse = false;
         int depot;
+        boolean notEnded = true;
         ResourceType type;
         String choice;
 
         printList(game.getMyPlayer().toCliPay());
 
         while(true) {
-            System.out.println("\nDo you want to pay from the Warehouse or the Strongbox? (insert relative number)");
-            System.out.println("1 - Warehouse");
-            System.out.println("2 - Strongbox");
+            while(notEnded) {
+                System.out.println("\nDo you want to pay from the Warehouse or the Strongbox? (insert relative number)");
+                System.out.println("1 - Warehouse");
+                System.out.println("2 - Strongbox");
 
-            choice = sc.nextLine();
+                choice = sc.nextLine();
 
-            switch(choice) {
-                case "1": fromWarehouse = true;
-                break;
-                case "2": fromWarehouse = false;
-                break;
-                default: System.out.println("Please enter a valid number");
-                break;
+                switch (choice) {
+                    case "1":
+                        fromWarehouse = true;
+                        notEnded = false;
+                        break;
+                    case "2":
+                        fromWarehouse = false;
+                        notEnded = false;
+                        break;
+                    default:
+                        System.out.println("Please enter a valid number");
+                        break;
+                }
             }
 
             if(fromWarehouse) {
                 System.out.println("\nWhich depot do you want to remove the resource from?");
 
-                depot = depotIntIterator(game, false);
+                depot = depotIntIterator(game, false, sc);
 
                 if(InputController.checkPayResource(true, depot - 1, null, game))
                     return new PayResource(true, depot - 1, null);
@@ -673,7 +684,7 @@ public class Cli implements UserInterface{
             else {
                 System.out.println("\nWhich type of resource do you want to remove from the Strongbox? (Insert relative number");
 
-                type = resourceIntIterator();
+                type = resourceIntIterator(sc);
 
                 if(InputController.checkPayResource(false, 0, type, game))
                     return  new PayResource(false, 0, type.viewToModel());
@@ -688,7 +699,8 @@ public class Cli implements UserInterface{
      * @return The requested action.
      */
     public PayResourceProduction payResourceProduction(Game game) {
-        return ((PayResourceProduction)payResource(game));
+        Action action = payResource(game);
+        return new PayResourceProduction(((PayResource)action).isFromWarehouse(), ((PayResource)action).getDepot(), ((PayResource)action).getResourceType());
     }
 
     /**
@@ -696,7 +708,8 @@ public class Cli implements UserInterface{
      * @return The requested action.
      */
     public PayResourceBuyCard payResourceBuyCard(Game game) {
-        return ((PayResourceBuyCard)payResource(game));
+        Action action = payResource(game);
+        return new PayResourceBuyCard(((PayResource)action).isFromWarehouse(), ((PayResource)action).getDepot(), ((PayResource)action).getResourceType());
     }
 
     /**
@@ -716,12 +729,12 @@ public class Cli implements UserInterface{
 
         while(true) {
             System.out.println("\nSelect first Depot you want to switch: (0 to go back)");
-            int depot1 = depotIntIterator(game, true);
+            int depot1 = depotIntIterator(game, true, sc);
             if(depot1 == 0)
                 return null;
 
             System.out.println("\nSelect second Depot you want to switch: (0 to go back)");
-            int depot2 = depotIntIterator(game, true);
+            int depot2 = depotIntIterator(game, true, sc);
             if(depot2 == 0)
                 return null;
 
@@ -769,6 +782,17 @@ public class Cli implements UserInterface{
         }
     }
 
+    public ArrayList<String> initLeaderCardsToCli(ArrayList<LeaderCard> leaderCards) throws IllegalArgumentException {
+        ArrayList<String> stringLeaders = leaderCards.get(0).toCliUp();
+
+        for(LeaderCard leaderCard : leaderCards)
+            for(int i = 0; i < stringLeaders.size(); i++)
+                if(leaderCard != leaderCards.get(0))
+                    stringLeaders.set(i, stringLeaders.get(i) + " " + leaderCard.toCliUp().get(i));
+
+        return stringLeaders;
+    }
+
 
     /**
      * Method used to print an ArrayList of Strings.
@@ -800,8 +824,7 @@ public class Cli implements UserInterface{
      * Method used to take a boolean type input from the Player
      * @return String containing "y", "n" or "0"
      */
-    private static String stringAssign() {
-        Scanner sc = new Scanner(System.in);
+    private static String stringAssign(Scanner sc) {
 
         String c = sc.nextLine();
 
@@ -818,8 +841,7 @@ public class Cli implements UserInterface{
      * @param jolly The number of resources which have to be chosen.
      * @return An ArrayList containing ResourceTypes.
      */
-    private ArrayList<ResourceType> typesFiller(int jolly) {
-        Scanner sc = new Scanner(System.in);
+    private ArrayList<ResourceType> typesFiller(int jolly, Scanner sc) {
         String choiceString;
         int choice;
 
@@ -866,10 +888,9 @@ public class Cli implements UserInterface{
      * @param canExit Boolean which specifies if the player can exit the action or not.
      * @return An int describing the player's choice.
      */
-    private static int depotIntIterator(Game game, boolean canExit) {
+    private static int depotIntIterator(Game game, boolean canExit, Scanner sc) {
         Warehouse warehouse = game.getMyPlayer().getWarehouse();
         String choice;
-        Scanner sc = new Scanner(System.in);
         int depot;
 
         if(!warehouse.getWarehouseDepots()[0].isEmpty())
@@ -901,7 +922,7 @@ public class Cli implements UserInterface{
      * Method used by the player to choose a ResourceType.
      * @return The chosen ResourceType.
      */
-    private static ResourceType resourceIntIterator() {
+    private static ResourceType resourceIntIterator(Scanner sc) {
         System.out.println("1 - SHIELD");
         System.out.println("2 - SERVANT");
         System.out.println("3 - COIN");
@@ -909,8 +930,6 @@ public class Cli implements UserInterface{
         String choice;
         int typeInt;
         ResourceType type;
-
-        Scanner sc = new Scanner(System.in);
 
         while(true) {
             choice = sc.nextLine();

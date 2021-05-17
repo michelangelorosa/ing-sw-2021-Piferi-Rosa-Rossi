@@ -3,6 +3,7 @@ package it.polimi.ingsw.ViewTest;
 
 import it.polimi.ingsw.Model.Enums.*;
 import it.polimi.ingsw.View.ANSIColors;
+import it.polimi.ingsw.View.Cli;
 import it.polimi.ingsw.View.ReducedModel.*;
 
 import it.polimi.ingsw.Model.Enums.*;
@@ -384,8 +385,10 @@ public class ToCliTest {
         for(String s : player1.leaderPrint(up))
             System.out.println(s);
 
-        //for(String s : game.initLeaderCardsToCli(leaderCards))
-            //System.out.println(s);
+        Cli cli = new Cli();
+
+        for(String s : cli.initLeaderCardsToCli(leaderCards))
+            System.out.println(s);
     }
 
     @Test
@@ -404,10 +407,9 @@ public class ToCliTest {
         leaderCards.add(card2);
         leaderCards.add(card3);
 
-        Game game = new Game();
-
-        //for(String s : game.initLeaderCardsToCli(leaderCards))
-            //System.out.println(s);
+        Cli cli = new Cli();
+        for(String s : cli.initLeaderCardsToCli(leaderCards))
+            System.out.println(s);
     }
 
 
@@ -444,7 +446,7 @@ public class ToCliTest {
         players.add(player1);
         players.add(player2);
         game.setPlayers(players);
-        game.setMyNickname("Antonino");
+        game.setMyNickname("Lello");
 
         ResourceStack input = new ResourceStack(0, 1, 2, 3);
         BasicProduction basic = new BasicProduction(input, input, 10, 10, 9);
