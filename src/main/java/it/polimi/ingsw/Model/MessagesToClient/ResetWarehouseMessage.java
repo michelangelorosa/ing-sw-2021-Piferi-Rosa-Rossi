@@ -1,15 +1,15 @@
 package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
-import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.View.ReducedModel.*;
 
 /**
  * ResetWarehouseMessage Class contains data for a response message to be sent to the client
  * after a ResetWarehouse request.
  */
 public class ResetWarehouseMessage extends MessageToClient {
-    private it.polimi.ingsw.View.ReducedModel.Warehouse warehouse;
-    private it.polimi.ingsw.View.ReducedModel.ResourceStack temporaryResources;
+    private Warehouse warehouse;
+    private ResourceStack temporaryResources;
 
     /**
      * Constructor for ResetWarehouseMessage Class.
@@ -22,28 +22,42 @@ public class ResetWarehouseMessage extends MessageToClient {
     /**
      * Setter for "warehouse" attribute in ResetWarehouseMessage Class.
      */
-    public void setWarehouse(it.polimi.ingsw.View.ReducedModel.Warehouse warehouse) {
+    public void setWarehouse(Warehouse warehouse) {
         this.warehouse = warehouse;
     }
 
     /**
      * Setter for "temporaryResources" attribute in ResetWarehouseMessage Class.
      */
-    public void setTemporaryResources(it.polimi.ingsw.View.ReducedModel.ResourceStack temporaryResources) {
+    public void setTemporaryResources(ResourceStack temporaryResources) {
         this.temporaryResources = temporaryResources;
     }
 
     /**
      * Getter for "warehouse" attribute in ResetWarehouseMessage Class.
      */
-    public it.polimi.ingsw.View.ReducedModel.Warehouse getWarehouse() {
+    public Warehouse getWarehouse() {
         return warehouse;
     }
 
     /**
      * Getter for "temporaryResources" attribute in ResetWarehouseMessage Class.
      */
-    public it.polimi.ingsw.View.ReducedModel.ResourceStack getTemporaryResources() {
+    public ResourceStack getTemporaryResources() {
         return temporaryResources;
+    }
+
+    /**
+     * Method used to update the client's view.
+     * @param game Game being played by the client.
+     */
+    @Override
+    public void updateView(Game game) {
+        for(Player player : game.getPlayers())
+            if(player.getTurnPosition() == this.playerId) {
+                player.setWarehouse(this.warehouse);
+                player.setTemporaryResources(this.temporaryResources);
+                player.setPossibleActions(this.possibleActions);
+            }
     }
 }

@@ -1,7 +1,9 @@
 package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
-import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.View.ReducedModel.Game;
+import it.polimi.ingsw.View.ReducedModel.Player;
+import it.polimi.ingsw.View.ReducedModel.Strongbox;
 
 /**
  * ChooseProductionOutputMessage Class defines a response message to be sent to the client
@@ -9,7 +11,7 @@ import it.polimi.ingsw.Model.*;
  */
 public class ChoseProductionOutputMessage extends MessageToClient {
     /** The player's strongbox is needed to update the client's View */
-    private it.polimi.ingsw.View.ReducedModel.Strongbox strongbox;
+    private Strongbox strongbox;
 
     /**
      * Constructor for ChooseProductionOutputMessage Class.
@@ -22,14 +24,32 @@ public class ChoseProductionOutputMessage extends MessageToClient {
     /**
      * Setter for "strongbox" attribute in ChooseProductionOutputMessage Class.
      */
-    public void setStrongbox(it.polimi.ingsw.View.ReducedModel.Strongbox strongbox) {
+    public void setStrongbox(Strongbox strongbox) {
         this.strongbox = strongbox;
     }
 
     /**
      * Getter for "strongbox" attribute in ChooseProductionOutputMessage Class.
      */
-    public it.polimi.ingsw.View.ReducedModel.Strongbox getStrongbox() {
+    public Strongbox getStrongbox() {
         return strongbox;
+    }
+
+    /**
+     * Method used to update the client's view.
+     * @param game Game being played by the client.
+     */
+    @Override
+    public void updateView(Game game) {
+        if(this.error.equals("SUCCESS"))
+            for(Player player : game.getPlayers())
+                if(player.getTurnPosition() == this.playerId) {
+                    player.setStrongbox(this.strongbox);
+                    player.setPossibleActions(this.possibleActions);
+                }
+
+                else {
+                    //TODO error message
+                }
     }
 }

@@ -1,11 +1,13 @@
 package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
-import it.polimi.ingsw.Model.ResourceStack;
+import it.polimi.ingsw.View.ReducedModel.Game;
+import it.polimi.ingsw.View.ReducedModel.Player;
+import it.polimi.ingsw.View.ReducedModel.ResourceStack;
 
 public class ChoseLeaderCardMessage extends MessageToClient {
     /**ChoseLeaderCardMessage need a temporary resource stack*/
-    it.polimi.ingsw.View.ReducedModel.ResourceStack temporaryResources;
+    ResourceStack temporaryResources;
 
     /**ChoseLeaderCardMessage's constructor*/
     public ChoseLeaderCardMessage(int playerId) {
@@ -14,7 +16,25 @@ public class ChoseLeaderCardMessage extends MessageToClient {
     }
 
     /**Setter for Temporary resource*/
-    public void setTemporaryResources(it.polimi.ingsw.View.ReducedModel.ResourceStack temporaryResources) {
+    public void setTemporaryResources(ResourceStack temporaryResources) {
         this.temporaryResources = temporaryResources;
+    }
+
+    /**
+     * Method used to update the client's view.
+     * @param game Game being played by the client.
+     */
+    @Override
+    public void updateView(Game game) {
+        if(this.error.equals("SUCCESS"))
+            for(Player player : game.getPlayers())
+                if(player.getTurnPosition() == this.playerId) {
+                    player.setPossibleActions(this.possibleActions);
+                    player.setTemporaryResources(this.temporaryResources);
+                }
+
+                else {
+                    //TODO error message
+                }
     }
 }

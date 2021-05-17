@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
-import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.View.ReducedModel.*;
 
 /**
  * AddMessage Class contains data for a response message to be sent to the client
@@ -9,8 +9,8 @@ import it.polimi.ingsw.Model.*;
  */
 public class AddMessage extends MessageToClient {
     /** warehouse and temporaryResources attributes are needed to update the client's View */
-    private it.polimi.ingsw.View.ReducedModel.Warehouse warehouse;
-    private it.polimi.ingsw.View.ReducedModel.ResourceStack temporaryResources;
+    private Warehouse warehouse;
+    private ResourceStack temporaryResources;
 
     /**
      * Constructor for AddMessage Class.
@@ -23,42 +23,40 @@ public class AddMessage extends MessageToClient {
     /**
      * Setter for "warehouse" attribute in AddMessage Class.
      */
-    public void setWarehouse(it.polimi.ingsw.View.ReducedModel.Warehouse warehouse) {
+    public void setWarehouse(Warehouse warehouse) {
         this.warehouse = warehouse;
     }
 
     /**
      * Setter for "temporaryResources" attribute in AddMessage Class.
      */
-    public void setTemporaryResources(it.polimi.ingsw.View.ReducedModel.ResourceStack temporaryResources) {
+    public void setTemporaryResources(ResourceStack temporaryResources) {
         this.temporaryResources = temporaryResources;
     }
 
     /**
      * Getter for "warehouse" attribute in AddMessage Class.
      */
-    public it.polimi.ingsw.View.ReducedModel.Warehouse getWarehouse() {
+    public Warehouse getWarehouse() {
         return warehouse;
     }
 
     /**
      * Getter for "temporaryResources" attribute in AddMessage Class.
      */
-    public it.polimi.ingsw.View.ReducedModel.ResourceStack getTemporaryResources() {
+    public ResourceStack getTemporaryResources() {
         return temporaryResources;
     }
 
-    /*
 
-     TODO import view methods
     /**
      * Method used to update the client's view.
      * @param game Game being played by the client.
      */
-    /*@Override
-    public void updateView(it.polimi.ingsw.View.ReducedModel.Game game) {
+    @Override
+    public void updateView(Game game) {
         if(this.error.equals("SUCCESS"))
-            for(it.polimi.ingsw.View.ReducedModel.Player player : game.getPlayers())
+            for(Player player : game.getPlayers())
                 if(player.getTurnPosition() == this.playerId) {
                     player.setWarehouse(this.warehouse);
                     player.setTemporaryResources(this.temporaryResources);
@@ -67,6 +65,6 @@ public class AddMessage extends MessageToClient {
                 else {
                     //TODO error message
                 }
-    } */
+    }
 
 }

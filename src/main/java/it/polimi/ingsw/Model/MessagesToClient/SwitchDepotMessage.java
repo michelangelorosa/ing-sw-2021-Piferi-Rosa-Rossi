@@ -1,7 +1,9 @@
 package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
-import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.View.ReducedModel.Game;
+import it.polimi.ingsw.View.ReducedModel.Player;
+import it.polimi.ingsw.View.ReducedModel.Warehouse;
 
 /**
  * SwitchDepotMessage Class contains data for a response message to be sent to the client
@@ -9,7 +11,7 @@ import it.polimi.ingsw.Model.*;
  */
 public class SwitchDepotMessage extends MessageToClient {
     /** A warehouse is needed to update the Client's View */
-    private it.polimi.ingsw.View.ReducedModel.Warehouse warehouse;
+    private Warehouse warehouse;
 
     /**
      * Constructor for SwitchDepotMessage Class.
@@ -22,14 +24,27 @@ public class SwitchDepotMessage extends MessageToClient {
     /**
      * Setter for "warehouse" attribute in SwitchDepotMessage Class.
      */
-    public void setWarehouse(it.polimi.ingsw.View.ReducedModel.Warehouse warehouse) {
+    public void setWarehouse(Warehouse warehouse) {
         this.warehouse = warehouse;
     }
 
     /**
      * Getter for "warehouse" attribute in SwitchDepotMessage Class.
      */
-    public it.polimi.ingsw.View.ReducedModel.Warehouse getWarehouse() {
+    public Warehouse getWarehouse() {
         return warehouse;
+    }
+
+    @Override
+    public void updateView(Game game) {
+        if(this.error.equals("SUCCESS"))
+            for(Player player : game.getPlayers())
+                if(player.getTurnPosition() == this.playerId) {
+                    player.setWarehouse(this.warehouse);
+                    player.setPossibleActions(this.possibleActions);
+                }
+                else {
+                    //TODO error message
+                }
     }
 }

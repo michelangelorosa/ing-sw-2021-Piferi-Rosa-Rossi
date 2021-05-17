@@ -1,7 +1,9 @@
 package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
-import it.polimi.ingsw.Model.ResourceStack;
+import it.polimi.ingsw.View.ReducedModel.Game;
+import it.polimi.ingsw.View.ReducedModel.Player;
+import it.polimi.ingsw.View.ReducedModel.ResourceStack;
 
 /**
  * ChoseMarketRowMessage Class defines a response to be sent to the client after
@@ -11,7 +13,7 @@ public class ChoseMarketRowMessage extends MessageToClient {
     /** A boolean and an int attributes define the row or column chosen by the client */
     private boolean isRow;
     private int rowOrColumn;
-    private it.polimi.ingsw.View.ReducedModel.ResourceStack temporaryResources;
+    private ResourceStack temporaryResources;
 
     /**
      * Constructor for ChoseMarketRowMessage Class.
@@ -49,11 +51,30 @@ public class ChoseMarketRowMessage extends MessageToClient {
         return rowOrColumn;
     }
 
-    public it.polimi.ingsw.View.ReducedModel.ResourceStack getTemporaryResources() {
+    public ResourceStack getTemporaryResources() {
         return temporaryResources;
     }
 
-    public void setTemporaryResources(it.polimi.ingsw.View.ReducedModel.ResourceStack temporaryResources) {
+    public void setTemporaryResources(ResourceStack temporaryResources) {
         this.temporaryResources = temporaryResources;
+    }
+
+    /**
+     * Method used to update the client's view.
+     * @param game Game being played by the client.
+     */
+    @Override
+    public void updateView(Game game) {
+        for (Player player : game.getPlayers())
+            if(player.getTurnPosition() == this.playerId) {
+                player.setPossibleActions(this.possibleActions);
+                if(this.error.equals("SUCCESS"))
+                    player.setTemporaryResources(this.temporaryResources);
+            }
+
+        if(this.isRow)
+            game.getMarket().rowChange(this.rowOrColumn);
+        else
+            game.getMarket().columnChange(this.rowOrColumn);
     }
 }

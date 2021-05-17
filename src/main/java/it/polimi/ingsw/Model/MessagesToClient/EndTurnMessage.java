@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
+import it.polimi.ingsw.View.ReducedModel.Game;
 
 /**
  * EndTurnMessage Class defines a response message to be sent to a client after
@@ -30,5 +31,14 @@ public class EndTurnMessage extends MessageToClient {
      */
     public int getNextPlayerId() {
         return nextPlayerId;
+    }
+
+    /**
+     * Method used to update the client's view.
+     * @param game Game being played by the client.
+     */
+    @Override
+    public void updateView(Game game) {
+
     }
 }

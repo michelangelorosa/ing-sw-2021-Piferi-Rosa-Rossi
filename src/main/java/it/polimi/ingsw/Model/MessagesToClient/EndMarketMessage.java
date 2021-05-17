@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
+import it.polimi.ingsw.View.ReducedModel.Game;
 
 import java.util.ArrayList;
 
@@ -32,5 +33,18 @@ public class EndMarketMessage extends MessageToClient {
      */
     public ArrayList<Integer> getPlayersFaithPosition() {
         return playersFaithPosition;
+    }
+
+    /**
+     * Method used to update the client's view.
+     * @param game Game being played by the client.
+     */
+    @Override
+    public void updateView(Game game) {
+        for(int i = 0; i < game.getPlayers().size(); i++) {
+            game.getPlayers().get(i).setFaithTrackPosition(this.playersFaithPosition.get(i));
+            if(game.getPlayers().get(i).getTurnPosition() == this.playerId)
+                game.getPlayers().get(i).setPossibleActions(this.possibleActions);
+        }
     }
 }
