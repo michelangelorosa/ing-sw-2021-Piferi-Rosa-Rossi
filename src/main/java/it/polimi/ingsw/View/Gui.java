@@ -28,6 +28,7 @@ public class Gui extends Application{
 
         primaryStage.setTitle("Masters Of Renaissance");
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         primaryStage.show();
 
     }

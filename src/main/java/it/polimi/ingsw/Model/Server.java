@@ -77,10 +77,18 @@ public class Server {
             }
         }catch (IOException e){
             System.err.print("Unable to open Server on port "+server_port);
-            System.err.println(", probably it's busy!");
+            System.err.println(", probably it's busy!\nShutting down");
             System.exit(1);
         }
 
     }
+
+    public synchronized void broadcast (String string){
+        for(ServerConnection allConnections : connections){
+            allConnections.sender(null,9);
+        }
+    }
+
+
 
 }

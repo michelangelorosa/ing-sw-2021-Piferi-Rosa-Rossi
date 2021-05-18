@@ -3,7 +3,7 @@ package it.polimi.ingsw.ViewTest;
 import it.polimi.ingsw.View.ANSIColors;
 import it.polimi.ingsw.View.ClientExceptionHandler;
 import it.polimi.ingsw.View.ReducedModel.*;
-import it.polimi.ingsw.View.ReducedModel.Enums.*;
+import it.polimi.ingsw.Model.Enums.*;
 import org.junit.Test;
 
 import java.util.ArrayList;
