@@ -78,9 +78,11 @@ public class ServerMessageHandler extends Observable<Object> {
     public void waitingForPlayers(ServerConnection serverConnection) {
         serverConnection.send(-3);
         while(true) {
-            if(Server.getNames().size() == Server.getNumberOfPlayers()) {
-                Server.broadcast(1);
-                return;
+            synchronized (this) {
+                if (Server.getNames().size() == Server.getNumberOfPlayers()) {
+                    serverConnection.send(1);
+                    return;
+                }
             }
         }
     }
@@ -90,15 +92,18 @@ public class ServerMessageHandler extends Observable<Object> {
         try {
             ready = serverConnection.getIn().readBoolean();
             if(ready)
-                serverConnection.setReady();
+                Server.playerReady();
+
         } catch (IOException e) {
             sendError(serverConnection, SE + "IOException when reading boolean");
             ready = true;
         }
         while(true) {
-            if(Server.checkReady()) {
-                Server.broadcast(4);
-                return;
+            synchronized (this) {
+                if (Server.getReadyPlayers() == Server.getNumberOfPlayers()) {
+                    serverConnection.send(4);
+                    return;
+                }
             }
         }
     }

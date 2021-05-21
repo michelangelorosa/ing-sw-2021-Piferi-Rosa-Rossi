@@ -56,7 +56,6 @@ public class ServerConnection implements Runnable{
 
             messageHandler.lobbyAndWait(this);
 
-            System.out.println("popooppopopo");
             //Accepts messages from client during game phase
             while (true) {
                 System.out.println("[SERVER CONNECTION] All players connected!");

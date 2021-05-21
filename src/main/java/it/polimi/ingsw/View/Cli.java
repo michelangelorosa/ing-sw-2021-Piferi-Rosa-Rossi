@@ -120,15 +120,16 @@ public class Cli implements UserInterface{
 
     public boolean initialLobby() {
         String choice;
-        System.out.println("\n\n\n\n");
+        System.out.println("\n\n");
         System.out.println(ANSIColors.GAMEPLAY_ACTIONS + ANSIfont.BOLD + "Welcome to the pre-game Lobby!" + ANSIColors.RESET);
         System.out.println();
         System.out.println("Are you ready to play " + ANSIfont.ITALIC + ANSIfont.BOLD + ANSIColors.FRONT_BLUE + "Masters of Renaissance" + ANSIColors.RESET + "? (y/n)");
 
         while(true) {
             choice = sc.nextLine();
-            if(choice.equals("y"))
-                return boolDecider(choice);
+            if(choice.equals("y")) {
+                return true;
+            }
             else if(!choice.equals("n"))
                 System.out.println("Please insert a valid character");
         }

@@ -24,6 +24,7 @@ public class Server {
     private static Set<Socket> socketSet = new HashSet<>();
     private final static ArrayList<ServerConnection> connections = new ArrayList<>();
     private final static int DEFAULT_PORT = 8765;
+    private static int readyPlayers = 0;
     //TODO error when creating a controller from classes with main()
     //private final static Controller controller = new Controller();
     public static Set<String> getNames() {
@@ -118,12 +119,11 @@ public class Server {
             return false;
     }
 
-    public static boolean checkReady() {
-        int counter = 0;
-        for(ServerConnection connection : connections) {
-            if(connection.isReady())
-                counter ++;
-        }
-        return counter == numberOfPlayers;
+    public static void playerReady() {
+        readyPlayers ++;
+    }
+
+    public static int getReadyPlayers() {
+        return readyPlayers;
     }
 }
