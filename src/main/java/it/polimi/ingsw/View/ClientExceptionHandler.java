@@ -40,7 +40,6 @@ public class ClientExceptionHandler {
     public boolean addressValidator(String address) throws Exception {
         String PATTERN = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
         if (address.matches(PATTERN)||address.equals("localhost")){
-            System.out.println("Server ok");
             return true;
         }
         String addressError ="Please enter a valid ipv4 address!";
@@ -94,31 +93,7 @@ public class ClientExceptionHandler {
      * @param s the message to display
      */
     public void cliError(String s) {
-        ArrayList<String> error = new ArrayList<>();
-        String b = ANSIColors.BACK_BRIGHT_WHITE;
-        String fw = ANSIColors.FRONT_BRIGHT_WHITE;
-        String f = "\u001B[38;5;160m";
-        String br = "\u001B[48;5;160m";
-        String r = ANSIColors.RESET;
-
-        String line = br + fw + "╔";
-        String line2 = br + fw + "╚";
-        for(int i = 0; i < s.length() + 6; i++) {
-            line += "═";
-            line2 += "═";
-        }
-        line += "╗" + r;
-        line2 += "╝" + r;
-
-        error.add(line);
-        error.add(br + fw + "║" + b + f + ANSIColors.BOLD + " ! " + s + " ! " + r + br + fw + "║" + r);
-        error.add(line2);
-
-        for(int i = 0; i < 30; i++)
-            System.out.println();
-
-        for(String string : error)
-            System.out.println(string);
+        System.out.println(ANSIfont.BOLD + "\u001B[38;5;160m" + s + ANSIColors.RESET);
     }
 
     /**

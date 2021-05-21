@@ -12,9 +12,21 @@ import java.util.ArrayList;
 public interface UserInterface {
     ArrayList<Object> init();
 
+    boolean startOrJoin();
+
+    int numberOfPlayers();
+
+    String initialInsertName();
+
+    void waitingForPlayers();
+
+    boolean initialLobby();
+
     Action initialChooseLeaderCards(ArrayList<LeaderCard> leaderCards) throws IllegalArgumentException;
 
-    void actionPicker(Game game) throws IllegalStateException;
+    Action initialChooseResources(int resources);
+
+    Action actionPicker(Game game) throws IllegalStateException;
 
     Action activateLeaderCard(Game game);
 

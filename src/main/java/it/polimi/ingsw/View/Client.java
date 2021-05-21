@@ -1,5 +1,8 @@
 package it.polimi.ingsw.View;
 
+import it.polimi.ingsw.View.ReducedModel.Game;
+import it.polimi.ingsw.View.ReducedModel.UserInteraction;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
@@ -15,53 +18,54 @@ public class Client {
     private boolean token;
     private boolean myTurn;
     private ClientConnection clientConnection;
+    private static final UserInteraction userInteraction = new UserInteraction() {
+    };
 
     /**
      * Default constructor
      * @param serverAddress The address to connect to
      * @param serverPort    The port to connect to
-     * @param user          The nickname of the player
-     * @param token         The player's token, with a token the player is allowed to perform one of the three moves allowed by the rules for each turn (buy/market/production)
-     * @param myTurn        If it's the player's turn it is allowed to send messages to the server and actively interact with the server
      */
-    public Client(String serverAddress, int serverPort, String user,boolean token,boolean myTurn){
+    public Client(String serverAddress, int serverPort){
         this.serverAddress = serverAddress;
         this.serverPort = serverPort;
-        this.user = user;
-        this.token = token;
-        this.myTurn = myTurn;
     }
 
     /**
      * Launches the client, if a command line argument "--cli" or "--CLI" is provided the game is started in CLI mode, otherwise in GUI
      * @param args          Command Line Arguments
      */
-    public void main(String[] args){
+    public static void main(String[] args){
        try{
-        if (args[0].toLowerCase(Locale.ROOT).equals("--cli")) {
-            //LAUNCH CLI
-        } else {
-            //LAUNCH GUI
-        }
+        //if (args[0].toLowerCase(Locale.ROOT).equals("--cli")) {
+            userInteraction.setUi(new Cli());
+        //} else {
+            //userInteraction = new UserInteraction(new Gui());
+        //}
+
        }catch (Exception e) {
-       System.err.println("Unable to start a Graphical Interface, shutting down");
-       System.exit(-1);
+            System.err.println("Unable to start a Graphical Interface, shutting down");
+            System.exit(-1);
        }
+        Client client = new Client("localhost", 25565);
+        client.startUp();
+
     }
 
     /**
      * Once the user is able to interact with the game this method is called to try to establish a connection with the server for both listening and writing on the socket
-     * @param serverAddress     String with an address to connect to
-     * @param serverPort        Port where to establish a connection
      */
-    public void startUp(String serverAddress,Integer serverPort){
+    public void startUp(){
         try {
             //serverAddress and serverPort have to be provided by the user
+            ArrayList<Object> objects = userInteraction.connectToServer();
+            serverAddress = (String)objects.get(0);
+            serverPort = (int)objects.get(1);
 
             Socket socket = new Socket(serverAddress, serverPort);
             System.out.println("Connected to server!");
 
-            ClientConnection clientConnection = new ClientConnection(this);
+            ClientConnection clientConnection = new ClientConnection(this, socket);
             new Thread(clientConnection).start();
 
         } catch (IOException e) {
@@ -116,5 +120,7 @@ public class Client {
         return serverPort;
     }
 
-
+    public UserInteraction getUserInteraction() {
+        return userInteraction;
+    }
 }

@@ -33,6 +33,7 @@ public class Game {
         this.gameType = GameType.SINGLEPLAYER;
         this.players = new ArrayList<>();
         this.currentPlayerIndex = 0;
+        this.leaderCards = new ArrayList<>();
         this.leaderCards = JSONReader.ReadLeaderCards();
         this.market = new Market();
         this.developmentCardTable = new DevelopmentCardTable();

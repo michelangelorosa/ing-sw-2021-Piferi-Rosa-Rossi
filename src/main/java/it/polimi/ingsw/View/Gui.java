@@ -22,7 +22,7 @@ public class Gui extends Application{
         ClientExceptionHandler gui= new ClientExceptionHandler();
         gui.visualType(false);
         Parent root;
-        root = FXMLLoader.load(getClass().getResource("Assets/Fxml/Intro.fxml"));
+        root = FXMLLoader.load(getClass().getResource("Assets/Fxml/Loser.fxml"));
         //Creates a scene object
         Scene scene = new Scene(root);
 

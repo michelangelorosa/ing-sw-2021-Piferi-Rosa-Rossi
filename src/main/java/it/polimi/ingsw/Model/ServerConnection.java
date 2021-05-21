@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Controller.Controller;
+import it.polimi.ingsw.Controller.Observable;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
 
 import java.io.*;
@@ -15,71 +17,57 @@ import java.util.stream.Collectors;
  * For the messages to be sent a manual flushing has to be performed!
  */
 
-public class ServerConnection implements Runnable {
+public class ServerConnection implements Runnable{
     private String name;
     private Socket socket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
+    private final ServerMessageHandler messageHandler;
+    private boolean ready = false;
 
     /**
      * Default constructor for a ServerConnection class. Tries to establish a connection to a client after it has contacted the server.
      * Given the socket it creates the outputStream, the corresponding ObjectOutputStream and vice versa for the InputStream and the ObjectInputStream.
      * If unable an IOException is caught and the connection is closed.
      * @param client        The socket Server-Client
-     * @param connections   //obsolete, probably
      */
-    public ServerConnection(Socket client, ArrayList<ServerConnection> connections){
-        try {
-            this.socket = client;
-            OutputStream outputStream = socket.getOutputStream();
-            this.out = new ObjectOutputStream(outputStream);
-            InputStream inputStream = socket.getInputStream();
-            this.in = new ObjectInputStream(inputStream);
-        }catch(IOException e){
-            System.err.println("IOException while reading socket! Terminating connection to player\n");
-            //CLOSE CONNECTION
-        }
+    public ServerConnection(Socket client) throws IOException{
+        this.socket = client;
+        this.messageHandler = new ServerMessageHandler();
     }
 
-    @Override
+
     public void run() {
-        System.out.println("Server Connection Connected to " + socket.getInetAddress());
+        try {
+            OutputStream outputStream = this.socket.getOutputStream();
+            InputStream inputStream = this.socket.getInputStream();
+            this.out = new ObjectOutputStream(outputStream);
+            this.in = new ObjectInputStream(inputStream);
+        } catch (IOException e) { System.out.println("Caught exception"); }
+
+        System.out.println("[SERVER] Connection Connected to " + socket.getInetAddress());
 
         try {
+            messageHandler.startAndNumberOfPlayers(this);
 
-            while (true) {
-                System.out.println("Sent request for name please! "+0);
-                //First thing: it expects a UTF string which represents the name of the client
-                String name = in.readUTF();
-                if(name.isEmpty()||name.isBlank()||name.length()>16) {
-                    System.err.println("Invalid name! Disconnetting "+socket.toString());
-                    sender(null,9);
-                    close();
-                }
-                //TODO Sync with Server names
-                synchronized (name) {
-                    if (Server.setName(name)) {
-                        System.out.println(name+"'s name is ok!");
-                        //TODO add new player, if possible
-                        this.name=name;
-                        break;
-                    } else if (!name.isBlank()) {
-                        System.err.println("Name is already in use!");
-                        //TODO: Reload from saved state
-                        break;
-                    }
-                }
-            }
+            messageHandler.nameRequest(this);
 
+            messageHandler.waitingForPlayers(this);
+
+            messageHandler.lobbyAndWait(this);
+
+            System.out.println("popooppopopo");
             //Accepts messages from client during game phase
             while (true) {
+                System.out.println("[SERVER CONNECTION] All players connected!");
                 int temp = in.readInt();
-                System.out.println("Recieved "+temp);
-                if(temp==0){//BROADCAST MESSAGE
+                System.out.println("Received "+temp);
+                if(temp==0){
+                    //BROADCAST MESSAGE
                 }
-                }
+            }
         }catch (Exception e){
-            System.out.println(e);
+            System.out.println("[SERVER CONNECTION] Caught exception");
         }finally{
             if(out!=null){
             }
@@ -99,37 +87,27 @@ public class ServerConnection implements Runnable {
 
     /**
      * Tries to send a number to the client. If it fails the connection is closed.
-     * @param i
+     * @param i     Number to send
      */
-    public synchronized void sender(String name,int i){
+    public synchronized void send(int i){
         try{
-            if(name.equals(this.name)||name.isBlank()){
             out.writeInt(i);
             out.flush();
-            }
         }catch (IOException e){
-            System.err.print("Unable to send "+i);
-            System.err.println(" to "+socket.toString());
-            close();
+            messageHandler.sendError(this, "IOException when sending a string");
         }
     }
 
     /**
-     * Tries to send a number to the client. If it fails the connection is closed.
-     * @param i      Number to send
+     * Tries to send a String to the client. If it fails the connection is closed.
      * @param string The string to be sent
      */
-    public synchronized void sender(int i,String string){
-        try{
-            if(name.equals(this.name)||name.isBlank()){
-                out.writeInt(i);
+    public synchronized void send(String string) {
+        try {
             out.writeUTF(string);
             out.flush();
-            }
-        }catch (IOException e){
-        System.err.print("Unable to send "+i+string);
-        System.err.println(" to "+socket.toString());
-        close();
+        } catch(IOException e) {
+            messageHandler.sendError(this, "IOException when sending a string");
         }
     }
 
@@ -137,17 +115,12 @@ public class ServerConnection implements Runnable {
      * Sends a LeaderCard array
      * @param leaderCards
      */
-    public synchronized void sender(LeaderCard[] leaderCards){
-        try{
-            if(name.equals(this.name)||name.isBlank()){
-                out.writeInt(4);
+    public synchronized void send(LeaderCard[] leaderCards) {
+        try {
             out.writeObject(leaderCards);
             out.flush();
-            }
-        }catch (IOException e){
-            System.err.print("Unable to send leader cards");
-            System.err.println(" to "+socket.toString());
-            close();
+        } catch(IOException e) {
+            messageHandler.sendError(this, "IOException when sending a Leader Card");
         }
     }
 
@@ -155,16 +128,21 @@ public class ServerConnection implements Runnable {
      * Sends a bool to the client
      * @param bool
      */
-    public synchronized void sender(boolean bool){
-        try{
-            if(name.equals(this.name)||name.isBlank()){
-                out.writeObject(bool);
+    public synchronized void send(boolean bool) throws IOException{
+        try {
+            out.writeBoolean(bool);
             out.flush();
-            }
-        }catch (IOException e){
-            System.err.print("Unable to send "+bool);
-            System.err.println(" to "+socket.toString());
-            close();
+        } catch(IOException e) {
+            messageHandler.sendError(this, "IOException when sending a boolean");
+        }
+    }
+
+    public synchronized void send(MessageToClient message) {
+        try {
+            out.writeObject(message);
+            out.flush();
+        } catch (IOException e) {
+            messageHandler.sendError(this, "IOException when sending a MessageToClient");
         }
     }
 
@@ -178,5 +156,21 @@ public class ServerConnection implements Runnable {
         }catch (IOException e){
             System.err.println("IOError closing socket of "+socket.toString());
         }
+    }
+
+    public ObjectInputStream getIn() {
+        return in;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isReady() {
+        return ready;
+    }
+
+    public void setReady() {
+        this.ready = true;
     }
 }

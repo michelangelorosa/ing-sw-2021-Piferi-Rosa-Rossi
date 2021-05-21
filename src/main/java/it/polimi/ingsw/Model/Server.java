@@ -1,5 +1,8 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Controller.Controller;
+import it.polimi.ingsw.Model.*;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -17,10 +20,12 @@ import static java.lang.Integer.parseInt;
  */
 public class Server {
     private static Set<String> names = new HashSet<>();
+    private static Integer numberOfPlayers = null;
     private static Set<Socket> socketSet = new HashSet<>();
-    private static ArrayList<ServerConnection> connections = new ArrayList<>();
-    private static int DEFAULT_PORT = 8765;
-    private static Game game;
+    private final static ArrayList<ServerConnection> connections = new ArrayList<>();
+    private final static int DEFAULT_PORT = 8765;
+    //TODO error when creating a controller from classes with main()
+    //private final static Controller controller = new Controller();
     public static Set<String> getNames() {
         return names;
     }
@@ -37,9 +42,9 @@ public class Server {
     public static boolean setName(String name){
         if(names.contains(name))
             return false;
-            else
-        names.add(name);
-        return true;
+        else
+            names.add(name);
+            return true;
     }
 
     public static Set<Socket> getSockets() {
@@ -68,7 +73,8 @@ public class Server {
             while (true){
                 try{
                     Socket client = ss.accept();
-                    ServerConnection serverConnection = new ServerConnection(client,connections);
+                    System.out.println("[SERVER] Client connected");
+                    ServerConnection serverConnection = new ServerConnection(client);
                     connections.add(serverConnection);
                     pool.execute(serverConnection);
                 }catch (IOException e){
@@ -83,12 +89,41 @@ public class Server {
 
     }
 
-    public synchronized void broadcast (String string){
-        for(ServerConnection allConnections : connections){
-            allConnections.sender(null,9);
+    public static synchronized void broadcast (String string){
+        for(ServerConnection connection : connections){
+            connection.send(string);
         }
     }
 
+    public static synchronized void broadcast (int i){
+        for(ServerConnection connection : connections){
+            connection.send(i);
+        }
+    }
 
+    //public static Controller getController() {
+    //    return controller;
+    //}
 
+    public static Integer getNumberOfPlayers() {
+        return numberOfPlayers;
+    }
+
+    public static boolean setNumberOfPlayers(int number) {
+        if(numberOfPlayers == null && number > 0 && number < 5) {
+            numberOfPlayers = number;
+            return true;
+        }
+        else
+            return false;
+    }
+
+    public static boolean checkReady() {
+        int counter = 0;
+        for(ServerConnection connection : connections) {
+            if(connection.isReady())
+                counter ++;
+        }
+        return counter == numberOfPlayers;
+    }
 }

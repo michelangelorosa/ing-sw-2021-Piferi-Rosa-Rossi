@@ -2,33 +2,39 @@ package it.polimi.ingsw.View;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import it.polimi.ingsw.Controller.Observer;
 import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.MessagesToClient.*;
 import it.polimi.ingsw.View.ReducedModel.LeaderCard;
+import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.Controller.Actions.*;
 
 /** ClientConnection handles the listening of messages from the server.
  * the messages are int coded
  */
-public class ClientConnection implements Runnable{
+public class ClientConnection implements Runnable, Observer<Action> {
     private Socket server;
     private OutputStream outputStream;
     private InputStream inputStream;
     private Client client;
-    private ObjectOutputStream objectOutputStream;
-    private ObjectInputStream objectInputStream;
+    private final ObjectOutputStream objectOutputStream;
+    private final ObjectInputStream objectInputStream;
 
     /**
      * Tries to create a connection to the server using the client's parameters.
      * @param client        The client
      * @throws IOException  I/O error
      */
-    public ClientConnection (Client client) throws IOException{
+    public ClientConnection (Client client, Socket server) throws IOException{
         this.client=client;
         int port = client.getPort();
         String address = client.getServer();
-        server = new Socket(address,port);
-        objectInputStream = new ObjectInputStream(inputStream);
-        objectOutputStream = new ObjectOutputStream(outputStream);
+        this.server = server;
+        objectOutputStream = new ObjectOutputStream(server.getOutputStream());
+        objectInputStream = new ObjectInputStream(server.getInputStream());
     }
 
     /**
@@ -36,21 +42,35 @@ public class ClientConnection implements Runnable{
      */
     @Override
     public void run(){
+        System.out.println(ANSIColors.FRONT_BRIGHT_CYAN + "[CLIENT CONNECTION] Started" + ANSIColors.RESET);
+        Action actionObject;
+        Scanner TEMPORARY_SCANNER = new Scanner(System.in);
         try {
             //First part of the connection
             while (true) {
                 int action = objectInputStream.readInt();
-                System.out.print("Got "+action);
+
+                System.out.println(ANSIColors.FRONT_BRIGHT_CYAN + "[CLIENT CONNECTION] Got action "+action + ANSIColors.RESET);
+                System.out.println();
+
+                //Action = -2, server is asking client if he wants to either start or join the game
+                if (action == -2) {
+                    this.client.getUserInteraction().startOrJoin(this);
+                }
+                else if (action == -1) {
+                    this.client.getUserInteraction().numberOfPlayers(this);
+                }
             //Action = 0, the server is asking the client to input a name!
-                if (action==0) {
-                    //TODO: asking the client for a name
-                    System.out.print(" Enter name: ");
-                    String name ="Giorgio";
-                    send(name);
+                else if (action==0) {
+                    this.client.getUserInteraction().initialChooseName(this);
+                }
+
+                else if(action == -3) {
+                    this.client.getUserInteraction().waitingForPlayers();
                 }
                 else if(action==1){
                     //Opens the lobby, if applicable, from the lobby a player can himself to be ready, or if no other players are modifying launches the param modifier
-                    System.out.println("Lobby");
+                    this.client.getUserInteraction().initialLobby(this);
                 }
                 else if(action==2){
                     //Opens the param modifier (GUI only!)
@@ -64,10 +84,23 @@ public class ClientConnection implements Runnable{
                 }
                 else if(action==4){
                     //Sends the leader cards to pick
-
+                    //TODO get leaderCards from server
+                    System.out.println("[CLIENT CONNECTION] You are here");
+                    ArrayList<LeaderCard> leaderCards = (ArrayList<LeaderCard>)objectInputStream.readObject();
+                    this.client.getUserInteraction().initialChooseLeaderCards(this, leaderCards);
                 }
                 else if(action==5){
                     //Sends the resources to pick from (if applicable) and the inkwell!
+                    int resources = objectInputStream.readInt();
+                    this.client.getUserInteraction().initialChooseResources(this, resources);
+                    break;
+                }
+                else if(action==10000000) {
+                    //Game creation and sets the correct userName for the game instantiation
+                    this.client.getUserInteraction().setGame(new Game());
+                    this.client.getUserInteraction().getGame().setMyNickname(this.client.getUser());
+
+                    //TODO initialize game with information sent by the server
                     break;
                 }
                 else if(action==9){
@@ -77,13 +110,24 @@ public class ClientConnection implements Runnable{
             }
             while (true){
 
-                //Handling of the Action message type
-
-                Action action = (Action) objectInputStream.readObject();
+                //Handling of the MessageToClient message type
+                MessageToClient messageToClient = (MessageToClient) objectInputStream.readObject();
+                messageToClient.updateView(this.client.getUserInteraction().getGame());
+                this.client.getUserInteraction().playTurn();
 
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public synchronized void update(Action action) {
+        try {
+            send(action);
+        }
+        catch (Exception e) {
+            System.out.println("Error occurred while writing on the socket");
         }
     }
 
@@ -130,11 +174,22 @@ public class ClientConnection implements Runnable{
     /**
      * Sends a boolean to the server.
      * Used for setting the player to be ready to play
-     * @param bool
-     * @throws Exception
+     * @param bool          The boolean to send
+     * @throws Exception    I/O error
      */
     public synchronized void send(Boolean bool) throws Exception{
-        objectOutputStream.writeObject(bool);
+        objectOutputStream.writeBoolean(bool);
+        objectOutputStream.flush();
+    }
+
+    /**
+     * Sends a boolean to the server.
+     * Used for setting the player to be ready to play
+     * @param number        The number to send
+     * @throws Exception    I/O error
+     */
+    public synchronized void send(int number) throws Exception{
+        objectOutputStream.writeInt(number);
         objectOutputStream.flush();
     }
 

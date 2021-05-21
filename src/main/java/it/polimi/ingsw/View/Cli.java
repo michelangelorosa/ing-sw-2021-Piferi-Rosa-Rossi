@@ -2,13 +2,10 @@ package it.polimi.ingsw.View;
 
 import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Model.Enums.ResourceType;
-import it.polimi.ingsw.View.ReducedModel.Game;
-import it.polimi.ingsw.View.ReducedModel.Player;
-import it.polimi.ingsw.View.ReducedModel.Warehouse;
-import it.polimi.ingsw.View.ReducedModel.LeaderCard;
+import it.polimi.ingsw.View.ReducedModel.*;
 
-import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -76,6 +73,68 @@ public class Cli implements UserInterface{
         return objects;
     }
 
+    public boolean startOrJoin() {
+        System.out.println("Do you want to Start a new game or Join an existing one?");
+        System.out.println("[1]     Start");
+        System.out.println("[other] Join");
+
+        String choice = sc.nextLine();
+        return choice.equals("1");
+    }
+
+    public int numberOfPlayers() {
+        String choice;
+        System.out.println("Insert the number of players: ");
+
+        while(true) {
+            choice = sc.nextLine();
+
+            if(choice.equals("1") || choice.equals("2") || choice.equals("3") || choice.equals("4"))
+                return Integer.parseInt(choice);
+            else
+                System.out.println("Please insert a valid number (from 1 to 4)");
+        }
+    }
+
+    public String initialInsertName() {
+        String choice;
+        System.out.println("\n" + ANSIColors.GAMEPLAY_ACTIONS + ANSIfont.BOLD + "PLEASE INSERT YOUR NAME:" + ANSIColors.RESET);
+        System.out.println();
+        while(true) {
+            choice = sc.nextLine();
+
+            if(choice.length() > 16)
+                System.out.println("Your name has to be less then 16 characters long");
+            else if(choice.isEmpty())
+                System.out.println("Your name cannot be an empty string");
+            else if(choice.isBlank())
+                System.out.println("Your name cannot be a blank string");
+            else
+                return choice;
+        }
+    }
+
+    public void waitingForPlayers() {
+        System.out.println("\nWaiting for players to join...");
+    }
+
+    public boolean initialLobby() {
+        String choice;
+        System.out.println("\n\n\n\n");
+        System.out.println(ANSIColors.GAMEPLAY_ACTIONS + ANSIfont.BOLD + "Welcome to the pre-game Lobby!" + ANSIColors.RESET);
+        System.out.println();
+        System.out.println("Are you ready to play " + ANSIfont.ITALIC + ANSIfont.BOLD + ANSIColors.FRONT_BLUE + "Masters of Renaissance" + ANSIColors.RESET + "? (y/n)");
+
+        while(true) {
+            choice = sc.nextLine();
+            if(choice.equals("y"))
+                return boolDecider(choice);
+            else if(!choice.equals("n"))
+                System.out.println("Please insert a valid character");
+        }
+
+    }
+
     public Action initialChooseLeaderCards(ArrayList<LeaderCard> leaderCards) throws IllegalArgumentException{
         if(leaderCards.size() != 4)
             throw new IllegalArgumentException("Number of Leader Cards to choose from is" + leaderCards.size() + ", should be 4");
@@ -114,12 +173,35 @@ public class Cli implements UserInterface{
         }
     }
 
+    public Action initialChooseResources(int resources) {
+        System.out.println(ANSIColors.YOUR_TURN_COLOR + ANSIfont.BOLD + " - PREPARING THE GAME - " + ANSIColors.RESET);
+        System.out.println();
+        if(resources <= 0)
+            return new InitChooseResources(new HashMap<>());
+
+        int depot;
+        ResourceType type;
+        HashMap<Integer, ResourceType> depotResource = new HashMap<>();
+
+        Warehouse warehouse = new Warehouse();
+        for(String s : warehouse.toCli())
+            System.out.println(s);
+
+        for(; resources > 0; resources--) {
+            System.out.println("\nChoose a resource type you want to add to your Warehouse (" + resources + " remaining)");
+            type = resourceIntIterator(sc);
+            depot = initialDepotIterator(sc);
+            depotResource.put(depot, type);
+        }
+        return new InitChooseResources(depotResource);
+    }
+
     /**
      * actionPicker method is used by the player to choose which action he wants to perform.
      * @param game Current game being played by the Player
      * @throws IllegalStateException if the Player does not have any Possible Action left.
      */
-    public void actionPicker(Game game) throws IllegalStateException {
+    public Action actionPicker(Game game) throws IllegalStateException {
         Player player = game.getMyPlayer();
         if(player.getPossibleActions() == null || player.getPossibleActions().isEmpty())
             throw new IllegalStateException("Player can't have zero possible actions");
@@ -153,8 +235,7 @@ public class Cli implements UserInterface{
                 else {
                     action = indexToAction(player.getPossibleActions().get(choiceInt - 1), game);
                     if(action != null) {
-                        //TODO send action to server
-                        return;
+                        return action;
                     }
                 }
             }
@@ -913,6 +994,32 @@ public class Cli implements UserInterface{
             }
             else if(canExit && choice.equals("0"))
                 return 0;
+            else
+                System.out.println("Please insert a valid Depot number");
+        }
+    }
+
+    /**
+     * Method used before the game's start to choose where to put the initial resources given
+     * by the Server to the Player.
+     * @return An int indicating the Player's depot.
+     */
+    private static int initialDepotIterator(Scanner sc) {
+        String choice;
+        int depot;
+
+        System.out.println("1 - First depot (below)");
+        System.out.println("2 - Second Depot (center)");
+        System.out.println("3 - Third Depot (above)");
+
+
+        while(true) {
+            choice = sc.nextLine();
+
+            if (choice.equals("1") || choice.equals("2") || choice.equals("3")) {
+                depot = Integer.parseInt(choice);
+                return depot;
+            }
             else
                 System.out.println("Please insert a valid Depot number");
         }
