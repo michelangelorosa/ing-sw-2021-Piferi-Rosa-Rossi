@@ -72,7 +72,8 @@ public class Client {
             e.printStackTrace();
             System.err.println("Error in creating connection!");
             Thread.currentThread().interrupt();
-            System.exit(-1);        }
+            System.exit(-1);
+        }
     }
 
     /**

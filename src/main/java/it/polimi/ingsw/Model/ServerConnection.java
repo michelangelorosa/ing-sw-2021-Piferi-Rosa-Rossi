@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 public class ServerConnection implements Runnable{
     private String name;
     private Socket socket;
+    private Server server;
     private ObjectOutputStream out;
     private ObjectInputStream in;
     private final ServerMessageHandler messageHandler;
@@ -31,7 +32,8 @@ public class ServerConnection implements Runnable{
      * If unable an IOException is caught and the connection is closed.
      * @param client        The socket Server-Client
      */
-    public ServerConnection(Socket client) throws IOException{
+    public ServerConnection(Server server, Socket client) throws IOException{
+        this.server = server;
         this.socket = client;
         this.messageHandler = new ServerMessageHandler();
     }
@@ -163,6 +165,10 @@ public class ServerConnection implements Runnable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Server getServer() {
+        return server;
     }
 
     public boolean isReady() {

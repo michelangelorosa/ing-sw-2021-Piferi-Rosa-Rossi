@@ -19,20 +19,24 @@ import static java.lang.Integer.parseInt;
  *  there can't be more than 4 connections handled at the same time, for now they get ignored
  */
 public class Server {
-    private static Set<String> names = new HashSet<>();
-    private static Integer numberOfPlayers = null;
+    private Set<String> names = new HashSet<>();
+    private Integer numberOfPlayers = null;
     private static Set<Socket> socketSet = new HashSet<>();
-    private final static ArrayList<ServerConnection> connections = new ArrayList<>();
+    private final ArrayList<ServerConnection> connections = new ArrayList<>();
     private final static int DEFAULT_PORT = 8765;
-    private static int readyPlayers = 0;
-    //TODO error when creating a controller from classes with main()
-    //private final static Controller controller = new Controller();
-    public static Set<String> getNames() {
+    private int readyPlayers = 0;
+    //private final Controller controller;
+
+   // public Server() {
+   //     this.controller = new Controller();
+   // }
+
+    public Set<String> getNames() {
         return names;
     }
 
-    public static void setNames(Set<String> names) {
-        Server.names = names;
+    public void setNames(Set<String> names) {
+        this.names = names;
     }
 
     /**
@@ -40,7 +44,7 @@ public class Server {
      * @param name the String of the name to insert
      * @return true if the insertion is successful (and thus no other player is called in the same way) or false if the name is already taken
      */
-    public static boolean setName(String name){
+    public boolean setName(String name){
         if(names.contains(name))
             return false;
         else
@@ -67,6 +71,11 @@ public class Server {
                     } catch (Exception e) {
                         System.err.println("Not a valid port! Using "+DEFAULT_PORT);
                     }
+        Server server = new Server();
+        server.startUp(server_port);
+    }
+
+    public void startUp(int server_port) {
         try{
             ServerSocket ss;
             ss = new ServerSocket(server_port);
@@ -75,7 +84,7 @@ public class Server {
                 try{
                     Socket client = ss.accept();
                     System.out.println("[SERVER] Client connected");
-                    ServerConnection serverConnection = new ServerConnection(client);
+                    ServerConnection serverConnection = new ServerConnection(this, client);
                     connections.add(serverConnection);
                     pool.execute(serverConnection);
                 }catch (IOException e){
@@ -87,16 +96,15 @@ public class Server {
             System.err.println(", probably it's busy!\nShutting down");
             System.exit(1);
         }
-
     }
 
-    public static synchronized void broadcast (String string){
+    public synchronized void broadcast (String string){
         for(ServerConnection connection : connections){
             connection.send(string);
         }
     }
 
-    public static synchronized void broadcast (int i){
+    public synchronized void broadcast (int i){
         for(ServerConnection connection : connections){
             connection.send(i);
         }
@@ -106,11 +114,11 @@ public class Server {
     //    return controller;
     //}
 
-    public static Integer getNumberOfPlayers() {
+    public Integer getNumberOfPlayers() {
         return numberOfPlayers;
     }
 
-    public static boolean setNumberOfPlayers(int number) {
+    public boolean setNumberOfPlayers(int number) {
         if(numberOfPlayers == null && number > 0 && number < 5) {
             numberOfPlayers = number;
             return true;
@@ -119,11 +127,11 @@ public class Server {
             return false;
     }
 
-    public static void playerReady() {
+    public void playerReady() {
         readyPlayers ++;
     }
 
-    public static int getReadyPlayers() {
+    public int getReadyPlayers() {
         return readyPlayers;
     }
 }

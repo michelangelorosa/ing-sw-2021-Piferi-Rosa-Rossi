@@ -33,7 +33,7 @@ public class ServerMessageHandler extends Observable<Object> {
                     if (number < 0 || number > 4) {
                         sendError(serverConnection, SE + "Invalid number of players");
                     } else {
-                        Server.setNumberOfPlayers(number);
+                        serverConnection.getServer().setNumberOfPlayers(number);
                         return;
                     }
                 } catch (IOException e) {
@@ -59,8 +59,8 @@ public class ServerMessageHandler extends Observable<Object> {
                     sendError(serverConnection, SE + "Name is longer than 16 characters, pick another name!");
 
                 else {
-                    synchronized (Server.getNames()) {
-                        if(Server.setName(name)) {
+                    synchronized (serverConnection.getServer().getNames()) {
+                        if(serverConnection.getServer().setName(name)) {
                             System.out.println(S + "Name: \"" + name + "\" is valid");
                             serverConnection.setName(name);
                             return;
@@ -79,7 +79,7 @@ public class ServerMessageHandler extends Observable<Object> {
         serverConnection.send(-3);
         while(true) {
             synchronized (this) {
-                if (Server.getNames().size() == Server.getNumberOfPlayers()) {
+                if (serverConnection.getServer().getNames().size() == serverConnection.getServer().getNumberOfPlayers()) {
                     serverConnection.send(1);
                     return;
                 }
@@ -92,15 +92,14 @@ public class ServerMessageHandler extends Observable<Object> {
         try {
             ready = serverConnection.getIn().readBoolean();
             if(ready)
-                Server.playerReady();
+                serverConnection.getServer().playerReady();
 
         } catch (IOException e) {
             sendError(serverConnection, SE + "IOException when reading boolean");
-            ready = true;
         }
         while(true) {
             synchronized (this) {
-                if (Server.getReadyPlayers() == Server.getNumberOfPlayers()) {
+                if (serverConnection.getServer().getReadyPlayers() == serverConnection.getServer().getNumberOfPlayers()) {
                     serverConnection.send(4);
                     return;
                 }
