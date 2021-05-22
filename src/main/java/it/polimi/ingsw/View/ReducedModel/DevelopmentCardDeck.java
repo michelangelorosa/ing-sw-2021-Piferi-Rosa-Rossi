@@ -14,7 +14,7 @@ import java.util.Collections;
 public class DevelopmentCardDeck implements Serializable {
     private static final long serialVersionUID = 0x1;
 
-   private DevelopmentCard[] cards;
+   private RedDevelopmentCard[] cards;
    private Color color;
    private Level level;
    private int cardsInDeck;
@@ -23,7 +23,7 @@ public class DevelopmentCardDeck implements Serializable {
      * Constructor for DevelopmentCardDeck Class.
      */
    public DevelopmentCardDeck(Color color, Level level) {
-       this.cards = new DevelopmentCard[4];
+       this.cards = new RedDevelopmentCard[4];
        this.color = color;
        this.level = level;
        this.cardsInDeck = 0;
@@ -32,14 +32,14 @@ public class DevelopmentCardDeck implements Serializable {
     /**
      * Getter for "cards" attribute in DevelopmentCardDeck Class.
      */
-   public DevelopmentCard[] getCards() {
+   public RedDevelopmentCard[] getCards() {
        return cards;
    }
 
     /**
      * Setter for "cards" attribute in DevelopmentCardDeck
      */
-   public void setCards(DevelopmentCard[] cards) {
+   public void setCards(RedDevelopmentCard[] cards) {
        this.cards = cards;
    }
 
@@ -102,7 +102,7 @@ public class DevelopmentCardDeck implements Serializable {
     /**
      * This method adds a card in the "cards" array attribute while also incrementing "cardsInDeck".
      */
-   public void addCard(DevelopmentCard card) {
+   public void addCard(RedDevelopmentCard card) {
        this.cards[cardsInDeck++] = card;
    }
 
@@ -110,7 +110,7 @@ public class DevelopmentCardDeck implements Serializable {
      * This method draws a card from the deck and updates the deck's length. If the deck is empty, a new
      * exception is thrown indicating the absence of cards in the deck.
      */
-   public DevelopmentCard drawCard() throws IllegalArgumentException {
+   public RedDevelopmentCard drawCard() throws IllegalArgumentException {
        if(isEmpty()) {
            throw new IllegalArgumentException("Cannot draw card from empty deck!");
        }
@@ -122,7 +122,7 @@ public class DevelopmentCardDeck implements Serializable {
      * @return a DevelopmentCard
      * @throws IllegalArgumentException if the deck is empty.
      */
-   public DevelopmentCard getTopCard() throws IllegalArgumentException {
+   public RedDevelopmentCard getTopCard() throws IllegalArgumentException {
        int position = cardsInDeck - 1;
        if(isEmpty()) {
            throw new IllegalArgumentException("Cannot get card from empty deck!");

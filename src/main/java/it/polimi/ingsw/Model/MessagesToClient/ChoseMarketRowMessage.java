@@ -3,7 +3,7 @@ package it.polimi.ingsw.Model.MessagesToClient;
 import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.Player;
-import it.polimi.ingsw.View.ReducedModel.ResourceStack;
+import it.polimi.ingsw.View.ReducedModel.RedResourceStack;
 
 /**
  * ChoseMarketRowMessage Class defines a response to be sent to the client after
@@ -13,7 +13,7 @@ public class ChoseMarketRowMessage extends MessageToClient {
     /** A boolean and an int attributes define the row or column chosen by the client */
     private boolean isRow;
     private int rowOrColumn;
-    private ResourceStack temporaryResources;
+    private RedResourceStack temporaryResources;
 
     /**
      * Constructor for ChoseMarketRowMessage Class.
@@ -51,11 +51,11 @@ public class ChoseMarketRowMessage extends MessageToClient {
         return rowOrColumn;
     }
 
-    public ResourceStack getTemporaryResources() {
+    public RedResourceStack getTemporaryResources() {
         return temporaryResources;
     }
 
-    public void setTemporaryResources(ResourceStack temporaryResources) {
+    public void setTemporaryResources(RedResourceStack temporaryResources) {
         this.temporaryResources = temporaryResources;
     }
 

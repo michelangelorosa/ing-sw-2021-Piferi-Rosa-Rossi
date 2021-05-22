@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.View.ReducedModel.RedResourceStack;
 
 import java.io.Serializable;
 
@@ -8,13 +9,7 @@ import java.io.Serializable;
  * ResourceStack Class contains four integer private attributes indicating the amount of each
  * different type of resource: shields, servants, coins, stones.
  */
-public class ResourceStack implements Serializable{
-    private static final long serialVersionUID = 0x1;
-
-    private int shields;
-    private int servants;
-    private int coins;
-    private int stones;
+public class ResourceStack extends RedResourceStack{
 
     /**
      * Constructor for ResourceStack Class.
@@ -26,79 +21,6 @@ public class ResourceStack implements Serializable{
         this.stones = stones;
     }
 
-    /**
-     * Getter for "shields" attribute in ResourceStack Class.
-     */
-    public int getShields() {
-        return shields;
-    }
-
-    /**
-     * Setter for "shields" attribute in ResourceStack Class.
-     */
-    public void setShields(int shields) {
-        this.shields = shields;
-    }
-
-    /**
-     * Getter for "servants" attribute in ResourceStack Class.
-     */
-    public int getServants() {
-        return servants;
-    }
-
-    /**
-     * Setter for "servants" attribute in ResourceStack Class.
-     */
-    public void setServants(int servants) {
-        this.servants = servants;
-    }
-
-    /**
-     * Getter for "coins" attribute in ResourceStack Class.
-     */
-    public int getCoins() {
-        return coins;
-    }
-
-    /**
-     * Setter for "coins" attribute in ResourceStack Class.
-     */
-    public void setCoins(int coins) {
-        this.coins = coins;
-    }
-
-    /**
-     * Getter for "stones" attribute in ResourceStack Class.
-     */
-    public int getStones() {
-        return stones;
-    }
-
-    /**
-     * Setter for "stones" attribute in ResourceStack Class.
-     */
-    public void setStones(int stones) {
-        this.stones = stones;
-    }
-
-    /**
-     * Getter for a specified type of resource inside the stack.
-     * @param resourceType is the specified resource type.
-     * @return the number of resources of the specified type.
-     */
-    public int getResource(ResourceType resourceType) {
-        if(resourceType == ResourceType.SHIELDS)
-            return shields;
-        else if (resourceType == ResourceType.SERVANTS)
-            return servants;
-        else if (resourceType == ResourceType.COINS)
-            return coins;
-        else if (resourceType == ResourceType.STONES)
-            return stones;
-        else
-            return -1;
-    }
 
     /**
      * Setter for a specified type of resource inside the stack.
@@ -173,18 +95,6 @@ public class ResourceStack implements Serializable{
     }
 
     /**
-     * This method is used to check if a Resource Stack is empty,
-     * @return true if the Resource Stack is empty.
-     */
-    public boolean isEmpty() {
-        ResourceType[] types = ResourceType.values();
-        for(int i = 1; i < 5; i++)
-            if(this.getResource(types[i]) != 0)
-                return false;
-        return true;
-    }
-
-    /**
      * This method is used to create a copy of the ResourceStack-type object.
      * @return a copy of the stack.
      */
@@ -218,15 +128,9 @@ public class ResourceStack implements Serializable{
     public int totalResourcesToInt() {
         return this.shields + this.servants + this.coins + this.stones;
     }
-    /**
-     * toString override method for ResourceStack Class.
-     */
-    public String toString() {
-        return shields+" "+servants+" "+coins+" "+stones;
-    }
 
     /**Method for converting model classes to view classes*/
-    public it.polimi.ingsw.View.ReducedModel.ResourceStack toView() {
-        return new it.polimi.ingsw.View.ReducedModel.ResourceStack(this.shields, this.servants, this.coins, this.stones);
+    public RedResourceStack toView() {
+        return ((RedResourceStack)this);
     }
 }

@@ -1,5 +1,8 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.View.ReducedModel.RedResourceStack;
+
 import java.io.Serializable;
 
 /**
@@ -90,8 +93,8 @@ public class BasicProduction implements Serializable {
             basicProduction = new it.polimi.ingsw.View.ReducedModel.BasicProduction(this.jollyIn, this.jollyOut);
         }
         else{
-            it.polimi.ingsw.View.ReducedModel.ResourceStack input = new it.polimi.ingsw.View.ReducedModel.ResourceStack(this.getFixedInputs().getShields(), this.getFixedInputs().getServants(), this.getFixedInputs().getCoins(), this.getFixedInputs().getStones());
-            it.polimi.ingsw.View.ReducedModel.ResourceStack output = new it.polimi.ingsw.View.ReducedModel.ResourceStack(this.getFixedOutputs().getShields(), this.getFixedOutputs().getServants(), this.getFixedOutputs().getCoins(), this.getFixedOutputs().getStones());
+            RedResourceStack input = new ResourceStack(this.getFixedInputs().getResource(ResourceType.SHIELDS), this.getFixedInputs().getResource(ResourceType.SERVANTS), this.getFixedInputs().getResource(ResourceType.COINS), this.getFixedInputs().getResource(ResourceType.STONES));
+            RedResourceStack output = new ResourceStack(this.getFixedOutputs().getResource(ResourceType.SHIELDS), this.getFixedOutputs().getResource(ResourceType.SERVANTS), this.getFixedOutputs().getResource(ResourceType.COINS), this.getFixedOutputs().getResource(ResourceType.STONES));
 
             basicProduction = new it.polimi.ingsw.View.ReducedModel.BasicProduction(input, output, this.jollyIn, this.jollyOut, this.outputFaith);
         }

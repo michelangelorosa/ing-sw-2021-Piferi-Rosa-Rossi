@@ -10,22 +10,16 @@ import java.util.ArrayList;
  * ResourceStack Class contains four integer private attributes indicating the amount of each
  * different type of resource: shields, servants, coins, stones.
  */
-public class ResourceStack implements Serializable{
+public class RedResourceStack implements Serializable{
     private static final long serialVersionUID = 0x1;
 
-    private int shields;
-    private int servants;
-    private int coins;
-    private int stones;
+    protected int shields;
+    protected int servants;
+    protected int coins;
+    protected int stones;
 
-    /**
-     * Constructor for ResourceStack Class.
-     */
-    public ResourceStack(int shields, int servants, int coins, int stones) {
-        this.shields = shields;
-        this.servants = servants;
-        this.coins = coins;
-        this.stones = stones;
+    public RedResourceStack() {
+
     }
 
     /**

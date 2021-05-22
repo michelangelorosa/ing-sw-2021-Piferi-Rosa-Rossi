@@ -37,7 +37,7 @@ public class DevelopmentCardSlots implements Serializable {
      * @param card is the Development card that the player wants to add
      * @return true if there is a slot available, false if not
      */
-    public boolean canAdd(DevelopmentCard card){
+    public boolean canAdd(RedDevelopmentCard card){
         for(int i = 0; i < 3; i++){
             if(slots[i].canAdd(card)) return true;
         }
@@ -50,12 +50,12 @@ public class DevelopmentCardSlots implements Serializable {
      * @param card is the Development card that the player wants to add
      * @return true if the player can add the card in that slot, false if not
      */
-    public boolean canAddInThisSlot(int i, DevelopmentCard card){
+    public boolean canAddInThisSlot(int i, RedDevelopmentCard card){
         if(slots[i].canAdd(card)) return true;
         else return false;
     }
 
-    public void addCard(int slot, DevelopmentCard card) {
+    public void addCard(int slot, RedDevelopmentCard card) {
         this.getSlots()[slot].addCard(card);
     }
 

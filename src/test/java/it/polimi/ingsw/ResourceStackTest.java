@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import it.polimi.ingsw.Model.ResourceStack;
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.View.ReducedModel.RedResourceStack;
 import org.junit.Test;
 
 /**
@@ -198,7 +199,7 @@ public class ResourceStackTest {
     /**Test for toView method*/
     @Test
     public void toViewTest(){
-        it.polimi.ingsw.View.ReducedModel.ResourceStack resourceStackView;
+        RedResourceStack resourceStackView;
 
         resourceStackView = stack.toView();
 

@@ -1,8 +1,10 @@
 
 package it.polimi.ingsw.ViewTest;
 
+import it.polimi.ingsw.Model.DevelopmentCard;
 import it.polimi.ingsw.Model.Enums.*;
 import it.polimi.ingsw.Model.LeaderRequirements;
+import it.polimi.ingsw.Model.ResourceStack;
 import it.polimi.ingsw.View.ANSIColors;
 import it.polimi.ingsw.View.Cli;
 import it.polimi.ingsw.View.ReducedModel.*;
@@ -153,10 +155,10 @@ public class ToCliTest {
 
     @Test
     public void developmentCardToCli() {
-        ResourceStack cost = new ResourceStack(1, 1, 0, 0);
-        ResourceStack input = new ResourceStack(1, 1, 10, 1);
-        ResourceStack output = new ResourceStack(10, 10, 23, 0);
-        DevelopmentCard card = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 10, cost, input, output, 10);
+        RedResourceStack cost = new ResourceStack(1, 1, 0, 0);
+        RedResourceStack input = new ResourceStack(1, 1, 10, 1);
+        RedResourceStack output = new ResourceStack(10, 10, 23, 0);
+        RedDevelopmentCard card = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 10, cost, input, output, 10);
         for(String string : card.toCli())
             System.out.println(string);
 
@@ -185,20 +187,20 @@ public class ToCliTest {
     @Test
     public void cardSlotToCliTest() {
         CardSlot cardSlot = new CardSlot();
-        ResourceStack cost = new ResourceStack(1, 1, 0, 0);
-        ResourceStack input = new ResourceStack(1, 1, 10, 1);
-        ResourceStack output = new ResourceStack(10, 10, 23, 0);
-        DevelopmentCard card1 = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 10, cost, input, output, 10);
+        RedResourceStack cost = new ResourceStack(1, 1, 0, 0);
+        RedResourceStack input = new ResourceStack(1, 1, 10, 1);
+        RedResourceStack output = new ResourceStack(10, 10, 23, 0);
+        RedDevelopmentCard card1 = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 10, cost, input, output, 10);
 
         cost = new ResourceStack(1, 1, 0, 0);
         input = new ResourceStack(1, 1, 10, 1);
         output = new ResourceStack(1, 4, 0, 1);
-        DevelopmentCard card2 = new DevelopmentCard(Color.PURPLE, Level.THREE, 1, 7, cost, input, output, 1);
+        RedDevelopmentCard card2 = new DevelopmentCard(Color.PURPLE, Level.THREE, 1, 7, cost, input, output, 1);
 
         cost = new ResourceStack(99, 99, 99, 99);
         input = new ResourceStack(99, 99, 99, 99);
         output = new ResourceStack(99, 99, 99, 99);
-        DevelopmentCard card3 = new DevelopmentCard(Color.YELLOW, Level.ONE, 99, 99, cost, input, output, 99);
+        RedDevelopmentCard card3 = new DevelopmentCard(Color.YELLOW, Level.ONE, 99, 99, cost, input, output, 99);
 
         cardSlot.addCard(card3);
         for(String s : cardSlot.toCli())
@@ -217,15 +219,15 @@ public class ToCliTest {
     public void developmentCardSlotsToCliTest() {
         DevelopmentCardSlots slots = new DevelopmentCardSlots();
 
-        ResourceStack cost = new ResourceStack(1, 1, 0, 0);
-        ResourceStack input = new ResourceStack(1, 1, 10, 1);
-        ResourceStack output = new ResourceStack(10, 10, 23, 0);
-        DevelopmentCard card1 = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 10, cost, input, output, 10);
-        DevelopmentCard card3 = new DevelopmentCard(Color.YELLOW, Level.ONE, 99, 99, cost, input, output, 99);
-        DevelopmentCard card4 = new DevelopmentCard(Color.GREEN, Level.ONE, 99, 99, cost, input, output, 99);
-        DevelopmentCard card5 = new DevelopmentCard(Color.GREEN, Level.TWO, 99, 99, cost, input, output, 99);
-        DevelopmentCard card6 = new DevelopmentCard(Color.PURPLE, Level.THREE, 99, 99, cost, input, output, 99);
-        DevelopmentCard card7 = new DevelopmentCard(Color.BLUE, Level.ONE, 99, 99, cost, input, output, 99);
+        RedResourceStack cost = new ResourceStack(1, 1, 0, 0);
+        RedResourceStack input = new ResourceStack(1, 1, 10, 1);
+        RedResourceStack output = new ResourceStack(10, 10, 23, 0);
+        RedDevelopmentCard card1 = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 10, cost, input, output, 10);
+        RedDevelopmentCard card3 = new DevelopmentCard(Color.YELLOW, Level.ONE, 99, 99, cost, input, output, 99);
+        RedDevelopmentCard card4 = new DevelopmentCard(Color.GREEN, Level.ONE, 99, 99, cost, input, output, 99);
+        RedDevelopmentCard card5 = new DevelopmentCard(Color.GREEN, Level.TWO, 99, 99, cost, input, output, 99);
+        RedDevelopmentCard card6 = new DevelopmentCard(Color.PURPLE, Level.THREE, 99, 99, cost, input, output, 99);
+        RedDevelopmentCard card7 = new DevelopmentCard(Color.BLUE, Level.ONE, 99, 99, cost, input, output, 99);
 
         slots.getSlots()[0].addCard(card3);
         slots.getSlots()[1].addCard(card7);
@@ -241,8 +243,8 @@ public class ToCliTest {
 
     @Test
     public void basicProductionToCliTest() {
-        ResourceStack inputs = new ResourceStack(1, 2, 3, 10);
-        ResourceStack outputs = new ResourceStack(10, 0, 23, 0);
+        RedResourceStack inputs = new ResourceStack(1, 2, 3, 10);
+        RedResourceStack outputs = new ResourceStack(10, 0, 23, 0);
 
         BasicProduction basic = new BasicProduction(inputs, outputs, 1, 2, 3);
 
@@ -269,7 +271,7 @@ public class ToCliTest {
 
     public static Player playerCreator(String nickname, int turnPosition) {
         Player player = new Player(nickname, turnPosition, true);
-        ResourceStack input = new ResourceStack(0, 1, 2, 3);
+        RedResourceStack input = new ResourceStack(0, 1, 2, 3);
         BasicProduction basic = new BasicProduction(input, input, 10, 10, 9);
 
         player.setBasicProduction(basic);
@@ -313,15 +315,15 @@ public class ToCliTest {
     public static DevelopmentCardSlots slotsCreator() {
         DevelopmentCardSlots slots = new DevelopmentCardSlots();
 
-        ResourceStack cost = new ResourceStack(1, 1, 0, 0);
-        ResourceStack input = new ResourceStack(1, 1, 10, 1);
-        ResourceStack output = new ResourceStack(10, 10, 23, 0);
-        DevelopmentCard card1 = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 10, cost, input, output, 10);
-        DevelopmentCard card3 = new DevelopmentCard(Color.YELLOW, Level.ONE, 99, 99, cost, input, output, 99);
-        DevelopmentCard card4 = new DevelopmentCard(Color.GREEN, Level.ONE, 99, 99, cost, input, output, 99);
-        DevelopmentCard card5 = new DevelopmentCard(Color.GREEN, Level.TWO, 99, 99, cost, input, output, 99);
-        DevelopmentCard card6 = new DevelopmentCard(Color.PURPLE, Level.THREE, 99, 99, cost, input, output, 99);
-        DevelopmentCard card7 = new DevelopmentCard(Color.BLUE, Level.ONE, 99, 99, cost, input, output, 99);
+        RedResourceStack cost = new ResourceStack(1, 1, 0, 0);
+        RedResourceStack input = new ResourceStack(1, 1, 10, 1);
+        RedResourceStack output = new ResourceStack(10, 10, 23, 0);
+        RedDevelopmentCard card1 = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 10, cost, input, output, 10);
+        RedDevelopmentCard card3 = new DevelopmentCard(Color.YELLOW, Level.ONE, 99, 99, cost, input, output, 99);
+        RedDevelopmentCard card4 = new DevelopmentCard(Color.GREEN, Level.ONE, 99, 99, cost, input, output, 99);
+        RedDevelopmentCard card5 = new DevelopmentCard(Color.GREEN, Level.TWO, 99, 99, cost, input, output, 99);
+        RedDevelopmentCard card6 = new DevelopmentCard(Color.PURPLE, Level.THREE, 99, 99, cost, input, output, 99);
+        RedDevelopmentCard card7 = new DevelopmentCard(Color.BLUE, Level.ONE, 99, 99, cost, input, output, 99);
 
         slots.getSlots()[0].addCard(card3);
         slots.getSlots()[1].addCard(card7);
@@ -346,9 +348,9 @@ public class ToCliTest {
         game.setPlayers(players);
         game.setMyNickname("Lello");
 
-        ResourceStack resourceStack = new ResourceStack(1,4,3,2);
+        RedResourceStack resourceStack = new ResourceStack(1,4,3,2);
         RedLeaderRequirements requirements = new LeaderRequirements(1,2,2,2,2,1,2,2,1,4,2,4);
-        ResourceStack discount = new ResourceStack(1,0,0,0);
+        RedResourceStack discount = new ResourceStack(1,0,0,0);
         LeaderCard card = new LeaderCard(49, 12, resourceStack, requirements, discount);
         leaderCards.add(card);
 
@@ -366,7 +368,7 @@ public class ToCliTest {
         card.setActive(true);
         game.getPlayers().get(1).getLeaderCards()[0] = card;
 
-        ResourceStack input = new ResourceStack(11,2,3,4);
+        RedResourceStack input = new ResourceStack(11,2,3,4);
         card = new LeaderCard(52, 78, resourceStack, requirements, input, 5, 4);
         leaderCards.add(card);
         game.getPlayers().get(1).getLeaderCards()[1] = card;
@@ -392,7 +394,7 @@ public class ToCliTest {
 
     @Test
     public void leaderCardsToCliTest() {
-        ResourceStack resourceStack = new ResourceStack(1,4,3,2);
+        RedResourceStack resourceStack = new ResourceStack(1,4,3,2);
         RedLeaderRequirements requirements = new LeaderRequirements(1,2,2,2,2,1,2,2,1,4,2,4);
 
         LeaderCard card = new LeaderCard(50, 12, resourceStack, requirements, Marble.BLUE);
@@ -447,7 +449,7 @@ public class ToCliTest {
         game.setPlayers(players);
         game.setMyNickname("Lello");
 
-        ResourceStack input = new ResourceStack(0, 1, 2, 3);
+        RedResourceStack input = new ResourceStack(0, 1, 2, 3);
         BasicProduction basic = new BasicProduction(input, input, 10, 10, 9);
 
         for(int i = 0; i < game.getPlayers().size(); i++) {
@@ -457,9 +459,9 @@ public class ToCliTest {
             players.get(i).setSlots(slotsCreator());
         }
 
-        ResourceStack resourceStack = new ResourceStack(1,4,3,2);
+        RedResourceStack resourceStack = new ResourceStack(1,4,3,2);
         RedLeaderRequirements requirements = new LeaderRequirements(11,2,3,22,1,24,3,2,3,44,2,3);
-        ResourceStack discount = new ResourceStack(1,0,0,0);
+        RedResourceStack discount = new ResourceStack(1,0,0,0);
         LeaderCard card = new LeaderCard(49, 12, resourceStack, requirements, discount);
         card.setActive(true);
         game.getPlayers().get(0).getLeaderCards()[0] = card;
@@ -505,10 +507,10 @@ public class ToCliTest {
         Color[] colors = Color.values();
         Level[] levels = Level.values();
 
-        ResourceStack cost;
-        ResourceStack input;
-        ResourceStack output;
-        DevelopmentCard card;
+        RedResourceStack cost;
+        RedResourceStack input;
+        RedResourceStack output;
+        RedDevelopmentCard card;
 
         for(int i = 0; i < 3; i++)
             for(int j = 0; j < 4; j++) {

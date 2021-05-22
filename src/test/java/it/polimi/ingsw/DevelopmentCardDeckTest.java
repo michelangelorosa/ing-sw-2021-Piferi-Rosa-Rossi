@@ -235,9 +235,9 @@ public class DevelopmentCardDeckTest {
 
         assertSame(Color.BLUE, deckView.getColor());
         assertSame(Level.ONE, deckView.getLevel());
-        assertEquals(deck.getCards()[0].getInput().getStones(), deckView.getCards()[0].getInput().getResource(ResourceType.STONES));
-        assertEquals(deck.getCards()[1].getInput().getStones(), deckView.getCards()[1].getInput().getResource(ResourceType.STONES));
-        assertEquals(deck.getCards()[2].getCost().getCoins(), deckView.getCards()[2].getCost().getResource(ResourceType.COINS));
+        assertEquals(deck.getCards()[0].getInput().getResource(ResourceType.STONES), deckView.getCards()[0].getInput().getResource(ResourceType.STONES));
+        assertEquals(deck.getCards()[1].getInput().getResource(ResourceType.STONES), deckView.getCards()[1].getInput().getResource(ResourceType.STONES));
+        assertEquals(deck.getCards()[2].getCost().getResource(ResourceType.COINS), deckView.getCards()[2].getCost().getResource(ResourceType.COINS));
         assertEquals(deck.getCardsInDeck(), deckView.getCardsInDeck());
     }
 }

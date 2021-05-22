@@ -10,17 +10,17 @@ public class CardSlot implements Serializable {
     private static final long serialVersionUID = 0x1;
 
     private int levelOccupied;
-    private final DevelopmentCard[] cards;
+    private final RedDevelopmentCard[] cards;
 
     /**
      * constructor for CardSlot
      */
     public CardSlot(){
         this.levelOccupied = 0;
-        this.cards = new DevelopmentCard[3];
+        this.cards = new RedDevelopmentCard[3];
     }
 
-    public DevelopmentCard[] getDevelopmentCards() {
+    public RedDevelopmentCard[] getDevelopmentCards() {
         return cards;
     }
 
@@ -71,14 +71,14 @@ public class CardSlot implements Serializable {
      * @param card which is  the card that the player wants to add
      * @return true if he can, false if he cannot
      */
-    public boolean canAdd(DevelopmentCard card){
+    public boolean canAdd(RedDevelopmentCard card){
         if(levelOccupied == 0 && card.getLevel() == Level.ONE) return true;
         if(levelOccupied == 1 && card.getLevel() == Level.TWO) return true;
         if(levelOccupied == 2 && card.getLevel() == Level.THREE) return true;
         else return false;
     }
 
-    public void addCard(DevelopmentCard card){
+    public void addCard(RedDevelopmentCard card){
         if(isFull()) System.out.println("Slot is full, select another slot!");
         else if(!canAdd(card)) System.out.println("Can't add a level " + card.getLevel() + " card in this slot!");
         else cards[levelOccupied++] = card;
@@ -88,7 +88,7 @@ public class CardSlot implements Serializable {
      * This method is use to get the first card of the slot.
      * @return the card on the top of the slot
      */
-    public DevelopmentCard getFirstCard(){
+    public RedDevelopmentCard getFirstCard(){
         if(levelOccupied == 0) return null;
         else return cards[levelOccupied - 1];
     }
@@ -136,7 +136,7 @@ public class CardSlot implements Serializable {
             return cardSlot;
         }
 
-        DevelopmentCard card;
+        RedDevelopmentCard card;
         for(int i = 0; i < this.levelOccupied; i++) {
             card = this.cards[i];
             if(i == 0)

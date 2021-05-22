@@ -1,10 +1,12 @@
 package it.polimi.ingsw.ViewTest;
 
+import it.polimi.ingsw.Model.DevelopmentCard;
 import it.polimi.ingsw.Model.Enums.Color;
 import it.polimi.ingsw.Model.Enums.Level;
 import it.polimi.ingsw.Model.Enums.Marble;
 import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.Model.LeaderRequirements;
+import it.polimi.ingsw.Model.ResourceStack;
 import it.polimi.ingsw.View.ReducedModel.*;
 
 import java.util.Random;
@@ -50,10 +52,10 @@ public class CommonViewTestMethods {
         Color[] colors = Color.values();
         Level[] levels = Level.values();
 
-        ResourceStack cost;
-        ResourceStack input;
-        ResourceStack output;
-        DevelopmentCard card;
+        RedResourceStack cost;
+        RedResourceStack input;
+        RedResourceStack output;
+        RedDevelopmentCard card;
 
         for(int i = 0; i < 3; i++)
             for(int j = 0; j < 4; j++) {
@@ -115,15 +117,15 @@ public class CommonViewTestMethods {
     public static DevelopmentCardSlots slotsCreator() {
         DevelopmentCardSlots slots = new DevelopmentCardSlots();
 
-        ResourceStack cost = new ResourceStack(1, 1, 0, 0);
-        ResourceStack input = new ResourceStack(1, 1, 10, 1);
-        ResourceStack output = new ResourceStack(10, 10, 23, 0);
-        DevelopmentCard card1 = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 10, cost, input, output, 10);
-        DevelopmentCard card3 = new DevelopmentCard(Color.YELLOW, Level.ONE, 99, 99, cost, input, output, 99);
-        DevelopmentCard card4 = new DevelopmentCard(Color.GREEN, Level.ONE, 99, 99, cost, input, output, 99);
-        DevelopmentCard card5 = new DevelopmentCard(Color.GREEN, Level.TWO, 99, 99, cost, input, output, 99);
-        DevelopmentCard card6 = new DevelopmentCard(Color.PURPLE, Level.THREE, 99, 99, cost, input, output, 99);
-        DevelopmentCard card7 = new DevelopmentCard(Color.BLUE, Level.ONE, 99, 99, cost, input, output, 99);
+        RedResourceStack cost = new ResourceStack(1, 1, 0, 0);
+        RedResourceStack input = new ResourceStack(1, 1, 10, 1);
+        RedResourceStack output = new ResourceStack(10, 10, 23, 0);
+        RedDevelopmentCard card1 = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 10, cost, input, output, 10);
+        RedDevelopmentCard card3 = new DevelopmentCard(Color.YELLOW, Level.ONE, 99, 99, cost, input, output, 99);
+        RedDevelopmentCard card4 = new DevelopmentCard(Color.GREEN, Level.ONE, 99, 99, cost, input, output, 99);
+        RedDevelopmentCard card5 = new DevelopmentCard(Color.GREEN, Level.TWO, 99, 99, cost, input, output, 99);
+        RedDevelopmentCard card6 = new DevelopmentCard(Color.PURPLE, Level.THREE, 99, 99, cost, input, output, 99);
+        RedDevelopmentCard card7 = new DevelopmentCard(Color.BLUE, Level.ONE, 99, 99, cost, input, output, 99);
 
         slots.getSlots()[0].addCard(card3);
         slots.getSlots()[1].addCard(card7);
@@ -137,7 +139,7 @@ public class CommonViewTestMethods {
 
     public static void leaderCardsCreator(Player player) {
         RedLeaderRequirements leaderRequirements = new LeaderRequirements(1, 2, 1, 0, 0,0,0,0,0,0,0,0);
-        ResourceStack resourceStack = new ResourceStack(1,1,1,1);
+        RedResourceStack resourceStack = new ResourceStack(1,1,1,1);
         player.getLeaderCards()[0] = new LeaderCard(1, 1, resourceStack, leaderRequirements, Marble.PURPLE);
         player.getLeaderCards()[1] = new LeaderCard(1, 1, resourceStack, leaderRequirements, resourceStack, 1, 2);
     }

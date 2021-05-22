@@ -10,7 +10,7 @@ import it.polimi.ingsw.View.ReducedModel.*;
 public class AddMessage extends MessageToClient {
     /** warehouse and temporaryResources attributes are needed to update the client's View */
     private Warehouse warehouse;
-    private ResourceStack temporaryResources;
+    private RedResourceStack temporaryResources;
 
     /**
      * Constructor for AddMessage Class.
@@ -30,7 +30,7 @@ public class AddMessage extends MessageToClient {
     /**
      * Setter for "temporaryResources" attribute in AddMessage Class.
      */
-    public void setTemporaryResources(ResourceStack temporaryResources) {
+    public void setTemporaryResources(RedResourceStack temporaryResources) {
         this.temporaryResources = temporaryResources;
     }
 
@@ -44,7 +44,7 @@ public class AddMessage extends MessageToClient {
     /**
      * Getter for "temporaryResources" attribute in AddMessage Class.
      */
-    public ResourceStack getTemporaryResources() {
+    public RedResourceStack getTemporaryResources() {
         return temporaryResources;
     }
 

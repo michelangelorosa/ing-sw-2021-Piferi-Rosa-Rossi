@@ -3,6 +3,7 @@ package it.polimi.ingsw.ViewTest;
 import static org.junit.Assert.*;
 
 import it.polimi.ingsw.Model.LeaderRequirements;
+import it.polimi.ingsw.Model.ResourceStack;
 import it.polimi.ingsw.View.InputController;
 import it.polimi.ingsw.View.ReducedModel.*;
 import it.polimi.ingsw.Model.Enums.*;
@@ -421,10 +422,10 @@ public class InputControllerTest {
     public static void leaderCardInit(Game game) {
         game.setLeaderCards(new ArrayList<>());
 
-        ResourceStack stack1 = new ResourceStack(1,1,0,0);
-        ResourceStack stack2 = new ResourceStack(0,0,1,1);
-        ResourceStack stack3 = new ResourceStack(1,1,1,1);
-        ResourceStack stack4 = new ResourceStack(2,0,0,0);
+        RedResourceStack stack1 = new ResourceStack(1,1,0,0);
+        RedResourceStack stack2 = new ResourceStack(0,0,1,1);
+        RedResourceStack stack3 = new ResourceStack(1,1,1,1);
+        RedResourceStack stack4 = new ResourceStack(2,0,0,0);
 
         RedLeaderRequirements requirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
 

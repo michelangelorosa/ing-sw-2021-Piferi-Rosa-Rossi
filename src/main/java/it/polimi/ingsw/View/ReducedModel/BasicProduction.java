@@ -1,6 +1,7 @@
 package it.polimi.ingsw.View.ReducedModel;
 
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.Model.ResourceStack;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,8 +13,8 @@ public class BasicProduction implements Serializable {
     private static final long serialVersionUID = 0x1;
 
     /** Fixed inputs and outputs can be added before playing the game */
-    private final ResourceStack fixedInputs;
-    private final ResourceStack fixedOutputs;
+    private final RedResourceStack fixedInputs;
+    private final RedResourceStack fixedOutputs;
 
     /** Jollies represent inputs and outputs the players can choose when starting the Production. */
     private final int jollyIn;
@@ -34,7 +35,7 @@ public class BasicProduction implements Serializable {
         this.outputFaith = 0;
     }
 
-    public BasicProduction(ResourceStack fixedInputs, ResourceStack fixedOutputs, int jollyIn, int jollyOut, int outputFaith) {
+    public BasicProduction(RedResourceStack fixedInputs, RedResourceStack fixedOutputs, int jollyIn, int jollyOut, int outputFaith) {
         this.fixedInputs = fixedInputs;
         this.fixedOutputs = fixedOutputs;
         this.jollyIn = jollyIn;
@@ -45,14 +46,14 @@ public class BasicProduction implements Serializable {
     /**
      * Getter for "fixedInputs" attribute in BasicProduction Class.
      */
-    public ResourceStack getFixedInputs() {
+    public RedResourceStack getFixedInputs() {
         return fixedInputs;
     }
 
     /**
      * Getter for "fixedInputs" attribute in BasicProduction Class.
      */
-    public ResourceStack getFixedOutputs() {
+    public RedResourceStack getFixedOutputs() {
         return fixedOutputs;
     }
 

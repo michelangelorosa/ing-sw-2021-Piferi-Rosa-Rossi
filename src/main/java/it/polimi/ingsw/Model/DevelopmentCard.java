@@ -2,6 +2,8 @@ package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Model.Enums.Color;
 import it.polimi.ingsw.Model.Enums.Level;
+import it.polimi.ingsw.View.ReducedModel.RedDevelopmentCard;
+import it.polimi.ingsw.View.ReducedModel.RedResourceStack;
 
 import java.io.Serializable;
 
@@ -9,39 +11,12 @@ import java.io.Serializable;
  * DevelopmentCard Class describes the different attributes and methods
  * needed for the creation of a Development Card.
  */
-public class DevelopmentCard implements Serializable {
-    private static final long serialVersionUID = 0x1;
-
-    /**
-     * Color and Level are enum type classes containing all possible colors and levels
-     * a Development Card could have.
-     * Each instantiated Development Card has two attributes (color and level) indicating the card's
-     * color and level, which are final, has they shall not be changed.
-     */
-    private final Color color;
-    private final Level level;
-
-    /**
-     * Each Development Card has its own unique cardId (hence the "final" declaration), used for
-     * recognition, and a finite number of victory points.
-     */
-    private final int cardId;
-    private int victoryPoints;
-
-    /**
-     * A Development Card has three ResourceStack Class - type attributes containing namely the cost,
-     * production input and production output of the card. As some cards can have faith points as a
-     * production outcome, an integer attribute called outputFaith is introduced.
-     */
-    private ResourceStack cost;
-    private ResourceStack input;
-    private ResourceStack output;
-    private int outputFaith;
+public class DevelopmentCard extends RedDevelopmentCard {
 
     /**
      * Constructor for DevelopmentCard Class.
      */
-    public DevelopmentCard(Color color, Level level, int cardId, int victoryPoints, ResourceStack cost, ResourceStack input, ResourceStack output, int outputFaith) {
+    public DevelopmentCard(Color color, Level level, int cardId, int victoryPoints, RedResourceStack cost, RedResourceStack input, RedResourceStack output, int outputFaith) {
         this.color = color;
         this.level = level;
         this.cardId = cardId;
@@ -53,46 +28,10 @@ public class DevelopmentCard implements Serializable {
     }
 
     /**
-     * Getter for "color" attribute in DevelopmentCard Class.
-     */
-    public Color getColor() {
-        return this.color;
-    }
-
-    /**
-     * Getter for "level" attribute in DevelopmentCard Class.
-     */
-    public Level getLevel() {
-        return this.level;
-    }
-
-    /**
-     * Getter for "cardId" attribute in DevelopmentCard Class.
-     */
-
-    public int getCardId() {
-        return cardId;
-    }
-
-    /**
-     * Getter for "victoryPoints" attribute in DevelopmentCard Class.
-     */
-    public int getVictoryPoints() {
-        return victoryPoints;
-    }
-
-    /**
      * Setter for "victoryPoints" attribute in DevelopmentCard Class.
      */
     public void setVictoryPoints(int victoryPoints) {
         this.victoryPoints = victoryPoints;
-    }
-
-    /**
-     * Getter for "outputFaith" attribute in DevelopmentCard Class.
-     */
-    public int getOutputFaith() {
-        return outputFaith;
     }
 
     /**
@@ -106,13 +45,13 @@ public class DevelopmentCard implements Serializable {
      * Getter for "cost" attribute in DevelopmentCard Class.
      */
     public ResourceStack getCost() {
-        return cost;
+        return (ResourceStack) cost;
     }
 
     /**
      * Setter for "cost" attribute in DevelopmentCard Class.
      */
-    public void setCost(ResourceStack cost) {
+    public void setCost(RedResourceStack cost) {
         this.cost = cost;
     }
 
@@ -120,13 +59,13 @@ public class DevelopmentCard implements Serializable {
      * Getter for "input" attribute in DevelopmentCard Class.
      */
     public ResourceStack getInput() {
-        return input;
+        return (ResourceStack)input;
     }
 
     /**
      * Setter for "input" attribute in DevelopmentCard Class.
      */
-    public void setInput(ResourceStack input) {
+    public void setInput(RedResourceStack input) {
         this.input = input;
     }
 
@@ -134,26 +73,18 @@ public class DevelopmentCard implements Serializable {
      * Getter for "output" attribute in DevelopmentCard Class.
      */
     public ResourceStack getOutput() {
-        return output;
+        return (ResourceStack)output;
     }
 
     /**
      * Setter for "output" attribute in DevelopmentCard Class.
      */
-    public void setOutput(ResourceStack output) {
+    public void setOutput(RedResourceStack output) {
         this.output = output;
     }
 
-    /**
-     * toString override method for DevelopmentCard Class.
-     */
-    @Override
-    public String toString() {
-        return cardId+" "+victoryPoints+" "+color+" "+level+" "+cost+" "+input+" "+output+" "+outputFaith;
-    }
-
     /**Method for converting model classes to view classes*/
-    public it.polimi.ingsw.View.ReducedModel.DevelopmentCard toView() {
-        return new it.polimi.ingsw.View.ReducedModel.DevelopmentCard(this.color, this.level, this.cardId, this.victoryPoints, this.cost.toView(), this.input.toView(), this.output.toView(), this.outputFaith);
+    public RedDevelopmentCard toView() {
+        return (RedDevelopmentCard)this;
     }
 }

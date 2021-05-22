@@ -40,7 +40,7 @@ public class DevelopmentCardTable implements Serializable {
      * @param column the deck's column index.
      * @return the requested Development Card.
      */
-    public DevelopmentCard getTopCardFromDeck(int row, int column) {
+    public RedDevelopmentCard getTopCardFromDeck(int row, int column) {
         DevelopmentCardDeck deck = getDeck(row, column);
         if(!deck.isEmpty())
             return deck.getCards()[deck.getCardsInDeck() - 1];
@@ -60,7 +60,7 @@ public class DevelopmentCardTable implements Serializable {
      * @param column the deck's column index.
      * @return the requested Development Card.
      */
-    public DevelopmentCard drawCardFromDeck(int row, int column) {
+    public RedDevelopmentCard drawCardFromDeck(int row, int column) {
         DevelopmentCardDeck deck = getDeck(row, column);
         if(!deck.isEmpty())
             return deck.drawCard();

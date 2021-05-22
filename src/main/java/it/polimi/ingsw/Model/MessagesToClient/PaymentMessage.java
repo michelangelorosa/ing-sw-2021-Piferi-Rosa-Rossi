@@ -7,7 +7,7 @@ public class PaymentMessage extends MessageToClient {
     /**Payment message need a warehouse a strongbox and a temporary resource*/
     private Warehouse warehouse;
     private Strongbox strongbox;
-    private ResourceStack temporaryResources;
+    private RedResourceStack temporaryResources;
 
     /**Constructor for PaymentMessage*/
     public PaymentMessage(int playerId) {
@@ -30,7 +30,7 @@ public class PaymentMessage extends MessageToClient {
     }
 
     /**Setter for TemporaryResources*/
-    public void setTemporaryResources(ResourceStack temporaryResources) {
+    public void setTemporaryResources(RedResourceStack temporaryResources) {
         this.temporaryResources = temporaryResources;
     }
 
@@ -42,7 +42,7 @@ public class PaymentMessage extends MessageToClient {
         return strongbox;
     }
 
-    public ResourceStack getTemporaryResources() {
+    public RedResourceStack getTemporaryResources() {
         return temporaryResources;
     }
 

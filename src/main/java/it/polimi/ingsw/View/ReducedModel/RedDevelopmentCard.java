@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * DevelopmentCard Class describes the different attributes and methods
  * needed for the creation of a Development Card.
  */
-public class DevelopmentCard implements Serializable {
+public class RedDevelopmentCard implements Serializable {
     private static final long serialVersionUID = 0x1;
 
     /**
@@ -21,38 +21,28 @@ public class DevelopmentCard implements Serializable {
      * Each instantiated Development Card has two attributes (color and level) indicating the card's
      * color and level, which are final, has they shall not be changed.
      */
-    private final Color color;
-    private final Level level;
+    protected Color color;
+    protected Level level;
 
     /**
      * Each Development Card has its own unique cardId (hence the "final" declaration), used for
      * recognition, and a finite number of victory points.
      */
-    private final int cardId;
-    private int victoryPoints;
+    protected int cardId;
+    protected int victoryPoints;
 
     /**
      * A Development Card has three ResourceStack Class - type attributes containing namely the cost,
      * production input and production output of the card. As some cards can have faith points as a
      * production outcome, an integer attribute called outputFaith is introduced.
      */
-    private ResourceStack cost;
-    private ResourceStack input;
-    private ResourceStack output;
-    private int outputFaith;
+    protected RedResourceStack cost;
+    protected RedResourceStack input;
+    protected RedResourceStack output;
+    protected int outputFaith;
 
-    /**
-     * Constructor for DevelopmentCard Class.
-     */
-    public DevelopmentCard(Color color, Level level, int cardId, int victoryPoints, ResourceStack cost, ResourceStack input, ResourceStack output, int outputFaith) {
-        this.color = color;
-        this.level = level;
-        this.cardId = cardId;
-        this.victoryPoints = victoryPoints;
-        this.cost = cost;
-        this.input = input;
-        this.output = output;
-        this.outputFaith = outputFaith;
+    public RedDevelopmentCard() {
+
     }
 
     /**
@@ -94,21 +84,21 @@ public class DevelopmentCard implements Serializable {
     /**
      * Getter for "cost" attribute in DevelopmentCard Class.
      */
-    public ResourceStack getCost() {
+    public RedResourceStack getCost() {
         return cost;
     }
 
     /**
      * Getter for "input" attribute in DevelopmentCard Class.
      */
-    public ResourceStack getInput() {
+    public RedResourceStack getInput() {
         return input;
     }
 
     /**
      * Getter for "output" attribute in DevelopmentCard Class.
      */
-    public ResourceStack getOutput() {
+    public RedResourceStack getOutput() {
         return output;
     }
 

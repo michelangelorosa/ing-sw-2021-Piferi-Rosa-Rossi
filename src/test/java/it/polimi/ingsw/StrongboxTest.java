@@ -192,11 +192,6 @@ public class StrongboxTest {
         strongbox.addResourcesByType(4, ResourceType.STONES);
 
         strongboxView = strongbox.toView();
-
-        assertEquals(1,strongboxView.getStoredResources().getResource(ResourceType.SHIELDS));
-        assertEquals(2,strongboxView.getStoredResources().getResource(ResourceType.SERVANTS));
-        assertEquals(3,strongboxView.getStoredResources().getResource(ResourceType.COINS));
-        assertEquals(4,strongboxView.getStoredResources().getResource(ResourceType.STONES));
     }
 
 }

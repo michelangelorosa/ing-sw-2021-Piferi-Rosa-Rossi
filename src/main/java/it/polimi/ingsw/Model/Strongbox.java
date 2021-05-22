@@ -103,16 +103,12 @@ public class Strongbox implements Serializable {
      * @return a String containing the information.
      */
     public String toString() {
-        return storedResources.getShields()+" "+storedResources.getServants()+" "+storedResources.getCoins()+" "+storedResources.getStones();
+        return storedResources.getResource(ResourceType.SHIELDS)+" "+storedResources.getResource(ResourceType.SERVANTS)+" "+storedResources.getResource(ResourceType.COINS)+" "+storedResources.getResource(ResourceType.STONES);
     }
 
     /**Method for converting model classes to view classes*/
     public it.polimi.ingsw.View.ReducedModel.Strongbox toView() {
         it.polimi.ingsw.View.ReducedModel.Strongbox strongbox = new it.polimi.ingsw.View.ReducedModel.Strongbox();
-        strongbox.getStoredResources().setResource(this.storedResources.getShields(), ResourceType.SHIELDS);
-        strongbox.getStoredResources().setResource(this.storedResources.getServants(), ResourceType.SERVANTS);
-        strongbox.getStoredResources().setResource(this.storedResources.getCoins(), ResourceType.COINS);
-        strongbox.getStoredResources().setResource(this.storedResources.getStones(), ResourceType.STONES);
 
         return strongbox;
     }

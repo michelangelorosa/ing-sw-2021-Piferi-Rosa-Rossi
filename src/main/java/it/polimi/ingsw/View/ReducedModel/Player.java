@@ -3,6 +3,7 @@ package it.polimi.ingsw.View.ReducedModel;
 import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.Model.ResourceStack;
 import it.polimi.ingsw.View.ANSIfont;
 
 import java.io.Serializable;
@@ -34,7 +35,7 @@ public class Player implements Serializable {
     private Warehouse warehouse;
     private Strongbox strongbox;
     private DevelopmentCardSlots slots;
-    private ResourceStack temporaryResources;
+    private RedResourceStack temporaryResources;
     private LeaderCard[] leaderCards;
     private PopeTileClass[] popeTiles;
 
@@ -128,7 +129,7 @@ public class Player implements Serializable {
         return slots;
     }
 
-    public ResourceStack getTemporaryResources() {
+    public RedResourceStack getTemporaryResources() {
         return temporaryResources;
     }
 
@@ -164,7 +165,7 @@ public class Player implements Serializable {
         this.leaderCards = leaderCards;
     }
 
-    public void setTemporaryResources(ResourceStack temporaryResources) {
+    public void setTemporaryResources(RedResourceStack temporaryResources) {
         this.temporaryResources = temporaryResources;
     }
 
