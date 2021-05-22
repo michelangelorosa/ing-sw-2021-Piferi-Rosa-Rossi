@@ -3,6 +3,7 @@ package it.polimi.ingsw.Model;
 import it.polimi.ingsw.Model.Enums.LeaderCardAction;
 import it.polimi.ingsw.Model.Enums.Marble;
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.View.ReducedModel.RedLeaderRequirements;
 
 import java.io.Serializable;
 
@@ -140,7 +141,7 @@ public class LeaderCard implements Serializable {
 
     public static LeaderCard toModel(it.polimi.ingsw.View.ReducedModel.LeaderCard viewLeaderCard) {
         ResourceStack resourceRequired = new ResourceStack(viewLeaderCard.getResourcesRequired().getResource(ResourceType.SHIELDS), viewLeaderCard.getResourcesRequired().getResource(ResourceType.SERVANTS), viewLeaderCard.getResourcesRequired().getResource(ResourceType.COINS), viewLeaderCard.getResourcesRequired().getResource(ResourceType.STONES));
-        it.polimi.ingsw.View.ReducedModel.LeaderRequirements viewCardsRequired = viewLeaderCard.getCardsRequired();
+        RedLeaderRequirements viewCardsRequired = viewLeaderCard.getCardsRequired();
         LeaderRequirements cardsRequired = new LeaderRequirements(viewCardsRequired.getBlueCardLv1(), viewCardsRequired.getPurpleCardLv1(), viewCardsRequired.getYellowCardLv1(), viewCardsRequired.getGreenCardLv1(), viewCardsRequired.getBlueCardLv2(), viewCardsRequired.getPurpleCardLv2(), viewCardsRequired.getYellowCardLv2(), viewCardsRequired.getGreenCardLv2(), viewCardsRequired.getBlueCardLv3(), viewCardsRequired.getPurpleCardLv3(), viewCardsRequired.getYellowCardLv3(), viewCardsRequired.getGreenCardLv3());
 
         switch(viewLeaderCard.getAction()) {

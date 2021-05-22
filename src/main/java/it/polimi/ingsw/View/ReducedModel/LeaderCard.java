@@ -19,7 +19,7 @@ public class LeaderCard implements Serializable {
     private final LeaderCardAction action;
     private boolean active;
     private final ResourceStack resourcesRequired;
-    private final LeaderRequirements cardsRequired;
+    private final RedLeaderRequirements cardsRequired;
     //ABILITY ONE: Discount on Development Card
     private ResourceStack discount;
     //ABILITY TWO: White Marble to Resource
@@ -34,7 +34,7 @@ public class LeaderCard implements Serializable {
     /**
      * Constructor for LeaderCard Class. The override of ability is implicit in the parameters
      */
-    public LeaderCard(int cardId, int victoryPoints, ResourceStack resourcesRequired, LeaderRequirements cards, ResourceStack discount) {
+    public LeaderCard(int cardId, int victoryPoints, ResourceStack resourcesRequired, RedLeaderRequirements cards, ResourceStack discount) {
         this.cardId = cardId;
         this.victoryPoints = victoryPoints;
         this.resourcesRequired = resourcesRequired;
@@ -43,7 +43,7 @@ public class LeaderCard implements Serializable {
         this.active = false;
         this.discount=discount;
     }
-    public LeaderCard(int cardId, int victoryPoints, ResourceStack resourcesRequired, LeaderRequirements cards, Marble marble) {
+    public LeaderCard(int cardId, int victoryPoints, ResourceStack resourcesRequired, RedLeaderRequirements cards, Marble marble) {
         this.cardId = cardId;
         this.victoryPoints = victoryPoints;
         this.resourcesRequired = resourcesRequired;
@@ -52,7 +52,7 @@ public class LeaderCard implements Serializable {
         this.active = false;
         this.marble = marble;
     }
-    public LeaderCard(int cardId, int victoryPoints, ResourceStack resourcesRequired, LeaderRequirements cards, ResourceStack input, int jollyOut, int faith) {
+    public LeaderCard(int cardId, int victoryPoints, ResourceStack resourcesRequired, RedLeaderRequirements cards, ResourceStack input, int jollyOut, int faith) {
         this.cardId = cardId;
         this.victoryPoints = victoryPoints;
         this.resourcesRequired = resourcesRequired;
@@ -63,7 +63,7 @@ public class LeaderCard implements Serializable {
         this.faith = faith;
         this.jollyOut = jollyOut;
     }
-    public LeaderCard(int cardId, int victoryPoints, ResourceStack resourcesRequired, LeaderRequirements cards, ResourceType resource) {
+    public LeaderCard(int cardId, int victoryPoints, ResourceStack resourcesRequired, RedLeaderRequirements cards, ResourceType resource) {
         this.cardId = cardId;
         this.victoryPoints = victoryPoints;
         this.resourcesRequired = resourcesRequired;
@@ -97,7 +97,7 @@ public class LeaderCard implements Serializable {
         return resourcesRequired;
     }
 
-    public LeaderRequirements getCardsRequired() {
+    public RedLeaderRequirements getCardsRequired() {
         return cardsRequired;
     }
 

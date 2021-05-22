@@ -2,6 +2,7 @@ package it.polimi.ingsw.ViewTest;
 
 import static org.junit.Assert.*;
 
+import it.polimi.ingsw.Model.LeaderRequirements;
 import it.polimi.ingsw.View.InputController;
 import it.polimi.ingsw.View.ReducedModel.*;
 import it.polimi.ingsw.Model.Enums.*;
@@ -425,7 +426,7 @@ public class InputControllerTest {
         ResourceStack stack3 = new ResourceStack(1,1,1,1);
         ResourceStack stack4 = new ResourceStack(2,0,0,0);
 
-        LeaderRequirements requirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
+        RedLeaderRequirements requirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
 
         LeaderCard discountOne = new LeaderCard(0, 1, stack1, requirements, stack1);
         LeaderCard discountTwo = new LeaderCard(1, 1, stack1, requirements, stack2);

@@ -4,6 +4,7 @@ import it.polimi.ingsw.Model.Enums.Color;
 import it.polimi.ingsw.Model.Enums.Level;
 import it.polimi.ingsw.Model.Enums.Marble;
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.Model.LeaderRequirements;
 import it.polimi.ingsw.View.ReducedModel.*;
 
 import java.util.Random;
@@ -135,7 +136,7 @@ public class CommonViewTestMethods {
     }
 
     public static void leaderCardsCreator(Player player) {
-        LeaderRequirements leaderRequirements = new LeaderRequirements(1, 2, 1, 0, 0,0,0,0,0,0,0,0);
+        RedLeaderRequirements leaderRequirements = new LeaderRequirements(1, 2, 1, 0, 0,0,0,0,0,0,0,0);
         ResourceStack resourceStack = new ResourceStack(1,1,1,1);
         player.getLeaderCards()[0] = new LeaderCard(1, 1, resourceStack, leaderRequirements, Marble.PURPLE);
         player.getLeaderCards()[1] = new LeaderCard(1, 1, resourceStack, leaderRequirements, resourceStack, 1, 2);

@@ -5,6 +5,7 @@ import it.polimi.ingsw.Model.Enums.Color;
 import it.polimi.ingsw.Model.Enums.Level;
 import it.polimi.ingsw.Model.Enums.Marble;
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.View.ReducedModel.RedLeaderRequirements;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -107,7 +108,7 @@ public class LeaderRequirementsTest {
     /**Test for toView method*/
     @Test
     public void toViewTest(){
-        it.polimi.ingsw.View.ReducedModel.LeaderRequirements leaderView;
+        RedLeaderRequirements leaderView;
 
         leaderView = leaderRequirements.toView();
 

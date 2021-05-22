@@ -2,11 +2,10 @@
 package it.polimi.ingsw.ViewTest;
 
 import it.polimi.ingsw.Model.Enums.*;
+import it.polimi.ingsw.Model.LeaderRequirements;
 import it.polimi.ingsw.View.ANSIColors;
 import it.polimi.ingsw.View.Cli;
 import it.polimi.ingsw.View.ReducedModel.*;
-
-import it.polimi.ingsw.Model.Enums.*;
 
 
 import org.junit.Test;
@@ -348,7 +347,7 @@ public class ToCliTest {
         game.setMyNickname("Lello");
 
         ResourceStack resourceStack = new ResourceStack(1,4,3,2);
-        LeaderRequirements requirements = new LeaderRequirements(1,2,2,2,2,1,2,2,1,4,2,4);
+        RedLeaderRequirements requirements = new LeaderRequirements(1,2,2,2,2,1,2,2,1,4,2,4);
         ResourceStack discount = new ResourceStack(1,0,0,0);
         LeaderCard card = new LeaderCard(49, 12, resourceStack, requirements, discount);
         leaderCards.add(card);
@@ -394,7 +393,7 @@ public class ToCliTest {
     @Test
     public void leaderCardsToCliTest() {
         ResourceStack resourceStack = new ResourceStack(1,4,3,2);
-        LeaderRequirements requirements = new LeaderRequirements(1,2,2,2,2,1,2,2,1,4,2,4);
+        RedLeaderRequirements requirements = new LeaderRequirements(1,2,2,2,2,1,2,2,1,4,2,4);
 
         LeaderCard card = new LeaderCard(50, 12, resourceStack, requirements, Marble.BLUE);
         LeaderCard card1 = new LeaderCard(50, 12, resourceStack, requirements, Marble.PURPLE);
@@ -459,7 +458,7 @@ public class ToCliTest {
         }
 
         ResourceStack resourceStack = new ResourceStack(1,4,3,2);
-        LeaderRequirements requirements = new LeaderRequirements(11,2,3,22,1,24,3,2,3,44,2,3);
+        RedLeaderRequirements requirements = new LeaderRequirements(11,2,3,22,1,24,3,2,3,44,2,3);
         ResourceStack discount = new ResourceStack(1,0,0,0);
         LeaderCard card = new LeaderCard(49, 12, resourceStack, requirements, discount);
         card.setActive(true);

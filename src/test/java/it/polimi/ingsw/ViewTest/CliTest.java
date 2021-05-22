@@ -3,6 +3,7 @@ package it.polimi.ingsw.ViewTest;
 import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Model.Enums.Marble;
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.Model.LeaderRequirements;
 import it.polimi.ingsw.View.Cli;
 import it.polimi.ingsw.View.ReducedModel.*;
 import it.polimi.ingsw.View.UserInterface;
@@ -35,7 +36,7 @@ public class CliTest {
 
     @Test
     public void initialChooseLeaderCardsTest() {
-        LeaderRequirements leaderRequirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
+        RedLeaderRequirements leaderRequirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
         ResourceStack stack = new ResourceStack(1,2,3,4);
         ArrayList<LeaderCard> leaderCards = new ArrayList<>();
         leaderCards.add(new LeaderCard(0, 1, stack, leaderRequirements, Marble.PURPLE));
@@ -144,7 +145,7 @@ public class CliTest {
 
     @Test
     public void chooseLeaderCardTest() {
-        LeaderRequirements leaderRequirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
+        RedLeaderRequirements leaderRequirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
         ResourceStack stack = new ResourceStack(1,1,1,1);
         LeaderCard whiteMarble = new LeaderCard(1, 1, stack, leaderRequirements, Marble.BLUE);
         game.getMyPlayer().getLeaderCards()[0] = whiteMarble;
