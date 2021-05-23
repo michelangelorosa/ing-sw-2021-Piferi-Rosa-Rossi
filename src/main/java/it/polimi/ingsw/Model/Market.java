@@ -18,12 +18,12 @@ public class Market extends RedMarket {
      * Constructor for Market Class.
      */
     public Market() {
-        this.marbles = new Marble[3][4];
+        super();
         this.reset();
     }
 
     public Market(Marble[][] marbles) {
-        this.marbles = marbles;
+        super(marbles);
     }
 
     /**

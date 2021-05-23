@@ -16,40 +16,24 @@ public class LeaderCard extends RedLeaderCard {
      * Constructor for LeaderCard Class. The override of ability is implicit in the parameters
      */
     public LeaderCard(int cardId, int victoryPoints, ResourceStack resourcesRequired, LeaderRequirements cards, ResourceStack discount) {
-        this.cardId = cardId;
-        this.victoryPoints = victoryPoints;
-        this.resourcesRequired = resourcesRequired;
-        this.cardsRequired = cards;
-        this.action = LeaderCardAction.DISCOUNT;
+        super(cardId, victoryPoints, LeaderCardAction.DISCOUNT, resourcesRequired, cards);
         this.active = false;
         this.discount=discount;
     }
     public LeaderCard(int cardId, int victoryPoints, ResourceStack resourcesRequired, LeaderRequirements cards, Marble marble) {
-        this.cardId = cardId;
-        this.victoryPoints = victoryPoints;
-        this.resourcesRequired = resourcesRequired;
-        this.cardsRequired = cards;
-        this.action = LeaderCardAction.WHITEMARBLE;
+        super(cardId, victoryPoints, LeaderCardAction.WHITEMARBLE, resourcesRequired, cards);
         this.active = false;
         this.marble = marble;
     }
     public LeaderCard(int cardId, int victoryPoints, ResourceStack resourcesRequired, LeaderRequirements cards, ResourceStack input,int jollyOut, int faith) {
-        this.cardId = cardId;
-        this.victoryPoints = victoryPoints;
-        this.resourcesRequired = resourcesRequired;
-        this.cardsRequired = cards;
-        this.action = LeaderCardAction.PRODUCTIONPOWER;
+        super(cardId, victoryPoints, LeaderCardAction.PRODUCTIONPOWER, resourcesRequired, cards);
         this.active = false;
         this.input = input;
         this.faith = faith;
         this.jollyOut = jollyOut;
     }
     public LeaderCard(int cardId, int victoryPoints, ResourceStack resourcesRequired, LeaderRequirements cards, ResourceType resource) {
-        this.cardId = cardId;
-        this.victoryPoints = victoryPoints;
-        this.resourcesRequired = resourcesRequired;
-        this.cardsRequired = cards;
-        this.action = LeaderCardAction.EXTRADEPOT;
+        super(cardId, victoryPoints, LeaderCardAction.EXTRADEPOT, resourcesRequired, cards);
         this.active = false;
         this.resource = resource;
     }

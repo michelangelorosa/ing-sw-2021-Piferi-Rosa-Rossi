@@ -23,13 +23,12 @@ public class DevelopmentCardTable extends RedDevelopmentCardTable {
      * stored inside the 2D array containing all decks.
      */
     public DevelopmentCardTable() {
+        super();
         DevelopmentCard[] cards = JSONReader.ReadDevelopmentCards();
         int cardsInDeck = 0;
 
         Color[] colors = Color.values();
         Level[] levels = Level.values();
-
-        decks = new DevelopmentCardDeck[3][4];
 
         decks[0][0] = new DevelopmentCardDeck(Color.GREEN, Level.THREE);
         decks[0][1] = new DevelopmentCardDeck(Color.BLUE, Level.THREE);
@@ -104,7 +103,7 @@ public class DevelopmentCardTable extends RedDevelopmentCardTable {
     }
 
     public DevelopmentCardTable(RedDevelopmentCardDeck[][] decks) {
-        this.decks = decks;
+        super(decks);
     }
 
     /**

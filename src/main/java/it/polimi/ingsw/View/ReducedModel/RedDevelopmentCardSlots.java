@@ -9,9 +9,13 @@ import java.util.ArrayList;
 public class RedDevelopmentCardSlots implements Serializable {
     private static final long serialVersionUID = 0x1;
 
-    protected RedCardSlot[] slots;
+    protected final RedCardSlot[] slots;
     protected int cardsInSlot;
     protected Level level;
+
+    protected RedDevelopmentCardSlots() {
+        this.slots = new CardSlot[3];
+    }
 
     /**
      * Getter
@@ -20,7 +24,6 @@ public class RedDevelopmentCardSlots implements Serializable {
     public RedCardSlot[] getSlots() {
         return slots;
     }
-
 
     /**
      * This method is use to see if the player can or cannot add a card in the slot

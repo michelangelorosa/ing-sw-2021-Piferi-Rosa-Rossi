@@ -1,5 +1,8 @@
 package it.polimi.ingsw.View.ReducedModel;
 
+import it.polimi.ingsw.Model.FaithCell;
+import it.polimi.ingsw.Model.JSONReader;
+import it.polimi.ingsw.Model.VaticanReportSection;
 import it.polimi.ingsw.View.ANSIColors;
 
 import java.io.Serializable;
@@ -8,16 +11,38 @@ import java.util.ArrayList;
 public class RedFaithTrack implements Serializable {
     protected static final long serialVersionUID = 0x1;
     /**A FaithTrack is an array of Faith Cell*/
-    protected RedFaithCell[] cells;
+    protected final RedFaithCell[] cells;
     /**The three vatican report sections*/
-    protected RedVaticanReportSection ONE;
-    protected RedVaticanReportSection TWO;
-    protected RedVaticanReportSection THREE;
+    protected final RedVaticanReportSection ONE;
+    protected final RedVaticanReportSection TWO;
+    protected final RedVaticanReportSection THREE;
 
     /**The three pope space, at the and of any report sections*/
     protected boolean popeSpaceONE;
     protected boolean popeSpaceTWO;
     protected boolean popeSpaceTHREE;
+
+    protected RedFaithTrack(VaticanReportSection ONE, VaticanReportSection TWO, VaticanReportSection THREE) {
+        this.cells = new FaithCell[25];
+        this.ONE = ONE;
+        this.TWO = TWO;
+        this.THREE = THREE;
+    }
+
+    protected RedFaithTrack(ArrayList<RedVaticanReportSection> sections) {
+        this.cells = new FaithCell[25];
+        this.ONE = sections.get(0);
+        this.TWO = sections.get(1);
+        this.THREE = sections.get(2);
+    }
+
+    protected RedFaithTrack() {
+        this.cells = JSONReader.ReadFaithCells();
+        VaticanReportSection[] vaticanReportSection = JSONReader.ReadVaticanReportSection();
+        this.ONE = vaticanReportSection[0];
+        this.TWO = vaticanReportSection[1];
+        this.THREE = vaticanReportSection[2];
+    }
 
     public RedVaticanReportSection getONE() {
         return ONE;

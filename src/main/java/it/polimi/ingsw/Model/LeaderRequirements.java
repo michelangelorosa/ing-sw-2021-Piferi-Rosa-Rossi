@@ -8,7 +8,7 @@ import it.polimi.ingsw.View.ReducedModel.RedLeaderRequirements;
  */
 public class LeaderRequirements extends RedLeaderRequirements {
 
-    /**Constructor for the requirements that needs a specific number of card of a specific level*/
+    /**Constructor for the requirements that need a specific number of card of a specific level*/
     public LeaderRequirements(int blueCardLv1, int purpleCardLv1, int yellowCardLv1, int greenCardLv1, int blueCardLv2, int purpleCardLv2, int yellowCardLv2, int greenCardLv2, int blueCardLv3, int purpleCardLv3, int yellowCardLv3, int greenCardLv3) {
         this.blueCardLv1 = blueCardLv1;
         this.purpleCardLv1 = purpleCardLv1;
@@ -25,7 +25,7 @@ public class LeaderRequirements extends RedLeaderRequirements {
         this.generic = false;
     }
 
-    /**Constructor for */
+    /**Constructor for the requirements that need a number of cards of a specific color ONLY*/
     public LeaderRequirements(int needBlueCard, int needPurpleCard, int needYellowCard, int needGreenCard){
         this.needBlueCard = needBlueCard;
         this.needPurpleCard = needPurpleCard;

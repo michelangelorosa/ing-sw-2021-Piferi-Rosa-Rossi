@@ -2,15 +2,11 @@ package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.View.ReducedModel.RedVaticanReportSection;
 
-import java.io.Serializable;
-
 public class VaticanReportSection extends RedVaticanReportSection {
     private static final long serialVersionUID = 0x1;
 
     public VaticanReportSection(int begin, int end, int points) {
-        this.begin = begin;
-        this.end = end;
-        this.points = points;
+        super(begin, end, points);
     }
 
     /**Method to check if the the vatican section is correct*/

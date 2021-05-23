@@ -16,11 +16,21 @@ import java.util.ArrayList;
 public class RedWarehouse implements Serializable {
     private static final long serialVersionUID = 0x1;
 
-    protected RedWarehouseDepot[] warehouseDepots;
-    protected RedWarehouseDepot extraWarehouseDepot1;
-    protected RedWarehouseDepot extraWarehouseDepot2;
+    protected final RedWarehouseDepot[] warehouseDepots;
+    protected final RedWarehouseDepot extraWarehouseDepot1;
+    protected final RedWarehouseDepot extraWarehouseDepot2;
     protected boolean extraWarehouseDepot1IsActive;
     protected boolean extraWarehouseDepot2IsActive;
+
+    protected RedWarehouse() {
+        this.warehouseDepots = new WarehouseDepot[3];
+        this.warehouseDepots[0] = new WarehouseDepot(3,false);
+        this.warehouseDepots[1] = new WarehouseDepot(2,false);
+        this.warehouseDepots[2] = new WarehouseDepot(1,false);
+
+        this.extraWarehouseDepot1 = new WarehouseDepot(2,true);
+        this.extraWarehouseDepot2 = new WarehouseDepot(2,true);
+    }
 
     /**
      * Getter for "warehouseDepots" array attribute in Warehouse Class.

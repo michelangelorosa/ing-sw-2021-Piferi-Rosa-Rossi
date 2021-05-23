@@ -12,36 +12,27 @@ import java.util.ArrayList;
 public class FaithTrack extends RedFaithTrack {
 
     public FaithTrack() {
-        this.cells = JSONReader.ReadFaithCells();
+        super();
         this.popeSpaceONE = true;
         this.popeSpaceTWO = true;
         this.popeSpaceTHREE = true;
-        this.ONE = JSONReader.ReadVaticanReportSection()[0];
-        this.TWO = JSONReader.ReadVaticanReportSection()[1];
-        this.THREE = JSONReader.ReadVaticanReportSection()[2];
         //this.ONE = new VaticanReportSection(5, 8, 2);
         //this.TWO = new VaticanReportSection(12, 16, 3);
         //this.THREE = new VaticanReportSection(19, 24, 4);
     }
 
     public FaithTrack(VaticanReportSection ONE, VaticanReportSection TWO, VaticanReportSection THREE) {
-        this.cells = new FaithCell[25];
+        super(ONE, TWO, THREE);
         this.popeSpaceONE = true;
         this.popeSpaceTWO = true;
         this.popeSpaceTHREE = true;
-        this.ONE = ONE;
-        this.TWO = TWO;
-        this.THREE = THREE;
     }
 
     public FaithTrack(ArrayList<RedVaticanReportSection> sections) {
-        this.cells = new FaithCell[25];
+        super(sections);
         this.popeSpaceONE = true;
         this.popeSpaceTWO = true;
         this.popeSpaceTHREE = true;
-        this.ONE = sections.get(0);
-        this.TWO = sections.get(1);
-        this.THREE = sections.get(2);
     }
 
     /**

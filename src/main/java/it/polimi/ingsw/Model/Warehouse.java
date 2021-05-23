@@ -21,13 +21,7 @@ public class Warehouse extends RedWarehouse {
      * depots. In addiction to that, it initializes the boolean attributes to "false".
      */
     public Warehouse() {
-        this.warehouseDepots = new WarehouseDepot[3];
-        this.warehouseDepots[0] = new WarehouseDepot(3,false);
-        this.warehouseDepots[1] = new WarehouseDepot(2,false);
-        this.warehouseDepots[2] = new WarehouseDepot(1,false);
-
-        this.extraWarehouseDepot1 = new WarehouseDepot(2,true);
-        this.extraWarehouseDepot2 = new WarehouseDepot(2,true);
+        super();
         this.extraWarehouseDepot1IsActive = false;
         this.extraWarehouseDepot2IsActive = false;
     }

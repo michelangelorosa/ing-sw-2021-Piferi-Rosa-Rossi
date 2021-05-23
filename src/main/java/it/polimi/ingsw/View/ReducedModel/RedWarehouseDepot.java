@@ -14,10 +14,14 @@ import java.util.ArrayList;
 public class RedWarehouseDepot implements Serializable {
     private static final long serialVersionUID = 0x1;
 
-    protected int maxResources;
+    protected final int maxResources;
     protected int storedResources;
     protected ResourceType resourceType;
     protected boolean isFromLeaderCardAbility;
+
+    public RedWarehouseDepot(int maxResources) {
+        this.maxResources = maxResources;
+    }
 
     /**
      * Getter for "maxResources" attribute in WarehouseDepot Class.

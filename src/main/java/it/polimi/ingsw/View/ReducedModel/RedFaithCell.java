@@ -1,5 +1,6 @@
 package it.polimi.ingsw.View.ReducedModel;
 
+import it.polimi.ingsw.Model.FaithCell;
 import it.polimi.ingsw.View.ANSIColors;
 import it.polimi.ingsw.Model.Enums.GameType;
 
@@ -10,8 +11,12 @@ public class RedFaithCell implements Serializable{
     private static final long serialVersionUID = 0x1;
 
     /**Every card is characterized by an id and the point it gives*/
-    protected int idCell;
+    protected final int idCell;
     protected int victoryPoints;
+
+    protected RedFaithCell(int idCell) {
+        this.idCell = idCell;
+    }
 
     /**Getter for idCell*/
     public int getIdCell() {

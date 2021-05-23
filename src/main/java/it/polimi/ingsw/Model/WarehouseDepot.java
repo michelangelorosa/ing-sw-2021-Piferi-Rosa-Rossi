@@ -17,7 +17,7 @@ public class WarehouseDepot extends RedWarehouseDepot {
       * Constructor for WarehouseDepot Class.
       */
     public WarehouseDepot(int maxResources, boolean isFromLeaderCardAbility) {
-        this.maxResources = maxResources;
+        super(maxResources);
         this.storedResources = 0;
         this.resourceType = ResourceType.NONE;
         this.isFromLeaderCardAbility = isFromLeaderCardAbility;

@@ -2,6 +2,7 @@ package it.polimi.ingsw.View;
 
 import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.Model.Warehouse;
 import it.polimi.ingsw.View.ReducedModel.*;
 
 import java.util.ArrayList;
@@ -184,7 +185,7 @@ public class Cli implements UserInterface{
         ResourceType type;
         HashMap<Integer, ResourceType> depotResource = new HashMap<>();
 
-        RedWarehouse warehouse = new RedWarehouse();
+        RedWarehouse warehouse = new Warehouse();
         for(String s : warehouse.toCli())
             System.out.println(s);
 

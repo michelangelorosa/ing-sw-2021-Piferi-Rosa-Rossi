@@ -13,7 +13,15 @@ import java.util.ArrayList;
 public class RedDevelopmentCardTable implements Serializable {
     private static final long serialVersionUID = 0x1;
 
-    protected RedDevelopmentCardDeck[][] decks;
+    protected final RedDevelopmentCardDeck[][] decks;
+
+    protected RedDevelopmentCardTable() {
+        this.decks = new DevelopmentCardDeck[3][4];
+    }
+
+    protected RedDevelopmentCardTable(RedDevelopmentCardDeck[][] decks) {
+        this.decks = decks;
+    }
 
     /**
      * This method returns the deck corresponding to the specified coordinates.

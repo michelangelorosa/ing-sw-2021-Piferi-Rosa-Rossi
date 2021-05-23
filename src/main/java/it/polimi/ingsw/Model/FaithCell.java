@@ -6,7 +6,7 @@ public class FaithCell extends RedFaithCell{
 
     /**FaithCell's constructor*/
     public FaithCell(int idCell, int victoryPoints) {
-        this.idCell = idCell;
+        super(idCell);
         this.victoryPoints = victoryPoints;
     }
 

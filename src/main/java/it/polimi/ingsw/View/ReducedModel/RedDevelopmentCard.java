@@ -21,14 +21,14 @@ public class RedDevelopmentCard implements Serializable {
      * Each instantiated Development Card has two attributes (color and level) indicating the card's
      * color and level, which are final, has they shall not be changed.
      */
-    protected Color color;
-    protected Level level;
+    protected final Color color;
+    protected final Level level;
 
     /**
      * Each Development Card has its own unique cardId (hence the "final" declaration), used for
      * recognition, and a finite number of victory points.
      */
-    protected int cardId;
+    protected final int cardId;
     protected int victoryPoints;
 
     /**
@@ -41,8 +41,10 @@ public class RedDevelopmentCard implements Serializable {
     protected RedResourceStack output;
     protected int outputFaith;
 
-    public RedDevelopmentCard() {
-
+    protected RedDevelopmentCard(int cardId, Color color, Level level) {
+        this.cardId = cardId;
+        this.color = color;
+        this.level = level;
     }
 
     /**

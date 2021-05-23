@@ -1,6 +1,8 @@
 package it.polimi.ingsw.View.ReducedModel;
 
 import it.polimi.ingsw.Model.Enums.*;
+import it.polimi.ingsw.Model.LeaderRequirements;
+import it.polimi.ingsw.Model.ResourceStack;
 import it.polimi.ingsw.View.ANSIColors;
 
 import java.io.Serializable;
@@ -14,12 +16,12 @@ import java.util.ArrayList;
 public class RedLeaderCard implements Serializable {
     private static final long serialVersionUID = 0x1;
 
-    protected int cardId;
-    protected int victoryPoints;
-    protected LeaderCardAction action;
+    protected final int cardId;
+    protected final int victoryPoints;
+    protected final LeaderCardAction action;
     protected boolean active;
-    protected RedResourceStack resourcesRequired;
-    protected RedLeaderRequirements cardsRequired;
+    protected final RedResourceStack resourcesRequired;
+    protected final RedLeaderRequirements cardsRequired;
     //ABILITY ONE: Discount on Development Card
     protected RedResourceStack discount;
     //ABILITY TWO: White Marble to Resource
@@ -30,6 +32,14 @@ public class RedLeaderCard implements Serializable {
     protected int jollyOut;
     //ABILITY FOUR: Xtra Depot
     protected ResourceType resource;
+
+    protected RedLeaderCard(int cardId, int victoryPoints, LeaderCardAction action, ResourceStack resourcesRequired, LeaderRequirements cardsRequired) {
+        this.cardId = cardId;
+        this.victoryPoints = victoryPoints;
+        this.action = action;
+        this.resourcesRequired = resourcesRequired;
+        this.cardsRequired = cardsRequired;
+    }
 
     /**Getter for cardId*/
     public int getCardId() {

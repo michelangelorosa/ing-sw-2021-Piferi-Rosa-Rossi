@@ -5,8 +5,6 @@ import it.polimi.ingsw.Model.Enums.Level;
 import it.polimi.ingsw.View.ReducedModel.RedDevelopmentCard;
 import it.polimi.ingsw.View.ReducedModel.RedResourceStack;
 
-import java.io.Serializable;
-
 /**
  * DevelopmentCard Class describes the different attributes and methods
  * needed for the creation of a Development Card.
@@ -17,9 +15,7 @@ public class DevelopmentCard extends RedDevelopmentCard {
      * Constructor for DevelopmentCard Class.
      */
     public DevelopmentCard(Color color, Level level, int cardId, int victoryPoints, RedResourceStack cost, RedResourceStack input, RedResourceStack output, int outputFaith) {
-        this.color = color;
-        this.level = level;
-        this.cardId = cardId;
+        super(cardId, color, level);
         this.victoryPoints = victoryPoints;
         this.cost = cost;
         this.input = input;

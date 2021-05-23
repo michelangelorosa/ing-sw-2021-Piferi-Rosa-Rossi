@@ -14,9 +14,16 @@ import java.util.Random;
 public class RedMarket implements Serializable {
     private static final long serialVersionUID = 0x1;
 
-    protected Marble[][] marbles;
+    protected final Marble[][] marbles;
     protected Marble extraMarble;
 
+    protected RedMarket() {
+        this.marbles = new Marble[3][4];
+    }
+
+    protected RedMarket(Marble[][] marbles) {
+        this.marbles = marbles;
+    }
     /**
      * Getter for "marbles" attribute.
      */

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.View.ReducedModel;
 
+import it.polimi.ingsw.Model.DevelopmentCard;
 import it.polimi.ingsw.Model.Enums.Color;
 import it.polimi.ingsw.Model.Enums.Level;
 
@@ -10,7 +11,11 @@ public class RedCardSlot implements Serializable {
     private static final long serialVersionUID = 0x1;
 
     protected int levelOccupied;
-    protected RedDevelopmentCard[] cards;
+    protected final RedDevelopmentCard[] cards;
+
+    protected RedCardSlot () {
+        this.cards = new DevelopmentCard[3];
+    }
 
     public RedDevelopmentCard[] getDevelopmentCards() {
         return cards;

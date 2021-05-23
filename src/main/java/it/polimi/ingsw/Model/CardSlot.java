@@ -11,8 +11,8 @@ public class CardSlot extends RedCardSlot {
      * constructor for CardSlot
      */
     public CardSlot(){
+        super();
         this.levelOccupied = 0;
-        this.cards = new DevelopmentCard[3];
     }
 
     /**

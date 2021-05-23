@@ -13,7 +13,7 @@ public class DevelopmentCardSlots extends RedDevelopmentCardSlots {
      * DevelopmentCardSlot constructor.
      */
     public DevelopmentCardSlots(){
-        this.slots = new CardSlot[3];
+        super();
         this.slots[0] = new CardSlot();
         this.slots[1] = new CardSlot();
         this.slots[2] = new CardSlot();

@@ -5,9 +5,15 @@ import java.io.Serializable;
 public class RedVaticanReportSection implements Serializable {
     private static final long serialVersionUID = 0x1;
 
-    protected int begin;
-    protected int end;
-    protected int points;
+    protected final int begin;
+    protected final int end;
+    protected final int points;
+
+    protected RedVaticanReportSection(int begin, int end, int points) {
+        this.begin = begin;
+        this.end = end;
+        this.points = points;
+    }
 
     /**Getter for the VaticanReportSection class */
     public int getBegin() {
