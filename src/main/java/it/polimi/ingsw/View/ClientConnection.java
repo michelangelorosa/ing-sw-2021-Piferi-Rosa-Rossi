@@ -8,7 +8,7 @@ import java.util.Scanner;
 import it.polimi.ingsw.Controller.Observer;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.MessagesToClient.*;
-import it.polimi.ingsw.View.ReducedModel.LeaderCard;
+import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.Controller.Actions.*;
 
@@ -86,7 +86,7 @@ public class ClientConnection implements Runnable, Observer<Action> {
                     //Sends the leader cards to pick
                     //TODO get leaderCards from server
                     System.out.println("[CLIENT CONNECTION] You are here");
-                    ArrayList<LeaderCard> leaderCards = (ArrayList<LeaderCard>)objectInputStream.readObject();
+                    ArrayList<RedLeaderCard> leaderCards = (ArrayList<RedLeaderCard>)objectInputStream.readObject();
                     this.client.getUserInteraction().initialChooseLeaderCards(this, leaderCards);
                 }
                 else if(action==5){
@@ -146,7 +146,7 @@ public class ClientConnection implements Runnable, Observer<Action> {
      * @param card          The card to send
      * @throws Exception    I/O error
      */
-    public synchronized void send(LeaderCard card) throws Exception{
+    public synchronized void send(RedLeaderCard card) throws Exception{
         objectOutputStream.writeObject(card);
         objectOutputStream.flush();
     }

@@ -6,22 +6,19 @@ import it.polimi.ingsw.Model.Enums.GameType;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class FaithCell implements Serializable{
+public class RedFaithCell implements Serializable{
     private static final long serialVersionUID = 0x1;
 
     /**Every card is characterized by an id and the point it gives*/
-    private final int idCell;
-    private int victoryPoints;
+    protected int idCell;
+    protected int victoryPoints;
 
-    public FaithCell(int idCell, int victoryPoints) {
-        this.idCell = idCell;
-        this.victoryPoints = victoryPoints;
-    }
-
+    /**Getter for idCell*/
     public int getIdCell() {
         return idCell;
     }
 
+    /**Getter for victoryPoints*/
     public int getVictoryPoints() {
         return victoryPoints;
     }

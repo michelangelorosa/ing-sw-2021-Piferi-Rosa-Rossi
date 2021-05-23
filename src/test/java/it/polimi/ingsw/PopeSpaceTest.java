@@ -3,6 +3,7 @@ package it.polimi.ingsw;
 import static org.junit.Assert.*;
 
 import it.polimi.ingsw.Model.Enums.PopeSpace;
+import it.polimi.ingsw.View.ReducedModel.RedPopeTileClass;
 import org.junit.Test;
 
 /**
@@ -27,7 +28,7 @@ public class PopeSpaceTest {
     /**Test for toView method*/
     @Test
     public void toViewTest(){
-        it.polimi.ingsw.View.ReducedModel.PopeTileClass popeTileClassView;
+        RedPopeTileClass popeTileClassView;
         it.polimi.ingsw.Model.PopeTileClass popeTileClass = new it.polimi.ingsw.Model.PopeTileClass(7);
         popeTileClassView = popeTileClass.toView();
         assertSame(7, popeTileClassView.getVictoryPoints());

@@ -3,6 +3,7 @@ package it.polimi.ingsw.ViewTest;
 import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Model.Enums.Marble;
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.Model.LeaderCard;
 import it.polimi.ingsw.Model.LeaderRequirements;
 import it.polimi.ingsw.Model.ResourceStack;
 import it.polimi.ingsw.View.Cli;
@@ -37,9 +38,9 @@ public class CliTest {
 
     @Test
     public void initialChooseLeaderCardsTest() {
-        RedLeaderRequirements leaderRequirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
-        RedResourceStack stack = new ResourceStack(1,2,3,4);
-        ArrayList<LeaderCard> leaderCards = new ArrayList<>();
+        LeaderRequirements leaderRequirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
+        ResourceStack stack = new ResourceStack(1,2,3,4);
+        ArrayList<RedLeaderCard> leaderCards = new ArrayList<>();
         leaderCards.add(new LeaderCard(0, 1, stack, leaderRequirements, Marble.PURPLE));
         leaderCards.add(new LeaderCard(1, 1, stack, leaderRequirements, Marble.BLUE));
         leaderCards.add(new LeaderCard(2, 1, stack, leaderRequirements, Marble.GREY));
@@ -82,7 +83,7 @@ public class CliTest {
 
     @Test
     public void activateProductionTest() {
-        game.getMyPlayer().getLeaderCards()[1].setActive(true);
+        ((LeaderCard)game.getMyPlayer().getLeaderCards()[1]).setActive(true);
         changeSystemIn("0");
         ui = new Cli();
         assertNull(ui.activateProduction(game));
@@ -146,11 +147,11 @@ public class CliTest {
 
     @Test
     public void chooseLeaderCardTest() {
-        RedLeaderRequirements leaderRequirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
-        RedResourceStack stack = new ResourceStack(1,1,1,1);
-        LeaderCard whiteMarble = new LeaderCard(1, 1, stack, leaderRequirements, Marble.BLUE);
+        LeaderRequirements leaderRequirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
+        ResourceStack stack = new ResourceStack(1,1,1,1);
+        RedLeaderCard whiteMarble = new LeaderCard(1, 1, stack, leaderRequirements, Marble.BLUE);
         game.getMyPlayer().getLeaderCards()[0] = whiteMarble;
-        game.getMyPlayer().getLeaderCards()[0].setActive(true);
+        ((LeaderCard)game.getMyPlayer().getLeaderCards()[0]).setActive(true);
 
         changeSystemIn("0\n2\n1");
         ui = new Cli();

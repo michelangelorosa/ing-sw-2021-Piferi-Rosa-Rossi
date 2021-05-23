@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Enums.Marble;
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.View.ReducedModel.RedMarket;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -291,7 +292,7 @@ public class MarketTest {
     /**Test for toView method*/
     @Test
     public void toViewTest(){
-        it.polimi.ingsw.View.ReducedModel.Market marketView;
+        RedMarket marketView;
 
         marketView = market.toView();
 

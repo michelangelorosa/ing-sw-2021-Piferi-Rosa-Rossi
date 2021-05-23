@@ -11,36 +11,19 @@ import java.util.Collections;
  * DevelopmentCardDeck Class contains three private attributes: an array of DevelopmentCards, a color and a level.
  * Another private integer attribute (cardsInDeck) is used to keep track of how many cards are in the deck.
  */
-public class DevelopmentCardDeck implements Serializable {
+public class RedDevelopmentCardDeck implements Serializable {
     private static final long serialVersionUID = 0x1;
 
-   private RedDevelopmentCard[] cards;
-   private Color color;
-   private Level level;
-   private int cardsInDeck;
-
-    /**
-     * Constructor for DevelopmentCardDeck Class.
-     */
-   public DevelopmentCardDeck(Color color, Level level) {
-       this.cards = new RedDevelopmentCard[4];
-       this.color = color;
-       this.level = level;
-       this.cardsInDeck = 0;
-   }
+    protected RedDevelopmentCard[] cards;
+    protected Color color;
+    protected Level level;
+    protected int cardsInDeck;
 
     /**
      * Getter for "cards" attribute in DevelopmentCardDeck Class.
      */
    public RedDevelopmentCard[] getCards() {
        return cards;
-   }
-
-    /**
-     * Setter for "cards" attribute in DevelopmentCardDeck
-     */
-   public void setCards(RedDevelopmentCard[] cards) {
-       this.cards = cards;
    }
 
     /**
@@ -51,24 +34,10 @@ public class DevelopmentCardDeck implements Serializable {
    }
 
     /**
-     * Setter for "color" attribute in DevelopmentCardDeck
-     */
-   public void setColor(Color color) {
-       this.color = color;
-   }
-
-    /**
      * Getter for "level" attribute in DevelopmentCardDeck
      */
    public Level getLevel() {
        return level;
-   }
-
-    /**
-     * Setter for "level" attribute in DevelopmentCardDeck
-     */
-   public void setLevel(Level level) {
-       this.level = level;
    }
 
     /**
@@ -79,42 +48,10 @@ public class DevelopmentCardDeck implements Serializable {
     }
 
     /**
-     * Setter for "cardsInDeck" attribute in DevelopmentCardDeck
-     */
-    public void setCardsInDeck(int cardsInDeck) {
-        this.cardsInDeck = cardsInDeck;
-    }
-
-    /**
      * This method returns true if "cardsInDeck" equals zero, meaning there are no cards in the deck.
      */
    public boolean isEmpty() {
        return cardsInDeck == 0;
-   }
-
-    /**
-     * This method uses a java.util.Collections standard method tu shuffle all the cards in the deck.
-     */
-   public void shuffle() {
-       Collections.shuffle(Arrays.asList(cards));
-   }
-
-    /**
-     * This method adds a card in the "cards" array attribute while also incrementing "cardsInDeck".
-     */
-   public void addCard(RedDevelopmentCard card) {
-       this.cards[cardsInDeck++] = card;
-   }
-
-    /**
-     * This method draws a card from the deck and updates the deck's length. If the deck is empty, a new
-     * exception is thrown indicating the absence of cards in the deck.
-     */
-   public RedDevelopmentCard drawCard() throws IllegalArgumentException {
-       if(isEmpty()) {
-           throw new IllegalArgumentException("Cannot draw card from empty deck!");
-       }
-       return cards[--cardsInDeck];
    }
 
     /**

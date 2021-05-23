@@ -6,24 +6,14 @@ import it.polimi.ingsw.View.ANSIColors;
 
 import java.util.ArrayList;
 
-public class PopeTileClass {
+public class RedPopeTileClass {
 
-    private PopeTile popeTile;
-    private final int victoryPoints;
-
-    /**Constructor*/
-    public PopeTileClass(int victoryPoints) {
-        this.popeTile = PopeTile.DOWN;
-        this.victoryPoints = victoryPoints;
-    }
+    protected PopeTile popeTile;
+    protected int victoryPoints;
 
     /**Getter and setter*/
     public PopeTile getPopeTile() {
         return popeTile;
-    }
-
-    public void setPopeTile(PopeTile popeTile) {
-        this.popeTile = popeTile;
     }
 
     public int getVictoryPoints() {
@@ -31,7 +21,7 @@ public class PopeTileClass {
     }
 
     /**Method to save in anArrayList the pope tile*/
-    public ArrayList<String> toCli(int position){
+    public ArrayList<String> toCli(){
         ArrayList<String> favorTile = new ArrayList<>();
         String r = ANSIColors.RESET;
         String c = ANSIColors.FRONT_RED;

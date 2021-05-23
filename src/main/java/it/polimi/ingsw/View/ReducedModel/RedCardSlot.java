@@ -6,29 +6,14 @@ import it.polimi.ingsw.Model.Enums.Level;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class CardSlot implements Serializable {
+public class RedCardSlot implements Serializable {
     private static final long serialVersionUID = 0x1;
 
-    private int levelOccupied;
-    private final RedDevelopmentCard[] cards;
-
-    /**
-     * constructor for CardSlot
-     */
-    public CardSlot(){
-        this.levelOccupied = 0;
-        this.cards = new RedDevelopmentCard[3];
-    }
+    protected int levelOccupied;
+    protected RedDevelopmentCard[] cards;
 
     public RedDevelopmentCard[] getDevelopmentCards() {
         return cards;
-    }
-
-    /**
-     * Setter for levelOccupied
-     */
-    public void setLevelOccupied(int levelOccupied) {
-        this.levelOccupied = levelOccupied;
     }
 
     /**
@@ -54,18 +39,6 @@ public class CardSlot implements Serializable {
         return levelOccupied == 0;
     }
 
-    /** This method is use to calculate the points relative at the Card Slots
-     * @return an int which is the points relative at the cards on the slots
-     */
-    public int finalPoints(){
-        int points = 0;
-        for(int i = 0; i < 3; i++){
-            if(cards[i] != null) points += cards[i].getVictoryPoints();
-            else return points;
-        }
-        return points;
-    }
-
     /**
      * This method returns true if he can add the card i the slot
      * @param card which is  the card that the player wants to add
@@ -78,12 +51,6 @@ public class CardSlot implements Serializable {
         else return false;
     }
 
-    public void addCard(RedDevelopmentCard card){
-        if(isFull()) System.out.println("Slot is full, select another slot!");
-        else if(!canAdd(card)) System.out.println("Can't add a level " + card.getLevel() + " card in this slot!");
-        else cards[levelOccupied++] = card;
-    }
-
     /**
      * This method is use to get the first card of the slot.
      * @return the card on the top of the slot
@@ -91,37 +58,6 @@ public class CardSlot implements Serializable {
     public RedDevelopmentCard getFirstCard(){
         if(levelOccupied == 0) return null;
         else return cards[levelOccupied - 1];
-    }
-
-    /**
-     * Counts the number of card of a certain color and level.
-     * @param color the color of the card I want to count
-     * @param level the level of the card I want to count
-     * @return the result of the counter
-     */
-    public int sumType(Color color, Level level){
-        int count = 0;
-        for(int i = 0; i < 3; i++) {
-            if(cards[i] != null) {
-                if (cards[i].getColor() == color && cards[i].getLevel() == level) count++;
-            }
-        }
-        return count;
-    }
-
-    /**
-     * Counts the number of card of a certain color.
-     * @param color the color of the card I want to count
-     * @return the result of the counter
-     */
-    public int sumColors(Color color){
-        int count = 0;
-        for(int i = 0; i < 3; i++){
-            if(cards[i] != null){
-                if(cards[i].getColor() == color) count ++;
-            }
-        }
-        return count;
     }
 
     public ArrayList<String> toCli() {

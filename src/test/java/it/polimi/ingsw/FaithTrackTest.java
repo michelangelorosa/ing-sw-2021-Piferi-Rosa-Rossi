@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
+import it.polimi.ingsw.View.ReducedModel.RedFaithTrack;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -11,7 +12,6 @@ import java.util.ArrayList;
 /**
  * Unit test for FaithTrack Class.
  */
-
 public class FaithTrackTest {
 
     FaithTrack test = new FaithTrack();
@@ -19,7 +19,6 @@ public class FaithTrackTest {
     /**
      * Getter test for Faith Track
      */
-
     @Test
     public void getterTest() {
 
@@ -228,7 +227,7 @@ public class FaithTrackTest {
     }
 
     /**
-     * In this test I check if the method "popeSpaceSector()" works properly by a simutaion of the Faith Track.
+     * In this test It is checked if the method "popeSpaceSector()" works properly by a simulation of the Faith Track.
      */
     @Test
     public void popeSpaceSectorTest(){
@@ -288,7 +287,7 @@ public class FaithTrackTest {
     /**Test for toView method*/
     @Test
     public void toViewTest(){
-        it.polimi.ingsw.View.ReducedModel.FaithTrack trackView;
+        RedFaithTrack trackView;
 
         ArrayList<Player> players = new ArrayList <>();
         players.add(new Player("zero", 0, true));
@@ -303,7 +302,10 @@ public class FaithTrackTest {
         assertEquals(2, trackView.getONE().getPoints());
         players.get(0).stepAhead(8);
         test.popeSpaceSector(players);
-        assertTrue(trackView.isPopeSpaceONE());
+
+        trackView = test.toView();
+
+        assertFalse(trackView.isPopeSpaceONE());
         assertTrue(trackView.isPopeSpaceTWO());
         assertTrue(trackView.isPopeSpaceTHREE());
         trackView = test.toView();

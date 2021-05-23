@@ -2,29 +2,14 @@ package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Enums.PopeTile;
+import it.polimi.ingsw.View.ReducedModel.RedFaithCell;
+import it.polimi.ingsw.View.ReducedModel.RedFaithTrack;
+import it.polimi.ingsw.View.ReducedModel.RedVaticanReportSection;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class FaithTrack implements Serializable {
-    private static final long serialVersionUID = 0x1;
-    /**
-     * A FaithTrack is an array of Faith Cell
-     */
-    private final FaithCell[] cells;
-    /**
-     * The three vatican report sectios
-     */
-    private final VaticanReportSection ONE;
-    private final VaticanReportSection TWO;
-    private final VaticanReportSection THREE;
-
-    /**
-     * The three pope space, at the and of any report sections
-     */
-    private boolean popeSpaceONE;
-    private boolean popeSpaceTWO;
-    private boolean popeSpaceTHREE;
+public class FaithTrack extends RedFaithTrack {
 
     public FaithTrack() {
         this.cells = JSONReader.ReadFaithCells();
@@ -37,38 +22,45 @@ public class FaithTrack implements Serializable {
         //this.ONE = new VaticanReportSection(5, 8, 2);
         //this.TWO = new VaticanReportSection(12, 16, 3);
         //this.THREE = new VaticanReportSection(19, 24, 4);
+    }
 
+    public FaithTrack(VaticanReportSection ONE, VaticanReportSection TWO, VaticanReportSection THREE) {
+        this.cells = new FaithCell[25];
+        this.popeSpaceONE = true;
+        this.popeSpaceTWO = true;
+        this.popeSpaceTHREE = true;
+        this.ONE = ONE;
+        this.TWO = TWO;
+        this.THREE = THREE;
+    }
+
+    public FaithTrack(ArrayList<RedVaticanReportSection> sections) {
+        this.cells = new FaithCell[25];
+        this.popeSpaceONE = true;
+        this.popeSpaceTWO = true;
+        this.popeSpaceTHREE = true;
+        this.ONE = sections.get(0);
+        this.TWO = sections.get(1);
+        this.THREE = sections.get(2);
     }
 
     /**
      * Getter for FatithCell
      */
     public FaithCell[] getCells() {
-        return cells;
-    }
-
-    public boolean isPopeSpaceONE() {
-        return popeSpaceONE;
-    }
-
-    public boolean isPopeSpaceTWO() {
-        return popeSpaceTWO;
-    }
-
-    public boolean isPopeSpaceTHREE() {
-        return popeSpaceTHREE;
+        return (FaithCell[]) cells;
     }
 
     public VaticanReportSection getONE() {
-        return ONE;
+        return (VaticanReportSection) ONE;
     }
 
     public VaticanReportSection getTWO() {
-        return TWO;
+        return (VaticanReportSection) TWO;
     }
 
     public VaticanReportSection getTHREE() {
-        return THREE;
+        return (VaticanReportSection) THREE;
     }
 
     public void setPopeSpaceONE(boolean popeSpaceONE) {
@@ -125,18 +117,11 @@ public class FaithTrack implements Serializable {
     }
 
     /**
-     * Points relative to the player's position in the FaithTrack
-     */
-    public int getTrackPoints(Player player) {
-        return player.getVictoryPoints();
-    }
-
-    /**
      * Management of points related to PopeSpace
      */
     public void popeSpaceSector(ArrayList<Player> players) {
         for (int i = 0; i < players.size(); i++) {
-            if (players.get(i).getFaithTrackPosition() >= ONE.getEnd() && popeSpaceONE == true) {
+            if (players.get(i).getFaithTrackPosition() >= ONE.getEnd() && popeSpaceONE) {
                 //Every time a player oversteps a PopeSpace it is deactivated
                 popeSpaceONE = false;
                 players.get(i).addVictoryPoints(ONE.getPoints());
@@ -152,7 +137,7 @@ public class FaithTrack implements Serializable {
                 }
             }
 
-            if (players.get(i).getFaithTrackPosition() >= TWO.getEnd() && popeSpaceTWO == true) {
+            if (players.get(i).getFaithTrackPosition() >= TWO.getEnd() && popeSpaceTWO) {
                 //Every time a player oversteps a PopeSpace it is deactivated
                 popeSpaceTWO = false;
                 players.get(i).addVictoryPoints(TWO.getPoints());
@@ -168,7 +153,7 @@ public class FaithTrack implements Serializable {
                 }
             }
 
-            if (players.get(i).getFaithTrackPosition() >= THREE.getEnd() && popeSpaceTHREE == true) {
+            if (players.get(i).getFaithTrackPosition() >= THREE.getEnd() && popeSpaceTHREE) {
                 //Every time a player oversteps a PopeSpace it is deactivated
                 popeSpaceTHREE = false;
                 players.get(i).addVictoryPoints(THREE.getPoints());
@@ -187,26 +172,8 @@ public class FaithTrack implements Serializable {
     }
 
     /**Method for converting model classes to view classes*/
-    public it.polimi.ingsw.View.ReducedModel.FaithTrack toView() {
-        it.polimi.ingsw.View.ReducedModel.FaithTrack track = new it.polimi.ingsw.View.ReducedModel.FaithTrack(this.ONE.toView(), this.TWO.toView(), this.THREE.toView());
-
-        for(int i = 0; i < 25; i++) track.getCells()[i] = this.cells[i].toView();
-
-        track.setPopeSpaceONE(this.popeSpaceONE);
-        track.setPopeSpaceTWO(this.popeSpaceTWO);
-        track.setPopeSpaceTHREE(this.popeSpaceTHREE);
-
-        return track;
-    }
-
-    public it.polimi.ingsw.View.ReducedModel.FaithTrack toViewUpdate() {
-        it.polimi.ingsw.View.ReducedModel.FaithTrack track = new it.polimi.ingsw.View.ReducedModel.FaithTrack(this.ONE.toView(), this.TWO.toView(), this.THREE.toView());
-
-        track.setPopeSpaceONE(this.popeSpaceONE);
-        track.setPopeSpaceTWO(this.popeSpaceTWO);
-        track.setPopeSpaceTHREE(this.popeSpaceTHREE);
-
-        return track;
+    public RedFaithTrack toView() {
+        return (RedFaithTrack) this;
     }
 
 }

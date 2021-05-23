@@ -5,7 +5,7 @@ import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.Controller.Actions.PayResourceBuyCard;
 import it.polimi.ingsw.Controller.Actions.PayResourceProduction;
 import it.polimi.ingsw.View.ReducedModel.Game;
-import it.polimi.ingsw.View.ReducedModel.LeaderCard;
+import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 
 import java.util.ArrayList;
 
@@ -60,7 +60,7 @@ public interface UserInterface {
      * to the player inside the Model's Game.
      * @throws IllegalArgumentException if the number of leader cards in the input ArrayList is != 4
      */
-    Action initialChooseLeaderCards(ArrayList<LeaderCard> leaderCards) throws IllegalArgumentException;
+    Action initialChooseLeaderCards(ArrayList<RedLeaderCard> leaderCards) throws IllegalArgumentException;
 
     /**
      * Used to get the initial Resources as input from the player.

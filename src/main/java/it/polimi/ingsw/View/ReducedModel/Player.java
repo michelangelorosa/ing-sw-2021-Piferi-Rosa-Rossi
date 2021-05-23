@@ -1,9 +1,9 @@
 package it.polimi.ingsw.View.ReducedModel;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
+import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Enums.ResourceType;
-import it.polimi.ingsw.Model.ResourceStack;
 import it.polimi.ingsw.View.ANSIfont;
 
 import java.io.Serializable;
@@ -31,13 +31,13 @@ public class Player implements Serializable {
     private int victoryPoints;
     private int faithTrackPosition;
 
-    private BasicProduction basicProduction;
-    private Warehouse warehouse;
-    private Strongbox strongbox;
-    private DevelopmentCardSlots slots;
+    private RedBasicProduction basicProduction;
+    private RedWarehouse warehouse;
+    private RedStrongbox strongbox;
+    private RedDevelopmentCardSlots slots;
     private RedResourceStack temporaryResources;
-    private LeaderCard[] leaderCards;
-    private PopeTileClass[] popeTiles;
+    private RedLeaderCard[] leaderCards;
+    private RedPopeTileClass[] popeTiles;
 
     private ArrayList<ActionType> possibleActions;
 
@@ -64,11 +64,11 @@ public class Player implements Serializable {
         this.possibleActions = new ArrayList<>();
     }
 
-    public void setPopeTiles(PopeTileClass[] popeTiles) {
+    public void setPopeTiles(RedPopeTileClass[] popeTiles) {
         this.popeTiles = popeTiles;
     }
 
-    public PopeTileClass[] getPopeTiles() {
+    public RedPopeTileClass[] getPopeTiles() {
         return popeTiles;
     }
 
@@ -113,19 +113,19 @@ public class Player implements Serializable {
         return faithTrackPosition;
     }
 
-    public BasicProduction getBasicProduction() {
+    public RedBasicProduction getBasicProduction() {
         return basicProduction;
     }
 
-    public Warehouse getWarehouse() {
+    public RedWarehouse getWarehouse() {
         return warehouse;
     }
 
-    public Strongbox getStrongbox() {
+    public RedStrongbox getStrongbox() {
         return strongbox;
     }
 
-    public DevelopmentCardSlots getSlots() {
+    public RedDevelopmentCardSlots getSlots() {
         return slots;
     }
 
@@ -133,7 +133,7 @@ public class Player implements Serializable {
         return temporaryResources;
     }
 
-    public LeaderCard[] getLeaderCards() {
+    public RedLeaderCard[] getLeaderCards() {
         return leaderCards;
     }
 
@@ -149,19 +149,19 @@ public class Player implements Serializable {
         this.faithTrackPosition = faithTrackPosition;
     }
 
-    public void setWarehouse(Warehouse warehouse) {
+    public void setWarehouse(RedWarehouse warehouse) {
         this.warehouse = warehouse;
     }
 
-    public void setStrongbox(Strongbox strongbox) {
+    public void setStrongbox(RedStrongbox strongbox) {
         this.strongbox = strongbox;
     }
 
-    public void setSlots(DevelopmentCardSlots slots) {
+    public void setSlots(RedDevelopmentCardSlots slots) {
         this.slots = slots;
     }
 
-    public void setLeaderCards(LeaderCard[] leaderCards) {
+    public void setLeaderCards(RedLeaderCard[] leaderCards) {
         this.leaderCards = leaderCards;
     }
 
@@ -174,7 +174,7 @@ public class Player implements Serializable {
         System.out.println(this.getLeaderCards()[1].getResourcesRequired().getResource(ResourceType.SHIELDS));
     }
 
-    public void setBasicProduction(BasicProduction basicProduction) {
+    public void setBasicProduction(RedBasicProduction basicProduction) {
         this.basicProduction = basicProduction;
     }
 
@@ -260,9 +260,9 @@ public class Player implements Serializable {
     }
 
     public ArrayList<String> popeTileToCli(){
-        ArrayList<String> pope1 = popeTiles[0].toCli(0);
-        ArrayList<String> pope2 = popeTiles[1].toCli(1);
-        ArrayList<String> pope3 = popeTiles[2].toCli(2);
+        ArrayList<String> pope1 = popeTiles[0].toCli();
+        ArrayList<String> pope2 = popeTiles[1].toCli();
+        ArrayList<String> pope3 = popeTiles[2].toCli();
 
         for(int i = 0; i < 7; i++){
             pope1.set(i, " " + pope1.get(i) +"  " + pope2.get(i) + "  " + pope3.get(i));

@@ -5,8 +5,8 @@ import it.polimi.ingsw.View.ReducedModel.*;
 
 public class PaymentMessage extends MessageToClient {
     /**Payment message need a warehouse a strongbox and a temporary resource*/
-    private Warehouse warehouse;
-    private Strongbox strongbox;
+    private RedWarehouse warehouse;
+    private RedStrongbox strongbox;
     private RedResourceStack temporaryResources;
 
     /**Constructor for PaymentMessage*/
@@ -20,12 +20,12 @@ public class PaymentMessage extends MessageToClient {
     }
 
     /**Setter for warehouse*/
-    public void setWarehouse(Warehouse warehouse) {
+    public void setWarehouse(RedWarehouse warehouse) {
         this.warehouse = warehouse;
     }
 
     /**Setter for Strongbox*/
-    public void setStrongbox(Strongbox strongbox) {
+    public void setStrongbox(RedStrongbox strongbox) {
         this.strongbox = strongbox;
     }
 
@@ -34,11 +34,11 @@ public class PaymentMessage extends MessageToClient {
         this.temporaryResources = temporaryResources;
     }
 
-    public Warehouse getWarehouse() {
+    public RedWarehouse getWarehouse() {
         return warehouse;
     }
 
-    public Strongbox getStrongbox() {
+    public RedStrongbox getStrongbox() {
         return strongbox;
     }
 

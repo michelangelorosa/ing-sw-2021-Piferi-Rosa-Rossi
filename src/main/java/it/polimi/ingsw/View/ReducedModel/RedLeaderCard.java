@@ -11,116 +11,82 @@ import java.util.ArrayList;
  * All of them have the following attributes: a CardId for identification, victoryPoints for the score.
  * Type is a byte identifying the type
  *  */
-public class LeaderCard implements Serializable {
+public class RedLeaderCard implements Serializable {
     private static final long serialVersionUID = 0x1;
 
-    private final int cardId;
-    private final int victoryPoints;
-    private final LeaderCardAction action;
-    private boolean active;
-    private final RedResourceStack resourcesRequired;
-    private final RedLeaderRequirements cardsRequired;
+    protected int cardId;
+    protected int victoryPoints;
+    protected LeaderCardAction action;
+    protected boolean active;
+    protected RedResourceStack resourcesRequired;
+    protected RedLeaderRequirements cardsRequired;
     //ABILITY ONE: Discount on Development Card
-    private RedResourceStack discount;
+    protected RedResourceStack discount;
     //ABILITY TWO: White Marble to Resource
-    private Marble marble;
+    protected Marble marble;
     //ABILITY THREE: New Dev w/ faith
-    private RedResourceStack input;
-    private int faith;
-    private int jollyOut;
+    protected RedResourceStack input;
+    protected int faith;
+    protected int jollyOut;
     //ABILITY FOUR: Xtra Depot
-    private ResourceType resource;
+    protected ResourceType resource;
 
-    /**
-     * Constructor for LeaderCard Class. The override of ability is implicit in the parameters
-     */
-    public LeaderCard(int cardId, int victoryPoints, RedResourceStack resourcesRequired, RedLeaderRequirements cards, RedResourceStack discount) {
-        this.cardId = cardId;
-        this.victoryPoints = victoryPoints;
-        this.resourcesRequired = resourcesRequired;
-        this.cardsRequired = cards;
-        this.action = LeaderCardAction.DISCOUNT;
-        this.active = false;
-        this.discount=discount;
-    }
-    public LeaderCard(int cardId, int victoryPoints, RedResourceStack resourcesRequired, RedLeaderRequirements cards, Marble marble) {
-        this.cardId = cardId;
-        this.victoryPoints = victoryPoints;
-        this.resourcesRequired = resourcesRequired;
-        this.cardsRequired = cards;
-        this.action = LeaderCardAction.WHITEMARBLE;
-        this.active = false;
-        this.marble = marble;
-    }
-    public LeaderCard(int cardId, int victoryPoints, RedResourceStack resourcesRequired, RedLeaderRequirements cards, RedResourceStack input, int jollyOut, int faith) {
-        this.cardId = cardId;
-        this.victoryPoints = victoryPoints;
-        this.resourcesRequired = resourcesRequired;
-        this.cardsRequired = cards;
-        this.action = LeaderCardAction.PRODUCTIONPOWER;
-        this.active = false;
-        this.input = input;
-        this.faith = faith;
-        this.jollyOut = jollyOut;
-    }
-    public LeaderCard(int cardId, int victoryPoints, RedResourceStack resourcesRequired, RedLeaderRequirements cards, ResourceType resource) {
-        this.cardId = cardId;
-        this.victoryPoints = victoryPoints;
-        this.resourcesRequired = resourcesRequired;
-        this.cardsRequired = cards;
-        this.action = LeaderCardAction.EXTRADEPOT;
-        this.active = false;
-        this.resource = resource;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
+    /**Getter for cardId*/
     public int getCardId() {
         return cardId;
     }
 
+    /**Getter for victoryPoints*/
     public int getVictoryPoints() {
         return victoryPoints;
     }
 
+    /**Getter for Action*/
     public LeaderCardAction getAction() {
         return action;
     }
 
+    /**Getter for Active*/
     public boolean isActive() {
         return active;
     }
 
+    /**Getter for ResourceRequired*/
     public RedResourceStack getResourcesRequired() {
         return resourcesRequired;
     }
 
+    /**Getter for cardsRequired*/
     public RedLeaderRequirements getCardsRequired() {
         return cardsRequired;
     }
 
+    /**Getter for discount*/
     public RedResourceStack getDiscount() {
         return discount;
     }
 
+    /**Getter for marble*/
     public Marble getMarble() {
         return marble;
     }
 
+    /**Getter for input*/
     public RedResourceStack getInput() {
         return input;
     }
 
+    /**Getter for faith*/
     public int getFaith() {
         return faith;
     }
 
+    /**Getter for jollyOut*/
     public int getJollyOut() {
         return jollyOut;
     }
 
+    /**Getter for Resource*/
     public ResourceType getResource() {
         return resource;
     }
@@ -277,53 +243,60 @@ public class LeaderCard implements Serializable {
 
     public String resourceToCli(String input){
         int resource = 0;
-        if(input.equals("BlueLv1")) resource = this.cardsRequired.getBlueCardLv1();
-        else if(input.equals("BlueLv2")) resource = this.cardsRequired.getBlueCardLv2();
-        else if(input.equals("BlueLv3")) resource = this.cardsRequired.getBlueCardLv3();
-        else if(input.equals("PurpleLv1")) resource = this.cardsRequired.getPurpleCardLv1();
-        else if(input.equals("PurpleLv2")) resource = this.cardsRequired.getPurpleCardLv2();
-        else if(input.equals("PurpleLv3")) resource = this.cardsRequired.getPurpleCardLv3();
-        else if(input.equals("YellowLv1")) resource = this.cardsRequired.getYellowCardLv1();
-        else if(input.equals("YellowLv2")) resource = this.cardsRequired.getYellowCardLv2();
-        else if(input.equals("YellowLv3")) resource = this.cardsRequired.getYellowCardLv3();
-        else if(input.equals("GreenLv1")) resource = this.cardsRequired.getGreenCardLv1();
-        else if(input.equals("GreenLv2")) resource = this.cardsRequired.getGreenCardLv2();
-        else if(input.equals("GreenLv3")) resource = this.cardsRequired.getGreenCardLv3();
-        else if(input.equals("Blue")) resource = this.cardsRequired.getNeedBlueCard();
-        else if(input.equals("Purple")) resource = this.cardsRequired.getNeedPurpleCard();
-        else if(input.equals("Yellow")) resource = this.cardsRequired.getNeedYellowCard();
-        else if(input.equals("Green")) resource = this.cardsRequired.getNeedGreenCard();
+        switch (input) {
+            case "BlueLv1":
+                resource = this.cardsRequired.getBlueCardLv1();
+                break;
+            case "BlueLv2":
+                resource = this.cardsRequired.getBlueCardLv2();
+                break;
+            case "BlueLv3":
+                resource = this.cardsRequired.getBlueCardLv3();
+                break;
+            case "PurpleLv1":
+                resource = this.cardsRequired.getPurpleCardLv1();
+                break;
+            case "PurpleLv2":
+                resource = this.cardsRequired.getPurpleCardLv2();
+                break;
+            case "PurpleLv3":
+                resource = this.cardsRequired.getPurpleCardLv3();
+                break;
+            case "YellowLv1":
+                resource = this.cardsRequired.getYellowCardLv1();
+                break;
+            case "YellowLv2":
+                resource = this.cardsRequired.getYellowCardLv2();
+                break;
+            case "YellowLv3":
+                resource = this.cardsRequired.getYellowCardLv3();
+                break;
+            case "GreenLv1":
+                resource = this.cardsRequired.getGreenCardLv1();
+                break;
+            case "GreenLv2":
+                resource = this.cardsRequired.getGreenCardLv2();
+                break;
+            case "GreenLv3":
+                resource = this.cardsRequired.getGreenCardLv3();
+                break;
+            case "Blue":
+                resource = this.cardsRequired.getNeedBlueCard();
+                break;
+            case "Purple":
+                resource = this.cardsRequired.getNeedPurpleCard();
+                break;
+            case "Yellow":
+                resource = this.cardsRequired.getNeedYellowCard();
+                break;
+            case "Green":
+                resource = this.cardsRequired.getNeedGreenCard();
+                break;
+        }
 
         if(resource < 9) return " " + resource;
         else return ""+resource;
 
     }
-/*
-    public void printD(LeaderCard card){
-        for(String string :card.toCliDown())
-            System.out.println(string);
-    }
-    public void printU(LeaderCard card){
-        for(String string :card.toCliUp())
-            System.out.println(string);
-    }
 
-    public void printCards(Game game, Player player){
-        String myName = game.getMyNickname();
-        String hisName = player.getNickname();
-
-        if(myName == hisName){
-            player.getLeaderCards()[0].printU(player.getLeaderCards()[0]);
-            player.getLeaderCards()[1].printU(player.getLeaderCards()[1]);
-        }
-        else {
-            if (player.getLeaderCards()[0].active) {
-                player.getLeaderCards()[0].printU(player.getLeaderCards()[0]);
-            } else player.getLeaderCards()[0].printD(player.getLeaderCards()[0]);
-            if (player.getLeaderCards()[1].active) {
-                player.getLeaderCards()[1].printU(player.getLeaderCards()[1]);
-            } else player.getLeaderCards()[1].printD(player.getLeaderCards()[1]);
-        }
-    }
- */
 }

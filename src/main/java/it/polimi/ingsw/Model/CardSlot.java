@@ -2,14 +2,10 @@ package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Model.Enums.Color;
 import it.polimi.ingsw.Model.Enums.Level;
+import it.polimi.ingsw.View.ReducedModel.RedCardSlot;
 
-import java.io.Serializable;
-
-public class CardSlot implements Serializable {
+public class CardSlot extends RedCardSlot {
     private static final long serialVersionUID = 0x1;
-
-    private int levelOccupied;
-    private final DevelopmentCard[] cards;
 
     /**
      * constructor for CardSlot
@@ -20,9 +16,15 @@ public class CardSlot implements Serializable {
     }
 
     /**
+     * Setter for levelOccupied
+     */
+    public void setLevelOccupied(int levelOccupied) {
+        this.levelOccupied = levelOccupied;
+    }
+
+    /**
      * Getter for levelOccupied
      */
-
     public int getLevelOccupied(){
         return levelOccupied;
     }
@@ -39,22 +41,6 @@ public class CardSlot implements Serializable {
         else cards[levelOccupied++] = card;
     }
 
-    /**
-     * This method returns true if a slot has 3 cards.
-     * @return true/false
-     */
-    public boolean isFull(){
-        return levelOccupied == 3;
-    }
-
-    /**
-     * This method returns true if a slot is empty.
-     * @return true/false
-     */
-    public boolean isEmpty() {
-        return levelOccupied == 0;
-    }
-
     /** This method is use to calculate the points relative at the Card Slots
      * @return an int which is the points relative at the cards on the slots
      */
@@ -68,27 +54,16 @@ public class CardSlot implements Serializable {
     }
 
     /**
-     * This method returns true if he can add the card i the slot
-     * @param card which is  the card that the player wants to add
-     * @return true if he can, false if he cannot
-     */
-    public boolean canAdd(DevelopmentCard card){
-        if(levelOccupied == 0 && card.getLevel() == Level.ONE) return true;
-        if(levelOccupied == 1 && card.getLevel() == Level.TWO) return true;
-        return levelOccupied == 2 && card.getLevel() == Level.THREE;
-    }
-
-    /**
      * This method is use to get the first card of the slot.
      * @return the card on the top of the slot
      */
     public DevelopmentCard getFirstCard(){
         if(levelOccupied == 0) return null;
-        else return cards[levelOccupied - 1];
+        else return (DevelopmentCard) cards[levelOccupied - 1];
     }
 
     /**
-     * Counts the number of card of a certain color and level.
+     * Counts the number of cards of a certain color and level.
      * @param color the color of the card I want to count
      * @param level the level of the card I want to count
      * @return the result of the counter
@@ -119,16 +94,11 @@ public class CardSlot implements Serializable {
     }
 
     public DevelopmentCard[] getCards() {
-        return cards;
+        return (DevelopmentCard[]) cards;
     }
 
     /**Method for converting model classes to view classes*/
-    public it.polimi.ingsw.View.ReducedModel.CardSlot toView() {
-        it.polimi.ingsw.View.ReducedModel.CardSlot cardSlot = new it.polimi.ingsw.View.ReducedModel.CardSlot();
-        cardSlot.setLevelOccupied(this.levelOccupied);
-        for(int i = 0; i < 3; i++){
-            if(this.cards[i] != null) cardSlot.getDevelopmentCards()[i] = this.cards[i].toView();
-        }
-        return cardSlot;
+    public RedCardSlot toView() {
+        return (RedCardSlot) this;
     }
 }

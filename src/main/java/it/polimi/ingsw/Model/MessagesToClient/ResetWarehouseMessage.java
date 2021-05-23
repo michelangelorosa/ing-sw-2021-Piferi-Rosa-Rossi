@@ -8,7 +8,7 @@ import it.polimi.ingsw.View.ReducedModel.*;
  * after a ResetWarehouse request.
  */
 public class ResetWarehouseMessage extends MessageToClient {
-    private Warehouse warehouse;
+    private RedWarehouse warehouse;
     private RedResourceStack temporaryResources;
 
     /**
@@ -22,7 +22,7 @@ public class ResetWarehouseMessage extends MessageToClient {
     /**
      * Setter for "warehouse" attribute in ResetWarehouseMessage Class.
      */
-    public void setWarehouse(Warehouse warehouse) {
+    public void setWarehouse(RedWarehouse warehouse) {
         this.warehouse = warehouse;
     }
 
@@ -36,7 +36,7 @@ public class ResetWarehouseMessage extends MessageToClient {
     /**
      * Getter for "warehouse" attribute in ResetWarehouseMessage Class.
      */
-    public Warehouse getWarehouse() {
+    public RedWarehouse getWarehouse() {
         return warehouse;
     }
 

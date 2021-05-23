@@ -1,6 +1,7 @@
 package it.polimi.ingsw.View.ReducedModel;
 
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.Model.WarehouseDepot;
 import it.polimi.ingsw.View.ANSIColors;
 
 import java.io.Serializable;
@@ -12,49 +13,33 @@ import java.util.ArrayList;
  * warehouseDepot-type objects which are activated if the player has activated the relative Leader Card
  * ability (via the boolean attributes).
  */
-public class Warehouse implements Serializable {
+public class RedWarehouse implements Serializable {
     private static final long serialVersionUID = 0x1;
 
-    private final WarehouseDepot[] warehouseDepots;
-    private final WarehouseDepot extraWarehouseDepot1;
-    private final WarehouseDepot extraWarehouseDepot2;
-    private boolean extraWarehouseDepot1IsActive;
-    private boolean extraWarehouseDepot2IsActive;
-
-    /**
-     * Constructor for Warehouse Class. It creates the "pyramid" of fixed-length depots and the two extra
-     * depots. In addiction to that, it initializes the boolean attributes to "false".
-     */
-    public Warehouse() {
-        this.warehouseDepots = new WarehouseDepot[3];
-        this.warehouseDepots[0] = new WarehouseDepot(3,false);
-        this.warehouseDepots[1] = new WarehouseDepot(2,false);
-        this.warehouseDepots[2] = new WarehouseDepot(1,false);
-
-        this.extraWarehouseDepot1 = new WarehouseDepot(2,true);
-        this.extraWarehouseDepot2 = new WarehouseDepot(2,true);
-        this.extraWarehouseDepot1IsActive = false;
-        this.extraWarehouseDepot2IsActive = false;
-    }
+    protected RedWarehouseDepot[] warehouseDepots;
+    protected RedWarehouseDepot extraWarehouseDepot1;
+    protected RedWarehouseDepot extraWarehouseDepot2;
+    protected boolean extraWarehouseDepot1IsActive;
+    protected boolean extraWarehouseDepot2IsActive;
 
     /**
      * Getter for "warehouseDepots" array attribute in Warehouse Class.
      */
-    public WarehouseDepot[] getWarehouseDepots() {
+    public RedWarehouseDepot[] getWarehouseDepots() {
         return warehouseDepots;
     }
 
     /**
      * Getter for "extraWarehouseDepot1" attribute in Warehouse Class.
      */
-    public WarehouseDepot getExtraWarehouseDepot1() {
+    public RedWarehouseDepot getExtraWarehouseDepot1() {
         return extraWarehouseDepot1;
     }
 
     /**
      * Getter for "extraWarehouseDepot2" attribute in Warehouse Class.
      */
-    public WarehouseDepot getExtraWarehouseDepot2() {
+    public RedWarehouseDepot getExtraWarehouseDepot2() {
         return extraWarehouseDepot2;
     }
 
@@ -72,14 +57,6 @@ public class Warehouse implements Serializable {
         return extraWarehouseDepot2IsActive;
     }
 
-    public void setExtraWarehouseDepot1IsActive(boolean extraWarehouseDepot1IsActive) {
-        this.extraWarehouseDepot1IsActive = extraWarehouseDepot1IsActive;
-    }
-
-    public void setExtraWarehouseDepot2IsActive(boolean extraWarehouseDepot2IsActive) {
-        this.extraWarehouseDepot2IsActive = extraWarehouseDepot2IsActive;
-    }
-
     /**
      * Method used to check if it is possible to remove resources from a depot.
      * @param depot Depot the player wants to remove resources from.
@@ -87,15 +64,6 @@ public class Warehouse implements Serializable {
      */
     public boolean canRemoveFromDepot(it.polimi.ingsw.Model.WarehouseDepot depot){
         return !depot.isEmpty();
-    }
-
-    /**
-     * Method used to remove a resource from a specified depot.
-     * @param depot Depot the player wants to remove resources from.
-     */
-    public void removeResourceFromDepot(it.polimi.ingsw.Model.WarehouseDepot depot) {
-        if(!depot.isEmpty())
-            depot.removeResources(1);
     }
 
     /**
@@ -122,7 +90,7 @@ public class Warehouse implements Serializable {
         boolean fitsInExtraDepot1 = false;
         boolean fitsInExtraDepot2 = false;
 
-        for(WarehouseDepot depot : warehouseDepots)
+        for(RedWarehouseDepot depot : warehouseDepots)
             if(depot.getResourceType() == resourceType)
                 fitsInStandardDepot = !depot.isFull();
 
@@ -140,7 +108,7 @@ public class Warehouse implements Serializable {
      * @return true if there is at least one empty depot.
      */
     public boolean emptyDepotExists() {
-        for(WarehouseDepot depot : this.getWarehouseDepots())
+        for(RedWarehouseDepot depot : this.getWarehouseDepots())
             if(depot.getResourceType() == ResourceType.NONE)
                 return true;
 
@@ -154,7 +122,7 @@ public class Warehouse implements Serializable {
      * @return true if the resource can fit.
      */
     public boolean areEmptyDepotsFillableByType(ResourceType resourceType) {
-        for(WarehouseDepot depot : this.getWarehouseDepots())
+        for(RedWarehouseDepot depot : this.getWarehouseDepots())
             if(depot.getResourceType() == resourceType)
                 return false;
 

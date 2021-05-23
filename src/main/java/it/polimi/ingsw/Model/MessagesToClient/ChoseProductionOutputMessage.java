@@ -3,7 +3,7 @@ package it.polimi.ingsw.Model.MessagesToClient;
 import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.Player;
-import it.polimi.ingsw.View.ReducedModel.Strongbox;
+import it.polimi.ingsw.View.ReducedModel.RedStrongbox;
 
 /**
  * ChooseProductionOutputMessage Class defines a response message to be sent to the client
@@ -11,7 +11,7 @@ import it.polimi.ingsw.View.ReducedModel.Strongbox;
  */
 public class ChoseProductionOutputMessage extends MessageToClient {
     /** The player's strongbox is needed to update the client's View */
-    private Strongbox strongbox;
+    private RedStrongbox strongbox;
 
     /**
      * Constructor for ChooseProductionOutputMessage Class.
@@ -24,14 +24,14 @@ public class ChoseProductionOutputMessage extends MessageToClient {
     /**
      * Setter for "strongbox" attribute in ChooseProductionOutputMessage Class.
      */
-    public void setStrongbox(Strongbox strongbox) {
+    public void setStrongbox(RedStrongbox strongbox) {
         this.strongbox = strongbox;
     }
 
     /**
      * Getter for "strongbox" attribute in ChooseProductionOutputMessage Class.
      */
-    public Strongbox getStrongbox() {
+    public RedStrongbox getStrongbox() {
         return strongbox;
     }
 

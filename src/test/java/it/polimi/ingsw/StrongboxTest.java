@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import it.polimi.ingsw.Model.ResourceStack;
 import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.Model.Strongbox;
+import it.polimi.ingsw.View.ReducedModel.RedStrongbox;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -177,7 +178,7 @@ public class StrongboxTest {
     @Test
     public void toViewTest(){
 
-        it.polimi.ingsw.View.ReducedModel.Strongbox strongboxView;
+        RedStrongbox strongboxView;
 
         strongboxView = strongbox.toView();
 

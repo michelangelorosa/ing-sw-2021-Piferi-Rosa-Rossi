@@ -1,7 +1,8 @@
 package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
-import it.polimi.ingsw.View.ReducedModel.LeaderCard;
+import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
+import it.polimi.ingsw.View.ReducedModel.RedPopeTileClass;
 
 import java.io.Serializable;
 
@@ -145,14 +146,14 @@ public class Player implements Serializable {
         player.setWarehouse(this.board.getResourceManager().getWarehouse().toView());
         player.setStrongbox(this.board.getResourceManager().getStrongbox().toView());
 
-        it.polimi.ingsw.View.ReducedModel.PopeTileClass[] popeTileClasses = new it.polimi.ingsw.View.ReducedModel.PopeTileClass[3];
+        RedPopeTileClass[] popeTileClasses = new RedPopeTileClass[3];
         for(int i = 0; i < 3; i++)
         {
             popeTileClasses[i] = this.popeTiles[i].toView();
         }
         player.setPopeTiles(popeTileClasses);
 
-        it.polimi.ingsw.View.ReducedModel.LeaderCard[] leaderCards = new LeaderCard[2];
+        RedLeaderCard[] leaderCards = new RedLeaderCard[2];
 
 
         return player;

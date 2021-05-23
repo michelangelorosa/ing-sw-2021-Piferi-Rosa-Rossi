@@ -11,22 +11,11 @@ import java.util.Random;
  * object contains a 2D-array final attribute containing marbles and an extra marble to
  * push inside the market whenever a player buys resources.
  */
-public class Market implements Serializable {
+public class RedMarket implements Serializable {
     private static final long serialVersionUID = 0x1;
 
-    private final Marble[][] marbles;
-    private Marble extraMarble;
-
-    /**
-     * Constructor for Market Class.
-     */
-    public Market() {
-        marbles = new Marble[3][4];
-    }
-
-    public Market(Marble[][] marbles) {
-        this.marbles = marbles;
-    }
+    protected Marble[][] marbles;
+    protected Marble extraMarble;
 
     /**
      * Getter for "marbles" attribute.
@@ -40,36 +29,6 @@ public class Market implements Serializable {
      */
     public Marble getExtraMarble() {
         return extraMarble;
-    }
-
-    public void setExtraMarble(Marble extraMarble) {
-        this.extraMarble = extraMarble;
-    }
-
-    public void rowChange(int row) {
-        Marble[] newMarbles = new Marble[4];
-        newMarbles[0] = this.marbles[row][1];
-        newMarbles[1] = this.marbles[row][2];
-        newMarbles[2] = this.marbles[row][3];
-        newMarbles[3] = extraMarble;
-
-        extraMarble = this.marbles[row][0];
-        this.marbles[row][0] = newMarbles[0];
-        this.marbles[row][1] = newMarbles[1];
-        this.marbles[row][2] = newMarbles[2];
-        this.marbles[row][3] = newMarbles[3];
-    }
-
-    public void columnChange(int column) {
-        Marble[] newMarbles = new Marble[3];
-        newMarbles[0] = this.marbles[1][column];
-        newMarbles[1] = this.marbles[2][column];
-        newMarbles[2] = extraMarble;
-
-        extraMarble = this.marbles[0][column];
-        this.marbles[0][column] = newMarbles[0];
-        this.marbles[1][column] = newMarbles[1];
-        this.marbles[2][column] = newMarbles[2];
     }
 
     /**

@@ -4,7 +4,7 @@ import it.polimi.ingsw.Model.Enums.LeaderCardAction;
 import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.Player;
-import it.polimi.ingsw.View.ReducedModel.Warehouse;
+import it.polimi.ingsw.View.ReducedModel.RedWarehouse;
 
 import java.util.ArrayList;
 
@@ -316,7 +316,7 @@ public abstract class InputController {
      * Method used to check if the specified Extra Depot can be used for certain messages.
      */
     private static boolean extraDepotCheck(int i, Game game) {
-        Warehouse warehouse = new Warehouse();
+        RedWarehouse warehouse = new RedWarehouse();
 
         for(Player player : game.getPlayers())
             if(player.getNickname().equals(game.getMyNickname()))

@@ -4,6 +4,8 @@ package it.polimi.ingsw.Model;
 import it.polimi.ingsw.Model.Enums.Color;
 import it.polimi.ingsw.Model.Enums.LeaderCardAction;
 import it.polimi.ingsw.Model.Enums.Level;
+import it.polimi.ingsw.View.ReducedModel.RedDevelopmentCardDeck;
+import it.polimi.ingsw.View.ReducedModel.RedDevelopmentCardTable;
 
 import java.io.Serializable;
 
@@ -11,10 +13,8 @@ import java.io.Serializable;
  * DevelopmentCardTable Class contains all 12 Development Card decks available for the player to buy.
  * All decks are stored in a 2D array of DevelopmentCardDeck-type object.
  */
-public class DevelopmentCardTable implements Serializable {
+public class DevelopmentCardTable extends RedDevelopmentCardTable {
     private static final long serialVersionUID = 0x1;
-
-    private final DevelopmentCardDeck[][] decks;
 
     /**
      * Constructor for DevelopmentCardTable Class.
@@ -49,50 +49,50 @@ public class DevelopmentCardTable implements Serializable {
         for(DevelopmentCard card : cards) {
             if(card.getColor() == colors[0]) {
                 if(card.getLevel() == levels[0]) {
-                    decks[2][1].addCard(card);
+                    ((DevelopmentCardDeck)decks[2][1]).addCard(card);
 
                 } else if(card.getLevel() == levels[1]) {
-                    decks[1][1].addCard(card);
+                    ((DevelopmentCardDeck)decks[1][1]).addCard(card);
 
                 } else if(card.getLevel() == levels[2]) {
-                    decks[0][1].addCard(card);
+                    ((DevelopmentCardDeck)decks[0][1]).addCard(card);
                 }
                 cardsInDeck ++;
 
             } else if(card.getColor() == colors[1]) {
                 if(card.getLevel() == levels[0]) {
-                    decks[2][3].addCard(card);
+                    ((DevelopmentCardDeck)decks[2][3]).addCard(card);
 
                 } else if(card.getLevel() == levels[1]) {
-                    decks[1][3].addCard(card);
+                    ((DevelopmentCardDeck)decks[1][3]).addCard(card);
 
                 } else if(card.getLevel() == levels[2]) {
-                    decks[0][3].addCard(card);
+                    ((DevelopmentCardDeck)decks[0][3]).addCard(card);
                 }
                 cardsInDeck ++;
 
             } else if(card.getColor() == colors[2]) {
                 if(card.getLevel() == levels[0]) {
-                    decks[2][2].addCard(card);
+                    ((DevelopmentCardDeck)decks[2][2]).addCard(card);
 
                 } else if(card.getLevel() == levels[1]) {
-                    decks[1][2].addCard(card);
+                    ((DevelopmentCardDeck)decks[1][2]).addCard(card);
 
                 } else if(card.getLevel() == levels[2]) {
-                    decks[0][2].addCard(card);
+                    ((DevelopmentCardDeck)decks[0][2]).addCard(card);
 
                 }
                 cardsInDeck ++;
 
             } else if(card.getColor() == colors[3]) {
                 if(card.getLevel() == levels[0]) {
-                    decks[2][0].addCard(card);
+                    ((DevelopmentCardDeck)decks[2][0]).addCard(card);
 
                 } else if(card.getLevel() == levels[1]) {
-                    decks[1][0].addCard(card);
+                    ((DevelopmentCardDeck)decks[1][0]).addCard(card);
 
                 } else if(card.getLevel() == levels[2]) {
-                    decks[0][0].addCard(card);
+                    ((DevelopmentCardDeck)decks[0][0]).addCard(card);
                 }
                 cardsInDeck ++;
 
@@ -103,6 +103,10 @@ public class DevelopmentCardTable implements Serializable {
 
     }
 
+    public DevelopmentCardTable(RedDevelopmentCardDeck[][] decks) {
+        this.decks = decks;
+    }
+
     /**
      * This method returns the deck corresponding to the specified coordinates.
      * @param row is the row corresponding to the deck.
@@ -110,7 +114,7 @@ public class DevelopmentCardTable implements Serializable {
      * @return the requested Development Card deck.
      */
     public DevelopmentCardDeck getDeck(int row, int column) {
-        return this.decks[row][column];
+        return (DevelopmentCardDeck)this.decks[row][column];
     }
 
     /**
@@ -120,9 +124,9 @@ public class DevelopmentCardTable implements Serializable {
      * @return the requested Development Card.
      */
     public DevelopmentCard getTopCardFromDeck(int row, int column) {
-        DevelopmentCardDeck deck = getDeck(row, column);
+        RedDevelopmentCardDeck deck = getDeck(row, column);
         if(!deck.isEmpty())
-            return deck.getCards()[deck.getCardsInDeck() - 1];
+            return ((DevelopmentCard)deck.getCards()[deck.getCardsInDeck() - 1]);
         else {
             System.out.println("This deck is empty. Choose another deck!");
             return null;
@@ -135,7 +139,7 @@ public class DevelopmentCardTable implements Serializable {
     public void shuffleTable() {
         for(int i = 0; i < 3; i++)
             for(int j = 0; j < 4; j++)
-                this.decks[i][j].shuffle();
+                ((DevelopmentCardDeck)this.decks[i][j]).shuffle();
     }
 
     /**
@@ -169,22 +173,7 @@ public class DevelopmentCardTable implements Serializable {
         resourceManager.setTemporaryResourcesToPay(cardCost);
     }
 
-    public it.polimi.ingsw.View.ReducedModel.DevelopmentCardTable toView(){
-        it.polimi.ingsw.View.ReducedModel.DevelopmentCardTable table = new it.polimi.ingsw.View.ReducedModel.DevelopmentCardTable();
-
-        table.getDecks()[0][0] = this.decks[0][0].toView();
-        table.getDecks()[0][1] = this.decks[0][1].toView();
-        table.getDecks()[0][2] = this.decks[0][2].toView();
-        table.getDecks()[0][3] = this.decks[0][3].toView();
-        table.getDecks()[1][0] = this.decks[1][0].toView();
-        table.getDecks()[1][1] = this.decks[1][1].toView();
-        table.getDecks()[1][2] = this.decks[1][2].toView();
-        table.getDecks()[1][3] = this.decks[1][3].toView();
-        table.getDecks()[2][0] = this.decks[2][0].toView();
-        table.getDecks()[2][1] = this.decks[2][1].toView();
-        table.getDecks()[2][2] = this.decks[2][2].toView();
-        table.getDecks()[2][3] = this.decks[2][3].toView();
-
-        return table;
+    public RedDevelopmentCardTable toView(){
+        return (RedDevelopmentCardTable) this;
     }
 }

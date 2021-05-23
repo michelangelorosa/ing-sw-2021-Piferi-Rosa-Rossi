@@ -11,23 +11,13 @@ import java.util.ArrayList;
  *  a private int attribute indicating the current number of resources stored,
  *  a ResourceType-type private attribute indicating which type of resource is stored in the depot.
  */
-public class WarehouseDepot implements Serializable {
+public class RedWarehouseDepot implements Serializable {
     private static final long serialVersionUID = 0x1;
 
-    private final int maxResources;
-    private int storedResources;
-    private ResourceType resourceType;
-    private final boolean isFromLeaderCardAbility;
-
-    /**
-     * Constructor for WarehouseDepot Class.
-     */
-    public WarehouseDepot(int maxResources, boolean isFromLeaderCardAbility) {
-        this.maxResources = maxResources;
-        this.storedResources = 0;
-        this.resourceType = ResourceType.NONE;
-        this.isFromLeaderCardAbility = isFromLeaderCardAbility;
-    }
+    protected int maxResources;
+    protected int storedResources;
+    protected ResourceType resourceType;
+    protected boolean isFromLeaderCardAbility;
 
     /**
      * Getter for "maxResources" attribute in WarehouseDepot Class.
@@ -62,14 +52,6 @@ public class WarehouseDepot implements Serializable {
      */
     public boolean isEmpty() {
         return storedResources == 0;
-    }
-
-    public void setStoredResources(int storedResources) {
-        this.storedResources = storedResources;
-    }
-
-    public void setResourceType(ResourceType resourceType) {
-        this.resourceType = resourceType;
     }
 
     /**

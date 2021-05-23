@@ -5,64 +5,34 @@ import it.polimi.ingsw.View.ANSIColors;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class FaithTrack implements Serializable {
-    private static final long serialVersionUID = 0x1;
+public class RedFaithTrack implements Serializable {
+    protected static final long serialVersionUID = 0x1;
     /**A FaithTrack is an array of Faith Cell*/
-    private final FaithCell[] cells;
+    protected RedFaithCell[] cells;
     /**The three vatican report sections*/
-    private final VaticanReportSection ONE;
-    private final VaticanReportSection TWO;
-    private final VaticanReportSection THREE;
+    protected RedVaticanReportSection ONE;
+    protected RedVaticanReportSection TWO;
+    protected RedVaticanReportSection THREE;
 
     /**The three pope space, at the and of any report sections*/
-    private boolean popeSpaceONE;
-    private boolean popeSpaceTWO;
-    private boolean popeSpaceTHREE;
+    protected boolean popeSpaceONE;
+    protected boolean popeSpaceTWO;
+    protected boolean popeSpaceTHREE;
 
-    public FaithTrack(){
-        this.cells = new FaithCell[25];
-        this.popeSpaceONE = true;
-        this.popeSpaceTWO = true;
-        this.popeSpaceTHREE = true;
-        this.ONE = null;
-        this.TWO = null;
-        this.THREE = null;
-    }
-
-    public FaithTrack(VaticanReportSection ONE, VaticanReportSection TWO, VaticanReportSection THREE){
-        this.cells = new FaithCell[25];
-        this.popeSpaceONE = true;
-        this.popeSpaceTWO = true;
-        this.popeSpaceTHREE = true;
-        this.ONE = ONE;
-        this.TWO = TWO;
-        this.THREE = THREE;
-    }
-
-    public VaticanReportSection getONE() {
+    public RedVaticanReportSection getONE() {
         return ONE;
     }
 
-    public VaticanReportSection getTWO() {
+    public RedVaticanReportSection getTWO() {
         return TWO;
     }
 
-    public VaticanReportSection getTHREE() {
+    public RedVaticanReportSection getTHREE() {
         return THREE;
     }
 
-    public FaithTrack(ArrayList<VaticanReportSection> sections) {
-        this.cells = new FaithCell[25];
-        this.popeSpaceONE = true;
-        this.popeSpaceTWO = true;
-        this.popeSpaceTHREE = true;
-        this.ONE = sections.get(0);
-        this.TWO = sections.get(1);
-        this.THREE = sections.get(2);
-    }
-
     /**Getter for FaithCell*/
-    public FaithCell[] getCells() {
+    public RedFaithCell[] getCells() {
         return cells;
     }
 
@@ -111,9 +81,9 @@ public class FaithTrack implements Serializable {
         sections.add("");
         sections.add("");
 
-        VaticanReportSection section = this.ONE;
+        RedVaticanReportSection section = this.ONE;
 
-        ArrayList<VaticanReportSection> vatican = new ArrayList<>();
+        ArrayList<RedVaticanReportSection> vatican = new ArrayList<>();
         vatican.add(this.ONE);
         vatican.add(this.TWO);
         vatican.add(this.THREE);
@@ -185,18 +155,6 @@ public class FaithTrack implements Serializable {
         }
 
         return sections;
-    }
-
-    public void setPopeSpaceONE(boolean popeSpaceONE) {
-        this.popeSpaceONE = popeSpaceONE;
-    }
-
-    public void setPopeSpaceTWO(boolean popeSpaceTWO) {
-        this.popeSpaceTWO = popeSpaceTWO;
-    }
-
-    public void setPopeSpaceTHREE(boolean popeSpaceTHREE) {
-        this.popeSpaceTHREE = popeSpaceTHREE;
     }
 
 }

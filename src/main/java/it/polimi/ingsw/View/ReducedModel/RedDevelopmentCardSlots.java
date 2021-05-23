@@ -1,33 +1,23 @@
 package it.polimi.ingsw.View.ReducedModel;
 
+import it.polimi.ingsw.Model.CardSlot;
 import it.polimi.ingsw.Model.Enums.Level;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class DevelopmentCardSlots implements Serializable {
+public class RedDevelopmentCardSlots implements Serializable {
     private static final long serialVersionUID = 0x1;
 
-    private final CardSlot[] slots;
-    private int cardsInSlot;
-    private Level level;
-
-
-    /**
-     * DevelopmentCardSlot constructor.
-     */
-    public DevelopmentCardSlots(){
-        this.slots = new CardSlot[3];
-        this.slots[0] = new CardSlot();
-        this.slots[1] = new CardSlot();
-        this.slots[2] = new CardSlot();
-    }
+    protected RedCardSlot[] slots;
+    protected int cardsInSlot;
+    protected Level level;
 
     /**
      * Getter
      * @return an array of CardSlot
      */
-    public CardSlot[] getSlots() {
+    public RedCardSlot[] getSlots() {
         return slots;
     }
 
@@ -51,12 +41,7 @@ public class DevelopmentCardSlots implements Serializable {
      * @return true if the player can add the card in that slot, false if not
      */
     public boolean canAddInThisSlot(int i, RedDevelopmentCard card){
-        if(slots[i].canAdd(card)) return true;
-        else return false;
-    }
-
-    public void addCard(int slot, RedDevelopmentCard card) {
-        this.getSlots()[slot].addCard(card);
+        return slots[i].canAdd(card);
     }
 
     public ArrayList<String> toCli() {

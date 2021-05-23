@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.View.ReducedModel.RedWarehouseDepot;
 
 import java.io.Serializable;
 
@@ -10,13 +11,7 @@ import java.io.Serializable;
   *  a private int attribute indicating the current number of resources stored,
   *  a ResourceType-type private attribute indicating which type of resource is stored in the depot.
   */
-public class WarehouseDepot implements Serializable {
-    private static final long serialVersionUID = 0x1;
-
-    private final int maxResources;
-    private int storedResources;
-    private ResourceType resourceType;
-    private final boolean isFromLeaderCardAbility;
+public class WarehouseDepot extends RedWarehouseDepot {
 
      /**
       * Constructor for WarehouseDepot Class.
@@ -29,20 +24,6 @@ public class WarehouseDepot implements Serializable {
     }
 
      /**
-      * Getter for "maxResources" attribute in WarehouseDepot Class.
-      */
-    public int getMaxResources() {
-        return maxResources;
-    }
-
-     /**
-      * Getter for "storedResources" attribute in WarehouseDepot Class.
-      */
-    public int getStoredResources() {
-        return storedResources;
-    }
-
-     /**
       * Setter for "storedResources" attribute in WarehouseDepot Class.
       */
     public void setStoredResources(int storedResources) {
@@ -52,38 +33,10 @@ public class WarehouseDepot implements Serializable {
     }
 
      /**
-      * Getter for "resourceType" attribute in WarehouseDepot Class.
-      */
-    public ResourceType getResourceType() {
-        return resourceType;
-    }
-
-     /**
       * Setter for "resourceType" attribute in WarehouseDepot Class.
       */
     public void setResourceType(ResourceType resourceType) {
         this.resourceType = resourceType;
-    }
-
-     /**
-      * Getter for "isFromLeaderCardAbility" attribute in WarehouseDepot Class.
-      */
-    public boolean isFromLeaderCardAbility() {
-        return isFromLeaderCardAbility;
-    }
-
-     /**
-      * This method returns a "true" value if the WarehouseDepot-type object is empty.
-      */
-    public boolean isEmpty() {
-        return storedResources == 0;
-    }
-
-     /**
-      * This method returns a "true" value if the WarehouseDepot-type object is full.
-      */
-    public boolean isFull() {
-        return this.storedResources == this.maxResources;
     }
 
      /**
@@ -115,11 +68,8 @@ public class WarehouseDepot implements Serializable {
     }
 
     /**Method for converting model classes to view classes*/
-    public it.polimi.ingsw.View.ReducedModel.WarehouseDepot toView() {
-        it.polimi.ingsw.View.ReducedModel.WarehouseDepot depot = new it.polimi.ingsw.View.ReducedModel.WarehouseDepot(this.maxResources, this.isFromLeaderCardAbility);
-        depot.setStoredResources(this.storedResources);
-        depot.setResourceType(this.resourceType);
-        return depot;
+    public RedWarehouseDepot toView() {
+        return (RedWarehouseDepot)this;
     }
 
 }

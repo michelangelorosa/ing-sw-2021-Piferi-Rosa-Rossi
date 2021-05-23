@@ -1,6 +1,9 @@
 package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
+import it.polimi.ingsw.Model.DevelopmentCard;
+import it.polimi.ingsw.Model.DevelopmentCardSlots;
+import it.polimi.ingsw.Model.DevelopmentCardTable;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.Player;
 
@@ -74,7 +77,7 @@ public class ChoseCardSlotMessage extends MessageToClient {
             for (Player player : game.getPlayers())
                 if (player.getTurnPosition() == this.playerId) {
                     player.setPossibleActions(this.possibleActions);
-                    player.getSlots().addCard(this.slot, game.getDevelopmentCardTable().drawCardFromDeck(this.row, this.column));
+                    ((DevelopmentCardSlots)player.getSlots()).addCard(this.slot, ((DevelopmentCardTable)game.getDevelopmentCardTable()).drawCardFromDeck(this.row, this.column));
                 }
 
         }

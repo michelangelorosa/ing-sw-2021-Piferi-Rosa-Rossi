@@ -3,31 +3,31 @@ package it.polimi.ingsw.Model.MessagesToClient;
 import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.View.ReducedModel.Player;
 import it.polimi.ingsw.View.ReducedModel.Game;
-import it.polimi.ingsw.View.ReducedModel.Warehouse;
-import it.polimi.ingsw.View.ReducedModel.Strongbox;
+import it.polimi.ingsw.View.ReducedModel.RedWarehouse;
+import it.polimi.ingsw.View.ReducedModel.RedStrongbox;
 
 public class BoughtCardMessage extends MessageToClient {
-    private Warehouse warehouse;
-    private Strongbox strongbox;
+    private RedWarehouse warehouse;
+    private RedStrongbox strongbox;
 
     public BoughtCardMessage(int playerId) {
         this.actionDone = ActionType.END_PAY_CARD;
         this.playerId = playerId;
     }
 
-    public void setWarehouse(Warehouse warehouse) {
+    public void setWarehouse(RedWarehouse warehouse) {
         this.warehouse = warehouse;
     }
 
-    public void setStrongbox(Strongbox strongbox) {
+    public void setStrongbox(RedStrongbox strongbox) {
         this.strongbox = strongbox;
     }
 
-    public Warehouse getWarehouse() {
+    public RedWarehouse getWarehouse() {
         return warehouse;
     }
 
-    public Strongbox getStrongbox() {
+    public RedStrongbox getStrongbox() {
         return strongbox;
     }
 

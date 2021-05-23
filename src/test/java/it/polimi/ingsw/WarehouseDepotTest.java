@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.Model.WarehouseDepot;
+import it.polimi.ingsw.View.ReducedModel.RedWarehouseDepot;
 import org.junit.Test;
 
 /**
@@ -96,8 +97,8 @@ public class WarehouseDepotTest {
     @Test
     public void toViewTest(){
 
-        it.polimi.ingsw.View.ReducedModel.WarehouseDepot depotView;
-        it.polimi.ingsw.View.ReducedModel.WarehouseDepot depotViewLeader;
+        RedWarehouseDepot depotView;
+        RedWarehouseDepot depotViewLeader;
 
         depotView = depot.toView();
         depotViewLeader = leaderDepot.toView();

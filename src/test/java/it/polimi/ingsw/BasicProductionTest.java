@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import it.polimi.ingsw.Model.BasicProduction;
 import it.polimi.ingsw.Model.ResourceStack;
+import it.polimi.ingsw.View.ReducedModel.RedBasicProduction;
 import org.junit.Test;
 
 /**
@@ -37,7 +38,7 @@ public class BasicProductionTest {
     /**Test for toView method*/
     @Test
     public void toViewTest(){
-        it.polimi.ingsw.View.ReducedModel.BasicProduction basicView;
+        RedBasicProduction basicView;
 
         basicView = basicProductionOne.toView();
 

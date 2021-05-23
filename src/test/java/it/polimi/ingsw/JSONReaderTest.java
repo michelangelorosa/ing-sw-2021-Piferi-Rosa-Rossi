@@ -1,5 +1,6 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.Controller.Controller;
 import it.polimi.ingsw.Model.*;
 import static org.junit.Assert.*;
 
@@ -12,6 +13,11 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 public class JSONReaderTest {
+
+    @Test
+    public void constructorTest() {
+        Controller controller = new Controller();
+    }
 
     @Test
     public void ReadDevelopmentCardsTest() {
@@ -489,18 +495,18 @@ public class JSONReaderTest {
             assertEquals(cardsToTest[i].getCardsRequired().getGreenCardLv2(), LeaderCards.get(i).getCardsRequired().getGreenCardLv2());
             assertEquals(cardsToTest[i].getCardsRequired().getGreenCardLv3(), LeaderCards.get(i).getCardsRequired().getGreenCardLv3());
             if (i < 4) {
-                assertEquals(cardsToTest[i].getDiscount().getShields(), LeaderCards.get(i).getDiscount().getShields());
-                assertEquals(cardsToTest[i].getDiscount().getServants(), LeaderCards.get(i).getDiscount().getServants());
-                assertEquals(cardsToTest[i].getDiscount().getCoins(), LeaderCards.get(i).getDiscount().getCoins());
-                assertEquals(cardsToTest[i].getDiscount().getStones(), LeaderCards.get(i).getDiscount().getStones());
+                assertEquals(cardsToTest[i].getDiscount().getResource(ResourceType.SHIELDS), LeaderCards.get(i).getDiscount().getResource(ResourceType.SHIELDS));
+                assertEquals(cardsToTest[i].getDiscount().getResource(ResourceType.SERVANTS), LeaderCards.get(i).getDiscount().getResource(ResourceType.SERVANTS));
+                assertEquals(cardsToTest[i].getDiscount().getResource(ResourceType.COINS), LeaderCards.get(i).getDiscount().getResource(ResourceType.COINS));
+                assertEquals(cardsToTest[i].getDiscount().getResource(ResourceType.STONES), LeaderCards.get(i).getDiscount().getResource(ResourceType.STONES));
             }
 
             if (i > 11) {
 
-                assertEquals(cardsToTest[i].getInput().getShields(), LeaderCards.get(i).getInput().getShields());
-                assertEquals(cardsToTest[i].getInput().getServants(), LeaderCards.get(i).getInput().getServants());
-                assertEquals(cardsToTest[i].getInput().getCoins(), LeaderCards.get(i).getInput().getCoins());
-                assertEquals(cardsToTest[i].getInput().getStones(), LeaderCards.get(i).getInput().getStones());
+                assertEquals(cardsToTest[i].getInput().getResource(ResourceType.SHIELDS), LeaderCards.get(i).getInput().getResource(ResourceType.SHIELDS));
+                assertEquals(cardsToTest[i].getInput().getResource(ResourceType.SERVANTS), LeaderCards.get(i).getInput().getResource(ResourceType.SERVANTS));
+                assertEquals(cardsToTest[i].getInput().getResource(ResourceType.COINS), LeaderCards.get(i).getInput().getResource(ResourceType.COINS));
+                assertEquals(cardsToTest[i].getInput().getResource(ResourceType.STONES), LeaderCards.get(i).getInput().getResource(ResourceType.STONES));
             }
             if(i > 7 && i < 12){
                 assertEquals(cardsToTest[i].getMarble(), LeaderCards.get(i).getMarble());

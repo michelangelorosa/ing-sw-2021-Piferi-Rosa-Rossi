@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.Model.Warehouse;
+import it.polimi.ingsw.View.ReducedModel.RedWarehouse;
 import org.junit.Test;
 
 /**
@@ -600,7 +601,7 @@ public class WarehouseTest {
     /**Test for toView method*/
     @Test
     public void toViewTest(){
-        it.polimi.ingsw.View.ReducedModel.Warehouse warehouseView;
+        RedWarehouse warehouseView;
 
         warehouse.getWarehouseDepots()[0].setResourceType(ResourceType.SHIELDS);
         warehouse.getWarehouseDepots()[2].setResourceType(ResourceType.STONES);

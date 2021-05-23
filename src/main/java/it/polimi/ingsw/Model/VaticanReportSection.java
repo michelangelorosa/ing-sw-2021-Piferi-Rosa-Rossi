@@ -1,33 +1,16 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.View.ReducedModel.RedVaticanReportSection;
+
 import java.io.Serializable;
 
-public class VaticanReportSection implements Serializable {
+public class VaticanReportSection extends RedVaticanReportSection {
     private static final long serialVersionUID = 0x1;
-
-    private final int begin;
-    private final int end;
-    private final int points;
-
 
     public VaticanReportSection(int begin, int end, int points) {
         this.begin = begin;
         this.end = end;
         this.points = points;
-
-    }
-
-    /**Getter for the VaticanReportSection class */
-    public int getBegin() {
-        return begin;
-    }
-
-    public int getEnd() {
-        return end;
-    }
-
-    public int getPoints() {
-        return points;
     }
 
     /**Method to check if the the vatican section is correct*/
@@ -36,7 +19,7 @@ public class VaticanReportSection implements Serializable {
     }
 
     /**Method for converting model classes to view classes*/
-    public it.polimi.ingsw.View.ReducedModel.VaticanReportSection toView() {
-        return new it.polimi.ingsw.View.ReducedModel.VaticanReportSection(this.begin, this.end, this.points);
+    public RedVaticanReportSection toView() {
+        return (RedVaticanReportSection)this;
     }
 }

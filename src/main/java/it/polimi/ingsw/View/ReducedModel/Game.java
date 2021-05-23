@@ -1,5 +1,6 @@
 package it.polimi.ingsw.View.ReducedModel;
 
+import it.polimi.ingsw.Model.FaithTrack;
 import it.polimi.ingsw.View.ANSIfont;
 import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.Enums.SoloActionToken;
@@ -17,11 +18,11 @@ public class Game {
     /** Index indicating the current player */
     private int currentPlayerIndex;
     /** ArrayList containing all Leader Cards of the game */
-    private ArrayList<LeaderCard> leaderCards;
+    private ArrayList<RedLeaderCard> leaderCards;
 
-    private Market market;
-    private DevelopmentCardTable developmentCardTable;
-    private FaithTrack faithTrack;
+    private RedMarket market;
+    private RedDevelopmentCardTable developmentCardTable;
+    private RedFaithTrack faithTrack;
 
     private final SoloActionToken[] tokens;
     private String myNickname;
@@ -34,8 +35,8 @@ public class Game {
         this.players = new ArrayList<>();
         this.currentPlayerIndex = 0;
         this.leaderCards = new ArrayList<>();
-        this.market = new Market();
-        this.developmentCardTable = new DevelopmentCardTable();
+        this.market = new RedMarket();
+        this.developmentCardTable = new RedDevelopmentCardTable();
         this.faithTrack = new FaithTrack();
         this.tokens = new SoloActionToken[6];
     }
@@ -72,28 +73,28 @@ public class Game {
     /**
      * Getter for "leaderCards" attribute in Game Class.
      */
-    public ArrayList<LeaderCard> getLeaderCards() {
+    public ArrayList<RedLeaderCard> getLeaderCards() {
         return leaderCards;
     }
 
     /**
      * Getter for "market" attribute in Game Class.
      */
-    public Market getMarket() {
+    public RedMarket getMarket() {
         return market;
     }
 
     /**
      * Getter for "developmentCardTable" attribute in Game Class.
      */
-    public DevelopmentCardTable getDevelopmentCardTable() {
+    public RedDevelopmentCardTable getDevelopmentCardTable() {
         return developmentCardTable;
     }
 
     /**
      * Getter for "faithTrack" attribute in Game Class.
      */
-    public FaithTrack getFaithTrack() {
+    public RedFaithTrack getFaithTrack() {
         return faithTrack;
     }
 
@@ -104,7 +105,7 @@ public class Game {
         return tokens;
     }
 
-    public void setLeaderCards(ArrayList<LeaderCard> leaderCards) {
+    public void setLeaderCards(ArrayList<RedLeaderCard> leaderCards) {
         this.leaderCards = leaderCards;
     }
 
@@ -137,15 +138,15 @@ public class Game {
         this.currentPlayerIndex = currentPlayerIndex;
     }
 
-    public void setMarket(Market market) {
+    public void setMarket(RedMarket market) {
         this.market = market;
     }
 
-    public void setFaithTrack(FaithTrack faithTrack) {
+    public void setFaithTrack(RedFaithTrack faithTrack) {
         this.faithTrack = faithTrack;
     }
 
-    public void setDevelopmentCardTable(DevelopmentCardTable developmentCardTable) {
+    public void setDevelopmentCardTable(RedDevelopmentCardTable developmentCardTable) {
         this.developmentCardTable = developmentCardTable;
     }
 

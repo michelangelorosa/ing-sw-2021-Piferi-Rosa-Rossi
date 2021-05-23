@@ -2,6 +2,7 @@ package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Model.Enums.LeaderCardAction;
 import it.polimi.ingsw.Model.Enums.Marble;
+import it.polimi.ingsw.View.ReducedModel.RedMarket;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,32 +13,17 @@ import java.util.Random;
  * object contains a 2D-array final attribute containing marbles and an extra marble to
  * push inside the market whenever a player buys resources.
  */
-public class Market implements Serializable {
-    private static final long serialVersionUID = 0x1;
-
-    private final Marble[][] marbles;
-    private Marble extraMarble;
-
+public class Market extends RedMarket {
     /**
      * Constructor for Market Class.
      */
     public Market() {
-        marbles = new Marble[3][4];
+        this.marbles = new Marble[3][4];
         this.reset();
     }
 
-    /**
-     * Getter for "marbles" attribute.
-     */
-    public Marble[][] getMarbles() {
-        return marbles;
-    }
-
-    /**
-     * Getter for "extraMarble" attribute.
-     */
-    public Marble getExtraMarble() {
-        return extraMarble;
+    public Market(Marble[][] marbles) {
+        this.marbles = marbles;
     }
 
     /**
@@ -95,6 +81,12 @@ public class Market implements Serializable {
             resourceStack.addResource(1, this.marbles[row][j].marbleToResource(player));
 
 
+        this.rowChange(row);
+
+        player.getBoard().getResourceManager().setTemporaryResourcesToPay(resourceStack);
+    }
+
+    public void rowChange(int row) {
         Marble[] newMarbles = new Marble[4];
         newMarbles[0] = this.marbles[row][1];
         newMarbles[1] = this.marbles[row][2];
@@ -106,8 +98,6 @@ public class Market implements Serializable {
         this.marbles[row][1] = newMarbles[1];
         this.marbles[row][2] = newMarbles[2];
         this.marbles[row][3] = newMarbles[3];
-
-        player.getBoard().getResourceManager().setTemporaryResourcesToPay(resourceStack);
     }
 
     /**
@@ -131,6 +121,12 @@ public class Market implements Serializable {
         for(int i = 0; i <= 2; i++)
             resourceStack.addResource(1, this.marbles[i][column].marbleToResource(player));
 
+        this.columnChange(column);
+
+        player.getBoard().getResourceManager().setTemporaryResourcesToPay(resourceStack);
+    }
+
+    public void columnChange(int column) {
         Marble[] newMarbles = new Marble[3];
         newMarbles[0] = this.marbles[1][column];
         newMarbles[1] = this.marbles[2][column];
@@ -140,8 +136,6 @@ public class Market implements Serializable {
         this.marbles[0][column] = newMarbles[0];
         this.marbles[1][column] = newMarbles[1];
         this.marbles[2][column] = newMarbles[2];
-
-        player.getBoard().getResourceManager().setTemporaryResourcesToPay(resourceStack);
     }
 
     public void whiteMarbleToResource(Player player, LeaderCard leaderCard) throws IllegalArgumentException {
@@ -156,14 +150,8 @@ public class Market implements Serializable {
         player.getBoard().getResourceManager().removeWhiteMarble();
     }
 
-    /**
-     * toString override method for Market Class.
-     */
-    @Override
-    public String toString() {
-        return marbles[0][0]+" "+marbles[0][1]+" "+marbles[0][2]+" "+marbles[0][3]+System.lineSeparator()+
-                marbles[1][0]+" "+marbles[1][1]+" "+marbles[1][2]+" "+marbles[1][3]+System.lineSeparator()+
-                marbles[2][0]+" "+marbles[2][1]+" "+marbles[2][2]+" "+marbles[2][3];
+    public void setExtraMarble(Marble extraMarble) {
+        this.extraMarble = extraMarble;
     }
 
     /**
@@ -176,23 +164,7 @@ public class Market implements Serializable {
         this.extraMarble = Marble.WHITE;
     }
 
-    public it.polimi.ingsw.View.ReducedModel.Market toView(){
-        it.polimi.ingsw.View.ReducedModel.Market marketView = new it.polimi.ingsw.View.ReducedModel.Market();
-
-        marketView.getMarbles()[0][0] = this.marbles[0][0];
-        marketView.getMarbles()[0][1] = this.marbles[0][1];
-        marketView.getMarbles()[0][2] = this.marbles[0][2];
-        marketView.getMarbles()[0][3] = this.marbles[0][3];
-        marketView.getMarbles()[1][0] = this.marbles[1][0];
-        marketView.getMarbles()[1][1] = this.marbles[1][1];
-        marketView.getMarbles()[1][2] = this.marbles[1][2];
-        marketView.getMarbles()[1][3] = this.marbles[1][3];
-        marketView.getMarbles()[2][0] = this.marbles[2][0];
-        marketView.getMarbles()[2][1] = this.marbles[2][1];
-        marketView.getMarbles()[2][2] = this.marbles[2][2];
-        marketView.getMarbles()[2][3] = this.marbles[2][3];
-
-
-        return marketView;
+    public RedMarket toView(){
+        return (RedMarket)this;
     }
 }

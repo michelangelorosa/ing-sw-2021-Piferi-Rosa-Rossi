@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Enums.Marble;
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.View.ReducedModel.RedDevelopmentCardTable;
 import org.junit.Test;
 
 /**
@@ -193,7 +194,7 @@ public class DevelopmentCardTableTest {
     /**Test for toView method*/
     @Test
     public void toViewTest(){
-        it.polimi.ingsw.View.ReducedModel.DevelopmentCardTable tableView;
+        RedDevelopmentCardTable tableView;
 
         tableView = table.toView();
 

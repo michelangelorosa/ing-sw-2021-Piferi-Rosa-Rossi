@@ -2,13 +2,14 @@ package it.polimi.ingsw.ViewTest;
 
 import static org.junit.Assert.*;
 
-import it.polimi.ingsw.Model.LeaderRequirements;
-import it.polimi.ingsw.Model.ResourceStack;
+import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.View.InputController;
 import it.polimi.ingsw.View.ReducedModel.*;
 import it.polimi.ingsw.Model.Enums.*;
 
 
+import it.polimi.ingsw.View.ReducedModel.Game;
+import it.polimi.ingsw.View.ReducedModel.Player;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -32,8 +33,8 @@ public class InputControllerTest {
         assertTrue(InputController.checkActivateLeaderCard(0, game));
         assertTrue(InputController.checkActivateLeaderCard(1, game));
 
-        game.getPlayers().get(0).getLeaderCards()[0].setActive(true);
-        game.getPlayers().get(0).getLeaderCards()[1].setActive(true);
+        ((LeaderCard)game.getPlayers().get(0).getLeaderCards()[0]).setActive(true);
+        ((LeaderCard)game.getPlayers().get(0).getLeaderCards()[1]).setActive(true);
 
         assertFalse(InputController.checkActivateLeaderCard(0, game));
         assertEquals("Leader Card already active!", InputController.getError());
@@ -89,12 +90,12 @@ public class InputControllerTest {
         assertFalse(InputController.checkActivateProduction(false, inputs, false, true, game));
         assertEquals("(Second) Leader Card is not active!", InputController.getError());
 
-        game.getPlayers().get(0).getLeaderCards()[0].setActive(true);
+        ((LeaderCard)game.getPlayers().get(0).getLeaderCards()[0]).setActive(true);
 
         assertFalse(InputController.checkActivateProduction(false, inputs, true, true, game));
         assertEquals("(Second) Leader Card is not active!", InputController.getError());
 
-        game.getPlayers().get(0).getLeaderCards()[1].setActive(true);
+        ((LeaderCard)game.getPlayers().get(0).getLeaderCards()[1]).setActive(true);
 
         assertTrue(InputController.checkActivateProduction(false, inputs, true, true, game));
     }
@@ -125,12 +126,12 @@ public class InputControllerTest {
         assertFalse(InputController.checkAddResource(4, ResourceType.SHIELDS, game));
         assertEquals("Extra depot 2 is not active!", InputController.getError());
 
-        game.getPlayers().get(0).getWarehouse().setExtraWarehouseDepot1IsActive(true);
+        ((Warehouse)(game.getPlayers().get(0).getWarehouse())).activateLeaderDepot(ResourceType.STONES);
         assertTrue(InputController.checkAddResource(3, ResourceType.STONES, game));
         assertFalse(InputController.checkAddResource(4, ResourceType.SHIELDS, game));
         assertEquals("Extra depot 2 is not active!", InputController.getError());
 
-        game.getPlayers().get(0).getWarehouse().setExtraWarehouseDepot2IsActive(true);
+        ((Warehouse)game.getPlayers().get(0).getWarehouse()).activateLeaderDepot(ResourceType.SHIELDS);
 
         assertTrue(InputController.checkAddResource(4, ResourceType.SHIELDS, game));
     }
@@ -156,7 +157,7 @@ public class InputControllerTest {
         assertEquals("Column index should be between 1 and 4!", InputController.getError());
 
         while(!game.getDevelopmentCardTable().getDeck(0,0).isEmpty())
-            game.getDevelopmentCardTable().drawCardFromDeck(0, 0);
+            ((DevelopmentCardTable)game.getDevelopmentCardTable()).drawCardFromDeck(0, 0);
 
         assertFalse(InputController.checkBuyCard(0, 0, game));
         assertEquals("Cannot buy Card from and empty Deck!", InputController.getError());
@@ -212,13 +213,13 @@ public class InputControllerTest {
         assertFalse(InputController.checkChooseLeaderCard(1, game));
         assertEquals("Leader Card must be active!", InputController.getError());
 
-        game.getPlayers().get(0).getLeaderCards()[0].setActive(true);
+        ((LeaderCard)game.getPlayers().get(0).getLeaderCards()[0]).setActive(true);
 
         assertTrue(InputController.checkChooseLeaderCard(0, game));
         assertFalse(InputController.checkChooseLeaderCard(1, game));
         assertEquals("Leader Card must be active!", InputController.getError());
 
-        game.getPlayers().get(0).getLeaderCards()[1].setActive(true);
+        ((LeaderCard)game.getPlayers().get(0).getLeaderCards()[1]).setActive(true);
 
         assertTrue(InputController.checkChooseLeaderCard(0, game));
         assertTrue(InputController.checkChooseLeaderCard(1, game));
@@ -271,8 +272,8 @@ public class InputControllerTest {
         assertFalse(InputController.checkChooseProductionOutput(false, false, true, basicInputs, lead1, lead2, game));
         assertEquals("(Second) Leader Card is not active!", InputController.getError());
 
-        game.getPlayers().get(0).getLeaderCards()[0].setActive(true);
-        game.getPlayers().get(0).getLeaderCards()[1].setActive(true);
+        ((LeaderCard)game.getPlayers().get(0).getLeaderCards()[0]).setActive(true);
+        ((LeaderCard)game.getPlayers().get(0).getLeaderCards()[1]).setActive(true);
 
         assertFalse(InputController.checkChooseProductionOutput(false, true, false, basicInputs, lead1, lead2, game));
         assertEquals("One or more resources were of type NONE!", InputController.getError());
@@ -345,8 +346,8 @@ public class InputControllerTest {
         assertFalse(InputController.checkPayResource(true, 4, ResourceType.NONE, game));
         assertEquals("Extra depot 2 is not active!", InputController.getError());
 
-        game.getPlayers().get(0).getWarehouse().setExtraWarehouseDepot1IsActive(true);
-        game.getPlayers().get(0).getWarehouse().setExtraWarehouseDepot2IsActive(true);
+        ((Warehouse)game.getPlayers().get(0).getWarehouse()).activateLeaderDepot(ResourceType.SHIELDS);
+        ((Warehouse)game.getPlayers().get(0).getWarehouse()).activateLeaderDepot(ResourceType.SHIELDS);
 
         assertTrue(InputController.checkPayResource(true, 3, ResourceType.NONE, game));
         assertTrue(InputController.checkPayResource(true, 4, ResourceType.NONE, game));
@@ -404,12 +405,12 @@ public class InputControllerTest {
         game.getPlayers().add(new Player("lello", 2, false));
         game.getPlayers().add(new Player("anastasia", 3, false));
 
-        DevelopmentCardDeck[][] decks;
+        RedDevelopmentCardDeck[][] decks;
         decks = ToCliTest.tableCreator();
 
         leaderCardInit(game);
 
-        DevelopmentCardTable table = new DevelopmentCardTable(decks);
+        RedDevelopmentCardTable table = new DevelopmentCardTable(decks);
 
         game.setDevelopmentCardTable(table);
 
@@ -422,24 +423,24 @@ public class InputControllerTest {
     public static void leaderCardInit(Game game) {
         game.setLeaderCards(new ArrayList<>());
 
-        RedResourceStack stack1 = new ResourceStack(1,1,0,0);
-        RedResourceStack stack2 = new ResourceStack(0,0,1,1);
-        RedResourceStack stack3 = new ResourceStack(1,1,1,1);
-        RedResourceStack stack4 = new ResourceStack(2,0,0,0);
+        ResourceStack stack1 = new ResourceStack(1,1,0,0);
+        ResourceStack stack2 = new ResourceStack(0,0,1,1);
+        ResourceStack stack3 = new ResourceStack(1,1,1,1);
+        ResourceStack stack4 = new ResourceStack(2,0,0,0);
 
-        RedLeaderRequirements requirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
+        LeaderRequirements requirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
 
-        LeaderCard discountOne = new LeaderCard(0, 1, stack1, requirements, stack1);
-        LeaderCard discountTwo = new LeaderCard(1, 1, stack1, requirements, stack2);
+        RedLeaderCard discountOne = new LeaderCard(0, 1, stack1, requirements, stack1);
+        RedLeaderCard discountTwo = new LeaderCard(1, 1, stack1, requirements, stack2);
 
-        LeaderCard whiteMarbleOne = new LeaderCard(2, 1, stack1, requirements, Marble.YELLOW);
-        LeaderCard whiteMarbleTwo = new LeaderCard(3, 2, stack1, requirements, Marble.PURPLE);
+        RedLeaderCard whiteMarbleOne = new LeaderCard(2, 1, stack1, requirements, Marble.YELLOW);
+        RedLeaderCard whiteMarbleTwo = new LeaderCard(3, 2, stack1, requirements, Marble.PURPLE);
 
-        LeaderCard productionOne = new LeaderCard(4, 3, stack2, requirements, stack1, 3, 1);
-        LeaderCard productionTwo = new LeaderCard(5, 1, stack2, requirements, stack2, 3, 0);
+        RedLeaderCard productionOne = new LeaderCard(4, 3, stack2, requirements, stack1, 3, 1);
+        RedLeaderCard productionTwo = new LeaderCard(5, 1, stack2, requirements, stack2, 3, 0);
 
-        LeaderCard extraDepotOne = new LeaderCard(1, 2, stack3, requirements, ResourceType.SHIELDS);
-        LeaderCard extraDepotTwo = new LeaderCard(1, 2, stack4, requirements, ResourceType.SERVANTS);
+        RedLeaderCard extraDepotOne = new LeaderCard(1, 2, stack3, requirements, ResourceType.SHIELDS);
+        RedLeaderCard extraDepotTwo = new LeaderCard(1, 2, stack4, requirements, ResourceType.SERVANTS);
 
         game.getLeaderCards().add(discountOne);
         game.getLeaderCards().add(discountTwo);

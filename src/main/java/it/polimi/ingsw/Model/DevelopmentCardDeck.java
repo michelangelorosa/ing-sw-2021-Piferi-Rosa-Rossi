@@ -2,6 +2,7 @@ package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Model.Enums.Color;
 import it.polimi.ingsw.Model.Enums.Level;
+import it.polimi.ingsw.View.ReducedModel.RedDevelopmentCardDeck;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -11,13 +12,7 @@ import java.util.Collections;
   * DevelopmentCardDeck Class contains three private attributes: an array of DevelopmentCards, a color and a level.
   * Another private integer attribute (cardsInDeck) is used to keep track of how many cards are in the deck.
   */
-public class DevelopmentCardDeck implements Serializable {
-     private static final long serialVersionUID = 0x1;
-
-     private DevelopmentCard[] cards;
-    private Color color;
-    private Level level;
-    private int cardsInDeck;
+public class DevelopmentCardDeck extends RedDevelopmentCardDeck {
 
      /**
       * Constructor for DevelopmentCardDeck Class.
@@ -33,7 +28,7 @@ public class DevelopmentCardDeck implements Serializable {
       * Getter for "cards" attribute in DevelopmentCardDeck Class.
       */
     public DevelopmentCard[] getCards() {
-        return cards;
+        return (DevelopmentCard[]) cards;
     }
 
      /**
@@ -44,24 +39,10 @@ public class DevelopmentCardDeck implements Serializable {
     }
 
      /**
-      * Getter for "color" attribute in DevelopmentCardDeck
-      */
-    public Color getColor() {
-        return color;
-    }
-
-     /**
       * Setter for "color" attribute in DevelopmentCardDeck
       */
     public void setColor(Color color) {
         this.color = color;
-    }
-
-     /**
-      * Getter for "level" attribute in DevelopmentCardDeck
-      */
-    public Level getLevel() {
-        return level;
     }
 
      /**
@@ -72,18 +53,11 @@ public class DevelopmentCardDeck implements Serializable {
     }
 
      /**
-      * Getter for "cardsInDeck" attribute in DevelopmentCardDeck
+      * Setter for "cardsInDeck" attribute in DevelopmentCardDeck
       */
-     public int getCardsInDeck() {
-         return cardsInDeck;
+     public void setCardsInDeck(int cardsInDeck) {
+         this.cardsInDeck = cardsInDeck;
      }
-
-     /**
-      * This method returns true if "cardsInDeck" equals zero, meaning there are no cards in the deck.
-      */
-    public boolean isEmpty() {
-        return cardsInDeck == 0;
-    }
 
      /**
       * This method uses a java.util.Collections standard method tu shuffle all the cards in the deck.
@@ -107,56 +81,11 @@ public class DevelopmentCardDeck implements Serializable {
         if(isEmpty()) {
             throw new IllegalArgumentException("Cannot draw card from empty deck!");
         }
-        return cards[--cardsInDeck];
-    }
-
-     /**
-      * Method to get the first card in a deck.
-      * @return a DevelopmentCard
-      * @throws IllegalArgumentException if the deck is empty.
-      */
-    public DevelopmentCard getTopCard() throws IllegalArgumentException {
-        int position = cardsInDeck - 1;
-        if(isEmpty()) {
-            throw new IllegalArgumentException("Cannot get card from empty deck!");
-        }
-        return cards[position];
-    }
-
-     /**
-      * A method to return a string with che color and the level of a card
-      * @return a string that contains the color and the level of the card
-      */
-    @Override
-    public String toString() {
-        return color+" "+level;
+        return (DevelopmentCard) cards[--cardsInDeck];
     }
 
      /**Method for converting model classes to view classes*/
-     public it.polimi.ingsw.View.ReducedModel.DevelopmentCardDeck toView() {
-         it.polimi.ingsw.View.ReducedModel.DevelopmentCardDeck developmentCardDeck = new it.polimi.ingsw.View.ReducedModel.DevelopmentCardDeck(this.color, this.level);
-         switch (cardsInDeck){
-             case 1:
-                 developmentCardDeck.getCards()[0] = this.cards[0].toView();
-                break;
-             case 2:
-                 developmentCardDeck.getCards()[0] = this.cards[0].toView();
-                 developmentCardDeck.getCards()[1] = this.cards[1].toView();
-                 break;
-             case 3:
-                 developmentCardDeck.getCards()[0] = this.cards[0].toView();
-                 developmentCardDeck.getCards()[1] = this.cards[1].toView();
-                 developmentCardDeck.getCards()[2] = this.cards[2].toView();
-                 break;
-             case 4:
-                 developmentCardDeck.getCards()[0] = this.cards[0].toView();
-                 developmentCardDeck.getCards()[1] = this.cards[1].toView();
-                 developmentCardDeck.getCards()[2] = this.cards[2].toView();
-                 developmentCardDeck.getCards()[3] = this.cards[3].toView();
-                 break;
-         }
-         developmentCardDeck.setCardsInDeck(this.cardsInDeck);
-
-         return developmentCardDeck;
+     public RedDevelopmentCardDeck toView() {
+         return (RedDevelopmentCardDeck) this;
      }
 }

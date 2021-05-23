@@ -3,6 +3,7 @@ import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Enums.LeaderCardAction;
 import it.polimi.ingsw.Model.Enums.Marble;
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -123,7 +124,7 @@ public class LeaderCardTest {
     @Test
     public void toViewTest(){
 
-        it.polimi.ingsw.View.ReducedModel.LeaderCard leaderView;
+        RedLeaderCard leaderView;
         leaderView = leaderCard1.toView();
 
             assertEquals(cardId1, leaderView.getCardId());

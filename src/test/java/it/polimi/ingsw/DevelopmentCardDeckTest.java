@@ -6,6 +6,7 @@ import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Enums.Color;
 import it.polimi.ingsw.Model.Enums.Level;
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.View.ReducedModel.RedDevelopmentCardDeck;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -201,13 +202,13 @@ public class DevelopmentCardDeckTest {
         deck.addCard(card2);
         deck.addCard(card3);
 
-        cardToGet = deck.getTopCard();
+        cardToGet = ((DevelopmentCard)deck.getTopCard());
         assertSame(card3, cardToGet);
 
         DevelopmentCardDeck emptyDeck = new DevelopmentCardDeck(Color.GREEN, Level.TWO);
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Cannot get card from empty deck!");
-        cardToGet = emptyDeck.getTopCard();
+        cardToGet = ((DevelopmentCard)emptyDeck.getTopCard());
         assertSame(card3, cardToGet);
     }
 
@@ -225,7 +226,7 @@ public class DevelopmentCardDeckTest {
     /**Test for toView method*/
     @Test
     public void toViewTest(){
-        it.polimi.ingsw.View.ReducedModel.DevelopmentCardDeck deckView;
+        RedDevelopmentCardDeck deckView;
 
         deck.addCard(card);
         deck.addCard(card1);

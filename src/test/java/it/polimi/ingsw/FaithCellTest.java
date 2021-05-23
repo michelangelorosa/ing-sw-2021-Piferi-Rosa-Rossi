@@ -2,6 +2,8 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.Model.*;
 import static org.junit.Assert.*;
+
+import it.polimi.ingsw.View.ReducedModel.RedFaithCell;
 import org.junit.Test;
 
 public class FaithCellTest {
@@ -84,7 +86,7 @@ public class FaithCellTest {
     /**Test for toView method*/
     @Test
     public void toViewTest(){
-        it.polimi.ingsw.View.ReducedModel.FaithCell[] faithCellView = new it.polimi.ingsw.View.ReducedModel.FaithCell[25];
+        RedFaithCell[] faithCellView = new RedFaithCell[25];
 
         for(int i = 0; i < 25; i++){
             faithCellView[i] = cellToTest[i].toView();

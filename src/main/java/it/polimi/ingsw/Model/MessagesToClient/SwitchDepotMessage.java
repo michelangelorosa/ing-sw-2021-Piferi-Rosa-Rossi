@@ -3,7 +3,7 @@ package it.polimi.ingsw.Model.MessagesToClient;
 import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.Player;
-import it.polimi.ingsw.View.ReducedModel.Warehouse;
+import it.polimi.ingsw.View.ReducedModel.RedWarehouse;
 
 /**
  * SwitchDepotMessage Class contains data for a response message to be sent to the client
@@ -11,7 +11,7 @@ import it.polimi.ingsw.View.ReducedModel.Warehouse;
  */
 public class SwitchDepotMessage extends MessageToClient {
     /** A warehouse is needed to update the Client's View */
-    private Warehouse warehouse;
+    private RedWarehouse warehouse;
 
     /**
      * Constructor for SwitchDepotMessage Class.
@@ -24,14 +24,14 @@ public class SwitchDepotMessage extends MessageToClient {
     /**
      * Setter for "warehouse" attribute in SwitchDepotMessage Class.
      */
-    public void setWarehouse(Warehouse warehouse) {
+    public void setWarehouse(RedWarehouse warehouse) {
         this.warehouse = warehouse;
     }
 
     /**
      * Getter for "warehouse" attribute in SwitchDepotMessage Class.
      */
-    public Warehouse getWarehouse() {
+    public RedWarehouse getWarehouse() {
         return warehouse;
     }
 

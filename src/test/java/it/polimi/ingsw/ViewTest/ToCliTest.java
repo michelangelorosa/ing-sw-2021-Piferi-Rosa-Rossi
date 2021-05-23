@@ -1,15 +1,26 @@
 
 package it.polimi.ingsw.ViewTest;
 
-import it.polimi.ingsw.Model.DevelopmentCard;
+import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Enums.*;
-import it.polimi.ingsw.Model.LeaderRequirements;
-import it.polimi.ingsw.Model.ResourceStack;
 import it.polimi.ingsw.View.ANSIColors;
 import it.polimi.ingsw.View.Cli;
 import it.polimi.ingsw.View.ReducedModel.*;
 
 
+import it.polimi.ingsw.View.ReducedModel.RedBasicProduction;
+import it.polimi.ingsw.View.ReducedModel.RedCardSlot;
+import it.polimi.ingsw.View.ReducedModel.RedDevelopmentCardDeck;
+import it.polimi.ingsw.View.ReducedModel.RedDevelopmentCardSlots;
+import it.polimi.ingsw.View.ReducedModel.RedDevelopmentCardTable;
+import it.polimi.ingsw.View.ReducedModel.RedFaithCell;
+import it.polimi.ingsw.View.ReducedModel.RedFaithTrack;
+import it.polimi.ingsw.View.ReducedModel.Game;
+import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
+import it.polimi.ingsw.View.ReducedModel.RedMarket;
+import it.polimi.ingsw.View.ReducedModel.Player;
+import it.polimi.ingsw.View.ReducedModel.RedVaticanReportSection;
+import it.polimi.ingsw.View.ReducedModel.RedWarehouse;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -19,7 +30,7 @@ import java.util.Random;
  * Print tests for toCli methods in Reduced Model.
  */
 public class ToCliTest {
-    Strongbox strongbox = new Strongbox();
+    RedStrongbox strongbox = new Strongbox();
 
     @Test
     public void strongboxCliTest() {
@@ -36,89 +47,87 @@ public class ToCliTest {
 
     @Test
     public void warehouseDepotCliTest() {
-        WarehouseDepot depot = new WarehouseDepot(3,false);
-        depot.setResourceType(ResourceType.SHIELDS);
-        depot.setStoredResources(1);
+        RedWarehouseDepot depot = new WarehouseDepot(3,false);
+        ((WarehouseDepot)depot).setResourceType(ResourceType.SHIELDS);
+        ((WarehouseDepot)depot).setStoredResources(1);
         System.out.println(depot.toCli());
 
-        depot.setResourceType(ResourceType.COINS);
-        depot.setStoredResources(2);
+        ((WarehouseDepot)depot).setResourceType(ResourceType.COINS);
+        ((WarehouseDepot)depot).setStoredResources(2);
         System.out.println(depot.toCli());
 
-        depot.setResourceType(ResourceType.SERVANTS);
-        depot.setStoredResources(3);
+        ((WarehouseDepot)depot).setResourceType(ResourceType.SERVANTS);
+        ((WarehouseDepot)depot).setStoredResources(3);
         System.out.println(depot.toCli());
 
     }
 
     @Test
     public void warehouseToCli() {
-        Warehouse warehouse = new Warehouse();
-        warehouse.getWarehouseDepots()[0].setResourceType(ResourceType.SERVANTS);
-        warehouse.getWarehouseDepots()[0].setStoredResources(1);
-        warehouse.getWarehouseDepots()[1].setResourceType(ResourceType.SHIELDS);
-        warehouse.getWarehouseDepots()[1].setStoredResources(1);
-        warehouse.getWarehouseDepots()[2].setResourceType(ResourceType.COINS);
-        warehouse.getWarehouseDepots()[2].setStoredResources(1);
+        RedWarehouse warehouse = new Warehouse();
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[0]).setResourceType(ResourceType.SERVANTS);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[0]).setStoredResources(1);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[1]).setResourceType(ResourceType.SHIELDS);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[1]).setStoredResources(1);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[2]).setResourceType(ResourceType.COINS);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[2]).setStoredResources(1);
         for(String s : warehouse.toCli())
             System.out.println(s);
 
-        warehouse.getWarehouseDepots()[0].setResourceType(ResourceType.SHIELDS);
-        warehouse.getWarehouseDepots()[0].setStoredResources(2);
-        warehouse.getWarehouseDepots()[1].setResourceType(ResourceType.STONES);
-        warehouse.getWarehouseDepots()[1].setStoredResources(2);
-        warehouse.getWarehouseDepots()[2].setResourceType(ResourceType.NONE);
-        warehouse.getWarehouseDepots()[2].setStoredResources(0);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[0]).setResourceType(ResourceType.SHIELDS);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[0]).setStoredResources(2);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[1]).setResourceType(ResourceType.STONES);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[1]).setStoredResources(2);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[2]).setResourceType(ResourceType.NONE);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[2]).setStoredResources(0);
         for(String s : warehouse.toCli())
             System.out.println(s);
 
-        warehouse.getWarehouseDepots()[0].setResourceType(ResourceType.NONE);
-        warehouse.getWarehouseDepots()[0].setStoredResources(0);
-        warehouse.getWarehouseDepots()[1].setResourceType(ResourceType.SERVANTS);
-        warehouse.getWarehouseDepots()[1].setStoredResources(2);
-        warehouse.getWarehouseDepots()[2].setResourceType(ResourceType.NONE);
-        warehouse.getWarehouseDepots()[2].setStoredResources(0);
-
-        for(String s : warehouse.toCli())
-            System.out.println(s);
-
-        warehouse.getWarehouseDepots()[0].setResourceType(ResourceType.SHIELDS);
-        warehouse.getWarehouseDepots()[0].setStoredResources(3);
-        warehouse.getWarehouseDepots()[1].setResourceType(ResourceType.COINS);
-        warehouse.getWarehouseDepots()[1].setStoredResources(2);
-        warehouse.getWarehouseDepots()[2].setResourceType(ResourceType.SERVANTS);
-        warehouse.getWarehouseDepots()[2].setStoredResources(1);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[0]).setResourceType(ResourceType.NONE);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[0]).setStoredResources(0);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[1]).setResourceType(ResourceType.SERVANTS);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[1]).setStoredResources(2);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[2]).setResourceType(ResourceType.NONE);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[2]).setStoredResources(0);
 
         for(String s : warehouse.toCli())
             System.out.println(s);
 
-        warehouse.getWarehouseDepots()[0].setResourceType(ResourceType.SHIELDS);
-        warehouse.getWarehouseDepots()[0].setStoredResources(3);
-        warehouse.getWarehouseDepots()[1].setResourceType(ResourceType.COINS);
-        warehouse.getWarehouseDepots()[1].setStoredResources(2);
-        warehouse.getWarehouseDepots()[2].setResourceType(ResourceType.SERVANTS);
-        warehouse.getWarehouseDepots()[2].setStoredResources(1);
-
-        warehouse.setExtraWarehouseDepot1IsActive(true);
-        warehouse.getExtraWarehouseDepot1().setResourceType(ResourceType.SERVANTS);
-        warehouse.getExtraWarehouseDepot1().setStoredResources(1);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[0]).setResourceType(ResourceType.SHIELDS);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[0]).setStoredResources(3);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[1]).setResourceType(ResourceType.COINS);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[1]).setStoredResources(2);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[2]).setResourceType(ResourceType.SERVANTS);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[2]).setStoredResources(1);
 
         for(String s : warehouse.toCli())
             System.out.println(s);
 
-        warehouse.getWarehouseDepots()[0].setResourceType(ResourceType.SHIELDS);
-        warehouse.getWarehouseDepots()[0].setStoredResources(3);
-        warehouse.getWarehouseDepots()[1].setResourceType(ResourceType.COINS);
-        warehouse.getWarehouseDepots()[1].setStoredResources(2);
-        warehouse.getWarehouseDepots()[2].setResourceType(ResourceType.SERVANTS);
-        warehouse.getWarehouseDepots()[2].setStoredResources(1);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[0]).setResourceType(ResourceType.SHIELDS);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[0]).setStoredResources(3);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[1]).setResourceType(ResourceType.COINS);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[1]).setStoredResources(2);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[2]).setResourceType(ResourceType.SERVANTS);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[2]).setStoredResources(1);
 
-        warehouse.setExtraWarehouseDepot1IsActive(true);
-        warehouse.setExtraWarehouseDepot2IsActive(true);
-        warehouse.getExtraWarehouseDepot1().setResourceType(ResourceType.SERVANTS);
-        warehouse.getExtraWarehouseDepot2().setResourceType(ResourceType.COINS);
-        warehouse.getExtraWarehouseDepot1().setStoredResources(1);
-        warehouse.getExtraWarehouseDepot2().setStoredResources(2);
+        ((Warehouse)warehouse).activateLeaderDepot(ResourceType.SERVANTS);
+        ((WarehouseDepot)warehouse.getExtraWarehouseDepot1()).setStoredResources(1);
+
+        for(String s : warehouse.toCli())
+            System.out.println(s);
+
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[0]).setResourceType(ResourceType.SHIELDS);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[0]).setStoredResources(3);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[1]).setResourceType(ResourceType.COINS);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[1]).setStoredResources(2);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[2]).setResourceType(ResourceType.SERVANTS);
+        ((WarehouseDepot)warehouse.getWarehouseDepots()[2]).setStoredResources(1);
+
+        ((Warehouse) warehouse).activateLeaderDepot(ResourceType.COINS);
+        ((WarehouseDepot)warehouse.getExtraWarehouseDepot1()).setResourceType(ResourceType.SERVANTS);
+        ((WarehouseDepot)warehouse.getExtraWarehouseDepot2()).setResourceType(ResourceType.COINS);
+        ((WarehouseDepot)warehouse.getExtraWarehouseDepot1()).setStoredResources(1);
+        ((WarehouseDepot)warehouse.getExtraWarehouseDepot2()).setStoredResources(2);
 
         for(String s : warehouse.toCli())
             System.out.println(s);
@@ -134,10 +143,8 @@ public class ToCliTest {
         warehouse.getWarehouseDepots()[2].setResourceType(ResourceType.SERVANTS);
         warehouse.getWarehouseDepots()[2].setStoredResources(1);
 
-        warehouse.setExtraWarehouseDepot1IsActive(true);
-        warehouse.setExtraWarehouseDepot2IsActive(true);
-        warehouse.getExtraWarehouseDepot1().setResourceType(ResourceType.SERVANTS);
-        warehouse.getExtraWarehouseDepot2().setResourceType(ResourceType.COINS);
+        warehouse.activateLeaderDepot(ResourceType.SERVANTS);
+        warehouse.activateLeaderDepot(ResourceType.COINS);
         warehouse.getExtraWarehouseDepot1().setStoredResources(1);
         warehouse.getExtraWarehouseDepot2().setStoredResources(2);
 
@@ -186,55 +193,55 @@ public class ToCliTest {
 
     @Test
     public void cardSlotToCliTest() {
-        CardSlot cardSlot = new CardSlot();
+        RedCardSlot cardSlot = new CardSlot();
         RedResourceStack cost = new ResourceStack(1, 1, 0, 0);
         RedResourceStack input = new ResourceStack(1, 1, 10, 1);
         RedResourceStack output = new ResourceStack(10, 10, 23, 0);
-        RedDevelopmentCard card1 = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 10, cost, input, output, 10);
+        DevelopmentCard card1 = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 10, cost, input, output, 10);
 
         cost = new ResourceStack(1, 1, 0, 0);
         input = new ResourceStack(1, 1, 10, 1);
         output = new ResourceStack(1, 4, 0, 1);
-        RedDevelopmentCard card2 = new DevelopmentCard(Color.PURPLE, Level.THREE, 1, 7, cost, input, output, 1);
+        DevelopmentCard card2 = new DevelopmentCard(Color.PURPLE, Level.THREE, 1, 7, cost, input, output, 1);
 
         cost = new ResourceStack(99, 99, 99, 99);
         input = new ResourceStack(99, 99, 99, 99);
         output = new ResourceStack(99, 99, 99, 99);
-        RedDevelopmentCard card3 = new DevelopmentCard(Color.YELLOW, Level.ONE, 99, 99, cost, input, output, 99);
+        DevelopmentCard card3 = new DevelopmentCard(Color.YELLOW, Level.ONE, 99, 99, cost, input, output, 99);
 
-        cardSlot.addCard(card3);
+        ((CardSlot)cardSlot).addCard(card3);
         for(String s : cardSlot.toCli())
             System.out.println(s);
 
-        cardSlot.addCard(card1);
+        ((CardSlot)cardSlot).addCard(card1);
         for(String s : cardSlot.toCli())
             System.out.println(s);
 
-        cardSlot.addCard(card2);
+        ((CardSlot)cardSlot).addCard(card2);
         for(String s : cardSlot.toCli())
             System.out.println(s);
     }
 
     @Test
     public void developmentCardSlotsToCliTest() {
-        DevelopmentCardSlots slots = new DevelopmentCardSlots();
+        RedDevelopmentCardSlots slots = new DevelopmentCardSlots();
 
         RedResourceStack cost = new ResourceStack(1, 1, 0, 0);
         RedResourceStack input = new ResourceStack(1, 1, 10, 1);
         RedResourceStack output = new ResourceStack(10, 10, 23, 0);
-        RedDevelopmentCard card1 = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 10, cost, input, output, 10);
-        RedDevelopmentCard card3 = new DevelopmentCard(Color.YELLOW, Level.ONE, 99, 99, cost, input, output, 99);
-        RedDevelopmentCard card4 = new DevelopmentCard(Color.GREEN, Level.ONE, 99, 99, cost, input, output, 99);
-        RedDevelopmentCard card5 = new DevelopmentCard(Color.GREEN, Level.TWO, 99, 99, cost, input, output, 99);
-        RedDevelopmentCard card6 = new DevelopmentCard(Color.PURPLE, Level.THREE, 99, 99, cost, input, output, 99);
-        RedDevelopmentCard card7 = new DevelopmentCard(Color.BLUE, Level.ONE, 99, 99, cost, input, output, 99);
+        DevelopmentCard card1 = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 10, cost, input, output, 10);
+        DevelopmentCard card3 = new DevelopmentCard(Color.YELLOW, Level.ONE, 99, 99, cost, input, output, 99);
+        DevelopmentCard card4 = new DevelopmentCard(Color.GREEN, Level.ONE, 99, 99, cost, input, output, 99);
+        DevelopmentCard card5 = new DevelopmentCard(Color.GREEN, Level.TWO, 99, 99, cost, input, output, 99);
+        DevelopmentCard card6 = new DevelopmentCard(Color.PURPLE, Level.THREE, 99, 99, cost, input, output, 99);
+        DevelopmentCard card7 = new DevelopmentCard(Color.BLUE, Level.ONE, 99, 99, cost, input, output, 99);
 
-        slots.getSlots()[0].addCard(card3);
-        slots.getSlots()[1].addCard(card7);
-        slots.getSlots()[1].addCard(card1);
-        slots.getSlots()[2].addCard(card4);
-        slots.getSlots()[2].addCard(card5);
-        slots.getSlots()[2].addCard(card6);
+        ((CardSlot)slots.getSlots()[0]).addCard(card3);
+        ((CardSlot)slots.getSlots()[1]).addCard(card7);
+        ((CardSlot)slots.getSlots()[1]).addCard(card1);
+        ((CardSlot)slots.getSlots()[2]).addCard(card4);
+        ((CardSlot)slots.getSlots()[2]).addCard(card5);
+        ((CardSlot)slots.getSlots()[2]).addCard(card6);
 
         ArrayList<String> list = slots.toCli();
         for(String s : list)
@@ -243,10 +250,10 @@ public class ToCliTest {
 
     @Test
     public void basicProductionToCliTest() {
-        RedResourceStack inputs = new ResourceStack(1, 2, 3, 10);
-        RedResourceStack outputs = new ResourceStack(10, 0, 23, 0);
+        ResourceStack inputs = new ResourceStack(1, 2, 3, 10);
+        ResourceStack outputs = new ResourceStack(10, 0, 23, 0);
 
-        BasicProduction basic = new BasicProduction(inputs, outputs, 1, 2, 3);
+        RedBasicProduction basic = new BasicProduction(inputs, outputs, 1, 2, 3);
 
         for(String s : basic.toCli())
             System.out.println(s);
@@ -271,8 +278,8 @@ public class ToCliTest {
 
     public static Player playerCreator(String nickname, int turnPosition) {
         Player player = new Player(nickname, turnPosition, true);
-        RedResourceStack input = new ResourceStack(0, 1, 2, 3);
-        BasicProduction basic = new BasicProduction(input, input, 10, 10, 9);
+        ResourceStack input = new ResourceStack(0, 1, 2, 3);
+        RedBasicProduction basic = new BasicProduction(input, input, 10, 10, 9);
 
         player.setBasicProduction(basic);
         player.setWarehouse(warehouseCreator());
@@ -282,7 +289,7 @@ public class ToCliTest {
         return player;
     }
 
-    public static Warehouse warehouseCreator() {
+    public static RedWarehouse warehouseCreator() {
         Warehouse warehouse = new Warehouse();
         warehouse.getWarehouseDepots()[0].setResourceType(ResourceType.SHIELDS);
         warehouse.getWarehouseDepots()[0].setStoredResources(3);
@@ -291,8 +298,8 @@ public class ToCliTest {
         warehouse.getWarehouseDepots()[2].setResourceType(ResourceType.SERVANTS);
         warehouse.getWarehouseDepots()[2].setStoredResources(1);
 
-        warehouse.setExtraWarehouseDepot1IsActive(true);
-        warehouse.setExtraWarehouseDepot2IsActive(true);
+        warehouse.activateLeaderDepot(ResourceType.SERVANTS);
+        warehouse.activateLeaderDepot(ResourceType.COINS);
         warehouse.getExtraWarehouseDepot1().setResourceType(ResourceType.SERVANTS);
         warehouse.getExtraWarehouseDepot2().setResourceType(ResourceType.COINS);
         warehouse.getExtraWarehouseDepot1().setStoredResources(1);
@@ -301,8 +308,8 @@ public class ToCliTest {
         return warehouse;
     }
 
-    public static Strongbox strongboxCreator() {
-        Strongbox strongbox = new Strongbox();
+    public static RedStrongbox strongboxCreator() {
+        RedStrongbox strongbox = new Strongbox();
 
         strongbox.getStoredResources().setResource(2, ResourceType.SHIELDS);
         strongbox.getStoredResources().setResource(3, ResourceType.SERVANTS);
@@ -312,25 +319,25 @@ public class ToCliTest {
         return strongbox;
     }
 
-    public static DevelopmentCardSlots slotsCreator() {
-        DevelopmentCardSlots slots = new DevelopmentCardSlots();
+    public static RedDevelopmentCardSlots slotsCreator() {
+        RedDevelopmentCardSlots slots = new DevelopmentCardSlots();
 
         RedResourceStack cost = new ResourceStack(1, 1, 0, 0);
         RedResourceStack input = new ResourceStack(1, 1, 10, 1);
         RedResourceStack output = new ResourceStack(10, 10, 23, 0);
-        RedDevelopmentCard card1 = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 10, cost, input, output, 10);
-        RedDevelopmentCard card3 = new DevelopmentCard(Color.YELLOW, Level.ONE, 99, 99, cost, input, output, 99);
-        RedDevelopmentCard card4 = new DevelopmentCard(Color.GREEN, Level.ONE, 99, 99, cost, input, output, 99);
-        RedDevelopmentCard card5 = new DevelopmentCard(Color.GREEN, Level.TWO, 99, 99, cost, input, output, 99);
-        RedDevelopmentCard card6 = new DevelopmentCard(Color.PURPLE, Level.THREE, 99, 99, cost, input, output, 99);
-        RedDevelopmentCard card7 = new DevelopmentCard(Color.BLUE, Level.ONE, 99, 99, cost, input, output, 99);
+        DevelopmentCard card1 = new DevelopmentCard(Color.BLUE, Level.TWO, 1, 10, cost, input, output, 10);
+        DevelopmentCard card3 = new DevelopmentCard(Color.YELLOW, Level.ONE, 99, 99, cost, input, output, 99);
+        DevelopmentCard card4 = new DevelopmentCard(Color.GREEN, Level.ONE, 99, 99, cost, input, output, 99);
+        DevelopmentCard card5 = new DevelopmentCard(Color.GREEN, Level.TWO, 99, 99, cost, input, output, 99);
+        DevelopmentCard card6 = new DevelopmentCard(Color.PURPLE, Level.THREE, 99, 99, cost, input, output, 99);
+        DevelopmentCard card7 = new DevelopmentCard(Color.BLUE, Level.ONE, 99, 99, cost, input, output, 99);
 
-        slots.getSlots()[0].addCard(card3);
-        slots.getSlots()[1].addCard(card7);
-        slots.getSlots()[1].addCard(card1);
-        slots.getSlots()[2].addCard(card4);
-        slots.getSlots()[2].addCard(card5);
-        slots.getSlots()[2].addCard(card6);
+        ((CardSlot)slots.getSlots()[0]).addCard(card3);
+        ((CardSlot)slots.getSlots()[1]).addCard(card7);
+        ((CardSlot)slots.getSlots()[1]).addCard(card1);
+        ((CardSlot)slots.getSlots()[2]).addCard(card4);
+        ((CardSlot)slots.getSlots()[2]).addCard(card5);
+        ((CardSlot)slots.getSlots()[2]).addCard(card6);
 
         return slots;
     }
@@ -338,7 +345,7 @@ public class ToCliTest {
     public void leaderCardToCliTest() {
         Game game = new Game();
         ArrayList<Player> players= new ArrayList<>();
-        ArrayList<LeaderCard> leaderCards = new ArrayList<>();
+        ArrayList<RedLeaderCard> leaderCards = new ArrayList<>();
         Player player = new Player("Lello", 0, true);
         Player player1 = new Player("Antonino", 1, false);
         Player player2 = new Player("Marcantonio", 2, false);
@@ -348,27 +355,27 @@ public class ToCliTest {
         game.setPlayers(players);
         game.setMyNickname("Lello");
 
-        RedResourceStack resourceStack = new ResourceStack(1,4,3,2);
-        RedLeaderRequirements requirements = new LeaderRequirements(1,2,2,2,2,1,2,2,1,4,2,4);
-        RedResourceStack discount = new ResourceStack(1,0,0,0);
-        LeaderCard card = new LeaderCard(49, 12, resourceStack, requirements, discount);
+        ResourceStack resourceStack = new ResourceStack(1,4,3,2);
+        LeaderRequirements requirements = new LeaderRequirements(1,2,2,2,2,1,2,2,1,4,2,4);
+        ResourceStack discount = new ResourceStack(1,0,0,0);
+        RedLeaderCard card = new LeaderCard(49, 12, resourceStack, requirements, discount);
         leaderCards.add(card);
 
-        card.setActive(true);
+        ((LeaderCard)card).setActive(true);
         game.getPlayers().get(0).getLeaderCards()[0] = card;
 
         Marble marble = Marble.RED;
         card = new LeaderCard(50, 12, resourceStack, requirements, marble);
         leaderCards.add(card);
-        card.setActive(false);
+        ((LeaderCard)card).setActive(false);
         game.getPlayers().get(0).getLeaderCards()[1] = card;
 
         card = new LeaderCard(51,4,resourceStack, requirements, ResourceType.COINS);
         leaderCards.add(card);
-        card.setActive(true);
+        ((LeaderCard)card).setActive(true);
         game.getPlayers().get(1).getLeaderCards()[0] = card;
 
-        RedResourceStack input = new ResourceStack(11,2,3,4);
+        ResourceStack input = new ResourceStack(11,2,3,4);
         card = new LeaderCard(52, 78, resourceStack, requirements, input, 5, 4);
         leaderCards.add(card);
         game.getPlayers().get(1).getLeaderCards()[1] = card;
@@ -394,15 +401,15 @@ public class ToCliTest {
 
     @Test
     public void leaderCardsToCliTest() {
-        RedResourceStack resourceStack = new ResourceStack(1,4,3,2);
-        RedLeaderRequirements requirements = new LeaderRequirements(1,2,2,2,2,1,2,2,1,4,2,4);
+        ResourceStack resourceStack = new ResourceStack(1,4,3,2);
+        LeaderRequirements requirements = new LeaderRequirements(1,2,2,2,2,1,2,2,1,4,2,4);
 
-        LeaderCard card = new LeaderCard(50, 12, resourceStack, requirements, Marble.BLUE);
-        LeaderCard card1 = new LeaderCard(50, 12, resourceStack, requirements, Marble.PURPLE);
-        LeaderCard card2 = new LeaderCard(50, 12, resourceStack, requirements, Marble.YELLOW);
-        LeaderCard card3 = new LeaderCard(50, 12, resourceStack, requirements, Marble.RED);
+        RedLeaderCard card = new LeaderCard(50, 12, resourceStack, requirements, Marble.BLUE);
+        RedLeaderCard card1 = new LeaderCard(50, 12, resourceStack, requirements, Marble.PURPLE);
+        RedLeaderCard card2 = new LeaderCard(50, 12, resourceStack, requirements, Marble.YELLOW);
+        RedLeaderCard card3 = new LeaderCard(50, 12, resourceStack, requirements, Marble.RED);
 
-        ArrayList<LeaderCard> leaderCards = new ArrayList<>();
+        ArrayList<RedLeaderCard> leaderCards = new ArrayList<>();
         leaderCards.add(card);
         leaderCards.add(card1);
         leaderCards.add(card2);
@@ -419,16 +426,16 @@ public class ToCliTest {
     public void boardTest(){
         Random rand = new Random();
 
-        VaticanReportSection section1 = new VaticanReportSection(0, 5, 30);
-        VaticanReportSection section2 = new VaticanReportSection(6, 18, 5);
-        VaticanReportSection section3 = new VaticanReportSection(19, 24, 1);
+        RedVaticanReportSection section1 = new VaticanReportSection(0, 5, 30);
+        RedVaticanReportSection section2 = new VaticanReportSection(6, 18, 5);
+        RedVaticanReportSection section3 = new VaticanReportSection(19, 24, 1);
 
-        ArrayList<VaticanReportSection> sections = new ArrayList<>();
+        ArrayList<RedVaticanReportSection> sections = new ArrayList<>();
         sections.add(section1);
         sections.add(section2);
         sections.add(section3);
 
-        FaithTrack track = new FaithTrack(sections);
+        RedFaithTrack track = new FaithTrack(sections);
 
         int vp;
 
@@ -449,7 +456,7 @@ public class ToCliTest {
         game.setPlayers(players);
         game.setMyNickname("Lello");
 
-        RedResourceStack input = new ResourceStack(0, 1, 2, 3);
+        ResourceStack input = new ResourceStack(0, 1, 2, 3);
         BasicProduction basic = new BasicProduction(input, input, 10, 10, 9);
 
         for(int i = 0; i < game.getPlayers().size(); i++) {
@@ -459,21 +466,21 @@ public class ToCliTest {
             players.get(i).setSlots(slotsCreator());
         }
 
-        RedResourceStack resourceStack = new ResourceStack(1,4,3,2);
-        RedLeaderRequirements requirements = new LeaderRequirements(11,2,3,22,1,24,3,2,3,44,2,3);
-        RedResourceStack discount = new ResourceStack(1,0,0,0);
-        LeaderCard card = new LeaderCard(49, 12, resourceStack, requirements, discount);
-        card.setActive(true);
+        ResourceStack resourceStack = new ResourceStack(1,4,3,2);
+        LeaderRequirements requirements = new LeaderRequirements(11,2,3,22,1,24,3,2,3,44,2,3);
+        ResourceStack discount = new ResourceStack(1,0,0,0);
+        RedLeaderCard card = new LeaderCard(49, 12, resourceStack, requirements, discount);
+        ((LeaderCard)card).setActive(true);
         game.getPlayers().get(0).getLeaderCards()[0] = card;
 
         Marble marble = Marble.GREY;
         requirements = new LeaderRequirements(11,2,3,22,1,24,3,2,3,44,2,3);
         card = new LeaderCard(50, 12, resourceStack, requirements, marble);
-        card.setActive(false);
+        ((LeaderCard)card).setActive(false);
         game.getPlayers().get(0).getLeaderCards()[1] = card;
 
         card = new LeaderCard(51,4,resourceStack, requirements, ResourceType.COINS);
-        card.setActive(true);
+        ((LeaderCard)card).setActive(true);
         game.getPlayers().get(1).getLeaderCards()[0] = card;
 
         input = new ResourceStack(11,2,3,4);
@@ -488,20 +495,20 @@ public class ToCliTest {
         input = new ResourceStack(11,2,3,4);
         requirements = new LeaderRequirements(11,2,3,22,1,24,3,2,3,44,2,3);
         card = new LeaderCard(52, 78, resourceStack, requirements, input, 5, 4);
-        card.setActive(true);
+        ((LeaderCard)card).setActive(true);
         game.getPlayers().get(2).getLeaderCards()[1] = card;
 
         game.boardToCli(game.getPlayers().get(2));
 
-        players.get(2).getPopeTiles()[0].setPopeTile(PopeTile.UP);
-        players.get(2).getPopeTiles()[1].setPopeTile(PopeTile.No);
+        ((PopeTileClass)players.get(2).getPopeTiles()[0]).setPopeTile(PopeTile.UP);
+        ((PopeTileClass)players.get(2).getPopeTiles()[1]).setPopeTile(PopeTile.No);
 
         for(String s : game.boardToCli(game.getPlayers().get(1)))
             System.out.println(s);
     }
 
-    public static DevelopmentCardDeck[][] tableCreator() {
-        DevelopmentCardDeck[][] decks = new DevelopmentCardDeck[3][4];
+    public static RedDevelopmentCardDeck[][] tableCreator() {
+        RedDevelopmentCardDeck[][] decks = new RedDevelopmentCardDeck[3][4];
 
         Random rand = new Random();
         Color[] colors = Color.values();
@@ -510,7 +517,7 @@ public class ToCliTest {
         RedResourceStack cost;
         RedResourceStack input;
         RedResourceStack output;
-        RedDevelopmentCard card;
+        DevelopmentCard card;
 
         for(int i = 0; i < 3; i++)
             for(int j = 0; j < 4; j++) {
@@ -522,7 +529,7 @@ public class ToCliTest {
                     input = new ResourceStack(rand.nextInt(11), rand.nextInt(11), rand.nextInt(11), rand.nextInt(11));
                     output = new ResourceStack(rand.nextInt(11), rand.nextInt(11), rand.nextInt(11), rand.nextInt(11));
                     card = new DevelopmentCard(color, level, 0, rand.nextInt(100), cost, input, output, rand.nextInt(50));
-                    decks[i][j].addCard(card);
+                    ((DevelopmentCardDeck)decks[i][j]).addCard(card);
                 }
             }
 
@@ -531,7 +538,7 @@ public class ToCliTest {
 
     @Test
     public void tableToCliTest() {
-        DevelopmentCardTable table = new DevelopmentCardTable(tableCreator());
+        RedDevelopmentCardTable table = new DevelopmentCardTable(tableCreator());
         ArrayList<String> tableString = table.toCli();
 
         for(String s : tableString)
@@ -541,7 +548,7 @@ public class ToCliTest {
 
     @Test
     public void faithCellToCliTest() {
-        FaithCell cell = new FaithCell(0, 15);
+        RedFaithCell cell = new FaithCell(0, 15);
 
         Game game = new Game();
         Player player = new Player("antonio", 0, true);
@@ -577,16 +584,16 @@ public class ToCliTest {
 
     @Test
     public void vaticanSectionsToCliTest() {
-        VaticanReportSection section1 = new VaticanReportSection(0, 5, 30);
-        VaticanReportSection section2 = new VaticanReportSection(6, 18, 5);
-        VaticanReportSection section3 = new VaticanReportSection(19, 24, 1);
+        RedVaticanReportSection section1 = new VaticanReportSection(0, 5, 30);
+        RedVaticanReportSection section2 = new VaticanReportSection(6, 18, 5);
+        RedVaticanReportSection section3 = new VaticanReportSection(19, 24, 1);
 
-        ArrayList<VaticanReportSection> sections = new ArrayList<>();
+        ArrayList<RedVaticanReportSection> sections = new ArrayList<>();
         sections.add(section1);
         sections.add(section2);
         sections.add(section3);
 
-        FaithTrack track = new FaithTrack(sections);
+        RedFaithTrack track = new FaithTrack(sections);
 
         ArrayList<String> trackString = track.sectionsToCli();
 
@@ -628,16 +635,16 @@ public class ToCliTest {
     public void faithTrackToCliTest() {
         Random rand = new Random();
 
-        VaticanReportSection section1 = new VaticanReportSection(0, 5, 30);
-        VaticanReportSection section2 = new VaticanReportSection(6, 18, 5);
-        VaticanReportSection section3 = new VaticanReportSection(19, 24, 1);
+        RedVaticanReportSection section1 = new VaticanReportSection(0, 5, 30);
+        RedVaticanReportSection section2 = new VaticanReportSection(6, 18, 5);
+        RedVaticanReportSection section3 = new VaticanReportSection(19, 24, 1);
 
-        ArrayList<VaticanReportSection> sections = new ArrayList<>();
+        ArrayList<RedVaticanReportSection> sections = new ArrayList<>();
         sections.add(section1);
         sections.add(section2);
         sections.add(section3);
 
-        FaithTrack track = new FaithTrack(sections);
+        RedFaithTrack track = new FaithTrack(sections);
 
         int vp;
 
@@ -652,17 +659,17 @@ public class ToCliTest {
         for(String s : trackString)
             System.out.println(s);
 
-        track.setPopeSpaceONE(false);
+        ((FaithTrack)track).setPopeSpaceONE(false);
         trackString = track.toCli(game);
         for(String s : trackString)
             System.out.println(s);
 
-        track.setPopeSpaceTWO(false);
+        ((FaithTrack)track).setPopeSpaceTWO(false);
         trackString = track.toCli(game);
         for(String s : trackString)
             System.out.println(s);
 
-        track.setPopeSpaceTHREE(false);
+        ((FaithTrack)track).setPopeSpaceTHREE(false);
         trackString = track.toCli(game);
         for(String s : trackString)
             System.out.println(s);
@@ -688,17 +695,17 @@ public class ToCliTest {
         for(String s : trackString)
             System.out.println(s);
 
-        track.setPopeSpaceONE(false);
+        ((FaithTrack)track).setPopeSpaceONE(false);
         trackString = track.toCli(game);
         for(String s : trackString)
             System.out.println(s);
 
-        track.setPopeSpaceTWO(false);
+        ((FaithTrack)track).setPopeSpaceTWO(false);
         trackString = track.toCli(game);
         for(String s : trackString)
             System.out.println(s);
 
-        track.setPopeSpaceTHREE(false);
+        ((FaithTrack)track).setPopeSpaceTHREE(false);
         trackString = track.toCli(game);
         for(String s : trackString)
             System.out.println(s);
@@ -724,17 +731,17 @@ public class ToCliTest {
         for(String s : trackString)
             System.out.println(s);
 
-        track.setPopeSpaceONE(false);
+        ((FaithTrack)track).setPopeSpaceONE(false);
         trackString = track.toCli(game);
         for(String s : trackString)
             System.out.println(s);
 
-        track.setPopeSpaceTWO(false);
+        ((FaithTrack)track).setPopeSpaceTWO(false);
         trackString = track.toCli(game);
         for(String s : trackString)
             System.out.println(s);
 
-        track.setPopeSpaceTHREE(false);
+        ((FaithTrack)track).setPopeSpaceTHREE(false);
         trackString = track.toCli(game);
         for(String s : trackString)
             System.out.println(s);
@@ -777,8 +784,8 @@ public class ToCliTest {
             for(int j = 0; j < 4; j++)
                 marbles[i][j] = marbleValues[rand.nextInt(6)];
 
-        Market market = new Market(marbles);
-        market.setExtraMarble(marbleValues[rand.nextInt(6)]);
+        RedMarket market = new Market(marbles);
+        ((Market)market).setExtraMarble(marbleValues[rand.nextInt(6)]);
 
         for(String s : market.toCli())
             System.out.println(s);
@@ -814,7 +821,7 @@ public class ToCliTest {
         VaticanReportSection section3 = new VaticanReportSection(19, 24, 4);
 
         Game game = gameCreator(4);
-        FaithTrack track = new FaithTrack(section1, section2, section3);
+        RedFaithTrack track = new FaithTrack(section1, section2, section3);
         gameCreator(4);
 
         int vp;
@@ -835,7 +842,7 @@ public class ToCliTest {
     public void popeTilesTest(){
         Player player = new Player("gianni", 1, true);
         for(int i = 0; i < 3; i++) {
-            player.getPopeTiles()[i].setPopeTile(PopeTile.No);
+            ((PopeTileClass)player.getPopeTiles()[i]).setPopeTile(PopeTile.No);
         }
         ArrayList<String> popeTiles = player.popeTileToCli();
         for(String s : popeTiles)

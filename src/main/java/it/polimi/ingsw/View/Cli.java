@@ -136,7 +136,7 @@ public class Cli implements UserInterface{
 
     }
 
-    public Action initialChooseLeaderCards(ArrayList<LeaderCard> leaderCards) throws IllegalArgumentException{
+    public Action initialChooseLeaderCards(ArrayList<RedLeaderCard> leaderCards) throws IllegalArgumentException{
         if(leaderCards.size() != 4)
             throw new IllegalArgumentException("Number of Leader Cards to choose from is" + leaderCards.size() + ", should be 4");
 
@@ -184,7 +184,7 @@ public class Cli implements UserInterface{
         ResourceType type;
         HashMap<Integer, ResourceType> depotResource = new HashMap<>();
 
-        Warehouse warehouse = new Warehouse();
+        RedWarehouse warehouse = new RedWarehouse();
         for(String s : warehouse.toCli())
             System.out.println(s);
 
@@ -864,10 +864,10 @@ public class Cli implements UserInterface{
         }
     }
 
-    public ArrayList<String> initLeaderCardsToCli(ArrayList<LeaderCard> leaderCards) throws IllegalArgumentException {
+    public ArrayList<String> initLeaderCardsToCli(ArrayList<RedLeaderCard> leaderCards) throws IllegalArgumentException {
         ArrayList<String> stringLeaders = leaderCards.get(0).toCliUp();
 
-        for(LeaderCard leaderCard : leaderCards)
+        for(RedLeaderCard leaderCard : leaderCards)
             for(int i = 0; i < stringLeaders.size(); i++)
                 if(leaderCard != leaderCards.get(0))
                     stringLeaders.set(i, stringLeaders.get(i) + " " + leaderCard.toCliUp().get(i));
@@ -971,7 +971,7 @@ public class Cli implements UserInterface{
      * @return An int describing the player's choice.
      */
     private static int depotIntIterator(Game game, boolean canExit, Scanner sc) {
-        Warehouse warehouse = game.getMyPlayer().getWarehouse();
+        RedWarehouse warehouse = game.getMyPlayer().getWarehouse();
         String choice;
         int depot;
 

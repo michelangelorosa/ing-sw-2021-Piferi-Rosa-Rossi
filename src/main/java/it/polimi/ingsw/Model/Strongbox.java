@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.View.ReducedModel.RedStrongbox;
 
 import java.io.Serializable;
 
@@ -9,10 +10,7 @@ import java.io.Serializable;
  * Each strongbox contains a ResourceStack-type object which contains the numbers all the four
  * different resource types.
  */
-public class Strongbox implements Serializable {
-    private static final long serialVersionUID = 0x1;
-
-    private final ResourceStack storedResources;
+public class Strongbox extends RedStrongbox {
 
     /**
      * Constructor for Strongbox Class. It initializes all resources to 0.
@@ -25,7 +23,7 @@ public class Strongbox implements Serializable {
      * Getter for "storedResources" attribute in Strongbox Class.
      */
     public ResourceStack getStoredResources() {
-        return storedResources;
+        return (ResourceStack) storedResources;
     }
 
     /**
@@ -34,7 +32,7 @@ public class Strongbox implements Serializable {
     public void reset() {
         ResourceType[] resourceTypes = ResourceType.values();
         for(int i = 1; i <= 4; i++)
-            this.storedResources.setResource(0, resourceTypes[i]);
+            ((ResourceStack)this.storedResources).setResource(0, resourceTypes[i]);
     }
 
     /**
@@ -45,7 +43,7 @@ public class Strongbox implements Serializable {
         ResourceType[] resourceTypes = ResourceType.values();
 
         for(int i = 1; i <= 4; i++)
-            this.storedResources.addResource(resourceStack.getResource(resourceTypes[i]), resourceTypes[i]);
+            ((ResourceStack)this.storedResources).addResource(resourceStack.getResource(resourceTypes[i]), resourceTypes[i]);
     }
 
     /**
@@ -61,7 +59,7 @@ public class Strongbox implements Serializable {
                 return;
             }
             else
-                this.storedResources.removeResource(resourceStack.getResource(resourceTypes[i]), resourceTypes[i]);
+                ((ResourceStack)this.storedResources).removeResource(resourceStack.getResource(resourceTypes[i]), resourceTypes[i]);
         }
     }
 
@@ -81,7 +79,7 @@ public class Strongbox implements Serializable {
      * @param resourceType is the type of the resources which are to be added.
      */
     public void addResourcesByType(int resourcesToAdd, ResourceType resourceType) {
-        this.storedResources.addResource(resourcesToAdd, resourceType);
+        ((ResourceStack)this.storedResources).addResource(resourcesToAdd, resourceType);
     }
 
     /**
@@ -95,7 +93,7 @@ public class Strongbox implements Serializable {
         if(this.countResourcesByType(resourceType) <= 0)
             throw new IllegalArgumentException("Model: Strongbox does not have any "+resourceType+" left.");
 
-        this.storedResources.removeResource(1, resourceType);
+        ((ResourceStack)this.storedResources).removeResource(1, resourceType);
     }
 
     /**
@@ -107,10 +105,8 @@ public class Strongbox implements Serializable {
     }
 
     /**Method for converting model classes to view classes*/
-    public it.polimi.ingsw.View.ReducedModel.Strongbox toView() {
-        it.polimi.ingsw.View.ReducedModel.Strongbox strongbox = new it.polimi.ingsw.View.ReducedModel.Strongbox();
-
-        return strongbox;
+    public RedStrongbox toView() {
+        return (RedStrongbox)this;
     }
 
 }

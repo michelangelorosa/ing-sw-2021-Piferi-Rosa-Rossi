@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
+import it.polimi.ingsw.Model.LeaderCard;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.Player;
 
@@ -26,7 +27,7 @@ public class ActivateLeaderCardMessage extends MessageToClient {
         if(this.error.equals("SUCCESS"))
             for(Player player : game.getPlayers())
                 if(player.getTurnPosition() == this.playerId) {
-                    player.getLeaderCards()[this.leaderCardPosition].setActive(true);
+                    ((LeaderCard)player.getLeaderCards()[this.leaderCardPosition]).setActive(true);
                     player.setPossibleActions(this.possibleActions);
                 }
                 else {

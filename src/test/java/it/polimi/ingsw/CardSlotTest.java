@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Enums.Color;
 import it.polimi.ingsw.Model.Enums.Level;
+import it.polimi.ingsw.View.ReducedModel.RedCardSlot;
 import org.junit.Test;
 public class CardSlotTest {
 
@@ -172,7 +173,7 @@ public class CardSlotTest {
     /**Test for toView method*/
     @Test
     public void toViewTest(){
-        it.polimi.ingsw.View.ReducedModel.CardSlot slotView;
+        RedCardSlot slotView;
         slotView = test.toView();
         assertEquals(0, slotView.getLevelOccupied());
 

@@ -6,6 +6,7 @@ import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Enums.Color;
 import it.polimi.ingsw.Model.Enums.Level;
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.View.ReducedModel.RedDevelopmentCardSlots;
 import org.junit.Test;
 
 public class DevelopmentCardSlotsTest {
@@ -177,7 +178,7 @@ public class DevelopmentCardSlotsTest {
     /**Test for toView method*/
     @Test
     public void toViewTest(){
-        it.polimi.ingsw.View.ReducedModel.DevelopmentCardSlots slotsView;
+        RedDevelopmentCardSlots slotsView;
 
         slots.addCard(1,card1);
         slots.addCard(2,card1);

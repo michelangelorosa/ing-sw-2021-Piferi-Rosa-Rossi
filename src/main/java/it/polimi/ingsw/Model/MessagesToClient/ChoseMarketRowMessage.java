@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
+import it.polimi.ingsw.Model.Market;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.Player;
 import it.polimi.ingsw.View.ReducedModel.RedResourceStack;
@@ -73,8 +74,8 @@ public class ChoseMarketRowMessage extends MessageToClient {
             }
 
         if(this.isRow)
-            game.getMarket().rowChange(this.rowOrColumn);
+            ((Market)game.getMarket()).rowChange(this.rowOrColumn);
         else
-            game.getMarket().columnChange(this.rowOrColumn);
+            ((Market)game.getMarket()).columnChange(this.rowOrColumn);
     }
 }

@@ -1,6 +1,8 @@
 
 package it.polimi.ingsw.View.ReducedModel;
 
+import it.polimi.ingsw.Model.DevelopmentCardDeck;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -8,21 +10,10 @@ import java.util.ArrayList;
  * DevelopmentCardTable Class contains all 12 Development Card decks available for the player to buy.
  * All decks are stored in a 2D array of DevelopmentCardDeck-type object.
  */
-public class DevelopmentCardTable implements Serializable {
+public class RedDevelopmentCardTable implements Serializable {
     private static final long serialVersionUID = 0x1;
 
-    private final DevelopmentCardDeck[][] decks;
-
-    /**
-     * Constructor for DevelopmentCardTable Class.
-     */
-    public DevelopmentCardTable() {
-        this.decks = new DevelopmentCardDeck[3][4];
-    }
-
-    public DevelopmentCardTable(DevelopmentCardDeck[][] decks) {
-        this.decks = decks;
-    }
+    protected RedDevelopmentCardDeck[][] decks;
 
     /**
      * This method returns the deck corresponding to the specified coordinates.
@@ -30,7 +21,7 @@ public class DevelopmentCardTable implements Serializable {
      * @param column is the column corresponding to the deck.
      * @return the requested Development Card deck.
      */
-    public DevelopmentCardDeck getDeck(int row, int column) {
+    public RedDevelopmentCardDeck getDeck(int row, int column) {
         return this.decks[row][column];
     }
 
@@ -41,7 +32,7 @@ public class DevelopmentCardTable implements Serializable {
      * @return the requested Development Card.
      */
     public RedDevelopmentCard getTopCardFromDeck(int row, int column) {
-        DevelopmentCardDeck deck = getDeck(row, column);
+        RedDevelopmentCardDeck deck = getDeck(row, column);
         if(!deck.isEmpty())
             return deck.getCards()[deck.getCardsInDeck() - 1];
         else {
@@ -50,22 +41,8 @@ public class DevelopmentCardTable implements Serializable {
         }
     }
 
-    public DevelopmentCardDeck[][] getDecks() {
+    public RedDevelopmentCardDeck[][] getDecks() {
         return decks;
-    }
-
-    /**
-     * This method is used to draw one card from a specified deck inside the Development Card Table.
-     * @param row the deck's row index.
-     * @param column the deck's column index.
-     * @return the requested Development Card.
-     */
-    public RedDevelopmentCard drawCardFromDeck(int row, int column) {
-        DevelopmentCardDeck deck = getDeck(row, column);
-        if(!deck.isEmpty())
-            return deck.drawCard();
-        else
-            return null;
     }
 
     public ArrayList<String> toCli() {

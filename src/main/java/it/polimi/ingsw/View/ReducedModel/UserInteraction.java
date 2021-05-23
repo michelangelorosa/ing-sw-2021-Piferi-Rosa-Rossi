@@ -113,7 +113,7 @@ public abstract class UserInteraction extends Observable<Action> {
      * @param leaderCards Four Leader Cards sent by the server to choose from.
      * @throws Exception if there have been problems while serializing on the socket.
      */
-    public void initialChooseLeaderCards(ClientConnection clientConnection, ArrayList<LeaderCard> leaderCards) throws Exception{
+    public void initialChooseLeaderCards(ClientConnection clientConnection, ArrayList<RedLeaderCard> leaderCards) throws Exception{
         clientConnection.send(ui.initialChooseLeaderCards(leaderCards));
     }
 

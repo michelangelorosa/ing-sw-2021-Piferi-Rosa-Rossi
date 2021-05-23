@@ -1,7 +1,6 @@
 package it.polimi.ingsw.View.ReducedModel;
 
 import it.polimi.ingsw.Model.Enums.ResourceType;
-import it.polimi.ingsw.Model.ResourceStack;
 import it.polimi.ingsw.View.ANSIColors;
 
 import java.io.Serializable;
@@ -12,17 +11,10 @@ import java.util.ArrayList;
  * Each strongbox contains a ResourceStack-type object which contains the numbers all the four
  * different resource types.
  */
-public class Strongbox implements Serializable {
+public class RedStrongbox implements Serializable {
     private static final long serialVersionUID = 0x1;
 
-    private final RedResourceStack storedResources;
-
-    /**
-     * Constructor for Strongbox Class. It initializes all resources to 0.
-     */
-    public Strongbox() {
-        this.storedResources = new ResourceStack(0,0,0,0);
-    }
+    protected RedResourceStack storedResources;
 
     /**
      * Getter for "storedResources" attribute in Strongbox Class.

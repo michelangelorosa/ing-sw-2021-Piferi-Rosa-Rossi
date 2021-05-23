@@ -1,13 +1,13 @@
 package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.ActionController;
-import it.polimi.ingsw.View.ReducedModel.LeaderCard;
+import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 
 public class InitChooseLeaderCards extends Action{
-    private final LeaderCard leaderCard1;
-    private final LeaderCard leaderCard2;
+    private final RedLeaderCard leaderCard1;
+    private final RedLeaderCard leaderCard2;
 
-    public InitChooseLeaderCards(LeaderCard leaderCard1, LeaderCard leaderCard2) {
+    public InitChooseLeaderCards(RedLeaderCard leaderCard1, RedLeaderCard leaderCard2) {
         this.leaderCard1 = leaderCard1;
         this.leaderCard2 = leaderCard2;
     }
@@ -20,11 +20,11 @@ public class InitChooseLeaderCards extends Action{
         return "SUCCESS";
     }
 
-    public LeaderCard getLeaderCard1() {
+    public RedLeaderCard getLeaderCard1() {
         return leaderCard1;
     }
 
-    public LeaderCard getLeaderCard2() {
+    public RedLeaderCard getLeaderCard2() {
         return leaderCard2;
     }
 }
