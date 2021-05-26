@@ -38,8 +38,9 @@ public class ClientExceptionHandler {
      * @param address the address the user has inserted
      */
     public boolean addressValidator(String address) throws Exception {
-        String PATTERN = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
-        if (address.matches(PATTERN)||address.equals("localhost")){
+        String IPv4 = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
+        String URL = "^(http:\\/\\/|https:\\/\\/)?(www.)?([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-z]{3}.?([a-z]+)?$";
+        if (address.matches(IPv4)||address.equals("localhost")||address.matches(URL)){
             return true;
         }
         String addressError ="Please enter a valid ipv4 address!";

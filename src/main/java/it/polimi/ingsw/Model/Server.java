@@ -2,6 +2,7 @@ package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Controller.Controller;
 import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.Enums.GameStatus;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -25,11 +26,8 @@ public class Server {
     private final ArrayList<ServerConnection> connections = new ArrayList<>();
     private final static int DEFAULT_PORT = 8765;
     private int readyPlayers = 0;
-    //private final Controller controller;
+    private static GameStatus serverStatus;
 
-   // public Server() {
-   //     this.controller = new Controller();
-   // }
 
     public Set<String> getNames() {
         return names;
@@ -71,6 +69,7 @@ public class Server {
                     } catch (Exception e) {
                         System.err.println("Not a valid port! Using "+DEFAULT_PORT);
                     }
+        setServerStatus(GameStatus.READY);
         Server server = new Server();
         server.startUp(server_port);
     }
@@ -83,7 +82,7 @@ public class Server {
             while (true){
                 try{
                     Socket client = ss.accept();
-                    System.out.println("[SERVER] Client connected");
+                    System.out.println("[SERVER] Client connected: "+client.toString());
                     ServerConnection serverConnection = new ServerConnection(this, client);
                     connections.add(serverConnection);
                     pool.execute(serverConnection);
@@ -110,10 +109,6 @@ public class Server {
         }
     }
 
-    //public static Controller getController() {
-    //    return controller;
-    //}
-
     public Integer getNumberOfPlayers() {
         return numberOfPlayers;
     }
@@ -133,5 +128,21 @@ public class Server {
 
     public int getReadyPlayers() {
         return readyPlayers;
+    }
+
+    /**
+     * Used to know the status of the game in the server
+     * @return      the status of the server, based upon the GameStatus Enum
+     */
+    public static GameStatus getServerStatus() {
+        return serverStatus;
+    }
+
+    /**
+     * Sets the server status following some events
+     * @param setState      the status to set the game to
+     */
+    public static void setServerStatus(GameStatus setState) {
+        serverStatus = setState;
     }
 }

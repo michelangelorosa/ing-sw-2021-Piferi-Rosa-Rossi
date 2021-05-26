@@ -1,8 +1,16 @@
 package it.polimi.ingsw.View;
 
+import it.polimi.ingsw.Controller.Actions.Action;
+import it.polimi.ingsw.Controller.Actions.ActionType;
+import it.polimi.ingsw.Controller.Actions.PayResourceBuyCard;
+import it.polimi.ingsw.Controller.Actions.PayResourceProduction;
 import it.polimi.ingsw.Model.Enums.Marble;
 import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.Model.Enums.SoloActionToken;
+import it.polimi.ingsw.View.ReducedModel.Game;
+import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -21,17 +29,22 @@ import javafx.stage.Stage;
 
 import javafx.scene.image.ImageView ;
 
+import javax.swing.*;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Optional;
 
 /**
  * Handles the interactions between the User and the Gui application.
  * The interactions are sent to the GuiExceptionHandler for validation and visualization of the errors
  */
-public class GuiController {
+public class GuiController implements UserInterface{
+    private Client client;
     public MediaPlayer mediaPlayer;
     @FXML private Label score;
     @FXML private TextField server;
@@ -47,9 +60,12 @@ public class GuiController {
     @FXML private ImageView card2image;
     @FXML private ImageView card3image;
     @FXML private ImageView card4image;
+    @FXML private ChoiceBox<String> numberPlayers;
+    @FXML private Button playerNumberConfirm;
 
 
     private ClientExceptionHandler gui = new ClientExceptionHandler();
+
 
     /**
      * Sets GuiExceptionHandler to Gui mode so that it generates graphical popup
@@ -101,6 +117,7 @@ public class GuiController {
             portNo=Integer.parseInt(port.getText());
             if(gui.addressValidator(server.getText()))
                 if(gui.portValidator(portNo)){
+                    init();
                     nameSelection(event);
                 }
         }catch (NumberFormatException e){
@@ -126,18 +143,72 @@ public class GuiController {
     }
 
     /**
+     * Changes the scene from Name selection to Player Number selection
+     * @param event
+     * @throws Exception
+     */
+    public void playerNumberSelection(ActionEvent event) throws Exception{
+        Parent playerNumberSelection;
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Assets/Fxml/PlayerNumber.fxml"));
+        loader.setController(this);
+        playerNumberSelection = loader.load();
+
+        Scene scene = new Scene(playerNumberSelection);
+        //Getting the stage information
+        Stage window = (Stage)(((Node)event.getSource()).getScene().getWindow());
+        window.setScene(scene);
+
+        ObservableList<String> playerNumbers = FXCollections.observableArrayList("1 Player","2 Players","3 Players","4 Players");
+        this.numberPlayers.setItems(playerNumbers);
+    }
+
+    /**
+     * Changes the scene from Name selection or PlayerNumber to the Lobby
+     * @param event
+     * @throws Exception
+     */
+    public void lobby(ActionEvent event) throws Exception{
+        Parent lobby;
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Assets/Fxml/Lobby.fxml"));
+        //loader.setController(this);
+        lobby = loader.load();
+
+        Scene scene = new Scene(lobby);
+        //Getting the stage information
+        Stage window = (Stage)(((Node)event.getSource()).getScene().getWindow());
+        window.setScene(scene);
+
+        music(getClass().getResource("Assets/Music/Connection.mp3").toExternalForm());
+    }
+
+    /**
      * Gets the name from the name's Text Field and sends it to nameValidator for validation
      * @throws Exception
      */
     public void nameValidation(ActionEvent event) throws Exception{
+
         String player=name.getText();
         if(gui.nameValidator(player))
         {
          System.out.println("NAME OK: " +player);
-         leaderCardSelection(event);
+         playerNumberSelection(event);
+            //leaderCardSelection(event);
         }
     }
 
+    /**
+     * Returns the number of players selected by the user in the player selection menu
+     * @param event
+     * @return              int: the number of players
+     * @throws Exception
+     */
+    public int playerNumberValidation(ActionEvent event) throws Exception{
+        System.out.println("Selected players: "+(numberPlayers.getSelectionModel().getSelectedIndex()+1));
+        lobby(event);
+        return numberPlayers.getSelectionModel().getSelectedIndex()+1;
+    }
     /**
      * Leader card selection screen
      * @param event
@@ -312,5 +383,188 @@ public class GuiController {
         else
             return null;
         return new Image(getClass().getResource(source+token).toExternalForm());
+    }
+
+    /**
+     * Used to get the Server Address and Server Port as input from the player.
+     *
+     * @return An ArrayList of object.
+     * - First element in the ArrayList -> String containing server address.
+     * - Second element in the ArrayList -> Integer containing server port.
+     */
+    @Override
+    public ArrayList<Object> init() {
+        this.client=new Client(server.getText(),Integer.parseInt(port.getText()));
+        ArrayList<Object> objects = new ArrayList<>();
+        objects.add(server.getText());
+        objects.add(Integer.parseInt(port.getText()));
+        client.startUp(objects);
+        return objects;
+    }
+
+    /**
+     * Used to get a boolean as input from the player to decide if he wants to start a new game or join
+     * an existing one.
+     *
+     * @return true  -> player wants to start a new game.
+     * false -> player wants to join an existing game.
+     */
+    @Override
+    public boolean startOrJoin() {
+        return false;
+    }
+
+    /**
+     * Used to get the number of players as input from the player who decided to start a new game.
+     *
+     * @return the number of players decided.
+     */
+    @Override
+    public int numberOfPlayers() {
+        return 0;
+    }
+
+    /**
+     * Used to get the UserName of the player as input.
+     *
+     * @return A String containing the UserName
+     */
+    @Override
+    public String initialInsertName() {
+        return null;
+    }
+
+    /**
+     * Used to display a message while the player waits for all the other players to join.
+     */
+    @Override
+    public void waitingForPlayers() {
+
+    }
+
+    /**
+     * Used to get a boolean as input from the player indicating whether he's ready to play or not.
+     *
+     * @return true if the player is ready.
+     */
+    @Override
+    public boolean initialLobby() {
+        return false;
+    }
+
+    /**
+     * Used to get the initial LeaderCards as input from the player.
+     *
+     * @param leaderCards The 4 leader cards sent by the server to choose from.
+     * @return An Action Class message containing the 4 leader cards and methods to assign the 4 leader cards
+     * to the player inside the Model's Game.
+     * @throws IllegalArgumentException if the number of leader cards in the input ArrayList is != 4
+     */
+    @Override
+    public Action initialChooseLeaderCards(ArrayList<RedLeaderCard> leaderCards) throws IllegalArgumentException {
+        return null;
+    }
+
+    /**
+     * Used to get the initial Resources as input from the player.
+     *
+     * @param resources The number of resources the player has to choose.
+     * @return An Action Class message containing all resources chosen and the places chosen by the player
+     * to put said resources.
+     */
+    @Override
+    public Action initialChooseResources(int resources) {
+        return null;
+    }
+
+    /**
+     * Used at the start of the actual Game turn to make the player choose which action he wants to do when
+     * playing the game. All methods below are mapped 1 to 1 with each Action Class message and are used to get
+     * a specific Action SUBCLASS which will be passed to this method.
+     *
+     * @param game Reduced Model game used to print/show the Game played.
+     * @return a specific Action Class message Subclass casted to its SuperClass and ready to be notified and sent
+     * to the Server.
+     * @throws IllegalStateException If the player does not have any possible action inside his
+     *                               ArrayList<ActionType> possibleActions.
+     */
+    @Override
+    public Action actionPicker(Game game) throws IllegalStateException {
+        return null;
+    }
+
+    @Override
+    public Action activateLeaderCard(Game game) {
+        return null;
+    }
+
+    @Override
+    public Action activateProduction(Game game) {
+        return null;
+    }
+
+    @Override
+    public Action addResource(Game game) {
+        return null;
+    }
+
+    @Override
+    public Action buyCard(Game game) {
+        return null;
+    }
+
+    @Override
+    public Action chooseCardSlot(Game game) {
+        return null;
+    }
+
+    @Override
+    public Action chooseLeaderCard(Game game) {
+        return null;
+    }
+
+    @Override
+    public Action chooseProductionOutput(Game game) {
+        return null;
+    }
+
+    @Override
+    public Action marketChooseRow(Game game) {
+        return null;
+    }
+
+    @Override
+    public Action payResource(Game game) {
+        return null;
+    }
+
+    @Override
+    public PayResourceProduction payResourceProduction(Game game) {
+        return null;
+    }
+
+    @Override
+    public PayResourceBuyCard payResourceBuyCard(Game game) {
+        return null;
+    }
+
+    @Override
+    public Action resetWarehouse() {
+        return null;
+    }
+
+    @Override
+    public Action switchDepot(Game game) {
+        return null;
+    }
+
+    @Override
+    public Action indexToAction(ActionType action, Game game) {
+        return null;
+    }
+
+    @Override
+    public void displayError(String s) {
+
     }
 }

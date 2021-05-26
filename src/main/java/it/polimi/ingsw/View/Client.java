@@ -2,6 +2,9 @@ package it.polimi.ingsw.View;
 
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.UserInteraction;
+import it.polimi.ingsw.View.*;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,17 +41,20 @@ public class Client {
     public static void main(String[] args){
        try{
         //if (args[0].toLowerCase(Locale.ROOT).equals("--cli")) {
-            userInteraction.setUi(new Cli());
+            //userInteraction.setUi(new Cli());
+
+
         //} else {
-            //userInteraction = new UserInteraction(new Gui());
+           new Thread(() -> Application.launch(Gui.class)).start();
+           Gui.waitForStartUp();
         //}
 
        }catch (Exception e) {
             System.err.println("Unable to start a Graphical Interface, shutting down");
             System.exit(-1);
        }
-        Client client = new Client("localhost", 25565);
-        client.startUp();
+        //Client client = new Client("localhost", 25565);
+       //client.startUp();
 
     }
 
@@ -59,6 +65,30 @@ public class Client {
         try {
             //serverAddress and serverPort have to be provided by the user
             ArrayList<Object> objects = userInteraction.connectToServer();
+            serverAddress = (String)objects.get(0);
+            serverPort = (int)objects.get(1);
+
+            Socket socket = new Socket(serverAddress, serverPort);
+            System.out.println("Connected to server!");
+
+            ClientConnection clientConnection = new ClientConnection(this, socket);
+            new Thread(clientConnection).start();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error in creating connection!");
+            Thread.currentThread().interrupt();
+            System.exit(-1);
+        }
+    }
+    /**
+     * Sets up the connection once the Player has inputed server and port in the Gui application
+     * @param objects   the server and the port
+     * //TODO timer of connection, error with Gui so that the connection doesn't close the application and the user is informed
+     */
+    public void startUp(ArrayList<Object> objects){
+        try {
+            //serverAddress and serverPort have to be provided by the user
             serverAddress = (String)objects.get(0);
             serverPort = (int)objects.get(1);
 

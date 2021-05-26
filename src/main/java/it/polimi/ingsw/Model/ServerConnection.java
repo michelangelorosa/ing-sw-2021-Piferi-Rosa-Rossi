@@ -50,13 +50,11 @@ public class ServerConnection implements Runnable{
         System.out.println("[SERVER] Connection Connected to " + socket.getInetAddress());
 
         try {
-            messageHandler.startAndNumberOfPlayers(this);
+            if(messageHandler.nameRequest(this)){
+                messageHandler.waitingForPlayers(this);
+                messageHandler.lobbyAndWait(this);
+            }
 
-            messageHandler.nameRequest(this);
-
-            messageHandler.waitingForPlayers(this);
-
-            messageHandler.lobbyAndWait(this);
 
             //Accepts messages from client during game phase
             while (true) {
