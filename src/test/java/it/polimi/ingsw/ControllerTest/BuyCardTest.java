@@ -69,7 +69,7 @@ public class BuyCardTest {
         assertTrue(messageToClient instanceof BuyCardMessage);
         assertEquals(ActionType.BUY_CARD, messageToClient.getActionDone());
         assertEquals("Not enough resources to buy Card", messageToClient.getError());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.BUY_CARD, messageToClient.getPossibleActions().get(1));
         assertEquals(ActionType.MARKET_CHOOSE_ROW, messageToClient.getPossibleActions().get(2));
@@ -87,7 +87,7 @@ public class BuyCardTest {
         assertTrue(messageToClient instanceof BuyCardMessage);
         assertEquals(ActionType.BUY_CARD, messageToClient.getActionDone());
         assertEquals("SUCCESS", messageToClient.getError());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals(ActionType.PAY_RESOURCE_CARD, messageToClient.getPossibleActions().get(0));
 
 
@@ -97,7 +97,7 @@ public class BuyCardTest {
         assertTrue(messageToClient instanceof BuyCardMessage);
         assertEquals(ActionType.BUY_CARD, messageToClient.getActionDone());
         assertEquals("Card does not fit inside Personal Board", messageToClient.getError());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.BUY_CARD, messageToClient.getPossibleActions().get(1));
         assertEquals(ActionType.MARKET_CHOOSE_ROW, messageToClient.getPossibleActions().get(2));

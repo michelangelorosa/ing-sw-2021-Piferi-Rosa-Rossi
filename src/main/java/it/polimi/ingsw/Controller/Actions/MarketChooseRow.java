@@ -116,7 +116,7 @@ public class MarketChooseRow extends Action {
      */
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {
-        ChoseMarketRowMessage message = new ChoseMarketRowMessage(actionController.getGame().getCurrentPlayerIndex());
+        ChoseMarketRowMessage message = new ChoseMarketRowMessage(actionController.getGame().getCurrentPlayerNickname());
         message.setError(this.response);
         message.setRow(this.row);
         message.setRowOrColumn(this.rowOrColumnNumber);

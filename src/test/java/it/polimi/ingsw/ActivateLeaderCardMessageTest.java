@@ -7,11 +7,11 @@ import org.junit.Test;
 
 public class ActivateLeaderCardMessageTest {
 
-    ActivateLeaderCardMessage leaderMessage = new ActivateLeaderCardMessage(2);
+    ActivateLeaderCardMessage leaderMessage = new ActivateLeaderCardMessage("antonino");
 
     @Test
     public void ConstructorTest(){
         assertEquals(ACTIVATE_LEADERCARD, leaderMessage.getActionDone());
-        assertEquals(2, leaderMessage.getPlayerPosition());
+        assertEquals("antonino", leaderMessage.getPlayerNickname());
     }
 }

@@ -97,7 +97,7 @@ public class SwitchDepotTest {
         assertTrue(messageToClient instanceof SwitchDepotMessage);
         assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getActionDone());
         assertEquals("Can't switch from/to non active depot", messageToClient.getError());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.RESET_WAREHOUSE, messageToClient.getPossibleActions().get(1));
         assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getPossibleActions().get(2));
@@ -122,7 +122,7 @@ public class SwitchDepotTest {
         assertTrue(messageToClient instanceof SwitchDepotMessage);
         assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getActionDone());
         assertEquals("SUCCESS", messageToClient.getError());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.RESET_WAREHOUSE, messageToClient.getPossibleActions().get(1));
         assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getPossibleActions().get(2));
@@ -143,7 +143,7 @@ public class SwitchDepotTest {
         assertTrue(messageToClient instanceof SwitchDepotMessage);
         assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getActionDone());
         assertEquals("SUCCESS", messageToClient.getError());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.RESET_WAREHOUSE, messageToClient.getPossibleActions().get(1));
         assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getPossibleActions().get(2));
@@ -164,7 +164,7 @@ public class SwitchDepotTest {
         assertTrue(messageToClient instanceof SwitchDepotMessage);
         assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getActionDone());
         assertEquals("Cannot switch depots", messageToClient.getError());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.RESET_WAREHOUSE, messageToClient.getPossibleActions().get(1));
         assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getPossibleActions().get(2));

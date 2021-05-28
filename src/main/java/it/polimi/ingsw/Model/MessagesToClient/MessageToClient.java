@@ -20,16 +20,24 @@ public class MessageToClient implements Serializable {
     protected ArrayList<ActionType> possibleActions = new ArrayList<>();
     /** error attribute specifies the message error (or SUCCESS) to be displayed client side */
     protected String error;
-    /** playerId indicates the current player doing the actions */
-    protected int playerId;
+
+    /** playerNickname attribute contains the nickname of the player who performed the action */
+    protected String playerNickname;
 
     /**
      * Default Constructor for MessageToClient Class.
      */
     public MessageToClient() {
-    this.actionDone=ActionType.ACTIVATE_LEADERCARD;
-    this.playerId=1;
-    this.error="Gino is a brony!";
+        this.actionDone=ActionType.ACTIVATE_LEADERCARD;
+        this.error="SUPERCLASS GENERIC MESSAGE";
+    }
+
+    public MessageToClient(String playerNickname) {
+        this.playerNickname = playerNickname;
+    }
+
+    public String getPlayerNickname() {
+        return playerNickname;
     }
 
     /**
@@ -44,13 +52,6 @@ public class MessageToClient implements Serializable {
      */
     public ArrayList<ActionType> getPossibleActions() {
         return possibleActions;
-    }
-
-    /**
-     * Getter for "playerId" attribute in MessageToClient Class.
-     */
-    public int getPlayerPosition() {
-        return playerId;
     }
 
     /**

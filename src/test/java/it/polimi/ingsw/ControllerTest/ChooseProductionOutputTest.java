@@ -123,7 +123,7 @@ public class ChooseProductionOutputTest {
         messageToClient = chooseProductionOutput.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ChoseProductionOutputMessage);
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals("Tried to use not valid Leader Cards or tried to get more resources than possible.", messageToClient.getError());
         assertEquals(ActionType.CHOOSE_PRODUCTION_OUTPUT, messageToClient.getActionDone());
         assertEquals(ActionType.CHOOSE_PRODUCTION_OUTPUT, messageToClient.getPossibleActions().get(0));
@@ -140,7 +140,7 @@ public class ChooseProductionOutputTest {
         messageToClient = chooseProductionOutput.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ChoseProductionOutputMessage);
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals("SUCCESS", messageToClient.getError());
         assertEquals(ActionType.CHOOSE_PRODUCTION_OUTPUT, messageToClient.getActionDone());
         assertEquals(ActionType.END_TURN, messageToClient.getPossibleActions().get(0));
@@ -155,7 +155,7 @@ public class ChooseProductionOutputTest {
         messageToClient = chooseProductionOutput.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ChoseProductionOutputMessage);
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals("SUCCESS", messageToClient.getError());
         assertEquals(ActionType.CHOOSE_PRODUCTION_OUTPUT, messageToClient.getActionDone());
         assertEquals(ActionType.END_TURN, messageToClient.getPossibleActions().get(0));
@@ -170,7 +170,7 @@ public class ChooseProductionOutputTest {
         messageToClient = chooseProductionOutput.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ChoseProductionOutputMessage);
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals("SUCCESS", messageToClient.getError());
         assertEquals(ActionType.CHOOSE_PRODUCTION_OUTPUT, messageToClient.getActionDone());
         assertEquals(ActionType.END_TURN, messageToClient.getPossibleActions().get(0));
@@ -185,7 +185,7 @@ public class ChooseProductionOutputTest {
         messageToClient = chooseProductionOutput.messagePrepare(actionController);
 
         assertTrue(messageToClient instanceof ChoseProductionOutputMessage);
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals("SUCCESS", messageToClient.getError());
         assertEquals(ActionType.CHOOSE_PRODUCTION_OUTPUT, messageToClient.getActionDone());
         assertEquals(ActionType.END_TURN, messageToClient.getPossibleActions().get(0));

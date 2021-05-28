@@ -16,9 +16,9 @@ public class SwitchDepotMessage extends MessageToClient {
     /**
      * Constructor for SwitchDepotMessage Class.
      */
-    public SwitchDepotMessage(int playerId) {
+    public SwitchDepotMessage(String playerNickname) {
+        super(playerNickname);
         this.actionDone = ActionType.SWITCH_DEPOT;
-        this.playerId = playerId;
     }
 
     /**
@@ -39,7 +39,7 @@ public class SwitchDepotMessage extends MessageToClient {
     public void updateView(Game game) {
         if(this.error.equals("SUCCESS"))
             for(Player player : game.getPlayers())
-                if(player.getTurnPosition() == this.playerId) {
+                if(player.getNickname().equals(this.getPlayerNickname())) {
                     player.setWarehouse(this.warehouse);
                     player.setPossibleActions(this.possibleActions);
                 }

@@ -14,9 +14,9 @@ public class ResetWarehouseMessage extends MessageToClient {
     /**
      * Constructor for ResetWarehouseMessage Class.
      */
-    public ResetWarehouseMessage(int playerId) {
+    public ResetWarehouseMessage(String playerNickname) {
+        super(playerNickname);
         this.actionDone = ActionType.RESET_WAREHOUSE;
-        this.playerId = playerId;
     }
 
     /**
@@ -54,7 +54,7 @@ public class ResetWarehouseMessage extends MessageToClient {
     @Override
     public void updateView(Game game) {
         for(Player player : game.getPlayers())
-            if(player.getTurnPosition() == this.playerId) {
+            if(player.getNickname().equals(this.getPlayerNickname())) {
                 player.setWarehouse(this.warehouse);
                 player.setTemporaryResources(this.temporaryResources);
                 player.setPossibleActions(this.possibleActions);

@@ -19,9 +19,9 @@ public class ChoseMarketRowMessage extends MessageToClient {
     /**
      * Constructor for ChoseMarketRowMessage Class.
      */
-    public ChoseMarketRowMessage(int playerId) {
+    public ChoseMarketRowMessage(String playerNickname) {
+        super(playerNickname);
         this.actionDone = ActionType.MARKET_CHOOSE_ROW;
-        this.playerId = playerId;
     }
 
     /**
@@ -67,7 +67,7 @@ public class ChoseMarketRowMessage extends MessageToClient {
     @Override
     public void updateView(Game game) {
         for (Player player : game.getPlayers())
-            if(player.getTurnPosition() == this.playerId) {
+            if(player.getNickname().equals(this.getPlayerNickname())) {
                 player.setPossibleActions(this.possibleActions);
                 if(this.error.equals("SUCCESS"))
                     player.setTemporaryResources(this.temporaryResources);

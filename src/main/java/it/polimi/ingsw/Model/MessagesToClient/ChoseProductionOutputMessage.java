@@ -16,9 +16,9 @@ public class ChoseProductionOutputMessage extends MessageToClient {
     /**
      * Constructor for ChooseProductionOutputMessage Class.
      */
-    public ChoseProductionOutputMessage(int playerId) {
+    public ChoseProductionOutputMessage(String playerNickname) {
+        super(playerNickname);
         this.actionDone = ActionType.CHOOSE_PRODUCTION_OUTPUT;
-        this.playerId = playerId;
     }
 
     /**
@@ -43,7 +43,7 @@ public class ChoseProductionOutputMessage extends MessageToClient {
     public void updateView(Game game) {
         if(this.error.equals("SUCCESS"))
             for(Player player : game.getPlayers())
-                if(player.getTurnPosition() == this.playerId) {
+                if(player.getNickname().equals(this.getPlayerNickname())) {
                     player.setStrongbox(this.strongbox);
                     player.setPossibleActions(this.possibleActions);
                 }

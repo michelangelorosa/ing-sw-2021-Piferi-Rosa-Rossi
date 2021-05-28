@@ -217,7 +217,7 @@ public class ChooseProductionOutput extends Action {
      */
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {
-        ChoseProductionOutputMessage message = new ChoseProductionOutputMessage(actionController.getGame().getCurrentPlayerIndex());
+        ChoseProductionOutputMessage message = new ChoseProductionOutputMessage(actionController.getGame().getCurrentPlayerNickname());
         message.setError(this.response);
         if(this.response.equals("SUCCESS")) {
             message.setStrongbox(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getStrongbox().toView());

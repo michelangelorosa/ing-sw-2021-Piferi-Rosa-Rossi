@@ -30,7 +30,7 @@ public class CardSlot extends RedCardSlot {
     }
 
     /**
-     *In this method firstly I check if the slot is full or if I can't add the card in this slot. If I can add the card
+     * In this method firstly I check if the slot is full or if I can't add the card in this slot. If I can add the card
      * I memorize it in the array cards.
      * @param card is the card to add
      */

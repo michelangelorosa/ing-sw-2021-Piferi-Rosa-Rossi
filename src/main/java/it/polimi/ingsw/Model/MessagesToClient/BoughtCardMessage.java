@@ -10,9 +10,9 @@ public class BoughtCardMessage extends MessageToClient {
     private RedWarehouse warehouse;
     private RedStrongbox strongbox;
 
-    public BoughtCardMessage(int playerId) {
+    public BoughtCardMessage(String playerNickname) {
+        super(playerNickname);
         this.actionDone = ActionType.END_PAY_CARD;
-        this.playerId = playerId;
     }
 
     public void setWarehouse(RedWarehouse warehouse) {
@@ -39,7 +39,7 @@ public class BoughtCardMessage extends MessageToClient {
     public void updateView(Game game) {
         if(this.error.equals("SUCCESS")) {
             for (Player player : game.getPlayers())
-                if (player.getTurnPosition() == this.playerId)
+                if (player.getNickname().equals(this.getPlayerNickname()))
                     player.setPossibleActions(this.possibleActions);
         }
 

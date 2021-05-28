@@ -26,7 +26,7 @@ public class PayResourceProduction extends PayResource {
         EndProductionMessage endProductionMessage;
 
         if(this.response.equals("SUCCESS")) {
-            endProductionMessage = new EndProductionMessage(actionController.getGame().getCurrentPlayerIndex());
+            endProductionMessage = new EndProductionMessage(actionController.getGame().getCurrentPlayerNickname());
             endProductionMessage.setWarehouse(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse().toView());
             endProductionMessage.setStrongbox(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getStrongbox().toView());
             endProductionMessage.addPossibleAction(ActionType.CHOOSE_PRODUCTION_OUTPUT);

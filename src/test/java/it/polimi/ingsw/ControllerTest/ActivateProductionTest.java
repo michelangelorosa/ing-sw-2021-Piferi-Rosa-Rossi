@@ -99,7 +99,7 @@ public class ActivateProductionTest {
 
         assertTrue(messageToClient instanceof ActivateProductionMessage);
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getActionDone());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals("Leader Card not active or not required Type/Error in reading basic production inputs.", messageToClient.getError());
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.BUY_CARD, messageToClient.getPossibleActions().get(1));
@@ -113,7 +113,7 @@ public class ActivateProductionTest {
 
         assertTrue(messageToClient instanceof ActivateProductionMessage);
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getActionDone());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals("Leader Card not active or not required Type/Error in reading basic production inputs.", messageToClient.getError());
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.BUY_CARD, messageToClient.getPossibleActions().get(1));
@@ -129,7 +129,7 @@ public class ActivateProductionTest {
 
         assertTrue(messageToClient instanceof ActivateProductionMessage);
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getActionDone());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals("Can't pick empty slot (1st)", messageToClient.getError());
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.BUY_CARD, messageToClient.getPossibleActions().get(1));
@@ -149,7 +149,7 @@ public class ActivateProductionTest {
 
         assertTrue(messageToClient instanceof ActivateProductionMessage);
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getActionDone());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals("SUCCESS", messageToClient.getError());
         assertEquals(ActionType.PAY_RESOURCE_PRODUCTION, messageToClient.getPossibleActions().get(0));
 
@@ -161,7 +161,7 @@ public class ActivateProductionTest {
 
         assertTrue(messageToClient instanceof ActivateProductionMessage);
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getActionDone());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals("SUCCESS", messageToClient.getError());
         assertEquals(ActionType.PAY_RESOURCE_PRODUCTION, messageToClient.getPossibleActions().get(0));
 
@@ -173,7 +173,7 @@ public class ActivateProductionTest {
 
         assertTrue(messageToClient instanceof ActivateProductionMessage);
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getActionDone());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals("Not enough Resources to start Production", messageToClient.getError());
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.BUY_CARD, messageToClient.getPossibleActions().get(1));
@@ -191,7 +191,7 @@ public class ActivateProductionTest {
 
         assertTrue(messageToClient instanceof ActivateProductionMessage);
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getActionDone());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals("SUCCESS", messageToClient.getError());
         assertEquals(ActionType.PAY_RESOURCE_PRODUCTION, messageToClient.getPossibleActions().get(0));
 
@@ -203,7 +203,7 @@ public class ActivateProductionTest {
 
         assertTrue(messageToClient instanceof ActivateProductionMessage);
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getActionDone());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals("SUCCESS", messageToClient.getError());
         assertEquals(ActionType.PAY_RESOURCE_PRODUCTION, messageToClient.getPossibleActions().get(0));
 
@@ -214,7 +214,7 @@ public class ActivateProductionTest {
 
         assertTrue(messageToClient instanceof ActivateProductionMessage);
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getActionDone());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals("Leader Card not active or not required Type/Error in reading basic production inputs.", messageToClient.getError());
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.BUY_CARD, messageToClient.getPossibleActions().get(1));
@@ -228,7 +228,7 @@ public class ActivateProductionTest {
 
         assertTrue(messageToClient instanceof ActivateProductionMessage);
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getActionDone());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals("No Payment", messageToClient.getError());
         assertEquals(ActionType.CHOOSE_PRODUCTION_OUTPUT, messageToClient.getPossibleActions().get(0));
     }

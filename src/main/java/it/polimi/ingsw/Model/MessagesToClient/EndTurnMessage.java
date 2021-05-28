@@ -9,28 +9,28 @@ import it.polimi.ingsw.View.ReducedModel.Game;
  */
 public class EndTurnMessage extends MessageToClient {
     /** the next player's Id is needed to update the client's View */
-    private int nextPlayerId;
+    private String nextPlayerNickname;
 
     /**
      * Constructor for EndTurnMessage Class.
      */
-    public EndTurnMessage(int playerId) {
+    public EndTurnMessage(String playerNickname) {
+        super(playerNickname);
         this.actionDone = ActionType.END_TURN;
-        this.playerId = playerId;
     }
 
     /**
      * Setter for "nextPlayerId" attribute in EndTurnMessage Class.
      */
-    public void setNextPlayerId(int nextPlayerId) {
-        this.nextPlayerId = nextPlayerId;
+    public void setNextPlayerNickname(String nextPlayerNickname) {
+        this.nextPlayerNickname = nextPlayerNickname;
     }
 
     /**
      * Getter for "nextPlayerId" attribute in EndTurnMessage Class.
      */
-    public int getNextPlayerId() {
-        return nextPlayerId;
+    public String getNextPlayerNickname() {
+        return nextPlayerNickname;
     }
 
     /**

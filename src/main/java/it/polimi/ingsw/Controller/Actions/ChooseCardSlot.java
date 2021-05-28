@@ -102,7 +102,7 @@ public class ChooseCardSlot extends Action {
      * @return A message to be sent to the client.
      */
     public MessageToClient messagePrepare(ActionController actionController) {
-        ChoseCardSlotMessage message = new ChoseCardSlotMessage(actionController.getGame().getCurrentPlayerIndex());
+        ChoseCardSlotMessage message = new ChoseCardSlotMessage(actionController.getGame().getCurrentPlayerNickname());
         message.setRow(this.rowCardToBuy);
         message.setColumn(this.columnCardToBuy);
 

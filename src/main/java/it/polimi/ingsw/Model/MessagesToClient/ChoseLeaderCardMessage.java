@@ -10,9 +10,9 @@ public class ChoseLeaderCardMessage extends MessageToClient {
     RedResourceStack temporaryResources;
 
     /**ChoseLeaderCardMessage's constructor*/
-    public ChoseLeaderCardMessage(int playerId) {
+    public ChoseLeaderCardMessage(String playerNickname) {
+        super(playerNickname);
         this.actionDone = ActionType.CHOOSE_LEADER_CARD;
-        this.playerId = playerId;
     }
 
     /**Setter for Temporary resource*/
@@ -28,7 +28,7 @@ public class ChoseLeaderCardMessage extends MessageToClient {
     public void updateView(Game game) {
         if(this.error.equals("SUCCESS"))
             for(Player player : game.getPlayers())
-                if(player.getTurnPosition() == this.playerId) {
+                if(player.getNickname().equals(this.getPlayerNickname())) {
                     player.setPossibleActions(this.possibleActions);
                     player.setTemporaryResources(this.temporaryResources);
                 }

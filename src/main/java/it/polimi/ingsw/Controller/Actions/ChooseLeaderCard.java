@@ -86,7 +86,7 @@ public class ChooseLeaderCard extends Action {
      */
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {
-        ChoseLeaderCardMessage message = new ChoseLeaderCardMessage(actionController.getGame().getCurrentPlayerIndex());
+        ChoseLeaderCardMessage message = new ChoseLeaderCardMessage(actionController.getGame().getCurrentPlayerNickname());
         message.setError(this.response);
         if(this.response.equals("SUCCESS")) {
             message.setTemporaryResources(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toView());

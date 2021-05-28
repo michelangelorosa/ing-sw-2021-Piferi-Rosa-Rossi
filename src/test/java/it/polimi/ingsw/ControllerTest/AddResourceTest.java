@@ -105,7 +105,7 @@ public class AddResourceTest {
         assertTrue(messageToClient instanceof AddMessage);
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getActionDone());
         assertEquals("SUCCESS", messageToClient.getError());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().toView().getWarehouseDepots()[0].getStoredResources(), ((AddMessage) messageToClient).getWarehouse().getWarehouseDepots()[0].getStoredResources());
         assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toView().getResource(ResourceType.SHIELDS), ((AddMessage) messageToClient).getTemporaryResources().getResource(ResourceType.SHIELDS));
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getPossibleActions().get(0));
@@ -121,7 +121,7 @@ public class AddResourceTest {
         assertTrue(messageToClient instanceof AddMessage);
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getActionDone());
         assertEquals("SUCCESS", messageToClient.getError());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().toView().getWarehouseDepots()[1].getResourceType(), ((AddMessage) messageToClient).getWarehouse().getWarehouseDepots()[1].getResourceType());
         assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toView().getResource(ResourceType.COINS), ((AddMessage) messageToClient).getTemporaryResources().getResource(ResourceType.COINS));
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getPossibleActions().get(0));
@@ -137,7 +137,7 @@ public class AddResourceTest {
         assertTrue(messageToClient instanceof AddMessage);
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getActionDone());
         assertEquals("Can't add SHIELDS to this depot", messageToClient.getError());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertNull(((AddMessage) messageToClient).getWarehouse());
         assertNull(((AddMessage) messageToClient).getTemporaryResources());
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getPossibleActions().get(0));
@@ -154,7 +154,7 @@ public class AddResourceTest {
         assertTrue(messageToClient instanceof AddMessage);
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getActionDone());
         assertEquals("Can't add SHIELDS to this depot", messageToClient.getError());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertNull(((AddMessage) messageToClient).getWarehouse());
         assertNull(((AddMessage) messageToClient).getTemporaryResources());
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getPossibleActions().get(0));
@@ -171,7 +171,7 @@ public class AddResourceTest {
         assertTrue(messageToClient instanceof AddMessage);
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getActionDone());
         assertEquals("Can't add SERVANTS to this depot", messageToClient.getError());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertNull(((AddMessage) messageToClient).getWarehouse());
         assertNull(((AddMessage) messageToClient).getTemporaryResources());
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getPossibleActions().get(0));
@@ -193,7 +193,7 @@ public class AddResourceTest {
         assertTrue(messageToClient instanceof AddMessage);
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getActionDone());
         assertEquals("Extra depot is not active or not of given type", messageToClient.getError());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertNull(((AddMessage) messageToClient).getWarehouse());
         assertNull(((AddMessage) messageToClient).getTemporaryResources());
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getPossibleActions().get(0));
@@ -210,7 +210,7 @@ public class AddResourceTest {
         assertTrue(messageToClient instanceof AddMessage);
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getActionDone());
         assertEquals("SUCCESS", messageToClient.getError());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().toView().getWarehouseDepots()[2].isFromLeaderCardAbility(), ((AddMessage) messageToClient).getWarehouse().getWarehouseDepots()[2].isFromLeaderCardAbility());
         assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toView().toString(), ((AddMessage) messageToClient).getTemporaryResources().toString());
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getPossibleActions().get(0));
@@ -226,7 +226,7 @@ public class AddResourceTest {
         assertTrue(messageToClient instanceof AddMessage);
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getActionDone());
         assertEquals("Extra depot is not active or not of given type", messageToClient.getError());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertNull(((AddMessage) messageToClient).getWarehouse());
         assertNull(((AddMessage) messageToClient).getTemporaryResources());
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getPossibleActions().get(0));

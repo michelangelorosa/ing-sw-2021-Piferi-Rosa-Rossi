@@ -8,9 +8,9 @@ import it.polimi.ingsw.View.ReducedModel.Player;
 public class ActivateLeaderCardMessage extends MessageToClient {
     private int leaderCardPosition;
 
-    public ActivateLeaderCardMessage(int playerId) {
+    public ActivateLeaderCardMessage(String playerNickname) {
+        super(playerNickname);
         this.actionDone = ActionType.ACTIVATE_LEADERCARD;
-        this.playerId = playerId;
     }
 
     public void setLeaderCardPosition(int leaderCardPosition) {
@@ -26,7 +26,7 @@ public class ActivateLeaderCardMessage extends MessageToClient {
     public void updateView(Game game) {
         if(this.error.equals("SUCCESS"))
             for(Player player : game.getPlayers())
-                if(player.getTurnPosition() == this.playerId) {
+                if(player.getNickname().equals(this.getPlayerNickname())) {
                     ((LeaderCard)player.getLeaderCards()[this.leaderCardPosition]).setActive(true);
                     player.setPossibleActions(this.possibleActions);
                 }

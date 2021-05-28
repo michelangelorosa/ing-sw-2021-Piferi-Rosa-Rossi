@@ -114,7 +114,7 @@ public class AddResource extends Action {
      */
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {
-        AddMessage message = new AddMessage(actionController.getGame().getCurrentPlayerIndex());
+        AddMessage message = new AddMessage(actionController.getGame().getCurrentPlayerNickname());
         message.setError(this.response);
         message.addPossibleAction(ActionType.ADD_RESOURCE);
         message.addPossibleAction(ActionType.SWITCH_DEPOT);

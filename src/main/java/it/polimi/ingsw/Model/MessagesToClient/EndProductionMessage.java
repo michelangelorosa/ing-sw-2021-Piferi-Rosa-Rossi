@@ -11,9 +11,9 @@ public class EndProductionMessage extends MessageToClient {
     private RedStrongbox strongbox;
 
     /**Constructor for EndProductionMessage*/
-    public EndProductionMessage(int playerId) {
+    public EndProductionMessage(String playerNickname) {
+        super(playerNickname);
         this.actionDone = ActionType.END_PAY_PRODUCTION;
-        this.playerId = playerId;
     }
 
     /**Setter for Warehouse*/
@@ -33,7 +33,7 @@ public class EndProductionMessage extends MessageToClient {
     @Override
     public void updateView(Game game) {
         for(Player player : game.getPlayers())
-            if(player.getTurnPosition() == this.playerId) {
+            if(player.getNickname().equals(this.playerNickname)) {
                 player.setWarehouse(this.warehouse);
                 player.setStrongbox(this.strongbox);
                 player.setPossibleActions(this.possibleActions);

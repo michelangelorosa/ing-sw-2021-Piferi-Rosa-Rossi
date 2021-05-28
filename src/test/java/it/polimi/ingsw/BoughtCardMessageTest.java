@@ -8,11 +8,11 @@ import static org.junit.Assert.*;
 
 public class BoughtCardMessageTest {
 
-    BoughtCardMessage cardMessage = new BoughtCardMessage(3);
+    BoughtCardMessage cardMessage = new BoughtCardMessage("antonio");
 
     @Test
     public void ConstructorTest(){
         assertEquals(END_PAY_CARD, cardMessage.getActionDone());
-        assertEquals(3, cardMessage.getPlayerPosition());
+        assertEquals("antonio", cardMessage.getPlayerNickname());
     }
 }

@@ -15,9 +15,9 @@ public class BuyCardMessage extends MessageToClient{
     /**
      * Constructor for BuyCardMessage Class.
      */
-    public BuyCardMessage(int playerId) {
+    public BuyCardMessage(String playerNickname) {
+        super(playerNickname);
         this.actionDone = ActionType.BUY_CARD;
-        this.playerId = playerId;
     }
 
     public RedResourceStack getTemporaryResources() {
@@ -36,7 +36,7 @@ public class BuyCardMessage extends MessageToClient{
     public void updateView(Game game) {
         if(this.error.equals("SUCCESS"))
             for(Player player : game.getPlayers())
-                if(player.getTurnPosition() == this.playerId) {
+                if(player.getNickname().equals(this.getPlayerNickname())) {
                     player.setPossibleActions(this.possibleActions);
                     player.setTemporaryResources(this.temporaryResources);
                 }

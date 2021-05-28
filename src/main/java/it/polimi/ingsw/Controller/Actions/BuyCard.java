@@ -107,7 +107,7 @@ BuyCard extends Action {
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {
         Game game = actionController.getGame();
-        BuyCardMessage message = new BuyCardMessage(game.getCurrentPlayerIndex());
+        BuyCardMessage message = new BuyCardMessage(game.getCurrentPlayerNickname());
         message.setError(this.response);
         if(this.response.equals("SUCCESS")) {
             message.addPossibleAction(ActionType.PAY_RESOURCE_CARD);

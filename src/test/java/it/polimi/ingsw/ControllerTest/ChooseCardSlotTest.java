@@ -69,7 +69,7 @@ public class ChooseCardSlotTest {
         assertTrue(messageToClient instanceof ChoseCardSlotMessage);
         assertEquals(CHOOSE_CARD_SLOT, messageToClient.getActionDone());
         assertEquals("Cannot put card in slot number 0", messageToClient.getError());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals(CHOOSE_CARD_SLOT, messageToClient.getPossibleActions().get(0));
         assertEquals(1, ((ChoseCardSlotMessage)messageToClient).getRow());
         assertEquals(1, ((ChoseCardSlotMessage)messageToClient).getColumn());
@@ -85,7 +85,7 @@ public class ChooseCardSlotTest {
         assertTrue(messageToClient instanceof ChoseCardSlotMessage);
         assertEquals(CHOOSE_CARD_SLOT, messageToClient.getActionDone());
         assertEquals("SUCCESS", messageToClient.getError());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals(ActionType.END_TURN, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.ACTIVATE_LEADERCARD, messageToClient.getPossibleActions().get(1));
         assertEquals(2, ((ChoseCardSlotMessage)messageToClient).getRow());
@@ -102,7 +102,7 @@ public class ChooseCardSlotTest {
         assertTrue(messageToClient instanceof ChoseCardSlotMessage);
         assertEquals(CHOOSE_CARD_SLOT, messageToClient.getActionDone());
         assertEquals("SUCCESS", messageToClient.getError());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals(ActionType.END_TURN, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.ACTIVATE_LEADERCARD, messageToClient.getPossibleActions().get(1));
         assertEquals(1, ((ChoseCardSlotMessage)messageToClient).getRow());

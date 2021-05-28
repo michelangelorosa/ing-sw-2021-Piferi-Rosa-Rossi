@@ -7,11 +7,11 @@ import org.junit.Test;
 
 public class EndProductionMessageTest {
 
-    EndProductionMessage productionMessage = new EndProductionMessage(2);
+    EndProductionMessage productionMessage = new EndProductionMessage("antonino");
 
     @Test
     public void ConstructorTest(){
         assertEquals(END_PAY_PRODUCTION, productionMessage.getActionDone());
-        assertEquals(2, productionMessage.getPlayerPosition());
+        assertEquals("antonino", productionMessage.getPlayerNickname());
     }
 }

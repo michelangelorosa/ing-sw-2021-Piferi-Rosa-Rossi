@@ -118,7 +118,7 @@ public class SwitchDepot extends Action {
      */
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {
-        SwitchDepotMessage message = new SwitchDepotMessage(actionController.getGame().getCurrentPlayerIndex());
+        SwitchDepotMessage message = new SwitchDepotMessage(actionController.getGame().getCurrentPlayerNickname());
         if(this.response.equals("SUCCESS"))
             message.setWarehouse(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse().toView());
         message.setError(this.response);

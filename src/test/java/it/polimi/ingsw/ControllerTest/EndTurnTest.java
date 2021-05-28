@@ -50,12 +50,12 @@ public class EndTurnTest {
         assertTrue(messageToClient instanceof EndTurnMessage);
         assertEquals(ActionType.END_TURN, messageToClient.getActionDone());
         assertEquals("SUCCESS", messageToClient.getError());
-        assertEquals(0, messageToClient.getPlayerPosition());
+        assertEquals("Zero", messageToClient.getPlayerNickname());
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.BUY_CARD, messageToClient.getPossibleActions().get(1));
         assertEquals(ActionType.MARKET_CHOOSE_ROW, messageToClient.getPossibleActions().get(2));
         assertEquals(ActionType.ACTIVATE_LEADERCARD, messageToClient.getPossibleActions().get(3));
-        assertEquals(1, ((EndTurnMessage)messageToClient).getNextPlayerId());
+        assertEquals("One", ((EndTurnMessage)messageToClient).getNextPlayerNickname());
 
 
         endTurn.doAction(actionController);
@@ -65,12 +65,12 @@ public class EndTurnTest {
         assertTrue(messageToClient instanceof EndTurnMessage);
         assertEquals(ActionType.END_TURN, messageToClient.getActionDone());
         assertEquals("SUCCESS", messageToClient.getError());
-        assertEquals(1, messageToClient.getPlayerPosition());
+        assertEquals("One", messageToClient.getPlayerNickname());
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.BUY_CARD, messageToClient.getPossibleActions().get(1));
         assertEquals(ActionType.MARKET_CHOOSE_ROW, messageToClient.getPossibleActions().get(2));
         assertEquals(ActionType.ACTIVATE_LEADERCARD, messageToClient.getPossibleActions().get(3));
-        assertEquals(3, ((EndTurnMessage)messageToClient).getNextPlayerId());
+        assertEquals("Three", ((EndTurnMessage)messageToClient).getNextPlayerNickname());
 
 
         endTurn.doAction(actionController);
@@ -80,11 +80,11 @@ public class EndTurnTest {
         assertTrue(messageToClient instanceof EndTurnMessage);
         assertEquals(ActionType.END_TURN, messageToClient.getActionDone());
         assertEquals("SUCCESS", messageToClient.getError());
-        assertEquals(3, messageToClient.getPlayerPosition());
+        assertEquals("Three", messageToClient.getPlayerNickname());
         assertEquals(ActionType.ACTIVATE_PRODUCTION, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.BUY_CARD, messageToClient.getPossibleActions().get(1));
         assertEquals(ActionType.MARKET_CHOOSE_ROW, messageToClient.getPossibleActions().get(2));
         assertEquals(ActionType.ACTIVATE_LEADERCARD, messageToClient.getPossibleActions().get(3));
-        assertEquals(0, ((EndTurnMessage)messageToClient).getNextPlayerId());
+        assertEquals("Zero", ((EndTurnMessage)messageToClient).getNextPlayerNickname());
     }
 }

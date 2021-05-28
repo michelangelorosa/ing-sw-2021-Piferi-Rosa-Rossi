@@ -15,9 +15,9 @@ public class AddMessage extends MessageToClient {
     /**
      * Constructor for AddMessage Class.
      */
-    public AddMessage(int playerId) {
+    public AddMessage(String playerNickname) {
+        super(playerNickname);
         this.actionDone = ActionType.ADD_RESOURCE;
-        this.playerId = playerId;
     }
 
     /**
@@ -57,7 +57,7 @@ public class AddMessage extends MessageToClient {
     public void updateView(Game game) {
         if(this.error.equals("SUCCESS"))
             for(Player player : game.getPlayers())
-                if(player.getTurnPosition() == this.playerId) {
+                if(player.getNickname().equals(this.getPlayerNickname())) {
                     player.setWarehouse(this.warehouse);
                     player.setTemporaryResources(this.temporaryResources);
                     player.setPossibleActions(this.possibleActions);

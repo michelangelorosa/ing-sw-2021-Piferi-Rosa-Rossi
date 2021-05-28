@@ -10,8 +10,8 @@ public class PaymentMessage extends MessageToClient {
     private RedResourceStack temporaryResources;
 
     /**Constructor for PaymentMessage*/
-    public PaymentMessage(int playerId) {
-        this.playerId = playerId;
+    public PaymentMessage(String playerNickname) {
+        super(playerNickname);
     }
 
     /**Setter for action done*/

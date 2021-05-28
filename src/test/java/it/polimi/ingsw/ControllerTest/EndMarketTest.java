@@ -48,7 +48,7 @@ public class EndMarketTest {
         assertTrue(messageToClient instanceof EndMarketMessage);
         assertEquals(ActionType.END_MARKET, messageToClient.getActionDone());
         assertEquals("SUCCESS", messageToClient.getError());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals(ActionType.END_TURN, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.ACTIVATE_LEADERCARD, messageToClient.getPossibleActions().get(1));
         assertEquals(0, (int)((EndMarketMessage)messageToClient).getPlayersFaithPosition().get(0));

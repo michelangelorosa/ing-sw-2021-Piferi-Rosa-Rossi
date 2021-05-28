@@ -87,7 +87,7 @@ public class MarketChooseRowTest {
         assertTrue(messageToClient instanceof ChoseMarketRowMessage);
         assertEquals(ActionType.MARKET_CHOOSE_ROW, messageToClient.getActionDone());
         assertEquals("SUCCESS", messageToClient.getError());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.RESET_WAREHOUSE, messageToClient.getPossibleActions().get(1));
         assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getPossibleActions().get(2));
@@ -107,7 +107,7 @@ public class MarketChooseRowTest {
         assertTrue(messageToClient instanceof ChoseMarketRowMessage);
         assertEquals(ActionType.MARKET_CHOOSE_ROW, messageToClient.getActionDone());
         assertEquals("SUCCESS", messageToClient.getError());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.RESET_WAREHOUSE, messageToClient.getPossibleActions().get(1));
         assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getPossibleActions().get(2));
@@ -127,7 +127,7 @@ public class MarketChooseRowTest {
         assertTrue(messageToClient instanceof ChoseMarketRowMessage);
         assertEquals(ActionType.MARKET_CHOOSE_ROW, messageToClient.getActionDone());
         assertEquals("Choose Leader Card", messageToClient.getError());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals(ActionType.CHOOSE_LEADER_CARD, messageToClient.getPossibleActions().get(0));
         assertTrue(((ChoseMarketRowMessage)messageToClient).isRow());
         assertEquals(1, ((ChoseMarketRowMessage)messageToClient).getRowOrColumn());
@@ -147,7 +147,7 @@ public class MarketChooseRowTest {
         assertTrue(messageToClient instanceof ChoseMarketRowMessage);
         assertEquals(ActionType.MARKET_CHOOSE_ROW, messageToClient.getActionDone());
         assertEquals("SUCCESS", messageToClient.getError());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.RESET_WAREHOUSE, messageToClient.getPossibleActions().get(1));
         assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getPossibleActions().get(2));

@@ -8,10 +8,10 @@ import org.junit.Test;
 
 public class PaymentMessageTest {
 
-    PaymentMessage paymentMessage = new PaymentMessage(2);
+    PaymentMessage paymentMessage = new PaymentMessage("antonino");
 
     @Test
     public void ConstructorTest(){
-        assertEquals(2, paymentMessage.getPlayerPosition());
+        assertEquals("antonino", paymentMessage.getPlayerNickname());
     }
 }

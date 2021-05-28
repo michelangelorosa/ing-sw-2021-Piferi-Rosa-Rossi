@@ -124,7 +124,7 @@ public class ResetWarehouseTest {
         assertTrue(messageToClient instanceof ResetWarehouseMessage);
         assertEquals(ActionType.RESET_WAREHOUSE, messageToClient.getActionDone());
         assertEquals("SUCCESS", messageToClient.getError());
-        assertEquals(game.getCurrentPlayerIndex(), messageToClient.getPlayerPosition());
+        assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals(ActionType.ADD_RESOURCE, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.RESET_WAREHOUSE, messageToClient.getPossibleActions().get(1));
         assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getPossibleActions().get(2));

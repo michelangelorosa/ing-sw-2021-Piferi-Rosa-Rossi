@@ -6,12 +6,12 @@ import it.polimi.ingsw.Model.MessagesToClient.ChoseLeaderCardMessage;
 import org.junit.Test;
 
 public class ChoseLeaderCardMessageTest {
-    ChoseLeaderCardMessage leaderCardMessage = new ChoseLeaderCardMessage(2);
+    ChoseLeaderCardMessage leaderCardMessage = new ChoseLeaderCardMessage("antonino");
 
     @Test
     public void ConstructorTest(){
         assertEquals(CHOOSE_LEADER_CARD, leaderCardMessage.getActionDone());
-        assertEquals(2, leaderCardMessage.getPlayerPosition());
+        assertEquals("antonino", leaderCardMessage.getPlayerNickname());
     }
 
 }

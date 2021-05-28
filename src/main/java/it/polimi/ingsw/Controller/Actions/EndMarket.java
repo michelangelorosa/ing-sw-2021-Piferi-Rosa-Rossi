@@ -45,7 +45,7 @@ public class EndMarket extends Action {
      */
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {
-        EndMarketMessage message = new EndMarketMessage(actionController.getGame().getCurrentPlayerIndex());
+        EndMarketMessage message = new EndMarketMessage(actionController.getGame().getCurrentPlayerNickname());
         ArrayList<Integer> faithPositions = new ArrayList<>();
 
         for(Player player : actionController.getGame().getPlayers())

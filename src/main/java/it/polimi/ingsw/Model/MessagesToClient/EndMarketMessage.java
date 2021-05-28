@@ -16,9 +16,9 @@ public class EndMarketMessage extends MessageToClient {
     /**
      * Constructor for EndMarketMessage Class.
      */
-    public EndMarketMessage(int playerId) {
+    public EndMarketMessage(String playerNickname) {
+        super(playerNickname);
         this.actionDone = ActionType.END_MARKET;
-        this.playerId = playerId;
     }
 
     /**
@@ -43,7 +43,7 @@ public class EndMarketMessage extends MessageToClient {
     public void updateView(Game game) {
         for(int i = 0; i < game.getPlayers().size(); i++) {
             game.getPlayers().get(i).setFaithTrackPosition(this.playersFaithPosition.get(i));
-            if(game.getPlayers().get(i).getTurnPosition() == this.playerId)
+            if(game.getPlayers().get(i).getNickname().equals(this.playerNickname))
                 game.getPlayers().get(i).setPossibleActions(this.possibleActions);
         }
     }

@@ -20,9 +20,9 @@ public class ChoseCardSlotMessage extends MessageToClient {
     /**
      * Constructor for ChooseCardSlotMessage Class
      */
-    public ChoseCardSlotMessage(int playerId) {
+    public ChoseCardSlotMessage(String playerNickname) {
+        super(playerNickname);
         this.actionDone = ActionType.CHOOSE_CARD_SLOT;
-        this.playerId = playerId;
     }
 
     /**
@@ -75,7 +75,7 @@ public class ChoseCardSlotMessage extends MessageToClient {
     public void updateView(Game game) {
         if(this.error.equals("SUCCESS")) {
             for (Player player : game.getPlayers())
-                if (player.getTurnPosition() == this.playerId) {
+                if (player.getNickname().equals(this.getPlayerNickname())) {
                     player.setPossibleActions(this.possibleActions);
                     ((DevelopmentCardSlots)player.getSlots()).addCard(this.slot, ((DevelopmentCardTable)game.getDevelopmentCardTable()).drawCardFromDeck(this.row, this.column));
                 }

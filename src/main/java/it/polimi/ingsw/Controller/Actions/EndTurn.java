@@ -11,7 +11,7 @@ import it.polimi.ingsw.Model.MessagesToClient.*;
  * one (if the game is Multiplayer)
  */
 public class EndTurn extends Action {
-    private int currentPlayer;
+    private String currentPlayer;
 
     /**
      * Constructor for EndTurn Class.
@@ -34,7 +34,7 @@ public class EndTurn extends Action {
     @Override
     public String doAction(ActionController actionController) {
         int idlePlayers = 0;
-        this.currentPlayer = actionController.getGame().getCurrentPlayerIndex();
+        this.currentPlayer = actionController.getGame().getCurrentPlayerNickname();
         if(actionController.getGame().getGameType() == GameType.MULTIPLAYER) {
             for(Player player : actionController.getGame().getPlayers())
                 if(player.getStatus() == PlayerStatus.IDLE)
@@ -63,7 +63,7 @@ public class EndTurn extends Action {
     public MessageToClient messagePrepare(ActionController actionController) {
         EndTurnMessage message = new EndTurnMessage(this.currentPlayer);
         message.setError(this.response);
-        message.setNextPlayerId(actionController.getGame().getCurrentPlayerIndex());
+        message.setNextPlayerNickname(actionController.getGame().getCurrentPlayerNickname());
 
         message.addPossibleAction(ActionType.ACTIVATE_PRODUCTION);
         message.addPossibleAction(ActionType.BUY_CARD);

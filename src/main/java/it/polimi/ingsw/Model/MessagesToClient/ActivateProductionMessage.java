@@ -6,9 +6,9 @@ import it.polimi.ingsw.View.ReducedModel.Player;
 
 public class ActivateProductionMessage extends MessageToClient {
 
-    public ActivateProductionMessage(int playerId) {
+    public ActivateProductionMessage(String playerNickname) {
+        super(playerNickname);
         this.actionDone = ActionType.ACTIVATE_PRODUCTION;
-        this.playerId = playerId;
     }
 
 
@@ -21,7 +21,7 @@ public class ActivateProductionMessage extends MessageToClient {
     public void updateView(Game game) {
         if(this.error.equals("SUCCESS") || this.error.equals("No Payment"))
             for(Player player : game.getPlayers())
-                if(player.getTurnPosition() == this.playerId)
+                if(player.getNickname().equals(this.getPlayerNickname()))
                     player.setPossibleActions(this.possibleActions);
                 else{
                     //TODO error message

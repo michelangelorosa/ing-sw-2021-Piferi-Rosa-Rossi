@@ -122,5 +122,7 @@ public class PayResourceTest {
         assertEquals("SUCCESS", pay2.doAction(actionController));
 
         assertEquals(ResourceType.NONE, game.getCurrentPlayer().getBoard().getResourceManager().getWarehouseDepots()[0].getResourceType());
+
+        //TODO message prepare tests
     }
 }

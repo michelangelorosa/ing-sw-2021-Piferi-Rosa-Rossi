@@ -194,7 +194,7 @@ public class ActivateProduction extends Action {
      */
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {
-        ActivateProductionMessage message = new ActivateProductionMessage(actionController.getGame().getCurrentPlayerIndex());
+        ActivateProductionMessage message = new ActivateProductionMessage(actionController.getGame().getCurrentPlayerNickname());
         message.setError(this.response);
 
         if(this.response.equals("SUCCESS")) {

@@ -26,7 +26,7 @@ public class PayResourceBuyCard extends PayResource {
         BoughtCardMessage boughtCardMessage;
 
         if(this.response.equals("SUCCESS")) {
-            boughtCardMessage = new BoughtCardMessage(actionController.getGame().getCurrentPlayerIndex());
+            boughtCardMessage = new BoughtCardMessage(actionController.getGame().getCurrentPlayerNickname());
             boughtCardMessage.setWarehouse(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse().toView());
             boughtCardMessage.setStrongbox(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getStrongbox().toView());
             boughtCardMessage.addPossibleAction(ActionType.CHOOSE_CARD_SLOT);

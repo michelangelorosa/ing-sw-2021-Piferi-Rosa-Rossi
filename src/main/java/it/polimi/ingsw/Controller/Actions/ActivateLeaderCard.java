@@ -85,7 +85,7 @@ public class ActivateLeaderCard extends Action {
      */
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {
-        ActivateLeaderCardMessage message = new ActivateLeaderCardMessage(actionController.getGame().getCurrentPlayerIndex());
+        ActivateLeaderCardMessage message = new ActivateLeaderCardMessage(actionController.getGame().getCurrentPlayerNickname());
         message.setError(this.response);
         message.setLeaderCardPosition(this.leaderCard);
 
