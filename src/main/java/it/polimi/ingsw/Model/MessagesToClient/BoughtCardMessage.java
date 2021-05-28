@@ -1,10 +1,7 @@
 package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
-import it.polimi.ingsw.View.ReducedModel.Player;
-import it.polimi.ingsw.View.ReducedModel.Game;
-import it.polimi.ingsw.View.ReducedModel.RedWarehouse;
-import it.polimi.ingsw.View.ReducedModel.RedStrongbox;
+import it.polimi.ingsw.View.ReducedModel.*;
 
 public class BoughtCardMessage extends MessageToClient {
     private RedWarehouse warehouse;
@@ -33,16 +30,16 @@ public class BoughtCardMessage extends MessageToClient {
 
     /**
      * Method used to update the client's view.
-     * @param game Game being played by the client.
+     * @param userInteraction Class containing the Reduced Game and methods to display Errors.
      */
     @Override
-    public void updateView(Game game) {
+    public void updateView(UserInteraction userInteraction) {
         if(this.error.equals("SUCCESS")) {
+            Game game = userInteraction.getGame();
             for (Player player : game.getPlayers())
                 if (player.getNickname().equals(this.getPlayerNickname()))
                     player.setPossibleActions(this.possibleActions);
         }
-
         else {
             //TODO error message
         }

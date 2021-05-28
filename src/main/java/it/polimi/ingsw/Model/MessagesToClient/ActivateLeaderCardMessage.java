@@ -4,6 +4,7 @@ import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.Model.LeaderCard;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.Player;
+import it.polimi.ingsw.View.ReducedModel.UserInteraction;
 
 public class ActivateLeaderCardMessage extends MessageToClient {
     private int leaderCardPosition;
@@ -20,16 +21,18 @@ public class ActivateLeaderCardMessage extends MessageToClient {
 
     /**
      * Method used to update the client's view.
-     * @param game Game being played by the client.
+     * @param userInteraction Class containing the Reduced Game and methods to display Errors.
      */
     @Override
-    public void updateView(Game game) {
-        if(this.error.equals("SUCCESS"))
-            for(Player player : game.getPlayers())
-                if(player.getNickname().equals(this.getPlayerNickname())) {
-                    ((LeaderCard)player.getLeaderCards()[this.leaderCardPosition]).setActive(true);
+    public void updateView(UserInteraction userInteraction) {
+        if(this.error.equals("SUCCESS")) {
+            Game game = userInteraction.getGame();
+            for (Player player : game.getPlayers())
+                if (player.getNickname().equals(this.getPlayerNickname())) {
+                    ((LeaderCard) player.getLeaderCards()[this.leaderCardPosition]).setActive(true);
                     player.setPossibleActions(this.possibleActions);
                 }
+        }
                 else {
                     //TODO error message
                 }

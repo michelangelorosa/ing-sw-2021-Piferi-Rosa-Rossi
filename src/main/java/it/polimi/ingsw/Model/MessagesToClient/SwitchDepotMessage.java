@@ -4,6 +4,7 @@ import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.Player;
 import it.polimi.ingsw.View.ReducedModel.RedWarehouse;
+import it.polimi.ingsw.View.ReducedModel.UserInteraction;
 
 /**
  * SwitchDepotMessage Class contains data for a response message to be sent to the client
@@ -36,15 +37,17 @@ public class SwitchDepotMessage extends MessageToClient {
     }
 
     @Override
-    public void updateView(Game game) {
-        if(this.error.equals("SUCCESS"))
-            for(Player player : game.getPlayers())
-                if(player.getNickname().equals(this.getPlayerNickname())) {
+    public void updateView(UserInteraction userInteraction) {
+        if(this.error.equals("SUCCESS")) {
+            Game game = userInteraction.getGame();
+            for (Player player : game.getPlayers())
+                if (player.getNickname().equals(this.getPlayerNickname())) {
                     player.setWarehouse(this.warehouse);
                     player.setPossibleActions(this.possibleActions);
                 }
-                else {
-                    //TODO error message
-                }
+        }
+        else {
+            //TODO error message
+        }
     }
 }

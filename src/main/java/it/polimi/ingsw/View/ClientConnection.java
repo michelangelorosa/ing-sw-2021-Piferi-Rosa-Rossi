@@ -112,7 +112,7 @@ public class ClientConnection implements Runnable, Observer<Action> {
 
                 //Handling of the MessageToClient message type
                 MessageToClient messageToClient = (MessageToClient) objectInputStream.readObject();
-                messageToClient.updateView(this.client.getUserInteraction().getGame());
+                messageToClient.updateView(this.client.getUserInteraction());
                 this.client.getUserInteraction().playTurn();
 
             }

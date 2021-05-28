@@ -4,6 +4,7 @@ import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.Player;
 import it.polimi.ingsw.View.ReducedModel.RedResourceStack;
+import it.polimi.ingsw.View.ReducedModel.UserInteraction;
 
 public class ChoseLeaderCardMessage extends MessageToClient {
     /**ChoseLeaderCardMessage need a temporary resource stack*/
@@ -22,19 +23,21 @@ public class ChoseLeaderCardMessage extends MessageToClient {
 
     /**
      * Method used to update the client's view.
-     * @param game Game being played by the client.
+     * @param userInteraction Class containing the Reduced Game and methods to display Errors.
      */
     @Override
-    public void updateView(Game game) {
-        if(this.error.equals("SUCCESS"))
-            for(Player player : game.getPlayers())
-                if(player.getNickname().equals(this.getPlayerNickname())) {
+    public void updateView(UserInteraction userInteraction) {
+        if(this.error.equals("SUCCESS")) {
+            Game game = userInteraction.getGame();
+            for (Player player : game.getPlayers())
+                if (player.getNickname().equals(this.getPlayerNickname())) {
                     player.setPossibleActions(this.possibleActions);
                     player.setTemporaryResources(this.temporaryResources);
                 }
+        }
 
-                else {
-                    //TODO error message
-                }
+        else {
+            //TODO error message
+        }
     }
 }

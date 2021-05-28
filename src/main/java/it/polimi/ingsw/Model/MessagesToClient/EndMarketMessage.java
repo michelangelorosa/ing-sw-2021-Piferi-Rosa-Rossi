@@ -2,6 +2,7 @@ package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.View.ReducedModel.Game;
+import it.polimi.ingsw.View.ReducedModel.UserInteraction;
 
 import java.util.ArrayList;
 
@@ -37,10 +38,11 @@ public class EndMarketMessage extends MessageToClient {
 
     /**
      * Method used to update the client's view.
-     * @param game Game being played by the client.
+     * @param userInteraction Class containing the Reduced Game and methods to display Errors.
      */
     @Override
-    public void updateView(Game game) {
+    public void updateView(UserInteraction userInteraction) {
+        Game game = userInteraction.getGame();
         for(int i = 0; i < game.getPlayers().size(); i++) {
             game.getPlayers().get(i).setFaithTrackPosition(this.playersFaithPosition.get(i));
             if(game.getPlayers().get(i).getNickname().equals(this.playerNickname))

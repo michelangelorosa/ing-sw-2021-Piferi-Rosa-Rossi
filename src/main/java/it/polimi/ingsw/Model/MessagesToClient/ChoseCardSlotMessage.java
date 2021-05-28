@@ -6,6 +6,7 @@ import it.polimi.ingsw.Model.DevelopmentCardSlots;
 import it.polimi.ingsw.Model.DevelopmentCardTable;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.Player;
+import it.polimi.ingsw.View.ReducedModel.UserInteraction;
 
 /**
  * ChoseCardSlotMessage Class contains data for a response message to be sent to the client
@@ -69,11 +70,12 @@ public class ChoseCardSlotMessage extends MessageToClient {
 
     /**
      * Method used to update the client's view.
-     * @param game Game being played by the client.
+     * @param userInteraction Class containing the Reduced Game and methods to display Errors.
      */
     @Override
-    public void updateView(Game game) {
+    public void updateView(UserInteraction userInteraction) {
         if(this.error.equals("SUCCESS")) {
+            Game game = userInteraction.getGame();
             for (Player player : game.getPlayers())
                 if (player.getNickname().equals(this.getPlayerNickname())) {
                     player.setPossibleActions(this.possibleActions);
