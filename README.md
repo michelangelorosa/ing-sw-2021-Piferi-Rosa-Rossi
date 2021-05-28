@@ -4,3 +4,4 @@
 ### Politecnico di Milano - 2020/2021
 
 ## Test Coverage
+![Screenshot](Coverage21-05-28.png)
