@@ -54,4 +54,21 @@ public class ConvertToJSONTest {
         System.out.println(test.covertLeaderCardString(leaderCards));
     }
 
+    @Test
+    public void convertPlayers() throws FileNotFoundException {
+        ArrayList<Player> players = new ArrayList<>();
+        Player player0 = new Player("Zero", 0, true);
+        Player player1 = new Player("One", 1, false);
+        Player player2 = new Player("Two", 2, false);
+        Player player3 = new Player("Three", 3, false);
+
+        players.add(player0);
+        players.add(player1);
+        players.add(player2);
+        players.add(player3);
+
+        test.covertPlayerName(players);
+
+    }
+
 }

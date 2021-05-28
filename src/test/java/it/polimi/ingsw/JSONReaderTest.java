@@ -4,10 +4,7 @@ import it.polimi.ingsw.Controller.Controller;
 import it.polimi.ingsw.Model.*;
 import static org.junit.Assert.*;
 
-import it.polimi.ingsw.Model.Enums.Color;
-import it.polimi.ingsw.Model.Enums.Level;
-import it.polimi.ingsw.Model.Enums.Marble;
-import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.Model.Enums.*;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -378,6 +375,16 @@ public class JSONReaderTest {
         assertEquals(2, vaticanReportSections[0].getPoints());
         assertEquals(3, vaticanReportSections[1].getPoints());
         assertEquals(4, vaticanReportSections[2].getPoints());
+    }
+
+    @Test
+    public void ReadPlayers() {
+
+        ArrayList<Player> players = JSONReader.ReadPlayersName();
+
+        System.out.println(players.get(0).getNickname());
+
+        System.out.println(players.get(1).getPopeTiles()[0].toCli());
     }
 
 

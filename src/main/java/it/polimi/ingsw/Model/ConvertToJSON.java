@@ -217,11 +217,19 @@ public class ConvertToJSON {
 
         for(int i = 0; i < players.size(); i++) {
 
+            PlayerStatus statusTemp = players.get(i).getStatus();
+            int status;
+
             String nickname = players.get(i).getNickname();
             int turnPosition = players.get(i).getTurnPosition();
             boolean hasInkwell = players.get(i).hasInkwell();
+            int faithTrackPosition = players.get(i).getFaithTrackPosition();
+            if(statusTemp == PlayerStatus.IN_GAME) status = 0;
+            else if(statusTemp == PlayerStatus.IDLE) status = 1;
+            else if(statusTemp == PlayerStatus.LOST) status = 2;
+            else status = 3;
 
-            player.add(new PlayerJSON(nickname, turnPosition, hasInkwell));
+            player.add(new PlayerJSON(nickname, turnPosition, hasInkwell, status, faithTrackPosition));
         }
 
         Gson gson = new Gson();
@@ -441,11 +449,20 @@ public class ConvertToJSON {
 
         for(int i = 0; i < players.size(); i++) {
 
+            PlayerStatus statusTemp = players.get(i).getStatus();
+            int status;
+
             String nickname = players.get(i).getNickname();
             int turnPosition = players.get(i).getTurnPosition();
             boolean hasInkwell = players.get(i).hasInkwell();
+            int faithTrackPosition = players.get(i).getFaithTrackPosition();
 
-            player.add(new PlayerJSON(nickname, turnPosition, hasInkwell));
+            if(statusTemp == PlayerStatus.IN_GAME) status = 0;
+            else if(statusTemp == PlayerStatus.IDLE) status = 1;
+            else if(statusTemp == PlayerStatus.LOST) status = 2;
+            else status = 3;
+
+            player.add(new PlayerJSON(nickname, turnPosition, hasInkwell, status, faithTrackPosition));
         }
 
         Gson gson = new Gson();

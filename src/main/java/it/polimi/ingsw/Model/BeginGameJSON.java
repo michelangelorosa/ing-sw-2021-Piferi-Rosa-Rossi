@@ -1,18 +1,16 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Model.*;
-
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class BeginGameJSON {
 
-    String developmentCards = new String();
-    String leaderCardsString = new String();
-    String faithTrack = new String();
-    String vaticanString = new String();
-    String names = new String();
+    String developmentCards = "";
+    String leaderCardsString = "";
+    String faithTrack = "";
+    String vaticanString = "";
+    String names = "";
     ConvertToJSON json = new ConvertToJSON();
     public BeginGameJSON() {
     }

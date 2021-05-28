@@ -98,7 +98,7 @@ public class JSONReader {
     }
 
     /**Json Reader for the vatican report section*/
-    public static VaticanReportSection[] ReadVaticanReportSection(){
+    public static VaticanReportSection[] ReadVaticanReportSection() {
         File cells = new File("FaithCell2.json");
 
 
@@ -362,7 +362,6 @@ public class JSONReader {
 
                 turnPosition = playerJsonObject.get("turnPosition").getAsInt();
                 hasInkwell = playerJsonObject.get("Inkwell").getAsBoolean();
-
                 Player player = new Player(nickname, turnPosition, hasInkwell);
                 readPlayer.add(player);
                 count++;
