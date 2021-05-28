@@ -147,4 +147,11 @@ public class CommonViewTestMethods {
         player.getLeaderCards()[0] = new LeaderCard(1, 1, resourceStack, leaderRequirements, Marble.PURPLE);
         player.getLeaderCards()[1] = new LeaderCard(1, 1, resourceStack, leaderRequirements, resourceStack, 1, 2);
     }
+
+    public static void giveLeaderCards(Player player, LeaderCard card1, LeaderCard card2) {
+        card1.setActive(true);
+        card2.setActive(true);
+        player.getLeaderCards()[0] = card1;
+        player.getLeaderCards()[1] = card2;
+    }
 }

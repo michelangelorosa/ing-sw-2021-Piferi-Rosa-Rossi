@@ -22,6 +22,12 @@ public class Cli implements UserInterface{
     private boolean secondLeaderCard = false;
     private boolean basicProduction = false;
 
+    protected void testSetter(boolean first, boolean second, boolean basic) {
+        this.firstLeaderCard = first;
+        this.secondLeaderCard = second;
+        this.basicProduction = basic;
+    }
+
     /**
      * Method used on startup by the client (if in Cli mode) to print the game title and get
      * the Server address and port as input from the user.
@@ -178,12 +184,20 @@ public class Cli implements UserInterface{
     public Action initialChooseResources(int resources) {
         System.out.println(ANSIColors.YOUR_TURN_COLOR + ANSIfont.BOLD + " - PREPARING THE GAME - " + ANSIColors.RESET);
         System.out.println();
-        if(resources <= 0)
+        if(resources <= 0) {
+            HashMap<Integer, ArrayList<ResourceType>> depotResource = new HashMap<>();
+            depotResource.put(0, null);
+            depotResource.put(1, null);
+            depotResource.put(2, null);
             return new InitChooseResources(new HashMap<>());
+        }
 
         int depot;
         ResourceType type;
-        HashMap<Integer, ResourceType> depotResource = new HashMap<>();
+        HashMap<Integer, ArrayList<ResourceType>> depotResource = new HashMap<>();
+        ArrayList<ResourceType> firstDepot = new ArrayList<>();
+        ArrayList<ResourceType> secondDepot = new ArrayList<>();
+        ArrayList<ResourceType> thirdDepot = new ArrayList<>();
 
         RedWarehouse warehouse = new Warehouse();
         for(String s : warehouse.toCli())
@@ -192,9 +206,22 @@ public class Cli implements UserInterface{
         for(; resources > 0; resources--) {
             System.out.println("\nChoose a resource type you want to add to your Warehouse (" + resources + " remaining)");
             type = resourceIntIterator(sc);
-            depot = initialDepotIterator(sc);
-            depotResource.put(depot, type);
+            System.out.println("\nSelect the Depot where you want to put the resource: ");
+            depot = initialDepotIterator(sc) - 1;
+
+            switch (depot) {
+                case 0: firstDepot.add(type);
+                break;
+                case 1: secondDepot.add(type);
+                break;
+                case 2: thirdDepot.add(type);
+                break;
+            }
         }
+        depotResource.put(0, firstDepot);
+        depotResource.put(1, secondDepot);
+        depotResource.put(2, thirdDepot);
+
         return new InitChooseResources(depotResource);
     }
 
@@ -572,6 +599,11 @@ public class Cli implements UserInterface{
         ChooseProductionOutput chooseProductionOutput = new ChooseProductionOutput();
         if(!this.firstLeaderCard && !this.secondLeaderCard && !this.basicProduction)
             return chooseProductionOutput;
+        else {
+            chooseProductionOutput.setFirstLeaderCard(this.firstLeaderCard);
+            chooseProductionOutput.setSecondLeaderCard(this.secondLeaderCard);
+            chooseProductionOutput.setBasicProduction(this.basicProduction);
+        }
 
         boolean notCorrect = true;
 

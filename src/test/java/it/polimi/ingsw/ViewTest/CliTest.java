@@ -15,6 +15,7 @@ import static org.junit.Assert.*;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CliTest {
 
@@ -34,6 +35,56 @@ public class CliTest {
         assertEquals("127.0.0.1", objects.get(0));
         assertEquals(22222, objects.get(1));
         System.setIn(sysInBackup);
+    }
+
+    @Test
+    public void startOrJoinTest() {
+        changeSystemIn("1");
+        ui = new Cli();
+        assertTrue(ui.startOrJoin());
+
+        changeSystemIn("0");
+        ui = new Cli();
+        assertFalse(ui.startOrJoin());
+    }
+
+    @Test
+    public void numberOfPlayersTest() {
+        changeSystemIn("5\n16\n3");
+        ui = new Cli();
+        assertEquals(3, ui.numberOfPlayers());
+    }
+
+    @Test
+    public void initialInsertNameTest() {
+        changeSystemIn("anthonyTheFirstAndPowerfulHumanBeing\n\n  \npippo");
+        ui = new Cli();
+        assertEquals("pippo", ui.initialInsertName());
+    }
+
+    @Test
+    public void waitingForOtherPlayersTest() {
+        ui.waitingForPlayers();
+    }
+
+    @Test
+    public void initialLobbyTest() {
+        changeSystemIn("n\n2\n123123123123\ny");
+        ui = new Cli();
+        assertTrue(ui.initialLobby());
+    }
+
+    @Test
+    public void initialChooseResourcesTest() {
+        changeSystemIn("-5\n3\n1\n4\n-1\n3\n2\n1");
+        ui = new Cli();
+        Action action = ui.initialChooseResources(3);
+        assertTrue(action instanceof InitChooseResources);
+        HashMap<Integer, ArrayList<ResourceType>> result = ((InitChooseResources)action).getDepotResource();
+        assertEquals(ResourceType.COINS, result.get(0).remove(0));
+        assertEquals(ResourceType.SERVANTS, result.get(0).remove(0));
+        assertEquals(ResourceType.STONES, result.get(2).remove(0));
+        assertEquals(0, result.get(1).size());
     }
 
     @Test
@@ -64,7 +115,11 @@ public class CliTest {
         game.getPlayers().get(0).getPossibleActions().add(ActionType.ACTIVATE_LEADERCARD);
         game.getPlayers().get(0).getPossibleActions().add(ActionType.MARKET_CHOOSE_ROW);
 
+        changeSystemIn("a\nb\n1\nc\nd\n4\n1\n3");
+        ui = new Cli();
 
+        Action action = ui.actionPicker(game);
+        assertTrue(action instanceof MarketChooseRow);
     }
 
     @Test
@@ -169,6 +224,41 @@ public class CliTest {
         assertFalse(((ChooseProductionOutput)action).isFirstLeaderCard());
         assertFalse(((ChooseProductionOutput)action).isSecondLeaderCard());
         assertFalse(((ChooseProductionOutput)action).isBasicProduction());
+
+        ResourceStack resourceStack = new ResourceStack(0,0,0,0);
+        LeaderRequirements leaderRequirements = new LeaderRequirements(0,0,0,0);
+
+        LeaderCard leaderCard1 = new LeaderCard(1, 23, resourceStack, leaderRequirements, resourceStack, 3, 2);
+        LeaderCard leaderCard2 = new LeaderCard(2, 23, resourceStack, leaderRequirements, resourceStack, 1, 2);
+
+        CommonViewTestMethods.giveLeaderCards(game.getCurrentPlayer(), leaderCard1, leaderCard2);
+
+        class CliExtender extends Cli {
+            CliExtender() {
+                super();
+            }
+
+            public void boolSetter(boolean first, boolean second, boolean basic) {
+                this.testSetter(first, second, basic);
+            }
+        }
+
+        changeSystemIn("0\n1\n2\n3\n0\n1\n0\n4");
+        ui = new CliExtender();
+        ((CliExtender)ui).boolSetter(true, true, true);
+        action = ui.chooseProductionOutput(game);
+
+        assertTrue(action instanceof ChooseProductionOutput);
+        assertTrue(((ChooseProductionOutput)action).isFirstLeaderCard());
+        assertTrue(((ChooseProductionOutput)action).isSecondLeaderCard());
+        assertTrue(((ChooseProductionOutput)action).isBasicProduction());
+        assertEquals(ResourceType.SHIELDS, ((ChooseProductionOutput)action).getFirstLeaderCardOutput().get(0));
+        assertEquals(ResourceType.SERVANTS, ((ChooseProductionOutput)action).getFirstLeaderCardOutput().get(1));
+        assertEquals(ResourceType.COINS, ((ChooseProductionOutput)action).getFirstLeaderCardOutput().get(2));
+
+        assertEquals(ResourceType.SHIELDS, ((ChooseProductionOutput)action).getSecondLeaderCardOutput().get(0));
+
+        assertEquals(ResourceType.STONES, ((ChooseProductionOutput)action).getBasicProductionOutput().get(0));
     }
 
     @Test
