@@ -27,6 +27,7 @@ public class Server {
     private final static int DEFAULT_PORT = 8765;
     private int readyPlayers = 0;
     private static GameStatus serverStatus;
+    private Controller controller = new Controller();
 
 
     public Set<String> getNames() {
