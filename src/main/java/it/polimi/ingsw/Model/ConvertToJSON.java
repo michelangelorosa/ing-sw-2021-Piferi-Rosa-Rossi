@@ -456,7 +456,6 @@ public class ConvertToJSON {
             int turnPosition = players.get(i).getTurnPosition();
             boolean hasInkwell = players.get(i).hasInkwell();
             int faithTrackPosition = players.get(i).getFaithTrackPosition();
-
             if(statusTemp == PlayerStatus.IN_GAME) status = 0;
             else if(statusTemp == PlayerStatus.IDLE) status = 1;
             else if(statusTemp == PlayerStatus.LOST) status = 2;

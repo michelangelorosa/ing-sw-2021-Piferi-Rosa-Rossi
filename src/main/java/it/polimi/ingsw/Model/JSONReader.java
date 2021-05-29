@@ -214,8 +214,8 @@ public class JSONReader {
         /**
          * A standard and handwritten file is overwritten whenever the player chooses to edit the game parameters.
          */
-        //File cards = new File("LeaderCards.json");
-        File cards = new File("LeaderCards2.json");
+        File cards = new File("LeaderCards.json");
+        //File cards = new File("LeaderCards2.json");
         ArrayList<LeaderCard> leaderCards = new ArrayList<>();
         LeaderCard cardToRead;
 
@@ -348,6 +348,9 @@ public class JSONReader {
         String nickname;
         int turnPosition = 0;
         boolean hasInkwell;
+        int status = 0;
+        PlayerStatus[] playerStatus = PlayerStatus.values();
+        int faithTrackPosition = 0;
 
         try {
             JsonElement fileElement = JsonParser.parseReader(new FileReader(players));
@@ -362,7 +365,11 @@ public class JSONReader {
 
                 turnPosition = playerJsonObject.get("turnPosition").getAsInt();
                 hasInkwell = playerJsonObject.get("Inkwell").getAsBoolean();
+                status = playerJsonObject.get("status").getAsInt();
+                faithTrackPosition = playerJsonObject.get("faithTrackPosition").getAsInt();
                 Player player = new Player(nickname, turnPosition, hasInkwell);
+                player.setStatus(playerStatus[status]);
+                player.setFaithTrackPosition(faithTrackPosition);
                 readPlayer.add(player);
                 count++;
             }

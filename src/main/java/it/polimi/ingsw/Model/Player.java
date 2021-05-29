@@ -98,6 +98,9 @@ public class Player implements Serializable {
     public int getFaithTrackPosition() {
         return faithTrackPosition;
     }
+    public void setFaithTrackPosition(int faithTrackPosition){
+        this.faithTrackPosition = faithTrackPosition;
+    }
     /**
      * Getter for "board" attribute in Player Class.
      */

@@ -1,6 +1,7 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
@@ -66,6 +67,9 @@ public class ConvertToJSONTest {
         players.add(player1);
         players.add(player2);
         players.add(player3);
+
+        players.get(0).setStatus(PlayerStatus.IDLE);
+        players.get(0).setFaithTrackPosition(12);
 
         test.covertPlayerName(players);
 

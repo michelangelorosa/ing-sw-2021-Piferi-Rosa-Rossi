@@ -382,9 +382,10 @@ public class JSONReaderTest {
 
         ArrayList<Player> players = JSONReader.ReadPlayersName();
 
-        System.out.println(players.get(0).getNickname());
-
-        System.out.println(players.get(1).getPopeTiles()[0].toCli());
+        assertEquals("Zero", players.get(0).getNickname());
+        assertEquals(PlayerStatus.IDLE, players.get(0).getStatus());
+        assertEquals(12, players.get(0).getFaithTrackPosition());
+        assertEquals(false, players.get(3).hasInkwell());
     }
 
 
