@@ -3,7 +3,7 @@ package it.polimi.ingsw;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.JSON.ConvertToJSON;
-import it.polimi.ingsw.Model.JSON.JSONReader;
+import it.polimi.ingsw.Model.JSON.*;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;

@@ -1,10 +1,10 @@
 package it.polimi.ingsw.Model.JSON;
 
+import it.polimi.ingsw.Model.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Enums.*;
 
 import java.io.File;
@@ -37,7 +37,7 @@ public class JSONReader {
 
         File cards = new File("DevelopmentCards.json");
         //File cards = new File("DevelopmentCard2.json");
-
+        //File cards = new File("FromServerToClientBegin.json");
         DevelopmentCard[] readCards = new DevelopmentCard[48];
         DevelopmentCard cardToRead;
         int cardsInDeck = 0;
@@ -58,7 +58,7 @@ public class JSONReader {
             //int example = fileObject.get("NumberOfCards").getAsInt();
 
             //Extracting card values from JSON
-            JsonArray jsonArrayCards = fileObject.get("DevelopmentCard").getAsJsonArray();
+            JsonArray jsonArrayCards = fileObject.get("DevelopmentCards").getAsJsonArray();
 
             for (JsonElement cardElement : jsonArrayCards) {
                 //Gets json objects
@@ -100,8 +100,8 @@ public class JSONReader {
 
     /**Json Reader for the vatican report section*/
     public static VaticanReportSection[] ReadVaticanReportSection() {
-        File cells = new File("FaithCell2.json");
-
+        //File cells = new File("FaithCell2.json");
+        File cells = new File("FromServerToClientBegin.json");
 
         VaticanReportSection[] readSection = new VaticanReportSection[3];
         VaticanReportSectionEnum[] vaticanReportSectionEnums = VaticanReportSectionEnum.values();
@@ -120,7 +120,7 @@ public class JSONReader {
             JsonObject fileObject = fileElement.getAsJsonObject();
 
 
-            JsonArray jsonArrayVatican = fileObject.get("VaticanReportSection").getAsJsonArray();
+            JsonArray jsonArrayVatican = fileObject.get("Vatican").getAsJsonArray();
             for (JsonElement vaticanElement : jsonArrayVatican) {
                 JsonObject vaticanJsonObject = vaticanElement.getAsJsonObject();
                 begin = vaticanJsonObject.get("begin").getAsInt();
@@ -154,8 +154,8 @@ public class JSONReader {
          * A standard and handwritten file is overwritten whenever the player chooses to edit the game parameters.
          */
         //File cells = new File("FaithTrack.json");
-        File cells = new File("FaithCell2.json");
-
+        //File cells = new File("FaithCell2.json");
+        File cells = new File("FromServerToClientBegin.json");
 
         FaithCell[] readCells = new FaithCell[25];
         FaithCell cellToRead;
@@ -175,7 +175,7 @@ public class JSONReader {
             JsonElement fileElement = JsonParser.parseReader(new FileReader(cells));
             JsonObject fileObject = fileElement.getAsJsonObject();
 
-            JsonArray jsonArrayCards = fileObject.get("FaithCell").getAsJsonArray();
+            JsonArray jsonArrayCards = fileObject.get("FaithCells").getAsJsonArray();
 
             for (JsonElement cellElement : jsonArrayCards) {
                 //Gets json objects
@@ -215,8 +215,10 @@ public class JSONReader {
         /**
          * A standard and handwritten file is overwritten whenever the player chooses to edit the game parameters.
          */
-        File cards = new File("LeaderCards.json");
+        //File cards = new File("LeaderCards.json");
         //File cards = new File("LeaderCards2.json");
+        File cards = new File("FromServerToClientBegin.json");
+
         ArrayList<LeaderCard> leaderCards = new ArrayList<>();
         LeaderCard cardToRead;
 
@@ -341,17 +343,17 @@ public class JSONReader {
 
     /**JSON Reader for the players name*/
     public static ArrayList<Player> ReadPlayersName(){
-        File players = new File("NamePlayers.json");
-
+        //File players = new File("NamePlayers.json");
+        File players = new File("FromServerToClientBegin.json");
         ArrayList<Player> readPlayer = new ArrayList<>();
         int count = 0;
 
         String nickname;
-        int turnPosition = 0;
+        int turnPosition;
         boolean hasInkwell;
-        int status = 0;
+        int status;
         PlayerStatus[] playerStatus = PlayerStatus.values();
-        int faithTrackPosition = 0;
+        int faithTrackPosition;
 
         try {
             JsonElement fileElement = JsonParser.parseReader(new FileReader(players));

@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
-import it.polimi.ingsw.Model.JSON.JSONReader;
+import it.polimi.ingsw.Model.JSON.*;
 import org.junit.Test;
 
 /**

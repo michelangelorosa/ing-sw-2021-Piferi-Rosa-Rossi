@@ -32,4 +32,14 @@ public class GameTest {
         game.join("Andrea");
         game.join("Lorenzo");
     }
+/*
+    @Test
+    public void jsonTest() throws FileNotFoundException {
+        ConvertToJSON convert = new ConvertToJSON();
+        joiner(game);
+        convert.convertForDisconnection(game);
+    }
+
+ */
+
 }

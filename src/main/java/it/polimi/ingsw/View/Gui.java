@@ -35,13 +35,13 @@ public class Gui extends Application{
         gui.visualType(false);
 
         Parent root;
-        root = FXMLLoader.load(getClass().getResource("Assets/Fxml/Name.fxml"));
+        root = FXMLLoader.load(getClass().getResource("Assets/Fxml/Intro.fxml"));
         //Creates a scene object
         Scene scene = new Scene(root);
 
         primaryStage.setTitle("Masters Of Renaissance");
         primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
+        //primaryStage.setResizable(false);
         primaryStage.show();
 
     }
