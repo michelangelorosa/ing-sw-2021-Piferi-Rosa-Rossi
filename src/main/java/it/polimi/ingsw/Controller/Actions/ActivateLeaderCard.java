@@ -7,10 +7,11 @@ import it.polimi.ingsw.Model.MessagesToClient.*;
 /**
  * ActivateLeaderClass contains data and methods to resolve a Client request regarding Leader
  * Card activation.
+ * Attributes:
  */
 public class ActivateLeaderCard extends Action {
 
-    /** "leaderCard" is an int type attribute containing the card's position int the player's Leader Card deck. */
+    /** "leaderCard" int attribute contains the position, inside the player's deck, of the Leader Card. */
     private final int leaderCard;
 
     /**
@@ -21,16 +22,22 @@ public class ActivateLeaderCard extends Action {
         this.leaderCard = leaderCard;
     }
 
+    /**
+     * Getter for "actionType" attribute.
+     */
     public ActionType getActionType() {
         return actionType;
     }
 
+    /**
+     * Getter for "leaderCard" attribute.
+     */
     public int getLeaderCard() {
         return leaderCard;
     }
 
     /**
-     * This method checks if the input sent to the server is correct by assuring that the Leader Card's
+     * Checks if the input sent to the server is correct by assuring that the Leader Card's
      * position corresponds to an existing card inside the player's hand.
      * @return true if the message is correct.
      * @throws IllegalArgumentException if "leaderCard" is not 0 nor 1.
@@ -43,7 +50,8 @@ public class ActivateLeaderCard extends Action {
     }
 
     /**
-     * This method checks if the input sent to the server is logically applicable.
+     * This method checks if the input sent to the server is logically applicable by assuring that the
+     * indicated card is not already active.
      * @return false if the Leader Card was already active, true if not.
      */
     @Override
@@ -55,7 +63,7 @@ public class ActivateLeaderCard extends Action {
     }
 
     /**
-     * This method is used to actually activate the player's Leader Card.
+     * Activates the player's Leader Card if the player has all the requirements needed.
      * @return a String containing an error message or a SUCCESS statement.
      */
     @Override
@@ -80,7 +88,7 @@ public class ActivateLeaderCard extends Action {
     }
 
     /**
-     * Method used to prepare a messageToClient type object to be sent by the server to the client.
+     * Prepares a ActivateLeaderCardMessage type object to be sent by the server to the client.
      * @return A message to be sent to the client.
      */
     @Override

@@ -16,22 +16,27 @@ import java.util.ArrayList;
  * activation.
  * <p>
  * Each boolean attribute represents a different production power the player wants to activate.
+ * Attributes:
  */
 public class ActivateProduction extends Action {
 
-    /** Three booleans indicating the player's Board Slots. */
+    /** "firstSlot", "secondSlot", "thirdSlot": Three booleans indicating the player's Board Slots. */
     private final boolean firstSlot;
     private final boolean secondSlot;
     private final boolean thirdSlot;
 
-    /** Two booleans indicating the player's Leader Cards. */
+    /** "firstLeaderCard", "secondLeaderCard": Two booleans indicating the player's Leader Cards. */
     private final boolean firstLeaderCard;
     private final boolean secondLeaderCard;
 
-    /** One boolean indicating the player's Basic Production and a array indicating the Basic Production inputs. */
+    /** "basicProduction": boolean indicating the player's Basic Production. */
     private final boolean basicProduction;
+    /** "basicProductionInputs": ArrayList containing Basic Production inputs. */
     private final ArrayList<ResourceType> basicProductionInputs;
 
+    /**
+     * Constructor for ActivateProduction Class.
+     */
     public ActivateProduction(boolean firstSlot, boolean secondSlot, boolean thirdSlot1, boolean firstLeaderCard, boolean secondLeaderCard, boolean basicProduction, ArrayList<ResourceType> basicProductionInputs) {
         this.actionType = ActionType.ACTIVATE_PRODUCTION;
         this.firstSlot = firstSlot;
@@ -43,43 +48,67 @@ public class ActivateProduction extends Action {
         this.basicProductionInputs = basicProductionInputs;
     }
 
+    /**
+     * Getter for "ActionType" attribute.
+     */
     public ActionType getActionType() {
         return actionType;
     }
 
+    /**
+     * Getter for "firsSlot" attribute.
+     */
     public boolean isFirstSlot() {
         return firstSlot;
     }
 
+    /**
+     * Getter for "secondSlot" attribute.
+     */
     public boolean isSecondSlot() {
         return secondSlot;
     }
 
+    /**
+     * Getter for "thirdSlot" attribute.
+     */
     public boolean isThirdSlot() {
         return thirdSlot;
     }
 
+    /**
+     * Getter for "firstLeaderCard" attribute.
+     */
     public boolean isFirstLeaderCard() {
         return firstLeaderCard;
     }
 
+    /**
+     * Getter for "secondLeaderCard" attribute.
+     */
     public boolean isSecondLeaderCard() {
         return secondLeaderCard;
     }
 
+    /**
+     * Getter for "basicProduction" attribute.
+     */
     public boolean isBasicProduction() {
         return basicProduction;
     }
 
+    /**
+     * Getter for "basicProductionInputs" attribute.
+     */
     public ArrayList<ResourceType> getBasicProductionInputs() {
         return basicProductionInputs;
     }
 
     /**
-     * This method checks if the input sent to the server is correct by assuring that the Basic Production
-     * inputs are not of type NONE.
-     * @return true if the message is correct.
-     * @throws IllegalArgumentException if the specified type is NONE.
+     * Checks if the input sent to the server is correct by assuring that there are no elements inside
+     * the basicProductionInputs ArrayList which are equal to ResourceType.NONE.
+     * @return true if there are no elements of ResourceType.NONE.
+     * @throws IllegalArgumentException if at least one element is of ResourceType.NONE.
      */
     @Override
     public boolean isCorrect() throws IllegalArgumentException {
@@ -91,8 +120,15 @@ public class ActivateProduction extends Action {
     }
 
     /**
-     * This method checks if the input sent to the server is logically applicable.
-     * @return false if the Leader Card was already active, true if not.
+     * Checks if the input sent to the server is logically applicable buy running the following controls:
+     * <ul>
+     *     <li>If any of the booleans indicating a Leader Card is set to true, checks if the Leader Card is
+     *     of type "PRODUCTION POWER" and active</li>
+     *     <li>If "basicProduction" boolean is set to true, checks if the size of the basicProductionInputs
+     *     ArrayList corresponds to the number of input resources needed by the Basic Production inside the
+     *     Game being played.</li>
+     * </ul>
+     * @return false if at least one of the two controls is not respected.
      */
     @Override
     public boolean canBeApplied(ActionController actionController) {
@@ -102,15 +138,13 @@ public class ActivateProduction extends Action {
 
         if(secondLeaderCard && (!player.getBoard().getLeaderCards()[1].isActive() || player.getBoard().getLeaderCards()[1].getAction() != LeaderCardAction.PRODUCTIONPOWER))
             return false;
-        if(basicProduction && basicProductionInputs.size() != actionController.getGame().getCurrentPlayer().getBoard().getBasicProduction().getJollyIn())
-            return false;
-
-        return true;
+        return !basicProduction || basicProductionInputs.size() == actionController.getGame().getCurrentPlayer().getBoard().getBasicProduction().getJollyIn();
     }
 
     /**
-     * This method is used to actually activate production if the player has the correct requirements.
-     * @return a String containing an error message or a SUCCESS statement.
+     * Activates production if the player has all the needed requirements.
+     * @return a String containing an error message if the player performing the action doesn't meet Production
+     * requirements or if the player indicated empty card slots to be used for production, otherwise a SUCCESS statement.
      */
     @Override
     public String doAction(ActionController actionController) {
@@ -192,7 +226,7 @@ public class ActivateProduction extends Action {
     }
 
     /**
-     * Method used to prepare a messageToClient type object to be sent by the server to the client.
+     * Prepares a ActivateProductionMessage type object to be sent by the server to the client.
      * @return A message to be sent to the client.
      */
     @Override
