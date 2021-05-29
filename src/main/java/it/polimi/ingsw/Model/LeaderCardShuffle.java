@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Model.JSON.JSONReader;
+
 import java.util.ArrayList;
 
 /**

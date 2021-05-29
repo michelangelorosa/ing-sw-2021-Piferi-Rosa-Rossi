@@ -1,4 +1,6 @@
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.Model.JSON;
+
+import it.polimi.ingsw.Model.*;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;

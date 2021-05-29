@@ -3,6 +3,7 @@ package it.polimi.ingsw;
 import it.polimi.ingsw.Model.*;
 import static org.junit.Assert.*;
 
+import it.polimi.ingsw.Model.JSON.JSONReader;
 import it.polimi.ingsw.View.ReducedModel.RedFaithCell;
 import org.junit.Test;
 

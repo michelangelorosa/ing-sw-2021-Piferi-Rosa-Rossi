@@ -1,7 +1,7 @@
 package it.polimi.ingsw.View.ReducedModel;
 
 import it.polimi.ingsw.Model.FaithCell;
-import it.polimi.ingsw.Model.JSONReader;
+import it.polimi.ingsw.Model.JSON.JSONReader;
 import it.polimi.ingsw.Model.VaticanReportSection;
 import it.polimi.ingsw.View.ANSIColors;
 

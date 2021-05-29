@@ -1,6 +1,8 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.JSON.BeginGameJSON;
+import it.polimi.ingsw.Model.JSON.JSONReader;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
