@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.JSONTest;
 
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;

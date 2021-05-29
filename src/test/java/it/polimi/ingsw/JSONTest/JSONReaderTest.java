@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.JSONTest;
 
 import it.polimi.ingsw.Controller.Controller;
 import it.polimi.ingsw.Model.*;
