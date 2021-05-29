@@ -103,15 +103,13 @@ public class ChooseCardSlot extends Action {
      */
     public MessageToClient messagePrepare(ActionController actionController) {
         ChoseCardSlotMessage message = new ChoseCardSlotMessage(actionController.getGame().getCurrentPlayerNickname());
-        message.setRow(this.rowCardToBuy);
-        message.setColumn(this.columnCardToBuy);
-
-        this.rowCardToBuy = 0;
-        this.columnCardToBuy = 0;
-
-        message.setSlot(this.cardSlot);
+        message.setTable(actionController.getGame().getDevelopmentCardTable());
         message.setError(this.response);
+
+        message.setSlots(actionController.getGame().getCurrentPlayer().getBoard().getDevelopmentCardSlots());
         if(this.response.equals("SUCCESS")) {
+            this.rowCardToBuy = 0;
+            this.columnCardToBuy = 0;
             message.addPossibleAction(ActionType.END_TURN);
             message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
         }

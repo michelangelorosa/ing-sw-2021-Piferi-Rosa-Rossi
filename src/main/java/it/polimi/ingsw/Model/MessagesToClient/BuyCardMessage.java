@@ -45,7 +45,7 @@ public class BuyCardMessage extends MessageToClient{
         }
 
         else {
-            //TODO error message
+            userInteraction.getUi().displayError(this.error);
         }
 
     }

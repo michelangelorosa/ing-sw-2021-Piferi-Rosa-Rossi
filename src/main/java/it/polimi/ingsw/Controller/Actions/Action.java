@@ -3,12 +3,18 @@ package it.polimi.ingsw.Controller.Actions;
 import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 
+import java.io.Serializable;
+
 /**
  * Action abstract Class defines common Data and Methods to perform an action on the model after a Client's request.
  */
-public class Action {
+public class Action implements Serializable {
     protected ActionType actionType;
     protected String response = null;
+
+    public String getResponse() {
+        return response;
+    }
 
     /**
      * Method used to check if the request parameters are actually usable by model's methods.

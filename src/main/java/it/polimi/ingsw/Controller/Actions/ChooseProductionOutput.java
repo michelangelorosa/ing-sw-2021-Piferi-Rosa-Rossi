@@ -220,7 +220,7 @@ public class ChooseProductionOutput extends Action {
         ChoseProductionOutputMessage message = new ChoseProductionOutputMessage(actionController.getGame().getCurrentPlayerNickname());
         message.setError(this.response);
         if(this.response.equals("SUCCESS")) {
-            message.setStrongbox(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getStrongbox().toView());
+            message.setStrongbox(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getStrongbox());
             message.addPossibleAction(ActionType.END_TURN);
             message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
         }

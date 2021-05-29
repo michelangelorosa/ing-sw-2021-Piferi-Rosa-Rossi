@@ -43,7 +43,7 @@ public class CommonTestMethods {
      * @param game Game to be initialized.
      */
     public static void leaderCardInit(Game game) {
-        game.setLeaderCards(new ArrayList<LeaderCard>());
+        game.setLeaderCards(new ArrayList<>());
 
         ResourceStack stack1 = new ResourceStack(1,1,0,0);
         ResourceStack stack2 = new ResourceStack(0,0,1,1);

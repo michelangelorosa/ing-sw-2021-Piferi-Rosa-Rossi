@@ -37,7 +37,7 @@ public class ChoseLeaderCardMessage extends MessageToClient {
         }
 
         else {
-            //TODO error message
+            userInteraction.getUi().displayError(this.error);
         }
     }
 }

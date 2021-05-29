@@ -4,19 +4,15 @@ import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.Model.DevelopmentCard;
 import it.polimi.ingsw.Model.DevelopmentCardSlots;
 import it.polimi.ingsw.Model.DevelopmentCardTable;
-import it.polimi.ingsw.View.ReducedModel.Game;
-import it.polimi.ingsw.View.ReducedModel.Player;
-import it.polimi.ingsw.View.ReducedModel.UserInteraction;
+import it.polimi.ingsw.View.ReducedModel.*;
 
 /**
  * ChoseCardSlotMessage Class contains data for a response message to be sent to the client
  * after a ChooseCardSlot request.
  */
 public class ChoseCardSlotMessage extends MessageToClient {
-    /** row and column of the deck and the slot int position are required to update the Client's View */
-    private int row;
-    private int column;
-    private int slot;
+    private RedDevelopmentCardSlots slots;
+    private RedDevelopmentCardTable table;
 
     /**
      * Constructor for ChooseCardSlotMessage Class
@@ -26,46 +22,20 @@ public class ChoseCardSlotMessage extends MessageToClient {
         this.actionDone = ActionType.CHOOSE_CARD_SLOT;
     }
 
-    /**
-     * Setter for "row" attribute in ChoseCardSlotMessage Class.
-     */
-    public void setRow(int row) {
-        this.row = row;
+    public RedDevelopmentCardSlots getSlots() {
+        return slots;
     }
 
-    /**
-     * Setter for "column" attribute in ChoseCardSlotMessage Class.
-     */
-    public void setColumn(int column) {
-        this.column = column;
+    public void setSlots(RedDevelopmentCardSlots slots) {
+        this.slots = slots;
     }
 
-    /**
-     * Setter for "slot" attribute in ChoseCardSlotMessage Class.
-     */
-    public void setSlot(int slot) {
-        this.slot = slot;
+    public RedDevelopmentCardTable getTable() {
+        return table;
     }
 
-    /**
-     * Getter for "row" attribute in ChoseCardSlotMessage Class.
-     */
-    public int getRow() {
-        return row;
-    }
-
-    /**
-     * Getter for "column" attribute in ChoseCardSlotMessage Class.
-     */
-    public int getColumn() {
-        return column;
-    }
-
-    /**
-     * Getter for "slot" attribute in ChoseCardSlotMessage Class.
-     */
-    public int getSlot() {
-        return slot;
+    public void setTable(RedDevelopmentCardTable table) {
+        this.table = table;
     }
 
     /**
@@ -75,16 +45,16 @@ public class ChoseCardSlotMessage extends MessageToClient {
     @Override
     public void updateView(UserInteraction userInteraction) {
         if(this.error.equals("SUCCESS")) {
+            userInteraction.getGame().setDevelopmentCardTable(this.table);
             Game game = userInteraction.getGame();
             for (Player player : game.getPlayers())
                 if (player.getNickname().equals(this.getPlayerNickname())) {
-                    player.setPossibleActions(this.possibleActions);
-                    ((DevelopmentCardSlots)player.getSlots()).addCard(this.slot, ((DevelopmentCardTable)game.getDevelopmentCardTable()).drawCardFromDeck(this.row, this.column));
+                    player.setSlots(this.slots);
                 }
 
         }
         else {
-            //TODO error message
+            userInteraction.getUi().displayError(this.error);
         }
     }
 }

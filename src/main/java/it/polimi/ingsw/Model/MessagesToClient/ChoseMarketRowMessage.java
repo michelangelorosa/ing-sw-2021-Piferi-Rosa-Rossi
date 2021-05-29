@@ -2,19 +2,14 @@ package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.Model.Market;
-import it.polimi.ingsw.View.ReducedModel.Game;
-import it.polimi.ingsw.View.ReducedModel.Player;
-import it.polimi.ingsw.View.ReducedModel.RedResourceStack;
-import it.polimi.ingsw.View.ReducedModel.UserInteraction;
+import it.polimi.ingsw.View.ReducedModel.*;
 
 /**
  * ChoseMarketRowMessage Class defines a response to be sent to the client after
  * a MarketChooseRow request.
  */
 public class ChoseMarketRowMessage extends MessageToClient {
-    /** A boolean and an int attributes define the row or column chosen by the client */
-    private boolean isRow;
-    private int rowOrColumn;
+    private RedMarket market;
     private RedResourceStack temporaryResources;
 
     /**
@@ -25,32 +20,12 @@ public class ChoseMarketRowMessage extends MessageToClient {
         this.actionDone = ActionType.MARKET_CHOOSE_ROW;
     }
 
-    /**
-     * Setter for "row" attribute in ChoseMarketRowMessage Class.
-     */
-    public void setRow(boolean row) {
-        isRow = row;
+    public RedMarket getMarket() {
+        return market;
     }
 
-    /**
-     * Getter for "row" attribute in ChoseMarketRowMessage Class.
-     */
-    public boolean isRow() {
-        return isRow;
-    }
-
-    /**
-     * Setter for "rowOrColumn" attribute in ChoseMarketRowMessage Class.
-     */
-    public void setRowOrColumn(int rowOrColumn) {
-        this.rowOrColumn = rowOrColumn;
-    }
-
-    /**
-     * Getter for "rowOrColumn" attribute in ChoseMarketRowMessage Class.
-     */
-    public int getRowOrColumn() {
-        return rowOrColumn;
+    public void setMarket(RedMarket market) {
+        this.market = market;
     }
 
     public RedResourceStack getTemporaryResources() {
@@ -67,6 +42,7 @@ public class ChoseMarketRowMessage extends MessageToClient {
      */
     @Override
     public void updateView(UserInteraction userInteraction) {
+        userInteraction.getGame().setMarket(this.market);
         Game game = userInteraction.getGame();
         for (Player player : game.getPlayers())
             if(player.getNickname().equals(this.getPlayerNickname())) {
@@ -74,10 +50,5 @@ public class ChoseMarketRowMessage extends MessageToClient {
                 if(this.error.equals("SUCCESS"))
                     player.setTemporaryResources(this.temporaryResources);
             }
-
-        if(this.isRow)
-            ((Market)game.getMarket()).rowChange(this.rowOrColumn);
-        else
-            ((Market)game.getMarket()).columnChange(this.rowOrColumn);
     }
 }

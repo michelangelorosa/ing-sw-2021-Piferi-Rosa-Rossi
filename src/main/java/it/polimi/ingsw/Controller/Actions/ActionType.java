@@ -7,6 +7,8 @@ package it.polimi.ingsw.Controller.Actions;
 public enum ActionType {
     CHOOSE_ACTION("choose_action"),
 
+    INIT_CHOOSE_RESOURCES("init_choose_resources"),
+
     BUY_FROM_MARKET("buy_market"),
     MARKET_CHOOSE_ROW("market_choose_row"),
     CHOOSE_LEADER_CARD("choose_leader_card"),
@@ -28,7 +30,7 @@ public enum ActionType {
     ACTIVATE_LEADERCARD("activate_leadercard"),
 
     END_TURN("end_turn");
-    private String text;
+    private final String text;
 
     ActionType(String text) {
         this.text = text;

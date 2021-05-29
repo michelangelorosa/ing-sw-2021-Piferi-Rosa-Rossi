@@ -41,7 +41,7 @@ public class BoughtCardMessage extends MessageToClient {
                     player.setPossibleActions(this.possibleActions);
         }
         else {
-            //TODO error message
+            userInteraction.getUi().displayError(this.error);
         }
     }
 }

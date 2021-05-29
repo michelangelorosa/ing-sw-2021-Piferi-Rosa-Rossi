@@ -92,9 +92,6 @@ public class MarketChooseRowTest {
         assertEquals(ActionType.RESET_WAREHOUSE, messageToClient.getPossibleActions().get(1));
         assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getPossibleActions().get(2));
         assertEquals(ActionType.END_MARKET, messageToClient.getPossibleActions().get(3));
-        assertTrue(((ChoseMarketRowMessage)messageToClient).isRow());
-        assertEquals(0, ((ChoseMarketRowMessage)messageToClient).getRowOrColumn());
-
 
         marketChooseRow = new MarketChooseRow(true, 1);
         game.getCurrentPlayer().getBoard().activateLeaderCard(game.getCurrentPlayer().getBoard().getLeaderCards()[0]);
@@ -112,8 +109,6 @@ public class MarketChooseRowTest {
         assertEquals(ActionType.RESET_WAREHOUSE, messageToClient.getPossibleActions().get(1));
         assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getPossibleActions().get(2));
         assertEquals(ActionType.END_MARKET, messageToClient.getPossibleActions().get(3));
-        assertTrue(((ChoseMarketRowMessage)messageToClient).isRow());
-        assertEquals(1, ((ChoseMarketRowMessage)messageToClient).getRowOrColumn());
 
 
         game.getCurrentPlayer().getBoard().activateLeaderCard(game.getCurrentPlayer().getBoard().getLeaderCards()[1]);
@@ -129,8 +124,6 @@ public class MarketChooseRowTest {
         assertEquals("Choose Leader Card", messageToClient.getError());
         assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals(ActionType.CHOOSE_LEADER_CARD, messageToClient.getPossibleActions().get(0));
-        assertTrue(((ChoseMarketRowMessage)messageToClient).isRow());
-        assertEquals(1, ((ChoseMarketRowMessage)messageToClient).getRowOrColumn());
 
         game.getMarket().testMethod();
         CommonTestMethods.givePlayerLeaderCards(game.getCurrentPlayer(), game.getLeaderCards().get(4), game.getLeaderCards().get(5));
@@ -152,7 +145,7 @@ public class MarketChooseRowTest {
         assertEquals(ActionType.RESET_WAREHOUSE, messageToClient.getPossibleActions().get(1));
         assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getPossibleActions().get(2));
         assertEquals(ActionType.END_MARKET, messageToClient.getPossibleActions().get(3));
-        assertFalse(((ChoseMarketRowMessage)messageToClient).isRow());
-        assertEquals(2, ((ChoseMarketRowMessage)messageToClient).getRowOrColumn());
+
+        //TODO check ChoseMarketRow Message attributes
     }
 }

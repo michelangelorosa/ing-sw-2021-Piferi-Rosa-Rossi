@@ -89,6 +89,9 @@ public class ActivateLeaderCard extends Action {
         message.setError(this.response);
         message.setLeaderCardPosition(this.leaderCard);
 
+        if(this.response.equals("SUCCESS"))
+            message.setLeaderCard(actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[this.leaderCard]);
+
         return message;
     }
 }
