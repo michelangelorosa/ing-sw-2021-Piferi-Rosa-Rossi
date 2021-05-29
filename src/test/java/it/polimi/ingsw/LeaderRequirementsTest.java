@@ -1,10 +1,10 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Enums.Color;
 import it.polimi.ingsw.Model.Enums.Level;
 import it.polimi.ingsw.Model.Enums.Marble;
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.Model.GameModel.*;
 import it.polimi.ingsw.View.ReducedModel.RedLeaderRequirements;
 import org.junit.Test;
 

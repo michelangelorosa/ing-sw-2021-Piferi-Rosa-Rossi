@@ -1,10 +1,9 @@
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.Model.GameModel;
 
 import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.View.ReducedModel.RedWarehouse;
 import it.polimi.ingsw.View.ReducedModel.RedWarehouseDepot;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**

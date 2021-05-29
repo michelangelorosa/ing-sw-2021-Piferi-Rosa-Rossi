@@ -1,10 +1,9 @@
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.Model.GameModel;
 
 import it.polimi.ingsw.Model.Enums.LeaderCardAction;
 import it.polimi.ingsw.Model.Enums.Marble;
 import it.polimi.ingsw.View.ReducedModel.RedMarket;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 

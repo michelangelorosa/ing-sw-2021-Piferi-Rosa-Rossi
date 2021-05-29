@@ -2,7 +2,7 @@ package it.polimi.ingsw;
 
 import static org.junit.Assert.*;
 
-import it.polimi.ingsw.Model.ResourceStack;
+import it.polimi.ingsw.Model.GameModel.ResourceStack;
 import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.View.ReducedModel.RedResourceStack;
 import org.junit.Test;

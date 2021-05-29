@@ -1,5 +1,6 @@
 package it.polimi.ingsw;
-import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.GameModel.LeaderCard;
+import it.polimi.ingsw.Model.GameModel.LeaderCardShuffle;
 import org.junit.Test;
 import static org.junit.Assert.*;
 /**

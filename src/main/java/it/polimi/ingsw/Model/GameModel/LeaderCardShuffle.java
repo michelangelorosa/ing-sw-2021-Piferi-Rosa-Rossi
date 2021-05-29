@@ -1,5 +1,6 @@
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.Model.GameModel;
 
+import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.Model.JSON.JSONReader;
 
 import java.util.ArrayList;

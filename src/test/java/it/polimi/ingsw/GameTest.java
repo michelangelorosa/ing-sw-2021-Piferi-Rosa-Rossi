@@ -1,7 +1,8 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.Model.*;
 import static org.junit.Assert.*;
+
+import it.polimi.ingsw.Model.GameModel.Game;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.ActionController;
-import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.GameModel.Player;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 
 import java.util.ArrayList;

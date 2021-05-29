@@ -1,10 +1,11 @@
 package it.polimi.ingsw.JSONTest;
 
 import it.polimi.ingsw.Controller.Controller;
-import it.polimi.ingsw.Model.*;
+
 import static org.junit.Assert.*;
 
 import it.polimi.ingsw.Model.Enums.*;
+import it.polimi.ingsw.Model.GameModel.*;
 import it.polimi.ingsw.Model.JSON.*;
 import org.junit.Test;
 

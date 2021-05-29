@@ -2,7 +2,7 @@ package it.polimi.ingsw.View;
 
 import it.polimi.ingsw.Model.Enums.LeaderCardAction;
 import it.polimi.ingsw.Model.Enums.ResourceType;
-import it.polimi.ingsw.Model.Warehouse;
+import it.polimi.ingsw.Model.GameModel.Warehouse;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.Player;
 import it.polimi.ingsw.View.ReducedModel.RedWarehouse;

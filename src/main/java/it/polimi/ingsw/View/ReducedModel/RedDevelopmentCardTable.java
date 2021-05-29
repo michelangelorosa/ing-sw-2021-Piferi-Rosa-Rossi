@@ -1,7 +1,7 @@
 
 package it.polimi.ingsw.View.ReducedModel;
 
-import it.polimi.ingsw.Model.DevelopmentCardDeck;
+import it.polimi.ingsw.Model.GameModel.DevelopmentCardDeck;
 
 import java.io.Serializable;
 import java.util.ArrayList;

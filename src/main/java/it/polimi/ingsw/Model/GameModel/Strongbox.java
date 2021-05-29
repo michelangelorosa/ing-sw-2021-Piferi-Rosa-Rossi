@@ -1,9 +1,8 @@
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.Model.GameModel;
 
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.Model.GameModel.ResourceStack;
 import it.polimi.ingsw.View.ReducedModel.RedStrongbox;
-
-import java.io.Serializable;
 
 /**
  * Strongbox Class defines the contents and the behaviour of the strongbox inside the player's board.

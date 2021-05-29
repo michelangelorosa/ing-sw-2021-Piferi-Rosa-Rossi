@@ -1,10 +1,10 @@
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.Model.GameModel;
 
 import it.polimi.ingsw.Model.Enums.Color;
 import it.polimi.ingsw.Model.Enums.Level;
+import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
 import it.polimi.ingsw.View.ReducedModel.RedDevelopmentCardDeck;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
 

@@ -2,7 +2,7 @@ package it.polimi.ingsw.ViewTest;
 
 import static org.junit.Assert.*;
 
-import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.GameModel.*;
 import it.polimi.ingsw.View.InputController;
 import it.polimi.ingsw.View.ReducedModel.*;
 import it.polimi.ingsw.Model.Enums.*;

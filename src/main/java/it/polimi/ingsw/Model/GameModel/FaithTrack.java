@@ -1,12 +1,10 @@
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.Model.GameModel;
 
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Enums.PopeTile;
-import it.polimi.ingsw.View.ReducedModel.RedFaithCell;
 import it.polimi.ingsw.View.ReducedModel.RedFaithTrack;
 import it.polimi.ingsw.View.ReducedModel.RedVaticanReportSection;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class FaithTrack extends RedFaithTrack {

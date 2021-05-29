@@ -1,8 +1,9 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.Model.*;
 import static org.junit.Assert.*;
 
+import it.polimi.ingsw.Model.GameModel.FaithCell;
+import it.polimi.ingsw.Model.GameModel.VaticanReportSection;
 import it.polimi.ingsw.Model.JSON.*;
 import it.polimi.ingsw.View.ReducedModel.RedFaithCell;
 import org.junit.Test;

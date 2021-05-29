@@ -1,7 +1,7 @@
 package it.polimi.ingsw.JSONTest;
 
-import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
+import it.polimi.ingsw.Model.GameModel.*;
 import it.polimi.ingsw.Model.JSON.ConvertToJSON;
 import it.polimi.ingsw.Model.JSON.*;
 import org.junit.Test;

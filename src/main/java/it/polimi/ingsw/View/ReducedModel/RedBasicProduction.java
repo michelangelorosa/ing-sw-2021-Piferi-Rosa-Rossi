@@ -1,7 +1,6 @@
 package it.polimi.ingsw.View.ReducedModel;
 
 import it.polimi.ingsw.Model.Enums.ResourceType;
-import it.polimi.ingsw.Model.ResourceStack;
 
 import java.io.Serializable;
 import java.util.ArrayList;

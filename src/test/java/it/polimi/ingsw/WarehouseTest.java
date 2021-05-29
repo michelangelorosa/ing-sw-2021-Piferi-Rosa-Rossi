@@ -3,7 +3,7 @@ package it.polimi.ingsw;
 import static org.junit.Assert.*;
 
 import it.polimi.ingsw.Model.Enums.ResourceType;
-import it.polimi.ingsw.Model.Warehouse;
+import it.polimi.ingsw.Model.GameModel.Warehouse;
 import it.polimi.ingsw.View.ReducedModel.RedWarehouse;
 import org.junit.Test;
 

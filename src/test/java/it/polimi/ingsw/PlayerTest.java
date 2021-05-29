@@ -2,8 +2,10 @@ package it.polimi.ingsw;
 
 import static org.junit.Assert.*;
 
-import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
+import it.polimi.ingsw.Model.GameModel.FaithCell;
+import it.polimi.ingsw.Model.GameModel.FaithTrack;
+import it.polimi.ingsw.Model.GameModel.Player;
 import it.polimi.ingsw.Model.JSON.*;
 import org.junit.Test;
 

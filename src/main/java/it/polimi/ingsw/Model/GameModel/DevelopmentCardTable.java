@@ -1,5 +1,5 @@
 
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.Model.GameModel;
 
 import it.polimi.ingsw.Model.Enums.Color;
 import it.polimi.ingsw.Model.Enums.LeaderCardAction;

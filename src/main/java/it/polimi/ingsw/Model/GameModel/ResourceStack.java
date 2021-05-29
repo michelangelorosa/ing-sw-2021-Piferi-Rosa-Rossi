@@ -1,9 +1,7 @@
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.Model.GameModel;
 
 import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.View.ReducedModel.RedResourceStack;
-
-import java.io.Serializable;
 
 /**
  * ResourceStack Class contains four integer private attributes indicating the amount of each

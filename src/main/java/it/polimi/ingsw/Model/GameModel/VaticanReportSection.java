@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.Model.GameModel;
 
 import it.polimi.ingsw.View.ReducedModel.RedVaticanReportSection;
 

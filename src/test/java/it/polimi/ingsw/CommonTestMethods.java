@@ -1,7 +1,7 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Enums.*;
+import it.polimi.ingsw.Model.GameModel.*;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Model.Enums;
 
-import it.polimi.ingsw.Model.Player;
+import it.polimi.ingsw.Model.GameModel.Player;
 import it.polimi.ingsw.View.ANSIColors;
 
 import java.util.ArrayList;

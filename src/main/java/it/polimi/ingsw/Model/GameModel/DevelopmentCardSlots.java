@@ -1,10 +1,9 @@
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.Model.GameModel;
 
 import it.polimi.ingsw.Model.Enums.Color;
 import it.polimi.ingsw.Model.Enums.Level;
 import it.polimi.ingsw.View.ReducedModel.RedDevelopmentCardSlots;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class DevelopmentCardSlots extends RedDevelopmentCardSlots {

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Model.JSON;
 
-import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.GameModel.*;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;

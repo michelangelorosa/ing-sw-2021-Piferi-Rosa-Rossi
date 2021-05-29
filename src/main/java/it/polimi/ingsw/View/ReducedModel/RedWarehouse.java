@@ -1,7 +1,7 @@
 package it.polimi.ingsw.View.ReducedModel;
 
 import it.polimi.ingsw.Model.Enums.ResourceType;
-import it.polimi.ingsw.Model.WarehouseDepot;
+import it.polimi.ingsw.Model.GameModel.WarehouseDepot;
 import it.polimi.ingsw.View.ANSIColors;
 
 import java.io.Serializable;
@@ -72,7 +72,7 @@ public class RedWarehouse implements Serializable {
      * @param depot Depot the player wants to remove resources from.
      * @return True if the depot is not empty.
      */
-    public boolean canRemoveFromDepot(it.polimi.ingsw.Model.WarehouseDepot depot){
+    public boolean canRemoveFromDepot(WarehouseDepot depot){
         return !depot.isEmpty();
     }
 

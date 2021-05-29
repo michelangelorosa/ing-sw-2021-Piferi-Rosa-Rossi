@@ -1,7 +1,8 @@
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.Model.GameModel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+
 import it.polimi.ingsw.Model.Enums.*;
 
 /**

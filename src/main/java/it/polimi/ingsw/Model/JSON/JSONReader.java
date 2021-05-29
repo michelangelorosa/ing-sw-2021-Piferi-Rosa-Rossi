@@ -1,11 +1,11 @@
 package it.polimi.ingsw.Model.JSON;
 
-import it.polimi.ingsw.Model.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import it.polimi.ingsw.Model.Enums.*;
+import it.polimi.ingsw.Model.GameModel.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;

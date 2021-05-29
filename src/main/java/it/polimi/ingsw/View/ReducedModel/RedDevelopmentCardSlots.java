@@ -1,6 +1,6 @@
 package it.polimi.ingsw.View.ReducedModel;
 
-import it.polimi.ingsw.Model.CardSlot;
+import it.polimi.ingsw.Model.GameModel.CardSlot;
 import it.polimi.ingsw.Model.Enums.Level;
 
 import java.io.Serializable;

@@ -3,6 +3,7 @@ package it.polimi.ingsw;
 import static org.junit.Assert.*;
 
 import it.polimi.ingsw.Model.Enums.VaticanReportSectionEnum;
+import it.polimi.ingsw.Model.GameModel.VaticanReportSection;
 import it.polimi.ingsw.View.ReducedModel.RedVaticanReportSection;
 import org.junit.Test;
 
@@ -28,7 +29,7 @@ public class VaticanReportSectionEnumTest {
     @Test
     public void toViewTest(){
         RedVaticanReportSection vaticanView;
-        it.polimi.ingsw.Model.VaticanReportSection vatican = new it.polimi.ingsw.Model.VaticanReportSection(1, 4, 7);
+        VaticanReportSection vatican = new VaticanReportSection(1, 4, 7);
         vaticanView = vatican.toView();
         assertSame(1, vaticanView.getBegin());
         assertSame(4, vaticanView.getEnd());

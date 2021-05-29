@@ -2,9 +2,9 @@ package it.polimi.ingsw;
 
 import static org.junit.Assert.*;
 
-import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Enums.Marble;
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.Model.GameModel.*;
 import it.polimi.ingsw.View.ReducedModel.RedMarket;
 import org.junit.Rule;
 import org.junit.Test;

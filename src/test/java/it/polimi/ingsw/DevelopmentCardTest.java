@@ -2,10 +2,11 @@ package it.polimi.ingsw;
 
 import static org.junit.Assert.*;
 
-import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Enums.Color;
 import it.polimi.ingsw.Model.Enums.Level;
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
+import it.polimi.ingsw.Model.GameModel.ResourceStack;
 import it.polimi.ingsw.View.ReducedModel.RedDevelopmentCard;
 import org.junit.Test;
 

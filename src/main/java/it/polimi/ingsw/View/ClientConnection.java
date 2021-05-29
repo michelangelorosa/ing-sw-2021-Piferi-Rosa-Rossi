@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import it.polimi.ingsw.Controller.Observer;
-import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 import it.polimi.ingsw.View.ReducedModel.Game;

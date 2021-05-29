@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
-import it.polimi.ingsw.Model.Market;
 import it.polimi.ingsw.View.ReducedModel.*;
 
 /**

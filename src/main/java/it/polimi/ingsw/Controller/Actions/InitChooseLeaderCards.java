@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.ActionController;
-import it.polimi.ingsw.Model.LeaderCard;
+import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 
 public class InitChooseLeaderCards extends Action{

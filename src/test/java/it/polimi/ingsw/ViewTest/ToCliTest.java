@@ -1,8 +1,8 @@
 
 package it.polimi.ingsw.ViewTest;
 
-import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Enums.*;
+import it.polimi.ingsw.Model.GameModel.*;
 import it.polimi.ingsw.View.ANSIColors;
 import it.polimi.ingsw.View.Cli;
 import it.polimi.ingsw.View.ReducedModel.*;

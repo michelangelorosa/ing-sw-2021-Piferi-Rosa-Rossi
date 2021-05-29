@@ -5,7 +5,7 @@ import it.polimi.ingsw.Controller.ActionController;
 import it.polimi.ingsw.Controller.Actions.ActivateLeaderCard;
 import it.polimi.ingsw.Model.MessagesToClient.ActivateLeaderCardMessage;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
-import it.polimi.ingsw.Model.ResourceStack;
+import it.polimi.ingsw.Model.GameModel.ResourceStack;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
