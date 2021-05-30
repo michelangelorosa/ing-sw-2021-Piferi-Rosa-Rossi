@@ -9,6 +9,7 @@ import java.util.ArrayList;
 /**
  * EndMarket Class contains data and methods to use when a player wants to end a
  * market interaction, transforming Resources into Faith Points.
+ * @author redrick99
  */
 public class EndMarket extends Action {
 
@@ -20,15 +21,9 @@ public class EndMarket extends Action {
     }
 
     /**
-     * Getter for "actionType" attribute in EndMarket Class.
-     */
-    public ActionType getActionType() {
-        return this.actionType;
-    }
-
-    /**
-     * Method used to execute the action on the Model.
-     * @return "SUCCESS" if the action went right, another String if it went wrong.
+     * Executes the action on the Model.
+     * @param actionController Class used to compute Action messages coming from the Client.
+     * @return "SUCCESS", since a EndMarket action cannot encounter any error.
      */
     @Override
     public String doAction(ActionController actionController) {
@@ -40,8 +35,9 @@ public class EndMarket extends Action {
     }
 
     /**
-     * Method used to prepare a messageToClient type object to be sent by the server to the client.
-     * @return A message to be sent to the client.
+     * Prepares a EndMarket MessageToClient type object to be sent to the Client.
+     * @param actionController Class used to compute Action messages coming from the Client.
+     * @return A message to be sent to the Client.
      */
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {

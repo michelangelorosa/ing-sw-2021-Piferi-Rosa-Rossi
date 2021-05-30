@@ -15,6 +15,7 @@ import it.polimi.ingsw.Model.MessagesToClient.*;
  * <ul>
  *     <li>int "row", "column":  coordinates of the deck the player wants to buy the cards from</li>
  * </ul>
+ * @author redrick99
  */
 public class
 BuyCard extends Action {
@@ -60,6 +61,7 @@ BuyCard extends Action {
 
     /**
      * Checks if the specified action is logically applicable.
+     * @param actionController Class used to compute Action messages coming from the Client.
      * @return false if the Deck from which the player wants to buy the card is Empty.
      */
     @Override
@@ -73,6 +75,7 @@ BuyCard extends Action {
      * fit inside his personal board, then saves data needed later to draw the Card from
      * the Development Card Table.</p>
      * At last, if the Player can buy the Card, a new Payment Cycle starts.
+     * @param actionController Class used to compute Action messages coming from the Client.
      * @return "SUCCESS" if the action went right, another String if it went wrong.
      */
     @Override
@@ -106,7 +109,8 @@ BuyCard extends Action {
     }
 
     /**
-     * Prepares a BuyCardMessage MessageToClient type object to be sent to the client.
+     * Prepares a BuyCardMessage MessageToClient type object to be sent to the Client.
+     * @param actionController Class used to compute Action messages coming from the Client.
      * @return The created message.
      */
     @Override

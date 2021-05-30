@@ -10,13 +10,18 @@ import it.polimi.ingsw.Model.MessagesToClient.*;
 /**
  * PayResource Class defines data and methods to complete a Client's request when paying for a
  * production or a Development Card.
+ * <p><b>Attributes:</b></p>
+ * <ul>
+ *     <li>boolean "fromWarehouse": set to true if the payed resource comes from the Warehouse</li>
+ *     <li>int "depot": specifies which depot the chosen resource comes from (if it comes from the Warehouse)</li>
+ *     <li>ResourceType "resourceType": specifies which type of resource was chosen by the player (if the resource comes
+ *     from the Strongbox)</li>
+ * </ul>
+ * @author redrick99
  */
 public class PayResource extends Action {
-    /** a boolean is used to tell if the resource comes from the warehouse or the strongbox */
     private final boolean fromWarehouse;
-    /** int indicating the depot where the player took the resource from */
     private final int depot;
-    /** ResourceType of the resources taken by the player (if !fromWarehouse) */
     private final ResourceType resourceType;
 
     /**
@@ -29,37 +34,42 @@ public class PayResource extends Action {
     }
 
     /**
-     * Getter for "actionType" attribute in PayResource Class.
+     * Getter for "actionType" attribute.
      */
     public ActionType getActionType() {
         return actionType;
     }
 
     /**
-     * Getter for "fromWarehouse" attribute in PayResource Class.
+     * Getter for "fromWarehouse" attribute.
      */
     public boolean isFromWarehouse() {
         return fromWarehouse;
     }
 
     /**
-     * Getter for "depot" attribute in PayResource Class.
+     * Getter for "depot" attribute.
      */
     public int getDepot() {
         return depot;
     }
 
     /**
-     * Getter for "resourceType" attribute in PayResource Class.
+     * Getter for "resourceType" attribute.
      */
     public ResourceType getResourceType() {
         return resourceType;
     }
 
     /**
-     * This method checks if the input sent to the server is correct by assuring that the depot index
-     * does not go out of bounds and .
-     * @throws IllegalArgumentException if on of the ResourceTypes is NONE.
+     * Controls if the input sent to the server is correct by running the following checks:
+     * <ul>
+     *     <li>if the resource comes from the Warehouse, depot index has to be between 0 and 4</li>
+     *     <li>if the resource comes from the Strongbox, the specified resourceType mustn't be of type NONE</li>
+     *     <li>if the resource comes from the Warehouse, the specified resourceType MUST be of type NONE</li>
+     * </ul>
+     * @return true if the action's parameters are correct.
+     * @throws IllegalArgumentException if one of the ResourceTypes is equal to NONE.
      */
     @Override
     public boolean isCorrect() throws IllegalArgumentException {
@@ -76,8 +86,10 @@ public class PayResource extends Action {
     }
 
     /**
-     * Method used to check if the action is logically applicable by assuring that the depot
-     * picked by the client is Active.
+     * Checks if the action is logically applicable by assuring that the depot
+     * chosen by the player is Active (if the resource comes from the Warehouse).
+     * @param actionController Class used to compute Action messages coming from the Client.
+     * @return true if the specified depot can actually be used.
      */
     @Override
     public boolean canBeApplied(ActionController actionController) {
@@ -94,7 +106,8 @@ public class PayResource extends Action {
     }
 
     /**
-     * Method used to execute the action on the Model.
+     * Controls and executes the action on the Model.
+     * @param actionController Class used to compute Action messages coming from the Client.
      * @return "SUCCESS" if the action went right, another String if it went wrong.
      */
     @Override
@@ -171,15 +184,25 @@ public class PayResource extends Action {
     }
 
     /**
-     * This method is overridden in Two other subclasses
-     * @return null by default as it should be overridden.
+     * This method is overridden in two other subclasses because the Server response to a payment action differs
+     * depending on if the player is paying for a Development Card or to activate a Production.
+     * @param actionController Class used to compute Action messages coming from the Client.
+     * @return null by default as it should be used in this SuperClass.
      */
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {
         return null;
     }
 
-    public PaymentMessage hasToPay(ActionController actionController, boolean card) {
+
+    /**
+     * Protected method used by SubClasses to create a new PaymentMessage in case the player has not finished
+     * paying for a Development Cart or a Production.
+     * @param actionController Class used to compute Action messages coming from the Client.
+     * @param card Boolean set to true if the player is buying a Card, false if he is starting a Production.
+     * @return A PaymentMessage MessageToClient type object.
+     */
+    protected PaymentMessage hasToPay(ActionController actionController, boolean card) {
         PaymentMessage paymentMessage = new PaymentMessage(actionController.getGame().getCurrentPlayerNickname());
         if(this.response.equals("HasToPay")) {
             paymentMessage.setWarehouse(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse().toView());

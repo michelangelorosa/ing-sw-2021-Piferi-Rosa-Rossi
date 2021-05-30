@@ -9,6 +9,15 @@ import it.polimi.ingsw.Model.MessagesToClient.*;
 /**
  * MarketChooseTow Class contains data and methods to resolve a Client request regarding Market
  * shopping.
+ * <p>
+ * <b>Attributes:</b>
+ * <ul>
+ *     <li>boolean "row": set to true if the player chose a Row from the Market, false if he chose a Column</li>
+ *     <li>int "rowOrColumnNumber": indicates the row or column the player chose</li>
+ *     <li>ResourceStack "temporaryResource": contains resources gathered when choosing a row or a column
+ *     from the market (needed to start a <i>Add Cycle</i>)</li>
+ * </ul>
+ * @author redrick99
  */
 public class MarketChooseRow extends Action {
     /** True if the player chose a Row, false if the player chose a Column */
@@ -27,29 +36,23 @@ public class MarketChooseRow extends Action {
     }
 
     /**
-     * Getter for "actionType" in Action super Class.
-     */
-    public ActionType getAction() {
-        return actionType;
-    }
-
-    /**
-     * Getter for "row" in MarketChooseRow Class.
+     * Getter for "row" attribute.
      */
     public boolean isRow() {
         return row;
     }
 
     /**
-     * Getter for "rowOrColumnNumber" in MarketChooseRow Class.
+     * Getter for "rowOrColumnNumber" attribute.
      */
     public int getRowOrColumnNumber() {
         return rowOrColumnNumber;
     }
 
     /**
-     * This method checks if the input sent to the server is correct by assuring that the row or
+     * Checks if the input sent to the server is correct by assuring that the row or
      * column index does not go out of bounds.
+     * @return true if the row is between 0 and 2 or if the column is between 0 and 3.
      * @throws IllegalArgumentException if the row or column index is out of bounds.
      */
     @Override
@@ -61,7 +64,9 @@ public class MarketChooseRow extends Action {
     }
 
     /**
-     * Method used to execute the action on the Model.
+     * Controls and executes the action on the Model. It saves resources got from the Market in a temporary ResourceStack
+     * inside the player's board to begin a <i>Add Cycle</i>.
+     * @param actionController Class used to compute Action messages coming from the Client.
      * @return "SUCCESS" if the action went right, another String if it went wrong.
      */
     @Override
@@ -84,7 +89,10 @@ public class MarketChooseRow extends Action {
     }
 
     /**
-     * Method used to check if and how many Leader Cards of type WHITE MARBLE the player has.
+     * Checks if and how many Leader Cards of type WHITE MARBLE the player has.
+     * <p>If the player has more than one active card of type WHITE MARBLE, he has to choose which card he wants to use
+     * for a Market interaction for <b>each</b> white marble.</p>
+     * @param actionController Class used to compute Action messages coming from the Client.
      * @return "Choose Leader Card" if the player has two active WHITE MARBLE ability Leader Cards.
      */
     public String leaderCardCheck(ActionController actionController) {
@@ -112,8 +120,9 @@ public class MarketChooseRow extends Action {
     }
 
     /**
-     * Method used to prepare a messageToClient type object to be sent by the server to the client.
-     * @return A message to be sent to the client.
+     * Prepares a ChoseMarketRowMessage MessageToClient type object to be sent to the Client.
+     * @param actionController Class used to compute Action messages coming from the Client.
+     * @return A message to be sent to the Client.
      */
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {

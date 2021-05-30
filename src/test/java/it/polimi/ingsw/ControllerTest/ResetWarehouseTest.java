@@ -56,18 +56,6 @@ public class ResetWarehouseTest {
         assertEquals(3, warehouse.getWarehouseDepots()[0].getStoredResources());
     }
 
-    /**This test checks that the method returns true everytime*/
-    @Test
-    public void isCorrectTest(){
-        assertTrue(reset.isCorrect());
-    }
-
-    /**This test checks that the method returns true everytime*/
-    @Test
-    public void canBeAppliedTest(){
-        assertTrue(reset.canBeApplied(actionController));
-    }
-
     /**
      * I created a game, gave to the current player some resources, tried to buy the cards and then check that with the
      * reset the warehouse and the strongbox return at the beginning condition.

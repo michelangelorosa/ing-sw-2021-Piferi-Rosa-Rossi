@@ -9,6 +9,12 @@ import it.polimi.ingsw.Model.MessagesToClient.*;
 /**
  * SwitchDepot Class defines data and methods to complete a Client's request when wanting
  * to switch two depots during an Add interaction.
+ * <p><b>Attributes:</b></p>
+ * <ul>
+ *     <li>int "firstDepot": indicates the first Depot the player wants to switch</li>
+ *     <li>int "secondDepot": indicates the second Depot the player wants to switch</li>
+ * </ul>
+ * @author redrick99
  */
 public class SwitchDepot extends Action {
     private final int firstDepot;
@@ -24,29 +30,30 @@ public class SwitchDepot extends Action {
     }
 
     /**
-     * Getter for "actionType" attribute in SwitchDepot Class.
+     * Getter for "actionType" attribute.
      */
     public ActionType getActionType() {
         return actionType;
     }
 
     /**
-     * Getter for "firstDepot" attribute in SwitchDepot Class.
+     * Getter for "firstDepot" attribute.
      */
     public int getFirstDepot() {
         return firstDepot;
     }
 
     /**
-     * Getter for "secondDepot" attribute in SwitchDepot Class.
+     * Getter for "secondDepot" attribute.
      */
     public int getSecondDepot() {
         return secondDepot;
     }
 
     /**
-     * This method checks if the input sent to the server is correct by assuring that the depot index
-     * does not go out of bounds.
+     * Checks if the input sent to the server is correct by assuring that the depot index
+     * isn't out of bounds.
+     * @return  true if both firstDepot and secondDepot indexes are between 0 and 4.
      * @throws IllegalArgumentException if the row or column index is out of bounds.
      */
     @Override
@@ -59,8 +66,10 @@ public class SwitchDepot extends Action {
     }
 
     /**
-     * Method used to check if the action is logically applicable by assuring that the depot
-     * picked by the client is Active.
+     * Checks if the action is logically applicable by assuring that both the depots
+     * chosen by the player are actually usable.
+     * @param actionController Class used to compute Action messages coming from the Client.
+     * @return true if the action is applicable.
      */
     @Override
     public boolean canBeApplied(ActionController actionController) {
@@ -74,7 +83,8 @@ public class SwitchDepot extends Action {
     }
 
     /**
-     * Method used to execute the action on the Model.
+     * Controls and executes the action on the Model.
+     * @param actionController Class used to compute Action messages coming from the Client.
      * @return "SUCCESS" if the action went right, another String if it went wrong.
      */
     @Override
@@ -115,8 +125,9 @@ public class SwitchDepot extends Action {
     }
 
     /**
-     * Method used to prepare a messageToClient type object to be sent by the server to the client.
-     * @return A message to be sent to the client.
+     * Prepares a SwitchDepotMessage MessageToClient type object to be sent to the Client.
+     * @param actionController Class used to compute Action messages coming from the Client.
+     * @return A message to be sent to the Client.
      */
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {

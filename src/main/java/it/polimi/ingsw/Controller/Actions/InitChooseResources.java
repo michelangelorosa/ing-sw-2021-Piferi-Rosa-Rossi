@@ -8,17 +8,40 @@ import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * InitChooseResources Class defines data and methods used to give to the player the initial resources
+ * he chooses at the beginning of the game.
+ * <p>
+ * <b>Attributes:</b>
+ * <ul>
+ *     <li>HashMap(Integer, ArrayList(ResourceType)) depotResource: Maps an ArrayList of Resources
+ *     to an Integer key which indicates the depot chose by the player to put said resources.</li>
+ * </ul>
+ * @author redrick99
+ */
 public class InitChooseResources extends Action{
     private final HashMap<Integer, ArrayList<ResourceType>> depotResource;
 
+    /**
+     * Constructor for InitChooseResources Class.
+     */
     public InitChooseResources(HashMap<Integer, ArrayList<ResourceType>> depotResource) {
         this.depotResource = depotResource;
     }
 
+    /**
+     * Getter for "depotResource" attribute.
+     */
     public HashMap<Integer, ArrayList<ResourceType>> getDepotResource() {
         return depotResource;
     }
 
+    /**
+     * Checks if the object parameters are correct by assuring that the player hasn't specified more
+     * resources per depot than he actually could and by making sure that there are no Resources of type NONE.
+     * @return true if every ArrayList inside the HashMap is correct.
+     * @throws IllegalArgumentException if any of the ArrayLists inside the HasMap do not follow given requirements
+     */
     @Override
     public boolean isCorrect() throws IllegalArgumentException{
         if(!depotResource.get(0).isEmpty())
@@ -48,8 +71,15 @@ public class InitChooseResources extends Action{
         return true;
     }
 
+    /**
+     * Checks if the action is applicable with given parameters by assuring that the player didn't pick
+     * different types of resources to be put in the same Depot or that the player didn't put two equal
+     * resources in two different depots.
+     * @param actionController Class used to compute Action messages coming from the Client.
+     * @return true if the action is applicable.
+     */
     @Override
-    public boolean canBeApplied(ActionController actionController) throws IllegalArgumentException {
+    public boolean canBeApplied(ActionController actionController) {
         if(depotResource.get(0).isEmpty() && depotResource.get(1).isEmpty() && depotResource.get(2).isEmpty())
             return true;
 
@@ -97,6 +127,11 @@ public class InitChooseResources extends Action{
         return true;
     }
 
+    /**
+     * Controls and Executes the action by adding the specified resources to the player's Warehouse.
+     * @param actionController Class used to compute Action messages coming from the Client.
+     * @return "SUCCESS" if the action is correctly applied to the Model, another String if otherwise.
+     */
     @Override
     public String doAction(ActionController actionController) {
 
@@ -130,6 +165,11 @@ public class InitChooseResources extends Action{
         return "SUCCESS";
     }
 
+    /**
+     * Prepares a InitChoseResourcesMessage MessageToClient type object to be sent to the Client.
+     * @param actionController Class used to compute Action messages coming from the Client.
+     * @return A message to be sent to the Client.
+     */
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {
         InitChoseResourcesMessage message = new InitChoseResourcesMessage(actionController.getGame().getCurrentPlayerNickname());

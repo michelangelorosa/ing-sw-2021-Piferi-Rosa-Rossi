@@ -9,6 +9,12 @@ import it.polimi.ingsw.Model.MessagesToClient.*;
 /**
  * EndTurn class defines methods to end a player's turn and go to the next
  * one (if the game is Multiplayer)
+ * <p>
+ * <b>Attributes:</b>
+ * <ul>
+ *     <li>String "currentPlayer": contains the name of the player who ended his turn</li>
+ * </ul>
+ * @author redrick99
  */
 public class EndTurn extends Action {
     private String currentPlayer;
@@ -21,14 +27,8 @@ public class EndTurn extends Action {
     }
 
     /**
-     * Getter for "actionType" attribute in EndTurn Class.
-     */
-    public ActionType getActionType() {
-        return this.actionType;
-    }
-
-    /**
-     * Method used to execute the action on the Model.
+     * Executes the action on the Model.
+     * @param actionController Class used to compute Action messages coming from the Client.
      * @return "SUCCESS" if the action went right, another String if it went wrong.
      */
     @Override
@@ -56,8 +56,8 @@ public class EndTurn extends Action {
     }
 
     /**
-     * Method used to prepare a messageToClient type object to be sent by the server to the client.
-     * @return A message to be sent to the client.
+     * Prepares a EndTurnMessage MessageToClient type object to be sent to the Client.
+     * @return A message to be sent to the Client.
      */
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {

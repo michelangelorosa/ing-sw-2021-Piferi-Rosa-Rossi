@@ -15,6 +15,7 @@ import it.polimi.ingsw.Model.MessagesToClient.*;
  *     <li>int "rowCardToBuy", "columnCardToBuy": they indicate the position of the DevelopmentCard
  *     bought by the player. <i>Automatically set when the player buys a new Card</i></li>
  * </ul>
+ * @author redrick99
  */
 public class ChooseCardSlot extends Action {
     private final int cardSlot;
@@ -80,6 +81,7 @@ public class ChooseCardSlot extends Action {
      * Controls and executes the action on the Model.
      * <p>Checks if the slot chosen by the player is suitable for a new Dev Card, then proceeds
      * to put the Card in said slot.</p>
+     * @param actionController Class used to compute Action messages coming from the Client.
      * @return "SUCCESS" if the action went right, another String if it went wrong.
      */
     @Override
@@ -103,6 +105,7 @@ public class ChooseCardSlot extends Action {
 
     /**
      * Prepares a ChoseCardSlot MessageToClient type object to be sent to the Client.
+     * @param actionController Class used to compute Action messages coming from the Client.
      * @return A message to be sent to the Client.
      */
     public MessageToClient messagePrepare(ActionController actionController) {

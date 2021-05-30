@@ -9,6 +9,12 @@ import it.polimi.ingsw.Model.MessagesToClient.*;
 /**
  * ResetWarehouse Class contains data and methods to complete a Client's request when wanting
  * to reset his warehouse to initial conditions (when adding resources).
+ * <p><b>Attributes:</b></p>
+ * <ul>
+ *     <li>Warehouse "backupWarehouse": Backed Up Warehouse use to reset the player's Warehouse to initial conditions</li>
+ *     <li>ResourceStack "backupResources": </li>
+ * </ul>
+ * @author redrick99
  */
 public class ResetWarehouse extends Action {
     private Warehouse backupWarehouse;
@@ -22,52 +28,37 @@ public class ResetWarehouse extends Action {
     }
 
     /**
-     * Getter for "backupWarehouse" attribute in ResetWarehouse Class.
+     * Getter for "backupWarehouse" attribute.
      */
     public Warehouse getBackupWarehouse() {
         return backupWarehouse;
     }
 
     /**
-     * Setter for "backupWarehouse" attribute in ResetWarehouse Class.
+     * Setter for "backupWarehouse" attribute.
      */
     public void setBackupWarehouse(Warehouse backupWarehouse) {
         this.backupWarehouse = backupWarehouse;
     }
 
     /**
-     * Getter for "backupResources" attribute in ResetWarehouse Class.
+     * Getter for "backupResources" attribute.
      */
     public ResourceStack getBackupResources() {
         return backupResources;
     }
 
     /**
-     * Setter for "backupResources" attribute in ResetWarehouse Class.
+     * Setter for "backupResources" attribute.
      */
     public void setBackupResources(ResourceStack backupResources) {
         this.backupResources = backupResources;
     }
 
     /**
-     * This method checks if the input sent to the server is correct.
-     */
-    @Override
-    public boolean isCorrect() {
-        return true;
-    }
-
-    /**
-     * Method used to check if the action is logically applicable.
-     */
-    @Override
-    public boolean canBeApplied(ActionController actionController) {
-        return true;
-    }
-
-    /**
-     * Method used to execute the action on the Model.
-     * @return "SUCCESS" if the action went right, another String if it went wrong.
+     * Executes the action on the Model.
+     * @param actionController Class used to compute Action messages coming from the Client.
+     * @return "SUCCESS".
      */
     @Override
     public String doAction(ActionController actionController) {
@@ -82,17 +73,16 @@ public class ResetWarehouse extends Action {
     }
 
     /**
-     * Method used to empty both backup objects when concluding the add phase.
+     * Empties both backup objects when concluding the <i>Add Cycle</i>.
      */
     public void emptyBackupResource() {
-        this.backupWarehouse.reset();
-        ResourceType[] resourceTypes = ResourceType.values();
-        for(int i = 1; i <= 4; i++)
-            this.getBackupResources().setResource(0, resourceTypes[i]);
+        this.backupWarehouse = new Warehouse();
+        this.backupResources = new ResourceStack(0,0,0,0);
     }
 
     /**
-     * Method used to prepare a messageToClient type object to be sent by the server to the client.
+     * Prepares a ResetWarehouseMessage MessageToClient type object to be sent to the Client.
+     * @param actionController Class used to compute Action messages coming from the Client.
      * @return A message to be sent to the client.
      */
     @Override

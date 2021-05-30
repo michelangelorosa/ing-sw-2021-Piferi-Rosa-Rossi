@@ -13,6 +13,7 @@ import it.polimi.ingsw.Model.MessagesToClient.*;
  *     <li>int "leaderCard": indicates the position, inside the player's deck, of the Leader Card
  *     he wants to choose to convert a White Marble</li>
  * </ul>
+ * @author redrick99
  */
 public class ChooseLeaderCard extends Action {
     private final int leaderCard;
@@ -47,6 +48,7 @@ public class ChooseLeaderCard extends Action {
 
     /**
      * Checks if the action is logically applicable.
+     * @param actionController Class used to compute Action messages coming from the Client.
      * @return true if the chosen Leader Card is of type WHITE_MARBLE and active.
      */
     @Override
@@ -57,6 +59,7 @@ public class ChooseLeaderCard extends Action {
 
     /**
      * Controls and executes the action on the Model.
+     * @param actionController Class used to compute Action messages coming from the Client.
      * @return "SUCCESS" if the action went right, another String if it went wrong.
      */
     @Override
@@ -84,6 +87,7 @@ public class ChooseLeaderCard extends Action {
      * Prepares a ChoseLeaderCardMessage MessageToClient type object to be sent to the Client.
      * <p>If there are more White Marbles for which the player has to choose a Leader Card,
      * the player's next possible action will be forced to "CHOOSE_LEADER_CARD"</p>
+     * @param actionController Class used to compute Action messages coming from the Client.
      * @return A message to be sent to the Client.
      */
     @Override

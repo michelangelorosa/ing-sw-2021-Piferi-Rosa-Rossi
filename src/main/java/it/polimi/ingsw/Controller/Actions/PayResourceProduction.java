@@ -7,6 +7,7 @@ import it.polimi.ingsw.Model.MessagesToClient.*;
 /**
  * PayResourceProduction Class extends PayResource Class to diversify messages going to the Client
  * for a better response management.
+ * @author redrick99
  */
 public class PayResourceProduction extends PayResource {
 
@@ -18,8 +19,10 @@ public class PayResourceProduction extends PayResource {
     }
 
     /**
-     * Method used to prepare a messageToClient type object to be sent by the server to the client.
-     * @return A message to be sent to the client.
+     * Prepares a EndProductionMessage or PaymentMessage MessageToClient type object to be sent to the Client.
+     * @param actionController Class used to compute Action messages coming from the Client.
+     * @return A EndProductionMessage if the player has finished paying for a Production, or a PaymentMessage
+     * if the player has <b>not</b> yet finished paying for a Production.
      */
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {

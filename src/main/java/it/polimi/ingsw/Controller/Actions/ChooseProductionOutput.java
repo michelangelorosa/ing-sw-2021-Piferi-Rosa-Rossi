@@ -19,6 +19,7 @@ import java.util.ArrayList;
  *     <li>ArrayList(ResourceType) "firstLeaderCardOutput", "secondLeaderCardOutput", "basicProductionOutput":
  *     they contain the outputs chosen by the player.</li>
  * </ul>
+ * @author redrick99
  */
 public class ChooseProductionOutput extends Action {
     private boolean firstLeaderCard;
@@ -42,13 +43,6 @@ public class ChooseProductionOutput extends Action {
         this.secondLeaderCardOutput = null;
         this.basicProductionOutput = null;
         this.output = new ResourceStack(0,0,0,0);
-    }
-
-    /**
-     * Getter for "actionType" attribute.
-     */
-    public ActionType getActionType() {
-        return actionType;
     }
 
     /**
@@ -169,6 +163,7 @@ public class ChooseProductionOutput extends Action {
 
     /**
      * Checks if the action is logically applicable.
+     * @param actionController Class used to compute Action messages coming from the Client.
      */
     @Override
     public boolean canBeApplied(ActionController actionController) {
@@ -192,6 +187,7 @@ public class ChooseProductionOutput extends Action {
      * Controls and executes the action on the Model.
      * <p>After checking all outputs specified by the player, proceeds to add them to the
      * player's strongbox along with all not chosen resources created by the production.</p>
+     * @param actionController Class used to compute Action messages coming from the Client.
      * @return "SUCCESS" if the action went right, another String if it went wrong.
      */
     @Override
@@ -223,6 +219,7 @@ public class ChooseProductionOutput extends Action {
 
     /**
      * Prepares a ChoseProductionMessage MessageToClient type object to be sent to the Client.
+     * @param actionController Class used to compute Action messages coming from the Client.
      * @return A message to be sent to the Client.
      */
     @Override
