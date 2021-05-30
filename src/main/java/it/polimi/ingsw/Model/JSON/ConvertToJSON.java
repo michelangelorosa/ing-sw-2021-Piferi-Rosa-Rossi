@@ -49,7 +49,7 @@ public class ConvertToJSON {
         Gson gson = new Gson();
         String json = gson.toJson(cell);
         //System.out.println("{ \"LeaderCard\": " + json + "}");
-        try (PrintWriter out = new PrintWriter("FaithCell2.json")) {
+        try (PrintWriter out = new PrintWriter("src/main/resources/JSON/FaithCell2.json")) {
             out.println("{\"VaticanReportSection\": "+ json1 + "," + "\"FaithCell\": " + json + "}");
         }
         //return json;
@@ -142,7 +142,7 @@ public class ConvertToJSON {
         Gson gson = new Gson();
         String json = gson.toJson(leaderCard);
         //System.out.println("{ \"LeaderCard\": " + json + "}");
-        try (PrintWriter out = new PrintWriter("LeaderCards2.json")) {
+        try (PrintWriter out = new PrintWriter("src/main/resources/JSON/LeaderCards2.json")) {
             out.println("{ \"LeaderCard\": " + json + "}");
         }
         //return json;
@@ -201,7 +201,7 @@ public class ConvertToJSON {
         Gson gson = new Gson();
         String json = gson.toJson(cardJSONS);
         //System.out.println("{ \"LeaderCard\": " + json + "}");
-        try (PrintWriter out = new PrintWriter("DevelopmentCard2.json")) {
+        try (PrintWriter out = new PrintWriter("src/main/resources/JSON/DevelopmentCard2.json")) {
             out.println("{ \"DevelopmentCard\": " + json + "}");
         }
         //return json;
@@ -235,7 +235,7 @@ public class ConvertToJSON {
 
         Gson gson = new Gson();
         String json = gson.toJson(player);
-        try (PrintWriter out = new PrintWriter("NamePlayers.json")) {
+        try (PrintWriter out = new PrintWriter("src/main/resources/JSON/NamePlayers.json")) {
             out.println("{ \"PlayersName\": " + json + "}");
         }
 
@@ -384,7 +384,7 @@ public class ConvertToJSON {
 
         Gson gson = new Gson();
         String json = gson.toJson(leaderCard);
-        String temp = new String();
+        String temp;
         temp = "\"LeaderCard\": " + json;
         return temp;
     }
@@ -409,7 +409,7 @@ public class ConvertToJSON {
         }
         Gson gson = new Gson();
         String json = gson.toJson(cell);
-        String temp = new String();
+        String temp;
         temp = "\"FaithCells\": " + json;
         return temp;
     }
@@ -434,7 +434,7 @@ public class ConvertToJSON {
 
         Gson gson = new Gson();
         String json = gson.toJson(vaticanReportSections);
-        String temp = new String();
+        String temp;
         temp = "\"Vatican\": " + json;
         return temp;
     }
@@ -448,18 +448,18 @@ public class ConvertToJSON {
 
         ArrayList<PlayerJSON> player = new ArrayList<>();
 
-        for(int i = 0; i < players.size(); i++) {
+        for (Player value : players) {
 
-            PlayerStatus statusTemp = players.get(i).getStatus();
+            PlayerStatus statusTemp = value.getStatus();
             int status;
 
-            String nickname = players.get(i).getNickname();
-            int turnPosition = players.get(i).getTurnPosition();
-            boolean hasInkwell = players.get(i).hasInkwell();
-            int faithTrackPosition = players.get(i).getFaithTrackPosition();
-            if(statusTemp == PlayerStatus.IN_GAME) status = 0;
-            else if(statusTemp == PlayerStatus.IDLE) status = 1;
-            else if(statusTemp == PlayerStatus.LOST) status = 2;
+            String nickname = value.getNickname();
+            int turnPosition = value.getTurnPosition();
+            boolean hasInkwell = value.hasInkwell();
+            int faithTrackPosition = value.getFaithTrackPosition();
+            if (statusTemp == PlayerStatus.IN_GAME) status = 0;
+            else if (statusTemp == PlayerStatus.IDLE) status = 1;
+            else if (statusTemp == PlayerStatus.LOST) status = 2;
             else status = 3;
 
             player.add(new PlayerJSON(nickname, turnPosition, hasInkwell, status, faithTrackPosition));
@@ -467,7 +467,7 @@ public class ConvertToJSON {
 
         Gson gson = new Gson();
         String json = gson.toJson(player);
-        String temp = new String();
+        String temp;
         temp = "\"PlayersName\": " + json;
         return temp;
     }

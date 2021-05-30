@@ -26,7 +26,7 @@ public class BeginGameJSON {
         names = json.covertPlayerNameString(players);
 
         //System.out.println(developmentCards + leaderCardsString + faithTrack + vaticanString + names +"\"basicProduction\": "+" [{ \"input\": " + inputBaseProduction + ", \"output\": " + outputBaseProduction + "}]}");
-        try (PrintWriter out = new PrintWriter("FromServerToClientBegin.json")) {
+        try (PrintWriter out = new PrintWriter("src/main/resources/JSON/FromServerToClientBegin.json")) {
             out.println("{" + developmentCards + "," + leaderCardsString + "," + faithTrack + "," + vaticanString + "," + names + "," + "\"basicProduction\": "+" [{ \"input\": " + inputBaseProduction + ", \"output\": " + outputBaseProduction + "}]}");
         }
     }

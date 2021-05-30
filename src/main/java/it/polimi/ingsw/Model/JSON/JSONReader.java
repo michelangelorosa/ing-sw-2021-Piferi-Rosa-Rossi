@@ -35,9 +35,9 @@ public class JSONReader {
          * A standard and handwritten file is overwritten whenever the player chooses to edit the game parameters.
          */
 
-        File cards = new File("DevelopmentCards.json");
-        //File cards = new File("DevelopmentCard2.json");
-        //File cards = new File("FromServerToClientBegin.json");
+        File cards = new File("src/main/resources/JSON/DevelopmentCards.json");
+        //File cards = new File("src/main/resources/JSON/DevelopmentCard2.json");
+        //File cards = new File("src/main/resources/JSON/FromServerToClientBegin.json");
         DevelopmentCard[] readCards = new DevelopmentCard[48];
         DevelopmentCard cardToRead;
         int cardsInDeck = 0;
@@ -100,8 +100,8 @@ public class JSONReader {
 
     /**Json Reader for the vatican report section*/
     public static VaticanReportSection[] ReadVaticanReportSection() {
-        //File cells = new File("FaithCell2.json");
-        File cells = new File("FromServerToClientBegin.json");
+        //File cells = new File("src/main/resources/JSON/FaithCell2.json");
+        File cells = new File("src/main/resources/JSON/FromServerToClientBegin.json");
 
         VaticanReportSection[] readSection = new VaticanReportSection[3];
         VaticanReportSectionEnum[] vaticanReportSectionEnums = VaticanReportSectionEnum.values();
@@ -153,9 +153,9 @@ public class JSONReader {
         /**
          * A standard and handwritten file is overwritten whenever the player chooses to edit the game parameters.
          */
-        //File cells = new File("FaithTrack.json");
-        //File cells = new File("FaithCell2.json");
-        File cells = new File("FromServerToClientBegin.json");
+        //File cells = new File("src/main/resources/JSON/FaithTrack.json");
+        //File cells = new File("src/main/resources/JSON/FaithCell2.json");
+        File cells = new File("src/main/resources/JSON/FromServerToClientBegin.json");
 
         FaithCell[] readCells = new FaithCell[25];
         FaithCell cellToRead;
@@ -215,9 +215,9 @@ public class JSONReader {
         /**
          * A standard and handwritten file is overwritten whenever the player chooses to edit the game parameters.
          */
-        //File cards = new File("LeaderCards.json");
-        //File cards = new File("LeaderCards2.json");
-        File cards = new File("FromServerToClientBegin.json");
+        //File cards = new File("src/main/resources/JSON/LeaderCards.json");
+        //File cards = new File("src/main/resources/JSON/LeaderCards2.json");
+        File cards = new File("src/main/resources/JSON/FromServerToClientBegin.json");
 
         ArrayList<LeaderCard> leaderCards = new ArrayList<>();
         LeaderCard cardToRead;
@@ -343,8 +343,8 @@ public class JSONReader {
 
     /**JSON Reader for the players name*/
     public static ArrayList<Player> ReadPlayersName(){
-        //File players = new File("NamePlayers.json");
-        File players = new File("FromServerToClientBegin.json");
+        //File players = new File("src/main/resources/JSON/NamePlayers.json");
+        File players = new File("src/main/resources/JSON/FromServerToClientBegin.json");
         ArrayList<Player> readPlayer = new ArrayList<>();
         int count = 0;
 
