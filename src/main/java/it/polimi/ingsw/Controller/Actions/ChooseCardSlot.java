@@ -8,6 +8,13 @@ import it.polimi.ingsw.Model.MessagesToClient.*;
 /**
  * ChooseCardSlot Class contains data and methods to resolve a Client's request when choosing
  * a card slot to put the just bought DevelopmentCard.
+ * <p>
+ * <b>Attributes:</b>
+ * <ul>
+ *     <li>int "cardSlot": indicates where the player wants to put the Development Card.</li>
+ *     <li>int "rowCardToBuy", "columnCardToBuy": they indicate the position of the DevelopmentCard
+ *     bought by the player. <i>Automatically set when the player buys a new Card</i></li>
+ * </ul>
  */
 public class ChooseCardSlot extends Action {
     private final int cardSlot;
@@ -23,50 +30,44 @@ public class ChooseCardSlot extends Action {
     }
 
     /**
-     * Getter for "actionType" attribute in ChooseCardSlot.
-     */
-    public ActionType getActionType() {
-        return actionType;
-    }
-
-    /**
-     * Getter for "cardSlot" attribute in ChooseCardSlot.
+     * Getter for "cardSlot" attribute.
      */
     public int getCardSlot() {
         return cardSlot;
     }
 
     /**
-     * Getter for "rowCardToBuy" attribute in ChooseCardSlot.
+     * Getter for "rowCardToBuy" attribute.
      */
     public int getRowCardToBuy() {
         return rowCardToBuy;
     }
 
     /**
-     * Setter for "rowCardToBuy" attribute in ChooseCardSlot.
+     * Setter for "rowCardToBuy" attribute.
      */
     public void setRowCardToBuy(int rowCardToBuy) {
         this.rowCardToBuy = rowCardToBuy;
     }
 
     /**
-     * Getter for "columnCardToBuy" attribute in ChooseCardSlot.
+     * Getter for "columnCardToBuy" attribute.
      */
     public int getColumnCardToBuy() {
         return columnCardToBuy;
     }
 
     /**
-     * Setter for "columnCardToBuy" attribute in ChooseCardSlot.
+     * Setter for "columnCardToBuy" attribute.
      */
     public void setColumnCardToBuy(int columnCardToBuy) {
         this.columnCardToBuy = columnCardToBuy;
     }
 
     /**
-     * Method used to check if the specified action is formally correct.
-     * @throws IllegalArgumentException if the row or column indexes are out of bounds.
+     * Checks if the specified action is formally correct.
+     * @return true if "cardSlot" is between 0 and 2.
+     * @throws IllegalArgumentException if the "cardSlot" index is out of bounds.
      */
     @Override
     public boolean isCorrect() throws IllegalArgumentException {
@@ -76,7 +77,9 @@ public class ChooseCardSlot extends Action {
     }
 
     /**
-     * Method used to execute the action on the Model.
+     * Controls and executes the action on the Model.
+     * <p>Checks if the slot chosen by the player is suitable for a new Dev Card, then proceeds
+     * to put the Card in said slot.</p>
      * @return "SUCCESS" if the action went right, another String if it went wrong.
      */
     @Override
@@ -99,8 +102,8 @@ public class ChooseCardSlot extends Action {
     }
 
     /**
-     * Method used to prepare a messageToClient type object to be sent by the server to the client.
-     * @return A message to be sent to the client.
+     * Prepares a ChoseCardSlot MessageToClient type object to be sent to the Client.
+     * @return A message to be sent to the Client.
      */
     public MessageToClient messagePrepare(ActionController actionController) {
         ChoseCardSlotMessage message = new ChoseCardSlotMessage(actionController.getGame().getCurrentPlayerNickname());

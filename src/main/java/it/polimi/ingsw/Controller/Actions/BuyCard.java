@@ -10,10 +10,14 @@ import it.polimi.ingsw.Model.MessagesToClient.*;
 /**
  * BuyCard Class contains data and methods to resolve a Client's request when buying a card
  * from the DevelopmentCardTable.
+ * <p>
+ * <b>Attributes:</b>
+ * <ul>
+ *     <li>int "row", "column":  coordinates of the deck the player wants to buy the cards from</li>
+ * </ul>
  */
 public class
 BuyCard extends Action {
-    /** row and column attributes are the coordinates of the deck the player wants to buy the cards from */
     private final int row;
     private final int column;
 
@@ -27,28 +31,22 @@ BuyCard extends Action {
     }
 
     /**
-     * Getter for "actionType" attribute in BuyCard Class.
-     */
-    public ActionType getActionType() {
-        return actionType;
-    }
-
-    /**
-     * Getter for "row" attribute in BuyCard Class.
+     * Getter for "row" attribute.
      */
     public int getRow() {
         return row;
     }
 
     /**
-     * Getter for "column" attribute in BuyCard Class.
+     * Getter for "column" attribute.
      */
     public int getColumn() {
         return column;
     }
 
     /**
-     * Method used to check if the specified action is formally correct.
+     * Checks if the specified action is formally correct.
+     * @return true if "row" is between 0 and 2 and "column" is between 0 and 3.
      * @throws IllegalArgumentException if the row or column indexes are out of bounds.
      */
     @Override
@@ -61,8 +59,8 @@ BuyCard extends Action {
     }
 
     /**
-     * Method used to check if the specified action is logically correct.
-     * @return false if the Deck specified by the Client is Empty.
+     * Checks if the specified action is logically applicable.
+     * @return false if the Deck from which the player wants to buy the card is Empty.
      */
     @Override
     public boolean canBeApplied(ActionController actionController) {
@@ -70,7 +68,11 @@ BuyCard extends Action {
     }
 
     /**
-     * Method used to execute the action on the Model.
+     * Controls and executes the action on the Model.
+     * <p>Firstly checks if the player has resources to buy the Card and if the Card can
+     * fit inside his personal board, then saves data needed later to draw the Card from
+     * the Development Card Table.</p>
+     * At last, if the Player can buy the Card, a new Payment Cycle starts.
      * @return "SUCCESS" if the action went right, another String if it went wrong.
      */
     @Override
@@ -104,8 +106,8 @@ BuyCard extends Action {
     }
 
     /**
-     * Method used to prepare a messageToClient type object to be sent by the server to the client.
-     * @return A message to be sent to the client.
+     * Prepares a BuyCardMessage MessageToClient type object to be sent to the client.
+     * @return The created message.
      */
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {

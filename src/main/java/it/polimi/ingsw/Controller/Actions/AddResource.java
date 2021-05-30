@@ -10,6 +10,13 @@ import it.polimi.ingsw.Model.MessagesToClient.*;
 /**
  * AddResource Class contains data and methods to resolve a Client request when adding
  * a resource from the Market into his Warehouse.
+ * <p>
+ * <b>Attributes:</b>
+ * <ul>
+ *     <li>int "depot": indicates the depot where the player wants to add a resource</li>
+ *     <li>ResourceType "resourceType": resource the player wants to add</li>
+ * </ul>
+ * @author redrick99
  */
 public class AddResource extends Action {
     private final int depot;
@@ -25,29 +32,24 @@ public class AddResource extends Action {
     }
 
     /**
-     * Getter for actionType attribute in AddResource Class.
-     */
-    public ActionType getActionType() {
-        return actionType;
-    }
-
-    /**
-     * Getter for depot attribute in AddResource Class.
+     * Getter for "depot" attribute.
      */
     public int getDepot() {
         return depot;
     }
 
     /**
-     * Getter for resourceType attribute in AddResource Class.
+     * Getter for "resourceType" attribute.
      */
     public ResourceType getResourceType() {
         return resourceType;
     }
 
     /**
-     * Method used to check if the specified action is formally correct.
-     * @throws IllegalArgumentException if the depot index is out of bounds.
+     * Checks if the specified action is formally correct.
+     * @return true if int "depot" is between 0 and 4 and resourceType is not equal to ResourceType.NONE.
+     * @throws IllegalArgumentException if depot index is out of bounds or if resourceType equals to
+     * ResourceType.NONE.
      */
     @Override
     public boolean isCorrect() throws IllegalArgumentException {
@@ -59,7 +61,7 @@ public class AddResource extends Action {
     }
 
     /**
-     * Method used to check if the specified action is logically correct.
+     * Checks if the specified action is logically applicable.
      * @return false if the player is referring to a inactive Leader Depot or if the
      * specified Type of resource cannot be put inside a Leader Depot.
      */
@@ -76,7 +78,8 @@ public class AddResource extends Action {
     }
 
     /**
-     * Method used to execute the action on the Model.
+     * Controls and executes the action on the Model.
+     * <p>Adds a specified ResourceType to a specified Depot if it is allowed by the game rules.</p>
      * @return "SUCCESS" if the action went right, another String if it went wrong.
      */
     @Override
@@ -111,7 +114,7 @@ public class AddResource extends Action {
     }
 
     /**
-     * Method used to prepare a messageToClient type object to be sent by the server to the client.
+     * Prepares a AddMessage MessageToClient type object to be sent to the Client.
      * @return A message to be sent to the client.
      */
     @Override

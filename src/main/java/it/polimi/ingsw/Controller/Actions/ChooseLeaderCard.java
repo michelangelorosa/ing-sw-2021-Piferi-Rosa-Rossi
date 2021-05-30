@@ -8,6 +8,11 @@ import it.polimi.ingsw.Model.MessagesToClient.*;
 /**
  * ChooseLeaderCard Class contains data and methods to resolve a Client request regarding Leader Card
  * choice when buying a white marble from the market.
+ * <p>Attributes:
+ * <ul>
+ *     <li>int "leaderCard": indicates the position, inside the player's deck, of the Leader Card
+ *     he wants to choose to convert a White Marble</li>
+ * </ul>
  */
 public class ChooseLeaderCard extends Action {
     private final int leaderCard;
@@ -21,13 +26,6 @@ public class ChooseLeaderCard extends Action {
     }
 
     /**
-     * Getter for "actionType" attribute in ChooseLeaderCard Class.
-     */
-    public ActionType getActionType() {
-        return actionType;
-    }
-
-    /**
      * Getter for "leaderCard" attribute in ChooseLeaderCard Class.
      */
     public int getLeaderCard() {
@@ -35,8 +33,9 @@ public class ChooseLeaderCard extends Action {
     }
 
     /**
-     * This method checks if the input sent to the server is correct by assuring that the Leader Card
+     * Checks if the input sent to the server is correct by assuring that the Leader Card
      * index does not go out of bounds.
+     * @return true if "leaderCard" is between 0 and 1.
      * @throws IllegalArgumentException if the row or column index is out of bounds.
      */
     @Override
@@ -47,7 +46,8 @@ public class ChooseLeaderCard extends Action {
     }
 
     /**
-     * Method used to check if the action is logically applicable.
+     * Checks if the action is logically applicable.
+     * @return true if the chosen Leader Card is of type WHITE_MARBLE and active.
      */
     @Override
     public boolean canBeApplied(ActionController actionController) {
@@ -56,7 +56,7 @@ public class ChooseLeaderCard extends Action {
     }
 
     /**
-     * Method used to execute the action on the Model.
+     * Controls and executes the action on the Model.
      * @return "SUCCESS" if the action went right, another String if it went wrong.
      */
     @Override
@@ -81,8 +81,10 @@ public class ChooseLeaderCard extends Action {
     }
 
     /**
-     * Method used to prepare a messageToClient type object to be sent by the server to the client.
-     * @return A message to be sent to the client.
+     * Prepares a ChoseLeaderCardMessage MessageToClient type object to be sent to the Client.
+     * <p>If there are more White Marbles for which the player has to choose a Leader Card,
+     * the player's next possible action will be forced to "CHOOSE_LEADER_CARD"</p>
+     * @return A message to be sent to the Client.
      */
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {

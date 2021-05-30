@@ -7,11 +7,15 @@ import it.polimi.ingsw.Model.MessagesToClient.*;
 /**
  * ActivateLeaderClass contains data and methods to resolve a Client request regarding Leader
  * Card activation.
- * Attributes:
+ * <p>
+ * <b>Attributes:</b>
+ * <ul>
+ *     <li> int "leaderCard": contains the position, inside the player's deck, of the Leader Card. </li>
+ * </ul>
+ * @author redrick99
  */
 public class ActivateLeaderCard extends Action {
 
-    /** "leaderCard" int attribute contains the position, inside the player's deck, of the Leader Card. */
     private final int leaderCard;
 
     /**
@@ -20,13 +24,6 @@ public class ActivateLeaderCard extends Action {
     public ActivateLeaderCard(int leaderCard) {
         this.actionType = ActionType.ACTIVATE_LEADERCARD;
         this.leaderCard = leaderCard;
-    }
-
-    /**
-     * Getter for "actionType" attribute.
-     */
-    public ActionType getActionType() {
-        return actionType;
     }
 
     /**

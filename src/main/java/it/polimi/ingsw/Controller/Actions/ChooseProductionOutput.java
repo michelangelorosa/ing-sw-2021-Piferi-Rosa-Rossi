@@ -11,6 +11,14 @@ import java.util.ArrayList;
 /**
  * ChooseProductionOutput Class contains data and methods to be used when the player
  * concluded payment for a Production to choose the Production output.
+ * <p>
+ * <b>Attributes:</b>
+ * <ul>
+ *     <li>boolean "firstLeaderCard", "secondLeaderCard", "basicProduction": they are set when activating
+ *     a production and indicate which different Productions the player chose to activate.</li>
+ *     <li>ArrayList(ResourceType) "firstLeaderCardOutput", "secondLeaderCardOutput", "basicProductionOutput":
+ *     they contain the outputs chosen by the player.</li>
+ * </ul>
  */
 public class ChooseProductionOutput extends Action {
     private boolean firstLeaderCard;
@@ -37,107 +45,107 @@ public class ChooseProductionOutput extends Action {
     }
 
     /**
-     * Getter for "actionType" attribute in Action super class.
+     * Getter for "actionType" attribute.
      */
     public ActionType getActionType() {
         return actionType;
     }
 
     /**
-     * Getter for "firstLeaderCard" attribute in ChooseProductionOutput Class.
+     * Getter for "firstLeaderCard" attribute.
      */
     public boolean isFirstLeaderCard() {
         return firstLeaderCard;
     }
 
     /**
-     * Getter for "secondLeaderCard" attribute in ChooseProductionOutput Class.
+     * Getter for "secondLeaderCard" attribute.
      */
     public boolean isSecondLeaderCard() {
         return secondLeaderCard;
     }
 
     /**
-     * Getter for "basicProduction" attribute in ChooseProductionOutput Class.
+     * Getter for "basicProduction" attribute.
      */
     public boolean isBasicProduction() {
         return basicProduction;
     }
 
     /**
-     * Getter for "firstLeaderCardOutput" attribute in ChooseProductionOutput Class.
+     * Getter for "firstLeaderCardOutput" attribute.
      */
     public ArrayList<ResourceType> getFirstLeaderCardOutput() {
         return firstLeaderCardOutput;
     }
 
     /**
-     * Getter for "secondLeaderCardOutput" attribute in ChooseProductionOutput Class.
+     * Getter for "secondLeaderCardOutput" attribute.
      */
     public ArrayList<ResourceType> getSecondLeaderCardOutput() {
         return secondLeaderCardOutput;
     }
 
     /**
-     * Getter for "basicProductionOutput" attribute in ChooseProductionOutput Class.
+     * Getter for "basicProductionOutput" attribute.
      */
     public ArrayList<ResourceType> getBasicProductionOutput() {
         return basicProductionOutput;
     }
 
     /**
-     * Getter for "output" attribute in ChooseProductionOutput Class.
+     * Getter for "output" attribute.
      */
     public ResourceStack getOutput() {
         return output;
     }
 
     /**
-     * Setter for firstLeaderCard attribute in ChooseProductionOutput Class.
+     * Setter for firstLeaderCard attribute.
      */
     public void setFirstLeaderCard(boolean firstLeaderCard) {
         this.firstLeaderCard = firstLeaderCard;
     }
 
     /**
-     * Setter for secondLeaderCard attribute in ChooseProductionOutput Class.
+     * Setter for secondLeaderCard attribute.
      */
     public void setSecondLeaderCard(boolean secondLeaderCard) {
         this.secondLeaderCard = secondLeaderCard;
     }
 
     /**
-     * Setter for basicProduction attribute in ChooseProductionOutput Class.
+     * Setter for basicProduction attribute.
      */
     public void setBasicProduction(boolean basicProduction) {
         this.basicProduction = basicProduction;
     }
 
     /**
-     * Setter for firstLeaderCardOutput attribute in ChooseProductionOutput Class.
+     * Setter for firstLeaderCardOutput attribute.
      */
     public void setFirstLeaderCardOutput(ArrayList<ResourceType> firstLeaderCardOutput) {
         this.firstLeaderCardOutput = firstLeaderCardOutput;
     }
 
     /**
-     * Setter for secondLeaderCardOutput attribute in ChooseProductionOutput Class.
+     * Setter for secondLeaderCardOutput attribute.
      */
     public void setSecondLeaderCardOutput(ArrayList<ResourceType> secondLeaderCardOutput) {
         this.secondLeaderCardOutput = secondLeaderCardOutput;
     }
 
     /**
-     * Setter for basicProductionOutput attribute in ChooseProductionOutput Class.
+     * Setter for basicProductionOutput attribute.
      */
     public void setBasicProductionOutput(ArrayList<ResourceType> basicProductionOutput) {
         this.basicProductionOutput = basicProductionOutput;
     }
 
     /**
-     * This method checks if the input sent to the server is correct by assuring that the ArrayLists
+     * Checks if the input sent to the server is correct by assuring that the ArrayLists
      * do not contain ResourceTypes equal to NONE.
-     * @throws IllegalArgumentException if on of the ResourceTypes is NONE.
+     * @throws IllegalArgumentException if at least one of the ResourceTypes is NONE.
      */
     @Override
     public boolean isCorrect() throws IllegalArgumentException {
@@ -160,7 +168,7 @@ public class ChooseProductionOutput extends Action {
     }
 
     /**
-     * Method used to check if the action is logically applicable.
+     * Checks if the action is logically applicable.
      */
     @Override
     public boolean canBeApplied(ActionController actionController) {
@@ -181,7 +189,9 @@ public class ChooseProductionOutput extends Action {
     }
 
     /**
-     * Method used to execute the action on the Model.
+     * Controls and executes the action on the Model.
+     * <p>After checking all outputs specified by the player, proceeds to add them to the
+     * player's strongbox along with all not chosen resources created by the production.</p>
      * @return "SUCCESS" if the action went right, another String if it went wrong.
      */
     @Override
@@ -212,8 +222,8 @@ public class ChooseProductionOutput extends Action {
     }
 
     /**
-     * Method used to prepare a messageToClient type object to be sent by the server to the client.
-     * @return A message to be sent to the client.
+     * Prepares a ChoseProductionMessage MessageToClient type object to be sent to the Client.
+     * @return A message to be sent to the Client.
      */
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {

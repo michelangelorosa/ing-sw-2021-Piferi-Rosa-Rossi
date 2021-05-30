@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Controller.Actions;
 
 /**
- * ActionType enum Class contains every single possible action coming from a Client, going
+ * ActionType enum Class contains definitions for every possible Action coming from a Client
  * to the Server.
  */
 public enum ActionType {
@@ -30,8 +30,14 @@ public enum ActionType {
     ACTIVATE_LEADERCARD("activate_leadercard"),
 
     END_TURN("end_turn");
+
+
     private final String text;
 
+    /**
+     * Constructor for "ActionType" enum Class.
+     * @param text String to be associated to the enum.
+     */
     ActionType(String text) {
         this.text = text;
     }

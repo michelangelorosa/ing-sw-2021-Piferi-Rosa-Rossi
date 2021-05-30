@@ -7,11 +7,31 @@ import java.io.Serializable;
 
 /**
  * Action abstract Class defines common Data and Methods to perform an action on the model after a Client's request.
+ * <p>
+ * An Action subclass type object is created by the Client and sent to the Server to be processed.
+ * <p>
+ * <b>Attributes:</b>
+ * <ul>
+ *     <li> ActionType actionType: enum indicating the Action requested </li>
+ *     <li> String response: contains the Controller's response after trying to perform the action </li>
+ * </ul>
+ *
+ * @author redrick99
  */
 public class Action implements Serializable {
     protected ActionType actionType;
     protected String response = null;
 
+    /**
+     * Getter for "actionType" attribute.
+     */
+    public ActionType getActionType() {
+        return actionType;
+    }
+
+    /**
+     * Getter for "response" attribute.
+     */
     public String getResponse() {
         return response;
     }

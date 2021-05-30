@@ -16,22 +16,26 @@ import java.util.ArrayList;
  * activation.
  * <p>
  * Each boolean attribute represents a different production power the player wants to activate.
- * Attributes:
+ * <p>
+ * <b>Attributes:</b>
+ * <ul>
+ *     <li> boolean "firstSlot", "secondSlot", "thirdSlot": they indicate the player's Board Slots. </li>
+ *     <li> boolean "firstLeaderCard", "secondLeaderCard": they indicate the player's Leader Cards. </li>
+ *     <li> boolean "basicProduction": indicates the player's Basic Production. </li>
+ *     <li> ArrayList(ResourceType) "basicProductionInputs": contains Basic Production inputs. </li>
+ * </ul>
+ * @author redrick99
  */
 public class ActivateProduction extends Action {
 
-    /** "firstSlot", "secondSlot", "thirdSlot": Three booleans indicating the player's Board Slots. */
     private final boolean firstSlot;
     private final boolean secondSlot;
     private final boolean thirdSlot;
 
-    /** "firstLeaderCard", "secondLeaderCard": Two booleans indicating the player's Leader Cards. */
     private final boolean firstLeaderCard;
     private final boolean secondLeaderCard;
 
-    /** "basicProduction": boolean indicating the player's Basic Production. */
     private final boolean basicProduction;
-    /** "basicProductionInputs": ArrayList containing Basic Production inputs. */
     private final ArrayList<ResourceType> basicProductionInputs;
 
     /**
@@ -46,13 +50,6 @@ public class ActivateProduction extends Action {
         this.secondLeaderCard = secondLeaderCard;
         this.basicProduction = basicProduction;
         this.basicProductionInputs = basicProductionInputs;
-    }
-
-    /**
-     * Getter for "ActionType" attribute.
-     */
-    public ActionType getActionType() {
-        return actionType;
     }
 
     /**
@@ -143,6 +140,9 @@ public class ActivateProduction extends Action {
 
     /**
      * Activates production if the player has all the needed requirements.
+     * <p>Firstly checks if the player has all the required resources to start a production, then saves data
+     * to be used later when the player has to choose Production Output.</p>
+     * At last, the Production is activated and a new Payment Cycle starts.
      * @return a String containing an error message if the player performing the action doesn't meet Production
      * requirements or if the player indicated empty card slots to be used for production, otherwise a SUCCESS statement.
      */
