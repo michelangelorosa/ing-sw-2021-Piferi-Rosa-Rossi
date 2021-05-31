@@ -14,6 +14,15 @@ public class ActionTest {
     ActionController actionController = new ActionController();
 
     @Test
+    public void actionTypeTest() {
+        ActionType type = ActionType.fromString("choose_action");
+        assert type != null;
+        assertEquals("choose_action", type.getText());
+
+        assertNull(ActionType.fromString("i am not an ActionType"));
+    }
+
+    @Test
     public void ActionTestAll() {
         assertFalse(action.isCorrect());
         assertFalse(action.canBeApplied(actionController));
@@ -40,6 +49,8 @@ public class ActionTest {
         assertFalse(action3.canDoAction(actionController));
 
         MessageToClient message = new MessageToClient();
+
+        message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
 
         action3.illegalAction(message, actionController);
         assertEquals("You cannot perform this action at this moment", message.getError());
