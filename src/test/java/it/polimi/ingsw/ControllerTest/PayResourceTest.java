@@ -9,6 +9,9 @@ import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.Model.GameModel.Game;
 import it.polimi.ingsw.Model.GameModel.ResourceStack;
 import it.polimi.ingsw.Model.GameModel.WarehouseDepot;
+import it.polimi.ingsw.Model.MessagesToClient.EndProductionMessage;
+import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
+import it.polimi.ingsw.Model.MessagesToClient.PaymentMessage;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -17,8 +20,8 @@ public class PayResourceTest {
     public ExpectedException thrown = ExpectedException.none();
 
     PayResource pay = new PayResourceBuyCard(false, 0, ResourceType.SHIELDS);
-    PayResource pay2 = new PayResourceBuyCard(true, 0, ResourceType.NONE);
-    PayResource pay3 = new PayResourceBuyCard(false, 0, ResourceType.STONES);
+    PayResource pay2 = new PayResourceProduction(true, 0, ResourceType.NONE);
+    PayResource pay3 = new PayResourceProduction(false, 0, ResourceType.STONES);
     PayResource pay4 = new PayResourceBuyCard(false, 0, ResourceType.COINS);
     PayResource pay5 = new PayResourceBuyCard(true, 3, ResourceType.NONE);
 
@@ -109,6 +112,10 @@ public class PayResourceTest {
         Game game = actionController.getGame();
         CommonTestMethods.gameInitOne(game);
 
+        PayResource payResource = new PayResource(true, 1, ResourceType.COINS);
+        assertNull(payResource.messagePrepare(actionController));
+
+        MessageToClient message;
         actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.PAY_RESOURCE_CARD);
         ResourceStack stack = new ResourceStack(5,3,0,2);
         ResourceStack temporary = new ResourceStack(2,0,0,0);
@@ -118,11 +125,30 @@ public class PayResourceTest {
 
         assertEquals("HasToPay", pay.doAction(actionController));
         assertEquals("1 0 0 0", game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toString());
+        message = pay.messagePrepare(actionController);
+        assertTrue(message instanceof PaymentMessage);
+        assertEquals("HasToPay", message.getError());
+        assertEquals(1, message.getPossibleActions().size());
+        assertEquals(ActionType.PAY_RESOURCE_CARD, message.getPossibleActions().get(0));
+
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.PAY_RESOURCE_PRODUCTION);
+
         assertEquals("This type of resource is not needed", pay3.doAction(actionController));
+        message = pay3.messagePrepare(actionController);
+        assertTrue(message instanceof PaymentMessage);
+        assertEquals("This type of resource is not needed", message.getError());
+        assertEquals(1, message.getPossibleActions().size());
+        assertEquals(ActionType.PAY_RESOURCE_PRODUCTION, message.getPossibleActions().get(0));
+
         assertEquals("1 0 0 0", game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toString());
         assertEquals("No COINS left in Strongbox", pay4.doAction(actionController));
         assertEquals("Can't take resource from a non active depot", pay5.doAction(actionController));
         assertEquals("SUCCESS", pay2.doAction(actionController));
+        message = pay2.messagePrepare(actionController);
+        assertTrue(message instanceof EndProductionMessage);
+        assertEquals("SUCCESS", message.getError());
+        assertEquals(1, message.getPossibleActions().size());
+        assertEquals(ActionType.CHOOSE_PRODUCTION_OUTPUT, message.getPossibleActions().get(0));
 
         assertEquals(ResourceType.NONE, game.getCurrentPlayer().getBoard().getResourceManager().getWarehouseDepots()[0].getResourceType());
 

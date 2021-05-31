@@ -34,13 +34,6 @@ public class PayResource extends Action {
     }
 
     /**
-     * Getter for "actionType" attribute.
-     */
-    public ActionType getActionType() {
-        return actionType;
-    }
-
-    /**
      * Getter for "fromWarehouse" attribute.
      */
     public boolean isFromWarehouse() {
@@ -223,12 +216,12 @@ public class PayResource extends Action {
         }
         paymentMessage.setError(this.response);
         if(card) {
-            paymentMessage.addPossibleAction(ActionType.PAY_RESOURCE_PRODUCTION);
-            paymentMessage.setActionDone(ActionType.PAY_RESOURCE_PRODUCTION);
-        }
-        else {
             paymentMessage.addPossibleAction(ActionType.PAY_RESOURCE_CARD);
             paymentMessage.setActionDone(ActionType.PAY_RESOURCE_CARD);
+        }
+        else {
+            paymentMessage.addPossibleAction(ActionType.PAY_RESOURCE_PRODUCTION);
+            paymentMessage.setActionDone(ActionType.PAY_RESOURCE_PRODUCTION);
         }
         return paymentMessage;
     }
