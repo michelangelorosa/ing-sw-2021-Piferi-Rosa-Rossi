@@ -45,6 +45,10 @@ public class ClientConnection implements Runnable, Observer<Action> {
         System.out.println(ANSIColors.FRONT_BRIGHT_CYAN + "[CLIENT CONNECTION] Started" + ANSIColors.RESET);
         Action actionObject;
         Scanner TEMPORARY_SCANNER = new Scanner(System.in);
+
+        ClientExceptionHandler clientExceptionHandler = new ClientExceptionHandler();
+        clientExceptionHandler.visualType(true);
+
         try {
             //First part of the connection
             while (true) {
@@ -53,26 +57,19 @@ public class ClientConnection implements Runnable, Observer<Action> {
                 System.out.println(ANSIColors.FRONT_BRIGHT_CYAN + "[CLIENT CONNECTION] Got action "+action + ANSIColors.RESET);
                 System.out.println();
 
-                //Action = -2, server is asking client if he wants to either start or join the game
-                if (action == -2) {
-                    this.client.getUserInteraction().startOrJoin(this);
-                }
-                else if (action == -1) {
-                    this.client.getUserInteraction().numberOfPlayers(this);
-                }
-            //Action = 0, the server is asking the client to input a name!
-                else if (action==0) {
+                //Action = 0, the server is asking the client to input a name!
+                if (action==0) {
                     this.client.getUserInteraction().initialChooseName(this);
                 }
-
-                else if(action == -3) {
-                    this.client.getUserInteraction().waitingForPlayers();
+                //Action = 1, first player to join, how many players?
+                if(action==1){
+                    this.client.getUserInteraction().numberOfPlayers(this);
                 }
-                else if(action==1){
+                else if(action==2){
                     //Opens the lobby, if applicable, from the lobby a player can himself to be ready, or if no other players are modifying launches the param modifier
                     this.client.getUserInteraction().initialLobby(this);
                 }
-                else if(action==2){
+                else if(action==10){
                     //Opens the param modifier (GUI only!)
                     //To be opened only if no other is modifying
 
@@ -105,7 +102,7 @@ public class ClientConnection implements Runnable, Observer<Action> {
                 }
                 else if(action==9){
                     //generic error, could be same name error, game has finished exception et al.
-                    System.exit(1);
+                    clientExceptionHandler.cliError(objectInputStream.readUTF());
                 }
             }
             while (true){
@@ -139,6 +136,7 @@ public class ClientConnection implements Runnable, Observer<Action> {
     public synchronized void send(String name) throws Exception{
         objectOutputStream.writeUTF(name);
         objectOutputStream.flush();
+        objectOutputStream.reset();
     }
 
     /**
@@ -149,6 +147,7 @@ public class ClientConnection implements Runnable, Observer<Action> {
     public synchronized void send(RedLeaderCard card) throws Exception{
         objectOutputStream.writeObject(card);
         objectOutputStream.flush();
+        objectOutputStream.reset();
     }
 
     /**
@@ -159,6 +158,7 @@ public class ClientConnection implements Runnable, Observer<Action> {
     public synchronized void send(DevelopmentCard card) throws Exception{
         objectOutputStream.writeObject(card);
         objectOutputStream.flush();
+        objectOutputStream.reset();
     }
 
     /**
@@ -169,6 +169,7 @@ public class ClientConnection implements Runnable, Observer<Action> {
     public synchronized void send(Action action) throws Exception{
         objectOutputStream.writeObject(action);
         objectOutputStream.flush();
+        objectOutputStream.reset();
     }
 
     /**
@@ -180,6 +181,7 @@ public class ClientConnection implements Runnable, Observer<Action> {
     public synchronized void send(Boolean bool) throws Exception{
         objectOutputStream.writeBoolean(bool);
         objectOutputStream.flush();
+        objectOutputStream.reset();
     }
 
     /**
@@ -191,6 +193,18 @@ public class ClientConnection implements Runnable, Observer<Action> {
     public synchronized void send(int number) throws Exception{
         objectOutputStream.writeInt(number);
         objectOutputStream.flush();
+        objectOutputStream.reset();
     }
 
+    public synchronized int readInt(ObjectInputStream objectInputStream){
+        try {
+            int number;
+            number=objectInputStream.readInt();
+            objectInputStream.reset();
+            return number;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
 }

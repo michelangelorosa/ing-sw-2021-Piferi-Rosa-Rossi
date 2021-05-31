@@ -3,6 +3,7 @@ package it.polimi.ingsw.Model;
 import it.polimi.ingsw.Controller.Controller;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Enums.GameStatus;
+import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -21,8 +22,7 @@ import static java.lang.Integer.parseInt;
  */
 public class Server {
     private Set<String> names = new HashSet<>();
-    private Integer numberOfPlayers = null;
-    private static Set<Socket> socketSet = new HashSet<>();
+    private Integer numberOfPlayers;
     private final ArrayList<ServerConnection> connections = new ArrayList<>();
     private final static int DEFAULT_PORT = 8765;
     private int readyPlayers = 0;
@@ -51,12 +51,16 @@ public class Server {
             return true;
     }
 
-    public static Set<Socket> getSockets() {
-        return socketSet;
-    }
-
-    public static void setSockets(Set<Socket> socketSet) {
-        Server.socketSet = socketSet;
+    /**
+     * Checks if a name in the Name is in the Hash Set
+     * @param name the String of the name to insert
+     * @return true if the name is found, false if the name is not found
+     */
+    public boolean matchName(String name){
+        if(names.contains(name))
+            return true;
+        else
+            return false;
     }
 
     public static void main(String[] args){
@@ -98,16 +102,54 @@ public class Server {
         }
     }
 
+    /**
+     * Broadcasts a String to every player connected
+     * @param string        The string to send
+     */
     public synchronized void broadcast (String string){
         for(ServerConnection connection : connections){
             connection.send(string);
         }
     }
 
+    /**
+     * Broadcasts an Integer to every player connected
+     * @param i             The int to send
+     */
     public synchronized void broadcast (int i){
         for(ServerConnection connection : connections){
             connection.send(i);
         }
+    }
+
+    /**
+     * Sends an int to a specific client, if found
+     * @param name      The player name to send the data to
+     * @param i         The int to send
+     */
+    public synchronized void sendTo(String name,int i){
+        for(ServerConnection connection : connections)
+            connection.conditionalSend(name,i);
+    }
+
+    /**
+     * Sends a string to a specific client, if found
+     * @param name      The player name to send the data to
+     * @param message   The string to send
+     */
+    public synchronized void sendTo(String name,String message){
+        for(ServerConnection connection : connections)
+            connection.conditionalSend(name,message);
+    }
+
+    /**
+     * Sends a MessageToClient to a specific client, if found
+     * @param name              The player name to send the data to
+     * @param messageToClient   The MessageToCliend to send
+     */
+    public synchronized void sendTo(String name, MessageToClient messageToClient){
+        for(ServerConnection connection : connections)
+            connection.conditionalSend(name,messageToClient);
     }
 
     public Integer getNumberOfPlayers() {
@@ -115,18 +157,28 @@ public class Server {
     }
 
     public boolean setNumberOfPlayers(int number) {
-        if(numberOfPlayers == null && number > 0 && number < 5) {
+        if(number>0&&number<5) {
+            System.out.println("[SERVER] Number of players set to "+number);
             numberOfPlayers = number;
+            setServerStatus(GameStatus.LOBBY);
             return true;
         }
         else
             return false;
     }
 
+    /**
+     * Adds a player to the playerReady value of the server
+     */
     public void playerReady() {
         readyPlayers ++;
+        System.out.println("[SERVER] Players ready in lobby: "+readyPlayers);
     }
 
+    /**
+     * Gets the number of players ready from the server
+     * @return  the number of players ready to play
+     */
     public int getReadyPlayers() {
         return readyPlayers;
     }
@@ -144,6 +196,7 @@ public class Server {
      * @param setState      the status to set the game to
      */
     public static void setServerStatus(GameStatus setState) {
+        System.out.println("[SERVER] Status set to "+setState.toString());
         serverStatus = setState;
     }
 }

@@ -9,5 +9,5 @@ package it.polimi.ingsw.Model.Enums;
  * End: the game has declared a winner
  */
 public enum GameStatus {
-    READY,LOBBY,PARAM,GAME,IDLE,END;
+    READY,LOBBY,PARAM,LEADER,RESOURCES,GAME,IDLE,END;
 }

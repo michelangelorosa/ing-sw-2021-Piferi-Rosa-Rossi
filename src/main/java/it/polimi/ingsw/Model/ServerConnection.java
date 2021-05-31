@@ -1,10 +1,19 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
 import it.polimi.ingsw.Model.GameModel.LeaderCard;
+import it.polimi.ingsw.Controller.Controller;
+import it.polimi.ingsw.Controller.Observable;
+import it.polimi.ingsw.Model.Enums.GameStatus;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * ServerConnection is a thread running on the server that manages connection to and from the clients.
@@ -45,14 +54,14 @@ public class ServerConnection implements Runnable{
 
         try {
             if(messageHandler.nameRequest(this)){
+                System.out.println("[SERVER CONNECTION] Name request TRUE, proceed to display lobby please!");
                 messageHandler.waitingForPlayers(this);
-                messageHandler.lobbyAndWait(this);
             }
-
 
             //Accepts messages from client during game phase
             while (true) {
                 System.out.println("[SERVER CONNECTION] All players connected!");
+                //This'll be read message to client
                 int temp = in.readInt();
                 System.out.println("Received "+temp);
                 if(temp==0){
@@ -86,8 +95,11 @@ public class ServerConnection implements Runnable{
         try{
             out.writeInt(i);
             out.flush();
+            out.reset();
         }catch (IOException e){
-            messageHandler.sendError(this, "IOException when sending a string");
+            //messageHandler.sendError(this, "IOException when sending an int");
+            System.err.println("IOException when sending an int to "+socket.toString());
+            close();
         }
     }
 
@@ -99,8 +111,11 @@ public class ServerConnection implements Runnable{
         try {
             out.writeUTF(string);
             out.flush();
+            out.reset();
         } catch(IOException e) {
-            messageHandler.sendError(this, "IOException when sending a string");
+            //messageHandler.sendError(this, "IOException when sending a string");
+            System.err.println("IOException when sending a string to "+socket.toString());
+            close();
         }
     }
 
@@ -112,8 +127,11 @@ public class ServerConnection implements Runnable{
         try {
             out.writeObject(leaderCards);
             out.flush();
+            out.reset();
         } catch(IOException e) {
-            messageHandler.sendError(this, "IOException when sending a Leader Card");
+            //messageHandler.sendError(this, "IOException when sending a Leader Card");
+            System.err.println("IOException when sending a Leader Card to "+socket.toString());
+            close();
         }
     }
 
@@ -125,8 +143,11 @@ public class ServerConnection implements Runnable{
         try {
             out.writeBoolean(bool);
             out.flush();
+            out.reset();
         } catch(IOException e) {
-            messageHandler.sendError(this, "IOException when sending a boolean");
+            //messageHandler.sendError(this, "IOException when sending a boolean");
+            System.err.println("IOException when sending a boolean to "+socket.toString());
+            close();
         }
     }
 
@@ -134,8 +155,32 @@ public class ServerConnection implements Runnable{
         try {
             out.writeObject(message);
             out.flush();
+            out.reset();
         } catch (IOException e) {
-            messageHandler.sendError(this, "IOException when sending a MessageToClient");
+            //messageHandler.sendError(this, "IOException when sending a MessageToClient");
+            System.err.println("IOException when sending a MessageToClient to "+socket.toString());
+            close();
+        }
+    }
+
+    public synchronized void send(LeaderCard leaderCard){
+        try{
+            out.writeObject(leaderCard);
+            out.flush();
+            out.reset();
+        }catch(IOException e){
+            System.err.println("IOException when sending a Leader Card to "+socket.toString());
+            close();
+        }
+    }
+    public synchronized void send(DevelopmentCard developmentCard){
+        try{
+            out.writeObject(developmentCard);
+            out.flush();
+            out.reset();
+        }catch(IOException e){
+            System.err.println("IOException when sending a Development Card to "+socket.toString());
+            close();
         }
     }
 
@@ -149,6 +194,26 @@ public class ServerConnection implements Runnable{
         }catch (IOException e){
             System.err.println("IOError closing socket of "+socket.toString());
         }
+    }
+
+    /**
+     * Sends to the client if name matches
+     * @param name  username
+     * @param i     what to send
+     */
+    public void conditionalSend(String name,int i){
+        if(this.name.equals(name))
+            send(i);
+    }
+
+    public void conditionalSend(String name,String message){
+        if(this.name.equals(name))
+            send(message);
+    }
+
+    public void conditionalSend(String name,MessageToClient message){
+        if(this.name.equals(name))
+            send(message);
     }
 
     public ObjectInputStream getIn() {

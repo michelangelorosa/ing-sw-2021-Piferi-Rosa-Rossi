@@ -25,6 +25,10 @@ public class ClientExceptionHandlerTest {
     public void addressValidatorTest() throws Exception{
         assertTrue(gui.addressValidator("192.168.1.2"));
         assertTrue(gui.addressValidator("localhost"));
+        assertTrue(gui.addressValidator("www.polimi.it"));
+        assertTrue(gui.addressValidator("http://www.example.com"));
+        assertTrue(gui.addressValidator("https://test.example30.pizza"));
+        assertTrue(gui.addressValidator("nic.arpa"));
         assertFalse(gui.addressValidator("999.999.999.999"));
         //assertFalse(gui.addressValidator("giovanni"));
         assertFalse(gui.addressValidator("193.344.cinquecento.39"));

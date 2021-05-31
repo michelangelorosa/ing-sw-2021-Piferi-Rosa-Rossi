@@ -41,20 +41,20 @@ public class Client {
     public static void main(String[] args){
        try{
         //if (args[0].toLowerCase(Locale.ROOT).equals("--cli")) {
-            //userInteraction.setUi(new Cli());
+            userInteraction.setUi(new Cli());
 
 
         //} else {
-           new Thread(() -> Application.launch(Gui.class)).start();
-           Gui.waitForStartUp();
+           //new Thread(() -> Application.launch(Gui.class)).start();
+           //Gui.waitForStartUp();
         //}
 
        }catch (Exception e) {
             System.err.println("Unable to start a Graphical Interface, shutting down");
             System.exit(-1);
        }
-        //Client client = new Client("localhost", 25565);
-       //client.startUp();
+        Client client = new Client("localhost", 25565);
+       client.startUp();
 
     }
 

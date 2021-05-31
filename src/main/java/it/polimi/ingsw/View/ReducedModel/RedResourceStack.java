@@ -67,6 +67,18 @@ public class RedResourceStack implements Serializable{
         return true;
     }
 
+    /**
+     * This method is used in the ParamValidator to check if the resourceStack is a valid one,
+     * @return true if the Resource Stack is valid.
+     */
+    public boolean isValid() {
+        ResourceType[] types = ResourceType.values();
+        for(int i = 1; i < 5; i++)
+            if(this.getResource(types[i]) < 0)
+                return false;
+        return true;
+    }
+
     public boolean hasResource(ResourceType type) {
         return this.getResource(type) > 0;
     }
