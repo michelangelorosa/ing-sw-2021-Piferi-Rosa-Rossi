@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ControllerTest;
 
+import static it.polimi.ingsw.Controller.Actions.ActionType.ACTIVATE_LEADERCARD;
 import static it.polimi.ingsw.Controller.Actions.ActionType.CHOOSE_CARD_SLOT;
 import static org.junit.Assert.*;
 
@@ -59,6 +60,9 @@ public class ChooseCardSlotTest {
         CommonTestMethods.gameInitOne(game);
         String response;
 
+        game.getCurrentPlayer().addPossibleAction(CHOOSE_CARD_SLOT);
+        game.getCurrentPlayer().addPossibleAction(ACTIVATE_LEADERCARD);
+
         slot0.setRowCardToBuy(1);
         slot0.setColumnCardToBuy(1);
         response = slot0.doAction(actionController);
@@ -86,6 +90,7 @@ public class ChooseCardSlotTest {
         assertEquals(ActionType.END_TURN, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.ACTIVATE_LEADERCARD, messageToClient.getPossibleActions().get(1));
 
+        game.getCurrentPlayer().addPossibleAction(CHOOSE_CARD_SLOT);
 
         slot1.setRowCardToBuy(1);
         slot1.setColumnCardToBuy(1);

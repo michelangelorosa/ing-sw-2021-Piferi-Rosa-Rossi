@@ -16,6 +16,7 @@ public class PayResourceBuyCard extends PayResource {
      */
     public PayResourceBuyCard(boolean fromWarehouse, int depot, ResourceType resourceType) {
         super(fromWarehouse, depot, resourceType);
+        this.actionType = ActionType.PAY_RESOURCE_CARD;
     }
 
     /**
@@ -27,6 +28,11 @@ public class PayResourceBuyCard extends PayResource {
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {
         BoughtCardMessage boughtCardMessage;
+
+        if(this.response.equals(ILLEGAL_ACTION)) {
+            boughtCardMessage = new BoughtCardMessage(actionController.getGame().getCurrentPlayerNickname());
+            return illegalAction(boughtCardMessage, actionController);
+        }
 
         if(this.response.equals("SUCCESS")) {
             boughtCardMessage = new BoughtCardMessage(actionController.getGame().getCurrentPlayerNickname());

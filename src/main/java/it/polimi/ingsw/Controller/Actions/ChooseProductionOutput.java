@@ -192,6 +192,9 @@ public class ChooseProductionOutput extends Action {
      */
     @Override
     public String doAction(ActionController actionController) {
+        if(!this.canDoAction(actionController))
+            return ILLEGAL_ACTION;
+
         this.isCorrect();
         if(!this.canBeApplied(actionController)) {
             this.response = "Tried to use not valid Leader Cards or tried to get more resources than possible.";
@@ -214,6 +217,8 @@ public class ChooseProductionOutput extends Action {
         output = new ResourceStack(0,0,0,0);
 
         this.response = "SUCCESS";
+        actionController.getGame().getCurrentPlayer().clearPossibleActions();
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.END_TURN);
         return "SUCCESS";
     }
 
@@ -225,11 +230,16 @@ public class ChooseProductionOutput extends Action {
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {
         ChoseProductionOutputMessage message = new ChoseProductionOutputMessage(actionController.getGame().getCurrentPlayerNickname());
+        if(this.response.equals(ILLEGAL_ACTION))
+            return illegalAction(message, actionController);
+
         message.setError(this.response);
         if(this.response.equals("SUCCESS")) {
             message.setStrongbox(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getStrongbox());
             message.addPossibleAction(ActionType.END_TURN);
-            message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
+
+            if(actionController.getGame().getCurrentPlayer().canDo(ActionType.ACTIVATE_LEADERCARD))
+                message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
         }
         else
             message.addPossibleAction(ActionType.CHOOSE_PRODUCTION_OUTPUT);

@@ -16,6 +16,7 @@ public class PayResourceProduction extends PayResource {
      */
     public PayResourceProduction(boolean fromWarehouse, int depot, ResourceType resourceType) {
         super(fromWarehouse, depot, resourceType);
+        this.actionType = ActionType.PAY_RESOURCE_PRODUCTION;
     }
 
     /**
@@ -27,6 +28,11 @@ public class PayResourceProduction extends PayResource {
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {
         EndProductionMessage endProductionMessage;
+
+        if(this.response.equals(ILLEGAL_ACTION)) {
+            endProductionMessage = new EndProductionMessage(actionController.getGame().getCurrentPlayerNickname());
+            return illegalAction(endProductionMessage, actionController);
+        }
 
         if(this.response.equals("SUCCESS")) {
             endProductionMessage = new EndProductionMessage(actionController.getGame().getCurrentPlayerNickname());

@@ -112,6 +112,9 @@ public class PayResource extends Action {
      */
     @Override
     public String doAction(ActionController actionController) {
+        if(!this.canDoAction(actionController))
+            return ILLEGAL_ACTION;
+
         this.isCorrect();
 
         if(!this.canBeApplied(actionController)) {
@@ -145,6 +148,15 @@ public class PayResource extends Action {
                 resourceManager.payOneResourceWarehouse(depot);
                 if(resourceManager.hasPayed()) {
                     response = "SUCCESS";
+                    
+                    if(actionController.getGame().getCurrentPlayer().canDo(ActionType.PAY_RESOURCE_PRODUCTION)) {
+                        actionController.getGame().getCurrentPlayer().clearPossibleActions();
+                        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.CHOOSE_PRODUCTION_OUTPUT);
+                    }
+                    else if(actionController.getGame().getCurrentPlayer().canDo(ActionType.PAY_RESOURCE_CARD)) {
+                        actionController.getGame().getCurrentPlayer().clearPossibleActions();
+                        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.CHOOSE_CARD_SLOT);
+                    }
                     return "SUCCESS";
                 }
                 else {

@@ -76,6 +76,8 @@ public class MarketChooseRowTest {
 
         String response;
 
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.MARKET_CHOOSE_ROW);
+
         CommonTestMethods.givePlayerLeaderCards(game.getCurrentPlayer(), game.getLeaderCards().get(2), game.getLeaderCards().get(3));
         MarketChooseRow marketChooseRow = new MarketChooseRow(true, 0);
         response = marketChooseRow.doAction(actionController);
@@ -92,6 +94,8 @@ public class MarketChooseRowTest {
         assertEquals(ActionType.RESET_WAREHOUSE, messageToClient.getPossibleActions().get(1));
         assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getPossibleActions().get(2));
         assertEquals(ActionType.END_MARKET, messageToClient.getPossibleActions().get(3));
+
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.MARKET_CHOOSE_ROW);
 
         marketChooseRow = new MarketChooseRow(true, 1);
         game.getCurrentPlayer().getBoard().activateLeaderCard(game.getCurrentPlayer().getBoard().getLeaderCards()[0]);
@@ -111,6 +115,8 @@ public class MarketChooseRowTest {
         assertEquals(ActionType.END_MARKET, messageToClient.getPossibleActions().get(3));
 
 
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.MARKET_CHOOSE_ROW);
+
         game.getCurrentPlayer().getBoard().activateLeaderCard(game.getCurrentPlayer().getBoard().getLeaderCards()[1]);
         game.getMarket().testMethod();
         response = marketChooseRow.doAction(actionController);
@@ -129,6 +135,8 @@ public class MarketChooseRowTest {
         CommonTestMethods.givePlayerLeaderCards(game.getCurrentPlayer(), game.getLeaderCards().get(4), game.getLeaderCards().get(5));
         game.getCurrentPlayer().getBoard().activateLeaderCard(game.getCurrentPlayer().getBoard().getLeaderCards()[0]);
         game.getCurrentPlayer().getBoard().activateLeaderCard(game.getCurrentPlayer().getBoard().getLeaderCards()[1]);
+
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.MARKET_CHOOSE_ROW);
 
         marketChooseRow = new MarketChooseRow(false, 2);
         response = marketChooseRow.doAction(actionController);

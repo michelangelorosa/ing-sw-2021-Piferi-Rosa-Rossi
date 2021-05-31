@@ -143,25 +143,29 @@ public class InitChooseResources extends Action{
 
         if(depotResource.get(0).isEmpty() && depotResource.get(1).isEmpty() && depotResource.get(2).isEmpty()) {
             this.response = "SUCCESS";
-            return "SUCCESS";
         }
+        else {
+            if (!depotResource.get(0).isEmpty()) {
+                for (ResourceType type : depotResource.get(0))
+                    actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().addOneResourceToDepot(type, actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouseDepots()[0]);
+            }
 
-        if(!depotResource.get(0).isEmpty()) {
-            for(ResourceType type : depotResource.get(0))
-                actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().addOneResourceToDepot(type, actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouseDepots()[0]);
-        }
+            if (!depotResource.get(1).isEmpty()) {
+                for (ResourceType type : depotResource.get(1))
+                    actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().addOneResourceToDepot(type, actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouseDepots()[1]);
+            }
 
-        if(!depotResource.get(1).isEmpty()) {
-            for(ResourceType type : depotResource.get(1))
-                actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().addOneResourceToDepot(type, actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouseDepots()[1]);
-        }
-
-        if(!depotResource.get(2).isEmpty()) {
-            for(ResourceType type : depotResource.get(2))
-                actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().addOneResourceToDepot(type, actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouseDepots()[2]);
+            if (!depotResource.get(2).isEmpty()) {
+                for (ResourceType type : depotResource.get(2))
+                    actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().addOneResourceToDepot(type, actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouseDepots()[2]);
+            }
         }
 
         this.response = "SUCCESS";
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.ACTIVATE_PRODUCTION);
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.BUY_CARD);
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.BUY_FROM_MARKET);
         return "SUCCESS";
     }
 

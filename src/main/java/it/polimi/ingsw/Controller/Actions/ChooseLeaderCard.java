@@ -64,6 +64,9 @@ public class ChooseLeaderCard extends Action {
      */
     @Override
     public String doAction(ActionController actionController) {
+        if(!this.canDoAction(actionController))
+            return ILLEGAL_ACTION;
+
         this.isCorrect();
         if(!this.canBeApplied(actionController)) {
             response = "Leader Card not active or not of type WHITE MARBLE";
@@ -79,6 +82,11 @@ public class ChooseLeaderCard extends Action {
         else {
             response = "SUCCESS";
             actionController.getResetWarehouse().setBackupResources(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay());
+            actionController.getGame().getCurrentPlayer().clearPossibleActions();
+            actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.ADD_RESOURCE);
+            actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.SWITCH_DEPOT);
+            actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.RESET_WAREHOUSE);
+            actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.END_MARKET);
             return "SUCCESS";
         }
     }
@@ -93,12 +101,16 @@ public class ChooseLeaderCard extends Action {
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {
         ChoseLeaderCardMessage message = new ChoseLeaderCardMessage(actionController.getGame().getCurrentPlayerNickname());
+        if(this.response.equals(ILLEGAL_ACTION))
+            return illegalAction(message, actionController);
+
         message.setError(this.response);
         if(this.response.equals("SUCCESS")) {
             message.setTemporaryResources(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay());
             message.addPossibleAction(ActionType.ADD_RESOURCE);
             message.addPossibleAction(ActionType.SWITCH_DEPOT);
             message.addPossibleAction(ActionType.RESET_WAREHOUSE);
+            message.addPossibleAction(ActionType.END_MARKET);
         }
         else
             message.addPossibleAction(ActionType.CHOOSE_LEADER_CARD);

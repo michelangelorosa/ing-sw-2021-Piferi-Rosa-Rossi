@@ -2,6 +2,7 @@ package it.polimi.ingsw;
 
 import static org.junit.Assert.*;
 
+import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.GameModel.FaithCell;
 import it.polimi.ingsw.Model.GameModel.FaithTrack;
@@ -97,6 +98,17 @@ public class PlayerTest {
     public void addVictoryPointsTest() {
         playerOne.addVictoryPoints(21);
         assertEquals(21, playerOne.getVictoryPoints());
+    }
+
+    @Test
+    public void possibleActionsTest() {
+        playerOne.addPossibleAction(ActionType.ACTIVATE_PRODUCTION);
+        assertEquals(1, playerOne.getPossibleActions().size());
+        assertEquals(ActionType.ACTIVATE_PRODUCTION, playerOne.getPossibleActions().get(0));
+        assertTrue(playerOne.canDo(ActionType.ACTIVATE_PRODUCTION));
+        assertFalse(playerOne.canDo(ActionType.BUY_FROM_MARKET));
+        playerOne.clearPossibleActions();
+        assertTrue(playerOne.getPossibleActions().isEmpty());
     }
 
     /**Test for toView method*/

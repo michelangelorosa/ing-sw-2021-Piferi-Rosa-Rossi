@@ -86,6 +86,9 @@ public class ChooseCardSlot extends Action {
      */
     @Override
     public String doAction(ActionController actionController) {
+        if(!this.canDoAction(actionController))
+            return ILLEGAL_ACTION;
+
         this.isCorrect();
 
         DevelopmentCardSlots slots = actionController.getGame().getCurrentPlayer().getBoard().getDevelopmentCardSlots();
@@ -94,6 +97,8 @@ public class ChooseCardSlot extends Action {
         if(slots.getSlots()[this.cardSlot].canAdd(deck.getTopCard())) {
             slots.getSlots()[this.cardSlot].addCard(deck.drawCard());
             response = "SUCCESS";
+            actionController.getGame().getCurrentPlayer().clearPossibleActions();
+            actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.END_TURN);
             return "SUCCESS";
         }
         else {
@@ -110,6 +115,9 @@ public class ChooseCardSlot extends Action {
      */
     public MessageToClient messagePrepare(ActionController actionController) {
         ChoseCardSlotMessage message = new ChoseCardSlotMessage(actionController.getGame().getCurrentPlayerNickname());
+        if(this.response.equals(ILLEGAL_ACTION))
+            return illegalAction(message, actionController);
+
         message.setTable(actionController.getGame().getDevelopmentCardTable());
         message.setError(this.response);
 
@@ -118,7 +126,9 @@ public class ChooseCardSlot extends Action {
             this.rowCardToBuy = 0;
             this.columnCardToBuy = 0;
             message.addPossibleAction(ActionType.END_TURN);
-            message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
+
+            if(actionController.getGame().getCurrentPlayer().canDo(ActionType.ACTIVATE_LEADERCARD))
+                message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
         }
         else
             message.addPossibleAction(ActionType.CHOOSE_CARD_SLOT);

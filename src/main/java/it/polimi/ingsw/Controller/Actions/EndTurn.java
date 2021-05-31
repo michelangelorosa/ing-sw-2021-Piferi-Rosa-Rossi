@@ -33,6 +33,9 @@ public class EndTurn extends Action {
      */
     @Override
     public String doAction(ActionController actionController) {
+        if(!this.canDoAction(actionController))
+            return ILLEGAL_ACTION;
+
         int idlePlayers = 0;
         this.currentPlayer = actionController.getGame().getCurrentPlayerNickname();
         if(actionController.getGame().getGameType() == GameType.MULTIPLAYER) {
@@ -45,6 +48,12 @@ public class EndTurn extends Action {
                 return "ALL PLAYERS DISCONNECTED";
             }
             else {
+                actionController.getGame().getCurrentPlayer().clearPossibleActions();
+                actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.ACTIVATE_PRODUCTION);
+                actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.BUY_CARD);
+                actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.MARKET_CHOOSE_ROW);
+                actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
+
                 actionController.getGame().nextPlayer();
                 while(actionController.getGame().getCurrentPlayer().getStatus() == PlayerStatus.IDLE)
                     actionController.getGame().nextPlayer();
@@ -62,6 +71,9 @@ public class EndTurn extends Action {
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {
         EndTurnMessage message = new EndTurnMessage(this.currentPlayer);
+        if(this.response.equals(ILLEGAL_ACTION))
+            return illegalAction(message, actionController);
+
         message.setError(this.response);
         message.setNextPlayerNickname(actionController.getGame().getCurrentPlayerNickname());
 

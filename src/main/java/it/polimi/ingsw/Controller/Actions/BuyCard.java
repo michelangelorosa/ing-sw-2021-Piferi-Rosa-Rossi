@@ -80,6 +80,9 @@ BuyCard extends Action {
      */
     @Override
     public String doAction(ActionController actionController) {
+        if(!this.canDoAction(actionController))
+            return ILLEGAL_ACTION;
+
         this.isCorrect();
 
         if(!this.canBeApplied(actionController)) {
@@ -103,6 +106,8 @@ BuyCard extends Action {
             actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().setTemporaryResourcesToPay(card.getCost());
             actionController.getChooseCardSlot().setRowCardToBuy(this.row);
             actionController.getChooseCardSlot().setColumnCardToBuy(this.column);
+            actionController.getGame().getCurrentPlayer().clearPossibleActions();
+            actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.PAY_RESOURCE_CARD);
             this.response = "SUCCESS";
             return "SUCCESS";
         }
@@ -117,6 +122,9 @@ BuyCard extends Action {
     public MessageToClient messagePrepare(ActionController actionController) {
         Game game = actionController.getGame();
         BuyCardMessage message = new BuyCardMessage(game.getCurrentPlayerNickname());
+        if(this.response.equals(ILLEGAL_ACTION))
+            return illegalAction(message, actionController);
+
         message.setError(this.response);
         if(this.response.equals("SUCCESS")) {
             message.addPossibleAction(ActionType.PAY_RESOURCE_CARD);

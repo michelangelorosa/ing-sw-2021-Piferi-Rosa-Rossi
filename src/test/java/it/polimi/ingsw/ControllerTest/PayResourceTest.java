@@ -16,11 +16,11 @@ public class PayResourceTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    PayResource pay = new PayResource(false, 0, ResourceType.SHIELDS);
-    PayResource pay2 = new PayResource(true, 0, ResourceType.NONE);
-    PayResource pay3 = new PayResource(false, 0, ResourceType.STONES);
-    PayResource pay4 = new PayResource(false, 0, ResourceType.COINS);
-    PayResource pay5 = new PayResource(true, 3, ResourceType.NONE);
+    PayResource pay = new PayResourceBuyCard(false, 0, ResourceType.SHIELDS);
+    PayResource pay2 = new PayResourceBuyCard(true, 0, ResourceType.NONE);
+    PayResource pay3 = new PayResourceBuyCard(false, 0, ResourceType.STONES);
+    PayResource pay4 = new PayResourceBuyCard(false, 0, ResourceType.COINS);
+    PayResource pay5 = new PayResourceBuyCard(true, 3, ResourceType.NONE);
 
     ActionController actionController = new ActionController();
 
@@ -109,6 +109,7 @@ public class PayResourceTest {
         Game game = actionController.getGame();
         CommonTestMethods.gameInitOne(game);
 
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.PAY_RESOURCE_CARD);
         ResourceStack stack = new ResourceStack(5,3,0,2);
         ResourceStack temporary = new ResourceStack(2,0,0,0);
         game.getCurrentPlayer().getBoard().getResourceManager().setTemporaryResourcesToPay(temporary);

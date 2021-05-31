@@ -84,6 +84,9 @@ public class AddResource extends Action {
      */
     @Override
     public String doAction(ActionController actionController) {
+        if(!this.canDoAction(actionController))
+            return ILLEGAL_ACTION;
+
         this.isCorrect();
 
         if(!this.canBeApplied(actionController)) {
@@ -120,6 +123,9 @@ public class AddResource extends Action {
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {
         AddMessage message = new AddMessage(actionController.getGame().getCurrentPlayerNickname());
+        if(this.response.equals(ILLEGAL_ACTION))
+            return illegalAction(message, actionController);
+
         message.setError(this.response);
         message.addPossibleAction(ActionType.ADD_RESOURCE);
         message.addPossibleAction(ActionType.SWITCH_DEPOT);

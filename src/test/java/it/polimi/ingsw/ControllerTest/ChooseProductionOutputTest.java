@@ -117,6 +117,9 @@ public class ChooseProductionOutputTest {
 
         String response;
 
+        game.getCurrentPlayer().addPossibleAction(ActionType.CHOOSE_PRODUCTION_OUTPUT);
+        game.getCurrentPlayer().addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
+
         response = chooseProductionOutput.doAction(actionController);
         assertEquals("Tried to use not valid Leader Cards or tried to get more resources than possible.", response);
         assertEquals("0 0 0 0", game.getCurrentPlayer().getBoard().getResourceManager().getStrongbox().getStoredResources().toString());
@@ -147,6 +150,7 @@ public class ChooseProductionOutputTest {
         assertEquals(ActionType.ACTIVATE_LEADERCARD, messageToClient.getPossibleActions().get(1));
         assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getStrongbox().toView().toString(), ((ChoseProductionOutputMessage) messageToClient).getStrongbox().toString());
 
+        game.getCurrentPlayer().addPossibleAction(ActionType.CHOOSE_PRODUCTION_OUTPUT);
 
         chooseProductionOutput.setBasicProduction(false);
         response = chooseProductionOutput.doAction(actionController);
@@ -162,6 +166,7 @@ public class ChooseProductionOutputTest {
         assertEquals(ActionType.ACTIVATE_LEADERCARD, messageToClient.getPossibleActions().get(1));
         assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getStrongbox().toView().toString(), ((ChoseProductionOutputMessage) messageToClient).getStrongbox().toString());
 
+        game.getCurrentPlayer().addPossibleAction(ActionType.CHOOSE_PRODUCTION_OUTPUT);
 
         chooseProductionOutput.setSecondLeaderCard(false);
         response = chooseProductionOutput.doAction(actionController);
@@ -177,6 +182,7 @@ public class ChooseProductionOutputTest {
         assertEquals(ActionType.ACTIVATE_LEADERCARD, messageToClient.getPossibleActions().get(1));
         assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getStrongbox().toView().toString(), ((ChoseProductionOutputMessage) messageToClient).getStrongbox().toString());
 
+        game.getCurrentPlayer().addPossibleAction(ActionType.CHOOSE_PRODUCTION_OUTPUT);
 
         chooseProductionOutput.setFirstLeaderCard(false);
         response = chooseProductionOutput.doAction(actionController);

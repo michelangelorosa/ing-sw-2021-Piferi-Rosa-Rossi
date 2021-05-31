@@ -97,6 +97,8 @@ public class AddResourceTest {
         CommonTestMethods.gameInitOne(game);
         String response;
 
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.ADD_RESOURCE);
+
         AddResource addResource = new AddResource(0, ResourceType.SHIELDS);
         response = addResource.doAction(actionController);
         assertEquals("SUCCESS", response);

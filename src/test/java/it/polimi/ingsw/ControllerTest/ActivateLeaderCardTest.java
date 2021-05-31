@@ -2,6 +2,7 @@ package it.polimi.ingsw.ControllerTest;
 
 import it.polimi.ingsw.CommonTestMethods;
 import it.polimi.ingsw.Controller.ActionController;
+import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.Controller.Actions.ActivateLeaderCard;
 import it.polimi.ingsw.Model.MessagesToClient.ActivateLeaderCardMessage;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
@@ -57,6 +58,14 @@ public class ActivateLeaderCardTest {
 
         MessageToClient message;
 
+        action = new ActivateLeaderCard(0);
+        action.doAction(actionController);
+        message = action.messagePrepare(actionController);
+        assertTrue(message instanceof ActivateLeaderCardMessage);
+        assertEquals("You cannot perform this action at this moment", message.getError());
+
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
+
         actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[0] = actionController.getGame().getLeaderCards().get(0);
         actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[1] = actionController.getGame().getLeaderCards().get(1);
         assertFalse(actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[0].isActive());
@@ -69,6 +78,7 @@ public class ActivateLeaderCardTest {
         assertEquals("Not enough resources to activate Leader Card", message.getError());
 
         actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getStrongbox().addToAllTypes(new ResourceStack(20, 20, 20, 20));
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
         action = new ActivateLeaderCard(0);
         action.doAction(actionController);
 
@@ -80,6 +90,8 @@ public class ActivateLeaderCardTest {
         assertEquals(actionController.getGame().getCurrentPlayerNickname(), message.getPlayerNickname());
         assertEquals(0, ((ActivateLeaderCardMessage) message).getLeaderCardPosition());
         assertEquals(actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[0], ((ActivateLeaderCardMessage) message).getLeaderCard());
+
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
 
         action.doAction(actionController);
         message = action.messagePrepare(actionController);

@@ -21,6 +21,7 @@ import java.io.Serializable;
 public class Action implements Serializable {
     protected ActionType actionType;
     protected String response = null;
+    protected static final String ILLEGAL_ACTION = "You cannot perform this action at this moment";
 
     /**
      * Getter for "actionType" attribute.
@@ -53,6 +54,22 @@ public class Action implements Serializable {
     public boolean canBeApplied(ActionController actionController) { return false; }
 
     /**
+     * Checks if the action requested can be performed by the player by assuring that the List of
+     * Possible Actions in the Model's Player contains the ActionType describing the Action coming from
+     * the Client.
+     * @param actionController Class used to compute Action messages coming from the Client.
+     * @return true if the action can be performed.
+     */
+    public boolean canDoAction(ActionController actionController) {
+        if(actionController.getGame().getCurrentPlayer().canDo(this.actionType))
+            return true;
+        else {
+            this.response = ILLEGAL_ACTION;
+            return false;
+        }
+    }
+
+    /**
      * Computes the request sent by the client using Model's methods.
      * @param actionController Class used to compute Action messages coming from the Client.
      * @return A String to be used later to create a message to send to the Client.
@@ -69,5 +86,23 @@ public class Action implements Serializable {
      */
     public MessageToClient messagePrepare(ActionController actionController) {
         return null;
+    }
+
+    /**
+     * Edits a MessageToClient in case the player tried to perform an Action he could not have performed at a
+     * certain time.
+     * @param message MessageToClient to edit.
+     * @param actionController Class used to compute Action messages coming from the Client.
+     * @return The edited MessageToClient object.
+     */
+    public MessageToClient illegalAction(MessageToClient message, ActionController actionController) {
+        if(message.getPossibleActions().size() > 0)
+            message.getPossibleActions().clear();
+
+        for(ActionType type : actionController.getGame().getCurrentPlayer().getPossibleActions())
+            message.addPossibleAction(type);
+
+        message.setError(this.response);
+        return message;
     }
 }

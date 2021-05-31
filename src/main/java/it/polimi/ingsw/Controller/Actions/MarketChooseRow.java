@@ -71,6 +71,9 @@ public class MarketChooseRow extends Action {
      */
     @Override
     public String doAction(ActionController actionController) {
+        if(!this.canDoAction(actionController))
+            return ILLEGAL_ACTION;
+
         this.isCorrect();
 
         if(this.row)
@@ -82,9 +85,25 @@ public class MarketChooseRow extends Action {
         actionController.getResetWarehouse().setBackupResources(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().copyStack());
 
         this.response = this.leaderCardCheck(actionController);
-        if(this.response.equals("SUCCESS"))
-            this.temporaryResource = actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay();
+        if(this.response.equals("SUCCESS")) {
+            actionController.getGame().getCurrentPlayer().clearPossibleActions();
 
+            if(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().hasPayed()) {
+                this.response = "Has Payed";
+                actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.END_TURN);
+            }
+            else {
+                this.temporaryResource = actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay();
+
+                actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.ADD_RESOURCE);
+                actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.RESET_WAREHOUSE);
+                actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.SWITCH_DEPOT);
+                actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.END_MARKET);
+            }
+        }
+
+        if(this.response.equals("SUCCESS") && actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().hasPayed())
+            this.response = "Has Payed";
         return response;
     }
 
@@ -98,8 +117,11 @@ public class MarketChooseRow extends Action {
     public String leaderCardCheck(ActionController actionController) {
         LeaderCard[] leaderCards = actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards();
 
-        if(leaderCards[0].isActive() && leaderCards[0].getAction() == LeaderCardAction.WHITEMARBLE && leaderCards[1].isActive() && leaderCards[1].getAction() == LeaderCardAction.WHITEMARBLE)
+        if(leaderCards[0].isActive() && leaderCards[0].getAction() == LeaderCardAction.WHITEMARBLE && leaderCards[1].isActive() && leaderCards[1].getAction() == LeaderCardAction.WHITEMARBLE) {
+            actionController.getGame().getCurrentPlayer().clearPossibleActions();
+            actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.CHOOSE_LEADER_CARD);
             return "Choose Leader Card";
+        }
 
         else if(leaderCards[0].isActive() && leaderCards[0].getAction() == LeaderCardAction.WHITEMARBLE && (!leaderCards[1].isActive() || leaderCards[1].getAction() != LeaderCardAction.WHITEMARBLE)) {
             while(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryWhiteMarbles() > 0)
@@ -127,14 +149,22 @@ public class MarketChooseRow extends Action {
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {
         ChoseMarketRowMessage message = new ChoseMarketRowMessage(actionController.getGame().getCurrentPlayerNickname());
+        if(this.response.equals(ILLEGAL_ACTION))
+            return illegalAction(message, actionController);
+
         message.setError(this.response);
         message.setMarket(actionController.getGame().getMarket());
-        message.setTemporaryResources(this.temporaryResource.toView());
+        message.setTemporaryResources(this.temporaryResource);
         if(this.response.equals("SUCCESS")) {
             message.addPossibleAction(ActionType.ADD_RESOURCE);
             message.addPossibleAction(ActionType.RESET_WAREHOUSE);
             message.addPossibleAction(ActionType.SWITCH_DEPOT);
             message.addPossibleAction(ActionType.END_MARKET);
+        }
+        else if(this.response.equals("Has Payed")) {
+            message.addPossibleAction(ActionType.END_TURN);
+            if(actionController.getGame().getCurrentPlayer().canDo(ActionType.ACTIVATE_LEADERCARD))
+                message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
         }
         else
             message.addPossibleAction(ActionType.CHOOSE_LEADER_CARD);

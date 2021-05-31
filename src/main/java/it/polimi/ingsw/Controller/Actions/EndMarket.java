@@ -27,10 +27,15 @@ public class EndMarket extends Action {
      */
     @Override
     public String doAction(ActionController actionController) {
+        if(!this.canDoAction(actionController))
+            return ILLEGAL_ACTION;
+
         actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().remainingResourcesToFaith(actionController.getGame().getCurrentPlayer(), actionController.getGame().getPlayers(), actionController.getGame().getFaithTrack());
         actionController.getResetWarehouse().emptyBackupResource();
 
         this.response = "SUCCESS";
+        actionController.getGame().getCurrentPlayer().clearPossibleActions();
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.END_TURN);
         return "SUCCESS";
     }
 
@@ -42,6 +47,10 @@ public class EndMarket extends Action {
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {
         EndMarketMessage message = new EndMarketMessage(actionController.getGame().getCurrentPlayerNickname());
+
+        if(this.response.equals(ILLEGAL_ACTION))
+            return illegalAction(message, actionController);
+
         ArrayList<Integer> faithPositions = new ArrayList<>();
 
         for(Player player : actionController.getGame().getPlayers())
@@ -50,7 +59,9 @@ public class EndMarket extends Action {
         message.setPlayersFaithPosition(faithPositions);
         message.setError(this.response);
         message.addPossibleAction(ActionType.END_TURN);
-        message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
+
+        if(actionController.getGame().getCurrentPlayer().canDo(ActionType.ACTIVATE_LEADERCARD))
+            message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
 
         return message;
     }

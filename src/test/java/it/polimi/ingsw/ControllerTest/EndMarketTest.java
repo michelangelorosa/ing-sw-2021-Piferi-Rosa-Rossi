@@ -45,6 +45,10 @@ public class EndMarketTest {
 
         ResourceStack stack = new ResourceStack(2, 1, 0, 1);
         game.getCurrentPlayer().getBoard().getResourceManager().setTemporaryResourcesToPay(stack);
+
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.END_MARKET);
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
+
         endMarket.doAction(actionController);
         messageToClient = endMarket.messagePrepare(actionController);
 

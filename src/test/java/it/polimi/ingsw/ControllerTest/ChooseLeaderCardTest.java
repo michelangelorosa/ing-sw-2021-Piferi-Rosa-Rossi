@@ -2,6 +2,7 @@ package it.polimi.ingsw.ControllerTest;
 
 import it.polimi.ingsw.CommonTestMethods;
 import it.polimi.ingsw.Controller.ActionController;
+import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.Controller.Actions.ChooseLeaderCard;
 import it.polimi.ingsw.Model.GameModel.Game;
 import org.junit.Test;
@@ -82,6 +83,8 @@ public class ChooseLeaderCardTest {
         ChooseLeaderCard chooseLeaderCard = new ChooseLeaderCard(0);
 
         String response;
+
+        game.getCurrentPlayer().addPossibleAction(ActionType.CHOOSE_LEADER_CARD);
 
         response = chooseLeaderCard.doAction(actionController);
         assertEquals("Leader Card not active or not of type WHITE MARBLE", response);

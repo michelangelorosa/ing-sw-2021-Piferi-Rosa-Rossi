@@ -63,6 +63,8 @@ public class BuyCardTest {
         String response;
         CommonTestMethods.givePlayerLeaderCards(game.getCurrentPlayer(), game.getLeaderCards().get(2), game.getLeaderCards().get(1));
 
+        actionController.getGame().getCurrentPlayer().addPossibleAction(BUY_CARD);
+
         response = card.doAction(actionController);
         assertEquals("Not enough resources to buy Card", response);
         messageToClient = card.messagePrepare(actionController);
@@ -91,6 +93,7 @@ public class BuyCardTest {
         assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals(ActionType.PAY_RESOURCE_CARD, messageToClient.getPossibleActions().get(0));
 
+        actionController.getGame().getCurrentPlayer().addPossibleAction(BUY_CARD);
 
         assertEquals("Card does not fit inside Personal Board", secondCard.doAction(actionController));
         messageToClient = secondCard.messagePrepare(actionController);

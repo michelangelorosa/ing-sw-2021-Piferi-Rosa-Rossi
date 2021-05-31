@@ -89,6 +89,7 @@ public class ActivateProductionTest {
         CommonTestMethods.gameInitOne(game);
         game.getCurrentPlayer().getBoard().getLeaderCards()[0] = game.getLeaderCards().get(4);
         game.getCurrentPlayer().getBoard().getLeaderCards()[1] = game.getLeaderCards().get(6);
+        game.getCurrentPlayer().addPossibleAction(ActionType.ACTIVATE_PRODUCTION);
 
         ArrayList<ResourceType> inputs = new ArrayList<>();
         inputs.add(ResourceType.COINS);
@@ -154,6 +155,7 @@ public class ActivateProductionTest {
         assertEquals("SUCCESS", messageToClient.getError());
         assertEquals(ActionType.PAY_RESOURCE_PRODUCTION, messageToClient.getPossibleActions().get(0));
 
+        game.getCurrentPlayer().addPossibleAction(ActionType.ACTIVATE_PRODUCTION);
 
         activateProduction = new ActivateProduction(true, false, false, true, false, true, inputs);
         assertEquals("SUCCESS", activateProduction.doAction(actionController));
@@ -166,6 +168,7 @@ public class ActivateProductionTest {
         assertEquals("SUCCESS", messageToClient.getError());
         assertEquals(ActionType.PAY_RESOURCE_PRODUCTION, messageToClient.getPossibleActions().get(0));
 
+        game.getCurrentPlayer().addPossibleAction(ActionType.ACTIVATE_PRODUCTION);
 
         activateProduction = new ActivateProduction(true, true, false, true, false, true, inputs);
         assertEquals("Not enough Resources to start Production", activateProduction.doAction(actionController));
@@ -196,6 +199,7 @@ public class ActivateProductionTest {
         assertEquals("SUCCESS", messageToClient.getError());
         assertEquals(ActionType.PAY_RESOURCE_PRODUCTION, messageToClient.getPossibleActions().get(0));
 
+        game.getCurrentPlayer().addPossibleAction(ActionType.ACTIVATE_PRODUCTION);
 
         activateProduction = new ActivateProduction(true, true, true, true, false, true, inputs);
         assertEquals("SUCCESS", activateProduction.doAction(actionController));
@@ -208,6 +212,7 @@ public class ActivateProductionTest {
         assertEquals("SUCCESS", messageToClient.getError());
         assertEquals(ActionType.PAY_RESOURCE_PRODUCTION, messageToClient.getPossibleActions().get(0));
 
+        game.getCurrentPlayer().addPossibleAction(ActionType.ACTIVATE_PRODUCTION);
 
         activateProduction = new ActivateProduction(true, true, true, true, true, true, inputs);
         assertEquals("Leader Card not active or not required Type/Error in reading basic production inputs.", activateProduction.doAction(actionController));

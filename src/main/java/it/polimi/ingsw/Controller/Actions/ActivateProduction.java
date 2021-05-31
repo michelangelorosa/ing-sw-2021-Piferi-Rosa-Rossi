@@ -148,6 +148,9 @@ public class ActivateProduction extends Action {
      */
     @Override
     public String doAction(ActionController actionController) {
+        if(!this.canDoAction(actionController))
+            return ILLEGAL_ACTION;
+
         this.isCorrect();
 
         if(!this.canBeApplied(actionController)) {
@@ -217,10 +220,17 @@ public class ActivateProduction extends Action {
             if(this.basicProduction)
                 actionController.getChooseProductionOutput().setBasicProduction(true);
 
-            if(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().isEmpty())
+            if(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().isEmpty()) {
                 this.response = "No Payment";
-            else
+                actionController.getGame().getCurrentPlayer().clearPossibleActions();
+                actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.CHOOSE_PRODUCTION_OUTPUT);
+            }
+            else {
                 this.response = "SUCCESS";
+                actionController.getGame().getCurrentPlayer().clearPossibleActions();
+                actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.PAY_RESOURCE_PRODUCTION);
+            }
+
             return "SUCCESS";
         }
     }
@@ -232,6 +242,9 @@ public class ActivateProduction extends Action {
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {
         ActivateProductionMessage message = new ActivateProductionMessage(actionController.getGame().getCurrentPlayerNickname());
+        if(this.response.equals(ILLEGAL_ACTION))
+            return this.illegalAction(message, actionController);
+
         message.setError(this.response);
 
         if(this.response.equals("SUCCESS")) {

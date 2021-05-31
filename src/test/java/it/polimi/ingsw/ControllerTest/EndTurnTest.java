@@ -41,6 +41,8 @@ public class EndTurnTest {
         assertEquals("Zero", game.getCurrentPlayerNickname());
         String response;
 
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.END_TURN);
+
         EndTurn endTurn = new EndTurn();
         response = endTurn.doAction(actionController);
         assertEquals("SUCCESS", response);
@@ -57,6 +59,7 @@ public class EndTurnTest {
         assertEquals(ActionType.ACTIVATE_LEADERCARD, messageToClient.getPossibleActions().get(3));
         assertEquals("One", ((EndTurnMessage)messageToClient).getNextPlayerNickname());
 
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.END_TURN);
 
         endTurn.doAction(actionController);
         assertEquals("Three", game.getCurrentPlayerNickname());
@@ -72,6 +75,7 @@ public class EndTurnTest {
         assertEquals(ActionType.ACTIVATE_LEADERCARD, messageToClient.getPossibleActions().get(3));
         assertEquals("Three", ((EndTurnMessage)messageToClient).getNextPlayerNickname());
 
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.END_TURN);
 
         endTurn.doAction(actionController);
         assertEquals("Zero", game.getCurrentPlayerNickname());

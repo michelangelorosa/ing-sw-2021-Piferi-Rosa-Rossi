@@ -65,6 +65,9 @@ public class ActivateLeaderCard extends Action {
      */
     @Override
     public String doAction(ActionController actionController) {
+        if(!this.canDoAction(actionController))
+            return ILLEGAL_ACTION;
+
         this.isCorrect();
         if(!this.canBeApplied(actionController)) {
             this.response = "Leader Card has already been activated";
@@ -80,6 +83,7 @@ public class ActivateLeaderCard extends Action {
         else {
             board.activateLeaderCard(board.getLeaderCards()[this.leaderCard]);
             this.response = "SUCCESS";
+            actionController.getGame().getCurrentPlayer().removePossibleAction(ActionType.ACTIVATE_LEADERCARD);
             return "SUCCESS";
         }
     }
@@ -91,11 +95,15 @@ public class ActivateLeaderCard extends Action {
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {
         ActivateLeaderCardMessage message = new ActivateLeaderCardMessage(actionController.getGame().getCurrentPlayerNickname());
+        if(this.response.equals(ILLEGAL_ACTION))
+            return illegalAction(message, actionController);
+
         message.setError(this.response);
         message.setLeaderCardPosition(this.leaderCard);
 
-        if(this.response.equals("SUCCESS"))
+        if(this.response.equals("SUCCESS")) {
             message.setLeaderCard(actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[this.leaderCard]);
+        }
 
         return message;
     }

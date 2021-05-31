@@ -89,15 +89,17 @@ public class ResetWarehouseTest {
     @Test
     public void doActionTest(){
         CommonTestMethods.gameInitOne(game);
-        PayResource pay = new PayResource(false, 0, ResourceType.SHIELDS);
-        PayResource pay2 = new PayResource(true, 0, ResourceType.NONE);
-        PayResource pay3 = new PayResource(false, 0, ResourceType.STONES);
+        PayResource pay = new PayResourceBuyCard(false, 0, ResourceType.SHIELDS);
+        PayResource pay2 = new PayResourceBuyCard(true, 0, ResourceType.NONE);
+        PayResource pay3 = new PayResourceBuyCard(false, 0, ResourceType.STONES);
 
         ResourceStack stack = new ResourceStack(1,3,0,2);
         game.getCurrentPlayer().getBoard().getResourceManager().setTemporaryResourcesToPay(backupResources);
         CommonTestMethods.giveResourcesToPlayer(game.getCurrentPlayer(), 1,2,1,ResourceType.SHIELDS, ResourceType.COINS, ResourceType.SERVANTS, stack);
         reset.setBackupWarehouse(game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().copyWarehouse());
         reset.setBackupResources(backupResources.copyStack());
+
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.PAY_RESOURCE_CARD);
 
         assertEquals("HasToPay", pay.doAction(actionController));
         assertEquals("1 0 0 0", game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toString());
