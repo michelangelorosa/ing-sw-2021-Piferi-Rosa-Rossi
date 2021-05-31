@@ -1,13 +1,7 @@
 package it.polimi.ingsw.View;
 
-import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.UserInteraction;
-import it.polimi.ingsw.View.*;
-import javafx.application.Application;
-import javafx.stage.Stage;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.Socket;
 import java.util.*;
@@ -20,6 +14,7 @@ public class Client {
     private String user;
     private boolean token;
     private boolean myTurn;
+    private boolean ready;
     private ClientConnection clientConnection;
     private static final UserInteraction userInteraction = new UserInteraction() {
     };
@@ -41,7 +36,7 @@ public class Client {
     public static void main(String[] args){
        try{
         //if (args[0].toLowerCase(Locale.ROOT).equals("--cli")) {
-            userInteraction.setUi(new Cli());
+            userInteraction.setUi(new CliController());
 
 
         //} else {
@@ -153,5 +148,17 @@ public class Client {
 
     public UserInteraction getUserInteraction() {
         return userInteraction;
+    }
+
+    public boolean isReady() {
+        return ready;
+    }
+
+    public void ready() {
+        this.ready = true;
+    }
+
+    public void notReady() {
+        this.ready = false;
     }
 }

@@ -4,7 +4,7 @@ package it.polimi.ingsw.ViewTest;
 import it.polimi.ingsw.Model.Enums.*;
 import it.polimi.ingsw.Model.GameModel.*;
 import it.polimi.ingsw.View.ANSIColors;
-import it.polimi.ingsw.View.Cli;
+import it.polimi.ingsw.View.CliController;
 import it.polimi.ingsw.View.ReducedModel.*;
 
 
@@ -393,7 +393,7 @@ public class ToCliTest {
         for(String s : player1.leaderPrint(up))
             System.out.println(s);
 
-        Cli cli = new Cli();
+        CliController cli = new CliController();
 
         for(String s : cli.initLeaderCardsToCli(leaderCards))
             System.out.println(s);
@@ -415,7 +415,7 @@ public class ToCliTest {
         leaderCards.add(card2);
         leaderCards.add(card3);
 
-        Cli cli = new Cli();
+        CliController cli = new CliController();
         for(String s : cli.initLeaderCardsToCli(leaderCards))
             System.out.println(s);
     }

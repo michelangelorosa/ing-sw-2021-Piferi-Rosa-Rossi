@@ -6,7 +6,7 @@ import it.polimi.ingsw.Model.MessagesToClient.*;
 import java.io.Serializable;
 
 /**
- * Action abstract Class defines common Data and Methods to perform an action on the model after a Client's request.
+ * Action Class defines common Data and Methods to perform an action on the model after a Client's request.
  * <p>
  * An Action subclass type object is created by the Client and sent to the Server to be processed.
  * <p>
