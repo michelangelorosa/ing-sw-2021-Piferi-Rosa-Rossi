@@ -470,7 +470,7 @@ public class ToCliTest {
         LeaderRequirements requirements = new LeaderRequirements(11,2,3,22,1,24,3,2,3,44,2,3);
         ResourceStack discount = new ResourceStack(1,0,0,0);
         RedLeaderCard card = new LeaderCard(49, 12, resourceStack, requirements, discount);
-        ((LeaderCard)card).setActive(true);
+        ((LeaderCard)card).discard();
         game.getPlayers().get(0).getLeaderCards()[0] = card;
 
         Marble marble = Marble.GREY;
@@ -503,7 +503,8 @@ public class ToCliTest {
         ((PopeTileClass)players.get(2).getPopeTiles()[0]).setPopeTile(PopeTile.UP);
         ((PopeTileClass)players.get(2).getPopeTiles()[1]).setPopeTile(PopeTile.No);
 
-        for(String s : game.boardToCli(game.getPlayers().get(1)))
+
+        for(String s : game.boardToCli(game.getPlayers().get(0)))
             System.out.println(s);
     }
 

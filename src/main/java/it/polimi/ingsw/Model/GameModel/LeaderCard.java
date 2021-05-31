@@ -75,4 +75,10 @@ public class LeaderCard extends RedLeaderCard {
     public RedLeaderCard toView(){
         return (RedLeaderCard) this;
     }
+
+    public void discard() throws IllegalArgumentException{
+        if(!this.discarded && !this.active) discarded = true;
+        else throw new IllegalArgumentException("You cannot discard this Leader Card");
+    }
+
 }

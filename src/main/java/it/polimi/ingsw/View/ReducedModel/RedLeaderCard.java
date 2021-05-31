@@ -20,6 +20,7 @@ public class RedLeaderCard implements Serializable {
     protected final int victoryPoints;
     protected final LeaderCardAction action;
     protected boolean active;
+    protected boolean discarded;
     protected final RedResourceStack resourcesRequired;
     protected final RedLeaderRequirements cardsRequired;
     //ABILITY ONE: Discount on Development Card
@@ -39,6 +40,7 @@ public class RedLeaderCard implements Serializable {
         this.action = action;
         this.resourcesRequired = resourcesRequired;
         this.cardsRequired = cardsRequired;
+        this.discarded = false;
     }
 
     /**Getter for cardId*/
@@ -56,9 +58,14 @@ public class RedLeaderCard implements Serializable {
         return action;
     }
 
+    /**Getter for discarded*/
+    public boolean isDiscarded() {
+        return discarded;
+    }
+
     /**Getter for Active*/
     public boolean isActive() {
-        return active;
+        return active && !discarded;
     }
 
     /**Getter for ResourceRequired*/
@@ -230,6 +237,29 @@ public class RedLeaderCard implements Serializable {
         leadCard.add("║     //  _\\ | |___)     "+c+"R "+r+"║");
         leadCard.add("║    //  (___|           "+c+"D "+r+"║");
         leadCard.add("╚══════════════════════════╝");
+        return leadCard;
+    }
+
+    public  ArrayList<String> toCliNo(){
+        ArrayList<String> leadCard = new ArrayList<>();
+        String r = ANSIColors.RESET;
+        String c = ANSIColors.FRONT_BRIGHT_CYAN;
+
+        leadCard.add("╔══  ══  ══  ══  ══  ══  ══╗" + r);
+        leadCard.add("                            ");
+        leadCard.add("║                          ║");
+        leadCard.add("                            ");
+        leadCard.add("║                          ║");
+        leadCard.add("                            ");
+        leadCard.add("║                          ║");
+        leadCard.add("                            ");
+        leadCard.add("║                          ║");
+        leadCard.add("                            ");
+        leadCard.add("║                          ║");
+        leadCard.add("                            ");
+        leadCard.add("║                          ║");
+        leadCard.add("                            ");
+        leadCard.add("╚══  ══  ══  ══  ══  ══  ══╝");
         return leadCard;
     }
 
