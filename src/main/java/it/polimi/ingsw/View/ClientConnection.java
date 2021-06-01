@@ -43,8 +43,6 @@ public class ClientConnection implements Runnable, Observer<Action> {
     @Override
     public void run(){
         System.out.println(ANSIColors.FRONT_BRIGHT_CYAN + "[CLIENT CONNECTION] Started" + ANSIColors.RESET);
-        Action actionObject;
-        Scanner TEMPORARY_SCANNER = new Scanner(System.in);
 
         ClientExceptionHandler clientExceptionHandler = new ClientExceptionHandler();
         clientExceptionHandler.visualType(true);
@@ -59,15 +57,15 @@ public class ClientConnection implements Runnable, Observer<Action> {
 
                 //Action = 0, the server is asking the client to input a name!
                 if (action==0) {
-                    this.client.getUserInteraction().initialChooseName(this);
+                    this.client.getUserInteraction().nextAction(0);
                 }
                 //Action = 1, first player to join, how many players?
                 if(action==1){
-                    this.client.getUserInteraction().numberOfPlayers(this);
+                    this.client.getUserInteraction().nextAction(1);
                 }
                 else if(action==2){
                     //Opens the lobby, if applicable, from the lobby a player can himself to be ready, or if no other players are modifying launches the param modifier
-                    this.client.getUserInteraction().initialLobby(this);
+                    this.client.getUserInteraction().nextAction(2);
                 }
                 else if(action==10){
                     //Opens the param modifier (GUI only!)
@@ -84,12 +82,12 @@ public class ClientConnection implements Runnable, Observer<Action> {
                     //TODO get leaderCards from server
                     System.out.println("[CLIENT CONNECTION] You are here");
                     ArrayList<RedLeaderCard> leaderCards = (ArrayList<RedLeaderCard>)objectInputStream.readObject();
-                    this.client.getUserInteraction().initialChooseLeaderCards(this, leaderCards);
+                    //this.client.getUserInteraction().initialChooseLeaderCards(this, leaderCards);
                 }
                 else if(action==5){
                     //Sends the resources to pick from (if applicable) and the inkwell!
                     int resources = objectInputStream.readInt();
-                    this.client.getUserInteraction().initialChooseResources(this, resources);
+                    //this.client.getUserInteraction().initialChooseResources(this, resources);
                     break;
                 }
                 else if(action==10000000) {
@@ -110,7 +108,7 @@ public class ClientConnection implements Runnable, Observer<Action> {
                 //Handling of the MessageToClient message type
                 MessageToClient messageToClient = (MessageToClient) objectInputStream.readObject();
                 messageToClient.updateView(this.client.getUserInteraction());
-                this.client.getUserInteraction().playTurn();
+                //this.client.getUserInteraction().playTurn();
 
             }
         } catch (Exception e) {

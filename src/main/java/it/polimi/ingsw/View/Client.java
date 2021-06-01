@@ -14,7 +14,6 @@ public class Client {
     private String user;
     private boolean token;
     private boolean myTurn;
-    private boolean ready;
     private ClientConnection clientConnection;
     private static final UserInteraction userInteraction = new UserInteraction() {
     };
@@ -68,6 +67,9 @@ public class Client {
 
             ClientConnection clientConnection = new ClientConnection(this, socket);
             new Thread(clientConnection).start();
+
+            if(userInteraction.getUi() instanceof CliController)
+                new Thread(new Cli(this, clientConnection)).start();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -148,17 +150,5 @@ public class Client {
 
     public UserInteraction getUserInteraction() {
         return userInteraction;
-    }
-
-    public boolean isReady() {
-        return ready;
-    }
-
-    public void ready() {
-        this.ready = true;
-    }
-
-    public void notReady() {
-        this.ready = false;
     }
 }

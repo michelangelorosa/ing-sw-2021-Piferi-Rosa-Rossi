@@ -6,6 +6,7 @@ import it.polimi.ingsw.Controller.Actions.PayResourceBuyCard;
 import it.polimi.ingsw.Controller.Actions.PayResourceProduction;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
+import it.polimi.ingsw.View.ReducedModel.UserInteraction;
 
 import java.util.ArrayList;
 
@@ -14,6 +15,9 @@ import java.util.ArrayList;
  * the user input, ready to be sent to the server via the UserInteraction Abstract Class.
  */
 public interface UserInterface {
+
+    void nextAction(UserInteraction userInteraction, int i);
+
     /**
      * Used to get the Server Address and Server Port as input from the player.
      * @return An ArrayList of object.
@@ -21,14 +25,6 @@ public interface UserInterface {
      *  - Second element in the ArrayList -> Integer containing server port.
      */
     ArrayList<Object> init();
-
-    /**
-     * Used to get a boolean as input from the player to decide if he wants to start a new game or join
-     * an existing one.
-     * @return true  -> player wants to start a new game.
-     *         false -> player wants to join an existing game.
-     */
-    boolean startOrJoin();
 
     /**
      * Used to get the number of players as input from the player who decided to start a new game.
@@ -51,7 +47,7 @@ public interface UserInterface {
      * Used to get a boolean as input from the player indicating whether he's ready to play or not.
      * @return true if the player is ready.
      */
-    boolean initialLobby();
+    int initialLobby();
 
     /**
      * Used to get the initial LeaderCards as input from the player.
@@ -81,34 +77,6 @@ public interface UserInterface {
      * ArrayList<ActionType> possibleActions.
      */
     Action actionPicker(Game game) throws IllegalStateException;
-
-    Action activateLeaderCard(Game game);
-
-    Action activateProduction(Game game);
-
-    Action addResource(Game game);
-
-    Action buyCard(Game game);
-
-    Action chooseCardSlot(Game game);
-
-    Action chooseLeaderCard(Game game);
-
-    Action chooseProductionOutput(Game game);
-
-    Action marketChooseRow(Game game);
-
-    Action payResource(Game game);
-
-    PayResourceProduction payResourceProduction(Game game);
-
-    PayResourceBuyCard payResourceBuyCard(Game game);
-
-    Action resetWarehouse();
-
-    Action switchDepot(Game game);
-
-    Action indexToAction(ActionType action, Game game);
 
     void displayError(String s);
 

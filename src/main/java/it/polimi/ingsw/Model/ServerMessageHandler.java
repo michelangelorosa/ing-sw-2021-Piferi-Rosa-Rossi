@@ -3,12 +3,14 @@ package it.polimi.ingsw.Model;
 import it.polimi.ingsw.Controller.Observable;
 import it.polimi.ingsw.Model.Enums.GameStatus;
 import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
+import it.polimi.ingsw.Model.GameModel.Game;
 import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.Model.GameModel.ParamValidator;
 import it.polimi.ingsw.View.ANSIColors;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ServerMessageHandler extends Observable<Object> {
     private static final String S = "[SERVER] ";
@@ -135,6 +137,10 @@ public class ServerMessageHandler extends Observable<Object> {
                                 System.out.println("Hurray, starting game!");
                                 Server.setServerStatus(GameStatus.LEADER);
                                 //We should create the Game here somehow
+                                //TODO pulire lista giocatori
+                                ArrayList<String> names = new ArrayList<>(serverConnection.getServer().getNames());
+                                serverConnection.getServer().getController().getActionController().getGame().gameStart(names);
+
                             }
                             else
                                 sendError(serverConnection,"Not enough players ready, need another "+(serverConnection.getServer().getReadyPlayers()-serverConnection.getServer().getNumberOfPlayers()));

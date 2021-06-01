@@ -1,45 +1,85 @@
 package it.polimi.ingsw.View;
 
-import java.util.ArrayList;
-
-public class Cli implements Runnable {
+public class Cli implements Runnable{
     private ClientConnection clientConnection;
     private final CliController cliController;
-    private static boolean ready = false;
+    private final Client client;
 
-    public Cli() {
+    public Cli(Client client, ClientConnection clientConnection) {
         this.cliController = new CliController();
+        this.client = client;
+        this.clientConnection = clientConnection;
     }
 
     @Override
     public void run() {
-        System.out.println("[INFO] Started Client with Cli");
+        System.out.println("[INFO] Started Client with Cli\n");
+        this.client.getUserInteraction().setActionNumber(-1);
+        int i;
 
-        synchronized (this) {
-            while(!ready) {
+        while(true) {
+            i = this.waitReady();
+            try {
+                this.actionParser(i);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void actionParser(int i) throws Exception {
+        switch(i) {
+            case 0: this.chooseName();
+                break;
+            case 1: this.numberOfPlayers();
+                break;
+            case 2: this.initialLobby();
+                break;
+            case 3: //reconnected, game already started
+                break;
+            case 4: //leader card choice
+                break;
+            case 5: //resources choice
+                break;
+
+
+            default: System.out.println("Can't understand Message, turning back...");
+        }
+    }
+
+    public void chooseName() throws Exception {
+        String nickname = this.cliController.initialInsertName();
+        this.clientConnection.send(nickname);
+    }
+
+    public void numberOfPlayers() throws Exception {
+        int number = this.cliController.numberOfPlayers();
+        this.clientConnection.send(number);
+    }
+
+    public void initialLobby() throws Exception {
+        int number = this.cliController.initialLobby();
+        this.clientConnection.send(number);
+    }
+
+    public void initialChoose() {
+
+    }
+
+    public int waitReady() {
+        int action;
+        synchronized (this.client.getUserInteraction()) {
+            while(this.client.getUserInteraction().getActionNumber() == -1) {
                 try {
-                    this.wait();
+                    this.client.getUserInteraction().wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
+            action = this.client.getUserInteraction().getActionNumber();
+            this.client.getUserInteraction().setActionNumber(-1);
         }
-
-
-
-
-    }
-
-    public static boolean isReady() {
-        return ready;
-    }
-
-    public static void makeReady() {
-        Cli.ready = true;
-    }
-
-    public static void notReady() {
-        Cli.ready = false;
+        return action;
     }
 
     public ClientConnection getClientConnection() {

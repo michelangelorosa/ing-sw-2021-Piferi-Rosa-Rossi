@@ -28,6 +28,13 @@ public class CliController implements UserInterface{
         this.basicProduction = basic;
     }
 
+    public void nextAction(UserInteraction userInteraction, int i) {
+        synchronized (userInteraction) {
+            userInteraction.setActionNumber(i);
+            userInteraction.notify();
+        }
+    }
+
     /**
      * Method used on startup by the client (if in Cli mode) to print the game title and get
      * the Server address and port as input from the user.
@@ -80,14 +87,7 @@ public class CliController implements UserInterface{
         return objects;
     }
 
-    public boolean startOrJoin() {
-        System.out.println("Do you want to Start a new game or Join an existing one?");
-        System.out.println("[1]     Start");
-        System.out.println("[other] Join");
 
-        String choice = sc.nextLine();
-        return choice.equals("1");
-    }
 
     public int numberOfPlayers() {
         String choice;
@@ -125,17 +125,18 @@ public class CliController implements UserInterface{
         System.out.println("\nWaiting for players to join...");
     }
 
-    public boolean initialLobby() {
+    public int initialLobby() {
         String choice;
         System.out.println("\n\n");
         System.out.println(ANSIColors.GAMEPLAY_ACTIONS + ANSIfont.BOLD + "Welcome to the pre-game Lobby!" + ANSIColors.RESET);
         System.out.println();
-        System.out.println("Are you ready to play " + ANSIfont.ITALIC + ANSIfont.BOLD + ANSIColors.FRONT_BLUE + "Masters of Renaissance" + ANSIColors.RESET + "? (y/n)");
+        System.out.println("What do you want to do?");
+        System.out.println("1- start the game");
 
         while(true) {
             choice = sc.nextLine();
-            if(choice.equals("y")) {
-                return true;
+            if(choice.equals("1")) {
+                return 4;
             }
             else if(!choice.equals("n"))
                 System.out.println("Please insert a valid character");

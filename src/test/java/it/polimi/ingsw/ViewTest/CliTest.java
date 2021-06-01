@@ -8,7 +8,7 @@ import it.polimi.ingsw.Model.GameModel.LeaderRequirements;
 import it.polimi.ingsw.Model.GameModel.ResourceStack;
 import it.polimi.ingsw.View.CliController;
 import it.polimi.ingsw.View.ReducedModel.*;
-import it.polimi.ingsw.View.UserInterface;
+import it.polimi.ingsw.View.CliController;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -20,7 +20,7 @@ import java.util.HashMap;
 public class CliTest {
 
     InputStream sysInBackup = System.in;
-    UserInterface ui = new CliController();
+    CliController ui = new CliController();
     Game game = CommonViewTestMethods.gameCreator();
 
     private static void changeSystemIn(String s) {
@@ -35,17 +35,6 @@ public class CliTest {
         assertEquals("127.0.0.1", objects.get(0));
         assertEquals(22222, objects.get(1));
         System.setIn(sysInBackup);
-    }
-
-    @Test
-    public void startOrJoinTest() {
-        changeSystemIn("1");
-        ui = new CliController();
-        assertTrue(ui.startOrJoin());
-
-        changeSystemIn("0");
-        ui = new CliController();
-        assertFalse(ui.startOrJoin());
     }
 
     @Test
@@ -69,9 +58,9 @@ public class CliTest {
 
     @Test
     public void initialLobbyTest() {
-        changeSystemIn("n\n2\n123123123123\ny");
+        changeSystemIn("n\n2\n123123123123\n1");
         ui = new CliController();
-        assertTrue(ui.initialLobby());
+        assertEquals(4, ui.initialLobby());
     }
 
     @Test

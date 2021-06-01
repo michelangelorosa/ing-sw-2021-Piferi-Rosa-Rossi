@@ -9,6 +9,7 @@ import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.Model.Enums.SoloActionToken;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
+import it.polimi.ingsw.View.ReducedModel.UserInteraction;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -43,7 +44,7 @@ import java.util.Optional;
  * Handles the interactions between the User and the Gui application.
  * The interactions are sent to the GuiExceptionHandler for validation and visualization of the errors
  */
-public class GuiController implements UserInterface{
+public class GuiController /*implements UserInterface*/{
     private Client client;
     public MediaPlayer mediaPlayer;
     @FXML private Label score;
@@ -392,7 +393,6 @@ public class GuiController implements UserInterface{
      * - First element in the ArrayList -> String containing server address.
      * - Second element in the ArrayList -> Integer containing server port.
      */
-    @Override
     public ArrayList<Object> init() {
         this.client=new Client(server.getText(),Integer.parseInt(port.getText()));
         ArrayList<Object> objects = new ArrayList<>();
@@ -403,23 +403,10 @@ public class GuiController implements UserInterface{
     }
 
     /**
-     * Used to get a boolean as input from the player to decide if he wants to start a new game or join
-     * an existing one.
-     *
-     * @return true  -> player wants to start a new game.
-     * false -> player wants to join an existing game.
-     */
-    @Override
-    public boolean startOrJoin() {
-        return false;
-    }
-
-    /**
      * Used to get the number of players as input from the player who decided to start a new game.
      *
      * @return the number of players decided.
      */
-    @Override
     public int numberOfPlayers() {
         return 0;
     }
@@ -429,7 +416,6 @@ public class GuiController implements UserInterface{
      *
      * @return A String containing the UserName
      */
-    @Override
     public String initialInsertName() {
         return null;
     }
@@ -437,7 +423,6 @@ public class GuiController implements UserInterface{
     /**
      * Used to display a message while the player waits for all the other players to join.
      */
-    @Override
     public void waitingForPlayers() {
 
     }
@@ -447,7 +432,6 @@ public class GuiController implements UserInterface{
      *
      * @return true if the player is ready.
      */
-    @Override
     public boolean initialLobby() {
         return false;
     }
@@ -460,7 +444,6 @@ public class GuiController implements UserInterface{
      * to the player inside the Model's Game.
      * @throws IllegalArgumentException if the number of leader cards in the input ArrayList is != 4
      */
-    @Override
     public Action initialChooseLeaderCards(ArrayList<RedLeaderCard> leaderCards) throws IllegalArgumentException {
         return null;
     }
@@ -472,7 +455,6 @@ public class GuiController implements UserInterface{
      * @return An Action Class message containing all resources chosen and the places chosen by the player
      * to put said resources.
      */
-    @Override
     public Action initialChooseResources(int resources) {
         return null;
     }
@@ -488,82 +470,10 @@ public class GuiController implements UserInterface{
      * @throws IllegalStateException If the player does not have any possible action inside his
      *                               ArrayList<ActionType> possibleActions.
      */
-    @Override
     public Action actionPicker(Game game) throws IllegalStateException {
         return null;
     }
 
-    @Override
-    public Action activateLeaderCard(Game game) {
-        return null;
-    }
-
-    @Override
-    public Action activateProduction(Game game) {
-        return null;
-    }
-
-    @Override
-    public Action addResource(Game game) {
-        return null;
-    }
-
-    @Override
-    public Action buyCard(Game game) {
-        return null;
-    }
-
-    @Override
-    public Action chooseCardSlot(Game game) {
-        return null;
-    }
-
-    @Override
-    public Action chooseLeaderCard(Game game) {
-        return null;
-    }
-
-    @Override
-    public Action chooseProductionOutput(Game game) {
-        return null;
-    }
-
-    @Override
-    public Action marketChooseRow(Game game) {
-        return null;
-    }
-
-    @Override
-    public Action payResource(Game game) {
-        return null;
-    }
-
-    @Override
-    public PayResourceProduction payResourceProduction(Game game) {
-        return null;
-    }
-
-    @Override
-    public PayResourceBuyCard payResourceBuyCard(Game game) {
-        return null;
-    }
-
-    @Override
-    public Action resetWarehouse() {
-        return null;
-    }
-
-    @Override
-    public Action switchDepot(Game game) {
-        return null;
-    }
-
-    @Override
-    public Action indexToAction(ActionType action, Game game) {
-        return null;
-    }
-
-    @Override
     public void displayError(String s) {
 
     }
