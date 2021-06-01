@@ -90,6 +90,10 @@ public abstract class UserInteraction extends Observable<Action> {
         this.message = message;
     }
 
+    public boolean sameMessages() {
+        return this.previousMessage == this.message;
+    }
+
     /**
      * Method used to start the UserInterface method required to get from the player the server address
      * and port needed to connect to the server.
@@ -99,10 +103,6 @@ public abstract class UserInteraction extends Observable<Action> {
      */
     public ArrayList<Object> connectToServer() {
         return ui.init();
-    }
-
-    public void ready() {
-        //ui.continueThread(this);
     }
 
     public int getActionNumber() {
