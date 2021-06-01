@@ -2,6 +2,7 @@ package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.View.ReducedModel.*;
+import it.polimi.ingsw.View.User.UserInteraction;
 
 public class PaymentMessage extends MessageToClient {
     /**Payment message need a warehouse a strongbox and a temporary resource*/

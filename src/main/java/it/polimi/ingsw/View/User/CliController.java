@@ -1,8 +1,10 @@
-package it.polimi.ingsw.View;
+package it.polimi.ingsw.View.User;
 
 import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.Model.GameModel.Warehouse;
+import it.polimi.ingsw.View.Utility.ANSIColors;
+import it.polimi.ingsw.View.Utility.ANSIfont;
 import it.polimi.ingsw.View.ReducedModel.*;
 
 import java.util.ArrayList;
@@ -13,7 +15,7 @@ import java.util.Scanner;
  * Cli Class contains all methods to let the Player decide which action he wants to perform, then
  * generate and Action Message to send to the Server accordingly.
  */
-public class CliController implements UserInterface{
+public class CliController implements UserInterface {
     /** A Scanner is used to take input from the player */
     private final Scanner sc = new Scanner(System.in);
 

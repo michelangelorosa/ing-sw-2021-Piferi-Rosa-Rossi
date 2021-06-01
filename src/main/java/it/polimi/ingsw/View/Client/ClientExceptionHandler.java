@@ -1,5 +1,7 @@
-package it.polimi.ingsw.View;
+package it.polimi.ingsw.View.Client;
 
+import it.polimi.ingsw.View.Utility.ANSIColors;
+import it.polimi.ingsw.View.Utility.ANSIfont;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,9 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.scene.control.Label;
-
-import java.util.ArrayList;
 
 public class ClientExceptionHandler {
     private boolean cli;

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.View.ReducedModel;
 
 import it.polimi.ingsw.Model.GameModel.FaithTrack;
-import it.polimi.ingsw.View.ANSIfont;
+import it.polimi.ingsw.View.Utility.ANSIfont;
 import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.Enums.SoloActionToken;
 

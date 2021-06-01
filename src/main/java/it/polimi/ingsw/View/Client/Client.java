@@ -1,6 +1,8 @@
-package it.polimi.ingsw.View;
+package it.polimi.ingsw.View.Client;
 
-import it.polimi.ingsw.View.ReducedModel.UserInteraction;
+import it.polimi.ingsw.View.User.UserInteraction;
+import it.polimi.ingsw.View.User.Cli;
+import it.polimi.ingsw.View.User.CliController;
 
 import java.io.*;
 import java.net.Socket;

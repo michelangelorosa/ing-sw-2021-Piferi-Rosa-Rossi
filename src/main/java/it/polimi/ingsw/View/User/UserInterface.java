@@ -1,12 +1,4 @@
-package it.polimi.ingsw.View;
-
-import it.polimi.ingsw.Controller.Actions.Action;
-import it.polimi.ingsw.Controller.Actions.ActionType;
-import it.polimi.ingsw.Controller.Actions.PayResourceBuyCard;
-import it.polimi.ingsw.Controller.Actions.PayResourceProduction;
-import it.polimi.ingsw.View.ReducedModel.Game;
-import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
-import it.polimi.ingsw.View.ReducedModel.UserInteraction;
+package it.polimi.ingsw.View.User;
 
 import java.util.ArrayList;
 

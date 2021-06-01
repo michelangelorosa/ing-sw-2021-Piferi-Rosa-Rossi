@@ -2,6 +2,7 @@ package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.View.ReducedModel.*;
+import it.polimi.ingsw.View.User.UserInteraction;
 
 public class EndProductionMessage extends MessageToClient {
     private RedWarehouse warehouse;

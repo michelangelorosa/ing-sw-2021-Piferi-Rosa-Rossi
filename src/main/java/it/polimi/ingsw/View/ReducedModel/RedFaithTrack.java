@@ -3,7 +3,7 @@ package it.polimi.ingsw.View.ReducedModel;
 import it.polimi.ingsw.Model.GameModel.FaithCell;
 import it.polimi.ingsw.Model.JSON.JSONReader;
 import it.polimi.ingsw.Model.GameModel.VaticanReportSection;
-import it.polimi.ingsw.View.ANSIColors;
+import it.polimi.ingsw.View.Utility.ANSIColors;
 
 import java.io.Serializable;
 import java.util.ArrayList;

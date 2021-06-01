@@ -4,7 +4,7 @@ import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.Player;
 import it.polimi.ingsw.View.ReducedModel.RedWarehouse;
-import it.polimi.ingsw.View.ReducedModel.UserInteraction;
+import it.polimi.ingsw.View.User.UserInteraction;
 
 /**
  * SwitchDepotMessage Class contains data for a response message to be sent to the client

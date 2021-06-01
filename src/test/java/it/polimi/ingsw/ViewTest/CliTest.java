@@ -6,9 +6,8 @@ import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.Model.GameModel.LeaderRequirements;
 import it.polimi.ingsw.Model.GameModel.ResourceStack;
-import it.polimi.ingsw.View.CliController;
+import it.polimi.ingsw.View.User.CliController;
 import it.polimi.ingsw.View.ReducedModel.*;
-import it.polimi.ingsw.View.CliController;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

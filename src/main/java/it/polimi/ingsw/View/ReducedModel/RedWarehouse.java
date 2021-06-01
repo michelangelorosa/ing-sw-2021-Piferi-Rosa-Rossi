@@ -2,7 +2,7 @@ package it.polimi.ingsw.View.ReducedModel;
 
 import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.Model.GameModel.WarehouseDepot;
-import it.polimi.ingsw.View.ANSIColors;
+import it.polimi.ingsw.View.Utility.ANSIColors;
 
 import java.io.Serializable;
 import java.util.ArrayList;

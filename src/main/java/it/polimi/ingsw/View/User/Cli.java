@@ -1,6 +1,8 @@
-package it.polimi.ingsw.View;
+package it.polimi.ingsw.View.User;
 
 import it.polimi.ingsw.Controller.Actions.*;
+import it.polimi.ingsw.View.Client.Client;
+import it.polimi.ingsw.View.Client.ClientConnection;
 
 public class Cli implements Runnable{
     private ClientConnection clientConnection;

@@ -3,12 +3,10 @@ package it.polimi.ingsw.Model;
 import it.polimi.ingsw.Controller.Observable;
 import it.polimi.ingsw.Model.Enums.GameStatus;
 import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
-import it.polimi.ingsw.Model.GameModel.Game;
 import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.Model.GameModel.ParamValidator;
-import it.polimi.ingsw.View.ANSIColors;
+import it.polimi.ingsw.View.Utility.ANSIColors;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 

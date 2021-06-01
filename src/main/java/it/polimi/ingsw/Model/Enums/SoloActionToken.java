@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Model.Enums;
 
-import it.polimi.ingsw.View.ANSIColors;
+import it.polimi.ingsw.View.Utility.ANSIColors;
 
 import java.util.ArrayList;
 

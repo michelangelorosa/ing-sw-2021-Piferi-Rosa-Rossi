@@ -1,8 +1,7 @@
 package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
-import it.polimi.ingsw.View.ReducedModel.Game;
-import it.polimi.ingsw.View.ReducedModel.UserInteraction;
+import it.polimi.ingsw.View.User.UserInteraction;
 
 import java.io.Serializable;
 import java.util.ArrayList;

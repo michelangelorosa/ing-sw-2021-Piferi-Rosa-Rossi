@@ -4,7 +4,7 @@ import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.Model.GameModel.*;
-import it.polimi.ingsw.View.ANSIfont;
+import it.polimi.ingsw.View.Utility.ANSIfont;
 
 import java.io.Serializable;
 import java.util.ArrayList;

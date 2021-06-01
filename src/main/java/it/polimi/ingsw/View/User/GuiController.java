@@ -1,15 +1,10 @@
-package it.polimi.ingsw.View;
+package it.polimi.ingsw.View.User;
 
-import it.polimi.ingsw.Controller.Actions.Action;
-import it.polimi.ingsw.Controller.Actions.ActionType;
-import it.polimi.ingsw.Controller.Actions.PayResourceBuyCard;
-import it.polimi.ingsw.Controller.Actions.PayResourceProduction;
 import it.polimi.ingsw.Model.Enums.Marble;
 import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.Model.Enums.SoloActionToken;
-import it.polimi.ingsw.View.ReducedModel.Game;
-import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
-import it.polimi.ingsw.View.ReducedModel.UserInteraction;
+import it.polimi.ingsw.View.Client.Client;
+import it.polimi.ingsw.View.Client.ClientExceptionHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,29 +17,20 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javafx.scene.image.ImageView ;
 
-import javax.swing.*;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Optional;
 
 /**
  * Handles the interactions between the User and the Gui application.
  * The interactions are sent to the GuiExceptionHandler for validation and visualization of the errors
  */
-public class GuiController implements UserInterface{
+public class GuiController implements UserInterface {
     private Client client;
     public MediaPlayer mediaPlayer;
     @FXML private Label score;

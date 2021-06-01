@@ -2,6 +2,7 @@ package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.View.ReducedModel.*;
+import it.polimi.ingsw.View.User.UserInteraction;
 
 /**
  * ChoseMarketRowMessage Class defines a response to be sent to the client after

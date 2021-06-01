@@ -1,10 +1,11 @@
-package it.polimi.ingsw.View.ReducedModel;
+package it.polimi.ingsw.View.User;
 
 import it.polimi.ingsw.Controller.Actions.Action;
 import it.polimi.ingsw.Controller.Observable;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
-import it.polimi.ingsw.View.ClientConnection;
-import it.polimi.ingsw.View.UserInterface;
+import it.polimi.ingsw.View.ReducedModel.Game;
+import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
+import it.polimi.ingsw.View.User.UserInterface;
 
 import java.util.ArrayList;
 

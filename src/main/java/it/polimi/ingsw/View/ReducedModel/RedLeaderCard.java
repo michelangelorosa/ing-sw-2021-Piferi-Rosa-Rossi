@@ -1,10 +1,9 @@
 package it.polimi.ingsw.View.ReducedModel;
 
 import it.polimi.ingsw.Model.Enums.*;
-import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.Model.GameModel.LeaderRequirements;
 import it.polimi.ingsw.Model.GameModel.ResourceStack;
-import it.polimi.ingsw.View.ANSIColors;
+import it.polimi.ingsw.View.Utility.ANSIColors;
 
 import java.io.Serializable;
 import java.util.ArrayList;

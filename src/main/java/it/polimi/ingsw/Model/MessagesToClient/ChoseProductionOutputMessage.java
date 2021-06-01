@@ -4,7 +4,7 @@ import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.Player;
 import it.polimi.ingsw.View.ReducedModel.RedStrongbox;
-import it.polimi.ingsw.View.ReducedModel.UserInteraction;
+import it.polimi.ingsw.View.User.UserInteraction;
 
 /**
  * ChooseProductionOutputMessage Class defines a response message to be sent to the client

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.View;
+package it.polimi.ingsw.View.Utility;
 
 public class ANSIColors {
     public final static String RESET = "\u001B[0m";

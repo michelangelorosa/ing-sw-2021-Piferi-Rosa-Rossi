@@ -1,7 +1,7 @@
 package it.polimi.ingsw.ViewTest;
 
-import it.polimi.ingsw.View.ANSIColors;
-import it.polimi.ingsw.View.ANSIfont;
+import it.polimi.ingsw.View.Utility.ANSIColors;
+import it.polimi.ingsw.View.Utility.ANSIfont;
 import org.junit.Test;
 
 public class ANSITest {

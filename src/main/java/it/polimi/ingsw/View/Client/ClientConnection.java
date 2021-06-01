@@ -1,9 +1,8 @@
-package it.polimi.ingsw.View;
+package it.polimi.ingsw.View.Client;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import it.polimi.ingsw.Controller.Observer;
 import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
@@ -11,6 +10,7 @@ import it.polimi.ingsw.Model.MessagesToClient.*;
 import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.Controller.Actions.*;
+import it.polimi.ingsw.View.Utility.ANSIColors;
 
 /** ClientConnection handles the listening of messages from the server.
  * the messages are int coded
