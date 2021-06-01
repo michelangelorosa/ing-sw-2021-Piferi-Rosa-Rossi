@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Controller.Actions;
 
-import it.polimi.ingsw.Controller.ActionController;
+import it.polimi.ingsw.Controller.ControllerClasses.ActionController;
 import it.polimi.ingsw.Model.Enums.LeaderCardAction;
 import it.polimi.ingsw.Model.GameModel.Player;
 import it.polimi.ingsw.Model.MessagesToClient.*;

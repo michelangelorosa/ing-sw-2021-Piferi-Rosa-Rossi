@@ -1,19 +1,11 @@
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.Model.Server;
 
 import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
 import it.polimi.ingsw.Model.GameModel.LeaderCard;
-import it.polimi.ingsw.Controller.Controller;
-import it.polimi.ingsw.Controller.Observable;
-import it.polimi.ingsw.Model.Enums.GameStatus;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * ServerConnection is a thread running on the server that manages connection to and from the clients.

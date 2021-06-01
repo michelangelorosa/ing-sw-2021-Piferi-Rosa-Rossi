@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Controller.Actions;
 
-import it.polimi.ingsw.Controller.ActionController;
+import it.polimi.ingsw.Controller.ControllerClasses.ActionController;
 import it.polimi.ingsw.Model.GameModel.DevelopmentCardDeck;
 import it.polimi.ingsw.Model.GameModel.DevelopmentCardSlots;
 import it.polimi.ingsw.Model.MessagesToClient.*;

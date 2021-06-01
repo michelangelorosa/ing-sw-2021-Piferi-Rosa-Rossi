@@ -1,6 +1,6 @@
 package it.polimi.ingsw.JSONTest;
 
-import it.polimi.ingsw.Controller.Controller;
+import it.polimi.ingsw.Controller.ControllerClasses.Controller;
 
 import static org.junit.Assert.*;
 

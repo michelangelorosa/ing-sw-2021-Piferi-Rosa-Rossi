@@ -2,8 +2,8 @@ package it.polimi.ingsw.ControllerTest;
 
 import it.polimi.ingsw.CommonTestMethods;
 import it.polimi.ingsw.Controller.Actions.Action;
-import it.polimi.ingsw.Controller.Controller;
-import it.polimi.ingsw.Controller.Observable;
+import it.polimi.ingsw.Controller.ControllerClasses.Controller;
+import it.polimi.ingsw.Controller.ControllerClasses.Observable;
 import static org.junit.Assert.*;
 import org.junit.Test;
 

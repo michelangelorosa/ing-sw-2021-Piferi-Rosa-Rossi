@@ -1,7 +1,6 @@
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.Model.Server;
 
-import it.polimi.ingsw.Controller.Controller;
-import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Controller.ControllerClasses.Controller;
 import it.polimi.ingsw.Model.Enums.GameStatus;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
 
@@ -10,7 +9,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
 import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
 
 import static java.lang.Integer.parseInt;
 

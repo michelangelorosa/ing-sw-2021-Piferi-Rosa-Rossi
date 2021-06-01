@@ -1,6 +1,6 @@
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.Model.Server;
 
-import it.polimi.ingsw.Controller.Observable;
+import it.polimi.ingsw.Controller.ControllerClasses.Observable;
 import it.polimi.ingsw.Model.Enums.GameStatus;
 import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
 import it.polimi.ingsw.Model.GameModel.LeaderCard;
@@ -45,7 +45,7 @@ public class ServerMessageHandler extends Observable<Object> {
                     //synchronized (serverConnection.getServer().getNames()) {
 
                     //Name is NOT in the server AND game status is the FIRST player to join
-                    if(newName&&Server.getServerStatus().equals(GameStatus.READY)){
+                    if(newName&& Server.getServerStatus().equals(GameStatus.READY)){
                         System.out.println("[SmHANDLER] A first player connected!");
                         //Asking for the number of players to start a game
                         serverConnection.send(1);

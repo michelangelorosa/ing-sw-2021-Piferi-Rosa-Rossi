@@ -1,7 +1,6 @@
-package it.polimi.ingsw.Controller;
+package it.polimi.ingsw.Controller.ControllerClasses;
 
 import it.polimi.ingsw.Controller.Actions.Action;
-import it.polimi.ingsw.Model.*;
 
 /**
  * Controller Class observes messages coming from the Client to compute them

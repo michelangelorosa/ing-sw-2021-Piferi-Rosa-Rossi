@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import it.polimi.ingsw.Controller.Observer;
+import it.polimi.ingsw.Controller.ControllerClasses.Observer;
 import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;

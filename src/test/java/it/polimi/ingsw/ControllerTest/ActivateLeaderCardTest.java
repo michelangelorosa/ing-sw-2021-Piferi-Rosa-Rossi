@@ -1,7 +1,7 @@
 package it.polimi.ingsw.ControllerTest;
 
 import it.polimi.ingsw.CommonTestMethods;
-import it.polimi.ingsw.Controller.ActionController;
+import it.polimi.ingsw.Controller.ControllerClasses.ActionController;
 import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.Controller.Actions.ActivateLeaderCard;
 import it.polimi.ingsw.Model.MessagesToClient.ActivateLeaderCardMessage;

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Controller;
+package it.polimi.ingsw.Controller.ControllerClasses;
 
 import java.util.ArrayList;
 import java.util.List;
