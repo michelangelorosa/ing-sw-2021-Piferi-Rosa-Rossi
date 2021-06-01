@@ -53,10 +53,7 @@ public class ActivateLeaderCard extends Action {
      */
     @Override
     public boolean canBeApplied(ActionController actionController) {
-        if(actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[this.leaderCard].isActive())
-            return false;
-
-        return true;
+        return !actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[this.leaderCard].isActive();
     }
 
     /**

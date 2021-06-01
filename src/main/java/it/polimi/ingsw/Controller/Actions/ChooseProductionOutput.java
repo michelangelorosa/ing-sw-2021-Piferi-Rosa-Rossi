@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * <ul>
  *     <li>boolean "firstLeaderCard", "secondLeaderCard", "basicProduction": they are set when activating
  *     a production and indicate which different Productions the player chose to activate.</li>
- *     <li>ArrayList(ResourceType) "firstLeaderCardOutput", "secondLeaderCardOutput", "basicProductionOutput":
+ *     <li>ArrayList&lt;ResourceType&gt; "firstLeaderCardOutput", "secondLeaderCardOutput", "basicProductionOutput":
  *     they contain the outputs chosen by the player.</li>
  * </ul>
  * @author redrick99
@@ -177,6 +177,7 @@ public class ChooseProductionOutput extends Action {
                 return false;
 
         if(basicProduction)
+            //noinspection RedundantIfStatement
             if(basicProductionOutput.size() != actionController.getGame().getCurrentPlayer().getBoard().getBasicProduction().getJollyOut())
                 return false;
 

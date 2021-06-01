@@ -22,7 +22,7 @@ import java.util.ArrayList;
  *     <li> boolean "firstSlot", "secondSlot", "thirdSlot": they indicate the player's Board Slots. </li>
  *     <li> boolean "firstLeaderCard", "secondLeaderCard": they indicate the player's Leader Cards. </li>
  *     <li> boolean "basicProduction": indicates the player's Basic Production. </li>
- *     <li> ArrayList(ResourceType) "basicProductionInputs": contains Basic Production inputs. </li>
+ *     <li> ArrayList&lt;ResourceType&gt; "basicProductionInputs": contains Basic Production inputs. </li>
  * </ul>
  * @author redrick99
  */

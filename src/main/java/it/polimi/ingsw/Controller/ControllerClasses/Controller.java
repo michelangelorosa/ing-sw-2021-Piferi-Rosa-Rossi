@@ -4,10 +4,15 @@ import it.polimi.ingsw.Controller.Actions.Action;
 
 /**
  * Controller Class observes messages coming from the Client to compute them
- * as soon as they are notified by an observable.
+ * as soon as they are notified by a serverConnection object (which extends Observable).
+ * <p><b>Attributes:</b></p>
+ * <ul>
+ *     <li>ActionController "actionController": contains the Game instance being played by the Clients, along
+ *     with methods to compute an Action message and create a MessageToClient to be sent to all Clients</li>
+ * </ul>
+ * @author redrick99
  */
 public class Controller implements Observer<Action> {
-    /** actionController computes the actions on a certain game instance */
     private final ActionController actionController;
 
     /**
@@ -19,7 +24,7 @@ public class Controller implements Observer<Action> {
 
     /**
      * Overridden update method of the Observer Interface. Used to receive
-     * constructed messages from the server Socket.
+     * Action type messages coming from the Server Socket.
      * @param action The action to be computed.
      */
     @Override
@@ -27,6 +32,9 @@ public class Controller implements Observer<Action> {
         actionController.doAction(action);
     }
 
+    /**
+     * Getter for "actionController" attribute.
+     */
     public ActionController getActionController() {
         return actionController;
     }

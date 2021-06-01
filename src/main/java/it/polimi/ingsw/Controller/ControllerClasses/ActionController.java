@@ -37,8 +37,12 @@ public class ActionController {
     }
 
     /**
-     * Method used to compute the client's request.
-     * @param action A generic action received by the server socket.
+     * Computes the client's request by calling the following methods inside the Action Class:
+     * <ol>
+     *     <li><b>doAction</b>: Checks the request and performs changes to Model</li>
+     *     <li><b>messagePrepare</b>: Creates a MessageToClient (specific to the Action) ready to be sent to all Clients</li>
+     * </ol>
+     * @param action A generic action received by the server socket and passed through by the Controller.
      */
     public void doAction(Action action) {
         action.doAction(this);

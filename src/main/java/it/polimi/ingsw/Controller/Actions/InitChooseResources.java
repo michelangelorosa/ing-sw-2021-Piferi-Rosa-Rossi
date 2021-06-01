@@ -14,7 +14,7 @@ import java.util.HashMap;
  * <p>
  * <b>Attributes:</b>
  * <ul>
- *     <li>HashMap(Integer, ArrayList(ResourceType)) depotResource: Maps an ArrayList of Resources
+ *     <li>HashMap&lt;Integer, ArrayList&lt;ResourceType&gt;&gt; depotResource: Maps an ArrayList of Resources
  *     to an Integer key which indicates the depot chose by the player to put said resources.</li>
  * </ul>
  * @author redrick99
