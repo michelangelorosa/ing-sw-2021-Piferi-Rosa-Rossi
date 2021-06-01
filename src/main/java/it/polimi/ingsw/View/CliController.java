@@ -99,7 +99,7 @@ public class CliController implements UserInterface{
             if(choice.equals("1") || choice.equals("2") || choice.equals("3") || choice.equals("4"))
                 return Integer.parseInt(choice);
             else
-                System.out.println("Please insert a valid number (from 1 to 4)");
+                displayError("Please insert a valid number (from 1 to 4)");
         }
     }
 
@@ -111,11 +111,11 @@ public class CliController implements UserInterface{
             choice = sc.nextLine();
 
             if(choice.length() > 16)
-                System.out.println("Your name has to be less then 16 characters long");
+                displayError("Your name has to be less then 16 characters long");
             else if(choice.isEmpty())
-                System.out.println("Your name cannot be an empty string");
+                displayError("Your name cannot be an empty string");
             else if(choice.isBlank())
-                System.out.println("Your name cannot be a blank string");
+                displayError("Your name cannot be a blank string");
             else
                 return choice;
         }
@@ -139,7 +139,7 @@ public class CliController implements UserInterface{
                 return 4;
             }
             else if(!choice.equals("n"))
-                System.out.println("Please insert a valid character");
+                displayError("Please insert a valid character");
         }
 
     }
@@ -166,19 +166,19 @@ public class CliController implements UserInterface{
                 break;
             }
             else
-                System.out.println("Please pick a number between 1 and 4");
+                displayError("Please pick a number between 1 and 4");
         }
 
         while(true) {
             choice2 = sc.nextLine();
             if(choice2.equals(choice))
-                System.out.println("You can't choose the same Leader Card twice!");
+                displayError("You can't choose the same Leader Card twice!");
             else if(choice2.equals("1") || choice2.equals("2") || choice2.equals("3") || choice2.equals("4")) {
                 secondLeaderCard = Integer.parseInt(choice2) - 1;
                 return new InitChooseLeaderCards(leaderCards.get(firstLeaderCard), leaderCards.get(secondLeaderCard));
             }
             else
-                System.out.println("Please pick a number between 1 and 4");
+                displayError("Please pick a number between 1 and 4");
         }
     }
 
@@ -187,10 +187,10 @@ public class CliController implements UserInterface{
         System.out.println();
         if(resources <= 0) {
             HashMap<Integer, ArrayList<ResourceType>> depotResource = new HashMap<>();
-            depotResource.put(0, null);
-            depotResource.put(1, null);
-            depotResource.put(2, null);
-            return new InitChooseResources(new HashMap<>());
+            depotResource.put(0, new ArrayList<>());
+            depotResource.put(1, new ArrayList<>());
+            depotResource.put(2, new ArrayList<>());
+            return new InitChooseResources(depotResource);
         }
 
         int depot;
@@ -261,7 +261,7 @@ public class CliController implements UserInterface{
             if (choice.equals("1") || choice.equals("2") || choice.equals("3") || choice.equals("4") || choice.equals("5") || choice.equals("6") || choice.equals("7") || choice.equals("8") || choice.equals("9")) {
                 choiceInt = Integer.parseInt(choice);
                 if(choiceInt < 1 || choiceInt > player.getPossibleActions().size())
-                    System.out.println("Please insert a valid number");
+                    displayError("Please insert a valid number or character");
                 else {
                     action = indexToAction(player.getPossibleActions().get(choiceInt - 1), game);
                     if(action != null) {
@@ -279,7 +279,7 @@ public class CliController implements UserInterface{
                     break;
                     case "d": printDevTable(game);
                     break;
-                    default: System.out.println("Please insert a valid number or character");
+                    default: displayError("Please insert a valid number or character");
                 }
         }
     }
@@ -313,7 +313,7 @@ public class CliController implements UserInterface{
                 }
             }
             else
-                System.out.println("Please insert a valid number");
+                displayError("Please insert a valid number");
         }
     }
 
@@ -353,11 +353,11 @@ public class CliController implements UserInterface{
                 if (InputController.checkActivateLeaderCard(choiceInt - 1, game))
                     notEnded = false;
                 else
-                    System.out.println(InputController.getError());
+                    displayError(InputController.getError());
             }
 
             else
-                System.out.println("Please insert a valid number");
+                displayError("Please insert a valid number");
         }
 
         return new ActivateLeaderCard(choiceInt - 1);
@@ -446,12 +446,12 @@ public class CliController implements UserInterface{
         }
 
         if(!firstSlot && !secondSlot && !thirdSlot && !firstLeaderCard && !secondLeaderCard && !basicProduction) {
-            System.out.println("Cannot start Production without any production power!");
+            displayError("Cannot start Production without any production power!");
             return null;
         }
 
         if(!InputController.checkActivateProduction(basicProduction, basicProductionInputs, firstLeaderCard, secondLeaderCard, game)) {
-            System.out.println(InputController.getError());
+            displayError(InputController.getError());
             return null;
         }
         else {
@@ -491,7 +491,7 @@ public class CliController implements UserInterface{
                 return new AddResource(depot - 1, type.viewToModel());
             }
             else
-                System.out.println(InputController.getError());
+                displayError(InputController.getError());
         }
     }
 
@@ -528,7 +528,7 @@ public class CliController implements UserInterface{
             if(InputController.checkBuyCard(row - 1, column - 1, game))
                 return new BuyCard(row - 1, column - 1);
             else
-                System.out.println(InputController.getError());
+                displayError(InputController.getError());
         }
     }
 
@@ -556,10 +556,10 @@ public class CliController implements UserInterface{
                 if(InputController.checkChooseCardSlot(slot - 1))
                     return new ChooseCardSlot(slot - 1);
                 else
-                    System.out.println(InputController.getError());
+                    displayError(InputController.getError());
             }
             else
-                System.out.println("Please insert a valid number");
+                displayError("Please insert a valid number");
         }
     }
 
@@ -585,10 +585,10 @@ public class CliController implements UserInterface{
                 if(InputController.checkChooseLeaderCard(choiceInt - 1, game))
                     return new ChooseLeaderCard(choiceInt - 1);
                 else
-                    System.out.println(InputController.getError());
+                    displayError(InputController.getError());
             }
             else
-                System.out.println("Please enter a valid number");
+                displayError("Please enter a valid number");
         }
     }
 
@@ -621,7 +621,7 @@ public class CliController implements UserInterface{
                 while (notEnded) {
                     firstLeaderOutputs = typesFiller(game.getMyPlayer().getLeaderCards()[0].getJollyOut(), sc);
                     if (firstLeaderOutputs == null)
-                        System.out.println("You have to choose which resources you want to add");
+                        displayError("You have to choose which resources you want to add");
                     else
                         notEnded = false;
                 }
@@ -634,7 +634,7 @@ public class CliController implements UserInterface{
                 while (notEnded) {
                     secondLeaderOutputs = typesFiller(game.getMyPlayer().getLeaderCards()[1].getJollyOut(), sc);
                     if (secondLeaderOutputs == null)
-                        System.out.println("You have to choose which resources you want to add");
+                        displayError("You have to choose which resources you want to add");
                     else
                         notEnded = false;
                 }
@@ -647,7 +647,7 @@ public class CliController implements UserInterface{
                 while (notEnded) {
                     basicOutputs = typesFiller(game.getMyPlayer().getBasicProduction().getJollyOut(), sc);
                     if (basicOutputs == null)
-                        System.out.println("You have to choose which resources you want to add");
+                        displayError("You have to choose which resources you want to add");
                     else
                         notEnded = false;
                 }
@@ -657,7 +657,7 @@ public class CliController implements UserInterface{
             if(InputController.checkChooseProductionOutput(basicProduction, firstLeaderCard, secondLeaderCard, basicOutputs, firstLeaderOutputs, secondLeaderOutputs, game))
                 notCorrect = false;
             else {
-                System.out.println(InputController.getError());
+                displayError(InputController.getError());
                 chooseProductionOutput.setSecondLeaderCardOutput(null);
                 chooseProductionOutput.setFirstLeaderCardOutput(null);
                 chooseProductionOutput.setBasicProductionOutput(null);
@@ -700,7 +700,7 @@ public class CliController implements UserInterface{
                         notEnded1 = false;
                         break;
                     default:
-                        System.out.println("Please enter a valid number");
+                        displayError("Please enter a valid number");
                         break;
                 }
             }
@@ -721,10 +721,10 @@ public class CliController implements UserInterface{
                     if(InputController.checkMarketChooseRow(true, rowOrColumn - 1))
                         return new MarketChooseRow(true, rowOrColumn - 1);
                     else
-                        System.out.println(InputController.getError());
+                        displayError(InputController.getError());
                 }
                 else
-                    System.out.println("Please enter a valid number");
+                    displayError("Please enter a valid number");
             }
             else {
                 System.out.println("\nChoose a column:  (0 to go back)");
@@ -743,10 +743,10 @@ public class CliController implements UserInterface{
                     if(InputController.checkMarketChooseRow(false, rowOrColumn - 1))
                         return new MarketChooseRow(false, rowOrColumn - 1);
                     else
-                        System.out.println(InputController.getError());
+                        displayError(InputController.getError());
                 }
                 else
-                    System.out.println("Please enter a valid number");
+                    displayError("Please enter a valid number");
             }
         }
     }
@@ -782,7 +782,7 @@ public class CliController implements UserInterface{
                         notEnded = false;
                         break;
                     default:
-                        System.out.println("Please enter a valid number");
+                        displayError("Please enter a valid number");
                         break;
                 }
             }
@@ -795,7 +795,7 @@ public class CliController implements UserInterface{
                 if(InputController.checkPayResource(true, depot - 1, null, game))
                     return new PayResource(true, depot - 1, null);
                 else
-                    System.out.println(InputController.getError());
+                    displayError(InputController.getError());
             }
             else {
                 System.out.println("\nWhich type of resource do you want to remove from the Strongbox? (Insert relative number");
@@ -805,7 +805,7 @@ public class CliController implements UserInterface{
                 if(InputController.checkPayResource(false, 0, type, game))
                     return  new PayResource(false, 0, type.viewToModel());
                 else
-                    System.out.println(InputController.getError());
+                    displayError(InputController.getError());
             }
         }
     }
@@ -857,7 +857,7 @@ public class CliController implements UserInterface{
             if(InputController.checkSwitchDepot(depot1 - 1, depot2 - 1, game))
                 return new SwitchDepot(depot1 - 1, depot2 - 1);
             else
-                System.out.println(InputController.getError());
+                displayError(InputController.getError());
         }
     }
 
@@ -894,7 +894,8 @@ public class CliController implements UserInterface{
 
             case END_TURN: return new EndTurn();
 
-            default: return null;
+            default: displayError("[FATAL ERROR] Nonexistent Action: \"" + action.getText() + "\"");
+                return null;
         }
     }
 
@@ -940,12 +941,12 @@ public class CliController implements UserInterface{
      * Method used to take a boolean type input from the Player
      * @return String containing "y", "n" or "0"
      */
-    private static String stringAssign(Scanner sc) {
+    private String stringAssign(Scanner sc) {
 
         String c = sc.nextLine();
 
         while(!c.equals("y") && !c.equals("n") && !c.equals("0")) {
-            System.out.println("Please insert a valid character ('y' or 'n')");
+            displayError("Please insert a valid character ('y' or 'n')");
             c = sc.nextLine();
             System.out.println();
         }
@@ -980,7 +981,7 @@ public class CliController implements UserInterface{
                 counter ++;
             }
             else
-                System.out.println("Please enter a valid number.");
+                displayError("Please enter a valid number");
         }
         return inputs;
     }
@@ -1004,7 +1005,7 @@ public class CliController implements UserInterface{
      * @param canExit Boolean which specifies if the player can exit the action or not.
      * @return An int describing the player's choice.
      */
-    private static int depotIntIterator(Game game, boolean canExit, Scanner sc) {
+    private int depotIntIterator(Game game, boolean canExit, Scanner sc) {
         RedWarehouse warehouse = game.getMyPlayer().getWarehouse();
         String choice;
         int depot;
@@ -1030,7 +1031,7 @@ public class CliController implements UserInterface{
             else if(canExit && choice.equals("0"))
                 return 0;
             else
-                System.out.println("Please insert a valid Depot number");
+                displayError("Please insert a valid Depot number");
         }
     }
 
@@ -1039,7 +1040,7 @@ public class CliController implements UserInterface{
      * by the Server to the Player.
      * @return An int indicating the Player's depot.
      */
-    private static int initialDepotIterator(Scanner sc) {
+    private int initialDepotIterator(Scanner sc) {
         String choice;
         int depot;
 
@@ -1056,7 +1057,7 @@ public class CliController implements UserInterface{
                 return depot;
             }
             else
-                System.out.println("Please insert a valid Depot number");
+                displayError("Please insert a valid Depot number");
         }
     }
 
@@ -1064,7 +1065,7 @@ public class CliController implements UserInterface{
      * Method used by the player to choose a ResourceType.
      * @return The chosen ResourceType.
      */
-    private static ResourceType resourceIntIterator(Scanner sc) {
+    private ResourceType resourceIntIterator(Scanner sc) {
         System.out.println("1 - SHIELD");
         System.out.println("2 - SERVANT");
         System.out.println("3 - COIN");
@@ -1082,7 +1083,7 @@ public class CliController implements UserInterface{
 
                 return type;
             } else
-                System.out.println("Please insert a valid Resource number");
+                displayError("Please insert a valid Resource number");
         }
     }
 
@@ -1090,7 +1091,7 @@ public class CliController implements UserInterface{
      * Displays an Alert Box for the user to see if the game is set to Cli Mode.
      * @param s the message to display
      */
-    public void displayError(String s) {
+    synchronized public void displayError(String s) {
         System.out.println(ANSIfont.BOLD + "\u001B[38;5;160m" + s + ANSIColors.RESET);
     }
 

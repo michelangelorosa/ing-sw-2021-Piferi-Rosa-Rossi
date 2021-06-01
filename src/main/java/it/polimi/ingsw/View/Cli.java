@@ -1,5 +1,7 @@
 package it.polimi.ingsw.View;
 
+import it.polimi.ingsw.Controller.Actions.*;
+
 public class Cli implements Runnable{
     private ClientConnection clientConnection;
     private final CliController cliController;
@@ -29,6 +31,8 @@ public class Cli implements Runnable{
 
     public void actionParser(int i) throws Exception {
         switch(i) {
+            case -1: this.error();
+                break;
             case 0: this.chooseName();
                 break;
             case 1: this.numberOfPlayers();
@@ -37,14 +41,21 @@ public class Cli implements Runnable{
                 break;
             case 3: //reconnected, game already started
                 break;
-            case 4: //leader card choice
+            case 4: this.initialLeaderCards();
                 break;
-            case 5: //resources choice
+            case 5: this.initialResources();
+                break;
+
+            case 17: this.turnInteraction();
                 break;
 
 
             default: System.out.println("Can't understand Message, turning back...");
         }
+    }
+
+    public void error() {
+
     }
 
     public void chooseName() throws Exception {
@@ -62,8 +73,24 @@ public class Cli implements Runnable{
         this.clientConnection.send(number);
     }
 
-    public void initialChoose() {
+    public void initialLeaderCards() throws Exception {
+        Action action = this.cliController.initialChooseLeaderCards(this.client.getUserInteraction().getGame().getLeaderCards());
+        this.clientConnection.send(action);
+    }
 
+    public void initialResources() throws Exception {
+        Action action = this.cliController.initialChooseResources(this.client.getUserInteraction().getInitNumberOfResources());
+        this.clientConnection.send(action);
+    }
+
+    public void turnInteraction() throws Exception {
+        if(this.client.getUserInteraction().getPreviousMessage() == this.client.getUserInteraction().getMessage()) {
+            this.cliController.displayError("Error: MessageToClient object is the same as before");
+        }
+        else {
+            Action action = this.cliController.actionPicker(this.client.getUserInteraction().getGame());
+            this.clientConnection.send(action);
+        }
     }
 
     public int waitReady() {

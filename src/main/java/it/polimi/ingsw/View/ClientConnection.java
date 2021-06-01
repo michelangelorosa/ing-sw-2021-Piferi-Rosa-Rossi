@@ -82,12 +82,14 @@ public class ClientConnection implements Runnable, Observer<Action> {
                     //TODO get leaderCards from server
                     System.out.println("[CLIENT CONNECTION] You are here");
                     ArrayList<RedLeaderCard> leaderCards = (ArrayList<RedLeaderCard>)objectInputStream.readObject();
-                    //this.client.getUserInteraction().initialChooseLeaderCards(this, leaderCards);
+                    this.client.getUserInteraction().getGame().setLeaderCards(leaderCards);
+                    this.client.getUserInteraction().nextAction(4);
                 }
                 else if(action==5){
                     //Sends the resources to pick from (if applicable) and the inkwell!
                     int resources = objectInputStream.readInt();
-                    //this.client.getUserInteraction().initialChooseResources(this, resources);
+                    this.client.getUserInteraction().setInitNumberOfResources(resources);
+                    this.client.getUserInteraction().nextAction(5);
                     break;
                 }
                 else if(action==10000000) {
@@ -107,9 +109,8 @@ public class ClientConnection implements Runnable, Observer<Action> {
 
                 //Handling of the MessageToClient message type
                 MessageToClient messageToClient = (MessageToClient) objectInputStream.readObject();
-                messageToClient.updateView(this.client.getUserInteraction());
-                //this.client.getUserInteraction().playTurn();
-
+                this.client.getUserInteraction().setMessage(messageToClient);
+                this.client.getUserInteraction().nextAction(17);
             }
         } catch (Exception e) {
             e.printStackTrace();

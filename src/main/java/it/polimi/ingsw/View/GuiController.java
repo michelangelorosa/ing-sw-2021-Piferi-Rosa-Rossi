@@ -44,7 +44,7 @@ import java.util.Optional;
  * Handles the interactions between the User and the Gui application.
  * The interactions are sent to the GuiExceptionHandler for validation and visualization of the errors
  */
-public class GuiController /*implements UserInterface*/{
+public class GuiController implements UserInterface{
     private Client client;
     public MediaPlayer mediaPlayer;
     @FXML private Label score;
@@ -420,58 +420,16 @@ public class GuiController /*implements UserInterface*/{
         return null;
     }
 
+    @Override
+    public void nextAction(UserInteraction userInteraction, int i) {
+
+    }
+
     /**
      * Used to display a message while the player waits for all the other players to join.
      */
     public void waitingForPlayers() {
 
-    }
-
-    /**
-     * Used to get a boolean as input from the player indicating whether he's ready to play or not.
-     *
-     * @return true if the player is ready.
-     */
-    public boolean initialLobby() {
-        return false;
-    }
-
-    /**
-     * Used to get the initial LeaderCards as input from the player.
-     *
-     * @param leaderCards The 4 leader cards sent by the server to choose from.
-     * @return An Action Class message containing the 4 leader cards and methods to assign the 4 leader cards
-     * to the player inside the Model's Game.
-     * @throws IllegalArgumentException if the number of leader cards in the input ArrayList is != 4
-     */
-    public Action initialChooseLeaderCards(ArrayList<RedLeaderCard> leaderCards) throws IllegalArgumentException {
-        return null;
-    }
-
-    /**
-     * Used to get the initial Resources as input from the player.
-     *
-     * @param resources The number of resources the player has to choose.
-     * @return An Action Class message containing all resources chosen and the places chosen by the player
-     * to put said resources.
-     */
-    public Action initialChooseResources(int resources) {
-        return null;
-    }
-
-    /**
-     * Used at the start of the actual Game turn to make the player choose which action he wants to do when
-     * playing the game. All methods below are mapped 1 to 1 with each Action Class message and are used to get
-     * a specific Action SUBCLASS which will be passed to this method.
-     *
-     * @param game Reduced Model game used to print/show the Game played.
-     * @return a specific Action Class message Subclass casted to its SuperClass and ready to be notified and sent
-     * to the Server.
-     * @throws IllegalStateException If the player does not have any possible action inside his
-     *                               ArrayList<ActionType> possibleActions.
-     */
-    public Action actionPicker(Game game) throws IllegalStateException {
-        return null;
     }
 
     public void displayError(String s) {

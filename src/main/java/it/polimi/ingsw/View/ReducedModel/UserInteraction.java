@@ -2,6 +2,7 @@ package it.polimi.ingsw.View.ReducedModel;
 
 import it.polimi.ingsw.Controller.Actions.Action;
 import it.polimi.ingsw.Controller.Observable;
+import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
 import it.polimi.ingsw.View.ClientConnection;
 import it.polimi.ingsw.View.UserInterface;
 
@@ -14,11 +15,15 @@ import java.util.ArrayList;
 public abstract class UserInteraction extends Observable<Action> {
     /** ReducedModel version of the game being played by the client */
     private Game game;
-
     /** UserInterface to be defined when constructing a new UserInteraction instance (either Cli or Gui) */
     private UserInterface ui;
 
     private int actionNumber = -1;
+
+    private ArrayList<RedLeaderCard> initLeaderCards;
+    private int initNumberOfResources = -1;
+    private MessageToClient previousMessage;
+    private MessageToClient message;
 
     /**
      * Constructor for UserInteraction Class.
@@ -53,6 +58,38 @@ public abstract class UserInteraction extends Observable<Action> {
         return ui;
     }
 
+    public ArrayList<RedLeaderCard> getInitLeaderCards() {
+        return initLeaderCards;
+    }
+
+    public void setInitLeaderCards(ArrayList<RedLeaderCard> initLeaderCards) {
+        this.initLeaderCards = initLeaderCards;
+    }
+
+    synchronized public int getInitNumberOfResources() {
+        return initNumberOfResources;
+    }
+
+    synchronized public void setInitNumberOfResources(int initNumberOfResources) {
+        this.initNumberOfResources = initNumberOfResources;
+    }
+
+    synchronized public MessageToClient getPreviousMessage() {
+        return previousMessage;
+    }
+
+    synchronized public void setPreviousMessage(MessageToClient previousMessage) {
+        this.previousMessage = previousMessage;
+    }
+
+    synchronized public MessageToClient getMessage() {
+        return message;
+    }
+
+    synchronized public void setMessage(MessageToClient message) {
+        this.message = message;
+    }
+
     /**
      * Method used to start the UserInterface method required to get from the player the server address
      * and port needed to connect to the server.
@@ -79,4 +116,6 @@ public abstract class UserInteraction extends Observable<Action> {
     public void nextAction(int actionNumber) {
         ui.nextAction(this, actionNumber);
     }
+
+    public void displayError(String error) { ui.displayError(error); }
 }
