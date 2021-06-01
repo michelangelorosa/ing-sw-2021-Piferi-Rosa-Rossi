@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.ModelTest.GameModelTest;
 
 import it.polimi.ingsw.Model.Enums.Level;
 import org.junit.Test;

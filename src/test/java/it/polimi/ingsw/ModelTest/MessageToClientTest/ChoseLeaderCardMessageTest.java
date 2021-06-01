@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.ModelTest.MessageToClientTest;
 
 import static it.polimi.ingsw.Controller.Actions.ActionType.CHOOSE_LEADER_CARD;
 import static org.junit.Assert.*;

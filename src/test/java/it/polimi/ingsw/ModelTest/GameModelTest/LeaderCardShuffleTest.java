@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.ModelTest.GameModelTest;
 import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.Model.GameModel.LeaderCardShuffle;
 import org.junit.Test;

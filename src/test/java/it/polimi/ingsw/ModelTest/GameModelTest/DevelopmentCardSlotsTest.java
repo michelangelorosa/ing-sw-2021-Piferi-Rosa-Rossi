@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.ModelTest.GameModelTest;
 
 import static org.junit.Assert.*;
 

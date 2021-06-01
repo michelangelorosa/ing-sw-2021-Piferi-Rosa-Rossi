@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.ModelTest.MessageToClientTest;
 
 import it.polimi.ingsw.Model.MessagesToClient.BoughtCardMessage;
 import org.junit.Test;

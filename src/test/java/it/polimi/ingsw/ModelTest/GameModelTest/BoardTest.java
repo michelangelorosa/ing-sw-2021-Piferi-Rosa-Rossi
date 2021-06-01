@@ -1,7 +1,8 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.ModelTest.GameModelTest;
 
 import static org.junit.Assert.*;
 
+import it.polimi.ingsw.CommonTestMethods;
 import it.polimi.ingsw.Model.Enums.Color;
 import it.polimi.ingsw.Model.Enums.Level;
 import it.polimi.ingsw.Model.Enums.Marble;
