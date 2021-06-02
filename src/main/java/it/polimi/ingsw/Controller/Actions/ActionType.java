@@ -28,6 +28,7 @@ public enum ActionType {
     CHOOSE_PRODUCTION_OUTPUT("choose_production_output"),
 
     ACTIVATE_LEADERCARD("activate_leadercard"),
+    DELETE_LEADERCARD("delete_leadercard"),
 
     END_TURN("end_turn");
 
