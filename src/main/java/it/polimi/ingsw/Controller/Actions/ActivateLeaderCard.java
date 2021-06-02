@@ -100,6 +100,9 @@ public class ActivateLeaderCard extends Action {
 
         if(this.response.equals("SUCCESS")) {
             message.setLeaderCard(actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[this.leaderCard]);
+            for(ActionType type : actionController.getGame().getCurrentPlayer().getPossibleActions()){
+                message.addPossibleAction(type);
+            }
         }
 
         return message;

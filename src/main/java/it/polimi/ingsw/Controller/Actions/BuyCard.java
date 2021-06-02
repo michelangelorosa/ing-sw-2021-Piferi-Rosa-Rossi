@@ -17,8 +17,7 @@ import it.polimi.ingsw.Model.MessagesToClient.*;
  * </ul>
  * @author redrick99
  */
-public class
-BuyCard extends Action {
+public class BuyCard extends Action {
     private final int row;
     private final int column;
 
@@ -135,6 +134,7 @@ BuyCard extends Action {
             message.addPossibleAction(ActionType.BUY_CARD);
             message.addPossibleAction(ActionType.MARKET_CHOOSE_ROW);
             message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
+            message.addPossibleAction(ActionType.DELETE_LEADERCARD);
         }
 
         return message;
