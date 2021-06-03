@@ -1,59 +1,43 @@
 package it.polimi.ingsw.ModelTest.MessageToClientTest;
 
-import static it.polimi.ingsw.Controller.Actions.ActionType.END_PAY_PRODUCTION;
-import static org.junit.Assert.*;
-
-import it.polimi.ingsw.Model.GameModel.Strongbox;
+import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.Model.GameModel.Warehouse;
-import it.polimi.ingsw.Model.MessagesToClient.EndProductionMessage;
+import it.polimi.ingsw.Model.MessagesToClient.ResetWarehouseMessage;
 import it.polimi.ingsw.View.ReducedModel.Player;
-import it.polimi.ingsw.View.ReducedModel.RedStrongbox;
 import it.polimi.ingsw.View.ReducedModel.RedWarehouse;
 import it.polimi.ingsw.View.User.UserInteraction;
 import it.polimi.ingsw.ViewTest.CommonViewTestMethods;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
-public class EndProductionMessageTest {
+public class ResetWarehouseMessageTest {
 
-    EndProductionMessage message = new EndProductionMessage("antonio");
+    ResetWarehouseMessage message = new ResetWarehouseMessage("antonio");
     UserInteraction userInteraction = CommonViewTestMethods.createUserInteraction();
 
     @Test
-    public void ConstructorTest(){
-        assertEquals(END_PAY_PRODUCTION, message.getActionDone());
-        assertEquals("antonio", message.getPlayerNickname());
-    }
-
-    @Test
     public void genericMethodsTest() {
-        RedStrongbox strongbox = new Strongbox();
+        assertEquals("antonio", message.getPlayerNickname());
+        assertEquals(ActionType.RESET_WAREHOUSE, message.getActionDone());
+
         RedWarehouse warehouse = new Warehouse();
-
-        message.setStrongbox(strongbox);
         message.setWarehouse(warehouse);
-
-        assertEquals(strongbox, message.getStrongbox());
         assertEquals(warehouse, message.getWarehouse());
     }
 
     @Test
     public void updateViewTest() {
-        RedStrongbox strongbox = new Strongbox();
         RedWarehouse warehouse = new Warehouse();
-
-        message.setStrongbox(strongbox);
         message.setWarehouse(warehouse);
-
         Player player = CommonViewTestMethods.findPlayerByNickname(userInteraction.getGame(), "antonio");
+        assert player != null;
 
         message.setError("error");
         message.updateView(userInteraction);
-        assert player != null;
         assertNotEquals(message.getWarehouse(), player.getWarehouse());
 
         message.setError("SUCCESS");
         message.updateView(userInteraction);
         assertEquals(message.getWarehouse(), player.getWarehouse());
-        assertEquals(message.getStrongbox(), player.getStrongbox());
     }
 }

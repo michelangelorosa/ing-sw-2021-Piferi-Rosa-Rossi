@@ -68,6 +68,7 @@ public class AddMessage extends MessageToClient {
         Player player = this.getPlayer(userInteraction);
 
         if(success()) {
+            player.setTemporaryResources(this.temporaryResources);
             player.setWarehouse(this.warehouse);
             this.displayAction(userInteraction);
         }

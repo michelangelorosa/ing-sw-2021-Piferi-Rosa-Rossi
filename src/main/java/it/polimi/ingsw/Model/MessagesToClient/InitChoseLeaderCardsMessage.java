@@ -15,14 +15,14 @@ import it.polimi.ingsw.View.User.UserInteraction;
  * </ul>
  * @author redrick99
  */
-public class InitChoseLeaderCards extends MessageToClient{
+public class InitChoseLeaderCardsMessage extends MessageToClient{
     RedLeaderCard leaderCard1;
     RedLeaderCard leaderCard2;
 
     /**
      * Constructor for InitChoseLeaderCard Class.
      */
-    public InitChoseLeaderCards(String playerNickname) {
+    public InitChoseLeaderCardsMessage(String playerNickname) {
         super(playerNickname);
         this.actionDone = ActionType.INIT_CHOOSE_LEADER_CARDS;
     }

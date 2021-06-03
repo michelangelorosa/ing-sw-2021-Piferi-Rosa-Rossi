@@ -26,6 +26,16 @@ public class EndProductionMessage extends MessageToClient {
         this.actionDone = ActionType.END_PAY_PRODUCTION;
     }
 
+    /**Getter for "warehouse" attribute.*/
+    public RedWarehouse getWarehouse() {
+        return warehouse;
+    }
+
+    /**Getter for "strongbox" attribute.*/
+    public RedStrongbox getStrongbox() {
+        return strongbox;
+    }
+
     /**Setter for "warehouse" attribute.*/
     public void setWarehouse(RedWarehouse warehouse) {
         this.warehouse = warehouse;

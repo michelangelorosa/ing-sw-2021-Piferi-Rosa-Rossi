@@ -95,6 +95,8 @@ public class DiscardLeaderCard extends Action{
             for(ActionType type : actionController.getGame().getCurrentPlayer().getPossibleActions())
                 message.addPossibleAction(type);
 
+            message.setNumber(this.number);
+            message.setLeaderCard(actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[this.number]);
         }
         return message;
     }
