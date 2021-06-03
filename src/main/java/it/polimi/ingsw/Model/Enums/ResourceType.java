@@ -5,9 +5,6 @@ import it.polimi.ingsw.View.Utility.ANSIColors;
 public enum ResourceType {
     NONE, SHIELDS, SERVANTS, COINS, STONES;
 
-    private static final ResourceType[] resourceTypes = ResourceType.values();
-    public static ResourceType getResourceType(int i) { return ResourceType.resourceTypes[i]; }
-
     public String toCli() {
         String string;
         switch (this) {
