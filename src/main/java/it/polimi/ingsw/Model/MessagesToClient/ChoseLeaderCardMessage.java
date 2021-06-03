@@ -26,6 +26,10 @@ public class ChoseLeaderCardMessage extends MessageToClient {
         this.actionDone = ActionType.CHOOSE_LEADER_CARD;
     }
 
+    public RedResourceStack getTemporaryResources() {
+        return temporaryResources;
+    }
+
     /**
      * Setter for "temporaryResources" attribute.
      */

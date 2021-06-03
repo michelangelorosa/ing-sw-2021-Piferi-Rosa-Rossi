@@ -17,6 +17,9 @@ import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
  */
 public class DiscardLeaderCard extends Action{
 
+    /**
+     * Number is an attribute to distinguish the two leader card a players owns.
+     */
     private final int number;
 
     /**
@@ -26,6 +29,11 @@ public class DiscardLeaderCard extends Action{
     public DiscardLeaderCard(int number){
         this.actionType = ActionType.DELETE_LEADERCARD;
         this.number = number;
+    }
+
+    /**Getter for Number*/
+    public int getNumber() {
+        return number;
     }
 
     /**
