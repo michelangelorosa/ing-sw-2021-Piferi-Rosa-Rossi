@@ -8,6 +8,7 @@ public enum ActionType {
     CHOOSE_ACTION("choose_action"),
 
     INIT_CHOOSE_RESOURCES("init_choose_resources"),
+    INIT_CHOOSE_LEADER_CARDS("init_choose_leader_cards"),
 
     BUY_FROM_MARKET("buy_market"),
     MARKET_CHOOSE_ROW("market_choose_row"),

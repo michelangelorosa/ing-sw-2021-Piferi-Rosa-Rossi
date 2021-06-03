@@ -58,10 +58,10 @@ public class EndMarketTest {
         assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals(ActionType.END_TURN, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.ACTIVATE_LEADERCARD, messageToClient.getPossibleActions().get(1));
-        assertEquals(0, (int)((EndMarketMessage)messageToClient).getPlayersFaithPosition().get(0));
-        assertEquals(4, (int)((EndMarketMessage)messageToClient).getPlayersFaithPosition().get(1));
-        assertEquals(4, (int)((EndMarketMessage)messageToClient).getPlayersFaithPosition().get(2));
-        assertEquals(4, (int)((EndMarketMessage)messageToClient).getPlayersFaithPosition().get(3));
+        assertEquals(0, (int)((EndMarketMessage)messageToClient).getPlayersFaithPosition().get(actionController.getGame().getPlayers().get(0).getNickname()));
+        assertEquals(4, (int)((EndMarketMessage)messageToClient).getPlayersFaithPosition().get(actionController.getGame().getPlayers().get(1).getNickname()));
+        assertEquals(4, (int)((EndMarketMessage)messageToClient).getPlayersFaithPosition().get(actionController.getGame().getPlayers().get(2).getNickname()));
+        assertEquals(4, (int)((EndMarketMessage)messageToClient).getPlayersFaithPosition().get(actionController.getGame().getPlayers().get(3).getNickname()));
 
 
         assertEquals("0 0 0 0", game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toString());

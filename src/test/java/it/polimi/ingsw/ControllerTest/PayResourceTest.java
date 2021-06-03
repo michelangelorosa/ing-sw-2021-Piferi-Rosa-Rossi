@@ -151,7 +151,5 @@ public class PayResourceTest {
         assertEquals(ActionType.CHOOSE_PRODUCTION_OUTPUT, message.getPossibleActions().get(0));
 
         assertEquals(ResourceType.NONE, game.getCurrentPlayer().getBoard().getResourceManager().getWarehouseDepots()[0].getResourceType());
-
-        //TODO message prepare tests
     }
 }

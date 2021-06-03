@@ -248,6 +248,7 @@ public class ActivateProduction extends Action {
         message.setError(this.response);
 
         if(this.response.equals("SUCCESS")) {
+            message.setResourcesToPay(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay());
             message.addPossibleAction(ActionType.PAY_RESOURCE_PRODUCTION);
         }
         else if(this.response.equals("No Payment")) {

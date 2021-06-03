@@ -33,7 +33,9 @@ public class Cli implements Runnable{
 
     public void actionParser(int i) throws Exception {
         switch(i) {
-            case -1: this.error();
+            case -2: this.displayAction();
+                break;
+            case -1: this.displayError();
                 break;
             case 0: this.chooseName();
                 break;
@@ -56,8 +58,18 @@ public class Cli implements Runnable{
         }
     }
 
-    public void error() {
+    public void displayAction() throws Exception {
+        cliController.displayAction(this.client.getUserInteraction());
 
+        if(this.client.getUserInteraction().getMessage().imPlaying(this.client.getUserInteraction()))
+            this.actionParser(17);
+    }
+
+    public void displayError() throws Exception {
+        cliController.displayServerError(client.getUserInteraction());
+
+        if(this.client.getUserInteraction().getMessage().imPlaying(this.client.getUserInteraction()))
+            this.actionParser(17);
     }
 
     public void chooseName() throws Exception {

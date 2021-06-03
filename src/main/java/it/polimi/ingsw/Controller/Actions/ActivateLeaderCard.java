@@ -5,7 +5,7 @@ import it.polimi.ingsw.Model.GameModel.Board;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 
 /**
- * ActivateLeaderClass contains data and methods to resolve a Client request regarding Leader
+ * ActivateLeaderCard Class contains data and methods to resolve a Client request regarding Leader
  * Card activation.
  * <p>
  * <b>Attributes:</b>

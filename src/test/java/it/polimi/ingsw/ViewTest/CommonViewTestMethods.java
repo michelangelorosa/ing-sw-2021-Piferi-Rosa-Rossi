@@ -13,6 +13,8 @@ import it.polimi.ingsw.View.ReducedModel.RedFaithTrack;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.RedMarket;
 import it.polimi.ingsw.View.ReducedModel.Player;
+import it.polimi.ingsw.View.User.CliController;
+import it.polimi.ingsw.View.User.UserInteraction;
 
 import java.util.Random;
 
@@ -153,5 +155,23 @@ public class CommonViewTestMethods {
         card2.setActive(true);
         player.getLeaderCards()[0] = card1;
         player.getLeaderCards()[1] = card2;
+    }
+
+    public static Player findPlayerByNickname(Game game, String nickname) {
+        for(Player player : game.getPlayers())
+            if(player.getNickname().equals(nickname))
+                return player;
+
+        return null;
+    }
+
+    public static UserInteraction createUserInteraction() {
+        UserInteraction userInteraction = new UserInteraction() {
+        };
+
+        userInteraction.setGame(gameCreator());
+        userInteraction.setUi(new CliController());
+
+        return userInteraction;
     }
 }

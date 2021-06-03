@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
-import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.Player;
 import it.polimi.ingsw.View.ReducedModel.RedStrongbox;
 import it.polimi.ingsw.View.User.UserInteraction;
@@ -9,9 +8,14 @@ import it.polimi.ingsw.View.User.UserInteraction;
 /**
  * ChooseProductionOutputMessage Class defines a response message to be sent to the client
  * after a ChooseProductionOutput request.
+ * <p><b>Attributes:</b></p>
+ * <ul>
+ *     <li>RedStrongbox "strongbox": the new Strongbox to be set to the corresponding player in the
+ *     Client's View</li>
+ * </ul>
+ * @author redrick99
  */
 public class ChoseProductionOutputMessage extends MessageToClient {
-    /** The player's strongbox is needed to update the client's View */
     private RedStrongbox strongbox;
 
     /**
@@ -23,36 +27,35 @@ public class ChoseProductionOutputMessage extends MessageToClient {
     }
 
     /**
-     * Setter for "strongbox" attribute in ChooseProductionOutputMessage Class.
+     * Setter for "strongbox" attribute.
      */
     public void setStrongbox(RedStrongbox strongbox) {
         this.strongbox = strongbox;
     }
 
     /**
-     * Getter for "strongbox" attribute in ChooseProductionOutputMessage Class.
+     * Getter for "strongbox" attribute.
      */
     public RedStrongbox getStrongbox() {
         return strongbox;
     }
 
     /**
-     * Method used to update the client's view.
-     * @param userInteraction Class containing the Reduced Game and methods to display Errors.
+     * Checks if the message contains an error and updates the Client's view.
+     * @param userInteraction Class containing the Reduced Game and the User Interface.
      */
     @Override
     public void updateView(UserInteraction userInteraction) {
-        if(this.error.equals("SUCCESS")) {
-            Game game = userInteraction.getGame();
-            for (Player player : game.getPlayers())
-                if (player.getNickname().equals(this.getPlayerNickname())) {
-                    player.setStrongbox(this.strongbox);
-                    player.setPossibleActions(this.possibleActions);
-                }
-        }
+        super.updateView(userInteraction);
 
-        else {
-            userInteraction.getUi().displayError(this.error);
+        Player player = this.getPlayer(userInteraction);
+
+        if(this.success()) {
+            player.setStrongbox(this.strongbox);
+
+            this.displayAction(userInteraction);
         }
+        else
+            this.displayError(userInteraction);
     }
 }

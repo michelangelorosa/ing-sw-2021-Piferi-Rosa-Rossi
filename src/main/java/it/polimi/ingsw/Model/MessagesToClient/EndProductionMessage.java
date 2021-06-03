@@ -4,38 +4,55 @@ import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.View.ReducedModel.*;
 import it.polimi.ingsw.View.User.UserInteraction;
 
+/**
+ * EndProductionMessage Class defines methods and attributes to update the Client's View after
+ * a PayResourceProduction Action.
+ * <p><b>Attributes:</b></p>
+ * <ul>
+ *     <li>RedWarehouse "warehouse": the new Warehouse to be set to the corresponding player in the
+ *     Client's View</li>
+ *     <li>RedStrongbox "strongbox": the new Strongbox to be set to the corresponding player in the
+ *     Client's View</li>
+ * </ul>
+ * @author redrick99
+ */
 public class EndProductionMessage extends MessageToClient {
     private RedWarehouse warehouse;
     private RedStrongbox strongbox;
 
-    /**Constructor for EndProductionMessage*/
+    /**Constructor for EndProductionMessage Class.*/
     public EndProductionMessage(String playerNickname) {
         super(playerNickname);
         this.actionDone = ActionType.END_PAY_PRODUCTION;
     }
 
-    /**Setter for Warehouse*/
+    /**Setter for "warehouse" attribute.*/
     public void setWarehouse(RedWarehouse warehouse) {
         this.warehouse = warehouse;
     }
 
-    /**Setter for Strongbox*/
+    /**Setter for "strongbox" attribute.*/
     public void setStrongbox(RedStrongbox strongbox) {
         this.strongbox = strongbox;
     }
 
     /**
-     * Method used to update the client's view.
-     * @param userInteraction Class containing the Reduced Game and methods to display Errors.
+     * Checks if the message contains an error and updates the Client's view.
+     * @param userInteraction Class containing the Reduced Game and the User Interface.
      */
     @Override
     public void updateView(UserInteraction userInteraction) {
-        Game game = userInteraction.getGame();
-        for(Player player : game.getPlayers())
-            if(player.getNickname().equals(this.playerNickname)) {
-                player.setWarehouse(this.warehouse);
-                player.setStrongbox(this.strongbox);
-                player.setPossibleActions(this.possibleActions);
-            }
+        super.updateView(userInteraction);
+
+        Player player = this.getPlayer(userInteraction);
+
+        if(success()) {
+            player.setWarehouse(this.warehouse);
+            player.setStrongbox(this.strongbox);
+
+            this.displayAction(userInteraction);
+        }
+        else
+            this.displayError(userInteraction);
     }
 }

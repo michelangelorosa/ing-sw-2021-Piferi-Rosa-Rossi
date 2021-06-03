@@ -5,6 +5,7 @@ import it.polimi.ingsw.Model.GameModel.Player;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * EndMarket Class contains data and methods to use when a player wants to end a
@@ -51,12 +52,12 @@ public class EndMarket extends Action {
         if(this.response.equals(ILLEGAL_ACTION))
             return illegalAction(message, actionController);
 
-        ArrayList<Integer> faithPositions = new ArrayList<>();
+        HashMap<String, Integer> playersFaithPosition = new HashMap<>();
 
         for(Player player : actionController.getGame().getPlayers())
-            faithPositions.add(player.getFaithTrackPosition());
+            playersFaithPosition.put(player.getNickname(), player.getFaithTrackPosition());
 
-        message.setPlayersFaithPosition(faithPositions);
+        message.setPlayersFaithPosition(playersFaithPosition);
         message.setError(this.response);
         message.addPossibleAction(ActionType.END_TURN);
 

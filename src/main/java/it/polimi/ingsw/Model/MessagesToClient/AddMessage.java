@@ -7,9 +7,16 @@ import it.polimi.ingsw.View.User.UserInteraction;
 /**
  * AddMessage Class contains data for a response message to be sent to the client
  * after an AddResource action.
+ * <p><b>Attributes:</b></p>
+ * <ul>
+ *     <li>RedWarehouse "warehouse": the new Warehouse to be set to the corresponding player in the
+ *     Client's View</li>
+ *     <li>RedResourceStack "temporaryResources": contains resources which the player has
+ *     yet to add to his Warehouse</li>
+ * </ul>
+ * @author redrick99
  */
 public class AddMessage extends MessageToClient {
-    /** warehouse and temporaryResources attributes are needed to update the client's View */
     private RedWarehouse warehouse;
     private RedResourceStack temporaryResources;
 
@@ -22,7 +29,7 @@ public class AddMessage extends MessageToClient {
     }
 
     /**
-     * Setter for "warehouse" attribute in AddMessage Class.
+     * Setter for "warehouse" attribute.
      */
     public void setWarehouse(RedWarehouse warehouse) {
         this.warehouse = warehouse;
@@ -51,23 +58,21 @@ public class AddMessage extends MessageToClient {
 
 
     /**
-     * Method used to update the client's view.
-     * @param userInteraction Class containing the Reduced Game and methods to display Errors.
+     * Checks if the message contains an error and updates the Client's view.
+     * @param userInteraction Class containing the Reduced Game and the User Interface.
      */
     @Override
     public void updateView(UserInteraction userInteraction) {
-        if(this.error.equals("SUCCESS")) {
-            Game game = userInteraction.getGame();
-            for (Player player : game.getPlayers())
-                if (player.getNickname().equals(this.getPlayerNickname())) {
-                    player.setWarehouse(this.warehouse);
-                    player.setTemporaryResources(this.temporaryResources);
-                    player.setPossibleActions(this.possibleActions);
-                }
+        super.updateView(userInteraction);
+
+        Player player = this.getPlayer(userInteraction);
+
+        if(success()) {
+            player.setWarehouse(this.warehouse);
+            this.displayAction(userInteraction);
         }
-        else {
-            userInteraction.getUi().displayError(this.error);
-        }
+        else
+            this.displayError(userInteraction);
     }
 
 }

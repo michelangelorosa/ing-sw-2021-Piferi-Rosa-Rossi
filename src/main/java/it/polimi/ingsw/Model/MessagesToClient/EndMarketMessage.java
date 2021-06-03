@@ -2,17 +2,24 @@ package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.View.ReducedModel.Game;
+import it.polimi.ingsw.View.ReducedModel.Player;
 import it.polimi.ingsw.View.User.UserInteraction;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * EndMarketMessage Class defines a response message to be sent to the client after
  * a EndMarket request.
+ * <p><b>Attributes:</b></p>
+ * <ul>
+ *     <li>ArrayList&lt;Integer&gt; "playersFaithPosition": contains all player</li>
+ * </ul>
+ * @author redrick99
  */
 public class EndMarketMessage extends MessageToClient {
     /** All players position onto the faith track is needed to update the clients' View */
-    private ArrayList<Integer> playersFaithPosition;
+    private HashMap<String, Integer> playersFaithPosition;
 
     /**
      * Constructor for EndMarketMessage Class.
@@ -23,30 +30,34 @@ public class EndMarketMessage extends MessageToClient {
     }
 
     /**
-     * Setter for "playersFaithPosition" attribute in EndMarketMessageClass.
+     * Getter for "playersFaithPosition" attribute.
      */
-    public void setPlayersFaithPosition(ArrayList<Integer> playersFaithPosition) {
-        this.playersFaithPosition = playersFaithPosition;
-    }
-
-    /**
-     * Getter for "playersFaithPosition" attribute in EndMarketMessageClass.
-     */
-    public ArrayList<Integer> getPlayersFaithPosition() {
+    public HashMap<String, Integer> getPlayersFaithPosition() {
         return playersFaithPosition;
     }
 
     /**
-     * Method used to update the client's view.
-     * @param userInteraction Class containing the Reduced Game and methods to display Errors.
+     * Setter for "playersFaithPosition" attribute.
+     */
+    public void setPlayersFaithPosition(HashMap<String, Integer> playersFaithPosition1) {
+        this.playersFaithPosition = playersFaithPosition1;
+    }
+
+    /**
+     * Checks if the message contains an error and updates the Client's view.
+     * @param userInteraction Class containing the Reduced Game and the User Interface.
      */
     @Override
     public void updateView(UserInteraction userInteraction) {
-        Game game = userInteraction.getGame();
-        for(int i = 0; i < game.getPlayers().size(); i++) {
-            game.getPlayers().get(i).setFaithTrackPosition(this.playersFaithPosition.get(i));
-            if(game.getPlayers().get(i).getNickname().equals(this.playerNickname))
-                game.getPlayers().get(i).setPossibleActions(this.possibleActions);
+        super.updateView(userInteraction);
+
+        if(this.success()) {
+            for(Player player : userInteraction.getGame().getPlayers())
+                player.setFaithTrackPosition(this.playersFaithPosition.get(player.getNickname()));
+
+            this.displayAction(userInteraction);
         }
+        else
+            this.displayError(userInteraction);
     }
 }

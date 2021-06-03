@@ -37,6 +37,25 @@ public class CliController implements UserInterface {
         }
     }
 
+    public void displayAction(UserInteraction userInteraction) {
+        Player player = userInteraction.getMessage().getPlayer(userInteraction);
+        String playerString = userInteraction.getMessage().getPlayerNickname();
+        String actionName = userInteraction.getMessage().getActionDone().getText();
+
+        if(userInteraction.getMessage().imPlaying(userInteraction))
+            System.out.println(ANSIfont.ITALIC + playerString + ANSIfont.RESET + " has performed the action: " + ANSIfont.BOLD + actionName + ANSIfont.RESET);
+        player.toCli();
+    }
+
+    public void displayServerError(UserInteraction userInteraction) {
+        String error = userInteraction.getMessage().getError();
+
+        if(!userInteraction.getMessage().imPlaying(userInteraction))
+            System.out.println(ANSIfont.BOLD + userInteraction.getMessage().getPlayer(userInteraction).getNickname() + ":" + ANSIfont.RESET);
+
+        this.displayError(error);
+    }
+
     /**
      * Method used on startup by the client (if in Cli mode) to print the game title and get
      * the Server address and port as input from the user.

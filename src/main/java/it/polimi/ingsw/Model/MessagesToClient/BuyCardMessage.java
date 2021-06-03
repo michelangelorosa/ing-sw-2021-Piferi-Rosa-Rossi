@@ -9,6 +9,11 @@ import it.polimi.ingsw.View.User.UserInteraction;
 /**
  * BuyCardMessage Class contains data for a response message to be sent to the client
  * after a BuyCard request.
+ * <p><b>Attributes:</b></p>
+ * <ul>
+ *     <li>RedResourceStack "temporaryResources": reduced stack containing the number of resources the player
+ *     has to pay</li>
+ * </ul>
  */
 public class BuyCardMessage extends MessageToClient{
     RedResourceStack temporaryResources;
@@ -21,32 +26,35 @@ public class BuyCardMessage extends MessageToClient{
         this.actionDone = ActionType.BUY_CARD;
     }
 
+    /**
+     * Getter for "temporaryResources" attribute.
+     */
     public RedResourceStack getTemporaryResources() {
         return temporaryResources;
     }
 
+    /**
+     * Getter for "temporaryResources" attribute.
+     */
     public void setTemporaryResources(RedResourceStack temporaryResources) {
         this.temporaryResources = temporaryResources;
     }
 
     /**
-     * Method used to update the client's view.
-     * @param userInteraction Class containing the Reduced Game and methods to display Errors.
+     * Checks if the message contains an error and updates the Client's view.
+     * @param userInteraction Class containing the Reduced Game and the User Interface.
      */
     @Override
     public void updateView(UserInteraction userInteraction) {
-        if(this.error.equals("SUCCESS")) {
-            Game game = userInteraction.getGame();
-            for (Player player : game.getPlayers())
-                if (player.getNickname().equals(this.getPlayerNickname())) {
-                    player.setPossibleActions(this.possibleActions);
-                    player.setTemporaryResources(this.temporaryResources);
-                }
-        }
+        super.updateView(userInteraction);
 
-        else {
-            userInteraction.getUi().displayError(this.error);
-        }
+        Player player = this.getPlayer(userInteraction);
 
+        if(success()) {
+            player.setTemporaryResources(this.temporaryResources);
+            this.displayAction(userInteraction);
+        }
+        else
+            this.displayError(userInteraction);
     }
 }

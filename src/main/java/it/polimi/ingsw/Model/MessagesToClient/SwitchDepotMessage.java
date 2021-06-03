@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
-import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.Player;
 import it.polimi.ingsw.View.ReducedModel.RedWarehouse;
 import it.polimi.ingsw.View.User.UserInteraction;
@@ -9,9 +8,13 @@ import it.polimi.ingsw.View.User.UserInteraction;
 /**
  * SwitchDepotMessage Class contains data for a response message to be sent to the client
  * after a SwitchDepot request.
+ * <p><b>Attributes:</b></p>
+ * <ul>
+ *     <li>RedWarehouse "warehouse": Warehouse to be set to the corresponding player int the Client's
+ *     View</li>
+ * </ul>
  */
 public class SwitchDepotMessage extends MessageToClient {
-    /** A warehouse is needed to update the Client's View */
     private RedWarehouse warehouse;
 
     /**
@@ -23,31 +26,35 @@ public class SwitchDepotMessage extends MessageToClient {
     }
 
     /**
-     * Setter for "warehouse" attribute in SwitchDepotMessage Class.
+     * Setter for "warehouse" attribute.
      */
     public void setWarehouse(RedWarehouse warehouse) {
         this.warehouse = warehouse;
     }
 
     /**
-     * Getter for "warehouse" attribute in SwitchDepotMessage Class.
+     * Getter for "warehouse" attribute.
      */
     public RedWarehouse getWarehouse() {
         return warehouse;
     }
 
+    /**
+     * Checks if the message contains an error and updates the Client's view.
+     * @param userInteraction Class containing the Reduced Game and the User Interface.
+     */
     @Override
     public void updateView(UserInteraction userInteraction) {
-        if(this.error.equals("SUCCESS")) {
-            Game game = userInteraction.getGame();
-            for (Player player : game.getPlayers())
-                if (player.getNickname().equals(this.getPlayerNickname())) {
-                    player.setWarehouse(this.warehouse);
-                    player.setPossibleActions(this.possibleActions);
-                }
+        super.updateView(userInteraction);
+
+        Player player = this.getPlayer(userInteraction);
+
+        if(this.success()) {
+            player.setWarehouse(this.warehouse);
+
+            this.displayAction(userInteraction);
         }
-        else {
-            userInteraction.getUi().displayError(this.error);
-        }
+        else
+            this.displayError(userInteraction);
     }
 }
