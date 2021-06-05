@@ -262,26 +262,32 @@ public class Player implements Serializable {
                 else leaderCards.addAll(this.leaderCards[0].toCliDown());
             }
         }
-        else if(this.leaderCards[1].isDiscarded()) {
-            if (up) {
+        else if(this.leaderCards[1].isDiscarded()){
+            if(this.leaderCards[0].isDiscarded()){
                 leaderCards.addAll(this.leaderCards[1].toCliNo());
                 leaderCards.add("                            ");
-                leaderCards.addAll(this.leaderCards[0].toCliUp());
-            } else {
+                leaderCards.addAll(this.leaderCards[0].toCliNo());
+            }
+            else{
                 leaderCards.addAll(this.leaderCards[1].toCliNo());
                 leaderCards.add("                            ");
-                leaderCards.addAll(this.leaderCards[0].toCliDown());
+                if(up) leaderCards.addAll(this.leaderCards[0].toCliUp());
+                else leaderCards.addAll(this.leaderCards[0].toCliDown());
+
             }
         }
-        else {
-            if (up) {
-                leaderCards.addAll(this.leaderCards[1].toCliUp());
+        else if(this.leaderCards[0].isDiscarded()){
+            if(this.leaderCards[1].isDiscarded()){
+                leaderCards.addAll(this.leaderCards[1].toCliNo());
                 leaderCards.add("                            ");
                 leaderCards.addAll(this.leaderCards[0].toCliNo());
-            } else {
-                leaderCards.addAll(this.leaderCards[1].toCliDown());
+            }
+            else{
+                if(up) leaderCards.addAll(this.leaderCards[1].toCliUp());
+                else leaderCards.addAll(this.leaderCards[1].toCliDown());
                 leaderCards.add("                            ");
                 leaderCards.addAll(this.leaderCards[0].toCliNo());
+
             }
         }
 

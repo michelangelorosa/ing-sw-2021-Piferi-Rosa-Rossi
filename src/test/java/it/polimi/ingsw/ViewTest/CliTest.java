@@ -205,6 +205,27 @@ public class CliTest {
     }
 
     @Test
+    public void discardLeaderCardTest(){
+        changeSystemIn("0\n1\n2");
+
+        LeaderRequirements leaderRequirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
+        ResourceStack stack = new ResourceStack(1,1,1,1);
+        ResourceStack resourceStack = new ResourceStack(0,0,0,0);
+        LeaderRequirements leaderRequirements1 = new LeaderRequirements(0,0,0,0);
+        RedLeaderCard whiteMarble = new LeaderCard(1, 1, stack, leaderRequirements, Marble.BLUE);
+        LeaderCard leaderCard2 = new LeaderCard(2, 23, resourceStack, leaderRequirements1, resourceStack, 1, 2);
+
+
+        game.getMyPlayer().getLeaderCards()[0] = whiteMarble;
+        game.getMyPlayer().getLeaderCards()[1] = leaderCard2;
+        ((LeaderCard)game.getMyPlayer().getLeaderCards()[0]).setActive(true);
+
+        ui = new CliController();
+        Action action = ui.discardLeaderCard(game);
+        assertTrue(action instanceof DiscardLeaderCard);
+    }
+
+    @Test
     public void chooseProductionOutput() {
         changeSystemIn("2\n1\n");
         ui = new CliController();

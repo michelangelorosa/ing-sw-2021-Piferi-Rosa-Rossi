@@ -195,6 +195,25 @@ public abstract class InputController {
         return true;
     }
 
+    public static boolean checkDiscardLeaderCard(int i, Game game){
+        if(i != MIN && i != LEADER_CARD_TWO){
+            error = "Leader Card Index should be either 1 or 2!";
+            return false;
+        }
+        for(Player player : game.getPlayers()){
+            if(player.getNickname().equals(game.getMyNickname()))
+                if(player.getLeaderCards()[i].isActive()){
+                    error = "Leader Card cannot be active";
+                    return false;
+                }
+                else if(player.getLeaderCards()[i].isDiscarded()){
+                    error = "This Leader Card has already been discarded";
+                    return false;
+                }
+        }
+        return true;
+    }
+
     /**
      * Checker for ChooseProductionOutput message.
      */

@@ -8,6 +8,7 @@ import it.polimi.ingsw.View.Utility.ANSIColors;
 import it.polimi.ingsw.View.Utility.ANSIfont;
 import it.polimi.ingsw.View.ReducedModel.*;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -614,6 +615,41 @@ public class CliController implements UserInterface {
         }
     }
 
+
+
+    public Action discardLeaderCard(Game game){
+        String choice;
+        int choiceInt;
+
+        printList(game.myBoardToCli());
+
+
+        while(true){
+            if(game.getMyPlayer().getLeaderCards()[0].isDiscarded() && game.getMyPlayer().getLeaderCards()[1].isDiscarded()) {
+                System.out.println("Both cards are already discarded!");
+                return null;
+            }
+
+            System.out.println("\nSelect Leader Card you want to discard: ");
+            if(!game.getMyPlayer().getLeaderCards()[0].isDiscarded()) System.out.println("1 - Below");
+            if(!game.getMyPlayer().getLeaderCards()[1].isDiscarded()) System.out.println("2 - Above");
+
+
+            choice = sc.nextLine();
+
+            if(choice.equals("1") || choice.equals("2")){
+                choiceInt = Integer.parseInt(choice);
+                if(InputController.checkDiscardLeaderCard(choiceInt-1, game))
+                    return new DiscardLeaderCard(choiceInt-1);
+                else
+                    displayError(InputController.getError());
+            }
+            else
+                displayError("Please, insert a valid number");
+        }
+    }
+
+
     /**
      * Method used by the player to generate a ChooseProductionOutput message.
      * @return The requested action.
@@ -941,6 +977,8 @@ public class CliController implements UserInterface {
             case CHOOSE_PRODUCTION_OUTPUT: return chooseProductionOutput(game);
 
             case ACTIVATE_LEADERCARD: return activateLeaderCard(game);
+
+            case DELETE_LEADERCARD: return discardLeaderCard(game);
 
             case END_TURN: return new EndTurn();
 

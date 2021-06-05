@@ -228,7 +228,7 @@ public class Player implements Serializable {
 
         RedLeaderCard[] leaderCards = new RedLeaderCard[2];
 
-
         return player;
     }
+
 }
