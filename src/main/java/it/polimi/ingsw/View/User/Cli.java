@@ -21,14 +21,18 @@ public class Cli implements Runnable{
         this.client.getUserInteraction().setActionNumber(-1);
         int i;
 
-        while(true) {
+        do {
             i = this.waitReady();
             try {
                 this.actionParser(i);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+
+        } while (i != 20);
+
+        //TODO ending message "thanks for playing"
+        System.out.println("[INFO] Closing Cli Thread...");
     }
 
     public void actionParser(int i) throws Exception {

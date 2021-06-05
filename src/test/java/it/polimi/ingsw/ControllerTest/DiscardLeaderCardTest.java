@@ -4,6 +4,7 @@ import it.polimi.ingsw.CommonTestMethods;
 import it.polimi.ingsw.Controller.Actions.DiscardLeaderCard;
 import it.polimi.ingsw.Controller.ControllerClasses.ActionController;
 import it.polimi.ingsw.Model.GameModel.*;
+import it.polimi.ingsw.Model.MessagesToClient.DiscardLeaderCardMessage;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
 import org.junit.Test;
 
@@ -14,7 +15,6 @@ public class DiscardLeaderCardTest {
 
     ActionController actionController = new ActionController();
     Game game = actionController.getGame();
-    MessageToClient messageToClient;
     DiscardLeaderCard action = new DiscardLeaderCard(0);
 
     /**
@@ -22,6 +22,7 @@ public class DiscardLeaderCardTest {
      */
     @Test
     public void isCorrectTest(){
+        assertEquals(0, action.getNumber());
         action = new DiscardLeaderCard(144);
         IllegalArgumentException e = assertThrows(IllegalArgumentException.class, action :: isCorrect);
         assertEquals("Not a valid card", e.getMessage());
@@ -50,7 +51,14 @@ public class DiscardLeaderCardTest {
         actionController.getGame().getCurrentPlayer().addPossibleAction(DELETE_LEADERCARD);
         assertTrue(action.canBeApplied(actionController));
         assertEquals("SUCCESS", action.doAction(actionController));
+        MessageToClient message = action.messagePrepare(actionController);
+        assertTrue(message instanceof DiscardLeaderCardMessage);
+        assertEquals("SUCCESS", message.getError());
+        assertEquals(0, ((DiscardLeaderCardMessage)message).getNumber());
+        assertEquals(actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[0], ((DiscardLeaderCardMessage)message).getLeaderCard());
+
         assertTrue(actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[0].isDiscarded());
         assertEquals(1, actionController.getGame().getCurrentPlayer().getFaithTrackPosition());
     }
+
 }

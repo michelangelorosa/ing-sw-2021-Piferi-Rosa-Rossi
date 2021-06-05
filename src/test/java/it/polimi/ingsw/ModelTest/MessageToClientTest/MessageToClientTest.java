@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ModelTest.MessageToClientTest;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
+import it.polimi.ingsw.Model.MessagesToClient.EndTurnMessage;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
 import it.polimi.ingsw.View.ReducedModel.Player;
 import it.polimi.ingsw.View.User.UserInteraction;
@@ -84,5 +85,28 @@ public class MessageToClientTest {
         assertEquals(ActionType.DELETE_LEADERCARD, player1.getPossibleActions().get(1));
         message.displayError(userInteraction);
         message.displayAction(userInteraction);
+    }
+
+    @Test
+    public void testFinisher() {
+        EndTurnMessage message = new EndTurnMessage("antonio");
+        message.setError("SUCCESS");
+        message.setNextPlayerNickname("Lorenzo il Magnifico");
+        assertFalse(message.imPlaying(userInteraction));
+
+        class Test extends MessageToClient {
+            public Test(String name) {
+                super(name);
+            }
+
+            public void testMethod() throws NullPointerException{
+                UserInteraction userInteraction = CommonViewTestMethods.createUserInteraction();
+                getPlayer(userInteraction);
+            }
+        }
+
+        Test message1 = new Test("not existing");
+        NullPointerException e = assertThrows(NullPointerException.class, message1 :: testMethod);
+        assertEquals("Error: no player found with name \"not existing\"", e.getMessage());
     }
 }

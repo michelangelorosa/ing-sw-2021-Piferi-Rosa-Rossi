@@ -13,6 +13,7 @@ public class FinalPointsMessage extends MessageToClient {
 
     public FinalPointsMessage(String playerNickname) {
         super(playerNickname);
+        this.error = "SUCCESS";
     }
 
     public HashMap<String, Integer> getNicknamePoints() {
