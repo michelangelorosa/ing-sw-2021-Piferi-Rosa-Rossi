@@ -53,6 +53,9 @@ public class Cli implements Runnable{
             case 17: this.turnInteraction();
                 break;
 
+            case 20: this.finalPoints();
+                break;
+
 
             default: System.out.println("Can't understand Message, turning back...");
         }
@@ -105,6 +108,10 @@ public class Cli implements Runnable{
             Action action = this.cliController.actionPicker(this.client.getUserInteraction().getGame());
             this.clientConnection.send(action);
         }
+    }
+
+    public void finalPoints() {
+        this.cliController.finalPoints(this.client.getUserInteraction().getGame());
     }
 
     public int waitReady() {

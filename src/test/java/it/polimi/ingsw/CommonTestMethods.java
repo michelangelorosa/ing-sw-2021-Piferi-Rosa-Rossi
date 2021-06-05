@@ -30,6 +30,11 @@ public class CommonTestMethods {
         Player player2 = new Player("Two", 2, false);
         Player player3 = new Player("Three", 3, false);
 
+        player0.setStatus(PlayerStatus.IN_GAME);
+        player1.setStatus(PlayerStatus.IN_GAME);
+        player2.setStatus(PlayerStatus.IN_GAME);
+        player3.setStatus(PlayerStatus.IN_GAME);
+
         game.getPlayers().add(player0);
         game.getPlayers().add(player1);
         game.getPlayers().add(player2);

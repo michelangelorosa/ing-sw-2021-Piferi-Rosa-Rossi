@@ -6,6 +6,8 @@ import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.GameModel.Player;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 
+import java.util.HashMap;
+
 /**
  * EndTurn class defines methods to end a player's turn and go to the next
  * one (if the game is Multiplayer)
@@ -18,12 +20,14 @@ import it.polimi.ingsw.Model.MessagesToClient.*;
  */
 public class EndTurn extends Action {
     private String currentPlayer;
+    private boolean lastPlayerTurn;
 
     /**
      * Constructor for EndTurn Class.
      */
     public EndTurn() {
         this.actionType = ActionType.END_TURN;
+        this.lastPlayerTurn = false;
     }
 
     /**
@@ -36,27 +40,36 @@ public class EndTurn extends Action {
         if(!this.canDoAction(actionController))
             return ILLEGAL_ACTION;
 
+
         int idlePlayers = 0;
         this.currentPlayer = actionController.getGame().getCurrentPlayerNickname();
         if(actionController.getGame().getGameType() == GameType.MULTIPLAYER) {
-            for(Player player : actionController.getGame().getPlayers())
-                if(player.getStatus() == PlayerStatus.IDLE)
-                    idlePlayers ++;
 
-            if(idlePlayers == actionController.getGame().getPlayers().size()) {
-                this.response = "ALL PLAYERS DISCONNECTED";
-                return "ALL PLAYERS DISCONNECTED";
+            actionController.getGame().checkIfAnyPlayerFinished();
+
+            if(actionController.getGame().isLastTurn() && actionController.getGame().currentPlayerIsLast()) {
+                actionController.getGame().setFinalVictoryPoints();
+                this.lastPlayerTurn = true;
             }
             else {
-                actionController.getGame().getCurrentPlayer().clearPossibleActions();
-                actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.ACTIVATE_PRODUCTION);
-                actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.BUY_CARD);
-                actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.MARKET_CHOOSE_ROW);
-                actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
+                for (Player player : actionController.getGame().getPlayers())
+                    if (player.getStatus() == PlayerStatus.IDLE)
+                        idlePlayers++;
 
-                actionController.getGame().nextPlayer();
-                while(actionController.getGame().getCurrentPlayer().getStatus() == PlayerStatus.IDLE)
+                if (idlePlayers == actionController.getGame().getPlayers().size()) {
+                    this.response = "ALL PLAYERS DISCONNECTED";
+                    return "ALL PLAYERS DISCONNECTED";
+                } else {
+                    actionController.getGame().getCurrentPlayer().clearPossibleActions();
+                    actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.ACTIVATE_PRODUCTION);
+                    actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.BUY_CARD);
+                    actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.MARKET_CHOOSE_ROW);
+                    actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
+
                     actionController.getGame().nextPlayer();
+                    while (actionController.getGame().getCurrentPlayer().getStatus() == PlayerStatus.IDLE)
+                        actionController.getGame().nextPlayer();
+                }
             }
         }
 
@@ -70,18 +83,38 @@ public class EndTurn extends Action {
      */
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {
-        EndTurnMessage message = new EndTurnMessage(this.currentPlayer);
-        if(this.response.equals(ILLEGAL_ACTION))
-            return illegalAction(message, actionController);
+        if (this.response.equals(ILLEGAL_ACTION))
+            return illegalAction(new EndTurnMessage(this.currentPlayer), actionController);
 
-        message.setError(this.response);
-        message.setNextPlayerNickname(actionController.getGame().getCurrentPlayerNickname());
 
-        message.addPossibleAction(ActionType.ACTIVATE_PRODUCTION);
-        message.addPossibleAction(ActionType.BUY_CARD);
-        message.addPossibleAction(ActionType.MARKET_CHOOSE_ROW);
-        message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
 
-        return message;
+        if(this.lastPlayerTurn) {
+            FinalPointsMessage message = new FinalPointsMessage(this.currentPlayer);
+
+            HashMap<String, Integer> namePoints = new HashMap<>();
+
+            for(Player player : actionController.getGame().getPlayers()) {
+                namePoints.put(player.getNickname(), player.getVictoryPoints());
+                if (player.getStatus() == PlayerStatus.WON)
+                    message.addWinningPlayers(player.getNickname());
+            }
+
+            message.setNicknamePoints(namePoints);
+
+            return message;
+        }
+        else {
+            EndTurnMessage message = new EndTurnMessage(this.currentPlayer);
+
+            message.setError(this.response);
+            message.setNextPlayerNickname(actionController.getGame().getCurrentPlayerNickname());
+
+            message.addPossibleAction(ActionType.ACTIVATE_PRODUCTION);
+            message.addPossibleAction(ActionType.BUY_CARD);
+            message.addPossibleAction(ActionType.MARKET_CHOOSE_ROW);
+            message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
+
+            return message;
+        }
     }
 }

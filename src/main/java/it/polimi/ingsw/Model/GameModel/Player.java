@@ -203,7 +203,11 @@ public class Player implements Serializable {
     }
 
     public boolean hasFinished() {
-        return this.getBoard().getDevelopmentCardSlots().countAllCards() >= 7 || this.getFaithTrackPosition() >= 25;
+        return this.getBoard().getDevelopmentCardSlots().countAllCards() >= 7 || this.getFaithTrackPosition() >= 24;
+    }
+
+    public void countFinalVictoryPoints() {
+        this.victoryPoints += this.getBoard().getDevelopmentCardSlots().totalPoints();
     }
 
     /**Method for converting model classes to view classes*/

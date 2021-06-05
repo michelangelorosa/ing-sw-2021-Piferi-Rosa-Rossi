@@ -100,6 +100,10 @@ public class Player implements Serializable {
         return status;
     }
 
+    public void setStatus(PlayerStatus status) {
+        this.status = status;
+    }
+
     /**
      * Getter for "victoryPoints" attribute in Player Class.
      */

@@ -21,6 +21,7 @@ public class Game {
     /** ArrayList containing all Leader Cards of the game */
     private ArrayList<LeaderCard> leaderCards;
 
+    private boolean lastTurn = false;
 
     private final Market market;
     private final DevelopmentCardTable developmentCardTable;
@@ -188,6 +189,17 @@ public class Game {
             currentPlayerIndex ++;
     }
 
+    public Player getPreviousPlayer() {
+        if(currentPlayerIndex == 0)
+            return this.players.get(this.players.size() - 1);
+        else
+            return this.players.get(this.currentPlayerIndex - 1);
+    }
+
+    public boolean currentPlayerIsLast() {
+        return this.currentPlayerIndex == this.players.size() - 1;
+    }
+
     /**
      * Method used to set a player's status to WIN.
      * @param player Player to set.
@@ -204,16 +216,31 @@ public class Game {
         player.setStatus(PlayerStatus.LOST);
     }
 
+    public boolean isLastTurn() {
+        return lastTurn;
+    }
+
     /**
      * Method used to check if any player bought 7 Development Cards or finished the Faith Track.
      * @return True if the player finished.
      */
     public boolean checkIfAnyPlayerFinished() {
         for(Player player : this.players)
-            if(player.hasFinished())
+            if(player.hasFinished()) {
+                this.lastTurn = true;
                 return true;
+            }
 
         return false;
+    }
+
+    public void setFinalVictoryPoints() {
+        this.getFaithTrack().addFinalPoints(this.players);
+
+        for(Player player : this.players)
+            player.countFinalVictoryPoints();
+
+        this.finalCountVictory();
     }
 
     /**

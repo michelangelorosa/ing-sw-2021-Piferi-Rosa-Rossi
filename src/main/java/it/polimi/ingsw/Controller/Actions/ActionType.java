@@ -31,7 +31,9 @@ public enum ActionType {
     ACTIVATE_LEADERCARD("activate_leadercard"),
     DELETE_LEADERCARD("delete_leadercard"),
 
-    END_TURN("end_turn");
+    END_TURN("end_turn"),
+
+    FINAL_POINTS("Final Points");
 
 
     private final String text;
@@ -44,6 +46,9 @@ public enum ActionType {
         this.text = text;
     }
 
+    /**
+     * Getter for "text" attribute in ActionType enum Class.
+     */
     public String getText() {
         return text;
     }

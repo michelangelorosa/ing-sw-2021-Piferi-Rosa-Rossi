@@ -16,9 +16,6 @@ import org.junit.Test;
  */
 public class EndTurnTest {
     ActionController actionController = new ActionController();
-    ResetWarehouse resetWarehouse = actionController.getResetWarehouse();
-    ChooseProductionOutput chooseProductionOutput = actionController.getChooseProductionOutput();
-    ChooseCardSlot chooseCardSlot = actionController.getChooseCardSlot();
     Game game = actionController.getGame();
     MessageToClient messageToClient;
 
@@ -90,5 +87,29 @@ public class EndTurnTest {
         assertEquals(ActionType.MARKET_CHOOSE_ROW, messageToClient.getPossibleActions().get(2));
         assertEquals(ActionType.ACTIVATE_LEADERCARD, messageToClient.getPossibleActions().get(3));
         assertEquals("Zero", ((EndTurnMessage)messageToClient).getNextPlayerNickname());
+    }
+
+    @Test
+    public void doActionWhenSomeoneFinished() {
+        CommonTestMethods.gameInitOne(actionController.getGame());
+
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.END_TURN);
+
+        EndTurn action = new EndTurn();
+        actionController.getGame().getPlayers().get(0).setFaithTrackPosition(14);
+        actionController.getGame().getPlayers().get(1).setFaithTrackPosition(12);
+        actionController.getGame().getPlayers().get(2).setFaithTrackPosition(24);
+        actionController.getGame().getPlayers().get(3).setFaithTrackPosition(2);
+
+        action.doAction(actionController);
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.END_TURN);
+        action.doAction(actionController);
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.END_TURN);
+        action.doAction(actionController);
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.END_TURN);
+        action.doAction(actionController);
+
+        MessageToClient message = action.messagePrepare(actionController);
+        assertTrue(message instanceof FinalPointsMessage);
     }
 }

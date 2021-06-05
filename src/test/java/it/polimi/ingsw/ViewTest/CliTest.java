@@ -2,6 +2,7 @@ package it.polimi.ingsw.ViewTest;
 
 import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Model.Enums.Marble;
+import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.Model.GameModel.LeaderRequirements;
@@ -292,13 +293,31 @@ public class CliTest {
     }
 
     @Test
-    public void switchDepot() {
+    public void switchDepotTest() {
         changeSystemIn("-1\n6\n2\n2\n1\n2");
         ui = new CliController();
         Action action = ui.switchDepot(game);
         assertTrue(action instanceof SwitchDepot);
         assertEquals(0, ((SwitchDepot)action).getFirstDepot());
         assertEquals(1, ((SwitchDepot)action).getSecondDepot());
+    }
+
+    @Test
+    public void finalPointsTest() {
+        game.getPlayers().get(0).setVictoryPoints(10);
+        game.getPlayers().get(1).setVictoryPoints(2);
+        game.getPlayers().get(2).setVictoryPoints(100);
+        game.getPlayers().get(3).setVictoryPoints(26);
+        game.getPlayers().get(2).setStatus(PlayerStatus.WON);
+
+        ui = new CliController();
+        ui.finalPoints(game);
+
+        game.getPlayers().get(3).setVictoryPoints(100);
+        game.getPlayers().get(3).setStatus(PlayerStatus.WON);
+
+        System.out.println("\n\n\n");
+        ui.finalPoints(game);
     }
 
 

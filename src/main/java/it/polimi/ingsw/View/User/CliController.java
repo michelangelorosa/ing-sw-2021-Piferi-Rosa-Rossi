@@ -1,6 +1,7 @@
 package it.polimi.ingsw.View.User;
 
 import it.polimi.ingsw.Controller.Actions.*;
+import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.Model.GameModel.Warehouse;
 import it.polimi.ingsw.View.Utility.ANSIColors;
@@ -42,7 +43,7 @@ public class CliController implements UserInterface {
         String playerString = userInteraction.getMessage().getPlayerNickname();
         String actionName = userInteraction.getMessage().getActionDone().getText();
 
-        if(userInteraction.getMessage().imPlaying(userInteraction))
+        if(!userInteraction.getMessage().imPlaying(userInteraction))
             System.out.println(ANSIfont.ITALIC + playerString + ANSIfont.RESET + " has performed the action: " + ANSIfont.BOLD + actionName + ANSIfont.RESET);
         player.toCli();
     }
@@ -879,6 +880,34 @@ public class CliController implements UserInterface {
                 return new SwitchDepot(depot1 - 1, depot2 - 1);
             else
                 displayError(InputController.getError());
+        }
+    }
+
+    public void finalPoints(Game game) {
+        ArrayList<String> winningPlayers = new ArrayList<>();
+
+        System.out.println(ANSIColors.FINAL_POINTS + "THE GAME HAS ENDED!" + ANSIColors.RESET);
+        System.out.println();
+        System.out.println(ANSIfont.UNDERLINE + "FINAL SCORE" + ANSIfont.RESET);
+        for(Player player : game.getPlayers()) {
+            System.out.println(ANSIfont.ITALIC + player.getNickname() + ANSIfont.RESET + ": " + player.getVictoryPoints());
+            if(player.getStatus() == PlayerStatus.WON)
+                winningPlayers.add(player.getNickname());
+        }
+
+        System.out.println("\n" + ANSIfont.BOLD + "You have: " + game.getMyPlayer().getVictoryPoints() + " points!" + ANSIfont.RESET);
+        System.out.println();
+
+        if(winningPlayers.size() > 1)
+            System.out.print("WINNERS: ");
+        else
+            System.out.print("WINNER: ");
+
+        for(int i = 0; i < winningPlayers.size(); i++) {
+            if(i == winningPlayers.size() - 1)
+                System.out.println(ANSIfont.ITALIC + winningPlayers.get(i) + ANSIfont.RESET + ".");
+            else
+                System.out.print(ANSIfont.ITALIC + winningPlayers.get(i) + ANSIfont.RESET + ", ");
         }
     }
 
