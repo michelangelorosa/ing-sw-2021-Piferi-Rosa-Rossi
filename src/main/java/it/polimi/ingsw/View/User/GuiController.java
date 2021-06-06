@@ -407,7 +407,7 @@ public class GuiController implements UserInterface {
     }
 
     @Override
-    public void nextAction(UserInteraction userInteraction, int i) {
+    public void nextAction(UserInteraction userInteraction, UIActions action) {
 
     }
 

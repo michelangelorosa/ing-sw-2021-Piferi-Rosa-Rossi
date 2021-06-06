@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public interface UserInterface {
 
-    void nextAction(UserInteraction userInteraction, int i);
+    void nextAction(UserInteraction userInteraction, UIActions action);
 
     /**
      * Used to get the Server Address and Server Port as input from the player.

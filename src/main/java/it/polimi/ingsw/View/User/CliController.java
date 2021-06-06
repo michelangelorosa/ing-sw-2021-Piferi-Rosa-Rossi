@@ -32,9 +32,9 @@ public class CliController implements UserInterface {
         this.basicProduction = basic;
     }
 
-    public void nextAction(UserInteraction userInteraction, int i) {
+    public void nextAction(UserInteraction userInteraction, UIActions action) {
         synchronized (userInteraction) {
-            userInteraction.setActionNumber(i);
+            userInteraction.setUiAction(action);
             userInteraction.notify();
         }
     }

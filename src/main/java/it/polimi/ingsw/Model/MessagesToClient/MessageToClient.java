@@ -2,6 +2,7 @@ package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.View.ReducedModel.Player;
+import it.polimi.ingsw.View.User.UIActions;
 import it.polimi.ingsw.View.User.UserInteraction;
 
 import java.io.Serializable;
@@ -129,7 +130,7 @@ public class MessageToClient implements Serializable {
      * @param userInteraction Class which contains the User Interface.
      */
     protected void displayAction(UserInteraction userInteraction) {
-        userInteraction.nextAction(-2);
+        userInteraction.nextAction(UIActions.DISPLAY_ACTION);
     }
 
     /**
@@ -138,7 +139,7 @@ public class MessageToClient implements Serializable {
      * @param userInteraction Class which contains the User Interface.
      */
     protected void displayError(UserInteraction userInteraction) {
-        userInteraction.nextAction(-1);
+        userInteraction.nextAction(UIActions.DISPLAY_ERROR);
     }
 
     /**

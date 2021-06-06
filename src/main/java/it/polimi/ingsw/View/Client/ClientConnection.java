@@ -10,6 +10,7 @@ import it.polimi.ingsw.Model.MessagesToClient.*;
 import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.Controller.Actions.*;
+import it.polimi.ingsw.View.User.UIActions;
 import it.polimi.ingsw.View.Utility.ANSIColors;
 
 /** ClientConnection handles the listening of messages from the server.
@@ -57,15 +58,15 @@ public class ClientConnection implements Runnable, Observer<Action> {
 
                 //Action = 0, the server is asking the client to input a name!
                 if (action==0) {
-                    this.client.getUserInteraction().nextAction(0);
+                    this.client.getUserInteraction().nextAction(UIActions.CHOOSE_NAME);
                 }
                 //Action = 1, first player to join, how many players?
                 if(action==1){
-                    this.client.getUserInteraction().nextAction(1);
+                    this.client.getUserInteraction().nextAction(UIActions.CHOOSE_NUMBER_OF_PLAYERS);
                 }
                 else if(action==2){
                     //Opens the lobby, if applicable, from the lobby a player can himself to be ready, or if no other players are modifying launches the param modifier
-                    this.client.getUserInteraction().nextAction(2);
+                    this.client.getUserInteraction().nextAction(UIActions.INITIAL_LOBBY);
                 }
                 else if(action==10){
                     //Opens the param modifier (GUI only!)
@@ -74,6 +75,7 @@ public class ClientConnection implements Runnable, Observer<Action> {
                 }
                 else if(action==3){
                     //Reconnected, the game has already started
+                    this.client.getUserInteraction().nextAction(UIActions.RECONNECTION);
 
                     break;
                 }
@@ -83,13 +85,13 @@ public class ClientConnection implements Runnable, Observer<Action> {
                     System.out.println("[CLIENT CONNECTION] You are here");
                     ArrayList<RedLeaderCard> leaderCards = (ArrayList<RedLeaderCard>)objectInputStream.readObject();
                     this.client.getUserInteraction().getGame().setLeaderCards(leaderCards);
-                    this.client.getUserInteraction().nextAction(4);
+                    this.client.getUserInteraction().nextAction(UIActions.INITIAL_CHOOSE_LEADER_CARDS);
                 }
                 else if(action==5){
                     //Sends the resources to pick from (if applicable) and the inkwell!
                     int resources = objectInputStream.readInt();
                     this.client.getUserInteraction().setInitNumberOfResources(resources);
-                    this.client.getUserInteraction().nextAction(5);
+                    this.client.getUserInteraction().nextAction(UIActions.INITIAL_CHOOSE_RESOURCES);
                     break;
                 }
                 else if(action==10000000) {
@@ -110,7 +112,7 @@ public class ClientConnection implements Runnable, Observer<Action> {
                 //Handling of the MessageToClient message type
                 MessageToClient messageToClient = (MessageToClient) objectInputStream.readObject();
                 this.client.getUserInteraction().setMessage(messageToClient);
-                this.client.getUserInteraction().nextAction(17);
+                this.client.getUserInteraction().nextAction(UIActions.PLAY_TURN);
             }
         } catch (Exception e) {
             e.printStackTrace();

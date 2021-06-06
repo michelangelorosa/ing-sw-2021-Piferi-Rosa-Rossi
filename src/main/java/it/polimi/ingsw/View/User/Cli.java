@@ -5,7 +5,7 @@ import it.polimi.ingsw.View.Client.Client;
 import it.polimi.ingsw.View.Client.ClientConnection;
 
 public class Cli implements Runnable{
-    private ClientConnection clientConnection;
+    private final ClientConnection clientConnection;
     private final CliController cliController;
     private final Client client;
 
@@ -18,46 +18,46 @@ public class Cli implements Runnable{
     @Override
     public void run() {
         System.out.println("[INFO] Started Client with Cli\n");
-        this.client.getUserInteraction().setActionNumber(-1);
-        int i;
+        this.client.getUserInteraction().setUiAction(UIActions.WAITING);
+        UIActions action;
 
         do {
-            i = this.waitReady();
+            action = this.waitReady();
             try {
-                this.actionParser(i);
+                this.actionParser(action);
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-        } while (i != 20);
+        } while (action != UIActions.FINAL_POINTS);
 
         //TODO ending message "thanks for playing"
         System.out.println("[INFO] Closing Cli Thread...");
     }
 
-    public void actionParser(int i) throws Exception {
-        switch(i) {
-            case -2: this.displayAction();
+    public void actionParser(UIActions ACTION) throws Exception {
+        switch(ACTION) {
+            case DISPLAY_ACTION: this.displayAction();
                 break;
-            case -1: this.displayError();
+            case DISPLAY_ERROR: this.displayError();
                 break;
-            case 0: this.chooseName();
+            case CHOOSE_NAME: this.chooseName();
                 break;
-            case 1: this.numberOfPlayers();
+            case CHOOSE_NUMBER_OF_PLAYERS: this.numberOfPlayers();
                 break;
-            case 2: this.initialLobby();
+            case INITIAL_LOBBY: this.initialLobby();
                 break;
-            case 3: //reconnected, game already started
+            case RECONNECTION: //reconnected, game already started
                 break;
-            case 4: this.initialLeaderCards();
+            case INITIAL_CHOOSE_LEADER_CARDS: this.initialLeaderCards();
                 break;
-            case 5: this.initialResources();
-                break;
-
-            case 17: this.turnInteraction();
+            case INITIAL_CHOOSE_RESOURCES: this.initialResources();
                 break;
 
-            case 20: this.finalPoints();
+            case PLAY_TURN: this.turnInteraction();
+                break;
+
+            case FINAL_POINTS: this.finalPoints();
                 break;
 
 
@@ -69,14 +69,14 @@ public class Cli implements Runnable{
         cliController.displayAction(this.client.getUserInteraction());
 
         if(this.client.getUserInteraction().getMessage().imPlaying(this.client.getUserInteraction()))
-            this.actionParser(17);
+            this.actionParser(UIActions.PLAY_TURN);
     }
 
     public void displayError() throws Exception {
         cliController.displayServerError(client.getUserInteraction());
 
         if(this.client.getUserInteraction().getMessage().imPlaying(this.client.getUserInteraction()))
-            this.actionParser(17);
+            this.actionParser(UIActions.PLAY_TURN);
     }
 
     public void chooseName() throws Exception {
@@ -118,27 +118,19 @@ public class Cli implements Runnable{
         this.cliController.finalPoints(this.client.getUserInteraction().getGame());
     }
 
-    public int waitReady() {
-        int action;
+    public UIActions waitReady() {
+        UIActions action;
         synchronized (this.client.getUserInteraction()) {
-            while(this.client.getUserInteraction().getActionNumber() == -1) {
+            while(this.client.getUserInteraction().getUiAction() == UIActions.WAITING) {
                 try {
                     this.client.getUserInteraction().wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-            action = this.client.getUserInteraction().getActionNumber();
-            this.client.getUserInteraction().setActionNumber(-1);
+            action = this.client.getUserInteraction().getUiAction();
+            this.client.getUserInteraction().setUiAction(UIActions.WAITING);
         }
         return action;
-    }
-
-    public ClientConnection getClientConnection() {
-        return clientConnection;
-    }
-
-    public void setClientConnection(ClientConnection clientConnection) {
-        this.clientConnection = clientConnection;
     }
 }

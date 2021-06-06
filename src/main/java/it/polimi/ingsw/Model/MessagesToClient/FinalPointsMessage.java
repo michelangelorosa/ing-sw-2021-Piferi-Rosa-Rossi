@@ -2,6 +2,7 @@ package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.View.ReducedModel.Player;
+import it.polimi.ingsw.View.User.UIActions;
 import it.polimi.ingsw.View.User.UserInteraction;
 
 import java.util.ArrayList;
@@ -44,6 +45,6 @@ public class FinalPointsMessage extends MessageToClient {
                 player.setStatus(PlayerStatus.LOST);
         }
 
-        userInteraction.nextAction(20);
+        userInteraction.nextAction(UIActions.FINAL_POINTS);
     }
 }

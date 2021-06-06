@@ -4,12 +4,12 @@ import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 import it.polimi.ingsw.View.User.CliController;
+import it.polimi.ingsw.View.User.UIActions;
 import it.polimi.ingsw.View.User.UserInteraction;
 import it.polimi.ingsw.View.User.UserInterface;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -28,8 +28,8 @@ public class UserInteractionTest {
         userInteraction.setUi(ui);
         assertEquals(ui, userInteraction.getUi());
 
-        userInteraction.setActionNumber(3);
-        assertEquals(3, userInteraction.getActionNumber());
+        userInteraction.setUiAction(UIActions.INITIAL_LOBBY);
+        assertEquals(UIActions.INITIAL_LOBBY, userInteraction.getUiAction());
 
         ArrayList<RedLeaderCard> leaderCards = new ArrayList<>();
         userInteraction.setInitLeaderCards(leaderCards);
@@ -59,6 +59,6 @@ public class UserInteractionTest {
         assertEquals(8765, objects.get(1));
 
         userInteraction.displayError("error");
-        userInteraction.nextAction(3);
+        userInteraction.nextAction(UIActions.INITIAL_LOBBY);
     }
 }

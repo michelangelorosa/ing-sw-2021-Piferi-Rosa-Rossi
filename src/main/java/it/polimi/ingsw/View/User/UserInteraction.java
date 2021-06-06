@@ -18,7 +18,7 @@ public abstract class UserInteraction extends Observable<Action> {
     /** UserInterface to be defined when constructing a new UserInteraction instance (either Cli or Gui) */
     private UserInterface ui;
 
-    private int actionNumber = -1;
+    private UIActions uiAction = UIActions.WAITING;
 
     private ArrayList<RedLeaderCard> initLeaderCards;
     private int initNumberOfResources = -1;
@@ -105,16 +105,16 @@ public abstract class UserInteraction extends Observable<Action> {
         return ui.init();
     }
 
-    public int getActionNumber() {
-        return actionNumber;
+    public UIActions getUiAction() {
+        return uiAction;
     }
 
-    public void setActionNumber(int actionNumber) {
-        this.actionNumber = actionNumber;
+    public void setUiAction(UIActions uiAction) {
+        this.uiAction = uiAction;
     }
 
-    public void nextAction(int actionNumber) {
-        ui.nextAction(this, actionNumber);
+    public void nextAction(UIActions action) {
+        ui.nextAction(this, action);
     }
 
     public void displayError(String error) { ui.displayError(error); }
