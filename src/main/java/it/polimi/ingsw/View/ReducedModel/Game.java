@@ -1,6 +1,7 @@
 package it.polimi.ingsw.View.ReducedModel;
 
 import it.polimi.ingsw.Model.GameModel.FaithTrack;
+import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.View.Utility.ANSIfont;
 import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.Enums.SoloActionToken;
@@ -18,7 +19,7 @@ public class Game {
     /** Index indicating the current player */
     private int currentPlayerIndex;
     /** ArrayList containing all Leader Cards of the game */
-    private ArrayList<RedLeaderCard> leaderCards;
+    private RedLeaderCard[] leaderCards;
 
     private RedMarket market;
     private RedDevelopmentCardTable developmentCardTable;
@@ -34,7 +35,6 @@ public class Game {
         this.gameType = GameType.SINGLEPLAYER;
         this.players = new ArrayList<>();
         this.currentPlayerIndex = 0;
-        this.leaderCards = new ArrayList<>();
         this.market = new RedMarket();
         this.developmentCardTable = new RedDevelopmentCardTable();
         this.faithTrack = new FaithTrack();
@@ -73,7 +73,7 @@ public class Game {
     /**
      * Getter for "leaderCards" attribute in Game Class.
      */
-    public ArrayList<RedLeaderCard> getLeaderCards() {
+    public RedLeaderCard[] getLeaderCards() {
         return leaderCards;
     }
 
@@ -105,7 +105,7 @@ public class Game {
         return tokens;
     }
 
-    public void setLeaderCards(ArrayList<RedLeaderCard> leaderCards) {
+    public void setLeaderCards(RedLeaderCard[] leaderCards) {
         this.leaderCards = leaderCards;
     }
 

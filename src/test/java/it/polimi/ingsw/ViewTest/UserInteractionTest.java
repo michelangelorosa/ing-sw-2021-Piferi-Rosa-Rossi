@@ -31,7 +31,8 @@ public class UserInteractionTest {
         userInteraction.setUiAction(UIActions.INITIAL_LOBBY);
         assertEquals(UIActions.INITIAL_LOBBY, userInteraction.getUiAction());
 
-        ArrayList<RedLeaderCard> leaderCards = new ArrayList<>();
+        //ArrayList<RedLeaderCard> leaderCards = new ArrayList<>();
+        RedLeaderCard[] leaderCards = new RedLeaderCard[4];
         userInteraction.setInitLeaderCards(leaderCards);
         assertEquals(leaderCards, userInteraction.getInitLeaderCards());
 

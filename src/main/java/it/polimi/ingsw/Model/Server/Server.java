@@ -2,6 +2,8 @@ package it.polimi.ingsw.Model.Server;
 
 import it.polimi.ingsw.Controller.ControllerClasses.Controller;
 import it.polimi.ingsw.Model.Enums.GameStatus;
+import it.polimi.ingsw.Model.Enums.GameType;
+import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
 
 import java.io.IOException;
@@ -81,14 +83,14 @@ public class Server {
         try{
             ServerSocket ss;
             ss = new ServerSocket(server_port);
-            var pool = Executors.newFixedThreadPool(4);
             while (true){
                 try{
                     Socket client = ss.accept();
                     System.out.println("[SERVER] Client connected: "+client.toString());
                     ServerConnection serverConnection = new ServerConnection(this, client);
                     connections.add(serverConnection);
-                    pool.execute(serverConnection);
+                    Thread thread = new Thread(serverConnection);
+                    thread.start();
                 }catch (IOException e){
                     System.err.println("Drop");
                 }
@@ -150,6 +152,36 @@ public class Server {
             connection.conditionalSend(name,messageToClient);
     }
 
+    /**
+     * Sends a MessageToClient to a specific client, if found
+     * @param name              The player name to send the data to
+     * @param gameType          The type of the game
+     */
+    public synchronized void sendTo(String name, GameType gameType){
+        for(ServerConnection connection : connections)
+            connection.conditionalSend(name,gameType);
+    }
+
+    /**
+     * Sends a MessageToClient to a specific client, if found
+     * @param name              The player name to send the data to
+     * @param bool              Boolean value
+     */
+    public synchronized void sendTo(String name, boolean bool){
+        for(ServerConnection connection : connections)
+            connection.conditionalSend(name,bool);
+    }
+
+    /**
+     * Sends a MessageToClient to a specific client, if found
+     * @param name              The player name to send the data to
+     * @param leaderCards       4 Leader cards for the player to choose from
+     */
+    public synchronized void sendTo(String name, LeaderCard[] leaderCards){
+        for(ServerConnection connection : connections)
+            connection.conditionalSend(name,leaderCards);
+    }
+
     public Integer getNumberOfPlayers() {
         return numberOfPlayers;
     }
@@ -200,5 +232,14 @@ public class Server {
 
     public Controller getController() {
         return controller;
+    }
+
+    public void removeFromConnections(Socket socket){
+        for(ServerConnection connection : connections){
+            if(connection.socketEquals(socket))
+            {
+                connections.remove(connection);
+            }
+        }
     }
 }

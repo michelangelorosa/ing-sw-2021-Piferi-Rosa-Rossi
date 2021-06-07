@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Model.Server;
 
+import it.polimi.ingsw.Controller.Actions.Action;
+import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
 import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
@@ -49,34 +51,29 @@ public class ServerConnection implements Runnable{
                 System.out.println("[SERVER CONNECTION] Name request TRUE, proceed to display lobby please!");
                 messageHandler.waitingForPlayers(this);
             }
-
             //Accepts messages from client during game phase
+            System.out.println("[SERVER CONNECTION] Starting listening to "+socket.toString());
             while (true) {
-                System.out.println("[SERVER CONNECTION] All players connected!");
-                //This'll be read message to client
-                int temp = in.readInt();
-                System.out.println("Received "+temp);
-                if(temp==0){
-                    //BROADCAST MESSAGE
-                }
+                Action action = (Action) in.readObject();
+                System.out.println("[SERVER CONNECTION] Received an action from "+this.name);
+                notify();
+                //TODO, notify someone
             }
         }catch (Exception e){
-            System.out.println("[SERVER CONNECTION] Caught exception");
+            System.out.println("[SERVER CONNECTION] Caught exception from "+this.name);
         }finally{
-            if(out!=null){
-            }
-        }if(name!=null){
+        if(name!=null){
             System.out.println(name +" is leaving");
 
             //TODO freezing player
             }
+        }
 
         try{
             socket.close();
         }catch (IOException e){
 
         }
-
     }
 
     /**
@@ -84,12 +81,12 @@ public class ServerConnection implements Runnable{
      * @param i     Number to send
      */
     public synchronized void send(int i){
+        System.out.println("[SERVER CONNECTION] Sending "+i);
         try{
             out.writeInt(i);
             out.flush();
             out.reset();
         }catch (IOException e){
-            //messageHandler.sendError(this, "IOException when sending an int");
             System.err.println("IOException when sending an int to "+socket.toString());
             close();
         }
@@ -105,7 +102,6 @@ public class ServerConnection implements Runnable{
             out.flush();
             out.reset();
         } catch(IOException e) {
-            //messageHandler.sendError(this, "IOException when sending a string");
             System.err.println("IOException when sending a string to "+socket.toString());
             close();
         }
@@ -121,7 +117,6 @@ public class ServerConnection implements Runnable{
             out.flush();
             out.reset();
         } catch(IOException e) {
-            //messageHandler.sendError(this, "IOException when sending a Leader Card");
             System.err.println("IOException when sending a Leader Card to "+socket.toString());
             close();
         }
@@ -131,25 +126,27 @@ public class ServerConnection implements Runnable{
      * Sends a bool to the client
      * @param bool
      */
-    public synchronized void send(boolean bool) throws IOException{
+    public synchronized void send(boolean bool) {
         try {
             out.writeBoolean(bool);
             out.flush();
             out.reset();
         } catch(IOException e) {
-            //messageHandler.sendError(this, "IOException when sending a boolean");
             System.err.println("IOException when sending a boolean to "+socket.toString());
             close();
         }
     }
 
+    /**
+     * Sends a MessageToClient to the client
+     * @param message   the message to send
+     */
     public synchronized void send(MessageToClient message) {
         try {
             out.writeObject(message);
             out.flush();
             out.reset();
         } catch (IOException e) {
-            //messageHandler.sendError(this, "IOException when sending a MessageToClient");
             System.err.println("IOException when sending a MessageToClient to "+socket.toString());
             close();
         }
@@ -165,9 +162,21 @@ public class ServerConnection implements Runnable{
             close();
         }
     }
+
     public synchronized void send(DevelopmentCard developmentCard){
         try{
             out.writeObject(developmentCard);
+            out.flush();
+            out.reset();
+        }catch(IOException e){
+            System.err.println("IOException when sending a Development Card to "+socket.toString());
+            close();
+        }
+    }
+
+    public synchronized void send(GameType gameType){
+        try{
+            out.writeObject(gameType);
             out.flush();
             out.reset();
         }catch(IOException e){
@@ -194,8 +203,15 @@ public class ServerConnection implements Runnable{
      * @param i     what to send
      */
     public void conditionalSend(String name,int i){
+       System.out.print("[SERVER CONNECTION] Conditional send: "+this.name);
+       System.out.print(" "+name);
+       System.out.println("condition is "+(boolean)(this.name.equals(name)));
         if(this.name.equals(name))
+        {
+            System.out.print("[SERVER CONNECTION] Sending to "+name);
+            System.out.println("the int "+i);
             send(i);
+        }
     }
 
     public void conditionalSend(String name,String message){
@@ -206,6 +222,21 @@ public class ServerConnection implements Runnable{
     public void conditionalSend(String name,MessageToClient message){
         if(this.name.equals(name))
             send(message);
+    }
+
+    public void conditionalSend(String name, GameType gameType){
+        if(this.name.equals(name))
+            send(gameType);
+    }
+
+    public void conditionalSend(String name,boolean bool){
+        if(this.name.equals(name))
+            send(bool);
+    }
+
+    public void conditionalSend(String name,LeaderCard[] leaderCards){
+        if(this.name.equals(name))
+            send(leaderCards);
     }
 
     public ObjectInputStream getIn() {
@@ -226,5 +257,11 @@ public class ServerConnection implements Runnable{
 
     public void setReady() {
         this.ready = true;
+    }
+
+    public boolean socketEquals(Socket socket){
+        if (socket==this.socket)
+        return true;
+        else return false;
     }
 }

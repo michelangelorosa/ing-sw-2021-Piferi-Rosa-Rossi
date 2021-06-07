@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="532.0" prefWidth="401.0" scaleShape="false" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="551.0" fitWidth="688.0" layoutX="-143.0" layoutY="-9.0">
+         <image>
+            <Image url="@../Game/background.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="462.0" fitWidth="358.0" layoutX="22.0" layoutY="14.0">
+         <image>
+            <Image url="@../Game/market.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="213.0" fitWidth="267.0" layoutX="68.0" layoutY="66.0">
+         <image>
+            <Image url="@../Game/market_board.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="extraMarble" fitHeight="41.0" fitWidth="41.0" layoutX="282.0" layoutY="78.0">
+         <image>
+            <Image url="@../Game/white.png" />
+         </image>
+      </ImageView>
+      <RadioButton fx:id="marketColumn1" layoutX="138.0" layoutY="314.0" mnemonicParsing="false" />
+      <RadioButton fx:id="marketColumn2" layoutX="178.0" layoutY="315.0" mnemonicParsing="false" />
+      <RadioButton fx:id="marketColumn3" layoutX="220.0" layoutY="315.0" mnemonicParsing="false" />
+      <RadioButton fx:id="marketColumn4" layoutX="261.0" layoutY="315.0" mnemonicParsing="false" />
+      <RadioButton fx:id="marketRow3" layoutX="360.0" layoutY="212.0" mnemonicParsing="false" />
+      <RadioButton fx:id="marketRow2" layoutX="360.0" layoutY="170.0" mnemonicParsing="false" />
+      <RadioButton fx:id="marketRow1" layoutX="360.0" layoutY="129.0" mnemonicParsing="false" />
+      <Button fx:id="button" layoutX="266.0" layoutY="482.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="80.0" text="Close">
+         <font>
+            <Font name="Baskerville" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="submitMarket" layoutX="56.0" layoutY="483.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="87.0" text="Submit">
+         <font>
+            <Font name="Baskerville" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <GridPane fx:id="marketPane" layoutX="123.0" layoutY="107.0" prefHeight="144.0" prefWidth="172.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+      </GridPane>
+   </children>
+</Pane>

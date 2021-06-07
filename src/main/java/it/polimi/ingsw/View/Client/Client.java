@@ -1,8 +1,8 @@
 package it.polimi.ingsw.View.Client;
 
-import it.polimi.ingsw.View.User.UserInteraction;
-import it.polimi.ingsw.View.User.Cli;
-import it.polimi.ingsw.View.User.CliController;
+import it.polimi.ingsw.Model.Enums.GameType;
+import it.polimi.ingsw.View.User.*;
+import javafx.application.Application;
 
 import java.io.*;
 import java.net.Socket;
@@ -136,6 +136,7 @@ public class Client {
     public void setMyTurn(boolean myTurn) {
         this.myTurn = myTurn;
     }
+
 
     /**
      * @return the server the Client is connected to

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.ViewTest;
 
-import it.polimi.ingsw.View.Client.ClientExceptionHandler;
+import it.polimi.ingsw.View.User.ClientExceptionHandler;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;

@@ -5,11 +5,15 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import it.polimi.ingsw.Controller.ControllerClasses.Observer;
+import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
+import it.polimi.ingsw.Model.GameModel.LeaderCard;
+import it.polimi.ingsw.Model.GameModel.Player;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.Controller.Actions.*;
+import it.polimi.ingsw.View.User.ClientExceptionHandler;
 import it.polimi.ingsw.View.User.UIActions;
 import it.polimi.ingsw.View.Utility.ANSIColors;
 
@@ -23,6 +27,7 @@ public class ClientConnection implements Runnable, Observer<Action> {
     private Client client;
     private final ObjectOutputStream objectOutputStream;
     private final ObjectInputStream objectInputStream;
+    private Player playerToAdd;
 
     /**
      * Tries to create a connection to the server using the client's parameters.
@@ -81,34 +86,31 @@ public class ClientConnection implements Runnable, Observer<Action> {
                 }
                 else if(action==4){
                     //Sends the leader cards to pick
-                    //TODO get leaderCards from server
-                    System.out.println("[CLIENT CONNECTION] You are here");
-                    ArrayList<RedLeaderCard> leaderCards = (ArrayList<RedLeaderCard>)objectInputStream.readObject();
-                    this.client.getUserInteraction().getGame().setLeaderCards(leaderCards);
-                    this.client.getUserInteraction().nextAction(UIActions.INITIAL_CHOOSE_LEADER_CARDS);
-                }
-                else if(action==5){
-                    //Sends the resources to pick from (if applicable) and the inkwell!
-                    int resources = objectInputStream.readInt();
-                    this.client.getUserInteraction().setInitNumberOfResources(resources);
-                    this.client.getUserInteraction().nextAction(UIActions.INITIAL_CHOOSE_RESOURCES);
-                    break;
-                }
-                else if(action==10000000) {
-                    //Game creation and sets the correct userName for the game instantiation
+                    System.out.println("[CLIENT CONNECTION] In Leader card block");
                     this.client.getUserInteraction().setGame(new Game());
                     this.client.getUserInteraction().getGame().setMyNickname(this.client.getUser());
 
-                    //TODO initialize game with information sent by the server
+                    this.client.getUserInteraction().getGame().setGameType((GameType) objectInputStream.readObject());
+                    boolean hasInkwell = objectInputStream.readBoolean();
+                    RedLeaderCard[] leaderCards = (LeaderCard[])objectInputStream.readObject();
+                    this.client.getUserInteraction().setInitNumberOfResources(objectInputStream.readInt());
+                    this.playerToAdd = new Player(objectInputStream.readUTF(),1,hasInkwell);
+                    this.client.getUserInteraction().getGame().setLeaderCards(leaderCards);
+                    this.client.getUserInteraction().nextAction(UIActions.INITIAL_CHOOSE_LEADER_CARDS);
+                }
+                /*
+                Should be called from choose leader cards instead of network
+                else if(action==5){
+                    this.client.getUserInteraction().nextAction(UIActions.INITIAL_CHOOSE_RESOURCES);
                     break;
                 }
+                 */
                 else if(action==9){
                     //generic error, could be same name error, game has finished exception et al.
                     clientExceptionHandler.cliError(objectInputStream.readUTF());
                 }
             }
             while (true){
-
                 //Handling of the MessageToClient message type
                 MessageToClient messageToClient = (MessageToClient) objectInputStream.readObject();
                 this.client.getUserInteraction().setMessage(messageToClient);
@@ -192,6 +194,7 @@ public class ClientConnection implements Runnable, Observer<Action> {
      * @throws Exception    I/O error
      */
     public synchronized void send(int number) throws Exception{
+        System.out.println("[CLIENT CONNECTION] Sending "+number);
         objectOutputStream.writeInt(number);
         objectOutputStream.flush();
         objectOutputStream.reset();

@@ -155,10 +155,11 @@ public class CliController implements UserInterface {
         System.out.println();
         System.out.println("What do you want to do?");
         System.out.println("1- start the game");
+        System.out.println("2- modify the game settings");
 
         while(true) {
-            choice = sc.nextLine();
-            if(choice.equals("1")) {
+            choice = sc.next();
+            if(choice.equalsIgnoreCase("1")) {
                 return 4;
             }
             else if(!choice.equals("n"))
@@ -167,9 +168,12 @@ public class CliController implements UserInterface {
 
     }
 
-    public Action initialChooseLeaderCards(ArrayList<RedLeaderCard> leaderCards) throws IllegalArgumentException{
-        if(leaderCards.size() != 4)
-            throw new IllegalArgumentException("Number of Leader Cards to choose from is" + leaderCards.size() + ", should be 4");
+    public Action initialChooseLeaderCards(RedLeaderCard[] leaderCardsArray) throws IllegalArgumentException{
+        if(leaderCardsArray.length != 4)
+            throw new IllegalArgumentException("Number of Leader Cards to choose from is" + leaderCardsArray.length + ", should be 4");
+        ArrayList<RedLeaderCard> leaderCards = new ArrayList<>();
+        for(int i=0;i<4;i++)
+            leaderCards.add(leaderCardsArray[i]);
 
         String choice;
         String choice2;
@@ -235,11 +239,11 @@ public class CliController implements UserInterface {
 
             switch (depot) {
                 case 0: firstDepot.add(type);
-                break;
+                    break;
                 case 1: secondDepot.add(type);
-                break;
+                    break;
                 case 2: thirdDepot.add(type);
-                break;
+                    break;
             }
         }
         depotResource.put(0, firstDepot);
@@ -295,13 +299,13 @@ public class CliController implements UserInterface {
             else
                 switch (choice) {
                     case "a": printYourBoard(game);
-                    break;
+                        break;
                     case "b": printPlayerBoard(game);
-                    break;
+                        break;
                     case "c": printMarket(game);
-                    break;
+                        break;
                     case "d": printDevTable(game);
-                    break;
+                        break;
                     default: displayError("Please insert a valid number or character");
                 }
         }
@@ -775,7 +779,7 @@ public class CliController implements UserInterface {
                     return null;
                 else if(choice.equals("1") || choice.equals("2") || choice.equals("3")) {
                     rowOrColumn = Integer.parseInt(choice);
-                    
+
                     if(InputController.checkMarketChooseRow(true, rowOrColumn - 1))
                         return new MarketChooseRow(true, rowOrColumn - 1);
                     else

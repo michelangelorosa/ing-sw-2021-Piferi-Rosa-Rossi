@@ -80,12 +80,12 @@ public class CliTest {
     public void initialChooseLeaderCardsTest() {
         LeaderRequirements leaderRequirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
         ResourceStack stack = new ResourceStack(1,2,3,4);
-        ArrayList<RedLeaderCard> leaderCards = new ArrayList<>();
-        leaderCards.add(new LeaderCard(0, 1, stack, leaderRequirements, Marble.PURPLE));
-        leaderCards.add(new LeaderCard(1, 1, stack, leaderRequirements, Marble.BLUE));
-        leaderCards.add(new LeaderCard(2, 1, stack, leaderRequirements, Marble.GREY));
-        leaderCards.add(new LeaderCard(3, 1, stack, leaderRequirements, Marble.YELLOW));
-        assertEquals(4, leaderCards.size());
+        RedLeaderCard[] leaderCards = new RedLeaderCard[4];
+        leaderCards[0]=(new LeaderCard(0, 1, stack, leaderRequirements, Marble.PURPLE));
+        leaderCards[1]=(new LeaderCard(1, 1, stack, leaderRequirements, Marble.BLUE));
+        leaderCards[2]=(new LeaderCard(2, 1, stack, leaderRequirements, Marble.GREY));
+        leaderCards[3]=(new LeaderCard(3, 1, stack, leaderRequirements, Marble.YELLOW));
+        assertEquals(4, leaderCards.length);
 
         changeSystemIn("0\n1\n0\n1\n2");
         ui = new CliController();
@@ -93,8 +93,8 @@ public class CliTest {
 
         assertTrue(action instanceof InitChooseLeaderCards);
 
-        assertEquals(leaderCards.get(0), ((InitChooseLeaderCards)action).getLeaderCard1());
-        assertEquals(leaderCards.get(1), ((InitChooseLeaderCards)action).getLeaderCard2());
+        assertEquals(leaderCards[0], ((InitChooseLeaderCards)action).getLeaderCard1());
+        assertEquals(leaderCards[1], ((InitChooseLeaderCards)action).getLeaderCard2());
     }
 
     @Test

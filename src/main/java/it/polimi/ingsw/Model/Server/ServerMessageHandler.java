@@ -9,6 +9,8 @@ import it.polimi.ingsw.View.Utility.ANSIColors;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ServerMessageHandler extends Observable<Object> {
     private static final String S = "[SERVER] ";
@@ -46,6 +48,7 @@ public class ServerMessageHandler extends Observable<Object> {
 
                     //Name is NOT in the server AND game status is the FIRST player to join
                     if(newName&& Server.getServerStatus().equals(GameStatus.READY)){
+                        serverConnection.setName(name);
                         System.out.println("[SmHANDLER] A first player connected!");
                         //Asking for the number of players to start a game
                         serverConnection.send(1);
@@ -59,6 +62,7 @@ public class ServerMessageHandler extends Observable<Object> {
                         }
                         else
                             if(freeSpace(serverConnection)&&isLobby()){
+                                serverConnection.setName(name);
                                 sendError(serverConnection,"There's another Lobby open, you'll now join!");
                                 serverConnection.getServer().playerReady();
                                 return true;
@@ -68,6 +72,7 @@ public class ServerMessageHandler extends Observable<Object> {
                     }
                     //New Name and game in Lobby mode
                     else if(newName&&isLobby()) {
+                        serverConnection.setName(name);
                         System.out.println("[SmHANDLER] New game in Lobby!");
                         if(freeSpace(serverConnection)){
                                 System.out.println(S + "Name: \"" + name + "\" is valid");
@@ -81,12 +86,14 @@ public class ServerMessageHandler extends Observable<Object> {
                     else if(!newName&&isLobby()){
                         System.out.println("[SmHANDLER] Old name in Lobby!");
                         //TODO: check if the client is alive, if not accept request
+                        serverConnection.setName(name);
                         //if client alive return true
                         sendError(serverConnection,"There's another player with the same name, change yours!");
                     }
                     //Name is already in the game and the game is running,
                     else if(!newName&&!isLobby()){
                         System.out.println("[SmHANDLER] Reconnection attempt");
+                        serverConnection.setName(name);
                         if(freeSpace(serverConnection)){
                             //TODO check if the client is alive, if not load the state
                             return false;
@@ -115,8 +122,10 @@ public class ServerMessageHandler extends Observable<Object> {
         try {
             serverConnection.send(2);
             while (true) {
+                int action = serverConnection.getIn().readInt();
+                System.out.println("[SmHANDLER] Got action "+action);
                 synchronized (this) {
-                    if (serverConnection.getIn().readInt() == 3){
+                    if (action == 3){
                         if(Server.getServerStatus().equals(GameStatus.PARAM))
                             sendError(serverConnection, SE + "Somebody else is already modifying the Game Settings");
                         else if(Server.getServerStatus().equals(GameStatus.LOBBY))
@@ -126,18 +135,25 @@ public class ServerMessageHandler extends Observable<Object> {
                             Server.setServerStatus(GameStatus.LOBBY);
                         }
                     }
-                    else if(serverConnection.getIn().readInt() == 4){
+                    else if(action == 4){
+                        System.out.println("[SmHANDLER] Got 4");
                         if(Server.getServerStatus().equals(GameStatus.PARAM))
                             sendError(serverConnection,SE + "Unable to start the game if somebody is modifying the game settings!");
                         if(Server.getServerStatus().equals(GameStatus.LOBBY))
                             if(serverConnection.getServer().getReadyPlayers()==serverConnection.getServer().getNumberOfPlayers())
                             {
                                 System.out.println("Hurray, starting game!");
-                                Server.setServerStatus(GameStatus.LEADER);
-                                //We should create the Game here somehow
                                 //TODO pulire lista giocatori
-                                ArrayList<String> names = new ArrayList<>(serverConnection.getServer().getNames());
-                                serverConnection.getServer().getController().getActionController().getGame().gameStart(names);
+                                synchronized (this){
+                                    if(Server.getServerStatus().equals(GameStatus.LOBBY))
+                                    {
+                                        Server.setServerStatus(GameStatus.LEADER);
+                                        Set<String> nameHash = serverConnection.getServer().getNames();
+                                        ArrayList<String> names = new ArrayList<>(nameHash);
+                                        serverConnection.getServer().getController().getActionController().getGame().gameStart(names, serverConnection.getServer());
+                                        return;
+                                    }
+                                }
 
                             }
                             else

@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * </ul>
  */
 public class Player implements Serializable {
-    private static final long serialVersionUID = 0x1;
+    private static final long serialVersionUID = 0x6;
 
     private final String nickname;
     private final int turnPosition;

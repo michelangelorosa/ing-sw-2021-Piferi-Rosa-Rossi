@@ -32,6 +32,19 @@ public class RedMarket implements Serializable {
     }
 
     /**
+     * Gets a single marble from the market, given the parameters
+     * @param marketColumn  Column of the market [0-3]
+     * @param marketRow     Row of the market    [0-2]
+     * @return  Marble corresponding to the coordinates
+     */
+    public Marble getMarble(int marketColumn,int marketRow){
+        if(marketColumn>=0&&marketColumn<=3&&marketRow>=0&&marketRow<=2)
+        return getMarbles()[marketRow][marketColumn];
+        else
+            return Marble.RED;
+    }
+
+    /**
      * Getter for "extraMarble" attribute.
      */
     public Marble getExtraMarble() {

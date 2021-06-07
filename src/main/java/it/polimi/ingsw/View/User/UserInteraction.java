@@ -2,6 +2,7 @@ package it.polimi.ingsw.View.User;
 
 import it.polimi.ingsw.Controller.Actions.Action;
 import it.polimi.ingsw.Controller.ControllerClasses.Observable;
+import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
@@ -20,7 +21,7 @@ public abstract class UserInteraction extends Observable<Action> {
 
     private UIActions uiAction = UIActions.WAITING;
 
-    private ArrayList<RedLeaderCard> initLeaderCards;
+    private RedLeaderCard[] initLeaderCards;
     private int initNumberOfResources = -1;
     private MessageToClient previousMessage;
     private MessageToClient message;
@@ -58,11 +59,11 @@ public abstract class UserInteraction extends Observable<Action> {
         return ui;
     }
 
-    public ArrayList<RedLeaderCard> getInitLeaderCards() {
+    public RedLeaderCard[] getInitLeaderCards() {
         return initLeaderCards;
     }
 
-    public void setInitLeaderCards(ArrayList<RedLeaderCard> initLeaderCards) {
+    public void setInitLeaderCards(RedLeaderCard [] initLeaderCards) {
         this.initLeaderCards = initLeaderCards;
     }
 

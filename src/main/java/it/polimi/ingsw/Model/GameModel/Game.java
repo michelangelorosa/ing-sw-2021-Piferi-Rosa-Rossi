@@ -4,6 +4,7 @@ import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Enums.SoloActionToken;
 import it.polimi.ingsw.Model.JSON.JSONReader;
+import it.polimi.ingsw.Model.Server.Server;
 
 
 import java.util.ArrayList;
@@ -28,6 +29,8 @@ public class Game {
     private final FaithTrack faithTrack;
 
     private final SoloActionToken[] tokens;
+
+    private Server server;
 
     /**
      * Constructor for Game Class.
@@ -116,7 +119,9 @@ public class Game {
      * @param clientNames ArrayList of nicknames that have successfully established a connection with the server.
      * @throws IllegalArgumentException if the max number of players has been reached.
      */
-    public void gameStart(ArrayList<String> clientNames) throws IllegalArgumentException {
+    public void gameStart(ArrayList<String> clientNames, Server server) throws IllegalArgumentException {
+
+        setServer(server);
         int numberOfPlayers = clientNames.size();
         if(numberOfPlayers==1)
             setGameType(GameType.SINGLEPLAYER);
@@ -131,29 +136,18 @@ public class Game {
         if(gameType==GameType.MULTIPLAYER){
             int activePlayer= (int)(Math.random()*numberOfPlayers);
 
-            for(int i=0;i<numberOfPlayers;i++){
-            newPlayer = new Player(clientNames.get(activePlayer),i,i==0);
+            for(int position=0;position<numberOfPlayers;position++){
+            newPlayer = new Player(clientNames.get(activePlayer),position,position==0);
             players.add(newPlayer);
-
             if(activePlayer==numberOfPlayers)
                 activePlayer=0;
             else activePlayer++;
-            if(i==1){
-                //TODO: una risorsa a scelta
-
-            }else
-                if(i==2)
-                {
-                    //TODO: una risorsa a scelta
-
+            sendToClient(newPlayer.getNickname(),server,position);
+                if(position==2)
                     newPlayer.stepAhead(1);
-                }
-                else if(i==3)
-                {
-                    //TODO: due risorse a scelta
-
+                else if(position==3)
                     newPlayer.stepAhead(1);
-                }
+
             }
         }
         else {//Singleplayer Init
@@ -161,8 +155,36 @@ public class Game {
             players.add(newPlayer);
             newPlayer = new Player(clientNames.get(0),0,false);
             players.add(newPlayer);
+            sendToClient(clientNames.get(0),server,4);
         }
 
+    }
+
+    /**
+     * Sends to the client the GameType, the Inkwell status, 4 Leader Cards, the number of resources to pick from
+     * Used in the beginning of the game
+     * @param nickname  Nickname of the player to send the messages to
+     * @param server    Server is used for establishing a connection to the client
+     * @param position  Position is the position of the player in the game, used for establishing the inkwell and the extra resources for the startup
+     */
+    private void sendToClient(String nickname,Server server, int position) {
+        System.out.print("Sending to "+nickname);
+        System.out.println(" 4");
+
+        server.sendTo(nickname,4);
+
+        server.sendTo(nickname,this.gameType);
+        if(position==0)//Has inkwell?
+            server.sendTo(nickname,true);
+        else server.sendTo(nickname,false);
+        server.sendTo(nickname,LeaderCardShuffle.getLeaderShuffled());
+        if(position==1||position==2)
+            server.sendTo(nickname,1);
+        else if(position==3)
+            server.sendTo(nickname,2);
+        else
+            server.sendTo(nickname,0);
+        server.sendTo(nickname,nickname);
     }
 
     /**
@@ -189,6 +211,10 @@ public class Game {
             currentPlayerIndex ++;
     }
 
+    /**
+     * Currently unused
+     * @return the previous player
+     */
     public Player getPreviousPlayer() {
         if(currentPlayerIndex == 0)
             return this.players.get(this.players.size() - 1);
@@ -266,7 +292,7 @@ public class Game {
     }
 
     /**
-     * Method used when a player wants to join the game.
+     * Method used in <b>testing only</b> when a player wants to join the game.
      * @param nickname Nickname of the player wanting to join.
      * @throws IllegalArgumentException if the max number of players has already been reached.
      */
@@ -289,6 +315,14 @@ public class Game {
         }
 
         players.add(newPlayer);
+    }
+
+    private void setServer(Server server){
+        this.server = server;
+    }
+
+    public Server getServer(){
+        return this.server;
     }
 
 }

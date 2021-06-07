@@ -11,7 +11,11 @@ import java.util.ArrayList;
 public class LeaderCardShuffle {
     private static boolean active = false;
     static ArrayList<LeaderCard> LeaderCards;
-    //Reads the cards once
+
+    /**
+     * Reads the cards from the source and then they're put into the ArrayList LeaderCards
+     * @return  ArrayList with all the leader cards
+     */
     private static ArrayList<LeaderCard> leaderCardsManager(){
         if(!active){
             active=true;
@@ -19,12 +23,21 @@ public class LeaderCardShuffle {
         }
         return LeaderCards;
     }
-    //Removes the cards
+
+    /**
+     * Removes from the ArrayList a LeaderCard that has been given to a player to choose.
+     * @param remove    The index of the leader card to remove
+     * @return          The ArrayList without the removed card
+     */
     private static ArrayList<LeaderCard> leaderCardsManager(int remove){
         LeaderCards.remove(remove);
         return LeaderCards;
     }
-    //Returns 4 different Leader Cards
+
+    /**
+     * Randomly gets 4 Leader Cards for the player to chose at the beginning of the game. The cards that aren't chosen are discarded.
+     * @return      LeaderCard[4]
+     */
     public static LeaderCard[] getLeaderShuffled(){
         ArrayList<LeaderCard> LeaderCards = leaderCardsManager();
         try{

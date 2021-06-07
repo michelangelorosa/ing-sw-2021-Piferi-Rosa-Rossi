@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="950.0" prefWidth="1660.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="962.0" fitWidth="479.0" layoutX="1191.0" layoutY="-2.0">
+         <image>
+            <Image url="@../Game/green.jpg" />
+         </image>
+      </ImageView>
+      <Pane layoutX="1191.0" layoutY="500.0" prefHeight="471.0" prefWidth="479.0">
+         <children>
+            <ImageView fitHeight="270.0" fitWidth="178.0" layoutX="31.0" layoutY="72.0">
+               <image>
+                  <Image url="@../Cards/F56.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="270.0" fitWidth="178.0" layoutX="239.0" layoutY="72.0">
+               <image>
+                  <Image url="@../Cards/F56.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="89.0" layoutY="366.0" mnemonicParsing="false" text="Activate" />
+            <Button layoutX="296.0" layoutY="366.0" mnemonicParsing="false" text="Activate" />
+            <Button layoutX="90.0" layoutY="407.0" mnemonicParsing="false" text="Discard" />
+            <Button layoutX="297.0" layoutY="407.0" mnemonicParsing="false" text="Discard" />
+            <ImageView fitHeight="55.0" fitWidth="55.0" layoutX="62.0" layoutY="276.0">
+               <image>
+                  <Image url="@../Game/shield.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="55.0" fitWidth="55.0" layoutX="124.0" layoutY="276.0">
+               <image>
+                  <Image url="@../Game/shield.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="55.0" fitWidth="55.0" layoutX="270.0" layoutY="276.0">
+               <image>
+                  <Image url="@../Game/shield.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="55.0" fitWidth="55.0" layoutX="331.0" layoutY="276.0">
+               <image>
+                  <Image url="@../Game/shield.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane layoutX="1.0" layoutY="383.0" prefHeight="600.0" prefWidth="1190.0">
+         <children>
+            <ImageView fitHeight="600.0" fitWidth="1190.0" layoutY="-11.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Game/onlyBoardFront.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="basicProductionBtn" layoutX="311.0" layoutY="493.0" mnemonicParsing="false" text="Activate Production" />
+            <Button fx:id="slot1ProdBtn" layoutX="499.0" layoutY="493.0" mnemonicParsing="false" text="Activate Production" />
+            <Button fx:id="slot2ProdBtn" layoutX="728.0" layoutY="493.0" mnemonicParsing="false" text="Activate Production" />
+            <Button fx:id="slot3ProdBtn" layoutX="964.0" layoutY="493.0" mnemonicParsing="false" text="Activate Production" />
+            <ImageView fitHeight="55.0" fitWidth="55.0" layoutX="116.0" layoutY="422.0">
+               <image>
+                  <Image url="@../Game/servant.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="55.0" fitWidth="55.0" layoutX="36.0" layoutY="422.0">
+               <image>
+                  <Image url="@../Game/shield.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="55.0" fitWidth="49.0" layoutX="39.0" layoutY="478.0">
+               <image>
+                  <Image url="@../Game/coin.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="55.0" fitWidth="55.0" layoutX="116.0" layoutY="478.0">
+               <image>
+                  <Image url="@../Game/stone.png" />
+               </image>
+            </ImageView>
+            <Text fx:id="strongboxShields" fill="WHITE" layoutX="88.0" layoutY="456.0" strokeType="OUTSIDE" strokeWidth="0.0" text="256" wrappingWidth="33.953125">
+               <font>
+                  <Font name="Baskerville" size="22.0" />
+               </font>
+            </Text>
+            <Text fx:id="strongboxCoins" fill="WHITE" layoutX="88.0" layoutY="512.0" strokeType="OUTSIDE" strokeWidth="0.0" text="256" wrappingWidth="33.953125">
+               <font>
+                  <Font name="Baskerville" size="22.0" />
+               </font>
+            </Text>
+            <Text fx:id="strongboxServants" fill="WHITE" layoutX="171.0" layoutY="456.0" strokeType="OUTSIDE" strokeWidth="0.0" text="256" wrappingWidth="33.953125">
+               <font>
+                  <Font name="Baskerville" size="22.0" />
+               </font>
+            </Text>
+            <Text fx:id="strongboxStones" fill="WHITE" layoutX="171.0" layoutY="512.0" strokeType="OUTSIDE" strokeWidth="0.0" text="256" wrappingWidth="33.953125">
+               <font>
+                  <Font name="Baskerville" size="22.0" />
+               </font>
+            </Text>
+            <ImageView fx:id="warehouse1" fitHeight="55.0" fitWidth="55.0" layoutX="136.0" layoutY="105.0">
+               <image>
+                  <Image url="@../Game/shield.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="warehouse21" fitHeight="55.0" fitWidth="49.0" layoutX="98.0" layoutY="170.0">
+               <image>
+                  <Image url="@../Game/coin.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="warehouse22" fitHeight="55.0" fitWidth="49.0" layoutX="163.0" layoutY="170.0">
+               <image>
+                  <Image url="@../Game/coin.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="warehouse31" fitHeight="55.0" fitWidth="55.0" layoutX="71.0" layoutY="251.0">
+               <image>
+                  <Image url="@../Game/stone.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="warehouse32" fitHeight="55.0" fitWidth="55.0" layoutX="120.0" layoutY="251.0">
+               <image>
+                  <Image url="@../Game/stone.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="warehouse33" fitHeight="55.0" fitWidth="55.0" layoutX="171.0" layoutY="251.0">
+               <image>
+                  <Image url="@../Game/stone.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="270.0" fitWidth="178.0" layoutX="472.0" layoutY="191.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="270.0" fitWidth="178.0" layoutX="472.0" layoutY="143.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="270.0" fitWidth="178.0" layoutX="472.0" layoutY="90.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="270.0" fitWidth="178.0" layoutX="701.0" layoutY="191.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="270.0" fitWidth="178.0" layoutX="701.0" layoutY="143.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="270.0" fitWidth="178.0" layoutX="701.0" layoutY="90.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="270.0" fitWidth="178.0" layoutX="937.0" layoutY="191.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="270.0" fitWidth="178.0" layoutX="937.0" layoutY="143.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="270.0" fitWidth="178.0" layoutX="937.0" layoutY="90.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane layoutX="1.0" layoutY="-7.0" prefHeight="240.0" prefWidth="1190.0">
+         <children>
+            <ImageView fitHeight="240.0" fitWidth="1190.0">
+               <image>
+                  <Image url="@../Game/background.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="115.0" fitWidth="239.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Game/logo.png" />
+               </image>
+            </ImageView>
+            <GridPane layoutX="269.0" layoutY="22.0" prefHeight="100.0" prefWidth="740.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <ImageView fx:id="inkwell" fitHeight="101.0" fitWidth="88.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Game/calamaio.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="singleToken" fitHeight="100.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                     <image>
+                        <Image url="@../Game/retrocerchi.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="marketBtn" mnemonicParsing="false" text="Open Market" GridPane.columnIndex="2" />
+                  <Button fx:id="cardTableBtn" mnemonicParsing="false" text="Open Card Table" GridPane.columnIndex="3" />
+                  <Button fx:id="nextTurnBtn" mnemonicParsing="false" text="NEXT TURN" GridPane.columnIndex="4" />
+               </children>
+            </GridPane>
+         </children>
+      </Pane>
+      <Pane layoutX="1187.0" prefHeight="564.0" prefWidth="473.0">
+         <children>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="1.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="293.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="181.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="91.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="383.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="181.0" layoutY="20.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="1.0" layoutY="20.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="91.0" layoutY="20.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="1.0" layoutY="45.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="91.0" layoutY="45.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="181.0" layoutY="45.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="1.0" layoutY="192.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="293.0" layoutY="192.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="181.0" layoutY="192.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="91.0" layoutY="192.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="383.0" layoutY="192.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="181.0" layoutY="212.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="1.0" layoutY="212.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="91.0" layoutY="212.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="1.0" layoutY="237.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="91.0" layoutY="237.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="181.0" layoutY="237.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="1.0" layoutY="384.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="293.0" layoutY="384.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="181.0" layoutY="384.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="91.0" layoutY="384.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="383.0" layoutY="384.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="181.0" layoutY="404.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="1.0" layoutY="404.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="91.0" layoutY="404.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="1.0" layoutY="429.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="91.0" layoutY="429.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="181.0" layoutY="429.0">
+               <image>
+                  <Image url="@../Cards/F1.png" />
+               </image>
+            </ImageView>
+         </children></Pane>
+      <Pane layoutX="1.0" layoutY="129.0" prefHeight="254.0" prefWidth="1190.0">
+         <children>
+            <ImageView fitHeight="254.0" fitWidth="1190.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Game/faithTrack.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="293.0" layoutY="127.0">
+               <image>
+                  <Image url="@../Game/quadratogiallo.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="936.0" layoutY="127.0">
+               <image>
+                  <Image url="@../Game/quadratorosso.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="585.0" layoutY="66.0">
+               <image>
+                  <Image url="@../Game/quadratoarancione.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </children>
+</Pane>

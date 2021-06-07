@@ -27,8 +27,8 @@ public class InputControllerTest {
         Game game = gameCreator();
         game.setMyNickname("marco");
 
-        game.getPlayers().get(0).getLeaderCards()[0] = game.getLeaderCards().get(0);
-        game.getPlayers().get(0).getLeaderCards()[1] = game.getLeaderCards().get(1);
+        game.getPlayers().get(0).getLeaderCards()[0] = game.getLeaderCards()[0];
+        game.getPlayers().get(0).getLeaderCards()[1] = game.getLeaderCards()[1];
 
         assertTrue(InputController.checkActivateLeaderCard(0, game));
         assertTrue(InputController.checkActivateLeaderCard(1, game));
@@ -60,8 +60,8 @@ public class InputControllerTest {
         Game game = gameCreator();
         game.setMyNickname("marco");
 
-        game.getPlayers().get(0).getLeaderCards()[0] = game.getLeaderCards().get(0);
-        game.getPlayers().get(0).getLeaderCards()[1] = game.getLeaderCards().get(1);
+        game.getPlayers().get(0).getLeaderCards()[0] = game.getLeaderCards()[0];
+        game.getPlayers().get(0).getLeaderCards()[1] = game.getLeaderCards()[1];
 
         ArrayList<ResourceType> inputs = new ArrayList<>();
         inputs.add(ResourceType.SHIELDS);
@@ -81,8 +81,8 @@ public class InputControllerTest {
         assertFalse(InputController.checkActivateProduction(false, inputs, false, true, game));
         assertEquals("(Second) Leader Card needs to be of \"PRODUCTION POWER\" type to be used in Production!", InputController.getError());
 
-        game.getPlayers().get(0).getLeaderCards()[0] = game.getLeaderCards().get(4);
-        game.getPlayers().get(0).getLeaderCards()[1] = game.getLeaderCards().get(5);
+        game.getPlayers().get(0).getLeaderCards()[0] = game.getLeaderCards()[4];
+        game.getPlayers().get(0).getLeaderCards()[1] = game.getLeaderCards()[5];
 
         assertFalse(InputController.checkActivateProduction(false, inputs, true, false, game));
         assertEquals("(First) Leader Card is not active!", InputController.getError());
@@ -189,8 +189,8 @@ public class InputControllerTest {
         Game game = gameCreator();
         game.setMyNickname("marco");
 
-        game.getPlayers().get(0).getLeaderCards()[0] = game.getLeaderCards().get(0);
-        game.getPlayers().get(0).getLeaderCards()[1] = game.getLeaderCards().get(1);
+        game.getPlayers().get(0).getLeaderCards()[0] = game.getLeaderCards()[0];
+        game.getPlayers().get(0).getLeaderCards()[1] = game.getLeaderCards()[1];
 
         assertFalse(InputController.checkChooseLeaderCard(-1, game));
         assertEquals("Leader Card Index should be either 0 or 1!", InputController.getError());
@@ -204,8 +204,8 @@ public class InputControllerTest {
         assertFalse(InputController.checkChooseLeaderCard(1, game));
         assertEquals("Leader Card must be of type \"WHITEMARBLE\"!", InputController.getError());
 
-        game.getPlayers().get(0).getLeaderCards()[0] = game.getLeaderCards().get(2);
-        game.getPlayers().get(0).getLeaderCards()[1] = game.getLeaderCards().get(3);
+        game.getPlayers().get(0).getLeaderCards()[0] = game.getLeaderCards()[2];
+        game.getPlayers().get(0).getLeaderCards()[1] = game.getLeaderCards()[3];
 
         assertFalse(InputController.checkChooseLeaderCard(0, game));
         assertEquals("Leader Card must be active!", InputController.getError());
@@ -233,8 +233,8 @@ public class InputControllerTest {
         Game game = gameCreator();
         game.setMyNickname("marco");
 
-        game.getPlayers().get(0).getLeaderCards()[0] = game.getLeaderCards().get(0);
-        game.getPlayers().get(0).getLeaderCards()[1] = game.getLeaderCards().get(1);
+        game.getPlayers().get(0).getLeaderCards()[0] = game.getLeaderCards()[0];
+        game.getPlayers().get(0).getLeaderCards()[1] = game.getLeaderCards()[1];
 
         ArrayList<ResourceType> basicInputs = new ArrayList<>();
         basicInputs.add(ResourceType.SHIELDS);
@@ -263,8 +263,8 @@ public class InputControllerTest {
         assertFalse(InputController.checkChooseProductionOutput(false, false, true, basicInputs, lead1, lead2, game));
         assertEquals("(Second) Leader Card needs to be of \"PRODUCTION POWER\" type to be used in Production!", InputController.getError());
 
-        game.getPlayers().get(0).getLeaderCards()[0] = game.getLeaderCards().get(4);
-        game.getPlayers().get(0).getLeaderCards()[1] = game.getLeaderCards().get(5);
+        game.getPlayers().get(0).getLeaderCards()[0] = game.getLeaderCards()[4];
+        game.getPlayers().get(0).getLeaderCards()[1] = game.getLeaderCards()[5];
 
         assertFalse(InputController.checkChooseProductionOutput(false, true, false, basicInputs, lead1, lead2, game));
         assertEquals("(First) Leader Card is not active!", InputController.getError());
@@ -328,8 +328,8 @@ public class InputControllerTest {
         Game game = gameCreator();
         game.setMyNickname("marco");
 
-        game.getPlayers().get(0).getLeaderCards()[0] = game.getLeaderCards().get(0);
-        game.getPlayers().get(0).getLeaderCards()[1] = game.getLeaderCards().get(1);
+        game.getPlayers().get(0).getLeaderCards()[0] = game.getLeaderCards()[0];
+        game.getPlayers().get(0).getLeaderCards()[1] = game.getLeaderCards()[1];
 
         assertFalse(InputController.checkPayResource(true, -1, ResourceType.NONE, game));
         assertEquals("Depot index should be between 1 and 5", InputController.getError());
@@ -421,7 +421,7 @@ public class InputControllerTest {
      * Method used to create a Game for test purposes.
      */
     public static void leaderCardInit(Game game) {
-        game.setLeaderCards(new ArrayList<>());
+        game.setLeaderCards(new RedLeaderCard[8]);
 
         ResourceStack stack1 = new ResourceStack(1,1,0,0);
         ResourceStack stack2 = new ResourceStack(0,0,1,1);
@@ -442,13 +442,13 @@ public class InputControllerTest {
         RedLeaderCard extraDepotOne = new LeaderCard(1, 2, stack3, requirements, ResourceType.SHIELDS);
         RedLeaderCard extraDepotTwo = new LeaderCard(1, 2, stack4, requirements, ResourceType.SERVANTS);
 
-        game.getLeaderCards().add(discountOne);
-        game.getLeaderCards().add(discountTwo);
-        game.getLeaderCards().add(whiteMarbleOne);
-        game.getLeaderCards().add(whiteMarbleTwo);
-        game.getLeaderCards().add(productionOne);
-        game.getLeaderCards().add(productionTwo);
-        game.getLeaderCards().add(extraDepotOne);
-        game.getLeaderCards().add(extraDepotTwo);
+        game.getLeaderCards()[0]=(discountOne);
+        game.getLeaderCards()[1]=(discountTwo);
+        game.getLeaderCards()[2]=(whiteMarbleOne);
+        game.getLeaderCards()[3]=(whiteMarbleTwo);
+        game.getLeaderCards()[4]=(productionOne);
+        game.getLeaderCards()[5]=(productionTwo);
+        game.getLeaderCards()[6]=(extraDepotOne);
+        game.getLeaderCards()[7]=(extraDepotTwo);
     }
 }
