@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Model.GameModel;
 
-import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.Model.JSON.JSONReader;
+import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 
 import java.util.ArrayList;
 
@@ -38,13 +38,13 @@ public class LeaderCardShuffle {
      * Randomly gets 4 Leader Cards for the player to chose at the beginning of the game. The cards that aren't chosen are discarded.
      * @return      LeaderCard[4]
      */
-    public static LeaderCard[] getLeaderShuffled(){
+    public static RedLeaderCard[] getLeaderShuffled(){
         ArrayList<LeaderCard> LeaderCards = leaderCardsManager();
         try{
         int size = LeaderCards.size();
         if(size<4)
             return null;
-        LeaderCard[] cardsPicked = new LeaderCard[4];
+        RedLeaderCard[] cardsPicked = new RedLeaderCard[4];
         for(int i=0;i<4;i++){
             int rand = (int) (Math.random() * size);
             cardsPicked[i]=LeaderCards.get(rand);

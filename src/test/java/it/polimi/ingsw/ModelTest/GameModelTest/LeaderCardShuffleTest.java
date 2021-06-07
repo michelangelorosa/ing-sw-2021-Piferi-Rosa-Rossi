@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ModelTest.GameModelTest;
 import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.Model.GameModel.LeaderCardShuffle;
+import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 import org.junit.Test;
 import static org.junit.Assert.*;
 /**
@@ -10,10 +11,10 @@ public class LeaderCardShuffleTest {
 
     @Test
     public void LeaderCardShuffleTests(){
-        LeaderCard[] cardsPicked1;
-        LeaderCard[] cardsPicked2;
-        LeaderCard[] cardsPicked3;
-        LeaderCard[] cardsPicked4;
+        RedLeaderCard[] cardsPicked1;
+        RedLeaderCard[] cardsPicked2;
+        RedLeaderCard[] cardsPicked3;
+        RedLeaderCard[] cardsPicked4;
         //Testing the number of cards, each has to be different
         cardsPicked1 = LeaderCardShuffle.getLeaderShuffled();
         cardsPicked2 = LeaderCardShuffle.getLeaderShuffled();

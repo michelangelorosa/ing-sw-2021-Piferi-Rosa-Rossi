@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Model.Server;
 
-import it.polimi.ingsw.Controller.ControllerClasses.Observable;
 import it.polimi.ingsw.Model.Enums.GameStatus;
 import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
 import it.polimi.ingsw.Model.GameModel.LeaderCard;
@@ -9,10 +8,9 @@ import it.polimi.ingsw.View.Utility.ANSIColors;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 
-public class ServerMessageHandler extends Observable<Object> {
+public class ServerMessageHandler {
     private static final String S = "[SERVER] ";
     private static final String SU = ANSIColors.FRONT_BRIGHT_BLUE + "[SERVER UTILITY] " + ANSIColors.RESET;
     private static final String SE = ANSIColors.FRONT_BRIGHT_RED + "[SERVER ERROR] " + ANSIColors.RESET;

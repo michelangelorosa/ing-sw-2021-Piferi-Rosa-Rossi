@@ -46,7 +46,8 @@ public class CliController implements UserInterface {
 
         if(!userInteraction.getMessage().imPlaying(userInteraction))
             System.out.println(ANSIfont.ITALIC + playerString + ANSIfont.RESET + " has performed the action: " + ANSIfont.BOLD + actionName + ANSIfont.RESET);
-        player.toCli();
+        else
+            player.toCli();
     }
 
     public void displayServerError(UserInteraction userInteraction) {
@@ -181,10 +182,9 @@ public class CliController implements UserInterface {
         int secondLeaderCard;
 
         System.out.println(ANSIColors.YOUR_TURN_COLOR + " - IT'S YOUR TURN! - " + ANSIColors.RESET);
-        for(String s : initLeaderCardsToCli(leaderCards))
-            System.out.println(s);
+        printList(initLeaderCardsToCli(leaderCards));
         System.out.println();
-        System.out.println("Please choose two Leader Cards (numbered 1 to 4 from left to right");
+        System.out.println("Please choose two Leader Cards (numbered 1 to 4 from left to right)");
 
         while(true) {
             choice = sc.nextLine();

@@ -1,10 +1,13 @@
 package it.polimi.ingsw.Model.Server;
 
 import it.polimi.ingsw.Controller.Actions.Action;
+import it.polimi.ingsw.Controller.ControllerClasses.Observable;
+import it.polimi.ingsw.Controller.ControllerClasses.Observer;
 import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
 import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
+import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 
 import java.io.*;
 import java.net.Socket;
@@ -14,7 +17,7 @@ import java.net.Socket;
  * For the messages to be sent a manual flushing has to be performed!
  */
 
-public class ServerConnection implements Runnable{
+public class ServerConnection extends Observable<Action> implements Runnable, Observer<MessageToClient> {
     private String name;
     private Socket socket;
     private Server server;
@@ -56,7 +59,8 @@ public class ServerConnection implements Runnable{
             while (true) {
                 Action action = (Action) in.readObject();
                 System.out.println("[SERVER CONNECTION] Received an action from "+this.name);
-                notify();
+
+                notify(action);
                 //TODO, notify someone
             }
         }catch (Exception e){
@@ -74,6 +78,11 @@ public class ServerConnection implements Runnable{
         }catch (IOException e){
 
         }
+    }
+
+    @Override
+    public synchronized void update(MessageToClient message) {
+        send(message);
     }
 
     /**
@@ -111,7 +120,7 @@ public class ServerConnection implements Runnable{
      * Sends a LeaderCard array
      * @param leaderCards
      */
-    public synchronized void send(LeaderCard[] leaderCards) {
+    public synchronized void send(RedLeaderCard[] leaderCards) {
         try {
             out.writeObject(leaderCards);
             out.flush();
@@ -234,7 +243,7 @@ public class ServerConnection implements Runnable{
             send(bool);
     }
 
-    public void conditionalSend(String name,LeaderCard[] leaderCards){
+    public void conditionalSend(String name, RedLeaderCard[] leaderCards){
         if(this.name.equals(name))
             send(leaderCards);
     }

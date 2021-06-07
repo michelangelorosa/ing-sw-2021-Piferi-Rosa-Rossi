@@ -5,6 +5,7 @@ import it.polimi.ingsw.Model.Enums.GameStatus;
 import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
+import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -89,6 +90,10 @@ public class Server {
                     System.out.println("[SERVER] Client connected: "+client.toString());
                     ServerConnection serverConnection = new ServerConnection(this, client);
                     connections.add(serverConnection);
+
+                    controller.getActionController().getModelToView().addObserver(serverConnection);
+                    serverConnection.addObserver(controller);
+
                     Thread thread = new Thread(serverConnection);
                     thread.start();
                 }catch (IOException e){
@@ -177,7 +182,7 @@ public class Server {
      * @param name              The player name to send the data to
      * @param leaderCards       4 Leader cards for the player to choose from
      */
-    public synchronized void sendTo(String name, LeaderCard[] leaderCards){
+    public synchronized void sendTo(String name, RedLeaderCard[] leaderCards){
         for(ServerConnection connection : connections)
             connection.conditionalSend(name,leaderCards);
     }

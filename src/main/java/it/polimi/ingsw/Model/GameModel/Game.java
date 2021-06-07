@@ -134,15 +134,19 @@ public class Game {
 
         Player newPlayer;
         if(gameType==GameType.MULTIPLAYER){
-            int activePlayer= (int)(Math.random()*numberOfPlayers);
+            int activePlayer = (int)(Math.random()*numberOfPlayers);
 
-            for(int position=0;position<numberOfPlayers;position++){
-            newPlayer = new Player(clientNames.get(activePlayer),position,position==0);
+            for(int position = 0; position < numberOfPlayers; position++){
+            newPlayer = new Player(clientNames.get(activePlayer),position,position == 0);
             players.add(newPlayer);
-            if(activePlayer==numberOfPlayers)
-                activePlayer=0;
-            else activePlayer++;
+
+            if(activePlayer == numberOfPlayers)
+                activePlayer = 0;
+            else
+                activePlayer++;
+
             sendToClient(newPlayer.getNickname(),server,position);
+
                 if(position==2)
                     newPlayer.stepAhead(1);
                 else if(position==3)
@@ -151,9 +155,9 @@ public class Game {
             }
         }
         else {//Singleplayer Init
-            newPlayer = new Player("Lorenzo il Magnifico",-1,false);
-            players.add(newPlayer);
             newPlayer = new Player(clientNames.get(0),0,false);
+            players.add(newPlayer);
+            newPlayer = new Player("Lorenzo il Magnifico",1,false);
             players.add(newPlayer);
             sendToClient(clientNames.get(0),server,4);
         }
@@ -177,7 +181,9 @@ public class Game {
         if(position==0)//Has inkwell?
             server.sendTo(nickname,true);
         else server.sendTo(nickname,false);
+
         server.sendTo(nickname,LeaderCardShuffle.getLeaderShuffled());
+
         if(position==1||position==2)
             server.sendTo(nickname,1);
         else if(position==3)

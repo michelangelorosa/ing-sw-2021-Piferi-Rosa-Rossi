@@ -51,6 +51,10 @@ public class ActionController {
         modelToView.notify(message);
     }
 
+    public ModelToView getModelToView() {
+        return modelToView;
+    }
+
     /**
      * Getter for "game" attribute.
      */

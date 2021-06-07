@@ -90,13 +90,26 @@ public class ClientConnection implements Runnable, Observer<Action> {
                     this.client.getUserInteraction().setGame(new Game());
                     this.client.getUserInteraction().getGame().setMyNickname(this.client.getUser());
 
-                    this.client.getUserInteraction().getGame().setGameType((GameType) objectInputStream.readObject());
+                    GameType gameType = (GameType) objectInputStream.readObject();
                     boolean hasInkwell = objectInputStream.readBoolean();
-                    RedLeaderCard[] leaderCards = (LeaderCard[])objectInputStream.readObject();
-                    this.client.getUserInteraction().setInitNumberOfResources(objectInputStream.readInt());
-                    this.playerToAdd = new Player(objectInputStream.readUTF(),1,hasInkwell);
+                    RedLeaderCard[] leaderCards = (RedLeaderCard[]) objectInputStream.readObject();
+                    int initialResources = objectInputStream.readInt();
+                    String playerName = objectInputStream.readUTF();
+
+                    this.playerToAdd = new Player(playerName,1,hasInkwell);
+
+                    this.client.getUserInteraction().getGame().setGameType(gameType);
+                    this.client.getUserInteraction().setInitNumberOfResources(initialResources);
+                    this.playerToAdd = new Player(playerName,1,hasInkwell);
                     this.client.getUserInteraction().getGame().setLeaderCards(leaderCards);
                     this.client.getUserInteraction().nextAction(UIActions.INITIAL_CHOOSE_LEADER_CARDS);
+
+                    MessageToClient messageLeaderCards = (MessageToClient) objectInputStream.readObject();
+                    messageLeaderCards.updateView(this.client.getUserInteraction());
+
+                    MessageToClient messageResources = (MessageToClient) objectInputStream.readObject();
+                    messageResources.updateView(client.getUserInteraction());
+                    break;
                 }
                 /*
                 Should be called from choose leader cards instead of network
@@ -110,11 +123,11 @@ public class ClientConnection implements Runnable, Observer<Action> {
                     clientExceptionHandler.cliError(objectInputStream.readUTF());
                 }
             }
+
             while (true){
                 //Handling of the MessageToClient message type
                 MessageToClient messageToClient = (MessageToClient) objectInputStream.readObject();
-                this.client.getUserInteraction().setMessage(messageToClient);
-                this.client.getUserInteraction().nextAction(UIActions.PLAY_TURN);
+                messageToClient.updateView(this.client.getUserInteraction());
             }
         } catch (Exception e) {
             e.printStackTrace();
