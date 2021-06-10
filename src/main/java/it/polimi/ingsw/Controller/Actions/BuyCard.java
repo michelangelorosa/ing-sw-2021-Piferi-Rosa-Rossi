@@ -133,8 +133,11 @@ public class BuyCard extends Action {
             message.addPossibleAction(ActionType.ACTIVATE_PRODUCTION);
             message.addPossibleAction(ActionType.BUY_CARD);
             message.addPossibleAction(ActionType.MARKET_CHOOSE_ROW);
-            message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
-            message.addPossibleAction(ActionType.DELETE_LEADERCARD);
+
+            if(actionController.getGame().getCurrentPlayer().canDo(ActionType.ACTIVATE_LEADERCARD))
+                message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
+            if(actionController.getGame().getCurrentPlayer().canDo(ActionType.DELETE_LEADERCARD))
+                message.addPossibleAction(ActionType.DELETE_LEADERCARD);
         }
 
         return message;

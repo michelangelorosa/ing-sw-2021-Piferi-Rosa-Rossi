@@ -64,6 +64,7 @@ public class BuyCardTest {
         CommonTestMethods.givePlayerLeaderCards(game.getCurrentPlayer(), game.getLeaderCards().get(2), game.getLeaderCards().get(1));
 
         actionController.getGame().getCurrentPlayer().addPossibleAction(BUY_CARD);
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ACTIVATE_LEADERCARD);
 
         response = card.doAction(actionController);
         assertEquals("Not enough resources to buy Card", response);

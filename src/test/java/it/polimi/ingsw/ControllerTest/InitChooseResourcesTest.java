@@ -177,11 +177,6 @@ public class InitChooseResourcesTest {
         assertEquals("SUCCESS", action.getResponse());
         assertEquals("SUCCESS", message.getError());
         assertTrue(message instanceof InitChoseResourcesMessage);
-        assertEquals(4, message.getPossibleActions().size());
-        assertEquals(ActionType.ACTIVATE_LEADERCARD, message.getPossibleActions().get(0));
-        assertEquals(ActionType.ACTIVATE_PRODUCTION, message.getPossibleActions().get(1));
-        assertEquals(ActionType.BUY_CARD, message.getPossibleActions().get(2));
-        assertEquals(ActionType.BUY_FROM_MARKET, message.getPossibleActions().get(3));
 
         depotResource.get(0).add(ResourceType.SHIELDS);
         depotResource.get(0).add(ResourceType.SHIELDS);
@@ -206,7 +201,5 @@ public class InitChooseResourcesTest {
         assertEquals("Cannot put two different resources in the same depot! (Depot 1)", action.getResponse());
         assertEquals("Cannot put two different resources in the same depot! (Depot 1)", message.getError());
         assertTrue(message instanceof InitChoseResourcesMessage);
-        assertEquals(1, message.getPossibleActions().size());
-        assertEquals(ActionType.INIT_CHOOSE_RESOURCES, message.getPossibleActions().get(0));
     }
 }

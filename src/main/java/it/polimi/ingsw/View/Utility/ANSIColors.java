@@ -56,9 +56,9 @@ public class ANSIColors {
 
     public static final String YOUR_TURN_COLOR = "\u001B[1m" + "\u001B[48;5;154m" + "\u001B[38;5;233m";
 
-    public static final String GAMEPLAY_ACTIONS = "\u001B[1m" + "\u001B[48;5;189m" + "\u001B[38;5;233m";
+    public static final String GAMEPLAY_ACTIONS = ANSIfont.UNDERLINE + "\u001B[1m" + "\u001B[38;5;39m";
 
-    public static final String VISUALIZE = "\u001B[1m" + "\u001B[48;5;214m" + "\u001B[38;5;233m";
+    public static final String VISUALIZE = ANSIfont.UNDERLINE + "\u001B[1m" + "\u001B[38;5;202m";
 
     //TODO choose colors
     public static final String FINAL_POINTS = "";

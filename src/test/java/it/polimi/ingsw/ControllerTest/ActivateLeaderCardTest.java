@@ -80,6 +80,7 @@ public class ActivateLeaderCardTest {
         actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getStrongbox().addToAllTypes(new ResourceStack(20, 20, 20, 20));
         actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
         action = new ActivateLeaderCard(0);
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.END_TURN);
         action.doAction(actionController);
 
         assertTrue(actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[0].isActive());
@@ -97,5 +98,6 @@ public class ActivateLeaderCardTest {
         message = action.messagePrepare(actionController);
         assertTrue(message instanceof ActivateLeaderCardMessage);
         assertEquals("Leader Card has already been activated", message.getError());
+
     }
 }

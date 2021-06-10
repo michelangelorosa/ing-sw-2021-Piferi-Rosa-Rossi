@@ -52,15 +52,19 @@ public class Player implements Serializable {
         this.status = PlayerStatus.IN_GAME;
         this.victoryPoints = 0;
         this.faithTrackPosition = 0;
+
         this.basicProduction = new BasicProduction(2, 1);
         this.warehouse = new Warehouse();
         this.strongbox = new Strongbox();
+        this.slots = new DevelopmentCardSlots();
         this.temporaryResources = new ResourceStack(0,0,0,0);
         this.leaderCards = new LeaderCard[2];
         this.popeTiles = new PopeTileClass[3];
         this.popeTiles[0] = new PopeTileClass(2);
         this.popeTiles[1] = new PopeTileClass(3);
         this.popeTiles[2] = new PopeTileClass(4);
+
+
         this.possibleActions = new ArrayList<>();
     }
 

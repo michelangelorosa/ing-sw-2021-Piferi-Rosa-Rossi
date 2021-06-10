@@ -8,9 +8,14 @@ import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
 import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
 import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
+import it.polimi.ingsw.View.Utility.DebuggingTools.Debugger;
+import it.polimi.ingsw.View.Utility.DebuggingTools.DebuggerFactory;
+import it.polimi.ingsw.View.Utility.DebuggingTools.DebuggerType;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * ServerConnection is a thread running on the server that manages connection to and from the clients.
@@ -20,11 +25,13 @@ import java.net.Socket;
 public class ServerConnection extends Observable<Action> implements Runnable, Observer<MessageToClient> {
     private String name;
     private Socket socket;
-    private Server server;
+    private final Server server;
     private ObjectOutputStream out;
     private ObjectInputStream in;
     private final ServerMessageHandler messageHandler;
     private boolean ready = false;
+
+    private final Debugger DEBUGGER = DebuggerFactory.getDebugger(DebuggerType.SERVER_CONNECTION);
 
     /**
      * Default constructor for a ServerConnection class. Tries to establish a connection to a client after it has contacted the server.
@@ -47,25 +54,25 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
             this.in = new ObjectInputStream(inputStream);
         } catch (IOException e) { System.out.println("Caught exception"); }
 
-        System.out.println("[SERVER] Connection Connected to " + socket.getInetAddress());
+        DEBUGGER.printDebug("Connection Connected to " + socket.getInetAddress());
 
         try {
             if(messageHandler.nameRequest(this)){
-                System.out.println("[SERVER CONNECTION] Name request TRUE, proceed to display lobby please!");
+                DEBUGGER.printDebug("Name request TRUE, proceed to display lobby please!");
                 messageHandler.waitingForPlayers(this);
+                messageHandler.initialPhase(this);
             }
             //Accepts messages from client during game phase
-            System.out.println("[SERVER CONNECTION] Starting listening to "+socket.toString());
+            DEBUGGER.printDebug("Starting listening to "+socket);
             while (true) {
-                Action action = (Action) in.readObject();
-                System.out.println("[SERVER CONNECTION] Received an action from "+this.name);
-
+                Action action = this.readAction();
+                DEBUGGER.printDebug("Received action: " + action.getActionType() + " from "+this.name);
                 notify(action);
-                //TODO, notify someone
             }
-        }catch (Exception e){
-            System.out.println("[SERVER CONNECTION] Caught exception from "+this.name);
-        }finally{
+        } catch (InterruptedException e) {
+            DEBUGGER.printDebug("Caught InterruptedException from " + this.name);
+            e.printStackTrace();
+        } finally{
         if(name!=null){
             System.out.println(name +" is leaving");
 
@@ -76,7 +83,7 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
         try{
             socket.close();
         }catch (IOException e){
-
+            DEBUGGER.printDebug("Caught IOException when closing socket of "+this.name);
         }
     }
 
@@ -85,14 +92,47 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
         send(message);
     }
 
+    public Action readAction() {
+        Action action = null;
+
+        try {
+            action = (Action) this.in.readObject();
+        } catch (IOException e) {
+            DEBUGGER.printDebug("IOException when reading an Action from "+socket.toString());
+            e.printStackTrace();
+            close();
+        } catch (ClassNotFoundException e) {
+            DEBUGGER.printDebug("ClassNotFoundException when reading an Action from "+socket.toString());
+            e.printStackTrace();
+            close();
+        }
+        return action;
+    }
+
     /**
      * Tries to send a number to the client. If it fails the connection is closed.
      * @param i     Number to send
      */
     public synchronized void send(int i){
-        System.out.println("[SERVER CONNECTION] Sending "+i);
+        DEBUGGER.printDebug("Sending int: "+i);
         try{
             out.writeInt(i);
+            out.flush();
+            out.reset();
+        }catch (IOException e){
+            System.err.println("IOException when sending an int to "+socket.toString());
+            close();
+        }
+    }
+
+    /**
+     * Tries to send a number to the client. If it fails the connection is closed.
+     * @param i     Number to send
+     */
+    public synchronized void send(int[] i){
+        DEBUGGER.printDebug("Sending int[]: "+i[0]);
+        try{
+            out.writeObject(i);
             out.flush();
             out.reset();
         }catch (IOException e){
@@ -106,6 +146,7 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
      * @param string The string to be sent
      */
     public synchronized void send(String string) {
+        DEBUGGER.printDebug("Sending String: " + string);
         try {
             out.writeUTF(string);
             out.flush();
@@ -117,10 +158,11 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
     }
 
     /**
-     * Sends a LeaderCard array
-     * @param leaderCards
+     * Sends a RedLeaderCard array
+     * @param leaderCards array RedLeaderCards to be sent.
      */
     public synchronized void send(RedLeaderCard[] leaderCards) {
+        DEBUGGER.printDebug("Sending RedLeaderCards" + Arrays.toString(leaderCards));
         try {
             out.writeObject(leaderCards);
             out.flush();
@@ -133,9 +175,10 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
 
     /**
      * Sends a bool to the client
-     * @param bool
+     * @param bool boolean to be sent.
      */
     public synchronized void send(boolean bool) {
+        DEBUGGER.printDebug("Sending boolean: " + bool);
         try {
             out.writeBoolean(bool);
             out.flush();
@@ -151,6 +194,7 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
      * @param message   the message to send
      */
     public synchronized void send(MessageToClient message) {
+        DEBUGGER.printDebug("Sending MessageToClient: " + message.getActionDone());
         try {
             out.writeObject(message);
             out.flush();
@@ -162,6 +206,7 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
     }
 
     public synchronized void send(LeaderCard leaderCard){
+        DEBUGGER.printDebug("Sending LeaderCard: " + leaderCard.getAction());
         try{
             out.writeObject(leaderCard);
             out.flush();
@@ -194,6 +239,18 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
         }
     }
 
+    public synchronized void send(ArrayList<String> names){
+        DEBUGGER.printDebug("ArrayList<String>: " + names);
+        try{
+            out.writeObject(names);
+            out.flush();
+            out.reset();
+        }catch(IOException e){
+            System.err.println("IOException when sending an ArrayList of Strings to "+socket.toString());
+            close();
+        }
+    }
+
     /**
      * Tries to close the socket with the client
      */
@@ -212,13 +269,11 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
      * @param i     what to send
      */
     public void conditionalSend(String name,int i){
-       System.out.print("[SERVER CONNECTION] Conditional send: "+this.name);
-       System.out.print(" "+name);
-       System.out.println("condition is "+(boolean)(this.name.equals(name)));
+        DEBUGGER.printDebug("Conditional send: "+this.name+" "+name);
+        DEBUGGER.printDebug("condition is "+this.name.equals(name));
         if(this.name.equals(name))
         {
-            System.out.print("[SERVER CONNECTION] Sending to "+name);
-            System.out.println("the int "+i);
+            DEBUGGER.printDebug("Sending to "+name+"the int "+i);
             send(i);
         }
     }
@@ -252,6 +307,10 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
         return in;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -264,13 +323,32 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
         return ready;
     }
 
-    public void setReady() {
-        this.ready = true;
+    public void setReady(boolean ready) {
+        this.ready = ready;
+    }
+
+    public void waitReady() {
+        synchronized (this.server) {
+            if(this.server.allAreReady()) {
+                this.server.notifyAll();
+                this.server.setAllReady(false);
+            }
+            else
+                try {
+                    this.server.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+        }
+    }
+
+    public boolean isMyTurn() {
+        return this.name.equals(this.server.getController().getActionController().getGame().getCurrentPlayerNickname());
     }
 
     public boolean socketEquals(Socket socket){
-        if (socket==this.socket)
-        return true;
-        else return false;
+        return socket == this.socket;
     }
+
+
 }

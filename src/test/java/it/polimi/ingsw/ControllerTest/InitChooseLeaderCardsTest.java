@@ -7,6 +7,8 @@ import it.polimi.ingsw.Model.Enums.Marble;
 import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.Model.GameModel.LeaderRequirements;
 import it.polimi.ingsw.Model.GameModel.ResourceStack;
+import it.polimi.ingsw.Model.MessagesToClient.InitChoseLeaderCardsMessage;
+import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
 import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -58,8 +60,11 @@ public class InitChooseLeaderCardsTest {
         CommonTestMethods.gameInitOne(actionController.getGame());
 
         action.doAction(actionController);
+        MessageToClient message = action.messagePrepare(actionController);
+        assertTrue(message instanceof InitChoseLeaderCardsMessage);
+        assertEquals(actionController.getGame().getPreviousPlayer().getNickname(), message.getPlayerNickname());
 
-        assertEquals(card1, actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[0]);
-        assertEquals(card2, actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[1]);
+        assertEquals(card1, actionController.getGame().getPreviousPlayer().getBoard().getLeaderCards()[0]);
+        assertEquals(card2, actionController.getGame().getPreviousPlayer().getBoard().getLeaderCards()[1]);
     }
 }

@@ -4,9 +4,11 @@ package it.polimi.ingsw.View.ReducedModel;
 import it.polimi.ingsw.Model.Enums.PopeTile;
 import it.polimi.ingsw.View.Utility.ANSIColors;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class RedPopeTileClass {
+public class RedPopeTileClass implements Serializable {
+    private static final long serialVersionUID = 0x1;
 
     protected PopeTile popeTile;
     protected int victoryPoints;

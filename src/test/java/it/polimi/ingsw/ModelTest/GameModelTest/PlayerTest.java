@@ -106,7 +106,7 @@ public class PlayerTest {
         assertEquals(1, playerOne.getPossibleActions().size());
         assertEquals(ActionType.ACTIVATE_PRODUCTION, playerOne.getPossibleActions().get(0));
         assertTrue(playerOne.canDo(ActionType.ACTIVATE_PRODUCTION));
-        assertFalse(playerOne.canDo(ActionType.BUY_FROM_MARKET));
+        assertFalse(playerOne.canDo(ActionType.MARKET_CHOOSE_ROW));
         playerOne.clearPossibleActions();
         assertTrue(playerOne.getPossibleActions().isEmpty());
     }

@@ -20,6 +20,7 @@ import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 public class InitChooseLeaderCards extends Action{
     private final RedLeaderCard leaderCard1;
     private final RedLeaderCard leaderCard2;
+    private String nickname;
 
     /**
      * Constructor for InitChooseLeaderCards Class.
@@ -58,6 +59,8 @@ public class InitChooseLeaderCards extends Action{
 
         actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[0] = (LeaderCard)leaderCard1;
         actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[1] = (LeaderCard)leaderCard2;
+        this.nickname = actionController.getGame().getCurrentPlayerNickname();
+        actionController.getGame().nextPlayer();
 
         this.response = "SUCCESS";
         return "SUCCESS";
@@ -65,9 +68,7 @@ public class InitChooseLeaderCards extends Action{
 
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {
-        InitChoseLeaderCardsMessage message = new InitChoseLeaderCardsMessage(actionController.getGame().getCurrentPlayerNickname());
-        message.setLeaderCard1(actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[0]);
-        message.setLeaderCard2(actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[1]);
+        InitChoseLeaderCardsMessage message = new InitChoseLeaderCardsMessage(this.nickname);
         message.setError(this.response);
         return message;
     }

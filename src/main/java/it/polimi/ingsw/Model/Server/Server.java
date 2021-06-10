@@ -3,17 +3,16 @@ package it.polimi.ingsw.Model.Server;
 import it.polimi.ingsw.Controller.ControllerClasses.Controller;
 import it.polimi.ingsw.Model.Enums.GameStatus;
 import it.polimi.ingsw.Model.Enums.GameType;
-import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
 import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
+import it.polimi.ingsw.View.Utility.DebuggingTools.Debugger;
+import it.polimi.ingsw.View.Utility.DebuggingTools.DebuggerFactory;
+import it.polimi.ingsw.View.Utility.DebuggingTools.DebuggerType;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
-import java.util.concurrent.Executors;
-
-import static java.lang.Integer.parseInt;
 
 /**
  *  Handles the connections to new clients, keeping an HashSet of active Names and active Sockets
@@ -30,6 +29,7 @@ public class Server {
     private static GameStatus serverStatus;
     private final Controller controller = new Controller();
 
+    private static final Debugger DEBUGGER = DebuggerFactory.getDebugger(DebuggerType.SERVER);
 
     public Set<String> getNames() {
         return names;
@@ -58,10 +58,7 @@ public class Server {
      * @return true if the name is found, false if the name is not found
      */
     public boolean matchName(String name){
-        if(names.contains(name))
-            return true;
-        else
-            return false;
+        return names.contains(name);
     }
 
     public static void main(String[] args){
@@ -81,13 +78,17 @@ public class Server {
     }
 
     public void startUp(int server_port) {
+
+        /* !! HAS TO BE COMMENTED FOR THE DEBUGGER TO STOP !! */
+        Debugger.setAllActive(true);
+
         try{
             ServerSocket ss;
             ss = new ServerSocket(server_port);
             while (true){
                 try{
                     Socket client = ss.accept();
-                    System.out.println("[SERVER] Client connected: "+client.toString());
+                    DEBUGGER.printDebug("Client connected: "+client.toString());
                     ServerConnection serverConnection = new ServerConnection(this, client);
                     connections.add(serverConnection);
 
@@ -124,6 +125,18 @@ public class Server {
     public synchronized void broadcast (int i){
         for(ServerConnection connection : connections){
             connection.send(i);
+        }
+    }
+
+    public synchronized void broadcast(ArrayList<String> names) {
+        for(ServerConnection connection : connections) {
+            connection.send(names);
+        }
+    }
+
+    public synchronized void broadcast(MessageToClient message) {
+        for(ServerConnection connection : connections) {
+            connection.send(message);
         }
     }
 
@@ -193,7 +206,7 @@ public class Server {
 
     public boolean setNumberOfPlayers(int number) {
         if(number>0&&number<5) {
-            System.out.println("[SERVER] Number of players set to "+number);
+            DEBUGGER.printDebug("Number of players set to "+number);
             numberOfPlayers = number;
             setServerStatus(GameStatus.LOBBY);
             return true;
@@ -207,7 +220,7 @@ public class Server {
      */
     public void playerReady() {
         readyPlayers ++;
-        System.out.println("[SERVER] Players ready in lobby: "+readyPlayers);
+        DEBUGGER.printDebug("Players ready in lobby: "+readyPlayers);
     }
 
     /**
@@ -231,20 +244,29 @@ public class Server {
      * @param setState      the status to set the game to
      */
     public static void setServerStatus(GameStatus setState) {
-        System.out.println("[SERVER] Status set to "+setState.toString());
+        DEBUGGER.printDebug("[SERVER] Status set to "+setState.toString());
         serverStatus = setState;
     }
 
-    public Controller getController() {
+    public synchronized Controller getController() {
         return controller;
     }
 
     public void removeFromConnections(Socket socket){
-        for(ServerConnection connection : connections){
-            if(connection.socketEquals(socket))
-            {
-                connections.remove(connection);
-            }
-        }
+        connections.removeIf(connection -> connection.socketEquals(socket));
+    }
+
+    public boolean allAreReady() {
+        int readyPlayers = 0;
+        for(ServerConnection connection : this.connections)
+            if(connection.isReady())
+                readyPlayers ++;
+
+        return readyPlayers == numberOfPlayers;
+    }
+
+    public synchronized void setAllReady(boolean ready) {
+        for(ServerConnection connection : this.connections)
+            connection.setReady(ready);
     }
 }

@@ -6,32 +6,32 @@ package it.polimi.ingsw.Controller.Actions;
  */
 public enum ActionType {
     CHOOSE_ACTION("choose_action"),
+    GAME_SET("Game Set"),
 
-    INIT_CHOOSE_RESOURCES("init_choose_resources"),
-    INIT_CHOOSE_LEADER_CARDS("init_choose_leader_cards"),
+    INIT_CHOOSE_RESOURCES("Initial Resource Choice"),
+    INIT_CHOOSE_LEADER_CARDS("Initial Leader Card Choice"),
 
-    BUY_FROM_MARKET("buy_market"),
-    MARKET_CHOOSE_ROW("market_choose_row"),
-    CHOOSE_LEADER_CARD("choose_leader_card"),
-    ADD_RESOURCE("add_resource"),
-    SWITCH_DEPOT("add_resource"),
-    RESET_WAREHOUSE("reset_warehouse"),
-    END_MARKET("end_market"),
+    MARKET_CHOOSE_ROW("Buy From Market"),
+    CHOOSE_LEADER_CARD("Choose Leader Card"),
+    ADD_RESOURCE("Add Resource"),
+    SWITCH_DEPOT("Switch Depot"),
+    RESET_WAREHOUSE("Reset Warehouse"),
+    END_MARKET("End Market"),
 
-    BUY_CARD("buy_card"),
-    PAY_RESOURCE_CARD("pay_resource_card"),
-    PAY_RESOURCE_PRODUCTION("pay_resource_production"),
-    END_PAY_CARD("end_pay"),
-    CHOOSE_CARD_SLOT("choose_card_slot"),
+    BUY_CARD("Buy Card"),
+    PAY_RESOURCE_CARD("Pay Resource to Buy Card"),
+    PAY_RESOURCE_PRODUCTION("Pay Resource to Activate Production"),
+    END_PAY_CARD("End Pay Cycle"),
+    CHOOSE_CARD_SLOT("Choose Card Slot"),
 
-    ACTIVATE_PRODUCTION("activate_production"),
-    END_PAY_PRODUCTION("end_pay_production"),
-    CHOOSE_PRODUCTION_OUTPUT("choose_production_output"),
+    ACTIVATE_PRODUCTION("Activate Production"),
+    END_PAY_PRODUCTION("End Production Payment Cycle"),
+    CHOOSE_PRODUCTION_OUTPUT("Choose Production Output"),
 
-    ACTIVATE_LEADERCARD("activate_leadercard"),
-    DELETE_LEADERCARD("delete_leadercard"),
+    ACTIVATE_LEADERCARD("Activate Leader Card"),
+    DELETE_LEADERCARD("Discard Leader Card"),
 
-    END_TURN("end_turn"),
+    END_TURN("End Turn"),
 
     FINAL_POINTS("Final Points");
 

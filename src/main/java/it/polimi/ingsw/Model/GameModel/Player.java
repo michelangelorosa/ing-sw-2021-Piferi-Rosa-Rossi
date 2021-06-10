@@ -216,17 +216,22 @@ public class Player implements Serializable {
         player.setVictoryPoints(this.victoryPoints);
         player.setFaithTrackPosition(this.faithTrackPosition);
         player.setBasicProduction(this.board.getBasicProduction().toView());
-        player.setWarehouse(this.board.getResourceManager().getWarehouse().toView());
-        player.setStrongbox(this.board.getResourceManager().getStrongbox().toView());
+        player.setWarehouse(this.board.getResourceManager().getWarehouse());
+        player.setStrongbox(this.board.getResourceManager().getStrongbox());
+        player.setSlots(this.board.getDevelopmentCardSlots());
 
         RedPopeTileClass[] popeTileClasses = new RedPopeTileClass[3];
-        for(int i = 0; i < 3; i++)
-        {
+        for(int i = 0; i < 3; i++) {
             popeTileClasses[i] = this.popeTiles[i].toView();
         }
         player.setPopeTiles(popeTileClasses);
 
         RedLeaderCard[] leaderCards = new RedLeaderCard[2];
+        leaderCards[0] = this.getBoard().getLeaderCards()[0];
+        leaderCards[1] = this.getBoard().getLeaderCards()[1];
+
+        player.setLeaderCards(leaderCards);
+        player.setPossibleActions(this.possibleActions);
 
         return player;
     }

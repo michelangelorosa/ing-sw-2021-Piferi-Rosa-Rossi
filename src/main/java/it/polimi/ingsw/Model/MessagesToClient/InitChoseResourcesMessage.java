@@ -1,8 +1,6 @@
 package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
-import it.polimi.ingsw.View.ReducedModel.Player;
-import it.polimi.ingsw.View.ReducedModel.RedWarehouse;
 import it.polimi.ingsw.View.User.UserInteraction;
 
 /**
@@ -16,28 +14,14 @@ import it.polimi.ingsw.View.User.UserInteraction;
  * @author redrick99
  */
 public class InitChoseResourcesMessage extends MessageToClient {
-    private RedWarehouse warehouse;
 
     /**
      * Constructor for InitChoseResourcesMessage.
      */
     public InitChoseResourcesMessage(String playerNickname) {
         super(playerNickname);
+        this.playerNickname = "";
         this.actionDone = ActionType.INIT_CHOOSE_RESOURCES;
-    }
-
-    /**
-     * Getter for "warehouse" attribute.
-     */
-    public RedWarehouse getWarehouse() {
-        return warehouse;
-    }
-
-    /**
-     * Setter for "warehouse" attribute.
-     */
-    public void setWarehouse(RedWarehouse warehouse) {
-        this.warehouse = warehouse;
     }
 
     /**
@@ -46,15 +30,8 @@ public class InitChoseResourcesMessage extends MessageToClient {
      */
     @Override
     public void updateView(UserInteraction userInteraction) {
-        super.updateView(userInteraction);
-
-        Player player = getPlayer(userInteraction);
-
-        if(success()) {
-            player.setWarehouse(this.warehouse);
-            this.displayAction(userInteraction);
-        }
-        else
+        if(!success()) {
             this.displayError(userInteraction);
+        }
     }
 }

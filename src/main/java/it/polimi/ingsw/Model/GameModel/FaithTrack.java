@@ -75,12 +75,15 @@ public class FaithTrack extends RedFaithTrack {
         }
         if (player.getTurnPosition() != 0 && players.get(0).getStatus() == PlayerStatus.IN_GAME)
             players.get(0).stepAhead(steps);
-        if (player.getTurnPosition() != 1 && players.get(1).getStatus() == PlayerStatus.IN_GAME)
-            players.get(1).stepAhead(steps);
-        if (player.getTurnPosition() != 2 && players.get(2).getStatus() == PlayerStatus.IN_GAME)
-            players.get(2).stepAhead(steps);
-        if (player.getTurnPosition() != 3 && players.get(3).getStatus() == PlayerStatus.IN_GAME)
-            players.get(3).stepAhead(steps);
+        if(players.size() > 1)
+            if (player.getTurnPosition() != 1 && players.get(1).getStatus() == PlayerStatus.IN_GAME)
+                players.get(1).stepAhead(steps);
+        if(players.size() > 2)
+            if (player.getTurnPosition() != 2 && players.get(2).getStatus() == PlayerStatus.IN_GAME)
+                players.get(2).stepAhead(steps);
+        if(players.size() > 3)
+            if (player.getTurnPosition() != 3 && players.get(3).getStatus() == PlayerStatus.IN_GAME)
+                players.get(3).stepAhead(steps);
 
         return checkFinishedTrack(players);
     }
@@ -99,7 +102,6 @@ public class FaithTrack extends RedFaithTrack {
      * At the end of the game this method is used to add the point of the faith cell to thei points
      */
     public void addFinalPoints(ArrayList<Player> players) {
-        int victoryPoints = 0;
         for (Player player : players) {
             player.addVictoryPoints(cells[player.getFaithTrackPosition()].getVictoryPoints());
         }

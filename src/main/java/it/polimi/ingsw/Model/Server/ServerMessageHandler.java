@@ -1,10 +1,17 @@
 package it.polimi.ingsw.Model.Server;
 
+import it.polimi.ingsw.Controller.Actions.Action;
 import it.polimi.ingsw.Model.Enums.GameStatus;
 import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
 import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.Model.GameModel.ParamValidator;
+import it.polimi.ingsw.Model.GameModel.Player;
+import it.polimi.ingsw.Model.MessagesToClient.GameSetMessage;
+import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 import it.polimi.ingsw.View.Utility.ANSIColors;
+import it.polimi.ingsw.View.Utility.DebuggingTools.Debugger;
+import it.polimi.ingsw.View.Utility.DebuggingTools.DebuggerFactory;
+import it.polimi.ingsw.View.Utility.DebuggingTools.DebuggerType;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,6 +21,7 @@ public class ServerMessageHandler {
     private static final String S = "[SERVER] ";
     private static final String SU = ANSIColors.FRONT_BRIGHT_BLUE + "[SERVER UTILITY] " + ANSIColors.RESET;
     private static final String SE = ANSIColors.FRONT_BRIGHT_RED + "[SERVER ERROR] " + ANSIColors.RESET;
+    private final Debugger DEBUGGER = DebuggerFactory.getDebugger(DebuggerType.SERVER_MESSAGE_HANDLER);
 
     /**
      * nameRequest is the first interaction the server has with the client, it asks for its name and validates it
@@ -27,7 +35,7 @@ public class ServerMessageHandler {
 
         String name;
         while(true) {
-            System.out.println(S + "Sent request for Client's name (Action 0)");
+            DEBUGGER.printDebug("Sent request for Client's name (Action 0)");
             serverConnection.send(0);
             try {
                 name = serverConnection.getIn().readUTF();
@@ -47,11 +55,11 @@ public class ServerMessageHandler {
                     //Name is NOT in the server AND game status is the FIRST player to join
                     if(newName&& Server.getServerStatus().equals(GameStatus.READY)){
                         serverConnection.setName(name);
-                        System.out.println("[SmHANDLER] A first player connected!");
+                        DEBUGGER.printDebug("A first player connected!");
                         //Asking for the number of players to start a game
                         serverConnection.send(1);
                         int numberOfPlayers = serverConnection.getIn().readInt();
-                        System.out.println("[SmHANDLER] Requested to start a game for "+numberOfPlayers);
+                        DEBUGGER.printDebug("Requested to start a game for "+ numberOfPlayers + " players");
                         //Checking if somebody else in the meanwhile has started a new game
                         if(Server.getServerStatus().equals(GameStatus.READY)){
                             serverConnection.getServer().setNumberOfPlayers(numberOfPlayers);
@@ -71,7 +79,7 @@ public class ServerMessageHandler {
                     //New Name and game in Lobby mode
                     else if(newName&&isLobby()) {
                         serverConnection.setName(name);
-                        System.out.println("[SmHANDLER] New game in Lobby!");
+                        DEBUGGER.printDebug("New game in Lobby!");
                         if(freeSpace(serverConnection)){
                                 System.out.println(S + "Name: \"" + name + "\" is valid");
                                 serverConnection.getServer().playerReady();
@@ -82,7 +90,7 @@ public class ServerMessageHandler {
                         }
                     //Used name and game in Lobby mode
                     else if(!newName&&isLobby()){
-                        System.out.println("[SmHANDLER] Old name in Lobby!");
+                        DEBUGGER.printDebug("Old name in Lobby!");
                         //TODO: check if the client is alive, if not accept request
                         serverConnection.setName(name);
                         //if client alive return true
@@ -100,7 +108,7 @@ public class ServerMessageHandler {
                         }
                     //Game running, new name
                     else if(!newName&&!isLobby()){
-                        System.out.println("[SmHANDLER] Invalid name for game already running");
+                        DEBUGGER.printDebug("Invalid name for game already running");
                         sendError(serverConnection, SE + "A game is already running in this server and you're not a player!\nGoodbye!");
                         serverConnection.close();
                         }
@@ -114,14 +122,14 @@ public class ServerMessageHandler {
 
     /**
      * This is the lobby in which a player can wait for other people to join or launch the Param Modifier or try to start the game once enough players are in there
-     * @param serverConnection
+     * @param serverConnection connection used to get the Server and operate on the Controller.
      */
     public void waitingForPlayers(ServerConnection serverConnection) {
         try {
             serverConnection.send(2);
             while (true) {
                 int action = serverConnection.getIn().readInt();
-                System.out.println("[SmHANDLER] Got action "+action);
+                DEBUGGER.printDebug("Got action "+action);
                 synchronized (this) {
                     if (action == 3){
                         if(Server.getServerStatus().equals(GameStatus.PARAM))
@@ -134,28 +142,23 @@ public class ServerMessageHandler {
                         }
                     }
                     else if(action == 4){
-                        System.out.println("[SmHANDLER] Got 4");
-                        if(Server.getServerStatus().equals(GameStatus.PARAM))
-                            sendError(serverConnection,SE + "Unable to start the game if somebody is modifying the game settings!");
-                        if(Server.getServerStatus().equals(GameStatus.LOBBY))
-                            if(serverConnection.getServer().getReadyPlayers()==serverConnection.getServer().getNumberOfPlayers())
-                            {
-                                System.out.println("Hurray, starting game!");
-                                //TODO pulire lista giocatori
-                                synchronized (this){
-                                    if(Server.getServerStatus().equals(GameStatus.LOBBY))
-                                    {
-                                        Server.setServerStatus(GameStatus.LEADER);
-                                        Set<String> nameHash = serverConnection.getServer().getNames();
-                                        ArrayList<String> names = new ArrayList<>(nameHash);
-                                        serverConnection.getServer().getController().getActionController().getGame().gameStart(names, serverConnection.getServer());
-                                        return;
-                                    }
-                                }
+                        serverConnection.setReady(true);
+                        serverConnection.waitReady();
 
+                        synchronized (serverConnection.getServer()) {
+                            if(Server.getServerStatus() == GameStatus.LOBBY) {
+                                DEBUGGER.printDebug("Starting Game!");
+                                Server.setServerStatus(GameStatus.LEADER);
+                                Set<String> namesSet = serverConnection.getServer().getNames();
+                                ArrayList<String> names = new ArrayList<>(namesSet);
+                                serverConnection.getServer().getController().getActionController().getGame().gameStartPlayers(names, serverConnection.getServer().getNumberOfPlayers());
+                                ArrayList<String> orderedPlayers = serverConnection.getServer().getController().getActionController().getGame().getAllPlayersNameInOrder();
+
+                                serverConnection.getServer().broadcast(4);
+                                serverConnection.getServer().broadcast(orderedPlayers);
                             }
-                            else
-                                sendError(serverConnection,"Not enough players ready, need another "+(serverConnection.getServer().getReadyPlayers()-serverConnection.getServer().getNumberOfPlayers()));
+                            return;
+                        }
                     }
 
                 }
@@ -165,11 +168,71 @@ public class ServerMessageHandler {
         }
     }
 
+    public void initialPhase(ServerConnection serverConnection) throws InterruptedException {
+        serverConnection.send(5);
+        this.initialLeaderCards(serverConnection);
+        serverConnection.waitReady();
+
+        this.initialResources(serverConnection);
+        serverConnection.waitReady();
+
+        synchronized (serverConnection.getServer()) {
+            DEBUGGER.printDebug("Initial Phase ended!");
+
+            // DEBUGGING
+            if(Debugger.isAllActive())
+                for(Player player : serverConnection.getServer().getController().getActionController().getGame().getPlayers())
+                    DEBUGGER.printDebug(player.getNickname());
+
+            if(Server.getServerStatus() == GameStatus.LEADER) {
+                Server.setServerStatus(GameStatus.GAME);
+                GameSetMessage message = serverConnection.getServer().getController().getActionController().prepareViewGame();
+                serverConnection.getServer().broadcast(message);
+            }
+        }
+    }
+
+    public void initialLeaderCards(ServerConnection serverConnection) throws InterruptedException {
+        synchronized (serverConnection.getServer().getController()) {
+            while(!serverConnection.isMyTurn()) {
+                serverConnection.getServer().getController().wait();
+            }
+            RedLeaderCard[] initialLeaderCards = serverConnection.getServer().getController().getActionController().getGame().gameStartLeaderCards();
+            serverConnection.send(initialLeaderCards);
+            Action action = serverConnection.readAction();
+            serverConnection.notify(action);
+            serverConnection.setReady(true);
+
+            serverConnection.getServer().getController().notifyAll();
+        }
+    }
+
+    public void initialResources(ServerConnection serverConnection) throws InterruptedException {
+        synchronized (serverConnection.getServer().getController()) {
+            while (!serverConnection.isMyTurn()) {
+                serverConnection.getServer().getController().wait();
+            }
+            int[] array = new int[1];
+            int resources = serverConnection.getServer().getController().getActionController().getGame().gameStartResources(serverConnection.getName());
+            array[0] = resources;
+
+            Action action = null;
+            while (action == null || !action.canBeApplied(serverConnection.getServer().getController().getActionController())) {
+                serverConnection.send(array);
+                action = serverConnection.readAction();
+                serverConnection.notify(action);
+            }
+            serverConnection.setReady(true);
+
+            serverConnection.getServer().getController().notifyAll();
+        }
+    }
+
     /**
      * paramModifier handles the interaction with the param modifier, the int between 10 and 20 (included) are reserved for use by this application
      * Decoder guide:
      * 10:   Open param modifier
-     * int recived: corresponding action
+     * int received: corresponding action
      * 10+1: Card modifier                      :card number to modify
      * 10+2: Base Production power modifier
      * 10+3: Vatican Report section modifier    :vatican report to modify
@@ -227,17 +290,18 @@ public class ServerMessageHandler {
     }
 
     public void sendError(ServerConnection serverConnection, String string) {
-        System.out.println(SU + "Sending error to client");
-        System.out.println(string);
+        DEBUGGER.printDebug("Sending error to client String: " + string);
         serverConnection.send(9);
         serverConnection.send(string);
     }
 
     public boolean isLobby(){
         GameStatus serverStatus = Server.getServerStatus();
+        //noinspection RedundantIfStatement
         if(serverStatus.equals(GameStatus.LOBBY) || serverStatus.equals(GameStatus.PARAM))
             return true;
-        else return false;
+        else
+            return false;
     }
 
     /**
@@ -246,7 +310,7 @@ public class ServerMessageHandler {
      * @param name                  the name to check
      * @return <b>true</b> if the name is not in the server, <b>false</b> if somebody has the same name
      */
-    public boolean nameInsert(ServerConnection serverConnection,String name){
+    public synchronized boolean nameInsert(ServerConnection serverConnection,String name){
         return serverConnection.getServer().setName(name);
     }
 
@@ -266,9 +330,7 @@ public class ServerMessageHandler {
      * @return true if there's free space to join, false otherwise
      */
     public boolean freeSpace(ServerConnection serverConnection){
-        System.out.print("[SmHANDLER] freeSpace: "+(serverConnection.getServer().getNumberOfPlayers()<serverConnection.getServer().getReadyPlayers()));
-        System.out.print(serverConnection.getServer().getNumberOfPlayers()+"<");
-        System.out.println(serverConnection.getServer().getReadyPlayers());
+        DEBUGGER.printDebug("freeSpace: "+(serverConnection.getServer().getNumberOfPlayers()<serverConnection.getServer().getReadyPlayers()) +" "+serverConnection.getServer().getNumberOfPlayers()+" < "+serverConnection.getServer().getReadyPlayers());
         return serverConnection.getServer().getNumberOfPlayers()>serverConnection.getServer().getReadyPlayers();
     }
 

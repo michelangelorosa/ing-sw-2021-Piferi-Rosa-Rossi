@@ -8,8 +8,8 @@ import it.polimi.ingsw.View.Utility.ANSIColors;
 import it.polimi.ingsw.View.Utility.ANSIfont;
 import it.polimi.ingsw.View.ReducedModel.*;
 
-import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -115,9 +115,10 @@ public class CliController implements UserInterface {
 
     public int numberOfPlayers() {
         String choice;
-        System.out.println("Insert the number of players: ");
+        System.out.println();
 
         while(true) {
+            System.out.print(ANSIColors.BOLD + "Number of Players: " + ANSIColors.RESET);
             choice = sc.nextLine();
 
             if(choice.equals("1") || choice.equals("2") || choice.equals("3") || choice.equals("4"))
@@ -129,9 +130,8 @@ public class CliController implements UserInterface {
 
     public String initialInsertName() {
         String choice;
-        System.out.println("\n" + ANSIColors.GAMEPLAY_ACTIONS + ANSIfont.BOLD + "PLEASE INSERT YOUR NAME:" + ANSIColors.RESET);
-        System.out.println();
         while(true) {
+            System.out.print(ANSIfont.BOLD + "Nickname: " + ANSIColors.RESET);
             choice = sc.nextLine();
 
             if(choice.length() > 16)
@@ -152,11 +152,10 @@ public class CliController implements UserInterface {
     public int initialLobby() {
         String choice;
         System.out.println("\n\n");
-        System.out.println(ANSIColors.GAMEPLAY_ACTIONS + ANSIfont.BOLD + "Welcome to the pre-game Lobby!" + ANSIColors.RESET);
-        System.out.println();
+        System.out.println(ANSIColors.GAMEPLAY_ACTIONS + ANSIfont.BOLD + " - Welcome to the pre-game Lobby! - " + ANSIColors.RESET);
         System.out.println("What do you want to do?");
-        System.out.println("1- start the game");
-        System.out.println("2- modify the game settings");
+        System.out.println("[1] start the game");
+        System.out.println("[2] modify the game settings");
 
         while(true) {
             choice = sc.next();
@@ -172,17 +171,18 @@ public class CliController implements UserInterface {
     public Action initialChooseLeaderCards(RedLeaderCard[] leaderCardsArray) throws IllegalArgumentException{
         if(leaderCardsArray.length != 4)
             throw new IllegalArgumentException("Number of Leader Cards to choose from is" + leaderCardsArray.length + ", should be 4");
-        ArrayList<RedLeaderCard> leaderCards = new ArrayList<>();
-        for(int i=0;i<4;i++)
-            leaderCards.add(leaderCardsArray[i]);
+        ArrayList<RedLeaderCard> leaderCards = new ArrayList<>(Arrays.asList(leaderCardsArray).subList(0, 4));
 
         String choice;
         String choice2;
         int firstLeaderCard;
         int secondLeaderCard;
 
+        System.out.println();
         System.out.println(ANSIColors.YOUR_TURN_COLOR + " - IT'S YOUR TURN! - " + ANSIColors.RESET);
-        printList(initLeaderCardsToCli(leaderCards));
+        for(String s : initLeaderCardsToCli(leaderCards))
+            System.out.println(s);
+
         System.out.println();
         System.out.println("Please choose two Leader Cards (numbered 1 to 4 from left to right)");
 
@@ -210,9 +210,10 @@ public class CliController implements UserInterface {
     }
 
     public Action initialChooseResources(int resources) {
-        System.out.println(ANSIColors.YOUR_TURN_COLOR + ANSIfont.BOLD + " - PREPARING THE GAME - " + ANSIColors.RESET);
         System.out.println();
+        System.out.println(ANSIColors.VISUALIZE + ANSIfont.BOLD + " - PREPARING THE GAME - " + ANSIColors.RESET);
         if(resources <= 0) {
+            System.out.println(ANSIColors.BOLD + "You cannot choose any resource!" + ANSIColors.RESET);
             HashMap<Integer, ArrayList<ResourceType>> depotResource = new HashMap<>();
             depotResource.put(0, new ArrayList<>());
             depotResource.put(1, new ArrayList<>());
@@ -269,20 +270,21 @@ public class CliController implements UserInterface {
 
 
         while(true) {
+            System.out.println();
             System.out.println(ANSIColors.YOUR_TURN_COLOR + " - IT'S YOUR TURN! - " + ANSIColors.RESET);
-            System.out.println("Please choose one of the following possible Actions");
+            System.out.println(ANSIColors.BOLD + "Please choose one of the following possible Actions" + ANSIColors.RESET);
 
             // "GAMEPLAY ACTIONS" refers to all Actions that can have an effect on the game's Model
-            System.out.println("\n" + ANSIColors.GAMEPLAY_ACTIONS + " GAMEPLAY ACTIONS: " + ANSIColors.RESET);
+            System.out.println("\n" + ANSIColors.GAMEPLAY_ACTIONS + "GAMEPLAY ACTIONS: " + ANSIColors.RESET);
             for(int i = 0; i < player.getPossibleActions().size(); i++)
-                System.out.println((i + 1) + " - " + player.getPossibleActions().get(i).toString());
+                System.out.println("[" + (i + 1) + "] " + player.getPossibleActions().get(i).getText());
 
             // "VISUALIZE" refers to actions that only print certain things on the Terminal
-            System.out.println("\n" + ANSIColors.VISUALIZE + " VISUALIZE: " + ANSIColors.RESET);
-            System.out.println("a - Your Board");
-            System.out.println("b - Another Player's board");
-            System.out.println("c - Market");
-            System.out.println("d - Development Card Table\n");
+            System.out.println("\n" + ANSIColors.VISUALIZE + "VISUALIZE: " + ANSIColors.RESET);
+            System.out.println("[a] Your Board");
+            System.out.println("[b] Another Player's board");
+            System.out.println("[c] Market");
+            System.out.println("[d] Development Card Table\n");
             choice = sc.nextLine();
 
             if (choice.equals("1") || choice.equals("2") || choice.equals("3") || choice.equals("4") || choice.equals("5") || choice.equals("6") || choice.equals("7") || choice.equals("8") || choice.equals("9")) {
@@ -324,9 +326,9 @@ public class CliController implements UserInterface {
     private void printPlayerBoard(Game game) {
         String choice;
         int choiceInt;
-        System.out.println("\nWhich player's Board do you to see? (Select corresponding number, 0 to go back)");
+        System.out.println("\nWhich player's Board do you want to see? (Select corresponding number, 0 to go back)");
         for(int i = 0; i < game.getPlayers().size(); i++)
-            System.out.println((i+1) + " - " + game.getPlayers().get(i).getNickname());
+            System.out.println("[" + (i+1) + "] " + game.getPlayers().get(i).getNickname());
 
         while(true) {
             choice = sc.nextLine();
@@ -368,7 +370,10 @@ public class CliController implements UserInterface {
         int choiceInt = -1;
         printList(game.myBoardToCli());
 
-        System.out.println("\nChoose which leader card you want to activate: 1 (below), 2 (above)\t(0 to exit): ");
+        System.out.println("\nChoose which leader card you want to activate: ");
+        System.out.println("[2] above");
+        System.out.println("[1] below");
+        System.out.println("[0] Go back");
 
         while(notEnded) {
             choice = sc.nextLine();
@@ -405,8 +410,8 @@ public class CliController implements UserInterface {
 
         printList(game.myBoardToCli());
 
-        System.out.println("\u001B[1m" + "Write 0 at any time to go back" + ANSIColors.RESET);
-        System.out.println("\nDo you want to use Development Cards? (y/n)");
+        System.out.println("\u001B[1m" + "[0] at any time to go back" + ANSIColors.RESET);
+        System.out.println("\nDo you want to use Development Cards? [y] [n]");
         choice = stringAssign(sc);
         if(choice.equals("0"))
             return null;
@@ -415,21 +420,21 @@ public class CliController implements UserInterface {
 
         if(decision) {
             System.out.println("Which cards do you want to use?");
-            System.out.println("First slot (left): (y/n)");
+            System.out.println("First slot (left): [y] [n]");
             choice = stringAssign(sc);
             if(choice.equals("0"))
                 return null;
             else
                 firstSlot = boolDecider(choice);
 
-            System.out.println("Second slot (center): (y/n)");
+            System.out.println("Second slot (center): [y] [n]");
             choice = stringAssign(sc);
             if(choice.equals("0"))
                 return null;
             else
                 secondSlot = boolDecider(choice);
 
-            System.out.println("Third slot (right): (y/n)");
+            System.out.println("Third slot (right): [y] [n]");
             choice = stringAssign(sc);
             if(choice.equals("0"))
                 return null;
@@ -437,20 +442,20 @@ public class CliController implements UserInterface {
                 thirdSlot = boolDecider(choice);
         }
 
-        System.out.println("\nDo you want to use Leader Cards? (y/n)");
+        System.out.println("\nDo you want to use Leader Cards? [y] [n]");
         choice = stringAssign(sc);
         decision = boolDecider(choice);
 
         if(decision) {
             System.out.println("Which leader cards do you want to use?");
-            System.out.println("First leader card (below): (y/n)");
+            System.out.println("First leader card (below): [y] [n]");
             choice = stringAssign(sc);
             if(choice.equals("0"))
                 return null;
             else
                 firstLeaderCard = boolDecider(choice);
 
-            System.out.println("Second leader card (above): (y/n)");
+            System.out.println("Second leader card (above): [y] [n]");
             choice = stringAssign(sc);
             if(choice.equals("0"))
                 return null;
@@ -458,7 +463,7 @@ public class CliController implements UserInterface {
                 secondLeaderCard = boolDecider(choice);
         }
 
-        System.out.println("\nDo you want to use Basic Production? (y/n)");
+        System.out.println("\nDo you want to use Basic Production? [y] [n]");
         choice = stringAssign(sc);
         basicProduction = boolDecider(choice);
 
@@ -504,6 +509,10 @@ public class CliController implements UserInterface {
         ResourceType type;
         printList(game.getMyPlayer().toCliAdd());
 
+        if(game.getMyPlayer().getTemporaryResources().isEmpty()) {
+            displayError("No more resources to add");
+            return null;
+        }
 
         while(true) {
             System.out.println("\nWhich depot do you want to add the resource to?");
@@ -571,9 +580,9 @@ public class CliController implements UserInterface {
 
         while(true) {
             System.out.println("\nSelect Development Card Slot where you want to put the card: ");
-            System.out.println("1 - Left");
-            System.out.println("2 - Center");
-            System.out.println("3 - Right");
+            System.out.println("[1] Left");
+            System.out.println("[2] Center");
+            System.out.println("[3] Right");
 
             choice = sc.nextLine();
 
@@ -602,8 +611,8 @@ public class CliController implements UserInterface {
 
         while(true) {
             System.out.println("\nSelect Leader Card you want to use: ");
-            System.out.println("1 - Below");
-            System.out.println("2 - Above");
+            System.out.println("[2] Above");
+            System.out.println("[1] Below");
 
             choice = sc.nextLine();
 
@@ -635,8 +644,8 @@ public class CliController implements UserInterface {
             }
 
             System.out.println("\nSelect Leader Card you want to discard: ");
-            if(!game.getMyPlayer().getLeaderCards()[0].isDiscarded()) System.out.println("1 - Below");
-            if(!game.getMyPlayer().getLeaderCards()[1].isDiscarded()) System.out.println("2 - Above");
+            if(!game.getMyPlayer().getLeaderCards()[0].isDiscarded()) System.out.println("[2] Above");
+            if(!game.getMyPlayer().getLeaderCards()[1].isDiscarded()) System.out.println("[1] Below");
 
 
             choice = sc.nextLine();
@@ -743,35 +752,35 @@ public class CliController implements UserInterface {
         printList(game.getMarket().toCli());
 
         while(true) {
-            System.out.println("\nDo you want a row or a column?  (0 to go back)");
+            System.out.println("\nDo you want a row or a column?  ([0] to go back)");
             while (notEnded1) {
-                System.out.println("1 - Row");
-                System.out.println("2 - Column");
+                System.out.println("[r] Row");
+                System.out.println("[c] Column");
 
                 choice = sc.nextLine();
 
                 switch (choice) {
                     case "0":
                         return null;
-                    case "1":
+                    case "r":
                         row = true;
                         notEnded1 = false;
                         break;
-                    case "2":
+                    case "c":
                         row = false;
                         notEnded1 = false;
                         break;
                     default:
-                        displayError("Please enter a valid number");
+                        displayError("Please enter a valid character or number");
                         break;
                 }
             }
 
             if(row) {
                 System.out.println("\nChoose a row:  (0 to go back)");
-                System.out.println("1 - Above");
-                System.out.println("2 - Center");
-                System.out.println("3 - Below");
+                System.out.println("[1] Above");
+                System.out.println("[2] Center");
+                System.out.println("[3] Below");
 
                 choice = sc.nextLine();
 
@@ -790,10 +799,10 @@ public class CliController implements UserInterface {
             }
             else {
                 System.out.println("\nChoose a column:  (0 to go back)");
-                System.out.println("1 - Left");
-                System.out.println("2 - Left Center");
-                System.out.println("3 - Right Center");
-                System.out.println("4 - Right");
+                System.out.print(  "[1] Left   ");
+                System.out.print(  "[2] Left Center   ");
+                System.out.print(  "[3] Right Center   ");
+                System.out.println("[4] Right");
 
                 choice = sc.nextLine();
 
@@ -828,23 +837,23 @@ public class CliController implements UserInterface {
 
         while(true) {
             while(notEnded) {
-                System.out.println("\nDo you want to pay from the Warehouse or the Strongbox? (insert relative number)");
-                System.out.println("1 - Warehouse");
-                System.out.println("2 - Strongbox");
+                System.out.println("\nDo you want to pay from the Warehouse or the Strongbox?");
+                System.out.println("[w] Warehouse");
+                System.out.println("[s] Strongbox");
 
                 choice = sc.nextLine();
 
                 switch (choice) {
-                    case "1":
+                    case "w":
                         fromWarehouse = true;
                         notEnded = false;
                         break;
-                    case "2":
+                    case "s":
                         fromWarehouse = false;
                         notEnded = false;
                         break;
                     default:
-                        displayError("Please enter a valid number");
+                        displayError("Please enter a valid character");
                         break;
                 }
             }
@@ -1038,7 +1047,7 @@ public class CliController implements UserInterface {
         String c = sc.nextLine();
 
         while(!c.equals("y") && !c.equals("n") && !c.equals("0")) {
-            displayError("Please insert a valid character ('y' or 'n')");
+            displayError("Please insert a valid character [y] or [n]");
             c = sc.nextLine();
             System.out.println();
         }
@@ -1058,10 +1067,10 @@ public class CliController implements UserInterface {
         int counter = 0;
         while(counter < jolly) {
             System.out.println("\nSelect a resource type: (write corresponding number)");
-            System.out.println("1 - SHIELD");
-            System.out.println("2 - SERVANT");
-            System.out.println("3 - COIN");
-            System.out.println("4 - STONE");
+            System.out.println("[1] SHIELD");
+            System.out.println("[2] SERVANT");
+            System.out.println("[3] COIN");
+            System.out.println("[4] STONE");
 
             choiceString = sc.nextLine();
 
@@ -1102,16 +1111,18 @@ public class CliController implements UserInterface {
         String choice;
         int depot;
 
-        if(!warehouse.getWarehouseDepots()[0].isEmpty())
-            System.out.println("1 - First depot (below)");
-        if(!warehouse.getWarehouseDepots()[1].isEmpty())
-            System.out.println("2 - Second Depot (center)");
-        if(!warehouse.getWarehouseDepots()[2].isEmpty())
-            System.out.println("3 - Third Depot (above)");
-        if(warehouse.isExtraWarehouseDepot1IsActive() && !warehouse.getExtraWarehouseDepot1().isEmpty())
-            System.out.println("4 - Extra Depot 1 (left)");
-        if(warehouse.isExtraWarehouseDepot2IsActive() && !warehouse.getExtraWarehouseDepot2().isEmpty())
-            System.out.println("5 - Extra Depot 2 (right)");
+        //TODO hide depots in different ways depending on ADDING or PAYING
+        //if(!warehouse.getWarehouseDepots()[2].isEmpty())
+            System.out.println("[3] Third Depot (above)");
+        //if(!warehouse.getWarehouseDepots()[1].isEmpty())
+            System.out.println("[2] Second Depot (center)");
+        //if(!warehouse.getWarehouseDepots()[0].isEmpty())
+            System.out.println("[1] First depot (below)");
+
+        if(warehouse.isExtraWarehouseDepot1IsActive()) //&& !warehouse.getExtraWarehouseDepot1().isEmpty())
+            System.out.print(  "[4] Extra Depot 1 (left)    ");
+        if(warehouse.isExtraWarehouseDepot2IsActive()) //&& !warehouse.getExtraWarehouseDepot2().isEmpty())
+            System.out.println("[5] Extra Depot 2 (right)");
 
         while(true) {
             choice = sc.nextLine();
@@ -1136,10 +1147,9 @@ public class CliController implements UserInterface {
         String choice;
         int depot;
 
-        System.out.println("1 - First depot (below)");
-        System.out.println("2 - Second Depot (center)");
-        System.out.println("3 - Third Depot (above)");
-
+        System.out.println("[3] Third Depot (above)");
+        System.out.println("[2] Second Depot (center)");
+        System.out.println("[1] First depot (below)");
 
         while(true) {
             choice = sc.nextLine();
@@ -1158,10 +1168,10 @@ public class CliController implements UserInterface {
      * @return The chosen ResourceType.
      */
     private ResourceType resourceIntIterator(Scanner sc) {
-        System.out.println("1 - SHIELD");
-        System.out.println("2 - SERVANT");
-        System.out.println("3 - COIN");
-        System.out.println("4 - STONE");
+        System.out.println("[1] SHIELD");
+        System.out.println("[2] SERVANT");
+        System.out.println("[3] COIN");
+        System.out.println("[4] STONE");
         String choice;
         int typeInt;
         ResourceType type;

@@ -4,13 +4,14 @@ import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Enums.SoloActionToken;
 import it.polimi.ingsw.Model.JSON.JSONReader;
-import it.polimi.ingsw.Model.Server.Server;
+import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
- * Game Class contains all attributes needed when creating an instance of a new game.
+ * Game Class contains all attributes and methods needed when creating an instance of a new Game.
  */
 public class Game {
     /** Type of the current game -> Single or Multi Player */
@@ -29,8 +30,6 @@ public class Game {
     private final FaithTrack faithTrack;
 
     private final SoloActionToken[] tokens;
-
-    private Server server;
 
     /**
      * Constructor for Game Class.
@@ -115,82 +114,107 @@ public class Game {
     }
 
     /**
-     * Method used when a player wants to join the game. Handles all the initialization of the game.
-     * @param clientNames ArrayList of nicknames that have successfully established a connection with the server.
-     * @throws IllegalArgumentException if the max number of players has been reached.
+     * Returns the player which corresponds to the given String.
+     * @param nickname String containing the name of the player to search.
+     * @return The Player corresponding to the String.
+     * @throws IllegalArgumentException if no player is found with the given name.
      */
-    public void gameStart(ArrayList<String> clientNames, Server server) throws IllegalArgumentException {
+    public Player getPlayerByNickname(String nickname) throws IllegalArgumentException{
+        for(Player player : this.players)
+            if(player.getNickname().equals(nickname))
+                return player;
 
-        setServer(server);
-        int numberOfPlayers = clientNames.size();
-        if(numberOfPlayers==1)
-            setGameType(GameType.SINGLEPLAYER);
+        throw new IllegalArgumentException("[Model.Game]: cannot find player named " + nickname);
+    }
+
+    /**
+     * Creates an ArrayList of all the Game's players names (in order from position 0 to size()).
+     * @return An ArrayList containing the ordered names.
+     */
+    public ArrayList<String> getAllPlayersNameInOrder() {
+        ArrayList<String> names = new ArrayList<>();
+
+        for(Player player : this.players) {
+            names.add(player.getNickname());
+        }
+
+        return names;
+    }
+
+    /**
+     * Takes the name of all the Players of the game and sets a new Game accordingly.
+     * @param playerNames Names of all the players of the game
+     * @param numberOfPlayers Number of the Players who are going to play.
+     */
+    public void gameStartPlayers(ArrayList<String> playerNames, int numberOfPlayers) {
+        if(numberOfPlayers > 1)
+            this.gameType = GameType.MULTIPLAYER;
+        else if(numberOfPlayers == 1)
+            this.gameType = GameType.SINGLEPLAYER;
+
+        if(this.gameType == GameType.MULTIPLAYER)
+            this.multiplayerGameStartPlayers(playerNames);
         else
-            setGameType(GameType.MULTIPLAYER);
-        if(numberOfPlayers > 4)
-            throw new IllegalArgumentException("Maximum number of players reached!");
+            this.singleplayerGameStartPlayers(playerNames);
 
-        developmentCardTable.shuffleTable();
-
-        Player newPlayer;
-        if(gameType==GameType.MULTIPLAYER){
-            int activePlayer = (int)(Math.random()*numberOfPlayers);
-
-            for(int position = 0; position < numberOfPlayers; position++){
-            newPlayer = new Player(clientNames.get(activePlayer),position,position == 0);
-            players.add(newPlayer);
-
-            if(activePlayer == numberOfPlayers)
-                activePlayer = 0;
-            else
-                activePlayer++;
-
-            sendToClient(newPlayer.getNickname(),server,position);
-
-                if(position==2)
-                    newPlayer.stepAhead(1);
-                else if(position==3)
-                    newPlayer.stepAhead(1);
-
-            }
-        }
-        else {//Singleplayer Init
-            newPlayer = new Player(clientNames.get(0),0,false);
-            players.add(newPlayer);
-            newPlayer = new Player("Lorenzo il Magnifico",1,false);
-            players.add(newPlayer);
-            sendToClient(clientNames.get(0),server,4);
-        }
+        this.developmentCardTable.shuffleTable();
 
     }
 
     /**
-     * Sends to the client the GameType, the Inkwell status, 4 Leader Cards, the number of resources to pick from
-     * Used in the beginning of the game
-     * @param nickname  Nickname of the player to send the messages to
-     * @param server    Server is used for establishing a connection to the client
-     * @param position  Position is the position of the player in the game, used for establishing the inkwell and the extra resources for the startup
+     * Sets the Game Players if the Game is of Singleplayer type.
+     * @param playerNames Contains the name of the Player who's going to play the game.
      */
-    private void sendToClient(String nickname,Server server, int position) {
-        System.out.print("Sending to "+nickname);
-        System.out.println(" 4");
+    public void singleplayerGameStartPlayers(ArrayList<String> playerNames) {
+        this.players.add(new Player(playerNames.get(0), 0, true));
+        this.players.add(new Player("Lorenzo il Magnifico", 1, false));
+    }
 
-        server.sendTo(nickname,4);
+    /**
+     * Sets the Game Players if the Game is of Multiplayer type.
+     * @param playerNames Contains the name of the Players who are going to play the game.
+     */
+    public void multiplayerGameStartPlayers(ArrayList<String> playerNames) {
+        int randomPosition;
+        int size = playerNames.size();
+        Random random = new Random();
 
-        server.sendTo(nickname,this.gameType);
-        if(position==0)//Has inkwell?
-            server.sendTo(nickname,true);
-        else server.sendTo(nickname,false);
+        for(int j = 0; j < size; j++) {
+            randomPosition = random.nextInt(playerNames.size());
+            this.players.add(new Player(playerNames.remove(randomPosition), j, j == 0));
+        }
+    }
 
-        server.sendTo(nickname,LeaderCardShuffle.getLeaderShuffled());
+    /**
+     * Creates an array of RedLeaderCards to be sent to the Player for the Initial Leader Card Choice.
+     * @return An array containing 4 RedLeaderCard objects.
+     */
+    public RedLeaderCard[] gameStartLeaderCards() {
+        return LeaderCardShuffle.getLeaderShuffled();
+    }
 
-        if(position==1||position==2)
-            server.sendTo(nickname,1);
-        else if(position==3)
-            server.sendTo(nickname,2);
-        else
-            server.sendTo(nickname,0);
-        server.sendTo(nickname,nickname);
+    /**
+     * Sets to the corresponding player the number of resources and faith points he gets at the beginning of the Game.
+     * @param name String containing the name of the Player receiving the goods.
+     * @return The number of resources which the Player has to choose.
+     * @throws IllegalArgumentException If the Player's position is out of bounds for the Game's rules.
+     */
+    public int gameStartResources(String name) throws IllegalArgumentException{
+        Player player = this.getPlayerByNickname(name);
+
+        switch(player.getTurnPosition()) {
+            case 0: return 0;
+
+            case 1: return 1;
+
+            case 2: player.stepAhead(1);
+                return 1;
+
+            case 3: player.stepAhead(1);
+                return 2;
+
+            default: throw new IllegalArgumentException("[Model.Game.gameStartResources]: player's position was " + player.getTurnPosition());
+        }
     }
 
     /**
@@ -254,18 +278,19 @@ public class Game {
 
     /**
      * Method used to check if any player bought 7 Development Cards or finished the Faith Track.
-     * @return True if the player finished.
      */
-    public boolean checkIfAnyPlayerFinished() {
+    public void checkIfAnyPlayerFinished() {
         for(Player player : this.players)
             if(player.hasFinished()) {
                 this.lastTurn = true;
-                return true;
+                return;
             }
 
-        return false;
     }
 
+    /**
+     * Sets the Final Victory points for all Players at the end of the Game.
+     */
     public void setFinalVictoryPoints() {
         this.getFaithTrack().addFinalPoints(this.players);
 
@@ -323,12 +348,17 @@ public class Game {
         players.add(newPlayer);
     }
 
-    private void setServer(Server server){
-        this.server = server;
-    }
+    /**
+     * Converts all the Players inside the Game to a compatible version which can be used by the Client.
+     * @return An ArrayList containing the View's Players.
+     */
+    public ArrayList<it.polimi.ingsw.View.ReducedModel.Player> getViewPlayers() {
+        ArrayList<it.polimi.ingsw.View.ReducedModel.Player> players = new ArrayList<>();
 
-    public Server getServer(){
-        return this.server;
+        for(Player player : this.players)
+            players.add(player.toView());
+
+        return players;
     }
 
 }

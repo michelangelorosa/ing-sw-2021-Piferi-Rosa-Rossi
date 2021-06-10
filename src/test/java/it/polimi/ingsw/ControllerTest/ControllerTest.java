@@ -2,9 +2,15 @@ package it.polimi.ingsw.ControllerTest;
 
 import it.polimi.ingsw.CommonTestMethods;
 import it.polimi.ingsw.Controller.Actions.Action;
+import it.polimi.ingsw.Controller.ControllerClasses.ActionController;
 import it.polimi.ingsw.Controller.ControllerClasses.Controller;
 import it.polimi.ingsw.Controller.ControllerClasses.Observable;
 import static org.junit.Assert.*;
+
+import it.polimi.ingsw.Model.GameModel.Player;
+import it.polimi.ingsw.Model.MessagesToClient.GameSetMessage;
+import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
+import it.polimi.ingsw.Model.MessagesToClient.ModelToView;
 import org.junit.Test;
 
 public class ControllerTest {
@@ -74,5 +80,15 @@ public class ControllerTest {
         observableClass.addObserver(controller);
         observableClass.notify(action);
 
+    }
+
+    @Test
+    public void prepareViewTest() {
+        ActionController actionController = new ActionController();
+        actionController.getGame().getPlayers().add(new Player("Gianni", 0, true));
+        actionController.prepareViewGame();
+
+        ModelToView modelToView = actionController.getModelToView();
+        assertEquals(modelToView, actionController.getModelToView());
     }
 }

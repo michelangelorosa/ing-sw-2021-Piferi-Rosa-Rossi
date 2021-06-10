@@ -21,6 +21,7 @@ import java.util.HashMap;
  */
 public class InitChooseResources extends Action{
     private final HashMap<Integer, ArrayList<ResourceType>> depotResource;
+    private String nickname;
 
     /**
      * Constructor for InitChooseResources Class.
@@ -89,9 +90,9 @@ public class InitChooseResources extends Action{
 
         if(!depotResource.get(0).isEmpty()) {
             ArrayList<ResourceType> depot0 = depotResource.get(0);
+            temp0 = depot0.get(0);
 
             if(depot0.size() > 1) {
-                temp0 = depot0.get(0);
                 for(int i = 1; i < depot0.size(); i++) {
                     if(depot0.get(i) != temp0) {
                         this.response = "Cannot put two different resources in the same depot! (Depot 0)";
@@ -103,9 +104,9 @@ public class InitChooseResources extends Action{
 
         if(!depotResource.get(1).isEmpty()) {
             ArrayList<ResourceType> depot1 = depotResource.get(1);
+            temp1 = depot1.get(0);
 
             if(depot1.size() > 1) {
-                temp1 = depot1.get(0);
                 for(int i = 1; i < depot1.size(); i++) {
                     if(depot1.get(i) != temp1) {
                         this.response = "Cannot put two different resources in the same depot! (Depot 1)";
@@ -119,7 +120,7 @@ public class InitChooseResources extends Action{
             temp2 = depotResource.get(2).get(0);
         }
 
-        if(temp0 == temp1 || temp0 == temp2 || temp1 == temp2) {
+        if(temp0 != ResourceType.NONE && temp0 == temp1 || temp0 != ResourceType.NONE && temp0 == temp2 || temp1 != ResourceType.NONE && temp1 == temp2) {
             this.response = "Cannot put the same type of resources in two different depots!";
             return false;
         }
@@ -165,7 +166,10 @@ public class InitChooseResources extends Action{
         actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
         actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.ACTIVATE_PRODUCTION);
         actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.BUY_CARD);
-        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.BUY_FROM_MARKET);
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.MARKET_CHOOSE_ROW);
+        this.nickname = actionController.getGame().getCurrentPlayerNickname();
+        actionController.getGame().nextPlayer();
+
         return "SUCCESS";
     }
 
@@ -176,19 +180,8 @@ public class InitChooseResources extends Action{
      */
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {
-        InitChoseResourcesMessage message = new InitChoseResourcesMessage(actionController.getGame().getCurrentPlayerNickname());
+        InitChoseResourcesMessage message = new InitChoseResourcesMessage(this.nickname);
         message.setError(this.response);
-
-        if(this.response.equals("SUCCESS")) {
-            message.setWarehouse(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse());
-            message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
-            message.addPossibleAction(ActionType.ACTIVATE_PRODUCTION);
-            message.addPossibleAction(ActionType.BUY_CARD);
-            message.addPossibleAction(ActionType.BUY_FROM_MARKET);
-        }
-        else {
-            message.addPossibleAction(ActionType.INIT_CHOOSE_RESOURCES);
-        }
 
         return message;
     }

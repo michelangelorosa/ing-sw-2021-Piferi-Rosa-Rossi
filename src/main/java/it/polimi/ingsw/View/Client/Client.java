@@ -2,6 +2,9 @@ package it.polimi.ingsw.View.Client;
 
 import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.View.User.*;
+import it.polimi.ingsw.View.Utility.DebuggingTools.Debugger;
+import it.polimi.ingsw.View.Utility.DebuggingTools.DebuggerFactory;
+import it.polimi.ingsw.View.Utility.DebuggingTools.DebuggerType;
 import javafx.application.Application;
 
 import java.io.*;
@@ -19,6 +22,7 @@ public class Client {
     private ClientConnection clientConnection;
     private static final UserInteraction userInteraction = new UserInteraction() {
     };
+    private final Debugger DEBUGGER = DebuggerFactory.getDebugger(DebuggerType.CLIENT);
 
     /**
      * Default constructor
@@ -35,6 +39,10 @@ public class Client {
      * @param args          Command Line Arguments
      */
     public static void main(String[] args){
+
+        /* !! HAS TO BE COMMENTED FOR THE DEBUGGER TO STOP !! */
+        Debugger.setAllActive(true);
+
        try{
         //if (args[0].toLowerCase(Locale.ROOT).equals("--cli")) {
             userInteraction.setUi(new CliController());
@@ -65,7 +73,7 @@ public class Client {
             serverPort = (int)objects.get(1);
 
             Socket socket = new Socket(serverAddress, serverPort);
-            System.out.println("Connected to server!");
+            DEBUGGER.printDebug("Connected to server!");
 
             ClientConnection clientConnection = new ClientConnection(this, socket);
             new Thread(clientConnection).start();
@@ -81,7 +89,7 @@ public class Client {
         }
     }
     /**
-     * Sets up the connection once the Player has inputed server and port in the Gui application
+     * Sets up the connection once the Player has input server and port in the Gui application
      * @param objects   the server and the port
      * //TODO timer of connection, error with Gui so that the connection doesn't close the application and the user is informed
      */
@@ -92,7 +100,7 @@ public class Client {
             serverPort = (int)objects.get(1);
 
             Socket socket = new Socket(serverAddress, serverPort);
-            System.out.println("Connected to server!");
+            DEBUGGER.printDebug("Connected to server!");
 
             ClientConnection clientConnection = new ClientConnection(this, socket);
             new Thread(clientConnection).start();
@@ -115,7 +123,6 @@ public class Client {
 
     /**
      * Sets the username of the Player. Has to be set from graphical interface once the username is validated and accepted by the server
-     * @param user
      */
     public void setUser(String user){
         this.user=user;
@@ -123,7 +130,6 @@ public class Client {
 
     /**
      * Sets the token value; it has to be set <b>true</b> every time it's the player's turn and <b>false</b> once the token is used
-     * @param token
      */
     public void setToken(boolean token) {
         this.token = token;
@@ -131,7 +137,6 @@ public class Client {
 
     /**
      * Sets if it's the user's turn, otherwise the client won't be allowed to send messages
-     * @param myTurn
      */
     public void setMyTurn(boolean myTurn) {
         this.myTurn = myTurn;
@@ -144,6 +149,7 @@ public class Client {
     public String getServer(){
         return serverAddress;
     }
+
     /**
      * @return the port the Client is connected to
      */

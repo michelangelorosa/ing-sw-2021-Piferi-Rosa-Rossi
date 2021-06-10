@@ -25,6 +25,7 @@ public class ActionController {
 
     private final Game game;
     private final ModelToView modelToView = new ModelToView();
+
     private final ResetWarehouse resetWarehouse = new ResetWarehouse();
     private final ChooseCardSlot chooseCardSlot = new ChooseCardSlot(-1);
     private final ChooseProductionOutput chooseProductionOutput = new ChooseProductionOutput();
@@ -44,9 +45,25 @@ public class ActionController {
      * </ol>
      * @param action A generic action received by the server socket and passed through by the Controller.
      */
-    public void doAction(Action action) {
-        action.doAction(this);
-        MessageToClient message = action.messagePrepare(this);
+    public synchronized void doAction(Action action) {
+        MessageToClient message;
+
+        if(action instanceof ResetWarehouse) {
+            resetWarehouse.doAction(this);
+            message = resetWarehouse.messagePrepare(this);
+        }
+        else if(action instanceof ChooseCardSlot) {
+            chooseCardSlot.doAction(this);
+            message = chooseCardSlot.messagePrepare(this);
+        }
+        else if(action instanceof ChooseProductionOutput) {
+            chooseProductionOutput.doAction(this);
+            message = chooseProductionOutput.messagePrepare(this);
+        }
+        else {
+            action.doAction(this);
+            message = action.messagePrepare(this);
+        }
 
         modelToView.notify(message);
     }
@@ -81,5 +98,16 @@ public class ActionController {
      */
     public ChooseProductionOutput getChooseProductionOutput() {
         return chooseProductionOutput;
+    }
+
+    public synchronized GameSetMessage prepareViewGame() {
+        System.out.println("[MODEL] current player: " + this.game.getCurrentPlayerNickname());
+        GameSetMessage message = new GameSetMessage(this.game.getCurrentPlayerNickname());
+        message.setPlayers(this.game.getViewPlayers());
+        message.setMarket(this.game.getMarket());
+        message.setTable(this.game.getDevelopmentCardTable());
+        message.setFaithTrack(this.game.getFaithTrack());
+
+        return message;
     }
 }

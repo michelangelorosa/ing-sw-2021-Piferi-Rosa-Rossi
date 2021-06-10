@@ -104,7 +104,7 @@ public class CliTest {
         game.getPlayers().get(0).getPossibleActions().add(ActionType.ACTIVATE_LEADERCARD);
         game.getPlayers().get(0).getPossibleActions().add(ActionType.MARKET_CHOOSE_ROW);
 
-        changeSystemIn("a\nb\n1\nc\nd\n4\n1\n3");
+        changeSystemIn("a\nb\n1\nc\nd\n4\nr\n3");
         ui = new CliController();
 
         Action action = ui.actionPicker(game);
@@ -273,14 +273,14 @@ public class CliTest {
 
     @Test
     public void marketChooseRowTest() {
-        changeSystemIn("-1\n3\n1\n-1\n4\n1");
+        changeSystemIn("-1\n3\nr\n-1\n4\n1");
         ui = new CliController();
         Action action = ui.marketChooseRow(game);
         assertTrue(action instanceof MarketChooseRow);
         assertTrue(((MarketChooseRow)action).isRow());
         assertEquals(0, ((MarketChooseRow)action).getRowOrColumnNumber());
 
-        changeSystemIn("-1\n3\n2\n-1\n5\n4");
+        changeSystemIn("-1\n3\nc\n-1\n5\n4");
         ui = new CliController();
         action = ui.marketChooseRow(game);
         assertTrue(action instanceof MarketChooseRow);
@@ -292,14 +292,14 @@ public class CliTest {
     public void payResourceTest() {
         game.getMyPlayer().setTemporaryResources(new ResourceStack(1,0,0,0));
 
-        changeSystemIn("-1\n3\n1\n2");
+        changeSystemIn("-1\n3\nw\n2");
         ui = new CliController();
         PayResourceBuyCard action = ui.payResourceBuyCard(game);
         assertNotNull(action);
         assertEquals(1, action.getDepot());
         assertNull(action.getResourceType());
 
-        changeSystemIn("-1\n3\n2\n2");
+        changeSystemIn("-1\n3\ns\n2");
         ui = new CliController();
         PayResourceProduction action2 = ui.payResourceProduction(game);
         assertNotNull(action2);
