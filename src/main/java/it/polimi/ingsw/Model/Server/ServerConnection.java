@@ -21,7 +21,6 @@ import java.util.Arrays;
  * ServerConnection is a thread running on the server that manages connection to and from the clients.
  * For the messages to be sent a manual flushing has to be performed!
  */
-
 public class ServerConnection extends Observable<Action> implements Runnable, Observer<MessageToClient> {
     private String name;
     private Socket socket;
@@ -45,7 +44,18 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
         this.messageHandler = new ServerMessageHandler();
     }
 
-
+    /**
+     * Implemented Run method of the Runnable Interface. Defines, using a ServerMessageHandler object, the sequence
+     * through which a Client, connected to the Server, has to go through to effectively initiate a new Game
+     * to be played.
+     * <p>The order of communications is divided as follows:</p>
+     * <ol>
+     *     <li>The Client is asked to input his name and the number of players (if he is the first who connected)</li>
+     *     <li>The Client enters a Lobby where he can decide whether e wants to start the game or modify the game parameters</li>
+     *     <li>Once all Clients are connected and ready to start, the Initial Phase of the game begins</li>
+     *     <li>The actual game then follows the standard Masters Of Renaissance rules.</li>
+     * </ol>
+     */
     public void run() {
         try {
             OutputStream outputStream = this.socket.getOutputStream();
@@ -327,6 +337,11 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
         this.ready = ready;
     }
 
+    /**
+     * Method used for synchronization purposes between different Server-Client connections.
+     * <p>It works buy stopping the caller Thread until all players are ready to proceed to the next phase of
+     * the game</p>
+     */
     public void waitReady() {
         synchronized (this.server) {
             if(this.server.allAreReady()) {

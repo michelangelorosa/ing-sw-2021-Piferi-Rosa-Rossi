@@ -11,4 +11,10 @@ public abstract class ANSIDebug {
 
     public static final String CLIENT = "\u001B[38;2;77;166;255m";
     public static final String CLIENT_CONNECTION = "\u001B[38;2;77;255;255m";
+
+    public static final String CLI = "\u001B[38;2;0;255;0m";
+    public static final String CLI_CONTROLLER = "\u001B[38;2;191;255;0m";
+
+    public static final String CONTROLLER = "\u001B[38;2;255;0;102m";
+    public static final String MODEL = "\u001B[38;2;191;0;255m";
 }

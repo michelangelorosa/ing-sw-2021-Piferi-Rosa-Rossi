@@ -33,7 +33,13 @@ public enum ActionType {
 
     END_TURN("End Turn"),
 
-    FINAL_POINTS("Final Points");
+    FINAL_POINTS("Final Points"),
+
+    STRONGBOX_CHEAT("{{CHEAT}} STRONGBOX"),
+    FAITHTRACK_CHEAT("{{CHEAT}} FAITHTRACK"),
+    DEVCARDS_CHEAT("{{CHEAT}} DEVCARDS"),
+    LEADERCARDS_CHEAT("{{CHEAT}} LEADERCARDS"),
+    VICTORYPOINTS_CHEAT("{{CHEAT}} VICTORYPOINTS");
 
 
     private final String text;

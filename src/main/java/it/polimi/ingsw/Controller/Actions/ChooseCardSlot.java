@@ -18,7 +18,7 @@ import it.polimi.ingsw.Model.MessagesToClient.*;
  * @author redrick99
  */
 public class ChooseCardSlot extends Action {
-    private final int cardSlot;
+    private int cardSlot;
     private int rowCardToBuy;
     private int columnCardToBuy;
 
@@ -35,6 +35,10 @@ public class ChooseCardSlot extends Action {
      */
     public int getCardSlot() {
         return cardSlot;
+    }
+
+    public void setCardSlot(int cardSlot) {
+        this.cardSlot = cardSlot;
     }
 
     /**

@@ -28,6 +28,7 @@ public class Server {
     private int readyPlayers = 0;
     private static GameStatus serverStatus;
     private final Controller controller = new Controller();
+    private static boolean cheatMode = false;
 
     private static final Debugger DEBUGGER = DebuggerFactory.getDebugger(DebuggerType.SERVER);
 
@@ -62,6 +63,10 @@ public class Server {
     }
 
     public static void main(String[] args){
+
+        // Enables Cheats to be used on Server
+        cheatMode = true;
+
         int server_port=DEFAULT_PORT;
         if(args.length==2)
             if (args[0].toLowerCase(Locale.ROOT).equals("--port"))
@@ -268,5 +273,9 @@ public class Server {
     public synchronized void setAllReady(boolean ready) {
         for(ServerConnection connection : this.connections)
             connection.setReady(ready);
+    }
+
+    public static boolean isCheatMode() {
+        return cheatMode;
     }
 }

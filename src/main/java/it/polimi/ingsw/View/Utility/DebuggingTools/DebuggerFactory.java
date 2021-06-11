@@ -22,6 +22,14 @@ public class DebuggerFactory {
 
             case CLIENT_CONNECTION: return new ClientConnectionDebugger();
 
+            case CLI: return new CliDebugger();
+
+            case CLI_CONTROLLER: return new CliControllerDebugger();
+
+            case CONTROLLER: return new ControllerDebugger();
+
+            case MODEL: return new ModelDebugger();
+
             default: return new Debugger() {
 
             };

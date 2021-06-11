@@ -4,6 +4,8 @@ import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.Model.GameModel.Warehouse;
+import it.polimi.ingsw.View.Client.Client;
+import it.polimi.ingsw.View.User.CheatInterface.CliCheatController;
 import it.polimi.ingsw.View.Utility.ANSIColors;
 import it.polimi.ingsw.View.Utility.ANSIfont;
 import it.polimi.ingsw.View.ReducedModel.*;
@@ -296,6 +298,12 @@ public class CliController implements UserInterface {
                     if(action != null) {
                         return action;
                     }
+                }
+            }
+            else if(choice.equals("cheat") && Client.isCheatMode()) {
+                action = new CliCheatController().cheatParser();
+                if(action != null) {
+                    return action;
                 }
             }
             else

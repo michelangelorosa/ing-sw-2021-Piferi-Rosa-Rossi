@@ -2,6 +2,7 @@ package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.ControllerClasses.ActionController;
 import it.polimi.ingsw.Model.MessagesToClient.*;
+import it.polimi.ingsw.Model.MessagesToClient.CheatMessage.CheatMessage;
 
 import java.io.Serializable;
 
@@ -102,6 +103,12 @@ public class Action implements Serializable {
         for(ActionType type : actionController.getGame().getCurrentPlayer().getPossibleActions())
             message.addPossibleAction(type);
 
+        message.setError(this.response);
+        return message;
+    }
+
+    protected CheatMessage cheatMessage(ActionController actionController) {
+        CheatMessage message = new CheatMessage(actionController);
         message.setError(this.response);
         return message;
     }

@@ -53,6 +53,7 @@ public class ActionController {
             message = resetWarehouse.messagePrepare(this);
         }
         else if(action instanceof ChooseCardSlot) {
+            chooseCardSlot.setCardSlot(((ChooseCardSlot)action).getCardSlot());
             chooseCardSlot.doAction(this);
             message = chooseCardSlot.messagePrepare(this);
         }

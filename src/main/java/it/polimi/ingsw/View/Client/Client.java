@@ -24,6 +24,8 @@ public class Client {
     };
     private final Debugger DEBUGGER = DebuggerFactory.getDebugger(DebuggerType.CLIENT);
 
+    private static boolean cheatMode = false;
+
     /**
      * Default constructor
      * @param serverAddress The address to connect to
@@ -39,6 +41,10 @@ public class Client {
      * @param args          Command Line Arguments
      */
     public static void main(String[] args){
+
+        // TOGGLE CLIENT SIDE CHEAT MODE VIEWED BY CLIENT
+        // Has to also be active on Server to work.
+        cheatMode = true;
 
         /* !! HAS TO BE COMMENTED FOR THE DEBUGGER TO STOP !! */
         Debugger.setAllActive(true);
@@ -159,5 +165,9 @@ public class Client {
 
     public UserInteraction getUserInteraction() {
         return userInteraction;
+    }
+
+    public static boolean isCheatMode() {
+        return cheatMode;
     }
 }
