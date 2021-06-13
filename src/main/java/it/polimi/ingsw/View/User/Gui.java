@@ -1,8 +1,13 @@
 package it.polimi.ingsw.View.User;
+import it.polimi.ingsw.View.Client.Client;
+import it.polimi.ingsw.View.Client.ClientConnection;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -14,13 +19,15 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
 public class Gui extends Application{
 
-
     public static final CountDownLatch latch = new CountDownLatch(1);
     public static Gui gui = null;
+    @FXML private TextField port;
+    @FXML private TextField server;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -57,6 +64,42 @@ public class Gui extends Application{
 
     public Gui(){
         setStartUpTest(this);
+    }
+
+    /**
+     * Quits the game, invoked if the user clicks on "Exit" button
+     * @param event
+     */
+    public void close(ActionEvent event){
+        System.exit(0);
+    }
+
+    /**
+     * Takes the parameters from the fields, validates them and tries to create a new Socket
+     * @param event
+     */
+    public void addressPort(ActionEvent event) throws Exception {
+        ClientExceptionHandler gui = new ClientExceptionHandler();
+        gui.visualType(false);
+        try{
+            int portNo=Integer.parseInt(port.getText());
+            if(gui.addressValidator(server.getText()))
+                if(gui.portValidator(portNo)){
+                    ArrayList<Object> initial = new ArrayList<>();
+                    initial.add(server.getText());
+                    initial.add(portNo);
+                    Client client = new Client((String) initial.get(0),(int) initial.get(1));
+                    ArrayList<Object> arrayList = client.startUp(initial);
+                    if(arrayList.size()==2){
+                        GuiInitController guiInitController;
+                        guiInitController=new GuiInitController(client,(ClientConnection) arrayList.get(1),gui);
+                        guiInitController.nameSelection(event);
+                    }else
+                        System.out.println("Connection Error");
+                }
+        }catch (NumberFormatException e){
+            gui.guiError("Port number not valid!");
+        }
     }
 
 }

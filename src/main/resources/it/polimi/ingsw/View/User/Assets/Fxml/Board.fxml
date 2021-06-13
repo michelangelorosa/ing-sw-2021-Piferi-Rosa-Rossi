@@ -19,12 +19,12 @@
       </ImageView>
       <Pane layoutX="1191.0" layoutY="500.0" prefHeight="471.0" prefWidth="479.0">
          <children>
-            <ImageView fitHeight="270.0" fitWidth="178.0" layoutX="31.0" layoutY="72.0">
+            <ImageView fx:id="leader1" fitHeight="270.0" fitWidth="178.0" layoutX="31.0" layoutY="72.0">
                <image>
                   <Image url="@../Cards/F56.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="270.0" fitWidth="178.0" layoutX="239.0" layoutY="72.0">
+            <ImageView fx:id="leader2" fitHeight="270.0" fitWidth="178.0" layoutX="239.0" layoutY="72.0">
                <image>
                   <Image url="@../Cards/F56.png" />
                </image>
@@ -33,22 +33,22 @@
             <Button layoutX="296.0" layoutY="366.0" mnemonicParsing="false" text="Activate" />
             <Button layoutX="90.0" layoutY="407.0" mnemonicParsing="false" text="Discard" />
             <Button layoutX="297.0" layoutY="407.0" mnemonicParsing="false" text="Discard" />
-            <ImageView fitHeight="55.0" fitWidth="55.0" layoutX="62.0" layoutY="276.0">
+            <ImageView fx:id="leader1resource1" fitHeight="55.0" fitWidth="55.0" layoutX="62.0" layoutY="276.0">
                <image>
                   <Image url="@../Game/shield.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="55.0" fitWidth="55.0" layoutX="124.0" layoutY="276.0">
+            <ImageView fx:id="leader1resource2" fitHeight="55.0" fitWidth="55.0" layoutX="124.0" layoutY="276.0">
                <image>
                   <Image url="@../Game/shield.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="55.0" fitWidth="55.0" layoutX="270.0" layoutY="276.0">
+            <ImageView fx:id="leader2resource1" fitHeight="55.0" fitWidth="55.0" layoutX="270.0" layoutY="276.0">
                <image>
                   <Image url="@../Game/shield.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="55.0" fitWidth="55.0" layoutX="331.0" layoutY="276.0">
+            <ImageView fx:id="leader2resource2" fitHeight="55.0" fitWidth="55.0" layoutX="331.0" layoutY="276.0">
                <image>
                   <Image url="@../Game/shield.png" />
                </image>
@@ -106,77 +106,77 @@
                   <Font name="Baskerville" size="22.0" />
                </font>
             </Text>
-            <ImageView fx:id="warehouse1" fitHeight="55.0" fitWidth="55.0" layoutX="136.0" layoutY="105.0">
+            <ImageView fx:id="warehouse1" fitHeight="80.0" fitWidth="80.0" layoutX="123.0" layoutY="79.0">
                <image>
                   <Image url="@../Game/shield.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="warehouse21" fitHeight="55.0" fitWidth="49.0" layoutX="98.0" layoutY="170.0">
+            <ImageView fx:id="warehouse21" fitHeight="80.0" fitWidth="80.0" layoutX="76.0" layoutY="158.0">
                <image>
                   <Image url="@../Game/coin.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="warehouse22" fitHeight="55.0" fitWidth="49.0" layoutX="163.0" layoutY="170.0">
+            <ImageView fx:id="warehouse22" fitHeight="80.0" fitWidth="80.0" layoutX="148.0" layoutY="158.0">
                <image>
                   <Image url="@../Game/coin.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="warehouse31" fitHeight="55.0" fitWidth="55.0" layoutX="71.0" layoutY="251.0">
+            <ImageView fx:id="warehouse31" fitHeight="80.0" fitWidth="80.0" layoutX="57.0" layoutY="232.0">
                <image>
                   <Image url="@../Game/stone.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="warehouse32" fitHeight="55.0" fitWidth="55.0" layoutX="120.0" layoutY="251.0">
+            <ImageView fx:id="warehouse32" fitHeight="80.0" fitWidth="80.0" layoutX="116.0" layoutY="232.0">
                <image>
                   <Image url="@../Game/stone.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="warehouse33" fitHeight="55.0" fitWidth="55.0" layoutX="171.0" layoutY="251.0">
+            <ImageView fx:id="warehouse33" fitHeight="80.0" fitWidth="80.0" layoutX="175.0" layoutY="232.0">
                <image>
                   <Image url="@../Game/stone.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="270.0" fitWidth="178.0" layoutX="472.0" layoutY="191.0">
+            <ImageView fx:id="dev11" fitHeight="270.0" fitWidth="178.0" layoutX="472.0" layoutY="191.0">
                <image>
                   <Image url="@../Cards/F1.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="270.0" fitWidth="178.0" layoutX="472.0" layoutY="143.0">
+            <ImageView fx:id="dev12" fitHeight="270.0" fitWidth="178.0" layoutX="472.0" layoutY="143.0">
                <image>
                   <Image url="@../Cards/F1.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="270.0" fitWidth="178.0" layoutX="472.0" layoutY="90.0">
+            <ImageView fx:id="dev13" fitHeight="270.0" fitWidth="178.0" layoutX="472.0" layoutY="90.0">
                <image>
                   <Image url="@../Cards/F1.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="270.0" fitWidth="178.0" layoutX="701.0" layoutY="191.0">
+            <ImageView fx:id="dev21" fitHeight="270.0" fitWidth="178.0" layoutX="701.0" layoutY="191.0">
                <image>
                   <Image url="@../Cards/F1.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="270.0" fitWidth="178.0" layoutX="701.0" layoutY="143.0">
+            <ImageView fx:id="dev22" fitHeight="270.0" fitWidth="178.0" layoutX="701.0" layoutY="143.0">
                <image>
                   <Image url="@../Cards/F1.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="270.0" fitWidth="178.0" layoutX="701.0" layoutY="90.0">
+            <ImageView fx:id="dev23" fitHeight="270.0" fitWidth="178.0" layoutX="701.0" layoutY="90.0">
                <image>
                   <Image url="@../Cards/F1.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="270.0" fitWidth="178.0" layoutX="937.0" layoutY="191.0">
+            <ImageView fx:id="dev31" fitHeight="270.0" fitWidth="178.0" layoutX="937.0" layoutY="191.0">
                <image>
                   <Image url="@../Cards/F1.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="270.0" fitWidth="178.0" layoutX="937.0" layoutY="143.0">
+            <ImageView fx:id="dev32" fitHeight="270.0" fitWidth="178.0" layoutX="937.0" layoutY="143.0">
                <image>
                   <Image url="@../Cards/F1.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="270.0" fitWidth="178.0" layoutX="937.0" layoutY="90.0">
+            <ImageView fx:id="dev33" fitHeight="270.0" fitWidth="178.0" layoutX="937.0" layoutY="90.0">
                <image>
                   <Image url="@../Cards/F1.png" />
                </image>
@@ -224,174 +224,6 @@
             </GridPane>
          </children>
       </Pane>
-      <Pane layoutX="1187.0" prefHeight="564.0" prefWidth="473.0">
-         <children>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="1.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="293.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="181.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="91.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="383.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="181.0" layoutY="20.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="1.0" layoutY="20.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="91.0" layoutY="20.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="1.0" layoutY="45.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="91.0" layoutY="45.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="181.0" layoutY="45.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="1.0" layoutY="192.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="293.0" layoutY="192.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="181.0" layoutY="192.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="91.0" layoutY="192.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="383.0" layoutY="192.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="181.0" layoutY="212.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="1.0" layoutY="212.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="91.0" layoutY="212.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="1.0" layoutY="237.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="91.0" layoutY="237.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="181.0" layoutY="237.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="1.0" layoutY="384.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="293.0" layoutY="384.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="181.0" layoutY="384.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="91.0" layoutY="384.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="383.0" layoutY="384.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="181.0" layoutY="404.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="1.0" layoutY="404.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="91.0" layoutY="404.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="1.0" layoutY="429.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="91.0" layoutY="429.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="135.0" fitWidth="90.0" layoutX="181.0" layoutY="429.0">
-               <image>
-                  <Image url="@../Cards/F1.png" />
-               </image>
-            </ImageView>
-         </children></Pane>
       <Pane layoutX="1.0" layoutY="129.0" prefHeight="254.0" prefWidth="1190.0">
          <children>
             <ImageView fitHeight="254.0" fitWidth="1190.0" pickOnBounds="true" preserveRatio="true">

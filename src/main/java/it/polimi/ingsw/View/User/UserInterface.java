@@ -16,7 +16,7 @@ public interface UserInterface {
      *  - First element in the ArrayList -> String containing server address.
      *  - Second element in the ArrayList -> Integer containing server port.
      */
-    ArrayList<Object> init();
+    ArrayList<Object> initial();
 
     /**
      * Used to display a message while the player waits for all the other players to join.

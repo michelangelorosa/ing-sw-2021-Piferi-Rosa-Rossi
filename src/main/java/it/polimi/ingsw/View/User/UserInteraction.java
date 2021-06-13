@@ -2,7 +2,6 @@ package it.polimi.ingsw.View.User;
 
 import it.polimi.ingsw.Controller.Actions.Action;
 import it.polimi.ingsw.Controller.ControllerClasses.Observable;
-import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.Player;
@@ -150,7 +149,7 @@ public abstract class UserInteraction extends Observable<Action> {
      *          2 - int containing the port
      */
     public ArrayList<Object> connectToServer() {
-        return ui.init();
+        return ui.initial();
     }
 
     /**

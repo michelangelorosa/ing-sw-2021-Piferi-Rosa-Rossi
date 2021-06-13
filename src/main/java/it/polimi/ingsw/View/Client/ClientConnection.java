@@ -225,9 +225,9 @@ public class ClientConnection implements Runnable, Observer<Action> {
     }
 
     /**
-     * Sends a boolean to the server.
+     * Sends a number to the server.
      * Used for setting the player to be ready to play
-     * @param number        The number to send
+     * @param number          The number to send
      * @throws IOException    I/O error
      */
     public synchronized void send(int number) throws IOException{

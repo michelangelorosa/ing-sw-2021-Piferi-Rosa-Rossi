@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 public class ServerMessageHandler {
+    private int attempt=0;
     private static final String S = "[SERVER] ";
     private static final String SU = ANSIColors.FRONT_BRIGHT_BLUE + "[SERVER UTILITY] " + ANSIColors.RESET;
     private static final String SE = ANSIColors.FRONT_BRIGHT_RED + "[SERVER ERROR] " + ANSIColors.RESET;
@@ -32,11 +33,11 @@ public class ServerMessageHandler {
      *                              <b>false</b> if the client has to skip directly to the game
      */
     public boolean nameRequest(ServerConnection serverConnection) {
-
         String name;
         while(true) {
             DEBUGGER.printDebug("Sent request for Client's name (Action 0)");
             serverConnection.send(0);
+            attempt++;
             try {
                 name = serverConnection.getIn().readUTF();
                 System.out.print("[SmHANDLER] Got name: "+name);
@@ -112,7 +113,8 @@ public class ServerMessageHandler {
                         sendError(serverConnection, SE + "A game is already running in this server and you're not a player!\nGoodbye!");
                         serverConnection.close();
                         }
-                    //}
+                    if(attempt>50)
+                        serverConnection.close();
                 }
             } catch(IOException e) {
                 serverConnection.close();

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model.Server;
 
+import com.sun.jdi.request.ThreadDeathRequest;
 import it.polimi.ingsw.Controller.Actions.Action;
 import it.polimi.ingsw.Controller.ControllerClasses.Observable;
 import it.polimi.ingsw.Controller.ControllerClasses.Observer;
@@ -267,9 +268,10 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
     public void close(){
         try{
         socket.close();
-        Thread.currentThread().interrupt();
+        Thread.currentThread().stop();
         }catch (IOException e){
             System.err.println("IOError closing socket of "+socket.toString());
+            Thread.currentThread().interrupt();
         }
     }
 

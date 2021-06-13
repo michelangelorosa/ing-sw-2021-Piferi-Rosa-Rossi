@@ -31,7 +31,7 @@ public class CliTest {
     @Test
     public void initTest() {
         changeSystemIn("123123\n22222\n127.0.0.1\n1001010\n127.0.0.1\n22222");
-        ArrayList<Object> objects = ui.init();
+        ArrayList<Object> objects = ui.initial();
         assertEquals("127.0.0.1", objects.get(0));
         assertEquals(22222, objects.get(1));
         System.setIn(sysInBackup);

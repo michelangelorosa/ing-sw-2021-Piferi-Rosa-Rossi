@@ -6,8 +6,11 @@ import it.polimi.ingsw.View.Utility.DebuggingTools.Debugger;
 import it.polimi.ingsw.View.Utility.DebuggingTools.DebuggerFactory;
 import it.polimi.ingsw.View.Utility.DebuggingTools.DebuggerType;
 import javafx.application.Application;
+import javafx.stage.Stage;
 
+import java.awt.font.ShapeGraphicAttribute;
 import java.io.*;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.util.*;
 
@@ -17,9 +20,6 @@ public class Client {
     static private String serverAddress;
     static private int serverPort;
     private String user;
-    private boolean token;
-    private boolean myTurn;
-    private ClientConnection clientConnection;
     private static final UserInteraction userInteraction = new UserInteraction() {
     };
     private final Debugger DEBUGGER = DebuggerFactory.getDebugger(DebuggerType.CLIENT);
@@ -50,23 +50,23 @@ public class Client {
         Debugger.setAllActive(true);
 
        try{
-        //if (args[0].toLowerCase(Locale.ROOT).equals("--cli")) {
+        //if (args.length!=0&&args[0].toLowerCase(Locale.ROOT).equals("--cli")) {
             userInteraction.setUi(new CliController());
-
-
+            Client client = new Client("localhost", 8765);
+            client.startUp();
         //} else {
-           //new Thread(() -> Application.launch(Gui.class)).start();
-           //Gui.waitForStartUp();
+        //    new Thread(() -> Application.launch(Gui.class)).start();
+        //    Gui.waitForStartUp();
         //}
 
        }catch (Exception e) {
             System.err.println("Unable to start a Graphical Interface, shutting down");
+            System.err.println(e);
             System.exit(-1);
        }
-        Client client = new Client("localhost", 25565);
-       client.startUp();
 
     }
+
 
     /**
      * Once the user is able to interact with the game this method is called to try to establish a connection with the server for both listening and writing on the socket
@@ -97,9 +97,9 @@ public class Client {
     /**
      * Sets up the connection once the Player has input server and port in the Gui application
      * @param objects   the server and the port
-     * //TODO timer of connection, error with Gui so that the connection doesn't close the application and the user is informed
      */
-    public void startUp(ArrayList<Object> objects){
+    public ArrayList startUp(ArrayList<Object> objects){
+        ArrayList<Object> arrayList = new ArrayList<>();
         try {
             //serverAddress and serverPort have to be provided by the user
             serverAddress = (String)objects.get(0);
@@ -111,12 +111,22 @@ public class Client {
             ClientConnection clientConnection = new ClientConnection(this, socket);
             new Thread(clientConnection).start();
 
+            if(socket.isConnected()){
+                arrayList.add(this);
+                arrayList.add(clientConnection);
+            }else
+                arrayList.add(false);
         } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Error in creating connection!");
-            Thread.currentThread().interrupt();
-            System.exit(-1);
+            ClientExceptionHandler clientExceptionHandler = new ClientExceptionHandler();
+            try {
+                clientExceptionHandler.guiError(e.toString());
+            }catch (Exception e1)
+            {
+                System.err.println("Java Lang Exception in Gui. Shutting down");
+                System.exit(-1);
+            }
         }
+        return arrayList;
     }
 
     /**
@@ -133,21 +143,6 @@ public class Client {
     public void setUser(String user){
         this.user=user;
     }
-
-    /**
-     * Sets the token value; it has to be set <b>true</b> every time it's the player's turn and <b>false</b> once the token is used
-     */
-    public void setToken(boolean token) {
-        this.token = token;
-    }
-
-    /**
-     * Sets if it's the user's turn, otherwise the client won't be allowed to send messages
-     */
-    public void setMyTurn(boolean myTurn) {
-        this.myTurn = myTurn;
-    }
-
 
     /**
      * @return the server the Client is connected to
@@ -170,4 +165,8 @@ public class Client {
     public static boolean isCheatMode() {
         return cheatMode;
     }
+
+    public static void setUserInteraction(UserInterface userInterface) { userInteraction.setUi(userInterface);}
+
+
 }

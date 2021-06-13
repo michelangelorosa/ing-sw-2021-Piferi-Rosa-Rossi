@@ -67,7 +67,7 @@ public class CliController implements UserInterface {
      * @return An ArrayList of Objects containing the address String and the port int.
      */
     @Override
-    public ArrayList<Object> init() {
+    public ArrayList<Object> initial() {
         Scanner sc = new Scanner(System.in);
         String choice;
         String choice2;

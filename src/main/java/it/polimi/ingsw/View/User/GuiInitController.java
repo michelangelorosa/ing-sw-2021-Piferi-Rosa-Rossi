@@ -4,7 +4,10 @@ import it.polimi.ingsw.Model.Enums.Marble;
 import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.Model.Enums.SoloActionToken;
 import it.polimi.ingsw.View.Client.Client;
+import it.polimi.ingsw.View.Client.ClientConnection;
 import it.polimi.ingsw.View.ReducedModel.Game;
+import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -43,8 +46,10 @@ import java.util.ArrayList;
  * The interactions are sent to the GuiExceptionHandler for validation and visualization of the errors
  */
 public class GuiInitController implements UserInterface {
-    private Client client;
+    protected Client client;
     public MediaPlayer mediaPlayer;
+    public static boolean connected;
+    protected ClientConnection clientConnection;
     @FXML protected ImageView profilePic;
     @FXML private Label score;
     @FXML private TextField server;
@@ -63,16 +68,20 @@ public class GuiInitController implements UserInterface {
     @FXML private ChoiceBox<String> numberPlayers;
     @FXML private Button playerNumberConfirm;
 
-
-    private ClientExceptionHandler gui = new ClientExceptionHandler();
-
+    private ClientExceptionHandler gui;
 
     /**
-     * Sets GuiExceptionHandler to Gui mode so that it generates graphical popup
+     * Constructor for Gui
      */
-    public GuiInitController() {
-        gui.visualType(false);
+
+    public GuiInitController(Client client,ClientConnection clientConnection,ClientExceptionHandler clientExceptionHandler) {
+        this.client=client;
+        Client.setUserInteraction(this);
+        this.clientConnection=clientConnection;
+        this.gui=clientExceptionHandler;
+
     }
+
 
     /**
      * Currently unused, it's a test for loading a music piece
@@ -86,13 +95,7 @@ public class GuiInitController implements UserInterface {
         music(getClass().getResource("Assets/Music/Zigeunerweisen.mp3").toExternalForm());
     }
 
-    /**
-     * Quits the game, invoked if the user clicks on "Exit" button
-     * @param event
-     */
-    public void close(ActionEvent event){
-        System.exit(0);
-    }
+
 
     /**
      * Plays Music with Media Player
@@ -106,31 +109,6 @@ public class GuiInitController implements UserInterface {
             mediaPlayer.play();
     }
 
-    /**
-     * Checks if the user has inserted good or bad values in the Text Fields for the connection to the server
-     * @param event
-     * @throws Exception
-     */
-    public void addressPort(ActionEvent event) throws Exception {
-
-        GuiBoardController boardController = new GuiBoardController();
-        boardController.dragDrop(new Stage());
-
-        /*
-        int portNo;
-        try{
-            portNo=Integer.parseInt(port.getText());
-            if(gui.addressValidator(server.getText()))
-                if(gui.portValidator(portNo)){
-                    init();
-                    nameSelection(event);
-                }
-        }catch (NumberFormatException e){
-            gui.guiError("Port number not valid!");
-        }
-        */
-
-    }
 
     /**
      * Changes the scene from Server, Port selection to Name selection
@@ -141,6 +119,7 @@ public class GuiInitController implements UserInterface {
         Parent nameSelection;
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Assets/Fxml/Name.fxml"));
+        loader.setController(this);
         nameSelection = loader.load();
         Scene scene = new Scene(nameSelection);
 
@@ -195,13 +174,12 @@ public class GuiInitController implements UserInterface {
      * @throws Exception
      */
     public void nameValidation(ActionEvent event) throws Exception{
-
         String player=name.getText();
         if(gui.nameValidator(player))
         {
-         System.out.println("NAME OK: " +player);
-         playerNumberSelection(event);
-            //leaderCardSelection(event);
+            clientConnection.getClient().setUser(player);
+            clientConnection.send(player);
+            playerNumberSelection(event);
         }
     }
 
@@ -242,6 +220,14 @@ public class GuiInitController implements UserInterface {
         card3image.setImage(card3);
         card4image.setImage(card4);
         leaderCardCheck(event,loader);
+    }
+
+    /**
+     * Quits the game, invoked if the user clicks on "Exit" button
+     * @param event
+     */
+    public void close(ActionEvent event){
+        System.exit(0);
     }
 
     /**
@@ -353,7 +339,7 @@ public class GuiInitController implements UserInterface {
      * @param resourceType the resource to show
      * @return the image of the resource OR null if the resource type is null
      */
-    private Image getImage(ResourceType resourceType){
+    protected Image getImage(ResourceType resourceType){
         String source = "Assets/Game/";
         String resource;
         if(resourceType.equals(ResourceType.SERVANTS)){
@@ -373,7 +359,7 @@ public class GuiInitController implements UserInterface {
      * @param soloActionToken the token to show
      * @return the image of the token
      */
-    private Image getImage(SoloActionToken soloActionToken){
+    protected Image getImage(SoloActionToken soloActionToken){
         String source = "Assets/Game/";
         String token;
         if(soloActionToken.equals(SoloActionToken.DELETE2BLUE)){
@@ -407,12 +393,13 @@ public class GuiInitController implements UserInterface {
      * - First element in the ArrayList -> String containing server address.
      * - Second element in the ArrayList -> Integer containing server port.
      */
-    public ArrayList<Object> init() {
-        this.client=new Client(server.getText(),Integer.parseInt(port.getText()));
+    @Override
+    public ArrayList<Object> initial() {
         ArrayList<Object> objects = new ArrayList<>();
         objects.add(server.getText());
         objects.add(Integer.parseInt(port.getText()));
         client.startUp(objects);
+        Client.setUserInteraction(this);
         return objects;
     }
 
@@ -470,6 +457,7 @@ public class GuiInitController implements UserInterface {
     public void nextAction(UserInteraction userInteraction, UIActions action) {
 
     }
+
 
     /**
      * Used to display a message while the player waits for all the other players to join.
