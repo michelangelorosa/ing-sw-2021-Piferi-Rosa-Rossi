@@ -5,6 +5,7 @@ import it.polimi.ingsw.Controller.Actions.Action;
 import it.polimi.ingsw.Controller.ControllerClasses.Observable;
 import it.polimi.ingsw.Controller.ControllerClasses.Observer;
 import it.polimi.ingsw.Model.Enums.GameType;
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
 import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
@@ -80,7 +81,7 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
                 DEBUGGER.printDebug("Received action: " + action.getActionType() + " from "+this.name);
                 notify(action);
             }
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | ModelException e) {
             DEBUGGER.printDebug("Caught InterruptedException from " + this.name);
             e.printStackTrace();
         } finally{

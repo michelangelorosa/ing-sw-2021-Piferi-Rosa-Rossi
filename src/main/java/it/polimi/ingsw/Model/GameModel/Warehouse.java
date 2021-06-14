@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model.GameModel;
 
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.View.ReducedModel.RedWarehouse;
 import it.polimi.ingsw.View.ReducedModel.RedWarehouseDepot;
 
@@ -173,11 +174,10 @@ public class Warehouse extends RedWarehouse {
      * @param resourcesToRemove is the number of resources to be removed from the warehouse.
      * @param resourceType is the type of resource which are to be removed from the warehouse
      */
-    public void removeResourcesByType(int resourcesToRemove, ResourceType resourceType) {
+    public void removeResourcesByType(int resourcesToRemove, ResourceType resourceType) throws ModelException {
         int resourceCount;
         if(resourcesToRemove > this.countResourcesByType(resourceType)) {
-            System.err.println("Error: Warehouse doesn't have that many " + resourceType + " type resources");
-            return;
+            throw new ModelException("Error: Warehouse doesn't have that many " + resourceType + " type resources");
         }
 
         for(WarehouseDepot depot : ((WarehouseDepot[])warehouseDepots))

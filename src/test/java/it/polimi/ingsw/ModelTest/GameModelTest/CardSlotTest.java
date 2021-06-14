@@ -186,4 +186,11 @@ public class CardSlotTest {
         slotView = test.toView();
         assertEquals(3, slotView.getLevelOccupied());
     }
+
+    @Test
+    public void getCardsTest(){
+        test.addCard(card);
+        DevelopmentCard[] card = test.getCards();
+        assertEquals("1 100 BLUE ONE 0 1 2 3 2 6 13 16 31 0 0 0 0", card[0].toString());
+    }
 }

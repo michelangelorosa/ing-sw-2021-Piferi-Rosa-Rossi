@@ -3,6 +3,7 @@ package it.polimi.ingsw.Model.GameModel;
 import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Enums.SoloActionToken;
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.JSON.JSONReader;
 import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 
@@ -146,11 +147,12 @@ public class Game {
      * @param playerNames Names of all the players of the game
      * @param numberOfPlayers Number of the Players who are going to play.
      */
-    public void gameStartPlayers(ArrayList<String> playerNames, int numberOfPlayers) {
-        if(numberOfPlayers > 1)
+    public void gameStartPlayers(ArrayList<String> playerNames, int numberOfPlayers) throws ModelException {
+        if(numberOfPlayers > 1 && numberOfPlayers < 5)
             this.gameType = GameType.MULTIPLAYER;
         else if(numberOfPlayers == 1)
             this.gameType = GameType.SINGLEPLAYER;
+        else throw new ModelException("Too many players");
 
         if(this.gameType == GameType.MULTIPLAYER)
             this.multiplayerGameStartPlayers(playerNames);

@@ -7,6 +7,7 @@ import it.polimi.ingsw.CommonTestMethods;
 import it.polimi.ingsw.Controller.ControllerClasses.ActionController;
 import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.Game;
 import it.polimi.ingsw.Model.GameModel.ResourceStack;
 import it.polimi.ingsw.Model.MessagesToClient.BuyCardMessage;
@@ -58,7 +59,7 @@ public class BuyCardTest {
      * </ul>
      */
     @Test
-    public void doAction(){
+    public void doAction() throws ModelException {
         CommonTestMethods.gameInitOne(game);
         String response;
         CommonTestMethods.givePlayerLeaderCards(game.getCurrentPlayer(), game.getLeaderCards().get(2), game.getLeaderCards().get(1));

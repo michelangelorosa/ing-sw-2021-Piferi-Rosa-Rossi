@@ -53,13 +53,6 @@ public class DevelopmentCardDeck extends RedDevelopmentCardDeck {
     }
 
      /**
-      * Setter for "cardsInDeck" attribute in DevelopmentCardDeck
-      */
-     public void setCardsInDeck(int cardsInDeck) {
-         this.cardsInDeck = cardsInDeck;
-     }
-
-     /**
       * This method uses a java.util.Collections standard method tu shuffle all the cards in the deck.
       */
     public void shuffle() {

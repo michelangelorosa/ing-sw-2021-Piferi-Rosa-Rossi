@@ -2,6 +2,7 @@
 package it.polimi.ingsw.ViewTest;
 
 import it.polimi.ingsw.Model.Enums.*;
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.*;
 import it.polimi.ingsw.View.Utility.ANSIColors;
 import it.polimi.ingsw.View.User.CliController;
@@ -538,7 +539,7 @@ public class ToCliTest {
     }
 
     @Test
-    public void tableToCliTest() {
+    public void tableToCliTest() throws ModelException {
         RedDevelopmentCardTable table = new DevelopmentCardTable(tableCreator());
         ArrayList<String> tableString = table.toCli();
 

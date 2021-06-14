@@ -16,11 +16,9 @@ public class CardSlot extends RedCardSlot {
     }
 
     /**
-     * Setter for levelOccupied
+     * Setter for CardSlot
      */
-    public void setLevelOccupied(int levelOccupied) {
-        this.levelOccupied = levelOccupied;
-    }
+    public void setLevelOccupied(int levelOccupied){this.levelOccupied = levelOccupied;}
 
     /**
      * Getter for levelOccupied

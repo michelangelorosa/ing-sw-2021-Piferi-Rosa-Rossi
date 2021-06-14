@@ -4,6 +4,7 @@ package it.polimi.ingsw.Model.GameModel;
 import it.polimi.ingsw.Model.Enums.Color;
 import it.polimi.ingsw.Model.Enums.LeaderCardAction;
 import it.polimi.ingsw.Model.Enums.Level;
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.View.ReducedModel.RedDevelopmentCardDeck;
 import it.polimi.ingsw.View.ReducedModel.RedDevelopmentCardTable;
 import it.polimi.ingsw.Model.JSON.*;
@@ -121,13 +122,12 @@ public class DevelopmentCardTable extends RedDevelopmentCardTable {
      * @param column the deck's column index.
      * @return the requested Development Card.
      */
-    public DevelopmentCard getTopCardFromDeck(int row, int column) {
+    public DevelopmentCard getTopCardFromDeck(int row, int column) throws ModelException {
         RedDevelopmentCardDeck deck = getDeck(row, column);
         if(!deck.isEmpty())
             return ((DevelopmentCard)deck.getCards()[deck.getCardsInDeck() - 1]);
         else {
-            System.out.println("This deck is empty. Choose another deck!");
-            return null;
+            throw new ModelException("This deck is empty. Choose another deck!");
         }
     }
 
@@ -146,12 +146,12 @@ public class DevelopmentCardTable extends RedDevelopmentCardTable {
      * @param column the deck's column index.
      * @return the requested Development Card.
      */
-    public DevelopmentCard drawCardFromDeck(int row, int column) {
+    public DevelopmentCard drawCardFromDeck(int row, int column) throws ModelException {
         DevelopmentCardDeck deck = getDeck(row, column);
         if(!deck.isEmpty())
             return deck.drawCard();
         else
-            return null;
+            throw new ModelException("This deck is empty. Choose another deck!");
     }
 
     /**

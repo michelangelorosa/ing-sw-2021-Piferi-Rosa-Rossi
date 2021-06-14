@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import it.polimi.ingsw.Model.Enums.Marble;
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.*;
 import it.polimi.ingsw.View.ReducedModel.RedDevelopmentCardTable;
 import org.junit.Test;
@@ -73,14 +74,13 @@ public class DevelopmentCardTableTest {
         assertEquals("10 3 PURPLE ONE 0 3 0 0 0 0 2 0 1 1 0 1 0", deck.drawCard().toString());
         assertEquals("6 2 PURPLE ONE 1 1 1 0 0 0 1 0 1 0 0 0 0", deck.drawCard().toString());
         assertEquals("2 1 PURPLE ONE 0 2 0 0 0 0 0 1 0 0 0 0 1", deck.drawCard().toString());
-
     }
 
     /**
      * Test for "getTopCardFromDeck" DevelopmentCardTable Class.
      */
     @Test
-    public void getTopCardFromDeckTest() {
+    public void getTopCardFromDeckTest() throws ModelException {
         assertEquals("45 12 GREEN THREE 4 0 4 0 0 0 0 1 1 0 3 0 0", table.getTopCardFromDeck(0,0).toString());
         assertEquals("45 12 GREEN THREE 4 0 4 0 0 0 0 1 1 0 3 0 0", table.getTopCardFromDeck(0,0).toString());
         table.getDeck(0,0).drawCard();
@@ -98,13 +98,18 @@ public class DevelopmentCardTableTest {
         assertEquals("22 6 PURPLE TWO 0 3 2 0 0 1 1 0 3 0 0 0 0", table.getTopCardFromDeck(1,3).toString());
         table.getDeck(1,3).drawCard();
         assertEquals("18 5 PURPLE TWO 0 4 0 0 0 0 1 0 0 0 0 0 2", table.getTopCardFromDeck(1,3).toString());
+        table.getDeck(1,3).drawCard();
+        ModelException e = assertThrows(ModelException.class, ()->{table.getTopCardFromDeck(1,3);});
+        assertEquals("This deck is empty. Choose another deck!", e.getMessage());
+
+
     }
 
     /**
      * Test for "drawCardFromDeck" DevelopmentCardTable Class.
      */
     @Test
-    public void drawCardFromDeckTest() {
+    public void drawCardFromDeckTest() throws ModelException {
         assertEquals("45 12 GREEN THREE 4 0 4 0 0 0 0 1 1 0 3 0 0", table.drawCardFromDeck(0,0).toString());
         assertEquals("41 11 GREEN THREE 7 0 0 0 0 1 0 0 0 0 1 0 3", table.drawCardFromDeck(0,0).toString());
         assertEquals("37 10 GREEN THREE 5 2 0 0 0 1 1 0 2 0 0 2 1", table.drawCardFromDeck(0,0).toString());
@@ -124,13 +129,16 @@ public class DevelopmentCardTableTest {
         assertEquals("10 3 PURPLE ONE 0 3 0 0 0 0 2 0 1 1 0 1 0", table.drawCardFromDeck(2,3).toString());
         assertEquals("6 2 PURPLE ONE 1 1 1 0 0 0 1 0 1 0 0 0 0", table.drawCardFromDeck(2,3).toString());
         assertEquals("2 1 PURPLE ONE 0 2 0 0 0 0 0 1 0 0 0 0 1", table.drawCardFromDeck(2,3).toString());
+
+        ModelException e = assertThrows(ModelException.class, ()->{table.drawCardFromDeck(0,0);});
+        assertEquals("This deck is empty. Choose another deck!", e.getMessage());
     }
 
     /**
      * Test for "updateCardToBuyCost" method in DevelopmentCardTable Class.
      */
     @Test
-    public void updateCardToBuyCost() {
+    public void updateCardToBuyCost() throws ModelException {
         leaderRequirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
         discountCardOne = new LeaderCard(1, 1, discount1, leaderRequirements, discount1);
         discountCardTwo = new LeaderCard(2, 1, discount2, leaderRequirements, discount2);

@@ -2,6 +2,7 @@ package it.polimi.ingsw.Model.GameModel;
 
 import it.polimi.ingsw.Model.Enums.LeaderCardAction;
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -257,7 +258,7 @@ public class ResourceManager implements Serializable {
      * @param players All player's of the current game.
      * @param faithTrack Faith Track of the current game.
      */
-    public void remainingResourcesToFaith(Player player, ArrayList<Player> players, FaithTrack faithTrack) {
+    public void remainingResourcesToFaith(Player player, ArrayList<Player> players, FaithTrack faithTrack) throws ModelException {
         int faith = this.temporaryResourcesToPay.totalResourcesToInt();
         this.temporaryResourcesToPay = new ResourceStack(0,0,0,0);
         faithTrack.allAhead(player, players, faith);

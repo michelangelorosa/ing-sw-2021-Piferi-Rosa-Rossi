@@ -3,6 +3,7 @@ package it.polimi.ingsw.ModelTest.GameModelTest;
 import static org.junit.Assert.*;
 
 import it.polimi.ingsw.Model.Enums.VaticanReportSectionEnum;
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.VaticanReportSection;
 import it.polimi.ingsw.View.ReducedModel.RedVaticanReportSection;
 import org.junit.Test;
@@ -34,5 +35,12 @@ public class VaticanReportSectionEnumTest {
         assertSame(1, vaticanView.getBegin());
         assertSame(4, vaticanView.getEnd());
         assertSame(7, vaticanView.getPoints());
+    }
+
+    @Test
+    public void isCorrectTest(){
+        VaticanReportSection vatican = new VaticanReportSection(8, 1, 3);
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, ()->{vatican.isCorrect();});
+        assertEquals("Vatican Report Section index out of bound", e.getMessage());
     }
 }

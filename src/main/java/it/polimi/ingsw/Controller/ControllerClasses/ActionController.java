@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Controller.ControllerClasses;
 
 import it.polimi.ingsw.Controller.Actions.*;
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.Game;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 
@@ -48,22 +49,24 @@ public class ActionController {
     public synchronized void doAction(Action action) {
         MessageToClient message;
 
-        if(action instanceof ResetWarehouse) {
-            resetWarehouse.doAction(this);
-            message = resetWarehouse.messagePrepare(this);
+        try {
+            if (action instanceof ResetWarehouse) {
+                resetWarehouse.doAction(this);
+                message = resetWarehouse.messagePrepare(this);
+            } else if (action instanceof ChooseCardSlot) {
+                chooseCardSlot.doAction(this);
+                message = chooseCardSlot.messagePrepare(this);
+            } else if (action instanceof ChooseProductionOutput) {
+                chooseProductionOutput.doAction(this);
+                message = chooseProductionOutput.messagePrepare(this);
+            } else {
+                action.doAction(this);
+                message = action.messagePrepare(this);
+            }
         }
-        else if(action instanceof ChooseCardSlot) {
-            chooseCardSlot.setCardSlot(((ChooseCardSlot)action).getCardSlot());
-            chooseCardSlot.doAction(this);
-            message = chooseCardSlot.messagePrepare(this);
-        }
-        else if(action instanceof ChooseProductionOutput) {
-            chooseProductionOutput.doAction(this);
-            message = chooseProductionOutput.messagePrepare(this);
-        }
-        else {
-            action.doAction(this);
-            message = action.messagePrepare(this);
+        catch (ModelException e){
+            message = new MessageToClient();
+            //TODO create exception message
         }
 
         modelToView.notify(message);

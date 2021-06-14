@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.ControllerClasses.ActionController;
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 import it.polimi.ingsw.Model.MessagesToClient.CheatMessage.CheatMessage;
 
@@ -75,7 +76,7 @@ public class Action implements Serializable {
      * @param actionController Class used to compute Action messages coming from the Client.
      * @return A String to be used later to create a message to send to the Client.
      */
-    public String doAction(ActionController actionController) {
+    public String doAction(ActionController actionController) throws ModelException {
         return null;
     }
 

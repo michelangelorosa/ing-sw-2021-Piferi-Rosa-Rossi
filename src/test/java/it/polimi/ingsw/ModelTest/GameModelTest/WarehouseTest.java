@@ -3,6 +3,7 @@ package it.polimi.ingsw.ModelTest.GameModelTest;
 import static org.junit.Assert.*;
 
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.Warehouse;
 import it.polimi.ingsw.View.ReducedModel.RedWarehouse;
 import org.junit.Test;
@@ -217,7 +218,7 @@ public class WarehouseTest {
      * Test for "removeResourcesByType" method in Warehouse Class.
      */
     @Test
-    public void removeResourcesByTypeTest() {
+    public void removeResourcesByTypeTest() throws ModelException {
         warehouse.getWarehouseDepots()[0].setResourceType(ResourceType.SHIELDS);
         warehouse.getWarehouseDepots()[1].setResourceType(ResourceType.SERVANTS);
         warehouse.getWarehouseDepots()[2].setResourceType(ResourceType.STONES);
@@ -462,7 +463,7 @@ public class WarehouseTest {
      * Test for "resourceTypeFits" in Warehouse Class.
      */
     @Test
-    public void resourceTypeFitsTest() {
+    public void resourceTypeFitsTest() throws ModelException {
         warehouse.getWarehouseDepots()[0].setResourceType(ResourceType.SHIELDS);
         warehouse.getWarehouseDepots()[1].setResourceType(ResourceType.SERVANTS);
         warehouse.getWarehouseDepots()[2].setResourceType(ResourceType.STONES);
@@ -499,7 +500,7 @@ public class WarehouseTest {
      * Test for "emptyDepotExists" in Warehouse Class.
      */
     @Test
-    public void emptyDepotExistsTest() {
+    public void emptyDepotExistsTest() throws ModelException {
         warehouse.getWarehouseDepots()[0].setResourceType(ResourceType.SHIELDS);
         warehouse.getWarehouseDepots()[1].setResourceType(ResourceType.SERVANTS);
         warehouse.getWarehouseDepots()[2].setResourceType(ResourceType.STONES);

@@ -4,6 +4,7 @@ import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Model.Enums.Marble;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.Model.GameModel.LeaderRequirements;
 import it.polimi.ingsw.Model.GameModel.ResourceStack;
@@ -98,7 +99,7 @@ public class CliTest {
     }
 
     @Test
-    public void actionPickerTest() {
+    public void actionPickerTest() throws ModelException {
         game.getPlayers().get(0).getPossibleActions().add(ActionType.BUY_CARD);
         game.getPlayers().get(0).getPossibleActions().add(ActionType.ACTIVATE_PRODUCTION);
         game.getPlayers().get(0).getPossibleActions().add(ActionType.ACTIVATE_LEADERCARD);
@@ -167,7 +168,7 @@ public class CliTest {
     }
 
     @Test
-    public void buyCardTest() {
+    public void buyCardTest() throws ModelException {
         changeSystemIn("0");
         ui = new CliController();
         assertNull(ui.buyCard(game));
@@ -325,17 +326,20 @@ public class CliTest {
 
     @Test
     public void finalPointsTest() {
+        changeSystemIn("-1\n6\n2\n2\n1\n2");
         game.getPlayers().get(0).setVictoryPoints(10);
         game.getPlayers().get(1).setVictoryPoints(2);
         game.getPlayers().get(2).setVictoryPoints(100);
         game.getPlayers().get(3).setVictoryPoints(26);
-        game.getPlayers().get(2).setStatus(PlayerStatus.WON);
+        game.getPlayers().get(3).setStatus(PlayerStatus.WON);
 
         ui = new CliController();
-        ui.finalPoints(game);
+        ui.chooseCardSlot(game);
+        System.out.println("\n\n\n");
+        //ui.finalPoints(game);
 
-        game.getPlayers().get(3).setVictoryPoints(100);
-        game.getPlayers().get(3).setStatus(PlayerStatus.WON);
+        game.getPlayers().get(0).setVictoryPoints(101);
+        game.getPlayers().get(0).setStatus(PlayerStatus.WON);
 
         System.out.println("\n\n\n");
         ui.finalPoints(game);

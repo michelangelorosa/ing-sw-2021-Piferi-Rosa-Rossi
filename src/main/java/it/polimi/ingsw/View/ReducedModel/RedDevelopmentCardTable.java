@@ -1,6 +1,7 @@
 
 package it.polimi.ingsw.View.ReducedModel;
 
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.DevelopmentCardDeck;
 
 import java.io.Serializable;
@@ -39,7 +40,7 @@ public class RedDevelopmentCardTable implements Serializable {
      * @param column the deck's column index.
      * @return the requested Development Card.
      */
-    public RedDevelopmentCard getTopCardFromDeck(int row, int column) {
+    public RedDevelopmentCard getTopCardFromDeck(int row, int column) throws ModelException {
         RedDevelopmentCardDeck deck = getDeck(row, column);
         if(!deck.isEmpty())
             return deck.getCards()[deck.getCardsInDeck() - 1];
@@ -53,7 +54,7 @@ public class RedDevelopmentCardTable implements Serializable {
         return decks;
     }
 
-    public ArrayList<String> toCli() {
+    public ArrayList<String> toCli() throws ModelException {
         ArrayList<String> table = new ArrayList<>();
         ArrayList<String> column2 = new ArrayList<>();
         ArrayList<String> column3 = new ArrayList<>();

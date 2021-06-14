@@ -2,6 +2,7 @@ package it.polimi.ingsw.Model.Server;
 
 import it.polimi.ingsw.Controller.Actions.Action;
 import it.polimi.ingsw.Model.Enums.GameStatus;
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
 import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.Model.GameModel.ParamValidator;
@@ -165,12 +166,12 @@ public class ServerMessageHandler {
 
                 }
             }
-        }catch (IOException e){
+        }catch (IOException | ModelException e){
             serverConnection.close();
         }
     }
 
-    public void initialPhase(ServerConnection serverConnection) throws InterruptedException {
+    public void initialPhase(ServerConnection serverConnection) throws InterruptedException, ModelException {
         serverConnection.send(5);
         this.initialLeaderCards(serverConnection);
         serverConnection.waitReady();
@@ -194,7 +195,7 @@ public class ServerMessageHandler {
         }
     }
 
-    public void initialLeaderCards(ServerConnection serverConnection) throws InterruptedException {
+    public void initialLeaderCards(ServerConnection serverConnection) throws InterruptedException, ModelException {
         synchronized (serverConnection.getServer().getController()) {
             while(!serverConnection.isMyTurn()) {
                 serverConnection.getServer().getController().wait();
@@ -209,7 +210,7 @@ public class ServerMessageHandler {
         }
     }
 
-    public void initialResources(ServerConnection serverConnection) throws InterruptedException {
+    public void initialResources(ServerConnection serverConnection) throws InterruptedException, ModelException {
         synchronized (serverConnection.getServer().getController()) {
             while (!serverConnection.isMyTurn()) {
                 serverConnection.getServer().getController().wait();

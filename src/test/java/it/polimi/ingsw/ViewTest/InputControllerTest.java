@@ -2,6 +2,7 @@ package it.polimi.ingsw.ViewTest;
 
 import static org.junit.Assert.*;
 
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.*;
 import it.polimi.ingsw.View.User.InputController;
 import it.polimi.ingsw.View.ReducedModel.*;
@@ -140,7 +141,7 @@ public class InputControllerTest {
      * Test for checkBuyCard Method in InputController Class.
      */
     @Test
-    public void checkBuyCardTest() {
+    public void checkBuyCardTest() throws ModelException {
         Game game = gameCreator();
         game.setMyNickname("marco");
 

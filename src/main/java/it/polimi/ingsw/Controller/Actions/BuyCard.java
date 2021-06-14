@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.ControllerClasses.ActionController;
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
 import it.polimi.ingsw.Model.GameModel.DevelopmentCardSlots;
 import it.polimi.ingsw.Model.GameModel.Game;
@@ -78,7 +79,7 @@ public class BuyCard extends Action {
      * @return "SUCCESS" if the action went right, another String if it went wrong.
      */
     @Override
-    public String doAction(ActionController actionController) {
+    public String doAction(ActionController actionController) throws ModelException {
         if(!this.canDoAction(actionController))
             return ILLEGAL_ACTION;
 

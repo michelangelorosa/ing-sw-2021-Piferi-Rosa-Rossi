@@ -3,6 +3,7 @@ package it.polimi.ingsw.View.User;
 import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.Warehouse;
 import it.polimi.ingsw.View.Client.Client;
 import it.polimi.ingsw.View.User.CheatInterface.CliCheatController;
@@ -261,7 +262,7 @@ public class CliController implements UserInterface {
      * @param game Current game being played by the Player
      * @throws IllegalStateException if the Player does not have any Possible Action left.
      */
-    public Action actionPicker(Game game) throws IllegalStateException {
+    public Action actionPicker(Game game) throws IllegalStateException, ModelException {
         Player player = game.getMyPlayer();
         if(player.getPossibleActions() == null || player.getPossibleActions().isEmpty())
             throw new IllegalStateException("Player can't have zero possible actions");
@@ -364,7 +365,7 @@ public class CliController implements UserInterface {
     /**
      * Method used to print the Development Card Table.
      */
-    private void printDevTable(Game game) {
+    private void printDevTable(Game game) throws ModelException {
         printList(game.getDevelopmentCardTable().toCli());
     }
 
@@ -543,7 +544,7 @@ public class CliController implements UserInterface {
      * Method used by the player to generate a BuyCard message.
      * @return The requested action (null if the player chose to go back).
      */
-    public Action buyCard(Game game) {
+    public Action buyCard(Game game) throws ModelException {
         String choice;
         int row, column;
         printList(game.getDevelopmentCardTable().toCli());
@@ -942,6 +943,10 @@ public class CliController implements UserInterface {
 
     public void finalPoints(Game game) {
         ArrayList<String> winningPlayers = new ArrayList<>();
+        if(game.getMyPlayer().getStatus() == PlayerStatus.WON) System.out.println("YOU WON!");
+        else System.out.println(ANSIfont.BOLD + "YOU LOST" + ANSIfont.RESET);
+
+        System.out.println();
 
         System.out.println(ANSIColors.FINAL_POINTS + "THE GAME HAS ENDED!" + ANSIColors.RESET);
         System.out.println();
@@ -966,12 +971,30 @@ public class CliController implements UserInterface {
             else
                 System.out.print(ANSIfont.ITALIC + winningPlayers.get(i) + ANSIfont.RESET + ", ");
         }
+        if(game.getMyPlayer().getStatus() == PlayerStatus.WON){
+            System.out.println(" _______________ ");
+            System.out.println("|@@@@|     |####|");
+            System.out.println("|@@@@|     |####|");
+            System.out.println("|@@@@|     |####|");
+            System.out.println("\\@@@@|     |####/");
+            System.out.println(" \\@@@|     |###/ ");
+            System.out.println("  `@@|_____|##'  ");
+            System.out.println("        O        ");
+            System.out.println("    .-'''''-.    ");
+            System.out.println("  .'  * * *  `.  ");
+            System.out.println(" :  *       *  : ");
+            System.out.println(": ~   WINNER  ~ :");
+            System.out.println(" :  *       *  : ");
+            System.out.println("  `.  * * *  .'  ");
+            System.out.println("    `-.....-'    ");
+            System.out.println();
+        }
     }
 
     /**
      * Method needed to map the player's choice to the actual Action that has to be performed.
      */
-    public Action indexToAction(ActionType action, Game game) {
+    public Action indexToAction(ActionType action, Game game) throws ModelException {
         switch(action) {
             case MARKET_CHOOSE_ROW: return marketChooseRow(game);
 

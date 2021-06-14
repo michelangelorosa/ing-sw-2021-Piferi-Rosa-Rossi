@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import it.polimi.ingsw.Controller.ControllerClasses.ActionController;
 import it.polimi.ingsw.CommonTestMethods;
 import it.polimi.ingsw.Controller.Actions.*;
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.Game;
 import it.polimi.ingsw.Model.GameModel.Player;
 import it.polimi.ingsw.Model.GameModel.ResourceStack;
@@ -36,7 +37,7 @@ public class EndMarketTest {
      * Test for "doAction" and "messagePrepare" methods in EndMarket Class.
      */
     @Test
-    public void doActionTest() {
+    public void doActionTest() throws ModelException {
         EndMarket endMarket = new EndMarket();
         CommonTestMethods.gameInitOne(game);
         ResourceStack stack1 = new ResourceStack(1, 1, 1, 1);

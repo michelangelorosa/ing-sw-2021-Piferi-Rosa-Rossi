@@ -28,5 +28,4 @@ public class GameJSON {
         this.tokens = game.getTokens();
     }
 
-
 }

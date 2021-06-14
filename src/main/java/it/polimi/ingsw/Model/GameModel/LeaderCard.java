@@ -68,10 +68,6 @@ public class LeaderCard extends RedLeaderCard {
         return (ResourceStack) input;
     }
 
-    public static LeaderCard toModel(RedLeaderCard viewLeaderCard) {
-        return (LeaderCard) viewLeaderCard;
-    }
-
     public RedLeaderCard toView(){
         return (RedLeaderCard) this;
     }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.View.User;
 
 import it.polimi.ingsw.Controller.Actions.*;
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.View.Client.Client;
 import it.polimi.ingsw.View.Client.ClientConnection;
 
@@ -166,7 +167,7 @@ public class Cli implements Runnable{
      * <p>If the MessageToClient read is the same as the previous one sent by the Server, an error is displayed</p>
      * @throws IOException if an error occurs while sending the message.
      */
-    public void turnInteraction() throws IOException {
+    public void turnInteraction() throws IOException, ModelException {
         if(this.client.getUserInteraction().getPreviousMessage() == this.client.getUserInteraction().getMessage()) {
             this.cliController.displayError("Error: MessageToClient object is the same as before");
         }

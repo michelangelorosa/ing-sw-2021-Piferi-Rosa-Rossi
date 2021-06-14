@@ -3,6 +3,7 @@ package it.polimi.ingsw.ModelTest.GameModelTest;
 import static org.junit.Assert.*;
 
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.FaithCell;
 import it.polimi.ingsw.Model.GameModel.FaithTrack;
 import it.polimi.ingsw.Model.GameModel.Player;
@@ -148,7 +149,7 @@ public class FaithTrackTest {
      */
 
     @Test
-    public void allAheadTest() {
+    public void allAheadTest() throws ModelException {
 
         ArrayList<Player> players = new ArrayList<>();
         players.add(new Player("zero", 0, true));
@@ -302,6 +303,12 @@ public class FaithTrackTest {
         assertEquals(5, trackView.getONE().getBegin());
         assertEquals(8, trackView.getONE().getEnd());
         assertEquals(2, trackView.getONE().getPoints());
+        assertEquals(12, trackView.getTWO().getBegin());
+        assertEquals(16, trackView.getTWO().getEnd());
+        assertEquals(3, trackView.getTWO().getPoints());
+        assertEquals(19, trackView.getTHREE().getBegin());
+        assertEquals(24, trackView.getTHREE().getEnd());
+        assertEquals(4, trackView.getTHREE().getPoints());
         players.get(0).stepAhead(8);
         test.popeSpaceSector(players);
 

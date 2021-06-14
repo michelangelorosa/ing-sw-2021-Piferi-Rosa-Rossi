@@ -2,6 +2,7 @@ package it.polimi.ingsw.Model.GameModel;
 
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Enums.PopeTile;
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.View.ReducedModel.RedFaithTrack;
 import it.polimi.ingsw.View.ReducedModel.RedVaticanReportSection;
 
@@ -68,10 +69,9 @@ public class FaithTrack extends RedFaithTrack {
      * In this method all the players except for one, go ahead in the Faith Track.
      * This happens if the player is still on for the game.
      */
-    public boolean allAhead(Player player, ArrayList<Player> players, int steps) {
+    public boolean allAhead(Player player, ArrayList<Player> players, int steps) throws ModelException {
         if (player.getTurnPosition() < 0 || player.getTurnPosition() > 3) {
-            System.err.println("Error: No player corresponds to position " + player.getTurnPosition());
-            return false;
+            throw new ModelException("Error: No player corresponds to position " + player.getTurnPosition());
         }
         if (player.getTurnPosition() != 0 && players.get(0).getStatus() == PlayerStatus.IN_GAME)
             players.get(0).stepAhead(steps);
@@ -92,8 +92,8 @@ public class FaithTrack extends RedFaithTrack {
      * This method controls if any player arrives at the end of the track
      */
     public boolean checkFinishedTrack(ArrayList<Player> players) {
-        for (int i = 0; i < players.size(); i++) {
-            if (players.get(i).endTrack()) return true;
+        for (Player player : players) {
+            if (player.endTrack()) return true;
         }
         return false;
     }

@@ -4,6 +4,7 @@ import it.polimi.ingsw.CommonTestMethods;
 import it.polimi.ingsw.Controller.ControllerClasses.ActionController;
 import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -23,7 +24,7 @@ public class ActionTest {
     }
 
     @Test
-    public void ActionTestAll() {
+    public void ActionTestAll() throws ModelException {
         assertFalse(action.isCorrect());
         assertFalse(action.canBeApplied(actionController));
         assertNull(action.doAction(actionController));

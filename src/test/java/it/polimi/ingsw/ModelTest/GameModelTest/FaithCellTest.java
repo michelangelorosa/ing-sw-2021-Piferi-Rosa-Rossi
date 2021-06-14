@@ -11,6 +11,14 @@ import org.junit.Test;
 public class FaithCellTest {
     FaithCell[] cellToTest = JSONReader.ReadFaithCells();
     VaticanReportSection[] vaticanReportSections = JSONReader.ReadVaticanReportSection();
+
+    @Test
+    public void setterTest(){
+        FaithCell cell = new FaithCell(1, 1);
+        cell.setVictoryPoints(23);
+        assertEquals(23, cell.getVictoryPoints());
+
+    }
     /**
      * GetterTest
      */

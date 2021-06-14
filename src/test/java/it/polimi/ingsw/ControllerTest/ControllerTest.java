@@ -7,6 +7,7 @@ import it.polimi.ingsw.Controller.ControllerClasses.Controller;
 import it.polimi.ingsw.Controller.ControllerClasses.Observable;
 import static org.junit.Assert.*;
 
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.Player;
 import it.polimi.ingsw.Model.MessagesToClient.GameSetMessage;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
@@ -34,7 +35,7 @@ public class ControllerTest {
     }
 
     @Test
-    public void controllerTest() {
+    public void controllerTest() throws ModelException {
         ObservableClass observableClass = new ObservableClass();
         ControllerTestClass controller = new ControllerTestClass();
         ControllerTestClass controller2 = new ControllerTestClass();
@@ -71,7 +72,7 @@ public class ControllerTest {
     }
 
     @Test
-    public void controllerTest2() {
+    public void controllerTest2() throws ModelException {
         Action action = new Action();
         Controller controller = new Controller();
         ObservableClass observableClass = new ObservableClass();

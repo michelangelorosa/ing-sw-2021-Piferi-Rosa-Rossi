@@ -53,7 +53,6 @@ public class LeaderCardShuffle {
         }
             return cardsPicked;
         }catch (ArrayIndexOutOfBoundsException e){
-            System.err.println("Error: no more Leader Cards!");
             e.printStackTrace();
         }
             return null;

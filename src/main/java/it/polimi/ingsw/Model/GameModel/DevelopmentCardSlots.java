@@ -26,33 +26,6 @@ public class DevelopmentCardSlots extends RedDevelopmentCardSlots {
         return (CardSlot[]) slots;
     }
 
-    /**
-     * This method is used to sum all the production input by receiving an ArrayList of all the Cards that the player
-     * wants to use and create a new ResourceStack that contains the sum of the resources.
-     * @param inputs is the ArrayList of DevelopmentCards
-     * @return productionInput which is a ResourceStack that contains the sum of the resources needed
-     */
-    private ResourceStack getProductionInput(ArrayList<DevelopmentCard> inputs){
-        ResourceStack productionInput = new ResourceStack(0, 0, 0,0);
-        for(DevelopmentCard card : inputs){
-            productionInput.addToAllTypes(card.getInput());
-        }
-        return productionInput;
-    }
-
-    /**
-     * This method is used to sum all the production outputs by receiving an ArrayList of all the Cards that the player
-     * wants to use and create a new ResourceStack that contains the sum of the resources.
-     * @param outputs is the ArrayList of DevelopmentCards
-     * @return productionOutput which is a ResourceStack that contains the sum of the resources needed
-     */
-    private ResourceStack getProductionOutput(ArrayList<DevelopmentCard> outputs){
-        ResourceStack productionOutput = new ResourceStack(0, 0, 0,0);
-        for(DevelopmentCard card : outputs){
-            productionOutput.addToAllTypes(card.getInput());
-        }
-        return productionOutput;
-    }
 
     /**
      * If the player buys the seventh card he wins

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.ControllerClasses.ActionController;
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.Player;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 
@@ -27,17 +28,18 @@ public class EndMarket extends Action {
      * @return "SUCCESS", since a EndMarket action cannot encounter any error.
      */
     @Override
-    public String doAction(ActionController actionController) {
-        if(!this.canDoAction(actionController))
-            return ILLEGAL_ACTION;
+    public String doAction(ActionController actionController) throws ModelException {
+            if (!this.canDoAction(actionController))
+                return ILLEGAL_ACTION;
 
-        actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().remainingResourcesToFaith(actionController.getGame().getCurrentPlayer(), actionController.getGame().getPlayers(), actionController.getGame().getFaithTrack());
-        actionController.getResetWarehouse().emptyBackupResource();
+            actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().remainingResourcesToFaith(actionController.getGame().getCurrentPlayer(), actionController.getGame().getPlayers(), actionController.getGame().getFaithTrack());
+            actionController.getResetWarehouse().emptyBackupResource();
 
-        this.response = "SUCCESS";
-        actionController.getGame().getCurrentPlayer().clearPossibleActions();
-        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.END_TURN);
-        return "SUCCESS";
+            this.response = "SUCCESS";
+            actionController.getGame().getCurrentPlayer().clearPossibleActions();
+            actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.END_TURN);
+            return "SUCCESS";
+
     }
 
     /**
