@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.ControllerClasses.ActionController;
+import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.Model.MessagesToClient.InitChoseResourcesMessage;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
@@ -168,7 +169,8 @@ public class InitChooseResources extends Action{
         actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.BUY_CARD);
         actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.MARKET_CHOOSE_ROW);
         this.nickname = actionController.getGame().getCurrentPlayerNickname();
-        actionController.getGame().nextPlayer();
+        if(actionController.getGame().getGameType() == GameType.MULTIPLAYER)
+            actionController.getGame().nextPlayer();
 
         return "SUCCESS";
     }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ModelTest.MessageToClientTest;
 
+import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.MessagesToClient.GameSetMessage;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.User.CliController;
@@ -45,5 +46,10 @@ public class GameSetMessageTest {
         assertEquals(game.getFaithTrack(), userInteraction.getGame().getFaithTrack());
         assertEquals(game.getMarket(), userInteraction.getGame().getMarket());
         assertEquals(game.getDevelopmentCardTable(), userInteraction.getGame().getDevelopmentCardTable());
+        assertEquals(GameType.SINGLEPLAYER, userInteraction.getGame().getGameType());
+
+        userInteraction.getGame().getPlayers().remove(1);
+        message.updateView(userInteraction);
+        assertEquals(GameType.MULTIPLAYER, userInteraction.getGame().getGameType());
     }
 }

@@ -54,18 +54,24 @@ public class RedDevelopmentCardTable implements Serializable {
         return decks;
     }
 
-    public ArrayList<String> toCli() throws ModelException {
+    public ArrayList<String> toCli() {
         ArrayList<String> table = new ArrayList<>();
         ArrayList<String> column2 = new ArrayList<>();
         ArrayList<String> column3 = new ArrayList<>();
         ArrayList<String> column4 = new ArrayList<>();
         int i, j;
 
-        for(i = 0; i < 3; i++) {
-            table.addAll(this.getTopCardFromDeck(i, 0).toCli());
-            column2.addAll(this.getTopCardFromDeck(i, 1).toCli());
-            column3.addAll(this.getTopCardFromDeck(i, 2).toCli());
-            column4.addAll(this.getTopCardFromDeck(i, 3).toCli());
+
+        try {
+            for (i = 0; i < 3; i++) {
+                table.addAll(this.getTopCardFromDeck(i, 0).toCli());
+                column2.addAll(this.getTopCardFromDeck(i, 1).toCli());
+                column3.addAll(this.getTopCardFromDeck(i, 2).toCli());
+                column4.addAll(this.getTopCardFromDeck(i, 3).toCli());
+            }
+        }catch (ModelException e) {
+            System.out.println("Cannot draw from empty deck");
+            e.printStackTrace();
         }
 
         for(i = 0; i < table.size(); i++)

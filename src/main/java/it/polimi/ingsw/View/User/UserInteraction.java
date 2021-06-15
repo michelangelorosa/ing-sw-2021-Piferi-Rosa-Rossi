@@ -2,6 +2,7 @@ package it.polimi.ingsw.View.User;
 
 import it.polimi.ingsw.Controller.Actions.Action;
 import it.polimi.ingsw.Controller.ControllerClasses.Observable;
+import it.polimi.ingsw.Model.Enums.SoloActionToken;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.Player;
@@ -34,6 +35,7 @@ public abstract class UserInteraction extends Observable<Action> {
     private int initNumberOfResources = -1;
     private MessageToClient previousMessage;
     private MessageToClient message;
+    private SoloActionToken lorenzoToken;
 
     /**
      * Constructor for UserInteraction Class.
@@ -139,6 +141,14 @@ public abstract class UserInteraction extends Observable<Action> {
      */
     public boolean sameMessages() {
         return this.previousMessage == this.message;
+    }
+
+    public SoloActionToken getLorenzoToken() {
+        return lorenzoToken;
+    }
+
+    public void setLorenzoToken(SoloActionToken lorenzoToken) {
+        this.lorenzoToken = lorenzoToken;
     }
 
     /**

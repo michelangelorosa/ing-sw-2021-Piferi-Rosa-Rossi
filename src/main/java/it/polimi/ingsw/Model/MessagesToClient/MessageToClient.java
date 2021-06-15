@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
+import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.View.ReducedModel.Player;
 import it.polimi.ingsw.View.User.UIActions;
 import it.polimi.ingsw.View.User.UserInteraction;
@@ -147,7 +148,7 @@ public class MessageToClient implements Serializable {
      * @param userInteraction Class containing the instance of the reduced Game seen by the player.
      */
     protected void changePossibleActions(UserInteraction userInteraction) {
-        if(this.success())
+        if(this.success() || userInteraction.getGame().getGameType() == GameType.SINGLEPLAYER)
             this.getPlayer(userInteraction).setPossibleActions(this.possibleActions);
     }
 }

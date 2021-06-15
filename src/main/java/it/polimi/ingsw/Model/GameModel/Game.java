@@ -3,6 +3,7 @@ package it.polimi.ingsw.Model.GameModel;
 import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Enums.SoloActionToken;
+import it.polimi.ingsw.Model.GameModel.SinglePlayer.SinglePlayer;
 import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.JSON.JSONReader;
 import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
@@ -30,7 +31,8 @@ public class Game {
     private final DevelopmentCardTable developmentCardTable;
     private final FaithTrack faithTrack;
 
-    private final SoloActionToken[] tokens;
+    private final SinglePlayer singlePlayer = new SinglePlayer();
+
 
     /**
      * Constructor for Game Class.
@@ -44,7 +46,6 @@ public class Game {
         this.market = new Market();
         this.developmentCardTable = new DevelopmentCardTable();
         this.faithTrack = new FaithTrack();
-        this.tokens = new SoloActionToken[6];
     }
 
     /**
@@ -96,13 +97,6 @@ public class Game {
         return faithTrack;
     }
 
-    /**
-     * Getter for "tokens" attribute in Game Class.
-     */
-    public SoloActionToken[] getTokens() {
-        return tokens;
-    }
-
     public void setLeaderCards(ArrayList<LeaderCard> leaderCards) {
         this.leaderCards = leaderCards;
     }
@@ -112,6 +106,10 @@ public class Game {
      */
     public void setGameType(GameType gameType) {
         this.gameType = gameType;
+    }
+
+    public SinglePlayer getSinglePlayer() {
+        return singlePlayer;
     }
 
     /**

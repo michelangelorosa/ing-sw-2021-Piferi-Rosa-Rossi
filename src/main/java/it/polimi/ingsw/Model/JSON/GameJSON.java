@@ -16,8 +16,6 @@ public class GameJSON {
     private final DevelopmentCardTable developmentCardTable;
     private final FaithTrack faithTrack;
 
-    private final SoloActionToken[] tokens;
-
     public GameJSON(Game game) {
         this.type = game.getGameType();
         this.players = game.getPlayers();
@@ -25,7 +23,6 @@ public class GameJSON {
         this.market = game.getMarket();
         this.developmentCardTable = game.getDevelopmentCardTable();
         this.faithTrack = game.getFaithTrack();
-        this.tokens = game.getTokens();
     }
 
 }

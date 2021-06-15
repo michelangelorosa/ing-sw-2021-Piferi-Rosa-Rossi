@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
+import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.View.ReducedModel.Player;
 import it.polimi.ingsw.View.ReducedModel.RedDevelopmentCardTable;
 import it.polimi.ingsw.View.ReducedModel.RedFaithTrack;
@@ -74,6 +75,10 @@ public class GameSetMessage extends MessageToClient{
         userInteraction.getGame().setDevelopmentCardTable(this.table);
         userInteraction.getGame().setMarket(this.market);
         userInteraction.getGame().setFaithTrack(this.faithTrack);
+        if(this.players.get(1).getNickname().equals("Lorenzo il Magnifico"))
+            userInteraction.getGame().setGameType(GameType.SINGLEPLAYER);
+        else
+            userInteraction.getGame().setGameType(GameType.MULTIPLAYER);
         userInteraction.setMessage(this);
 
         this.displayAction(userInteraction);

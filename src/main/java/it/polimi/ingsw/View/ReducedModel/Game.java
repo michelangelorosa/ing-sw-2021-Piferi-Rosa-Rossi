@@ -153,6 +153,10 @@ public class Game {
     }
 
     public ArrayList<String> boardToCli(Player player){
+        if(player.getNickname().equals("Lorenzo il Magnifico")) {
+            return lorenzoToCli();
+        }
+
         boolean up = false;
         ArrayList<String> leader;
         ArrayList<String> board;
@@ -186,6 +190,12 @@ public class Game {
 
     public ArrayList<String> myBoardToCli() {
         return this.boardToCli(this.getMyPlayer());
+    }
+
+    public ArrayList<String> lorenzoToCli() {
+        ArrayList<String> lorenzo = new ArrayList<>();
+        lorenzo.add("HELLO! IM LORENZO'S BOARD!");
+        return lorenzo;
     }
 
     public Player getMyPlayer() throws IllegalStateException{

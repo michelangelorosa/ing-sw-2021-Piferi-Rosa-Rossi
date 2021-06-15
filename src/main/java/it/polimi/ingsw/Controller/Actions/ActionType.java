@@ -32,6 +32,7 @@ public enum ActionType {
     DELETE_LEADERCARD("Discard Leader Card"),
 
     END_TURN("End Turn"),
+    END_TURN_SINGLEPLAYER("End Turn Singleplayer"),
 
     FINAL_POINTS("Final Points"),
 

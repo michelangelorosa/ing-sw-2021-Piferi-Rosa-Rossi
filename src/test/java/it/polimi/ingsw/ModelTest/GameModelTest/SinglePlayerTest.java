@@ -1,11 +1,16 @@
 package it.polimi.ingsw.ModelTest.GameModelTest;
 
+import it.polimi.ingsw.CommonTestMethods;
+import it.polimi.ingsw.Model.Enums.Color;
+import it.polimi.ingsw.Model.GameModel.DevelopmentCardDeck;
+import it.polimi.ingsw.Model.GameModel.DevelopmentCardTable;
+import it.polimi.ingsw.Model.GameModel.Game;
 import it.polimi.ingsw.Model.GameModel.Player;
-import it.polimi.ingsw.Model.GameModel.SinglePlayer;
+import it.polimi.ingsw.Model.GameModel.SinglePlayer.SinglePlayer;
 import it.polimi.ingsw.Model.Enums.SoloActionToken;
 import org.junit.Test;
 
-import java.util.ArrayList;
+import java.util.Random;
 
 import static org.junit.Assert.*;
 
@@ -15,7 +20,24 @@ import static org.junit.Assert.*;
 
 public class SinglePlayerTest {
 
-    SinglePlayer singlePlayer = new SinglePlayer();
+    static class SinglePlayerTestClass extends SinglePlayer {
+        public SinglePlayerTestClass() {
+            super();
+        }
+
+        @Override
+        protected void tokenParser(Game game, SoloActionToken token) {
+            super.tokenParser(game, token);
+        }
+
+        @Override
+        protected Player getLorenzo(Game game) {
+            return super.getLorenzo(game);
+        }
+    }
+    SinglePlayerTestClass singlePlayer = new SinglePlayerTestClass();
+    Game game = new Game();
+
 
     /**
      * Testing the initial conditions of the SinglePlayer game
@@ -24,61 +46,40 @@ public class SinglePlayerTest {
      */
     @Test
     public void constructorTest(){
-        SoloActionToken[] token = singlePlayer.getTokens(singlePlayer);
-        int BLACKCROSSPLUS2=0, BLACKCROSSSHUFFLE=0, DELETE2BLUE=0, DELETE2PURPLE=0, DELETE2YELLOW=0, DELETE2GREEN=0;
-        for(int i=0;i<7;i++){
-            if(token[i]==SoloActionToken.BLACKCROSSPLUS2)
-                BLACKCROSSPLUS2++;
-            else
-                if(token[i]==SoloActionToken.BLACKCROSSSHUFFLE)
-                    BLACKCROSSSHUFFLE++;
-                else
-                    if(token[i]==SoloActionToken.DELETE2BLUE)
-                        DELETE2BLUE++;
-                    else
-                        if (token[i]==SoloActionToken.DELETE2GREEN)
-                            DELETE2GREEN++;
-                        else
-                            if(token[i]==SoloActionToken.DELETE2PURPLE)
-                                DELETE2PURPLE++;
-                            else
-                                if(token[i]==SoloActionToken.DELETE2YELLOW)
-                                    DELETE2YELLOW++;
-        }
-        assertEquals(2,BLACKCROSSPLUS2);
-        assertEquals(1,BLACKCROSSSHUFFLE);
-        assertEquals(1,DELETE2BLUE);
-        assertEquals(1,DELETE2GREEN);
-        assertEquals(1,DELETE2YELLOW);
-        assertEquals(1,DELETE2PURPLE);
+        assertEquals(0, singlePlayer.getLorenzoCards());
+        assertEquals(0, singlePlayer.getLorenzoFaithPoints());
+        assertFalse(singlePlayer.hasLorenzoWon());
+
     }
 
     /**
      * Tests the actionTokenHandler method for the actions due in SinglePlayer Game
      */
     @Test
-    public void actionTokenHandlerTest(){
-        SoloActionToken[] soloActionTokens=singlePlayer.getTokens(singlePlayer);
-    Player lorenzo,player;
-    lorenzo=new Player("Lorenzo il Magnifico",-1,false);
-    player=new Player("player",0,false);
-    ArrayList<Player> players = new ArrayList<>();
-    players.add(lorenzo);
-    players.add(player);
-    SoloActionToken testToken;
-    //(SoloActionToken actionToken,SoloActionToken[] soloActionToken,ArrayList<Player> players){
-        /*
-          BlackCross+2 test: expected behaviour:
-          Lorenzo's faith position has to increase by 2
-         */
-        singlePlayer.actionTokenHandler(SoloActionToken.BLACKCROSSPLUS2,soloActionTokens,players);
-        assertEquals(2,lorenzo.getFaithTrackPosition());
-        /*
-          BlackCrossShuffle test: expected behaviour:
-          Lorenzo's faith position has to increase by 1
-          Token deck has to be shuffled
-         */
-        singlePlayer.actionTokenHandler(SoloActionToken.BLACKCROSSSHUFFLE,soloActionTokens,players);
-        assertEquals(3,lorenzo.getFaithTrackPosition());
+    public void lorenzoTurnTest(){
+        game.join("Pippo");
+        game.join("Lorenzo il Magnifico");
+
+        assertEquals(game.getPlayers().get(1), singlePlayer.getLorenzo(game));
+
+        for(SoloActionToken t : SoloActionToken.values())
+            singlePlayer.tokenParser(game, t);
+
+        assertEquals(4, singlePlayer.getLorenzoCards());
+        assertEquals(3, singlePlayer.getLorenzoFaithPoints());
+
+        singlePlayer.lorenzoTurn(game);
+
+        DevelopmentCardTable table = game.getDevelopmentCardTable();
+
+        for(int i = 0; i < 3; i++)
+            for(int j = 0; j < 4; j++)
+                while(!table.getDeck(i, j).isEmpty())
+                    table.getDeck(i, j).drawCard();
+
+        singlePlayer.tokenParser(game, SoloActionToken.DELETE2BLUE);
+        assertTrue(singlePlayer.hasLorenzoWon());
+
+        SoloActionToken token = singlePlayer.getLastToken();
     }
 }

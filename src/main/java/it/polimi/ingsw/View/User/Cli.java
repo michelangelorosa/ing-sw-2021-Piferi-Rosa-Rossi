@@ -51,7 +51,7 @@ public class Cli implements Runnable{
                 e.printStackTrace();
             }
 
-        } while (action != UIActions.FINAL_POINTS);
+        } while (action != UIActions.FINAL_POINTS && action != UIActions.SINGLEPLAYER_END_LOST && action != UIActions.SINGLEPLAYER_END_WON);
 
         //TODO ending message "thanks for playing"
         System.out.println("[INFO] Closing Cli Thread...");
@@ -83,10 +83,17 @@ public class Cli implements Runnable{
 
             case PLAY_TURN: this.turnInteraction();
                 break;
-
             case FINAL_POINTS: this.finalPoints();
                 break;
 
+            case SINGLEPLAYER_TURN: this.singleplayerTurn();
+                break;
+
+            case SINGLEPLAYER_END_WON: this.singleplayerEndWon();
+                break;
+
+            case SINGLEPLAYER_END_LOST: this.singleplayerEndLost();
+                break;
 
             default: System.out.println("Can't understand Message, turning back...");
         }
@@ -175,6 +182,19 @@ public class Cli implements Runnable{
             Action action = this.cliController.actionPicker(this.client.getUserInteraction().getGame());
             this.clientConnection.send(action);
         }
+    }
+
+    public void singleplayerTurn() throws Exception {
+        this.cliController.showToken(this.client.getUserInteraction().getLorenzoToken());
+        this.actionParser(UIActions.PLAY_TURN);
+    }
+
+    public void singleplayerEndWon() {
+        this.cliController.finalSingleplayer(this.client.getUserInteraction().getGame(), true);
+    }
+
+    public void singleplayerEndLost() {
+        this.cliController.finalSingleplayer(this.client.getUserInteraction().getGame(), false);
     }
 
     /**

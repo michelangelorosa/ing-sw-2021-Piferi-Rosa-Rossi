@@ -40,6 +40,11 @@ public class EndTurn extends Action {
         if(!this.canDoAction(actionController))
             return ILLEGAL_ACTION;
 
+        actionController.getGame().getCurrentPlayer().clearPossibleActions();
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.ACTIVATE_PRODUCTION);
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.BUY_CARD);
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.MARKET_CHOOSE_ROW);
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
 
         int idlePlayers = 0;
         this.currentPlayer = actionController.getGame().getCurrentPlayerNickname();
@@ -60,20 +65,24 @@ public class EndTurn extends Action {
                     this.response = "ALL PLAYERS DISCONNECTED";
                     return "ALL PLAYERS DISCONNECTED";
                 } else {
-                    actionController.getGame().getCurrentPlayer().clearPossibleActions();
-                    actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.ACTIVATE_PRODUCTION);
-                    actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.BUY_CARD);
-                    actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.MARKET_CHOOSE_ROW);
-                    actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
 
                     actionController.getGame().nextPlayer();
                     while (actionController.getGame().getCurrentPlayer().getStatus() == PlayerStatus.IDLE)
                         actionController.getGame().nextPlayer();
                 }
             }
+            this.response = "SUCCESS";
         }
-
-        this.response = "SUCCESS";
+        else {
+            actionController.getGame().getSinglePlayer().lorenzoTurn(actionController.getGame());
+            //TODO messaggio nel market nel caso lorenzo vinca prima
+            if(actionController.getGame().getCurrentPlayer().hasFinished())
+                this.response = "SINGLEPLAYER WIN";
+            else if(actionController.getGame().getSinglePlayer().hasLorenzoWon())
+                this.response = "SINGLEPLAYER LOOSE";
+            else
+                this.response = "SINGLEPLAYER";
+        }
         return "SUCCESS";
     }
 
@@ -85,8 +94,6 @@ public class EndTurn extends Action {
     public MessageToClient messagePrepare(ActionController actionController) {
         if (this.response.equals(ILLEGAL_ACTION))
             return illegalAction(new EndTurnMessage(this.currentPlayer), actionController);
-
-
 
         if(this.lastPlayerTurn) {
             FinalPointsMessage message = new FinalPointsMessage(this.currentPlayer);
@@ -103,7 +110,7 @@ public class EndTurn extends Action {
 
             return message;
         }
-        else {
+        else if(this.response.equals("SUCCESS")){
             EndTurnMessage message = new EndTurnMessage(this.currentPlayer);
 
             message.setError(this.response);
@@ -116,5 +123,21 @@ public class EndTurn extends Action {
 
             return message;
         }
+        else {
+            EndTurnSingleplayerMessage message = new EndTurnSingleplayerMessage(this.currentPlayer);
+
+            message.setError(this.response);
+            message.setToken(actionController.getGame().getSinglePlayer().getLastToken());
+            message.setVictoryPoints(actionController.getGame().getCurrentPlayer().getVictoryPoints());
+            message.setLorenzoFaith(actionController.getGame().getSinglePlayer().getLorenzoFaithPoints());
+
+            message.addPossibleAction(ActionType.ACTIVATE_PRODUCTION);
+            message.addPossibleAction(ActionType.BUY_CARD);
+            message.addPossibleAction(ActionType.MARKET_CHOOSE_ROW);
+            message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
+
+            return message;
+        }
+
     }
 }

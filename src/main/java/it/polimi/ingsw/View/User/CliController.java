@@ -3,7 +3,7 @@ package it.polimi.ingsw.View.User;
 import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Enums.ResourceType;
-import it.polimi.ingsw.Model.Exceptions.ModelException;
+import it.polimi.ingsw.Model.Enums.SoloActionToken;
 import it.polimi.ingsw.Model.GameModel.Warehouse;
 import it.polimi.ingsw.View.Client.Client;
 import it.polimi.ingsw.View.User.CheatInterface.CliCheatController;
@@ -262,7 +262,7 @@ public class CliController implements UserInterface {
      * @param game Current game being played by the Player
      * @throws IllegalStateException if the Player does not have any Possible Action left.
      */
-    public Action actionPicker(Game game) throws IllegalStateException, ModelException {
+    public Action actionPicker(Game game) throws IllegalStateException {
         Player player = game.getMyPlayer();
         if(player.getPossibleActions() == null || player.getPossibleActions().isEmpty())
             throw new IllegalStateException("Player can't have zero possible actions");
@@ -365,7 +365,7 @@ public class CliController implements UserInterface {
     /**
      * Method used to print the Development Card Table.
      */
-    private void printDevTable(Game game) throws ModelException {
+    private void printDevTable(Game game) {
         printList(game.getDevelopmentCardTable().toCli());
     }
 
@@ -544,7 +544,7 @@ public class CliController implements UserInterface {
      * Method used by the player to generate a BuyCard message.
      * @return The requested action (null if the player chose to go back).
      */
-    public Action buyCard(Game game) throws ModelException {
+    public Action buyCard(Game game) {
         String choice;
         int row, column;
         printList(game.getDevelopmentCardTable().toCli());
@@ -941,6 +941,12 @@ public class CliController implements UserInterface {
         }
     }
 
+    public void showToken(SoloActionToken token) {
+        System.out.println(ANSIfont.BOLD + ANSIfont.ITALIC + "Lorenzo il Magnifico" + ANSIfont.RESET + ANSIfont.BOLD + " has drawn the following token:" + ANSIfont.RESET);
+        for(String s : token.toCli())
+            System.out.println(s);
+    }
+
     public void finalPoints(Game game) {
         ArrayList<String> winningPlayers = new ArrayList<>();
         if(game.getMyPlayer().getStatus() == PlayerStatus.WON) System.out.println("YOU WON!");
@@ -991,10 +997,26 @@ public class CliController implements UserInterface {
         }
     }
 
+    public void finalSingleplayer(Game game, boolean youWon) {
+        if(youWon)
+            this.singleplayerWinner();
+        else
+            this.singleplayerLooser();
+        System.out.println(ANSIfont.BOLD + "You made: " + game.getPlayers().get(0).getVictoryPoints() + " points!");
+    }
+
+    public void singleplayerWinner() {
+        System.out.println(ANSIfont.BOLD + ANSIColors.FRONT_BRIGHT_GREEN + "CONGRATULATIONS! YOU WON! Lorenzo il Magnifico is no more!" + ANSIfont.RESET + "\n");
+    }
+
+    public void singleplayerLooser() {
+        System.out.println(ANSIfont.BOLD + ANSIColors.BACK_BRIGHT_RED + "Oh no... YOU LOST! Lorenzo il Magnifico will live on forever!" + ANSIfont.RESET + "\n");
+    }
+
     /**
      * Method needed to map the player's choice to the actual Action that has to be performed.
      */
-    public Action indexToAction(ActionType action, Game game) throws ModelException {
+    public Action indexToAction(ActionType action, Game game) {
         switch(action) {
             case MARKET_CHOOSE_ROW: return marketChooseRow(game);
 

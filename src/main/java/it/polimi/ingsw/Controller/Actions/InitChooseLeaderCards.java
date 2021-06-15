@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.ControllerClasses.ActionController;
+import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.Model.MessagesToClient.InitChoseLeaderCardsMessage;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
@@ -60,7 +61,8 @@ public class InitChooseLeaderCards extends Action{
         actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[0] = (LeaderCard)leaderCard1;
         actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[1] = (LeaderCard)leaderCard2;
         this.nickname = actionController.getGame().getCurrentPlayerNickname();
-        actionController.getGame().nextPlayer();
+        if(actionController.getGame().getGameType() == GameType.MULTIPLAYER)
+            actionController.getGame().nextPlayer();
 
         this.response = "SUCCESS";
         return "SUCCESS";
