@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.io.*;
 
+import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.Model.Enums.*;
 import it.polimi.ingsw.Model.GameModel.*;
 
@@ -17,10 +18,8 @@ public class ConvertToJSON {
     /**
      * Method to convert an Array of FaithCell in a JSON file-
      * @param cells is an array of FaithCell
-     * @return
      * @throws FileNotFoundException
      */
-
     public void covertFaith(FaithCell[] cells, VaticanReportSection[] reportSections) throws FileNotFoundException {
         FaithCell[] cell = new FaithCell[25];
         VaticanReportSection[] vaticanReportSections = new VaticanReportSection[3];
@@ -39,7 +38,7 @@ public class ConvertToJSON {
 
         for(int i = 0; i < 25; i++) {
 
-            int id, victoryPoints, vatican = 0, pope = 0;
+            int id, victoryPoints;
 
             id = cells[i].getIdCell();
             victoryPoints = cells[i].getVictoryPoints();
@@ -230,7 +229,7 @@ public class ConvertToJSON {
             else if(statusTemp == PlayerStatus.LOST) status = 2;
             else status = 3;
 
-            player.add(new PlayerJSON(nickname, turnPosition, hasInkwell, status, faithTrackPosition));
+            player.add(new PlayerJSON(nickname, turnPosition, hasInkwell, statusTemp, faithTrackPosition));
         }
 
         Gson gson = new Gson();
@@ -292,7 +291,7 @@ public class ConvertToJSON {
         }
         Gson gson = new Gson();
         String json = gson.toJson(cardJSONS);
-        String temp = new String();
+        String temp;
         temp = "\"DevelopmentCards\": " + json;
 
         return temp;
@@ -393,9 +392,8 @@ public class ConvertToJSON {
      * Method to convert an Array of FaithCell in a String.
      * @param cells is an Array of FaithCell.
      * @return a String in json template.
-     * @throws FileNotFoundException
      */
-    public String covertFaithString(FaithCell[] cells) throws FileNotFoundException {
+    public String covertFaithString(FaithCell[] cells){
         FaithCell[] cell = new FaithCell[25];
 
         for(int i = 0; i < 25; i++) {
@@ -418,9 +416,8 @@ public class ConvertToJSON {
      * Method to convert an Array of VaticanReportSection in a String
      * @param reportSections is an Array of VaticanReportSection
      * @return a String in json template.
-     * @throws FileNotFoundException
      */
-    public String covertVaticanString(VaticanReportSection[] reportSections) throws FileNotFoundException {
+    public String covertVaticanString(VaticanReportSection[] reportSections){
         VaticanReportSection[] vaticanReportSections = new VaticanReportSection[3];
 
         for(int i = 0; i < 3; i++){
@@ -457,12 +454,8 @@ public class ConvertToJSON {
             int turnPosition = value.getTurnPosition();
             boolean hasInkwell = value.hasInkwell();
             int faithTrackPosition = value.getFaithTrackPosition();
-            if (statusTemp == PlayerStatus.IN_GAME) status = 0;
-            else if (statusTemp == PlayerStatus.IDLE) status = 1;
-            else if (statusTemp == PlayerStatus.LOST) status = 2;
-            else status = 3;
 
-            player.add(new PlayerJSON(nickname, turnPosition, hasInkwell, status, faithTrackPosition));
+            player.add(new PlayerJSON(nickname, turnPosition, hasInkwell, statusTemp, faithTrackPosition));
         }
 
         Gson gson = new Gson();
@@ -474,5 +467,120 @@ public class ConvertToJSON {
 
 
 
+    public String createJSON(String title, String body){
+        Gson gson = new Gson();
+        String json = gson.toJson(body);
+        return "\""+ title +"\": " + json;
+    }
 
+    public String covertPlayerDisconnectionString(ArrayList<Player> players) {
+
+        ArrayList<PlayerJSON> player = new ArrayList<>();
+
+        for (Player value : players) {
+
+            PlayerStatus statusTemp = value.getStatus();
+            PopeTile popeTile0 = value.getPopeTiles()[0].getPopeTile();
+            PopeTile popeTile1 = value.getPopeTiles()[1].getPopeTile();
+            PopeTile popeTile2 = value.getPopeTiles()[2].getPopeTile();
+
+            String nickname = value.getNickname();
+            int turnPosition = value.getTurnPosition();
+            boolean hasInkwell = value.hasInkwell();
+            int faithTrackPosition = value.getFaithTrackPosition();
+            int victory = value.getVictoryPoints();
+
+            int depot0Max = value.getBoard().getResourceManager().getWarehouse().getWarehouseDepots()[0].getMaxResources();
+            int depot0Stored = value.getBoard().getResourceManager().getWarehouse().getWarehouseDepots()[0].getStoredResources();
+            ResourceType depot0Type = value.getBoard().getResourceManager().getWarehouse().getWarehouseDepots()[0].getResourceType();
+            boolean depot0IsLeader = value.getBoard().getResourceManager().getWarehouse().getWarehouseDepots()[0].isFromLeaderCardAbility();
+
+            int depot1Max = value.getBoard().getResourceManager().getWarehouse().getWarehouseDepots()[1].getMaxResources();
+            int depot1Stored = value.getBoard().getResourceManager().getWarehouse().getWarehouseDepots()[1].getStoredResources();
+            ResourceType depot1Type = value.getBoard().getResourceManager().getWarehouse().getWarehouseDepots()[1].getResourceType();
+            boolean depot1IsLeader = value.getBoard().getResourceManager().getWarehouse().getWarehouseDepots()[1].isFromLeaderCardAbility();
+
+
+            int depot2Max = value.getBoard().getResourceManager().getWarehouse().getWarehouseDepots()[2].getMaxResources();
+            int depot2Stored = value.getBoard().getResourceManager().getWarehouse().getWarehouseDepots()[2].getStoredResources();
+            ResourceType depot2Type = value.getBoard().getResourceManager().getWarehouse().getWarehouseDepots()[2].getResourceType();
+            boolean depot2IsLeader = value.getBoard().getResourceManager().getWarehouse().getWarehouseDepots()[2].isFromLeaderCardAbility();
+            int leader0;
+            {
+                if(value.getBoard().getLeaderCards()[0] != null)
+                    leader0 = value.getBoard().getLeaderCards()[0].getCardId();
+                else leader0 = -1;
+            }
+            int leader1;
+            {
+                if(value.getBoard().getLeaderCards()[1] != null)
+                    leader1 = value.getBoard().getLeaderCards()[1].getCardId();
+                else leader1 = -1;
+            }
+            boolean CHOOSE_ACTION, GAME_SET,INIT_CHOOSE_RESOURCES, INIT_CHOOSE_LEADER_CARDS, MARKET_CHOOSE_ROW, CHOOSE_LEADER_CARD, ADD_RESOURCE, SWITCH_DEPOT, RESET_WAREHOUSE, END_MARKET, BUY_CARD, PAY_RESOURCE_CARD, PAY_RESOURCE_PRODUCTION, END_PAY_CARD, CHOOSE_CARD_SLOT, ACTIVATE_PRODUCTION, END_PAY_PRODUCTION, CHOOSE_PRODUCTION_OUTPUT, ACTIVATE_LEADERCARD, DELETE_LEADERCARD, END_TURN, FINAL_POINTS;
+
+            CHOOSE_ACTION = value.getPossibleActions().contains(ActionType.CHOOSE_ACTION);
+            GAME_SET = value.getPossibleActions().contains(ActionType.GAME_SET);
+            INIT_CHOOSE_RESOURCES = value.getPossibleActions().contains(ActionType.INIT_CHOOSE_RESOURCES);
+            INIT_CHOOSE_LEADER_CARDS = value.getPossibleActions().contains(ActionType.INIT_CHOOSE_LEADER_CARDS);
+            MARKET_CHOOSE_ROW = value.getPossibleActions().contains(ActionType.MARKET_CHOOSE_ROW);
+            CHOOSE_LEADER_CARD = value.getPossibleActions().contains(ActionType.CHOOSE_LEADER_CARD);
+            ADD_RESOURCE = value.getPossibleActions().contains(ActionType.ADD_RESOURCE);
+            SWITCH_DEPOT = value.getPossibleActions().contains(ActionType.SWITCH_DEPOT);
+            RESET_WAREHOUSE = value.getPossibleActions().contains(ActionType.RESET_WAREHOUSE);
+            END_MARKET = value.getPossibleActions().contains(ActionType.END_MARKET);
+            BUY_CARD = value.getPossibleActions().contains(ActionType.BUY_CARD);
+            PAY_RESOURCE_CARD = value.getPossibleActions().contains(ActionType.PAY_RESOURCE_CARD);
+            PAY_RESOURCE_PRODUCTION = value.getPossibleActions().contains(ActionType.PAY_RESOURCE_PRODUCTION);
+            END_PAY_CARD = value.getPossibleActions().contains(ActionType.END_PAY_CARD);
+            CHOOSE_CARD_SLOT = value.getPossibleActions().contains(ActionType.CHOOSE_CARD_SLOT);
+            ACTIVATE_PRODUCTION = value.getPossibleActions().contains(ActionType.ACTIVATE_PRODUCTION);
+            END_PAY_PRODUCTION = value.getPossibleActions().contains(ActionType.END_PAY_PRODUCTION);
+            CHOOSE_PRODUCTION_OUTPUT = value.getPossibleActions().contains(ActionType.CHOOSE_PRODUCTION_OUTPUT);
+            ACTIVATE_LEADERCARD = value.getPossibleActions().contains(ActionType.ACTIVATE_LEADERCARD);
+            DELETE_LEADERCARD = value.getPossibleActions().contains(ActionType.DELETE_LEADERCARD);
+            END_TURN = value.getPossibleActions().contains(ActionType.END_TURN);
+            FINAL_POINTS = value.getPossibleActions().contains(ActionType.FINAL_POINTS);
+
+            player.add(new PlayerJSON(nickname, turnPosition, hasInkwell, statusTemp, faithTrackPosition, victory, popeTile0, popeTile1, popeTile2, depot0Max, depot1Max, depot2Max, depot0Stored, depot1Stored, depot2Stored, depot0IsLeader, depot1IsLeader, depot2IsLeader, depot0Type, depot1Type, depot2Type, leader0, leader1, CHOOSE_ACTION, GAME_SET,INIT_CHOOSE_RESOURCES, INIT_CHOOSE_LEADER_CARDS, MARKET_CHOOSE_ROW, CHOOSE_LEADER_CARD, ADD_RESOURCE, SWITCH_DEPOT, RESET_WAREHOUSE, END_MARKET, BUY_CARD, PAY_RESOURCE_CARD, PAY_RESOURCE_PRODUCTION, END_PAY_CARD, CHOOSE_CARD_SLOT, ACTIVATE_PRODUCTION, END_PAY_PRODUCTION, CHOOSE_PRODUCTION_OUTPUT, ACTIVATE_LEADERCARD, DELETE_LEADERCARD, END_TURN, FINAL_POINTS));
+        }
+
+        Gson gson = new Gson();
+        String json = gson.toJson(player);
+        String temp;
+        temp = "\"PlayersName\": " + json;
+        return temp;
+    }
+
+    public String convertMarket(Game game){
+        MarketJSON market = new MarketJSON(game.getMarket().getMarbles()[0][0], game.getMarket().getMarbles()[0][1], game.getMarket().getMarbles()[0][2], game.getMarket().getMarbles()[0][3], game.getMarket().getMarbles()[1][0], game.getMarket().getMarbles()[1][1], game.getMarket().getMarbles()[1][2], game.getMarket().getMarbles()[1][3], game.getMarket().getMarbles()[2][0], game.getMarket().getMarbles()[2][1], game.getMarket().getMarbles()[2][2], game.getMarket().getMarbles()[2][3], game.getMarket().getExtraMarble());
+        Gson gson = new Gson();
+        String json = gson.toJson(market);
+        String temp;
+        temp = "\"Marble\": " + json;
+        return temp;
+    }
+
+    public String convertDevelopmentCardDeck(Game game){
+        DevelopmentCardDeckJSON deck = new DevelopmentCardDeckJSON(game.getDevelopmentCardTable().getDeck(0,0).getCardsInDeck(), game.getDevelopmentCardTable().getDeck(0,1).getCardsInDeck(), game.getDevelopmentCardTable().getDeck(0,2).getCardsInDeck(), game.getDevelopmentCardTable().getDeck(0,3).getCardsInDeck(), game.getDevelopmentCardTable().getDeck(1,0).getCardsInDeck(), game.getDevelopmentCardTable().getDeck(1,1).getCardsInDeck(), game.getDevelopmentCardTable().getDeck(1,2).getCardsInDeck(), game.getDevelopmentCardTable().getDeck(1,3).getCardsInDeck(), game.getDevelopmentCardTable().getDeck(2,0).getCardsInDeck(), game.getDevelopmentCardTable().getDeck(2,1).getCardsInDeck(), game.getDevelopmentCardTable().getDeck(2,2).getCardsInDeck(), game.getDevelopmentCardTable().getDeck(2,3).getCardsInDeck(), game.getDevelopmentCardTable().getDeck(0,0).getCards()[0].getCardId(), game.getDevelopmentCardTable().getDeck(0,0).getCards()[1].getCardId(), game.getDevelopmentCardTable().getDeck(0,0).getCards()[2].getCardId(), game.getDevelopmentCardTable().getDeck(0,0).getCards()[3].getCardId(), game.getDevelopmentCardTable().getDeck(0,1).getCards()[0].getCardId(), game.getDevelopmentCardTable().getDeck(0,1).getCards()[1].getCardId(), game.getDevelopmentCardTable().getDeck(0,1).getCards()[2].getCardId(), game.getDevelopmentCardTable().getDeck(0,1).getCards()[3].getCardId(), game.getDevelopmentCardTable().getDeck(0,2).getCards()[0].getCardId(), game.getDevelopmentCardTable().getDeck(0,2).getCards()[1].getCardId(), game.getDevelopmentCardTable().getDeck(0,2).getCards()[2].getCardId(), game.getDevelopmentCardTable().getDeck(0,2).getCards()[3].getCardId(), game.getDevelopmentCardTable().getDeck(0,3).getCards()[0].getCardId(), game.getDevelopmentCardTable().getDeck(0,3).getCards()[1].getCardId(), game.getDevelopmentCardTable().getDeck(0,3).getCards()[2].getCardId(), game.getDevelopmentCardTable().getDeck(0,3).getCards()[3].getCardId(), game.getDevelopmentCardTable().getDeck(1,0).getCards()[0].getCardId(), game.getDevelopmentCardTable().getDeck(1,0).getCards()[1].getCardId(), game.getDevelopmentCardTable().getDeck(1,0).getCards()[2].getCardId(), game.getDevelopmentCardTable().getDeck(1,0).getCards()[3].getCardId(), game.getDevelopmentCardTable().getDeck(1,1).getCards()[0].getCardId(), game.getDevelopmentCardTable().getDeck(1,1).getCards()[1].getCardId(), game.getDevelopmentCardTable().getDeck(1,1).getCards()[2].getCardId(), game.getDevelopmentCardTable().getDeck(1,1).getCards()[3].getCardId(), game.getDevelopmentCardTable().getDeck(1,2).getCards()[0].getCardId(), game.getDevelopmentCardTable().getDeck(1,2).getCards()[1].getCardId(), game.getDevelopmentCardTable().getDeck(1,2).getCards()[2].getCardId(), game.getDevelopmentCardTable().getDeck(1,2).getCards()[3].getCardId(), game.getDevelopmentCardTable().getDeck(1,3).getCards()[0].getCardId(), game.getDevelopmentCardTable().getDeck(1,3).getCards()[1].getCardId(), game.getDevelopmentCardTable().getDeck(1,3).getCards()[2].getCardId(), game.getDevelopmentCardTable().getDeck(1,3).getCards()[3].getCardId(), game.getDevelopmentCardTable().getDeck(2,0).getCards()[0].getCardId(), game.getDevelopmentCardTable().getDeck(2,0).getCards()[1].getCardId(), game.getDevelopmentCardTable().getDeck(2,0).getCards()[2].getCardId(), game.getDevelopmentCardTable().getDeck(2,0).getCards()[3].getCardId(), game.getDevelopmentCardTable().getDeck(2,1).getCards()[0].getCardId(), game.getDevelopmentCardTable().getDeck(2,1).getCards()[1].getCardId(), game.getDevelopmentCardTable().getDeck(2,1).getCards()[2].getCardId(), game.getDevelopmentCardTable().getDeck(2,1).getCards()[3].getCardId(), game.getDevelopmentCardTable().getDeck(2,2).getCards()[0].getCardId(), game.getDevelopmentCardTable().getDeck(2,2).getCards()[1].getCardId(), game.getDevelopmentCardTable().getDeck(2,2).getCards()[2].getCardId(), game.getDevelopmentCardTable().getDeck(2,2).getCards()[3].getCardId(), game.getDevelopmentCardTable().getDeck(2,3).getCards()[0].getCardId(), game.getDevelopmentCardTable().getDeck(2,3).getCards()[1].getCardId(), game.getDevelopmentCardTable().getDeck(2,3).getCards()[2].getCardId(), game.getDevelopmentCardTable().getDeck(2,3).getCards()[3].getCardId());
+        Gson gson = new Gson();
+        String json = gson.toJson(deck);
+        String temp;
+        temp = "\"DevelopmentCardDeck\": " + json;
+        return temp;
+    }
+
+
+    public void convertGame(Game game) throws FileNotFoundException {
+        String player = covertPlayerDisconnectionString(game.getPlayers());
+        String type = "SINGLEPLAYER";
+        if(game.getGameType() == GameType.MULTIPLAYER) type = "MULTIPLAYER";
+        String gameType = createJSON("GameType", type);
+        String market = convertMarket(game);
+        String deck = convertDevelopmentCardDeck(game);
+
+        try (PrintWriter out = new PrintWriter("src/main/resources/JSON/Disconnection.json")) {
+            out.println("{"+ player + "," + gameType + "," + market + "," + deck + "," + "}");
+        }
+    }
 }

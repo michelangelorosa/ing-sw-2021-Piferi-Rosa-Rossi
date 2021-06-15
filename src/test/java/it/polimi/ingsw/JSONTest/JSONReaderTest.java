@@ -378,17 +378,20 @@ public class JSONReaderTest {
         assertEquals(3, vaticanReportSections[1].getPoints());
         assertEquals(4, vaticanReportSections[2].getPoints());
     }
-
+/*
     @Test
     public void ReadPlayers() {
 
-        ArrayList<Player> players = JSONReader.ReadPlayersName();
+        ArrayList<Player> players = JSONReader.playersDisconnections();
 
-        assertEquals("Zero", players.get(0).getNickname());
-        assertEquals(PlayerStatus.IDLE, players.get(0).getStatus());
-        assertEquals(12, players.get(0).getFaithTrackPosition());
+        assertEquals("Giacomo", players.get(0).getNickname());
+        assertEquals(PlayerStatus.IN_GAME, players.get(0).getStatus());
+        assertEquals(0, players.get(0).getFaithTrackPosition());
         assertEquals(false, players.get(3).hasInkwell());
+        System.out.println(players.get(0).getPossibleActions());
     }
+
+ */
 
 
 
