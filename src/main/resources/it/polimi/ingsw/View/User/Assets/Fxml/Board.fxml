@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -8,7 +9,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="950.0" prefWidth="1660.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -86,26 +86,6 @@
                   <Image url="@../Game/stone.png" />
                </image>
             </ImageView>
-            <Text fx:id="strongboxShields" fill="WHITE" layoutX="88.0" layoutY="456.0" strokeType="OUTSIDE" strokeWidth="0.0" text="256" wrappingWidth="33.953125">
-               <font>
-                  <Font name="Baskerville" size="22.0" />
-               </font>
-            </Text>
-            <Text fx:id="strongboxCoins" fill="WHITE" layoutX="88.0" layoutY="512.0" strokeType="OUTSIDE" strokeWidth="0.0" text="256" wrappingWidth="33.953125">
-               <font>
-                  <Font name="Baskerville" size="22.0" />
-               </font>
-            </Text>
-            <Text fx:id="strongboxServants" fill="WHITE" layoutX="171.0" layoutY="456.0" strokeType="OUTSIDE" strokeWidth="0.0" text="256" wrappingWidth="33.953125">
-               <font>
-                  <Font name="Baskerville" size="22.0" />
-               </font>
-            </Text>
-            <Text fx:id="strongboxStones" fill="WHITE" layoutX="171.0" layoutY="512.0" strokeType="OUTSIDE" strokeWidth="0.0" text="256" wrappingWidth="33.953125">
-               <font>
-                  <Font name="Baskerville" size="22.0" />
-               </font>
-            </Text>
             <ImageView fx:id="warehouse1" fitHeight="80.0" fitWidth="80.0" layoutX="123.0" layoutY="79.0">
                <image>
                   <Image url="@../Game/shield.png" />
@@ -181,6 +161,26 @@
                   <Image url="@../Cards/F1.png" />
                </image>
             </ImageView>
+            <Label fx:id="strongboxServants" layoutX="171.0" layoutY="436.0" text="256" textFill="WHITE">
+               <font>
+                  <Font name="Baskerville" size="22.0" />
+               </font>
+            </Label>
+            <Label fx:id="strongboxStones" layoutX="171.0" layoutY="491.0" text="256" textFill="WHITE">
+               <font>
+                  <Font name="Baskerville" size="22.0" />
+               </font>
+            </Label>
+            <Label fx:id="strongboxCoins" layoutX="84.0" layoutY="491.0" text="256" textFill="WHITE">
+               <font>
+                  <Font name="Baskerville" size="22.0" />
+               </font>
+            </Label>
+            <Label fx:id="strongboxShields" layoutX="84.0" layoutY="436.0" text="256" textFill="WHITE">
+               <font>
+                  <Font name="Baskerville" size="22.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Pane layoutX="1.0" layoutY="-7.0" prefHeight="240.0" prefWidth="1190.0">

@@ -1,11 +1,17 @@
 package it.polimi.ingsw.View.User;
 
+import it.polimi.ingsw.Controller.Actions.Action;
+import it.polimi.ingsw.Controller.Actions.EndMarket;
+import it.polimi.ingsw.Controller.Actions.EndTurn;
+import it.polimi.ingsw.Controller.Actions.InitChooseLeaderCards;
 import it.polimi.ingsw.Model.Enums.Marble;
 import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.Model.Enums.SoloActionToken;
+import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.View.Client.Client;
 import it.polimi.ingsw.View.Client.ClientConnection;
 import it.polimi.ingsw.View.ReducedModel.Game;
+import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -19,6 +25,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.Axis;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
@@ -28,6 +35,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javafx.scene.image.ImageView ;
@@ -46,11 +54,12 @@ import java.util.ArrayList;
  * The interactions are sent to the GuiExceptionHandler for validation and visualization of the errors
  */
 public class GuiInitController implements UserInterface {
+    protected static Stage guiStage;
     protected Client client;
-    public MediaPlayer mediaPlayer;
-    public static boolean connected;
+    protected MediaPlayer mediaPlayer;
     protected ClientConnection clientConnection;
-    @FXML protected ImageView profilePic;
+    protected GuiBoardController board;
+    @FXML private Button nameConfirm;
     @FXML private Label score;
     @FXML private TextField server;
     @FXML private TextField port;
@@ -67,8 +76,10 @@ public class GuiInitController implements UserInterface {
     @FXML private ImageView card4image;
     @FXML private ChoiceBox<String> numberPlayers;
     @FXML private Button playerNumberConfirm;
-
-    private ClientExceptionHandler gui;
+    @FXML private Button gameSettings;
+    @FXML private Button readyToPlay;
+    protected ClientExceptionHandler gui;
+    protected ActionEvent event;
 
     /**
      * Constructor for Gui
@@ -76,10 +87,16 @@ public class GuiInitController implements UserInterface {
 
     public GuiInitController(Client client,ClientConnection clientConnection,ClientExceptionHandler clientExceptionHandler) {
         this.client=client;
-        Client.setUserInteraction(this);
+        //Client.setUserInteraction(this);
         this.clientConnection=clientConnection;
         this.gui=clientExceptionHandler;
+    }
 
+    public static Stage getStage() {
+        return guiStage;
+    }
+    public static void setStage(Stage stage) {
+        guiStage=stage;
     }
 
 
@@ -116,6 +133,7 @@ public class GuiInitController implements UserInterface {
      * @throws Exception
      */
     public void nameSelection(ActionEvent event) throws Exception{
+        this.event=event;
         Parent nameSelection;
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Assets/Fxml/Name.fxml"));
@@ -124,16 +142,16 @@ public class GuiInitController implements UserInterface {
         Scene scene = new Scene(nameSelection);
 
         //Getting the stage information
-        Stage window = (Stage)(((Node)event.getSource()).getScene().getWindow());
+        Stage window;
+        window = getStage();
         window.setScene(scene);
     }
 
     /**
      * Changes the scene from Name selection to Player Number selection
-     * @param event
      * @throws Exception
      */
-    public void playerNumberSelection(ActionEvent event) throws Exception{
+    public void playerNumberSelection() throws Exception{
         Parent playerNumberSelection;
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Assets/Fxml/PlayerNumber.fxml"));
@@ -142,7 +160,8 @@ public class GuiInitController implements UserInterface {
 
         Scene scene = new Scene(playerNumberSelection);
         //Getting the stage information
-        Stage window = (Stage)(((Node)event.getSource()).getScene().getWindow());
+        //Stage window = (Stage)(((Node)event.getSource()).getScene().getWindow());
+        Stage window = getStage();
         window.setScene(scene);
 
         ObservableList<String> playerNumbers = FXCollections.observableArrayList("1 Player","2 Players","3 Players","4 Players");
@@ -151,19 +170,18 @@ public class GuiInitController implements UserInterface {
 
     /**
      * Changes the scene from Name selection or PlayerNumber to the Lobby
-     * @param event
      * @throws Exception
      */
-    public void lobby(ActionEvent event) throws Exception{
+    public void lobby() throws Exception{
         Parent lobby;
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Assets/Fxml/Lobby.fxml"));
-        //loader.setController(this);
+        loader.setController(this);
         lobby = loader.load();
 
         Scene scene = new Scene(lobby);
         //Getting the stage information
-        Stage window = (Stage)(((Node)event.getSource()).getScene().getWindow());
+        Stage window = getStage();
         window.setScene(scene);
 
         music(getClass().getResource("Assets/Music/Connection.mp3").toExternalForm());
@@ -174,12 +192,14 @@ public class GuiInitController implements UserInterface {
      * @throws Exception
      */
     public void nameValidation(ActionEvent event) throws Exception{
+        System.out.println("Name validation event: "+event);
+        this.event=event;
         String player=name.getText();
+        System.out.println(player);
         if(gui.nameValidator(player))
         {
-            clientConnection.getClient().setUser(player);
-            clientConnection.send(player);
-            playerNumberSelection(event);
+            this.clientConnection.getClient().setUser(player);
+            this.clientConnection.send(player);
         }
     }
 
@@ -189,22 +209,22 @@ public class GuiInitController implements UserInterface {
      * @return              int: the number of players
      * @throws Exception
      */
-    public int playerNumberValidation(ActionEvent event) throws Exception{
+    public void playerNumberValidation(ActionEvent event) throws Exception{
+        this.event=event;
         System.out.println("Selected players: "+(numberPlayers.getSelectionModel().getSelectedIndex()+1));
-        lobby(event);
-        return numberPlayers.getSelectionModel().getSelectedIndex()+1;
+        this.clientConnection.send(numberPlayers.getSelectionModel().getSelectedIndex()+1);
     }
     /**
      * Leader card selection screen
-     * @param event
      * @throws Exception
      */
-    public void leaderCardSelection(ActionEvent event) throws Exception{
-        Image card1 = getImage(64,true);
-        Image card2 = getImage(63,true);
-        Image card3 = getImage(62,true);
-        Image card4 = getImage(61,true);
+    public void leaderCardSelection() throws Exception{
+        RedLeaderCard[] leaderCards = this.client.getUserInteraction().getGame().getLeaderCards();
 
+        Image card1 = getImage(leaderCards[0].getCardId(),true);
+        Image card2 = getImage(leaderCards[1].getCardId(),true);
+        Image card3 = getImage(leaderCards[2].getCardId(),true);
+        Image card4 = getImage(leaderCards[3].getCardId(),true);
 
         Parent leaderCard;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Assets/Fxml/Leader.fxml"));
@@ -230,6 +250,17 @@ public class GuiInitController implements UserInterface {
         System.exit(0);
     }
 
+    public void openSettings(ActionEvent event){
+        System.out.println("Open settings");
+    }
+
+    public void setReady(ActionEvent event) throws IOException{
+        this.event=event;
+        readyToPlay.setDisable(true);
+        gameSettings.setDisable(true);
+        this.clientConnection.send(4);
+    }
+
     /**
      * Checks that the user has picked two leader cards and enables the cards to be pickable into a checkbox
      * @param event
@@ -237,6 +268,7 @@ public class GuiInitController implements UserInterface {
      * @throws Exception
      */
     private void leaderCardCheck(ActionEvent event,FXMLLoader loader){
+        RedLeaderCard[] leaderCards = this.client.getUserInteraction().getGame().getLeaderCards();
         card1image.setPickOnBounds(true);
         card2image.setPickOnBounds(true);
         card3image.setPickOnBounds(true);
@@ -265,29 +297,81 @@ public class GuiInitController implements UserInterface {
                 card4.setSelected(!card4.isSelected());
             }
         });
-        confirmLeader.setOnAction(new EventHandler() {
-            @Override
-            public void handle(Event event) {
-                int selected=0;
-                if(card1.isSelected())
-                    selected++;
-                if(card2.isSelected())
-                    selected++;
-                if(card3.isSelected())
-                    selected++;
-                if(card4.isSelected())
-                    selected++;
-                if(selected==2){
-                    //goes to next screen
-                }else {
-                    try {
-                        if(selected==1)
-                            gui.guiError("You've picked just "+selected+" leader card!\nYou've got to pick two");
-                        else
-                        gui.guiError("You've picked "+selected+" leader cards!\nYou've got to pick two");
-                    } catch (Exception e) {
-                        e.printStackTrace();
+        confirmLeader.setOnAction((EventHandler) event1 -> {
+            int selected=0;
+            RedLeaderCard[] chosen;
+            chosen=new RedLeaderCard[2];
+            if(card1.isSelected()){
+                selected++;
+            }
+            if(card2.isSelected()){
+                selected++;
+            }
+            if(card3.isSelected()){
+                selected++;
+            }
+            if(card4.isSelected()){
+                selected++;
+            }
+            if(selected==2){
+                try {
+                    int choice=0;
+                    if(card1.isSelected()){
+                        chosen[choice]=leaderCards[0];
+                        choice++;
                     }
+                    if(card2.isSelected()){
+                        chosen[choice]=leaderCards[1];
+                        choice++;
+                    }
+                    if(card3.isSelected()){
+                        chosen[choice]=leaderCards[2];
+                        choice++;
+                    }
+                    if(card4.isSelected()){
+                        chosen[choice]=leaderCards[3];
+                        choice++;
+                    }
+                    if(choice==2){
+                        mediaPlayer.stop();
+                        confirmLeader.setDisable(true);
+                        if(!card1.isSelected())
+                        {
+                            card1image.setImage(null);
+                        }
+                        if(!card2.isSelected())
+                        {
+                            card2image.setImage(null);
+                        }if(!card3.isSelected())
+                        {
+                            card3image.setImage(null);
+                        }if(!card4.isSelected())
+                        {
+                            card4image.setImage(null);
+                        }
+                        card1.setDisable(true);
+                        card2.setDisable(true);
+                        card3.setDisable(true);
+                        card4.setDisable(true);
+
+                        InitChooseLeaderCards action;
+                        action = new InitChooseLeaderCards(chosen[0], chosen[1]);
+
+                        this.event=event;
+                        clientConnection.send(action);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else {
+                try {
+                    if(selected==1)
+                        gui.guiError("You've picked just "+selected+" leader card!\nYou've got to pick two");
+                    else{
+                        gui.guiError("You've picked "+selected+" leader cards!\nYou've got to pick two");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -380,12 +464,6 @@ public class GuiInitController implements UserInterface {
         return new Image(getClass().getResource(source+token).toExternalForm());
     }
 
-    //DEBUG ONLY FOR GUI REASONS; TO BE REPLACED WITH A WORKING ONE
-    protected Game getGame(){
-        Game game = new Game();
-        return game;
-    }
-
     /**
      * Used to get the Server Address and Server Port as input from the player.
      *
@@ -399,65 +477,100 @@ public class GuiInitController implements UserInterface {
         objects.add(server.getText());
         objects.add(Integer.parseInt(port.getText()));
         client.startUp(objects);
-        Client.setUserInteraction(this);
+        //Client.setUserInteraction(this);
         return objects;
     }
 
-    /**
-     * Used to get the number of players as input from the player who decided to start a new game.
-     *
-     * @return the number of players decided.
-     */
-    public int numberOfPlayers() {
-        return 0;
-    }
-
-    public void getProfilePic(){
-        String imageUrl = "https://thispersondoesnotexist.com/image";
-        InputStream in = null;
-        try
-        {
-            URL url = new URL(imageUrl);
-            BufferedImage image = ImageIO.read(url);
-
-            WritableImage wr = null;
-            if (image != null) {
-                wr = new WritableImage(image.getWidth(), image.getHeight());
-                PixelWriter pw = wr.getPixelWriter();
-                for (int x = 0; x < image.getWidth(); x++) {
-                    for (int y = 0; y < image.getHeight(); y++) {
-                        pw.setArgb(x, y, image.getRGB(x, y));
-                    }
-                }
-                Image pic = wr;
-                profilePic.setImage(pic);
-                System.out.println("[gPP] Hey got something!");
-            }
-        }
-        catch (MalformedURLException e)
-        {
-            e.printStackTrace();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Used to get the UserName of the player as input.
-     *
-     * @return A String containing the UserName
-     */
-    public String initialInsertName() {
-        return null;
-    }
-
     @Override
-    public void nextAction(UserInteraction userInteraction, UIActions action) {
-
+    public void nextAction(UserInteraction userInteraction, UIActions action){
+        try {
+        switch(action) {
+            case CHOOSE_NAME:{
+                break;
+            }
+            case CHOOSE_NUMBER_OF_PLAYERS:{
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            playerNumberSelection();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+                break;
+            case INITIAL_CHOOSE_LEADER_CARDS:
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            leaderCardSelection();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                break;
+            case INITIAL_LOBBY:
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            lobby();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                break;
+            case INITIAL_CHOOSE_RESOURCES:
+                this.board = new GuiBoardController(client,clientConnection,gui);
+            {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            board.getResources(true);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                break;
+            }
+            case RECONNECTION:
+                break;
+            case PLAY_TURN:
+                break;
+            case FINAL_POINTS:
+                break;
+            case DISPLAY_ACTION:{
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            board.board();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+                break;
+            case DISPLAY_ERROR:
+            gui.guiError("Error");
+                break;
+            case WAITING:
+                break;
+            default:
+                displayError("Unexpected value: " + action);
+        }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
 
     /**
      * Used to display a message while the player waits for all the other players to join.
@@ -466,7 +579,16 @@ public class GuiInitController implements UserInterface {
 
     }
 
-    public void displayError(String s) {
-
+    /**
+     * Displays an Alert Box for the user to see if the game is set to Gui Mode.
+     * @param message the message to display
+     */
+    public void displayError(String message){
+        try {
+            gui.guiError(message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 }

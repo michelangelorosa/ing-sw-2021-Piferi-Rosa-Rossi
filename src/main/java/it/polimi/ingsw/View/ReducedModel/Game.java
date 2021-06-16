@@ -202,7 +202,7 @@ public class Game {
         for(Player player : this.players)
             if(player.getNickname().equals(this.myNickname))
                 return player;
-
         throw new IllegalStateException("THERE IS NO PLAYER WITH THIS NAME: " + this.getMyNickname() + " IN GAME!");
+
     }
 }

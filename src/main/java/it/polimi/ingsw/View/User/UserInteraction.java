@@ -48,7 +48,9 @@ public abstract class UserInteraction extends Observable<Action> {
      * Setter for "ui" attribute.
      */
     public void setUi(UserInterface ui) {
-        if(this.ui == null)
+        //TEST!//
+        System.out.println("HEY, I've SET A USER INTERFACE "+ui);
+        //if(this.ui == null)
             this.ui = ui;
     }
 

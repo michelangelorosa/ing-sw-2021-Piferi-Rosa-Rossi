@@ -45,9 +45,6 @@ public class ClientConnection implements Runnable, Observer<Action> {
     public void run(){
         DEBUGGER.printDebug("Started");
 
-        ClientExceptionHandler clientExceptionHandler = new ClientExceptionHandler();
-        clientExceptionHandler.visualType(true);
-
         try {
             //First part of the connection
             while (true) {
@@ -58,6 +55,7 @@ public class ClientConnection implements Runnable, Observer<Action> {
                 //Action = 0, the server is asking the client to input a name!
                 if (action==0) {
                     DEBUGGER.printDebug("First Loop: choosing name");
+                    if(this.client.getUserInteraction()!=null)
                     this.client.getUserInteraction().nextAction(UIActions.CHOOSE_NAME);
                 }
                 //Action = 1, first player to join, how many players?
@@ -88,6 +86,7 @@ public class ClientConnection implements Runnable, Observer<Action> {
                     DEBUGGER.printDebug("Setting up new Game");
                     ArrayList<String> playerNames = (ArrayList<String>) objectInputStream.readObject();
                     this.client.getUserInteraction().setPlayers(playerNames);
+                    DEBUGGER.printDebug("MY NICKNAME: "+this.client.getUser());
                     this.client.getUserInteraction().getGame().setMyNickname(this.client.getUser());
                 }
                 else if(action==5){
@@ -132,7 +131,7 @@ public class ClientConnection implements Runnable, Observer<Action> {
 
                 else if(action==9){
                     //generic error, could be same name error, game has finished exception et al.
-                    clientExceptionHandler.cliError(objectInputStream.readUTF());
+                    this.client.getUserInteraction().displayError(objectInputStream.readUTF());
                 }
             }
 

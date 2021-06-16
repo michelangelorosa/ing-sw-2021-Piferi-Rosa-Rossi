@@ -31,7 +31,6 @@ public class Gui extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-
         ClientExceptionHandler gui= new ClientExceptionHandler();
         gui.visualType(false);
 
@@ -44,7 +43,7 @@ public class Gui extends Application{
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
-
+        GuiInitController.setStage(primaryStage);
     }
 
     public static Gui waitForStartUp() {

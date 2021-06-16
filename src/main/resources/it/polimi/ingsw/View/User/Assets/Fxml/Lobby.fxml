@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.User.GuiInitController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitHeight="491.0" fitWidth="600.0" layoutY="-27.0">
          <image>
@@ -20,7 +20,7 @@
             <Font name="Dominican Italic" size="38.0" />
          </font>
       </Text>
-      <Button layoutX="175.0" layoutY="337.0" mnemonicParsing="false" onAction="#close" prefHeight="39.0" prefWidth="90.0" text="Exit">
+      <Button layoutX="110.0" layoutY="337.0" mnemonicParsing="false" onAction="#close" prefHeight="39.0" prefWidth="90.0" text="Exit">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>
@@ -28,7 +28,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="nameConfirm" layoutX="331.0" layoutY="337.0" mnemonicParsing="false" onAction="#nameValidation" prefHeight="39.0" prefWidth="146.0" text="Game Settings">
+      <Button fx:id="gameSettings" layoutX="227.0" layoutY="337.0" mnemonicParsing="false" onAction="#openSettings" prefHeight="39.0" prefWidth="146.0" text="Game Settings">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>
@@ -36,7 +36,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Text fill="WHITE" layoutX="162.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The game will start automatically once all the players have joined" wrappingWidth="276.58984375">
+      <Text fill="WHITE" layoutX="153.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The game will start automatically once all the players are ready to play" wrappingWidth="294.58984375">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>
@@ -46,5 +46,13 @@
             <Image url="@/it/polimi/ingsw/View/User/Assets/Game/loading.gif" />
          </image>
       </ImageView>
+      <Button fx:id="readyToPlay" layoutX="400.0" layoutY="337.0" mnemonicParsing="false" onAction="#setReady" prefHeight="39.0" prefWidth="146.0" text="Ready to Play">
+         <font>
+            <Font name="Baskerville" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </Pane>
