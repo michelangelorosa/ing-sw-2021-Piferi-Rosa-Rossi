@@ -288,4 +288,8 @@ public class Server {
     public void addConnection(ServerConnection serverConnection) {
         this.connections.add(serverConnection);
     }
+
+    public int getConnectedPlayers() {
+        return connections.size();
+    }
 }

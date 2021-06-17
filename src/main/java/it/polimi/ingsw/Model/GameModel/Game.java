@@ -361,4 +361,9 @@ public class Game {
         return players;
     }
 
+    public void changeCurrentPlayerReconnection(String playerName) {
+        Player player = this.getPlayerByNickname(playerName);
+        this.currentPlayerIndex = player.getTurnPosition();
+    }
+
 }

@@ -340,6 +340,10 @@ public class ServerMessageHandler {
 
     public void reconnection(ServerConnection serverConnection) {
         serverConnection.send(3);
+
+        if(serverConnection.getServer().getConnectedPlayers() == 0)
+            serverConnection.getServer().getController().getActionController().getGame().changeCurrentPlayerReconnection(serverConnection.getName());
+
         GameSetMessage message = serverConnection.getServer().getController().getActionController().prepareViewGame();
         serverConnection.getServer().getController().getActionController().getGame().getPlayerByNickname(serverConnection.getName()).setStatus(PlayerStatus.IN_GAME);
         serverConnection.send(message);
