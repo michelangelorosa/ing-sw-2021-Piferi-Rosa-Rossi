@@ -95,10 +95,12 @@ public class Server {
                     Socket client = ss.accept();
                     DEBUGGER.printDebug("Client connected: "+client.toString());
                     ServerConnection serverConnection = new ServerConnection(this, client);
-                    connections.add(serverConnection);
 
-                    controller.getActionController().getModelToView().addObserver(serverConnection);
-                    serverConnection.addObserver(controller);
+                    if(serverStatus != GameStatus.GAME) {
+                        connections.add(serverConnection);
+                        controller.getActionController().getModelToView().addObserver(serverConnection);
+                        serverConnection.addObserver(controller);
+                    }
 
                     Thread thread = new Thread(serverConnection);
                     thread.start();
@@ -277,5 +279,13 @@ public class Server {
 
     public static boolean isCheatMode() {
         return cheatMode;
+    }
+
+    public boolean canReconnect() {
+        return this.connections.size() < numberOfPlayers;
+    }
+
+    public void addConnection(ServerConnection serverConnection) {
+        this.connections.add(serverConnection);
     }
 }

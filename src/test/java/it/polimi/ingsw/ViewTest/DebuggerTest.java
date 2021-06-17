@@ -38,22 +38,22 @@ public class DebuggerTest {
         debugger = DebuggerFactory.getDebugger(DebuggerType.CLI);
         assertTrue(debugger instanceof CliDebugger);
         debugger.printDebug(e);
-        ClientConnectionDebugger.setActive(false);
+        CliDebugger.setActive(false);
 
         debugger = DebuggerFactory.getDebugger(DebuggerType.CLI_CONTROLLER);
         assertTrue(debugger instanceof CliControllerDebugger);
         debugger.printDebug(e);
-        ClientConnectionDebugger.setActive(false);
+        CliControllerDebugger.setActive(false);
 
         debugger = DebuggerFactory.getDebugger(DebuggerType.CONTROLLER);
         assertTrue(debugger instanceof ControllerDebugger);
         debugger.printDebug(e);
-        ClientConnectionDebugger.setActive(false);
+        ControllerDebugger.setActive(false);
 
         debugger = DebuggerFactory.getDebugger(DebuggerType.MODEL);
         assertTrue(debugger instanceof ModelDebugger);
         debugger.printDebug(e);
-        ClientConnectionDebugger.setActive(false);
+        ModelDebugger.setActive(false);
 
         debugger = DebuggerFactory.getDebugger(DebuggerType.DEFAULT);
         debugger.printDebug("error");

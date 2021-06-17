@@ -1,9 +1,12 @@
 package it.polimi.ingsw.Controller.ControllerClasses;
 
 import it.polimi.ingsw.Controller.Actions.*;
+import it.polimi.ingsw.Model.Enums.GameType;
+import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.Game;
 import it.polimi.ingsw.Model.MessagesToClient.*;
+import it.polimi.ingsw.Model.MessagesToClient.OtherMessages.DisconnectedMessage;
 
 /**
  * ActionController Class contains all that is needed to compute an Action sent by the Client
@@ -54,10 +57,16 @@ public class ActionController {
                 resetWarehouse.doAction(this);
                 message = resetWarehouse.messagePrepare(this);
             } else if (action instanceof ChooseCardSlot) {
+                chooseCardSlot.setCardSlot(((ChooseCardSlot)action).getCardSlot());
                 chooseCardSlot.doAction(this);
+
                 message = chooseCardSlot.messagePrepare(this);
             } else if (action instanceof ChooseProductionOutput) {
+                chooseProductionOutput.setBasicProductionOutput(((ChooseProductionOutput)action).getBasicProductionOutput());
+                chooseProductionOutput.setFirstLeaderCardOutput(((ChooseProductionOutput)action).getFirstLeaderCardOutput());
+                chooseProductionOutput.setSecondLeaderCardOutput(((ChooseProductionOutput)action).getSecondLeaderCardOutput());
                 chooseProductionOutput.doAction(this);
+
                 message = chooseProductionOutput.messagePrepare(this);
             } else {
                 action.doAction(this);
@@ -104,6 +113,10 @@ public class ActionController {
         return chooseProductionOutput;
     }
 
+    /**
+     * Prepares a Reduced version of the Model's game to be sent to all players after passing the initial phase of the game.
+     * @return A message containing all information about the Model's game.
+     */
     public synchronized GameSetMessage prepareViewGame() {
         System.out.println("[MODEL] current player: " + this.game.getCurrentPlayerNickname());
         GameSetMessage message = new GameSetMessage(this.game.getCurrentPlayerNickname());
@@ -113,5 +126,21 @@ public class ActionController {
         message.setFaithTrack(this.game.getFaithTrack());
 
         return message;
+    }
+
+    /**
+     * Prepares a message to send to the player if the player who was playing his turn disconnected from the Server.
+     * <p><b>Message is to be sent only if the CURRENTLY PLAYING player disconnected.</b></p>
+     * @param disconnectedPlayer Name of the player who disconnected
+     * @return A disconnection message.
+     */
+    public MessageToClient disconnected(String disconnectedPlayer) {
+        this.game.getPlayerByNickname(disconnectedPlayer).setStatus(PlayerStatus.IDLE);
+
+        if(this.game.getCurrentPlayerNickname().equals(disconnectedPlayer) && this.game.getGameType() == GameType.MULTIPLAYER) {
+            this.game.nextPlayer();
+        }
+
+        return new DisconnectedMessage(this, disconnectedPlayer);
     }
 }

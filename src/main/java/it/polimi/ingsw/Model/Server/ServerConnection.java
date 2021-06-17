@@ -5,6 +5,7 @@ import it.polimi.ingsw.Controller.Actions.Action;
 import it.polimi.ingsw.Controller.ControllerClasses.Observable;
 import it.polimi.ingsw.Controller.ControllerClasses.Observer;
 import it.polimi.ingsw.Model.Enums.GameType;
+import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
 import it.polimi.ingsw.Model.GameModel.LeaderCard;
@@ -81,14 +82,16 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
                 DEBUGGER.printDebug("Received action: " + action.getActionType() + " from "+this.name);
                 notify(action);
             }
-        } catch (InterruptedException | ModelException e) {
+        } catch (InterruptedException e) {
             DEBUGGER.printDebug("Caught InterruptedException from " + this.name);
-            e.printStackTrace();
-        } finally{
-        if(name!=null){
-            System.out.println(name +" is leaving");
 
-            //TODO freezing player
+        } finally {
+            if(name!=null){
+                /* DISCONNECTION PROCESSING */
+                System.out.println(name +" is leaving");
+                disconnected();
+                DEBUGGER.printDebug(name + " disconnected successfully");
+                /*                          */
             }
         }
 
@@ -99,11 +102,20 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
         }
     }
 
+    /**
+     * Overridden method of the Observer Interface.
+     * <p>It sends a message whenever an action is executed bu the ActionController.</p>
+     * @param message MessageToClient to be sent to the client.
+     */
     @Override
     public synchronized void update(MessageToClient message) {
         send(message);
     }
 
+    /**
+     * Reads an Action object from the socket.
+     * @return The Action read.
+     */
     public Action readAction() {
         Action action = null;
 
@@ -343,7 +355,7 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
     /**
      * Method used for synchronization purposes between different Server-Client connections.
      * <p>It works buy stopping the caller Thread until all players are ready to proceed to the next phase of
-     * the game</p>
+     * the game.</p>
      */
     public void waitReady() {
         synchronized (this.server) {
@@ -366,6 +378,21 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
 
     public boolean socketEquals(Socket socket){
         return socket == this.socket;
+    }
+
+    /**
+     * Updates the Model about a disconnection and <b>if the player who disconnected was CURRENTLY playing</b>, uses
+     * the Server to broadcast a message to all Clients so that the next player can start his turn.
+     */
+    public void disconnected() {
+        String currentPlayer = this.server.getController().getActionController().getGame().getCurrentPlayerNickname();
+        MessageToClient message = this.server.getController().getActionController().disconnected(this.name);
+        this.server.removeFromConnections(this.socket);
+        this.removeObserver(this.server.getController());
+        this.server.getController().getActionController().getModelToView().removeObserver(this);
+
+        if(this.name.equals(currentPlayer))
+            this.server.broadcast(message);
     }
 
 

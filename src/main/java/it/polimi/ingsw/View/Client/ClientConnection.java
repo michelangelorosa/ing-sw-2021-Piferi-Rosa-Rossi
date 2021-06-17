@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import it.polimi.ingsw.Controller.ControllerClasses.Observer;
 import it.polimi.ingsw.Model.MessagesToClient.*;
+import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.RedDevelopmentCard;
 import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 import it.polimi.ingsw.Controller.Actions.*;
@@ -77,7 +78,11 @@ public class ClientConnection implements Runnable, Observer<Action> {
                 else if(action==3) {
                     //Reconnected, the game has already started
                     DEBUGGER.printDebug("First Loop: reconnecting to Game");
+                    this.client.getUserInteraction().setGame(new Game());
                     this.client.getUserInteraction().nextAction(UIActions.RECONNECTION);
+                    MessageToClient reconnectionMessage = (MessageToClient) objectInputStream.readObject();
+                    reconnectionMessage.updateView(getClient().getUserInteraction());
+                    this.client.getUserInteraction().getGame().setMyNickname(this.client.getUser());
 
                     break;
                 }

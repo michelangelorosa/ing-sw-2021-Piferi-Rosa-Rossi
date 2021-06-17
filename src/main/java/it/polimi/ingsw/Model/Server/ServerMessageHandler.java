@@ -2,6 +2,7 @@ package it.polimi.ingsw.Model.Server;
 
 import it.polimi.ingsw.Controller.Actions.Action;
 import it.polimi.ingsw.Model.Enums.GameStatus;
+import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
 import it.polimi.ingsw.Model.GameModel.LeaderCard;
@@ -99,11 +100,11 @@ public class ServerMessageHandler {
                         sendError(serverConnection,"There's another player with the same name, change yours!");
                     }
                     //Name is already in the game and the game is running,
-                    else if(!newName&&!isLobby()){
-                        System.out.println("[SmHANDLER] Reconnection attempt");
+                    else if(!newName&&!isLobby() && Server.getServerStatus() == GameStatus.GAME){
+                        DEBUGGER.printDebug("Reconnection attempt");
                         serverConnection.setName(name);
-                        if(freeSpace(serverConnection)){
-                            //TODO check if the client is alive, if not load the state
+                        if(serverConnection.getServer().canReconnect()){
+                            reconnection(serverConnection);
                             return false;
                         }
                             else sendError(serverConnection,"This game is full!");
@@ -171,7 +172,7 @@ public class ServerMessageHandler {
         }
     }
 
-    public void initialPhase(ServerConnection serverConnection) throws InterruptedException, ModelException {
+    public void initialPhase(ServerConnection serverConnection) throws InterruptedException {
         serverConnection.send(5);
         this.initialLeaderCards(serverConnection);
         serverConnection.waitReady();
@@ -195,7 +196,7 @@ public class ServerMessageHandler {
         }
     }
 
-    public void initialLeaderCards(ServerConnection serverConnection) throws InterruptedException, ModelException {
+    public void initialLeaderCards(ServerConnection serverConnection) throws InterruptedException {
         synchronized (serverConnection.getServer().getController()) {
             while(!serverConnection.isMyTurn()) {
                 serverConnection.getServer().getController().wait();
@@ -210,7 +211,7 @@ public class ServerMessageHandler {
         }
     }
 
-    public void initialResources(ServerConnection serverConnection) throws InterruptedException, ModelException {
+    public void initialResources(ServerConnection serverConnection) throws InterruptedException {
         synchronized (serverConnection.getServer().getController()) {
             while (!serverConnection.isMyTurn()) {
                 serverConnection.getServer().getController().wait();
@@ -335,6 +336,16 @@ public class ServerMessageHandler {
     public boolean freeSpace(ServerConnection serverConnection){
         DEBUGGER.printDebug("freeSpace: "+(serverConnection.getServer().getNumberOfPlayers()<serverConnection.getServer().getReadyPlayers()) +" "+serverConnection.getServer().getNumberOfPlayers()+" < "+serverConnection.getServer().getReadyPlayers());
         return serverConnection.getServer().getNumberOfPlayers()>serverConnection.getServer().getReadyPlayers();
+    }
+
+    public void reconnection(ServerConnection serverConnection) {
+        serverConnection.send(3);
+        GameSetMessage message = serverConnection.getServer().getController().getActionController().prepareViewGame();
+        serverConnection.getServer().getController().getActionController().getGame().getPlayerByNickname(serverConnection.getName()).setStatus(PlayerStatus.IN_GAME);
+        serverConnection.send(message);
+        serverConnection.addObserver(serverConnection.getServer().getController());
+        serverConnection.getServer().getController().getActionController().getModelToView().addObserver(serverConnection);
+        serverConnection.getServer().addConnection(serverConnection);
     }
 
 

@@ -76,8 +76,10 @@ public class ChooseCardSlot extends Action {
      */
     @Override
     public boolean isCorrect() throws IllegalArgumentException {
-        if(cardSlot < 0 || cardSlot > 2)
+        if(cardSlot < 0 || cardSlot > 2) {
+            System.out.println("ERROR SLOT WAS " + cardSlot);
             throw new IllegalArgumentException("Card Slot index out of bounds.");
+        }
         return true;
     }
 
