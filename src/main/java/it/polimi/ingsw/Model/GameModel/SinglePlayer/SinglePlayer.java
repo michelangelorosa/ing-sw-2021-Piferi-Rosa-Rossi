@@ -96,6 +96,11 @@ public class SinglePlayer {
         return lorenzoWon;
     }
 
+    public boolean hasLorenzoWonMarket(Game game) {
+        lorenzoFaithPoints = getLorenzo(game).getFaithTrackPosition();
+        return lorenzoFaithPoints >= 24;
+    }
+
     public SoloActionToken getLastToken() {
         return lastToken;
     }

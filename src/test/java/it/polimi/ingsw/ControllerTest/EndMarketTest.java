@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import it.polimi.ingsw.Controller.ControllerClasses.ActionController;
 import it.polimi.ingsw.CommonTestMethods;
 import it.polimi.ingsw.Controller.Actions.*;
+import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.Game;
 import it.polimi.ingsw.Model.GameModel.Player;
@@ -71,6 +72,22 @@ public class EndMarketTest {
                 assertEquals(0, player.getFaithTrackPosition());
             else
                 assertEquals(4, player.getFaithTrackPosition());
+    }
+
+    @Test
+    public void doActionLorenzoWonTest() {
+        EndMarket action = new EndMarket();
+        game.getPlayers().add(new Player("pippo", 0, true));
+        game.getPlayers().add(new Player("Lorenzo il Magnifico", 1, false));
+
+        game.getPlayers().get(1).stepAhead(24);
+        game.setGameType(GameType.SINGLEPLAYER);
+
+        MessageToClient message = action.messagePrepare(actionController);
+        assertTrue(message instanceof EndTurnSingleplayerMessage);
+        assertEquals(game.getCurrentPlayerNickname(), message.getPlayerNickname());
+        assertEquals("SINGLEPLAYER LOOSE", message.getError());
+
     }
 
 }

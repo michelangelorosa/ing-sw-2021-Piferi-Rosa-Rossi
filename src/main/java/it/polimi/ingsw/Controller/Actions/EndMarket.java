@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.ControllerClasses.ActionController;
+import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.Player;
 import it.polimi.ingsw.Model.MessagesToClient.*;
@@ -49,6 +50,16 @@ public class EndMarket extends Action {
      */
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {
+        if(actionController.getGame().getGameType() == GameType.SINGLEPLAYER && actionController.getGame().getSinglePlayer().hasLorenzoWonMarket(actionController.getGame())) {
+            EndTurnSingleplayerMessage message = new EndTurnSingleplayerMessage(actionController.getGame().getCurrentPlayerNickname());
+            message.setError("SINGLEPLAYER LOOSE");
+            message.setToken(actionController.getGame().getSinglePlayer().getLastToken());
+            message.setVictoryPoints(actionController.getGame().getCurrentPlayer().getVictoryPoints());
+            message.setLorenzoFaith(actionController.getGame().getSinglePlayer().getLorenzoFaithPoints());
+
+            return message;
+        }
+
         EndMarketMessage message = new EndMarketMessage(actionController.getGame().getCurrentPlayerNickname());
 
         if(this.response.equals(ILLEGAL_ACTION))
