@@ -61,7 +61,7 @@ public class ActivateLeaderCard extends Action {
      * @return a String containing an error message or a SUCCESS statement.
      */
     @Override
-    public String doAction(ActionController actionController) {
+    public String doAction(ActionController actionController) throws IllegalArgumentException {
         if(!this.canDoAction(actionController))
             return ILLEGAL_ACTION;
 
@@ -98,11 +98,12 @@ public class ActivateLeaderCard extends Action {
         message.setError(this.response);
         message.setLeaderCardPosition(this.leaderCard);
 
+        for(ActionType type : actionController.getGame().getCurrentPlayer().getPossibleActions()){
+            message.addPossibleAction(type);
+        }
+
         if(this.response.equals("SUCCESS")) {
             message.setLeaderCard(actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[this.leaderCard]);
-            for(ActionType type : actionController.getGame().getCurrentPlayer().getPossibleActions()){
-                message.addPossibleAction(type);
-            }
         }
 
         return message;
