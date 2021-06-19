@@ -146,11 +146,10 @@ public class Player implements Serializable {
         if(this.possibleActions.size() > 0)
             this.possibleActions.clear();
 
-        if(type != null && type2 != null) {
+        if(type != null)
             this.possibleActions.add(type);
+        if(type2 != null)
             this.possibleActions.add(type2);
-        }
-
     }
 
     /**
