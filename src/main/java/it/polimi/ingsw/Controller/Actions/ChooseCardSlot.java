@@ -91,7 +91,7 @@ public class ChooseCardSlot extends Action {
      * @return "SUCCESS" if the action went right, another String if it went wrong.
      */
     @Override
-    public String doAction(ActionController actionController) {
+    public String doAction(ActionController actionController) throws IllegalArgumentException{
         if(!this.canDoAction(actionController))
             return ILLEGAL_ACTION;
 
@@ -135,6 +135,8 @@ public class ChooseCardSlot extends Action {
 
             if(actionController.getGame().getCurrentPlayer().canDo(ActionType.ACTIVATE_LEADERCARD))
                 message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
+            if(actionController.getGame().getCurrentPlayer().canDo(ActionType.DELETE_LEADERCARD))
+                message.addPossibleAction(ActionType.DELETE_LEADERCARD);
         }
         else
             message.addPossibleAction(ActionType.CHOOSE_CARD_SLOT);

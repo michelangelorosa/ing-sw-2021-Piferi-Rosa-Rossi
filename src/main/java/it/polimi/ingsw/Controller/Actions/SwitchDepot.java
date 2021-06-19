@@ -88,7 +88,7 @@ public class SwitchDepot extends Action {
      * @return "SUCCESS" if the action went right, another String if it went wrong.
      */
     @Override
-    public String doAction(ActionController actionController) {
+    public String doAction(ActionController actionController) throws IllegalArgumentException{
         this.isCorrect();
         if(!this.canBeApplied(actionController)) {
             this.response = "Can't switch from/to non active depot";

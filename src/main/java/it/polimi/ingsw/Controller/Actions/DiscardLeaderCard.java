@@ -67,7 +67,7 @@ public class DiscardLeaderCard extends Action{
      * @return "SUCCESS" if the method goes well
      */
     @Override
-    public String doAction(ActionController actionController) {
+    public String doAction(ActionController actionController) throws IllegalArgumentException{
         if(!this.canDoAction(actionController))
             return ILLEGAL_ACTION;
 
@@ -100,11 +100,11 @@ public class DiscardLeaderCard extends Action{
 
         message.setError(this.response);
         if(this.response.equals("SUCCESS")) {
-            for(ActionType type : actionController.getGame().getCurrentPlayer().getPossibleActions())
-                message.addPossibleAction(type);
-
             message.setNumber(this.number);
             message.setLeaderCard(actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[this.number]);
+
+            for(ActionType type : actionController.getGame().getCurrentPlayer().getPossibleActions())
+                message.addPossibleAction(type);
         }
         return message;
     }

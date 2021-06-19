@@ -147,7 +147,7 @@ public class ActivateProduction extends Action {
      * requirements or if the player indicated empty card slots to be used for production, otherwise a SUCCESS statement.
      */
     @Override
-    public String doAction(ActionController actionController) {
+    public String doAction(ActionController actionController) throws IllegalArgumentException{
         if(!this.canDoAction(actionController))
             return ILLEGAL_ACTION;
 

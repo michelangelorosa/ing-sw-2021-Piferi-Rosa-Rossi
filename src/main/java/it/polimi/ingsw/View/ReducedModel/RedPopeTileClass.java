@@ -22,6 +22,15 @@ public class RedPopeTileClass implements Serializable {
         return victoryPoints;
     }
 
+    public void setPopeTile(PopeTile popeTile) {
+        this.popeTile = popeTile;
+    }
+
+    public void setVictoryPoints(int victoryPoints) {
+        this.victoryPoints = victoryPoints;
+    }
+
+
     /**Method to save in anArrayList the pope tile*/
     public ArrayList<String> toCli(){
         ArrayList<String> favorTile = new ArrayList<>();

@@ -404,6 +404,7 @@ public class CliController implements UserInterface {
         return new ActivateLeaderCard(choiceInt - 1);
     }
 
+
     /**
      * Method used by the player to generate an ActivateProduction message.
      * @return The requested action (null if the player chose to go back).
@@ -653,8 +654,14 @@ public class CliController implements UserInterface {
             }
 
             System.out.println("\nSelect Leader Card you want to discard: ");
-            if(!game.getMyPlayer().getLeaderCards()[0].isDiscarded()) System.out.println("[2] Above");
-            if(!game.getMyPlayer().getLeaderCards()[1].isDiscarded()) System.out.println("[1] Below");
+            int i = 2;
+            if(!game.getMyPlayer().getLeaderCards()[0].isDiscarded()){
+                System.out.println("[" + i + "] Above");
+                i--;
+            }
+            if(!game.getMyPlayer().getLeaderCards()[1].isDiscarded()){
+                System.out.println("[" + i + "] Below");
+            }
 
 
             choice = sc.nextLine();

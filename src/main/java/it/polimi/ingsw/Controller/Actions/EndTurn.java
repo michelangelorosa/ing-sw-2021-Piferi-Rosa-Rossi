@@ -45,6 +45,8 @@ public class EndTurn extends Action {
         actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.BUY_CARD);
         actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.MARKET_CHOOSE_ROW);
         actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.DELETE_LEADERCARD);
+
 
         int idlePlayers = 0;
         this.currentPlayer = actionController.getGame().getCurrentPlayerNickname();
@@ -120,6 +122,7 @@ public class EndTurn extends Action {
             message.addPossibleAction(ActionType.BUY_CARD);
             message.addPossibleAction(ActionType.MARKET_CHOOSE_ROW);
             message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
+            message.addPossibleAction(ActionType.DELETE_LEADERCARD);
 
             return message;
         }
@@ -135,6 +138,7 @@ public class EndTurn extends Action {
             message.addPossibleAction(ActionType.BUY_CARD);
             message.addPossibleAction(ActionType.MARKET_CHOOSE_ROW);
             message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
+            message.addPossibleAction(ActionType.DELETE_LEADERCARD);
 
             return message;
         }

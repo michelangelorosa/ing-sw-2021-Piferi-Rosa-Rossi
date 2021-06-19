@@ -135,15 +135,22 @@ public class Player implements Serializable {
      */
     public void clearPossibleActions() {
         ActionType type = null;
+        ActionType type2 = null;
 
         if(this.canDo(ActionType.ACTIVATE_LEADERCARD))
             type = ActionType.ACTIVATE_LEADERCARD;
 
+        if(this.canDo(ActionType.DELETE_LEADERCARD))
+            type2 = ActionType.DELETE_LEADERCARD;
+
         if(this.possibleActions.size() > 0)
             this.possibleActions.clear();
 
-        if(type != null)
+        if(type != null && type2 != null) {
             this.possibleActions.add(type);
+            this.possibleActions.add(type2);
+        }
+
     }
 
     /**

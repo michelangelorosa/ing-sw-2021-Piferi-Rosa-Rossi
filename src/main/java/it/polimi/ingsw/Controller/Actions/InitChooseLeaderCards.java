@@ -54,7 +54,7 @@ public class InitChooseLeaderCards extends Action{
      * @return "SUCCESS" if it doesn't encounter an Exception.
      */
     @Override
-    public String doAction(ActionController actionController) {
+    public String doAction(ActionController actionController) throws IllegalArgumentException{
         if(!this.isCorrect())
             return null;
 

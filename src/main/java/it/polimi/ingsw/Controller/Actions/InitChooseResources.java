@@ -135,7 +135,7 @@ public class InitChooseResources extends Action{
      * @return "SUCCESS" if the action is correctly applied to the Model, another String if otherwise.
      */
     @Override
-    public String doAction(ActionController actionController) {
+    public String doAction(ActionController actionController) throws IllegalArgumentException{
 
         if(!this.isCorrect())
             return null;
@@ -168,6 +168,8 @@ public class InitChooseResources extends Action{
         actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.ACTIVATE_PRODUCTION);
         actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.BUY_CARD);
         actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.MARKET_CHOOSE_ROW);
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.DELETE_LEADERCARD);
+
         this.nickname = actionController.getGame().getCurrentPlayerNickname();
         if(actionController.getGame().getGameType() == GameType.MULTIPLAYER)
             actionController.getGame().nextPlayer();

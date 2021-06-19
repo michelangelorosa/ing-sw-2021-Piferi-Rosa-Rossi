@@ -75,6 +75,17 @@ public class ActionController {
         }
         catch (ModelException e){
             message = new MessageToClient();
+            e.printStackTrace();
+            //TODO create exception message
+        }
+        catch (IllegalArgumentException e){
+            message = new MessageToClient();
+            e.printStackTrace();
+            //TODO create exception message
+        }
+        catch (Exception e){
+            message = new MessageToClient();
+            e.printStackTrace();
             //TODO create exception message
         }
 

@@ -79,7 +79,7 @@ public class BuyCard extends Action {
      * @return "SUCCESS" if the action went right, another String if it went wrong.
      */
     @Override
-    public String doAction(ActionController actionController) throws ModelException {
+    public String doAction(ActionController actionController) throws ModelException, IllegalArgumentException {
         if(!this.canDoAction(actionController))
             return ILLEGAL_ACTION;
 

@@ -174,7 +174,7 @@ public class Cli implements Runnable{
      * <p>If the MessageToClient read is the same as the previous one sent by the Server, an error is displayed</p>
      * @throws IOException if an error occurs while sending the message.
      */
-    public void turnInteraction() throws IOException, ModelException {
+    public void turnInteraction() throws IOException{
         if(this.client.getUserInteraction().getPreviousMessage() == this.client.getUserInteraction().getMessage()) {
             this.cliController.displayError("Error: MessageToClient object is the same as before");
         }

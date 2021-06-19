@@ -53,6 +53,7 @@ public class GameTest {
     public void jsonTest() throws FileNotFoundException {
         ConvertToJSON convert = new ConvertToJSON();
         joiner(game);
+        game.getDevelopmentCardTable().shuffleTable();
         convert.convertGame(game);
     }
 
