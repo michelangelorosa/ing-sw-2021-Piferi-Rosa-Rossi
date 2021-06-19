@@ -12,6 +12,7 @@ import it.polimi.ingsw.Model.GameModel.Player;
 import it.polimi.ingsw.Model.MessagesToClient.GameSetMessage;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
 import it.polimi.ingsw.Model.MessagesToClient.ModelToView;
+import it.polimi.ingsw.Model.MessagesToClient.OtherMessages.DisconnectedMessage;
 import org.junit.Test;
 
 public class ControllerTest {
@@ -91,5 +92,15 @@ public class ControllerTest {
 
         ModelToView modelToView = actionController.getModelToView();
         assertEquals(modelToView, actionController.getModelToView());
+    }
+
+    @Test
+    public void disconnectedTest() {
+        ActionController actionController = new ActionController();
+        CommonTestMethods.gameInitOne(actionController.getGame());
+        assertEquals(actionController.getGame().getPlayers().get(0), actionController.getGame().getCurrentPlayer());
+        MessageToClient message = actionController.disconnected("Zero");
+        assertEquals(actionController.getGame().getPlayers().get(1), actionController.getGame().getCurrentPlayer());
+        assertTrue(message instanceof DisconnectedMessage);
     }
 }

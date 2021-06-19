@@ -7,6 +7,7 @@ import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.Game;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 import it.polimi.ingsw.Model.MessagesToClient.OtherMessages.DisconnectedMessage;
+import it.polimi.ingsw.Model.MessagesToClient.OtherMessages.ExceptionMessage;
 
 /**
  * ActionController Class contains all that is needed to compute an Action sent by the Client
@@ -74,19 +75,19 @@ public class ActionController {
             }
         }
         catch (ModelException e){
-            message = new MessageToClient();
+            message = new ExceptionMessage(this.game.getCurrentPlayerNickname());
+            message.setError("ModelException Caught! " + e.getMessage());
             e.printStackTrace();
-            //TODO create exception message
         }
         catch (IllegalArgumentException e){
-            message = new MessageToClient();
+            message = new ExceptionMessage(this.game.getCurrentPlayerNickname());
+            message.setError("IllegalArgumentException Caught! " + e.getMessage());
             e.printStackTrace();
-            //TODO create exception message
         }
         catch (Exception e){
-            message = new MessageToClient();
+            message = new ExceptionMessage(this.game.getCurrentPlayerNickname());
+            message.setError("Exception Caught! " + e.getMessage());
             e.printStackTrace();
-            //TODO create exception message
         }
 
         modelToView.notify(message);
