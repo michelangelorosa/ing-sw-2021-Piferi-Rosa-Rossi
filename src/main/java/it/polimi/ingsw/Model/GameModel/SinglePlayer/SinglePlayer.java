@@ -7,8 +7,16 @@ import it.polimi.ingsw.Model.GameModel.*;
 import java.util.Random;
 
 /**
- * Handles all the interactions specific with the single player game,
- * each ActionToken is
+ * SinglePlayer Class contains data and methods used by the Model when playing a singleplayer game.
+ * <p><b>Attributes:</b></p>
+ * <ul>
+ *     <li>SoloActionTokenDeck "tokenDeck": deck containing all Action Tokens of the singleplayer game</li>
+ *     <li>int "lorenzoCards": indicates the number of Development Cards owned by Lorenzo il Magnifico</li>
+ *     <li>int "lorenzoFaithPoints": stores Lorenzo's faith points</li>
+ *     <li>boolean "lorenzoWon": indicates if Lorenzo il Magnifico lost the game</li>
+ *     <li>SoloActionToken "lastToken": last token drawn from the token deck by Lorenzo il Magnifico</li>
+ * </ul>
+ * @author redrick99 & michelangelorosa
  */
 public class SinglePlayer {
     private final SoloActionTokenDeck tokenDeck = new SoloActionTokenDeck();
@@ -17,15 +25,28 @@ public class SinglePlayer {
     private boolean lorenzoWon = false;
     private SoloActionToken lastToken;
 
+    /**
+     * Constructor for SinglePlayer Class.
+     * <p>Sets Lorenzo's Development Cards and Faith Points to 0</p>
+     */
     public SinglePlayer() {
         lorenzoCards = 0;
         lorenzoFaithPoints = 0;
     }
 
+    /**
+     * Plays Lorenzo's turn at the end of the player's turn.
+     * @param game Instance of the game being played by the player.
+     */
     public void lorenzoTurn(Game game) {
         this.tokenParser(game, tokenDeck.draw());
     }
 
+    /**
+     * Draws a Token from the SoloActionToken deck and executes code based on the type of token drawn.
+     * @param game Instance of the game being played by the player.
+     * @param token Token drawn from the deck.
+     */
     protected void tokenParser(Game game, SoloActionToken token) {
         Player Lorenzo = getLorenzo(game);
         this.lastToken = token;
@@ -52,6 +73,12 @@ public class SinglePlayer {
         }
     }
 
+    /**
+     * Return the player who's name is "Lorenzo il Magnifico". Since the server does not allow names of more than
+     * 16 characters, Lorenzo il Magnifico can only be found in singleplayer games.
+     * @param game Instance of the game being played by the player.
+     * @return Lorenzo il Magnifico.
+     */
     protected Player getLorenzo(Game game) {
         return game.getPlayerByNickname("Lorenzo il Magnifico");
     }
@@ -84,23 +111,41 @@ public class SinglePlayer {
             lorenzoWon = true;
     }
 
+    /**
+     * Getter for "lorenzoCards" attribute.
+     */
     public int getLorenzoCards() {
         return lorenzoCards;
     }
 
+    /**
+     * Getter for "lorenzoFaithPoints" attribute.
+     */
     public int getLorenzoFaithPoints() {
         return lorenzoFaithPoints;
     }
 
+    /**
+     * Getter for "lorenzoWon" attribute.
+     */
     public boolean hasLorenzoWon() {
         return lorenzoWon;
     }
 
+    /**
+     * Method used ONLY when the player ends a market interaction
+     * @param game Instance of the game being played by the player.
+     * @return true if Lorenzo il Magnifico won after the player has discarded resources from the market (thus giving
+     * faith points to Lorenzo).
+     */
     public boolean hasLorenzoWonMarket(Game game) {
         lorenzoFaithPoints = getLorenzo(game).getFaithTrackPosition();
         return lorenzoFaithPoints >= 24;
     }
 
+    /**
+     * Getter for "lastToken" attribute.
+     */
     public SoloActionToken getLastToken() {
         return lastToken;
     }
