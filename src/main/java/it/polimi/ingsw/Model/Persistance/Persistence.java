@@ -149,4 +149,8 @@ public class Persistence {
     public boolean majorityWantsToRestart() {
         return wantsToRestart > 0;
     }
+
+    public boolean fileExists(){
+        return file.exists();
+    }
 }

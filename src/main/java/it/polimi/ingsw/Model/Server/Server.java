@@ -87,10 +87,12 @@ public class Server {
         /* !! HAS TO BE COMMENTED FOR THE DEBUGGER TO STOP !! */
         Debugger.setAllActive(true);
 
-        this.controller.getActionController().getPersistence().readFile();
-        if(this.controller.getActionController().getPersistence().isGameStarted()) {
-            this.numberOfPlayers = this.controller.getActionController().getPersistence().getNumberOfPlayers();
-            serverStatus = GameStatus.GAME;
+        if(this.controller.getActionController().getPersistence().fileExists()) {
+            this.controller.getActionController().getPersistence().readFile();
+            if (this.controller.getActionController().getPersistence().isGameStarted()) {
+                this.numberOfPlayers = this.controller.getActionController().getPersistence().getNumberOfPlayers();
+                serverStatus = GameStatus.GAME;
+            }
         }
 
         try{
