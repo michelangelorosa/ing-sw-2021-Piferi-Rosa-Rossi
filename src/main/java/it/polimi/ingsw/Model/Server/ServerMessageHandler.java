@@ -55,6 +55,24 @@ public class ServerMessageHandler {
                     System.out.println(", newName: "+newName);
                     //synchronized (serverConnection.getServer().getNames()) {
 
+                    //TODO persistence
+                    //if(an instance of the game already exists and you are the first player to reconnect and now the ActionController Game is empty) {
+                    //  ask the player if he wants to start a new game or continue
+                    //  if(player wants to start game) {
+                    //      set boolean "existing game" to false, delete or reset JSON
+                    //      continue normally with the rest of this method
+                    //  }
+                    // else {
+                    //      load existing game from json
+                    //      set number of players and player names on server (based on games)
+                    //      reconnect first player (like if he disconnected)
+                    //      change Server and Model setting so that all players can reconnect
+                    //
+                    //  if(serverConnection.getServer().canReconnect()){
+                    //      reconnection(serverConnection);
+                    //      return false;
+                    //  }
+
                     //Name is NOT in the server AND game status is the FIRST player to join
                     if(newName&& Server.getServerStatus().equals(GameStatus.READY)){
                         serverConnection.setName(name);

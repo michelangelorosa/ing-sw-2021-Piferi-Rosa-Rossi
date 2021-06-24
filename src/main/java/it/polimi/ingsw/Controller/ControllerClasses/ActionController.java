@@ -5,6 +5,7 @@ import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.Game;
+import it.polimi.ingsw.Model.GameModel.ResourceStack;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 import it.polimi.ingsw.Model.MessagesToClient.OtherMessages.DisconnectedMessage;
 import it.polimi.ingsw.Model.MessagesToClient.OtherMessages.ExceptionMessage;
@@ -148,6 +149,14 @@ public class ActionController {
      */
     public MessageToClient disconnected(String disconnectedPlayer) {
         this.game.getPlayerByNickname(disconnectedPlayer).setStatus(PlayerStatus.IDLE);
+
+        if(this.game.getPlayerByNickname(disconnectedPlayer).wasPayingOrAdding()) {
+            this.resetWarehouse.doAction(this);
+            this.getGame().getPlayerByNickname(disconnectedPlayer).getBoard().getResourceManager().setTemporaryResourcesToPay(new ResourceStack(0, 0, 0, 0));
+            this.getGame().getPlayerByNickname(disconnectedPlayer).getBoard().getResourceManager().setTemporaryWhiteMarbles(0);
+        }
+
+        this.game.getPlayerByNickname(disconnectedPlayer).disconnectionPrepareTurn();
 
         if(this.game.getCurrentPlayerNickname().equals(disconnectedPlayer) && this.game.getGameType() == GameType.MULTIPLAYER) {
             this.game.nextPlayer();

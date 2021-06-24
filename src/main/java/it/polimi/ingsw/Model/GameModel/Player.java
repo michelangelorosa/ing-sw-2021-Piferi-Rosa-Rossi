@@ -242,4 +242,22 @@ public class Player implements Serializable {
         return player;
     }
 
+    public boolean wasPayingOrAdding() {
+       return this.possibleActions.contains(ActionType.ADD_RESOURCE) || this.possibleActions.contains(ActionType.CHOOSE_CARD_SLOT) || this.possibleActions.contains(ActionType.CHOOSE_PRODUCTION_OUTPUT)
+               || this.possibleActions.contains(ActionType.PAY_RESOURCE_CARD) || this.possibleActions.contains(ActionType.PAY_RESOURCE_PRODUCTION) || this.possibleActions.contains(ActionType.CHOOSE_LEADER_CARD);
+    }
+
+    public void disconnectionPrepareTurn() {
+        clearPossibleActions();
+        if(!this.possibleActions.contains(ActionType.ACTIVATE_LEADERCARD))
+            this.possibleActions.add(ActionType.ACTIVATE_LEADERCARD);
+
+        this.possibleActions.add(ActionType.ACTIVATE_PRODUCTION);
+        this.possibleActions.add(ActionType.BUY_CARD);
+        this.possibleActions.add(ActionType.MARKET_CHOOSE_ROW);
+
+        if(!this.possibleActions.contains(ActionType.DELETE_LEADERCARD))
+            this.possibleActions.add(ActionType.DELETE_LEADERCARD);
+    }
+
 }
