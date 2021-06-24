@@ -1,12 +1,9 @@
 package it.polimi.ingsw.Model.Server;
 
-import com.sun.jdi.request.ThreadDeathRequest;
 import it.polimi.ingsw.Controller.Actions.Action;
 import it.polimi.ingsw.Controller.ControllerClasses.Observable;
 import it.polimi.ingsw.Controller.ControllerClasses.Observer;
 import it.polimi.ingsw.Model.Enums.GameType;
-import it.polimi.ingsw.Model.Enums.PlayerStatus;
-import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
 import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
@@ -131,6 +128,15 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
             close();
         }
         return action;
+    }
+
+    public boolean readBoolean() {
+        try {
+            return this.in.readBoolean();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**

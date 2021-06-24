@@ -75,6 +75,9 @@ public class ClientConnection implements Runnable, Observer<Action> {
                     DEBUGGER.printDebug("First Loop: opening parameter modifier");
 
                 }
+                else if(action == 11) {
+                    this.client.getUserInteraction().nextAction(UIActions.RESTART_OR_CONTINUE);
+                }
                 else if(action==3) {
                     //Reconnected, the game has already started
                     DEBUGGER.printDebug("First Loop: reconnecting to Game");

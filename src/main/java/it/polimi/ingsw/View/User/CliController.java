@@ -1020,6 +1020,25 @@ public class CliController implements UserInterface {
         System.out.println(ANSIfont.BOLD + ANSIColors.BACK_BRIGHT_RED + "Oh no... YOU LOST! Lorenzo il Magnifico will live on forever!" + ANSIfont.RESET + "\n");
     }
 
+    public boolean restartOrContinue() {
+        String choice;
+        System.out.println("\n\n");
+        System.out.println(ANSIColors.FRONT_BRIGHT_MAGENTA + ANSIfont.BOLD + ANSIfont.UNDERLINE + " - Welcome back! - " + ANSIColors.RESET);
+        while(true) {
+            System.out.println("What do you want to do?");
+            System.out.println("[1] start a new game");
+            System.out.println("[2] continue the existing one");
+            choice = sc.nextLine();
+
+            if(choice.equals("1"))
+                return true;
+            else if(choice.equals("2"))
+                return false;
+            else
+                displayError("Please insert a valid number");
+        }
+    }
+
     /**
      * Method needed to map the player's choice to the actual Action that has to be performed.
      */

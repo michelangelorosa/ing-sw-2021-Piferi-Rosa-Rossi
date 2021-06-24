@@ -51,6 +51,7 @@ public class EndMarket extends Action {
     @Override
     public MessageToClient messagePrepare(ActionController actionController) {
         if(actionController.getGame().getGameType() == GameType.SINGLEPLAYER && actionController.getGame().getSinglePlayer().hasLorenzoWonMarket(actionController.getGame())) {
+            actionController.endGamePersistence();
             EndTurnSingleplayerMessage message = new EndTurnSingleplayerMessage(actionController.getGame().getCurrentPlayerNickname());
             message.setError("SINGLEPLAYER LOOSE");
             message.setToken(actionController.getGame().getSinglePlayer().getLastToken());

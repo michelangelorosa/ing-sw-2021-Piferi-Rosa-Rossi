@@ -9,6 +9,7 @@ import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.Model.GameModel.ParamValidator;
 import it.polimi.ingsw.Model.GameModel.Player;
 import it.polimi.ingsw.Model.MessagesToClient.GameSetMessage;
+import it.polimi.ingsw.Model.Persistance.Persistence;
 import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 import it.polimi.ingsw.View.Utility.ANSIColors;
 import it.polimi.ingsw.View.Utility.DebuggingTools.Debugger;
@@ -53,25 +54,71 @@ public class ServerMessageHandler {
                     //If the name is already in the game this value is FALSE, if the name is new it is added to the server and set to TRUE
                     boolean newName = nameInsert(serverConnection,name);
                     System.out.println(", newName: "+newName);
-                    //synchronized (serverConnection.getServer().getNames()) {
 
-                    //TODO persistence
-                    //if(an instance of the game already exists and you are the first player to reconnect and now the ActionController Game is empty) {
-                    //  ask the player if he wants to start a new game or continue
-                    //  if(player wants to start game) {
-                    //      set boolean "existing game" to false, delete or reset JSON
-                    //      continue normally with the rest of this method
-                    //  }
-                    // else {
-                    //      load existing game from json
-                    //      set number of players and player names on server (based on games)
-                    //      reconnect first player (like if he disconnected)
-                    //      change Server and Model setting so that all players can reconnect
-                    //
-                    //  if(serverConnection.getServer().canReconnect()){
-                    //      reconnection(serverConnection);
-                    //      return false;
-                    //  }
+                    Persistence persistence = serverConnection.getServer().getController().getActionController().getPersistence();
+                    System.out.println(persistence.getNumberOfPlayers());
+                    System.out.println(persistence.getPlayerNames());
+
+                    if(persistence.isGameStarted() && serverConnection.getServer().gameIsEmpty()) {
+                        DEBUGGER.printDebug("Game was already started");
+                        serverConnection.setName(name);
+                        if(persistence.getPlayerNames().contains(serverConnection.getName())) {
+                            synchronized (serverConnection.getServer()) {
+                                DEBUGGER.printDebug("Player: " + serverConnection.getName() + " successfully reconnected");
+
+                                serverConnection.getServer().addConnection(serverConnection);
+                                serverConnection.getServer().getController().getActionController().getModelToView().addObserver(serverConnection);
+                                serverConnection.addObserver(serverConnection.getServer().getController());
+
+                                if (serverConnection.getServer().getConnectedPlayers() >= persistence.getNumberOfPlayers()) {
+                                    System.out.println("Notifying all");
+                                    serverConnection.getServer().notifyAll();
+                                }
+                                while (serverConnection.getServer().getConnectedPlayers() < persistence.getNumberOfPlayers()) {
+                                    try {
+                                        System.out.println("waiting");
+                                        serverConnection.getServer().wait();
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                            // ASKS THE PLAYER IF HE WANTS TO START A NEW GAME
+                            DEBUGGER.printDebug("Asking: " + serverConnection.getName() + " to Restart ot Continue");
+                            serverConnection.send(11);
+                            boolean wantsToStartNewGame = serverConnection.readBoolean();
+                            DEBUGGER.printDebug(serverConnection.getName() + " read boolean!");
+
+                            synchronized (serverConnection.getServer()) {
+                                if (wantsToStartNewGame)
+                                    persistence.wantsToRestart();
+                                else
+                                    persistence.wantsToContinue();
+                            }
+
+                            serverConnection.setReady(true);
+                            serverConnection.waitReady();
+                            DEBUGGER.printDebug("Everyone is ready!");
+
+                            if (persistence.majorityWantsToRestart()) {
+                                DEBUGGER.printDebug("Majority wanted to RESTART!");
+                                synchronized (serverConnection.getServer()) {
+                                    Server.setServerStatus(GameStatus.LOBBY);
+                                }
+                                return true;
+                            }
+                            else {
+                                if (serverConnection.getServer().getController().getActionController().getGame().getPlayers().size() == 0) {
+                                    //TODO SETS NEW GAME WITH JSON INFORMATION
+                                }
+                                reconnection(serverConnection);
+                                return false;
+                            }
+                        }
+                        else
+                            sendError(serverConnection, "Your name is not on the list of players. Please choose another name!");
+
+                    }
 
                     //Name is NOT in the server AND game status is the FIRST player to join
                     if(newName&& Server.getServerStatus().equals(GameStatus.READY)){

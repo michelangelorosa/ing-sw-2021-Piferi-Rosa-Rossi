@@ -298,7 +298,7 @@ public class CliTest {
         PayResourceBuyCard action = ui.payResourceBuyCard(game);
         assertNotNull(action);
         assertEquals(1, action.getDepot());
-        assertNull(action.getResourceType());
+        assertEquals(ResourceType.NONE, action.getResourceType());
 
         changeSystemIn("-1\n3\ns\n2");
         ui = new CliController();
@@ -346,6 +346,20 @@ public class CliTest {
 
         System.out.println("\n\n\n");
         ui.finalPoints(game);
+    }
+
+    @Test
+    public void continueOrStartTest() {
+        boolean wantsToRestart;
+        changeSystemIn("3\n1");
+        ui = new CliController();
+        wantsToRestart = ui.restartOrContinue();
+        assertTrue(wantsToRestart);
+
+        changeSystemIn("3\n2");
+        ui = new CliController();
+        wantsToRestart = ui.restartOrContinue();
+        assertFalse(wantsToRestart);
     }
 
 

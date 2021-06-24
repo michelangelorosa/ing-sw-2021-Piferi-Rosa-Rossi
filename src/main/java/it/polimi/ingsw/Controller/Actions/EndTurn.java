@@ -78,10 +78,14 @@ public class EndTurn extends Action {
         else {
             actionController.getGame().getSinglePlayer().lorenzoTurn(actionController.getGame());
             //TODO messaggio nel market nel caso lorenzo vinca prima
-            if(actionController.getGame().getCurrentPlayer().hasFinished())
+            if(actionController.getGame().getCurrentPlayer().hasFinished()) {
+                actionController.endGamePersistence();
                 this.response = "SINGLEPLAYER WIN";
-            else if(actionController.getGame().getSinglePlayer().hasLorenzoWon())
+            }
+            else if(actionController.getGame().getSinglePlayer().hasLorenzoWon()) {
+                actionController.endGamePersistence();
                 this.response = "SINGLEPLAYER LOOSE";
+            }
             else
                 this.response = "SINGLEPLAYER";
         }
@@ -98,6 +102,7 @@ public class EndTurn extends Action {
             return illegalAction(new EndTurnMessage(this.currentPlayer), actionController);
 
         if(this.lastPlayerTurn) {
+            actionController.endGamePersistence();
             FinalPointsMessage message = new FinalPointsMessage(this.currentPlayer);
 
             HashMap<String, Integer> namePoints = new HashMap<>();

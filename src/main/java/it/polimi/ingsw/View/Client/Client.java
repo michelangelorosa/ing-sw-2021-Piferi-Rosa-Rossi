@@ -1,6 +1,5 @@
 package it.polimi.ingsw.View.Client;
 
-import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.View.User.*;
 import it.polimi.ingsw.View.Utility.DebuggingTools.Debugger;
 import it.polimi.ingsw.View.Utility.DebuggingTools.DebuggerFactory;
@@ -10,7 +9,6 @@ import javafx.stage.Stage;
 
 import java.awt.font.ShapeGraphicAttribute;
 import java.io.*;
-import java.net.ConnectException;
 import java.net.Socket;
 import java.util.*;
 
@@ -51,7 +49,7 @@ public class Client {
 
        try{
 
-         if (true||args.length!=0&&args[0].toLowerCase(Locale.ROOT).equals("--cli")) {
+         if (args.length!=0&&args[0].toLowerCase(Locale.ROOT).equals("--cli")) {
             userInteraction.setUi(new CliController());
             Client client = new Client("localhost", 8765);
             client.startUp();

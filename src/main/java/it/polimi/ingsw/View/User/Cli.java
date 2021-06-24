@@ -95,6 +95,9 @@ public class Cli implements Runnable{
             case SINGLEPLAYER_END_LOST: this.singleplayerEndLost();
                 break;
 
+            case RESTART_OR_CONTINUE: this.restartOrContinue();
+                break;
+
             default: System.out.println("Can't understand Message, turning back...");
         }
     }
@@ -202,6 +205,11 @@ public class Cli implements Runnable{
      */
     public void finalPoints() {
         this.cliController.finalPoints(this.client.getUserInteraction().getGame());
+    }
+
+    public void restartOrContinue() throws IOException {
+        boolean wantsToRestart = this.cliController.restartOrContinue();
+        this.clientConnection.send(wantsToRestart);
     }
 
     /**

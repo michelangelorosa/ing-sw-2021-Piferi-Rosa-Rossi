@@ -87,6 +87,12 @@ public class Server {
         /* !! HAS TO BE COMMENTED FOR THE DEBUGGER TO STOP !! */
         Debugger.setAllActive(true);
 
+        this.controller.getActionController().getPersistence().readFile();
+        if(this.controller.getActionController().getPersistence().isGameStarted()) {
+            this.numberOfPlayers = this.controller.getActionController().getPersistence().getNumberOfPlayers();
+            serverStatus = GameStatus.GAME;
+        }
+
         try{
             ServerSocket ss;
             ss = new ServerSocket(server_port);
@@ -291,5 +297,9 @@ public class Server {
 
     public int getConnectedPlayers() {
         return connections.size();
+    }
+
+    public synchronized boolean gameIsEmpty() {
+        return this.controller.getActionController().gameIsEmpty();
     }
 }

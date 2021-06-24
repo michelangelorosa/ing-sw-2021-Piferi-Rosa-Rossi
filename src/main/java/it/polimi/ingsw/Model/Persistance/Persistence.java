@@ -12,19 +12,25 @@ import java.util.Scanner;
  * the Server.
  * <p><b>Attributes:</b></p>
  * <ul>
+ *     <li>String "fileName": Name of the file to save information to</li>
  *     <li>File "file": Used to write a .txt file containing persistence info to be used by the Server</li>
  *     <li>boolean "gameStarted": Indicates whether a game already started or not</li>
  *     <li>int "numberOfPlayers": Indicates the number of players of the game which already started</li>
  *     <li>ArrayList&lt;String&gt; "playerNames": Contains the name of all players who joined the Server</li>
+ *     <li>int "wantsToRestart": Indicates the number of players who want to restart the game after
+ *     the Server went down</li>
  * </ul>
  * @author redrick99
  */
 public class Persistence {
-    private File file;
+    private final String fileName = "persistence_info.txt";
+    private File file = new File(fileName);
 
     private boolean gameStarted = false;
-    private int numberOfPlayers;
+    private int numberOfPlayers = -1;
     private final ArrayList<String> playerNames = new ArrayList<>();
+
+    private int wantsToRestart = 0;
 
     /**
      * Getter for "gameStarted" attribute.
@@ -52,8 +58,8 @@ public class Persistence {
      * @throws IOException if there are problems when trying to check if the file exists.
      */
     public void createFile() throws IOException {
-        if(!file.createNewFile())
-            file = new File("persistence_info.txt");
+        if(!file.exists())
+            file = new File(fileName);
     }
 
     /**
@@ -64,8 +70,7 @@ public class Persistence {
      */
     public void writeFile(boolean gameStarted, int numberOfPlayers, ArrayList<String> players){
         try {
-            if (!file.createNewFile())
-                file = new File("persistence_info.txt");
+            createFile();
 
             FileWriter fileWriter = new FileWriter(file);
 
@@ -76,9 +81,10 @@ public class Persistence {
                 fileWriter.write("0\n");
             fileWriter.write(numberOfPlayers + "\n");
 
-            if(players.size() > 0)
-                for(String s : players)
+            if(players.size() > 0) {
+                for (String s : players)
                     fileWriter.write(s + "\n");
+            }
 
             fileWriter.close();
         } catch (IOException e) {
@@ -95,6 +101,9 @@ public class Persistence {
             String gameStarted = sc.nextLine();
             this.gameStarted = gameStarted.equals("1");
 
+            if(!this.gameStarted)
+                return;
+
             String numberOfPlayers = sc.nextLine();
             this.numberOfPlayers = Integer.parseInt(numberOfPlayers);
 
@@ -103,9 +112,41 @@ public class Persistence {
                 this.playerNames.add(sc.nextLine());
 
         } catch (FileNotFoundException e) {
+            this.gameStarted = false;
             e.printStackTrace();
         }
     }
 
+    /**
+     * Method used to test the creation of a file to be written and read.
+     * @throws IOException if problems occur when creating the file.
+     */
+    protected void testCreateFile() throws IOException {
+        if(!file.exists())
+            file = new File("testFile.txt");
+    }
 
+    /**
+     * Adds 1 to "wantsToRestart" attribute.
+     * <p>To be called when the player wants to restart the game.</p>
+     */
+    public void wantsToRestart() {
+        this.wantsToRestart++;
+    }
+
+    /**
+     * Subtracts 1 to "wantsToRestart" attribute.
+     * <p>To be called when the player wants to continue the existing game.</p>
+     */
+    public void wantsToContinue() {
+        this.wantsToRestart--;
+    }
+
+    /**
+     * Tells the Server if the players want to either restart or continue the game.
+     * @return true if the strict majority of players want to restart the game.
+     */
+    public boolean majorityWantsToRestart() {
+        return wantsToRestart > 0;
+    }
 }

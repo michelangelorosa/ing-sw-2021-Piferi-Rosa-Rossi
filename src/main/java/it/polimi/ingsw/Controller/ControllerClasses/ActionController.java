@@ -9,6 +9,9 @@ import it.polimi.ingsw.Model.GameModel.ResourceStack;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 import it.polimi.ingsw.Model.MessagesToClient.OtherMessages.DisconnectedMessage;
 import it.polimi.ingsw.Model.MessagesToClient.OtherMessages.ExceptionMessage;
+import it.polimi.ingsw.Model.Persistance.Persistence;
+
+import java.util.ArrayList;
 
 /**
  * ActionController Class contains all that is needed to compute an Action sent by the Client
@@ -24,6 +27,7 @@ import it.polimi.ingsw.Model.MessagesToClient.OtherMessages.ExceptionMessage;
  *     a Development Card to remember which Development Card he wanted to buy</li>
  *     <li>ChooseProductionOutput "chooseProductionOutput": Stores information to be used when a player has finished
  *     paying for a Production to remember which different types of productions he started</li>
+ *     <li>Persistence "persistence": Contains information and methods needed for the the server's Persistence</li>
  * </ul>
  * @author redrick99
  */
@@ -35,6 +39,8 @@ public class ActionController {
     private final ResetWarehouse resetWarehouse = new ResetWarehouse();
     private final ChooseCardSlot chooseCardSlot = new ChooseCardSlot(-1);
     private final ChooseProductionOutput chooseProductionOutput = new ChooseProductionOutput();
+
+    private final Persistence persistence = new Persistence();
 
     /**
      * Constructor for ActionController Class.
@@ -126,6 +132,10 @@ public class ActionController {
         return chooseProductionOutput;
     }
 
+    public Persistence getPersistence() {
+        return persistence;
+    }
+
     /**
      * Prepares a Reduced version of the Model's game to be sent to all players after passing the initial phase of the game.
      * @return A message containing all information about the Model's game.
@@ -137,6 +147,19 @@ public class ActionController {
         message.setMarket(this.game.getMarket());
         message.setTable(this.game.getDevelopmentCardTable());
         message.setFaithTrack(this.game.getFaithTrack());
+
+        int numberOfPlayers;
+        if(this.game.getGameType() == GameType.SINGLEPLAYER)
+            numberOfPlayers = 1;
+        else
+            numberOfPlayers = this.game.getPlayers().size();
+
+        ArrayList<String> playerNames = new ArrayList<>();
+        for(int i = 0; i < this.game.getPlayers().size(); i++)
+            if(!this.game.getPlayers().get(i).getNickname().equals("Lorenzo il Magnifico"))
+                playerNames.add(this.game.getPlayers().get(i).getNickname());
+
+        this.persistence.writeFile(true, numberOfPlayers, playerNames);
 
         return message;
     }
@@ -163,5 +186,20 @@ public class ActionController {
         }
 
         return new DisconnectedMessage(this, disconnectedPlayer);
+    }
+
+    /**
+     * Checks id the game has players to see if a player reconnected or the server restarted.
+     * @return true if the number of players in the game is equal to 0.
+     */
+    public boolean gameIsEmpty() {
+        return this.game.getPlayers().size() == 0;
+    }
+
+    /**
+     * Resets the .txt persistence file when the Game is finished.
+     */
+    public void endGamePersistence() {
+        persistence.writeFile(false, 0, new ArrayList<>());
     }
 }
