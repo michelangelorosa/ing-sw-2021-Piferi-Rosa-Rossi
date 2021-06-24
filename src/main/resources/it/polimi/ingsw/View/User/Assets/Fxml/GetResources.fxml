@@ -25,21 +25,33 @@
          <image>
             <Image url="@../Game/coin.png" />
          </image>
+         <cursor>
+            <Cursor fx:constant="OPEN_HAND" />
+         </cursor>
       </ImageView>
       <ImageView fx:id="servants" fitHeight="100.0" fitWidth="100.0" layoutX="370.0" layoutY="60.0">
          <image>
             <Image url="@../Game/servant.png" />
          </image>
+         <cursor>
+            <Cursor fx:constant="OPEN_HAND" />
+         </cursor>
       </ImageView>
       <ImageView fx:id="shields" fitHeight="100.0" fitWidth="100.0" layoutX="192.0" layoutY="60.0">
          <image>
             <Image url="@../Game/shield.png" />
          </image>
+         <cursor>
+            <Cursor fx:constant="OPEN_HAND" />
+         </cursor>
       </ImageView>
       <ImageView fx:id="stones" fitHeight="100.0" fitWidth="100.0" layoutX="22.0" layoutY="60.0">
          <image>
             <Image url="@../Game/stone.png" />
          </image>
+         <cursor>
+            <Cursor fx:constant="OPEN_HAND" />
+         </cursor>
       </ImageView>
       <Text fill="WHITE" layoutX="97.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remaining:">
          <font>

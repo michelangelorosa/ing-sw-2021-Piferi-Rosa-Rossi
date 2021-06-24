@@ -9,19 +9,19 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fitHeight="491.0" fitWidth="600.0" layoutY="-27.0">
+      <ImageView fitHeight="625.0" fitWidth="765.0" layoutX="-2.0" layoutY="-96.0">
          <image>
-            <Image url="@/it/polimi/ingsw/View/User/Assets/Game/background.jpg" />
+            <Image url="@../Game/background.jpg" />
          </image>
       </ImageView>
-      <Text fx:id="cardTitle" fill="WHITE" layoutX="116.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose 2 Leader Cards">
+      <Text fx:id="cardTitle" fill="WHITE" layoutX="167.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Production Powers">
          <font>
             <Font name="Dominican Italic" size="38.0" />
          </font>
       </Text>
-      <Button fx:id="confirmLeader" layoutX="450.0" layoutY="337.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="98.0" text="Confirm">
+      <Button fx:id="confirmLeader" layoutX="633.0" layoutY="476.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="98.0" text="Confirm">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>
@@ -32,19 +32,31 @@
       <ImageView fx:id="card1image" fitHeight="230.0" fitWidth="215.0" layoutY="60.0" preserveRatio="true">
          <cursor>
             <Cursor fx:constant="HAND" />
-         </cursor></ImageView>
+         </cursor>
+         <image>
+            <Image url="@../Cards/B9.png" />
+         </image></ImageView>
       <ImageView fx:id="card2image" fitHeight="230.0" fitWidth="215.0" layoutX="147.0" layoutY="60.0" preserveRatio="true">
          <cursor>
             <Cursor fx:constant="HAND" />
-         </cursor></ImageView>
+         </cursor>
+         <image>
+            <Image url="@../Cards/B4.png" />
+         </image></ImageView>
       <ImageView fx:id="card3image" fitHeight="230.0" fitWidth="215.0" layoutX="299.0" layoutY="60.0" preserveRatio="true">
          <cursor>
             <Cursor fx:constant="HAND" />
-         </cursor></ImageView>
+         </cursor>
+         <image>
+            <Image url="@../Cards/B2.png" />
+         </image></ImageView>
       <ImageView fx:id="card4image" fitHeight="230.0" fitWidth="215.0" layoutX="447.0" layoutY="60.0" preserveRatio="true">
          <cursor>
             <Cursor fx:constant="HAND" />
-         </cursor></ImageView>
+         </cursor>
+         <image>
+            <Image url="@../Cards/B1.png" />
+         </image></ImageView>
       <CheckBox fx:id="card1" layoutX="68.0" layoutY="297.0" mnemonicParsing="false">
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -61,5 +73,23 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></CheckBox>
+      <CheckBox fx:id="card5" layoutX="673.0" layoutY="297.0" mnemonicParsing="false">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </CheckBox>
+      <ImageView fx:id="card5image" fitHeight="230.0" fitWidth="215.0" layoutX="604.0" layoutY="60.0" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <image>
+            <Image url="@../Cards/B1.png" />
+         </image>
+      </ImageView>
+      <Text fx:id="cardTitle1" fill="WHITE" layoutX="24.0" layoutY="411.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Basic pp">
+         <font>
+            <Font name="Dominican Italic" size="38.0" />
+         </font>
+      </Text>
    </children>
 </Pane>

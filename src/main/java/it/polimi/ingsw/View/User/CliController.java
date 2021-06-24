@@ -880,7 +880,7 @@ public class CliController implements UserInterface {
                 depot = depotIntIterator(game, false, sc);
 
                 if(InputController.checkPayResource(true, depot - 1, null, game))
-                    return new PayResource(true, depot - 1, null);
+                    return new PayResource(true, depot - 1, ResourceType.NONE);
                 else
                     displayError(InputController.getError());
             }

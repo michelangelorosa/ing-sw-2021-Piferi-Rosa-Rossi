@@ -31,7 +31,7 @@
       </Button>
       <ImageView fitHeight="104.0" fitWidth="109.0" layoutX="14.0" layoutY="42.0">
          <image>
-            <Image url="@/it/polimi/ingsw/View/User/Assets/Game/retrocerchi.png" />
+            <Image url="@/it/polimi/ingsw/View/User/Assets/Game/singletoken.png" />
          </image>
       </ImageView>
       <Label fx:id="errorLabel" alignment="CENTER" layoutX="115.0" layoutY="53.0" prefHeight="132.0" prefWidth="369.0" textFill="WHITE" wrapText="true">

@@ -26,7 +26,7 @@
       </Button>
       <ImageView fitHeight="104.0" fitWidth="109.0" layoutX="14.0" layoutY="42.0">
          <image>
-            <Image url="@/it/polimi/ingsw/View/User/Assets/Game/retrocerchi.png" />
+            <Image url="@/it/polimi/ingsw/View/User/Assets/Game/singletoken.png" />
          </image>
       </ImageView>
       <Text fill="WHITE" layoutX="97.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Final Score: ">

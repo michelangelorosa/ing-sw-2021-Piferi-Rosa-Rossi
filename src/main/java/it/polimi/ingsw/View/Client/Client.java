@@ -51,16 +51,16 @@ public class Client {
 
        try{
 
-         //if (args.length!=0&&args[0].toLowerCase(Locale.ROOT).equals("--cli")) {
+         if (true||args.length!=0&&args[0].toLowerCase(Locale.ROOT).equals("--cli")) {
             userInteraction.setUi(new CliController());
             Client client = new Client("localhost", 8765);
             client.startUp();
-/*
+
        } else {
             new Thread(() -> Application.launch(Gui.class)).start();
             Gui.waitForStartUp();
         }
-*/
+
        }catch (Exception e) {
             System.err.println("Unable to start a Graphical Interface, shutting down");
             System.err.println(e);

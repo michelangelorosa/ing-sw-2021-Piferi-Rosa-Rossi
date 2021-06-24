@@ -1,9 +1,6 @@
 package it.polimi.ingsw.View.User;
 
-import it.polimi.ingsw.Controller.Actions.Action;
-import it.polimi.ingsw.Controller.Actions.EndMarket;
-import it.polimi.ingsw.Controller.Actions.EndTurn;
-import it.polimi.ingsw.Controller.Actions.InitChooseLeaderCards;
+import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Model.Enums.Marble;
 import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.Model.Enums.SoloActionToken;
@@ -59,21 +56,24 @@ public class GuiInitController implements UserInterface {
     protected MediaPlayer mediaPlayer;
     protected ClientConnection clientConnection;
     protected GuiBoardController board;
+    private boolean firstRun = true;
     @FXML private Button nameConfirm;
     @FXML private Label score;
     @FXML private TextField server;
     @FXML private TextField port;
     @FXML private Button connect;
-    @FXML private Button confirmLeader;
+    @FXML protected Button confirmLeader;
     @FXML private TextField name;
-    @FXML private CheckBox card1;
-    @FXML private CheckBox card2;
-    @FXML private CheckBox card3;
-    @FXML private CheckBox card4;
-    @FXML private ImageView card1image;
-    @FXML private ImageView card2image;
-    @FXML private ImageView card3image;
-    @FXML private ImageView card4image;
+    @FXML protected CheckBox card1;
+    @FXML protected CheckBox card2;
+    @FXML protected CheckBox card3;
+    @FXML protected CheckBox card4;
+    @FXML protected CheckBox card5;
+    @FXML protected ImageView card1image;
+    @FXML protected ImageView card2image;
+    @FXML protected ImageView card3image;
+    @FXML protected ImageView card4image;
+    @FXML protected ImageView card5image;
     @FXML private ChoiceBox<String> numberPlayers;
     @FXML private Button playerNumberConfirm;
     @FXML private Button gameSettings;
@@ -99,6 +99,9 @@ public class GuiInitController implements UserInterface {
         guiStage=stage;
     }
 
+    protected ClientConnection getClientConnection(){
+        return this.clientConnection;
+    }
 
     /**
      * Currently unused, it's a test for loading a music piece
@@ -239,7 +242,7 @@ public class GuiInitController implements UserInterface {
         card2image.setImage(card2);
         card3image.setImage(card3);
         card4image.setImage(card4);
-        leaderCardCheck(event,loader);
+        leaderCardCheck(event,false);
     }
 
     /**
@@ -264,15 +267,17 @@ public class GuiInitController implements UserInterface {
     /**
      * Checks that the user has picked two leader cards and enables the cards to be pickable into a checkbox
      * @param event
-     * @param loader
      * @throws Exception
      */
-    private void leaderCardCheck(ActionEvent event,FXMLLoader loader){
+    protected void leaderCardCheck(ActionEvent event,Boolean productionCheck){
         RedLeaderCard[] leaderCards = this.client.getUserInteraction().getGame().getLeaderCards();
         card1image.setPickOnBounds(true);
         card2image.setPickOnBounds(true);
         card3image.setPickOnBounds(true);
         card4image.setPickOnBounds(true);
+        if(productionCheck)
+            card5image.setPickOnBounds(true);
+
         card1image.setOnMouseClicked(new EventHandler() {
             @Override
             public void handle(Event event) {
@@ -297,6 +302,14 @@ public class GuiInitController implements UserInterface {
                 card4.setSelected(!card4.isSelected());
             }
         });
+        if(productionCheck)
+            card5image.setOnMouseClicked(new EventHandler() {
+                @Override
+                public void handle(Event event) {
+                    card5.setSelected(!card5.isSelected());
+                }
+            });
+        if(!productionCheck)
         confirmLeader.setOnAction((EventHandler) event1 -> {
             int selected=0;
             RedLeaderCard[] chosen;
@@ -375,6 +388,46 @@ public class GuiInitController implements UserInterface {
                 }
             }
         });
+        if(productionCheck){
+            confirmLeader.setOnAction((EventHandler) event1 -> {
+                card1.setDisable(card1image==null);
+                card2.setDisable(card1image==null);
+                card3.setDisable(card1image==null);
+                card4.setDisable(card1image==null);
+                card5.setDisable(card1image==null);
+
+                boolean selected=false;
+                boolean[] activateProduction;
+                activateProduction=new boolean[6];
+                selected=card1.isSelected()||card2.isSelected()||card3.isSelected()||card4.isSelected()||card5.isSelected();
+                if(selected){
+                    int choice=0;
+                    activateProduction[choice]=card1.isSelected();
+                    choice++;
+                    activateProduction[choice]=card2.isSelected();
+                    choice++;
+                    activateProduction[choice]=card3.isSelected();
+                    choice++;
+                    activateProduction[choice]=card4.isSelected();
+                    choice++;
+                    activateProduction[choice]=card5.isSelected();
+                    choice++;
+                    //TODO BASIC PRODUCTION
+                    activateProduction[choice]=card5.isSelected();
+                    choice++;
+                    try {
+                        clientConnection.send(new ActivateProduction(activateProduction[0],activateProduction[1],activateProduction[2],activateProduction[3],activateProduction[4],activateProduction[5],null));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else {
+                    displayError("You haven't selected any Production Power to activate");
+                }
+            });
+        }
+
+
     }
 
     /**
@@ -464,6 +517,16 @@ public class GuiInitController implements UserInterface {
         return new Image(getClass().getResource(source+token).toExternalForm());
     }
 
+    protected Image getImage(boolean inkwell){
+        String source = "Assets/Game/";
+        String token;
+        if(inkwell)
+            token="inkwell.png";
+        else
+            token="singletoken.png";
+        return new Image(getClass().getResource(source+token).toExternalForm());
+    }
+
     /**
      * Used to get the Server Address and Server Port as input from the player.
      *
@@ -477,7 +540,6 @@ public class GuiInitController implements UserInterface {
         objects.add(server.getText());
         objects.add(Integer.parseInt(port.getText()));
         client.startUp(objects);
-        //Client.setUserInteraction(this);
         return objects;
     }
 
@@ -547,20 +609,40 @@ public class GuiInitController implements UserInterface {
             case FINAL_POINTS:
                 break;
             case DISPLAY_ACTION:{
+                if(firstRun){
+                    firstRun=false;
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                    board.board();
+                                    firstRun=false;
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }else{
+                    board.setResourceData(board.getResourceData(client.getUserInteraction().getGame().getMyPlayer()));
+                    board.setCardData(board.getCardData(client.getUserInteraction().getGame().getMyPlayer()));
+                }
+
+            }
+                break;
+            case DISPLAY_ERROR:
+            {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
                         try {
-                            board.board();
+                            if(userInteraction.getMessage().getPlayerNickname().equals(board.myPlayer().getNickname()))
+                            displayError(userInteraction.getMessage().getError());
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 });
             }
-                break;
-            case DISPLAY_ERROR:
-            gui.guiError("Error");
                 break;
             case WAITING:
                 break;
@@ -584,10 +666,17 @@ public class GuiInitController implements UserInterface {
      * @param message the message to display
      */
     public void displayError(String message){
-        try {
-            gui.guiError(message);
-        } catch (Exception e) {
-            e.printStackTrace();
+        {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        gui.guiError(message);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         }
     }
 

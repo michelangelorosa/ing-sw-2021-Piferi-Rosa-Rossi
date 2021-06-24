@@ -41,11 +41,11 @@ public class ActivateProduction extends Action {
     /**
      * Constructor for ActivateProduction Class.
      */
-    public ActivateProduction(boolean firstSlot, boolean secondSlot, boolean thirdSlot1, boolean firstLeaderCard, boolean secondLeaderCard, boolean basicProduction, ArrayList<ResourceType> basicProductionInputs) {
+    public ActivateProduction(boolean firstSlot, boolean secondSlot, boolean thirdSlot, boolean firstLeaderCard, boolean secondLeaderCard, boolean basicProduction, ArrayList<ResourceType> basicProductionInputs) {
         this.actionType = ActionType.ACTIVATE_PRODUCTION;
         this.firstSlot = firstSlot;
         this.secondSlot = secondSlot;
-        this.thirdSlot = thirdSlot1;
+        this.thirdSlot = thirdSlot;
         this.firstLeaderCard = firstLeaderCard;
         this.secondLeaderCard = secondLeaderCard;
         this.basicProduction = basicProduction;

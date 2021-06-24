@@ -33,13 +33,34 @@
             <Image url="@../Game/white.png" />
          </image>
       </ImageView>
-      <RadioButton fx:id="marketColumn1" layoutX="138.0" layoutY="314.0" mnemonicParsing="false" />
-      <RadioButton fx:id="marketColumn2" layoutX="178.0" layoutY="315.0" mnemonicParsing="false" />
-      <RadioButton fx:id="marketColumn3" layoutX="220.0" layoutY="315.0" mnemonicParsing="false" />
-      <RadioButton fx:id="marketColumn4" layoutX="261.0" layoutY="315.0" mnemonicParsing="false" />
-      <RadioButton fx:id="marketRow3" layoutX="360.0" layoutY="212.0" mnemonicParsing="false" />
-      <RadioButton fx:id="marketRow2" layoutX="360.0" layoutY="170.0" mnemonicParsing="false" />
-      <RadioButton fx:id="marketRow1" layoutX="360.0" layoutY="129.0" mnemonicParsing="false" />
+      <RadioButton fx:id="marketColumn1" layoutX="138.0" layoutY="314.0" mnemonicParsing="false">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></RadioButton>
+      <RadioButton fx:id="marketColumn2" layoutX="178.0" layoutY="315.0" mnemonicParsing="false">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></RadioButton>
+      <RadioButton fx:id="marketColumn3" layoutX="220.0" layoutY="315.0" mnemonicParsing="false">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></RadioButton>
+      <RadioButton fx:id="marketColumn4" layoutX="261.0" layoutY="315.0" mnemonicParsing="false">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></RadioButton>
+      <RadioButton fx:id="marketRow3" layoutX="360.0" layoutY="212.0" mnemonicParsing="false">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></RadioButton>
+      <RadioButton fx:id="marketRow2" layoutX="360.0" layoutY="170.0" mnemonicParsing="false">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></RadioButton>
+      <RadioButton fx:id="marketRow1" layoutX="360.0" layoutY="129.0" mnemonicParsing="false">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></RadioButton>
       <Button fx:id="button" layoutX="266.0" layoutY="482.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="80.0" text="Close">
          <font>
             <Font name="Baskerville" size="20.0" />
