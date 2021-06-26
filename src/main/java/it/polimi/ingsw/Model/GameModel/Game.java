@@ -394,19 +394,19 @@ public class Game {
         Market market = JSONReader.convertMarketPersistence();
         this.market = market;
         ArrayList<LeaderCard> leader = JSONReader.convertLeaderCardPersistence();
-        if(this.players.get(0)!= null){
+        if(this.players.size() > 0){
             this.getPlayers().get(0).getBoard().getLeaderCards()[0] = leader.get(0);
             this.getPlayers().get(0).getBoard().getLeaderCards()[1] = leader.get(1);
         }
-        if(this.players.get(1)!= null){
+        if(this.players.size() > 1 && !this.players.get(1).getNickname().equals("Lorenzo il Magnifico")){
             this.getPlayers().get(1).getBoard().getLeaderCards()[0] = leader.get(2);
             this.getPlayers().get(1).getBoard().getLeaderCards()[1] = leader.get(3);
         }
-        if(this.players.get(2)!= null){
+        if(this.players.size() > 2){
             this.getPlayers().get(2).getBoard().getLeaderCards()[0] = leader.get(4);
             this.getPlayers().get(2).getBoard().getLeaderCards()[1] = leader.get(5);
         }
-        if(this.players.get(3)!= null){
+        if(this.players.size() > 3){
             this.getPlayers().get(3).getBoard().getLeaderCards()[0] = leader.get(6);
             this.getPlayers().get(3).getBoard().getLeaderCards()[1] = leader.get(7);
         }
