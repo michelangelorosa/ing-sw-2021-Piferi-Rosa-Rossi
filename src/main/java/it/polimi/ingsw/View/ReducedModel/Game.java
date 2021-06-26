@@ -114,8 +114,6 @@ public class Game {
      */
     public void setGameType(GameType gameType) {
         this.gameType = gameType;
-        if(this.gameType == GameType.SINGLEPLAYER)
-            this.getPlayers().add(new Player("Lorenzo il Magnifico", 1, false));
     }
 
     /**
