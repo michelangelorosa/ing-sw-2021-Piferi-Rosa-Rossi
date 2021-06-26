@@ -5,6 +5,7 @@ import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Enums.SoloActionToken;
 import it.polimi.ingsw.Model.GameModel.SinglePlayer.SinglePlayer;
 import it.polimi.ingsw.Model.Exceptions.ModelException;
+import it.polimi.ingsw.Model.JSON.ConvertToJSON;
 import it.polimi.ingsw.Model.JSON.JSONReader;
 import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 
@@ -27,8 +28,8 @@ public class Game {
 
     private boolean lastTurn = false;
 
-    private final Market market;
-    private final DevelopmentCardTable developmentCardTable;
+    private Market market;
+    private DevelopmentCardTable developmentCardTable;
     private final FaithTrack faithTrack;
 
     private final SinglePlayer singlePlayer = new SinglePlayer();
@@ -364,6 +365,52 @@ public class Game {
     public void changeCurrentPlayerReconnection(String playerName) {
         Player player = this.getPlayerByNickname(playerName);
         this.currentPlayerIndex = player.getTurnPosition();
+    }
+
+    public void persistence(){
+        ArrayList<Player> newPlayers = JSONReader.playersDisconnections();
+        for(int i = 0; i < newPlayers.size(); i++)
+            players.add(newPlayers.get(i));
+
+        DevelopmentCardDeck[][] deck = JSONReader.developmentCardDecksDisconnection();
+        DevelopmentCardTable table = new DevelopmentCardTable(deck);
+        Integer[] card = JSONReader.convertCardsInDeck();
+
+        table.getDeck(0,0).setCardsInDeck(card[0]);
+        table.getDeck(0,1).setCardsInDeck(card[1]);
+        table.getDeck(0,2).setCardsInDeck(card[2]);
+        table.getDeck(0,3).setCardsInDeck(card[3]);
+        table.getDeck(1,0).setCardsInDeck(card[4]);
+        table.getDeck(1,1).setCardsInDeck(card[5]);
+        table.getDeck(1,2).setCardsInDeck(card[6]);
+        table.getDeck(1,3).setCardsInDeck(card[7]);
+        table.getDeck(2,0).setCardsInDeck(card[8]);
+        table.getDeck(2,1).setCardsInDeck(card[9]);
+        table.getDeck(2,2).setCardsInDeck(card[10]);
+        table.getDeck(2,3).setCardsInDeck(card[11]);
+
+        this.developmentCardTable = table;
+
+        Market market = JSONReader.convertMarketPersistence();
+        this.market = market;
+        ArrayList<LeaderCard> leader = JSONReader.convertLeaderCardPersistence();
+        if(this.players.get(0)!= null){
+            this.getPlayers().get(0).getBoard().getLeaderCards()[0] = leader.get(0);
+            this.getPlayers().get(0).getBoard().getLeaderCards()[1] = leader.get(1);
+        }
+        if(this.players.get(1)!= null){
+            this.getPlayers().get(1).getBoard().getLeaderCards()[0] = leader.get(2);
+            this.getPlayers().get(1).getBoard().getLeaderCards()[1] = leader.get(3);
+        }
+        if(this.players.get(2)!= null){
+            this.getPlayers().get(2).getBoard().getLeaderCards()[0] = leader.get(4);
+            this.getPlayers().get(2).getBoard().getLeaderCards()[1] = leader.get(5);
+        }
+        if(this.players.get(3)!= null){
+            this.getPlayers().get(3).getBoard().getLeaderCards()[0] = leader.get(6);
+            this.getPlayers().get(3).getBoard().getLeaderCards()[1] = leader.get(7);
+        }
+
     }
 
 }
