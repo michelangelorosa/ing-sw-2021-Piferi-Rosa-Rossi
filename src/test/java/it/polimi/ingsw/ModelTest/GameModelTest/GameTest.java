@@ -2,9 +2,12 @@ package it.polimi.ingsw.ModelTest.GameModelTest;
 
 import static org.junit.Assert.*;
 
+import it.polimi.ingsw.CommonTestMethods;
 import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.Controller.Actions.EndMarket;
 import it.polimi.ingsw.Model.Enums.GameType;
+import it.polimi.ingsw.Model.Enums.Marble;
+import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.*;
 import it.polimi.ingsw.Model.JSON.ConvertToJSON;
@@ -50,10 +53,27 @@ public class GameTest {
     }
 
     @Test
-    public void jsonTest() throws FileNotFoundException {
+    public void jsonTest() throws FileNotFoundException, ModelException {
         ConvertToJSON convert = new ConvertToJSON();
+        int cardId1=43,victoryPoints1=32,blueCardLv1=1,purpleCardLv1=2,yellowCardLv1=1,greenCardLv1=0,blueCardLv2=0,purpleCardLv2=0,yellowCardLv2=0,greenCardLv2=4,blueCardLv3=0,purpleCardLv3=0,yellowCardLv3=2,greenCardLv3=0;
+        Marble marble = Marble.RED;
+        ResourceType resourceType = ResourceType.COINS;
+        ResourceStack resourceStack1 = new ResourceStack(1,4,6,7);
+        ResourceStack resourceStack2 = new ResourceStack(6,5,2,4);
+        ResourceStack resourceStack3 = new ResourceStack(0,0,0,0);
+        ResourceStack resourceStack4 = new ResourceStack(6,4,1,8);
+        ResourceStack resourceStackDiscount = new ResourceStack(5,7,0,0);
+        ResourceStack resourceStackInput = new ResourceStack(4,3,0,0);
+        LeaderRequirements leaderRequirements = new LeaderRequirements(blueCardLv1,purpleCardLv1,yellowCardLv1,greenCardLv1,blueCardLv2,purpleCardLv2,yellowCardLv2,greenCardLv2,blueCardLv3,purpleCardLv3,yellowCardLv3,greenCardLv3);
+
+        LeaderCard leaderCard1 = new LeaderCard(cardId1,victoryPoints1,resourceStack1,leaderRequirements,resourceStackDiscount);
         joiner(game);
+        for(int i = 0; i < game.getPlayers().size(); i++){
+            game.getPlayers().get(i).getBoard().getLeaderCards()[0] = leaderCard1;
+            game.getPlayers().get(i).getBoard().getLeaderCards()[1] = leaderCard1;
+        }
         game.getDevelopmentCardTable().shuffleTable();
+        game.getDevelopmentCardTable().drawCardFromDeck(0,0);
         convert.convertGame(game);
     }
 
@@ -95,6 +115,80 @@ public class GameTest {
 
     }
 
+    @Test
+    public void persistenceTest() throws FileNotFoundException, ModelException {
+        joiner(game);
+        ConvertToJSON convert = new ConvertToJSON();
+        int cardId1=43,victoryPoints1=32,blueCardLv1=1,purpleCardLv1=2,yellowCardLv1=1,greenCardLv1=0,blueCardLv2=0,purpleCardLv2=0,yellowCardLv2=0,greenCardLv2=4,blueCardLv3=0,purpleCardLv3=0,yellowCardLv3=2,greenCardLv3=0;
+        Marble marble = Marble.RED;
+        ResourceType resourceType = ResourceType.COINS;
+        ResourceStack resourceStack1 = new ResourceStack(1,4,6,7);
+        ResourceStack resourceStack2 = new ResourceStack(6,5,2,4);
+        ResourceStack resourceStack3 = new ResourceStack(0,0,0,0);
+        ResourceStack resourceStack4 = new ResourceStack(6,4,1,8);
+        ResourceStack resourceStackDiscount = new ResourceStack(5,7,0,0);
+        ResourceStack resourceStackInput = new ResourceStack(4,3,0,0);
+        LeaderRequirements leaderRequirements = new LeaderRequirements(blueCardLv1,purpleCardLv1,yellowCardLv1,greenCardLv1,blueCardLv2,purpleCardLv2,yellowCardLv2,greenCardLv2,blueCardLv3,purpleCardLv3,yellowCardLv3,greenCardLv3);
+
+        LeaderCard leaderCard1 = new LeaderCard(1,victoryPoints1,resourceStack1,leaderRequirements,resourceStackDiscount);
+        LeaderCard leaderCard2 = new LeaderCard(2,victoryPoints1,resourceStack1,leaderRequirements,resourceStackDiscount);
+        LeaderCard leaderCard3 = new LeaderCard(3,victoryPoints1,resourceStack2,leaderRequirements,resourceStackDiscount);
+        LeaderCard leaderCard4 = new LeaderCard(4,victoryPoints1,resourceStack1,leaderRequirements,resourceStackDiscount);
+        LeaderCard leaderCard5 = new LeaderCard(5,victoryPoints1,resourceStack1,leaderRequirements,resourceStackDiscount);
+        LeaderCard leaderCard6 = new LeaderCard(6,victoryPoints1,resourceStack3,leaderRequirements,resourceStackDiscount);
+        LeaderCard leaderCard7 = new LeaderCard(7,victoryPoints1,resourceStack4,leaderRequirements,resourceStackDiscount);
+        LeaderCard leaderCard8 = new LeaderCard(8,victoryPoints1,resourceStack1,leaderRequirements,resourceStackDiscount);
+
+
+        game.getPlayers().get(0).getBoard().getLeaderCards()[0] = leaderCard1;
+        game.getPlayers().get(0).getBoard().getLeaderCards()[1] = leaderCard2;
+        game.getPlayers().get(1).getBoard().getLeaderCards()[0] = leaderCard3;
+        game.getPlayers().get(1).getBoard().getLeaderCards()[1] = leaderCard4;
+        game.getPlayers().get(2).getBoard().getLeaderCards()[0] = leaderCard5;
+        game.getPlayers().get(2).getBoard().getLeaderCards()[1] = leaderCard6;
+        game.getPlayers().get(3).getBoard().getLeaderCards()[0] = leaderCard7;
+        game.getPlayers().get(3).getBoard().getLeaderCards()[1] = leaderCard8;
+
+
+        game.getDevelopmentCardTable().drawCardFromDeck(0,0);
+
+        game.getPlayers().get(0).getBoard().getLeaderCards()[0].setActive(true);
+        convert.convertGame(game);
+
+        //System.out.println("---------- game2 = new Game AND game2.persistence() ----------");
+        Game game2 = new Game();
+        game2.persistence();
+        assertEquals(game.getPlayers().get(0).getNickname(), game2.getPlayers().get(0).getNickname());
+        assertEquals(game.getDevelopmentCardTable().getDeck(0,0).getCards()[0].getCost().getResource(ResourceType.STONES), game2.getDevelopmentCardTable().getDeck(0,0).getCards()[0].getCost().getResource(ResourceType.STONES));
+        assertEquals(game.getDevelopmentCardTable().getDeck(0,0).getCardsInDeck(), game2.getDevelopmentCardTable().getDeck(0,0).getCardsInDeck());
+
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 4; j++){
+                assertEquals(game.getMarket().getMarble(i,j), game2.getMarket().getMarble(i,j));
+            }
+        }
+        assertEquals(game.getPlayers().get(0).getBoard().getLeaderCards()[0].getCardId(), game2.getPlayers().get(0).getBoard().getLeaderCards()[0].getCardId());
+        assertEquals(game.getPlayers().get(0).getBoard().getLeaderCards()[1].getCardId(), game2.getPlayers().get(0).getBoard().getLeaderCards()[1].getCardId());
+        assertEquals(game.getPlayers().get(1).getBoard().getLeaderCards()[0].getCardId(), game2.getPlayers().get(1).getBoard().getLeaderCards()[0].getCardId());
+        assertEquals(game.getPlayers().get(1).getBoard().getLeaderCards()[1].getCardId(), game2.getPlayers().get(1).getBoard().getLeaderCards()[1].getCardId());
+        assertEquals(game.getPlayers().get(2).getBoard().getLeaderCards()[0].getCardId(), game2.getPlayers().get(2).getBoard().getLeaderCards()[0].getCardId());
+        assertEquals(game.getPlayers().get(2).getBoard().getLeaderCards()[1].getCardId(), game2.getPlayers().get(2).getBoard().getLeaderCards()[1].getCardId());
+        assertEquals(game.getPlayers().get(3).getBoard().getLeaderCards()[0].getCardId(), game2.getPlayers().get(3).getBoard().getLeaderCards()[0].getCardId());
+        assertEquals(game.getPlayers().get(3).getBoard().getLeaderCards()[1].getCardId(), game2.getPlayers().get(3).getBoard().getLeaderCards()[1].getCardId());
+
+        assertEquals(game.getPlayers().get(0).getBoard().getLeaderCards()[0].getDiscount().getResource(ResourceType.SHIELDS), game2.getPlayers().get(0).getBoard().getLeaderCards()[0].getDiscount().getResource(ResourceType.SHIELDS));
+
+        assertEquals(game.getPlayers().get(0).getBoard().getLeaderCards()[0].isActive(), game2.getPlayers().get(0).getBoard().getLeaderCards()[0].isActive());
+        assertEquals(game.getPlayers().get(0).getBoard().getLeaderCards()[1].isActive(), game2.getPlayers().get(0).getBoard().getLeaderCards()[1].isActive());
+        assertEquals(game.getPlayers().get(1).getBoard().getLeaderCards()[0].isActive(), game2.getPlayers().get(1).getBoard().getLeaderCards()[0].isActive());
+        assertEquals(game.getPlayers().get(1).getBoard().getLeaderCards()[1].isActive(), game2.getPlayers().get(1).getBoard().getLeaderCards()[1].isActive());
+        assertEquals(game.getPlayers().get(2).getBoard().getLeaderCards()[0].isActive(), game2.getPlayers().get(2).getBoard().getLeaderCards()[0].isActive());
+        assertEquals(game.getPlayers().get(2).getBoard().getLeaderCards()[1].isActive(), game2.getPlayers().get(2).getBoard().getLeaderCards()[1].isActive());
+        assertEquals(game.getPlayers().get(3).getBoard().getLeaderCards()[0].isActive(), game2.getPlayers().get(3).getBoard().getLeaderCards()[0].isActive());
+        assertEquals(game.getPlayers().get(3).getBoard().getLeaderCards()[1].isActive(), game2.getPlayers().get(3).getBoard().getLeaderCards()[1].isActive());
+
+
+    }
 
 
 }

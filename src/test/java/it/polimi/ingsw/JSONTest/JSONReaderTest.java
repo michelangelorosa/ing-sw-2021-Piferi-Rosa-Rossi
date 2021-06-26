@@ -1,5 +1,6 @@
 package it.polimi.ingsw.JSONTest;
 
+import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.Controller.ControllerClasses.Controller;
 
 import static org.junit.Assert.*;
@@ -532,4 +533,36 @@ public class JSONReaderTest {
         //int size = LeaderCards.size();
         //System.out.println(size);
     }
+
+    @Test
+    public void playerDisconnectionTest(){
+        ArrayList<Player> players = JSONReader.playersDisconnections();
+        assertEquals("Giacomo", players.get(0).getNickname());
+        assertEquals("Valentino", players.get(1).getNickname());
+        assertEquals("Andrea", players.get(2).getNickname());
+        assertTrue(players.get(0).getPossibleActions().get(0).equals(ActionType.RESET_WAREHOUSE));
+        assertEquals(PopeTile.DOWN, players.get(0).getPopeTiles()[0].getPopeTile());
+    }
+
+    @Test
+    public void developmentDisconnectionTest(){
+        DevelopmentCardDeck[][] deck = JSONReader.developmentCardDecksDisconnection();
+        for(int r = 0; r < 3; r++){
+            for(int c = 0; c < 4; c++){
+                for(int pos = 0; pos < 4; pos++){
+                    System.out.println(deck[r][c].getCards()[pos]);
+                }
+            }
+        }
+    }
+
+    @Test
+    public void leaderDisconnectionTest(){
+        ArrayList<LeaderCard> leader = JSONReader.convertLeaderCardPersistence();
+
+        for(int pos = 0; pos < 8; pos++){
+            System.out.println(leader.get(pos).isDiscarded());
+        }
+    }
+
 }

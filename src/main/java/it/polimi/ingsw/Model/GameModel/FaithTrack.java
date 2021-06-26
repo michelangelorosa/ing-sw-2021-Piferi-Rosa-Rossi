@@ -10,14 +10,14 @@ import java.util.ArrayList;
 
 public class FaithTrack extends RedFaithTrack {
 
+    /**
+     * Constructors for FaithTrack
+     */
     public FaithTrack() {
         super();
         this.popeSpaceONE = true;
         this.popeSpaceTWO = true;
         this.popeSpaceTHREE = true;
-        //this.ONE = new VaticanReportSection(5, 8, 2);
-        //this.TWO = new VaticanReportSection(12, 16, 3);
-        //this.THREE = new VaticanReportSection(19, 24, 4);
     }
 
     public FaithTrack(VaticanReportSection ONE, VaticanReportSection TWO, VaticanReportSection THREE) {

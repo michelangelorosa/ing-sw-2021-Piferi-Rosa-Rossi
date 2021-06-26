@@ -59,6 +59,15 @@ public class DevelopmentCardDeck extends RedDevelopmentCardDeck {
         Collections.shuffle(Arrays.asList(cards));
     }
 
+
+    public void resetCardsInDeck(){
+        this.cardsInDeck = 0;
+    }
+
+    public void setCardsInDeck(int cardsInDeck){
+        this.cardsInDeck = cardsInDeck;
+    }
+
      /**
       * This method adds a card in the "cards" array attribute while also incrementing "cardsInDeck".
       */
@@ -81,4 +90,27 @@ public class DevelopmentCardDeck extends RedDevelopmentCardDeck {
      public RedDevelopmentCardDeck toView() {
          return (RedDevelopmentCardDeck) this;
      }
+
+    /* public DevelopmentCardDeck[][] prepareToRead(DevelopmentCardDeck[][] developmentCardDecks){
+
+         developmentCardDecks[0][0] = new DevelopmentCardDeck(Color.GREEN, Level.THREE);
+         developmentCardDecks[1][0] = new DevelopmentCardDeck(Color.GREEN, Level.TWO);
+         developmentCardDecks[2][0] = new DevelopmentCardDeck(Color.GREEN, Level.ONE);
+
+         developmentCardDecks[0][1] = new DevelopmentCardDeck(Color.BLUE, Level.THREE);
+         developmentCardDecks[1][1] = new DevelopmentCardDeck(Color.BLUE, Level.TWO);
+         developmentCardDecks[2][1] = new DevelopmentCardDeck(Color.BLUE, Level.ONE);
+
+         developmentCardDecks[0][2] = new DevelopmentCardDeck(Color.YELLOW, Level.THREE);
+         developmentCardDecks[1][2] = new DevelopmentCardDeck(Color.YELLOW, Level.TWO);
+         developmentCardDecks[2][2] = new DevelopmentCardDeck(Color.YELLOW, Level.ONE);
+
+         developmentCardDecks[0][3] = new DevelopmentCardDeck(Color.PURPLE, Level.THREE);
+         developmentCardDecks[1][3] = new DevelopmentCardDeck(Color.PURPLE, Level.TWO);
+         developmentCardDecks[2][3] = new DevelopmentCardDeck(Color.PURPLE, Level.ONE);
+
+
+         return developmentCardDecks;
+     }
+     */
 }

@@ -20,10 +20,10 @@ public class PlayerJSON {
     private final int faithTrackPosition;
     int victoryPoints;
     PopeTile pope0, pope1, pope2;
-    int depot0Max, depot1Max, depot2Max, depot0Stored, depot1Stored, depot2Stored;
+    int depot0Max, depot1Max, depot2Max, depot0Stored, depot1Stored, depot2Stored, depotLeader1Stored, depotLeader2Stored;
     boolean depot0IsLeader, depot1IsLeader, depot2IsLeader;
     ResourceType depot0Type, depot1Type, depot2Type;
-    int leader0, leader2;
+    int leader0, leader1;
     boolean CHOOSE_ACTION, GAME_SET,INIT_CHOOSE_RESOURCES, INIT_CHOOSE_LEADER_CARDS, MARKET_CHOOSE_ROW, CHOOSE_LEADER_CARD, ADD_RESOURCE, SWITCH_DEPOT, RESET_WAREHOUSE, END_MARKET, BUY_CARD, PAY_RESOURCE_CARD, PAY_RESOURCE_PRODUCTION, END_PAY_CARD, CHOOSE_CARD_SLOT, ACTIVATE_PRODUCTION, END_PAY_PRODUCTION, CHOOSE_PRODUCTION_OUTPUT, ACTIVATE_LEADERCARD, DELETE_LEADERCARD, END_TURN, FINAL_POINTS;
 
     /**This class is use to create the file "NamePlayers.json"*/
@@ -34,11 +34,11 @@ public class PlayerJSON {
         this.status = status;
         this.faithTrackPosition = faithTrackPosition;
     }
-
-    public PlayerJSON(String nickname, int turnPosition, boolean inkwell, PlayerStatus status, int faithTrackPosition, int victoryPoints, PopeTile pope0, PopeTile pope1, PopeTile pope2, int depot0Max, int depot1Max, int depot2Max, int depot0Stored, int depot1Stored, int depot2Stored, boolean depot0IsLeader, boolean depot1IsLeader, boolean depot2IsLeader, ResourceType depot0Type, ResourceType depot1Type, ResourceType depot2Type, int leader0, int leader2, boolean CHOOSE_ACTION, boolean GAME_SET, boolean INIT_CHOOSE_RESOURCES, boolean INIT_CHOOSE_LEADER_CARDS, boolean MARKET_CHOOSE_ROW, boolean CHOOSE_LEADER_CARD, boolean ADD_RESOURCE, boolean SWITCH_DEPOT, boolean RESET_WAREHOUSE, boolean END_MARKET, boolean BUY_CARD, boolean PAY_RESOURCE_CARD, boolean PAY_RESOURCE_PRODUCTION, boolean END_PAY_CARD, boolean CHOOSE_CARD_SLOT, boolean ACTIVATE_PRODUCTION, boolean END_PAY_PRODUCTION, boolean CHOOSE_PRODUCTION_OUTPUT, boolean ACTIVATE_LEADERCARD, boolean DELETE_LEADERCARD, boolean END_TURN, boolean FINAL_POINTS) {
+    /**This class is use to create the file "Persistence.json"*/
+    public PlayerJSON(String nickname, int turnPosition, boolean inkwell, PlayerStatus status, int faithTrackPosition, int victoryPoints, PopeTile pope0, PopeTile pope1, PopeTile pope2, int depot0Max, int depot1Max, int depot2Max, int depot0Stored, int depot1Stored, int depot2Stored, int depotLeader1Stored, int depotLeader2Stored, ResourceType depot0Type, ResourceType depot1Type, ResourceType depot2Type, int leader0, int leader1, boolean CHOOSE_ACTION, boolean GAME_SET, boolean INIT_CHOOSE_RESOURCES, boolean INIT_CHOOSE_LEADER_CARDS, boolean MARKET_CHOOSE_ROW, boolean CHOOSE_LEADER_CARD, boolean ADD_RESOURCE, boolean SWITCH_DEPOT, boolean RESET_WAREHOUSE, boolean END_MARKET, boolean BUY_CARD, boolean PAY_RESOURCE_CARD, boolean PAY_RESOURCE_PRODUCTION, boolean END_PAY_CARD, boolean CHOOSE_CARD_SLOT, boolean ACTIVATE_PRODUCTION, boolean END_PAY_PRODUCTION, boolean CHOOSE_PRODUCTION_OUTPUT, boolean ACTIVATE_LEADERCARD, boolean DELETE_LEADERCARD, boolean END_TURN, boolean FINAL_POINTS) {
         this.nickname = nickname;
         this.turnPosition = turnPosition;
-        Inkwell = inkwell;
+        this.Inkwell = inkwell;
         this.status = status;
         this.faithTrackPosition = faithTrackPosition;
         this.victoryPoints = victoryPoints;
@@ -51,14 +51,13 @@ public class PlayerJSON {
         this.depot0Stored = depot0Stored;
         this.depot1Stored = depot1Stored;
         this.depot2Stored = depot2Stored;
-        this.depot0IsLeader = depot0IsLeader;
-        this.depot1IsLeader = depot1IsLeader;
-        this.depot2IsLeader = depot2IsLeader;
+        this.depotLeader1Stored = depotLeader1Stored;
+        this.depotLeader2Stored = depotLeader2Stored;
         this.depot0Type = depot0Type;
         this.depot1Type = depot1Type;
         this.depot2Type = depot2Type;
         this.leader0 = leader0;
-        this.leader2 = leader2;
+        this.leader1 = leader1;
         this.CHOOSE_ACTION = CHOOSE_ACTION;
         this.GAME_SET = GAME_SET;
         this.INIT_CHOOSE_RESOURCES = INIT_CHOOSE_RESOURCES;
