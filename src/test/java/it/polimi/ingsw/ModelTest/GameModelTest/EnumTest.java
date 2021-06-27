@@ -20,6 +20,14 @@ public class EnumTest {
     public void ResourceTypeTest() {
         ResourceType type = ResourceType.COINS;
         assertEquals(ANSIColors.FRONT_YELLOW + ANSIColors.COIN + ANSIColors.RESET, type.toCliSymbol());
+
+        ResourceType[] types = ResourceType.values();
+        for(ResourceType t : types) {
+            System.out.println(t.toCli());
+            System.out.println(t.toCliSymbol());
+            System.out.println(t.toCliNoColor());
+            System.out.println(t.viewToModel());
+        }
     }
 
     @Test

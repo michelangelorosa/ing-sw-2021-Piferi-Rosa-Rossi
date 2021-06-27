@@ -5,8 +5,10 @@ import static org.junit.Assert.*;
 import it.polimi.ingsw.Controller.ControllerClasses.ActionController;
 import it.polimi.ingsw.CommonTestMethods;
 import it.polimi.ingsw.Controller.Actions.*;
+import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.GameModel.Game;
+import it.polimi.ingsw.Model.GameModel.Player;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 
 import org.junit.Test;
@@ -111,5 +113,20 @@ public class EndTurnTest {
 
         MessageToClient message = action.messagePrepare(actionController);
         assertTrue(message instanceof FinalPointsMessage);
+    }
+
+    @Test
+    public void doActionSingleplayer() {
+        game.getPlayers().add(new Player("pippo", 0, true));
+        game.getPlayers().add(new Player("Lorenzo il Magnifico", 1, false));
+        game.setGameType(GameType.SINGLEPLAYER);
+        game.getPlayers().get(0).addPossibleAction(ActionType.END_TURN);
+
+        EndTurn action = new EndTurn();
+        action.doAction(actionController);
+        messageToClient = action.messagePrepare(actionController);
+        assertTrue(messageToClient instanceof EndTurnSingleplayerMessage);
+        assertEquals("SINGLEPLAYER", messageToClient.getError());
+        assertEquals(game.getDevelopmentCardTable(), ((EndTurnSingleplayerMessage) messageToClient).getTable());
     }
 }

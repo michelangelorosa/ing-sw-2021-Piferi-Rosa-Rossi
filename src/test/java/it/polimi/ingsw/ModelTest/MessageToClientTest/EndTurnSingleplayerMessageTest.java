@@ -40,6 +40,7 @@ public class EndTurnSingleplayerMessageTest {
 
         message.setError("SINGLEPLAYER");
         message.updateView(userInteraction);
+        assertEquals(userInteraction.getGame().getDevelopmentCardTable(), message.getTable());
         assertEquals(UIActions.SINGLEPLAYER_TURN, userInteraction.getUiAction());
 
         message.setError("SINGLEPLAYER LOOSE");

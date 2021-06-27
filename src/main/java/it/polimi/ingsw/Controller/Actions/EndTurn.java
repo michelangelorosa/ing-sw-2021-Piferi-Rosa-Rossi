@@ -77,7 +77,6 @@ public class EndTurn extends Action {
         }
         else {
             actionController.getGame().getSinglePlayer().lorenzoTurn(actionController.getGame());
-            //TODO messaggio nel market nel caso lorenzo vinca prima
             if(actionController.getGame().getCurrentPlayer().hasFinished()) {
                 actionController.endGamePersistence();
                 this.response = "SINGLEPLAYER WIN";
@@ -138,6 +137,7 @@ public class EndTurn extends Action {
             message.setToken(actionController.getGame().getSinglePlayer().getLastToken());
             message.setVictoryPoints(actionController.getGame().getCurrentPlayer().getVictoryPoints());
             message.setLorenzoFaith(actionController.getGame().getSinglePlayer().getLorenzoFaithPoints());
+            message.setTable(actionController.getGame().getDevelopmentCardTable());
 
             message.addPossibleAction(ActionType.ACTIVATE_PRODUCTION);
             message.addPossibleAction(ActionType.BUY_CARD);
