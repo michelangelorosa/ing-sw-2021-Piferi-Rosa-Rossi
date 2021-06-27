@@ -13,8 +13,6 @@ import java.util.ArrayList;
  * needed for the creation of a Development Card.
  */
 public class RedDevelopmentCard implements Serializable {
-    private static final long serialVersionUID = 0x1;
-
     /**
      * Color and Level are enum type classes containing all possible colors and levels
      * a Development Card could have.

@@ -12,8 +12,6 @@ import java.util.Collections;
  * Another private integer attribute (cardsInDeck) is used to keep track of how many cards are in the deck.
  */
 public class RedDevelopmentCardDeck implements Serializable {
-    private static final long serialVersionUID = 0x1;
-
     protected RedDevelopmentCard[] cards;
     protected Color color;
     protected Level level;

@@ -9,8 +9,6 @@ import it.polimi.ingsw.Model.Enums.*;
  * Board Class contains all parts defining the playing board for each Player.
  */
 public class Board implements Serializable {
-    private static final long serialVersionUID = 0x1;
-
     /** resourceManager contains both the Warehouse and the Strongbox */
     private final ResourceManager resourceManager;
     /** developmentCardSlots contains all three slots on the board */

@@ -61,7 +61,7 @@
             <Font name="Dominican" size="38.0" />
          </font>
       </Text>
-      <Button fx:id="submitMarket" layoutX="838.0" layoutY="521.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="123.0" text="Submit">
+      <Button fx:id="submit" layoutX="838.0" layoutY="521.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="123.0" text="Submit">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>

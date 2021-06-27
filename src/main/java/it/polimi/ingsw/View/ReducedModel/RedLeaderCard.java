@@ -14,8 +14,6 @@ import java.util.ArrayList;
  * Type is a byte identifying the type
  *  */
 public class RedLeaderCard implements Serializable {
-    private static final long serialVersionUID = 0x1;
-
     protected final int cardId;
     protected final int victoryPoints;
     protected final LeaderCardAction action;

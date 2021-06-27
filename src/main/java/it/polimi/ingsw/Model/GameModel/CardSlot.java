@@ -5,8 +5,6 @@ import it.polimi.ingsw.Model.Enums.Level;
 import it.polimi.ingsw.View.ReducedModel.RedCardSlot;
 
 public class CardSlot extends RedCardSlot {
-    private static final long serialVersionUID = 0x1;
-
     /**
      * constructor for CardSlot
      */

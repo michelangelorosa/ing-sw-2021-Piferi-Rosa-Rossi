@@ -14,8 +14,6 @@ import java.util.ArrayList;
  * ability (via the boolean attributes).
  */
 public class RedWarehouse implements Serializable {
-    private static final long serialVersionUID = 0x1;
-
     protected final RedWarehouseDepot[] warehouseDepots;
     protected final RedWarehouseDepot extraWarehouseDepot1;
     protected final RedWarehouseDepot extraWarehouseDepot2;

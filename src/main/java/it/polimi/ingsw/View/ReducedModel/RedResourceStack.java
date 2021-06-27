@@ -11,8 +11,6 @@ import java.util.ArrayList;
  * different type of resource: shields, servants, coins, stones.
  */
 public class RedResourceStack implements Serializable{
-    private static final long serialVersionUID = 0x1;
-
     protected int shields;
     protected int servants;
     protected int coins;
@@ -63,18 +61,6 @@ public class RedResourceStack implements Serializable{
         ResourceType[] types = ResourceType.values();
         for(int i = 1; i < 5; i++)
             if(this.getResource(types[i]) != 0)
-                return false;
-        return true;
-    }
-
-    /**
-     * This method is used in the ParamValidator to check if the resourceStack is a valid one,
-     * @return true if the Resource Stack is valid.
-     */
-    public boolean isValid() {
-        ResourceType[] types = ResourceType.values();
-        for(int i = 1; i < 5; i++)
-            if(this.getResource(types[i]) < 0)
                 return false;
         return true;
     }

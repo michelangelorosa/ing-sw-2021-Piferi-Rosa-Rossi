@@ -9,8 +9,6 @@ import java.io.Serializable;
  * If The cards doesn't require a minimum level it is set to 1
  */
 public class RedLeaderRequirements implements Serializable {
-    private static final long serialVersionUID = 0x1;
-
     protected int blueCardLv1;
     protected int purpleCardLv1;
     protected int yellowCardLv1;

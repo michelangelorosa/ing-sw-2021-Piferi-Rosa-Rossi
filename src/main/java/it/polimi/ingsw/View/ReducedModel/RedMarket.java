@@ -12,8 +12,6 @@ import java.util.Random;
  * push inside the market whenever a player buys resources.
  */
 public class RedMarket implements Serializable {
-    private static final long serialVersionUID = 0x1;
-
     protected Marble[][] marbles;
     protected Marble extraMarble;
 

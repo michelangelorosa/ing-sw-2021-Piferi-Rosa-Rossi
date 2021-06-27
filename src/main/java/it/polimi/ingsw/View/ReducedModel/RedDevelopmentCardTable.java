@@ -12,8 +12,6 @@ import java.util.ArrayList;
  * All decks are stored in a 2D array of DevelopmentCardDeck-type object.
  */
 public class RedDevelopmentCardTable implements Serializable {
-    private static final long serialVersionUID = 0x1;
-
     protected final RedDevelopmentCardDeck[][] decks;
 
     protected RedDevelopmentCardTable() {

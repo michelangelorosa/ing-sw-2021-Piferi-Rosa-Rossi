@@ -14,8 +14,6 @@ import java.util.ArrayList;
  * ability (via the boolean attributes).
  */
 public class Warehouse extends RedWarehouse {
-    private static final long serialVersionUID = 0x1;
-
     /**
      * Constructor for Warehouse Class. It creates the "pyramid" of fixed-length depots and the two extra
      * depots. In addiction to that, it initializes the boolean attributes to "false".

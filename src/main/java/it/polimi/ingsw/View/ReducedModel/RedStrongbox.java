@@ -12,8 +12,6 @@ import java.util.ArrayList;
  * different resource types.
  */
 public class RedStrongbox implements Serializable {
-    private static final long serialVersionUID = 0x1;
-
     protected RedResourceStack storedResources;
 
     /**

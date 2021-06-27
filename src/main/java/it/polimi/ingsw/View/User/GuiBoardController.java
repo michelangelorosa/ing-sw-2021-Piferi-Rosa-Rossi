@@ -65,6 +65,7 @@ public class GuiBoardController extends GuiInitController{
     @FXML RadioButton marketColumn3;
     @FXML RadioButton marketColumn4;
     @FXML Button submitMarket;
+    @FXML Button submit;
     @FXML ImageView extraMarble;
     private ImageView[][] activeMarket;
     @FXML private Text resourcesTitle;
@@ -215,6 +216,9 @@ public class GuiBoardController extends GuiInitController{
             resourcesTitle.setText("Drag any resource on the warehouse depot");
             remStones.setText(remaining);             remCoins.setText(remaining);
             remShields.setText(remaining);            remServants.setText(remaining);
+            leader1resource1.setImage(null);            leader1resource2.setImage(null);
+            leader2resource1.setImage(null);            leader2resource2.setImage(null);
+            leader1.setImage(null);                     leader2.setImage(null);
         }
         else{
             if(this.client.getUserInteraction().getGame().getMyPlayer().getTemporaryResources().isEmpty()) {
@@ -312,9 +316,6 @@ public class GuiBoardController extends GuiInitController{
 
         firstFloor.setOnDragOver(new EventHandler <DragEvent>() {
             public void handle(DragEvent event) {
-                /* data is dragged over the target */
-                System.out.println("onDragOver");
-
                 /* accept it only if it is  not dragged from the same node
                  * and if it has a string data */
                 if (event.getDragboard().hasString()) {
@@ -326,24 +327,17 @@ public class GuiBoardController extends GuiInitController{
         });
         secondFloor.setOnDragOver(new EventHandler <DragEvent>() {
             public void handle(DragEvent event) {
-                /* data is dragged over the target */
-                System.out.println("onDragOver");
-
                 /* accept it only if it is  not dragged from the same node
                  * and if it has a string data */
                 if (event.getDragboard().hasString()) {
                     /* allow for both copying and moving, whatever user chooses */
                     event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
                 }
-
                 event.consume();
             }
         });
         thirdFloor.setOnDragOver(new EventHandler <DragEvent>() {
             public void handle(DragEvent event) {
-                /* data is dragged over the target */
-                System.out.println("onDragOver");
-
                 /* accept it only if it is  not dragged from the same node
                  * and if it has a string data */
                 if (event.getDragboard().hasString()) {
@@ -357,8 +351,6 @@ public class GuiBoardController extends GuiInitController{
 
         firstFloor.setOnDragDropped(new EventHandler <DragEvent>() {
             public void handle(DragEvent event) {
-                /* data dropped */
-                System.out.println("onDragDropped");
                 /* if there is a string data on dragboard, read it and use it */
                 Dragboard db = event.getDragboard();
                 boolean success = false;
@@ -407,16 +399,11 @@ public class GuiBoardController extends GuiInitController{
                 /* let the source know whether the string was successfully
                  * transferred and used */
                 event.setDropCompleted(success);
-                if(success){
-                    System.out.println("Set On drag dropped success for resource "+db.getString());
-                }
                 event.consume();
             }
         });
         secondFloor.setOnDragDropped(new EventHandler <DragEvent>() {
             public void handle(DragEvent event) {
-                /* data dropped */
-                System.out.println("onDragDropped");
                 /* if there is a string data on dragboard, read it and use it */
                 Dragboard db = event.getDragboard();
                 boolean success = false;
@@ -463,16 +450,11 @@ public class GuiBoardController extends GuiInitController{
                 /* let the source know whether the string was successfully
                  * transferred and used */
                 event.setDropCompleted(success);
-                if(success){
-                    System.out.println("Set On drag dropped success for resource "+db.getString());
-                }
                 event.consume();
             }
         });
         thirdFloor.setOnDragDropped(new EventHandler <DragEvent>() {
             public void handle(DragEvent event) {
-                /* data dropped */
-                System.out.println("onDragDropped");
                 /* if there is a string data on dragboard, read it and use it */
                 Dragboard db = event.getDragboard();
                 boolean success = false;
@@ -520,9 +502,6 @@ public class GuiBoardController extends GuiInitController{
                 /* let the source know whether the string was successfully
                  * transferred and used */
                 event.setDropCompleted(success);
-                if(success){
-                    System.out.println("Set On drag dropped success for resource "+db.getString());
-                }
                 event.consume();
             }
         });
@@ -539,6 +518,102 @@ public class GuiBoardController extends GuiInitController{
         });
 
     if(!initialResources){
+        if(myPlayer().getLeaderCards()[0].isActive()&&myPlayer().getLeaderCards()[0].getAction().equals(LeaderCardAction.EXTRADEPOT)){
+            leader1.setImage(getImage(myPlayer().getLeaderCards()[0].getCardId(),true));
+            leader1.setFitWidth(184);
+            leader1.setFitHeight(271);
+
+            leader1.setOnDragOver(new EventHandler <DragEvent>() {
+                public void handle(DragEvent event) {
+                    /* accept it only if it is  not dragged from the same node
+                     * and if it has a string data */
+                    if (event.getDragboard().hasString()) {
+                        /* allow for both copying and moving, whatever user chooses */
+                        event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                    }
+                    event.consume();
+                }
+            });
+
+            leader1.setOnDragDropped(new EventHandler <DragEvent>() {
+                public void handle(DragEvent event) {
+                    /* if there is a string data on dragboard, read it and use it */
+                    Dragboard db = event.getDragboard();
+                    boolean success = false;
+                    if (db.hasString()) {
+                        String resource = db.getString();
+                            success=addResource(3,resource);
+                            if(success)
+                                gotResource(resource);
+                            if(resourceNumber==0)
+                            {
+                                sendAction(new EndMarket());
+                                marketBtn.setText("Open Market");
+                                refresh();
+                                resourcePicker.close();
+                                try {
+                                    board();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            setResourceData(getResourceData(client.getUserInteraction().getGame().getMyPlayer()));
+                    }
+                    /* let the source know whether the string was successfully
+                     * transferred and used */
+                    event.setDropCompleted(success);
+                    event.consume();
+                }
+            });
+        }
+        if(myPlayer().getLeaderCards()[1].isActive()&&myPlayer().getLeaderCards()[1].getAction().equals(LeaderCardAction.EXTRADEPOT)){
+            leader2.setImage(getImage(myPlayer().getLeaderCards()[1].getCardId(),true));
+            leader2.setFitWidth(184);
+            leader2.setFitHeight(271);
+
+            leader2.setOnDragOver(new EventHandler <DragEvent>() {
+                public void handle(DragEvent event) {
+                    /* accept it only if it is  not dragged from the same node
+                     * and if it has a string data */
+                    if (event.getDragboard().hasString()) {
+                        /* allow for both copying and moving, whatever user chooses */
+                        event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                    }
+                    event.consume();
+                }
+            });
+
+            leader2.setOnDragDropped(new EventHandler <DragEvent>() {
+                public void handle(DragEvent event) {
+                    /* if there is a string data on dragboard, read it and use it */
+                    Dragboard db = event.getDragboard();
+                    boolean success = false;
+                    if (db.hasString()) {
+                        String resource = db.getString();
+                        success=addResource(4,resource);
+                        if(success)
+                            gotResource(resource);
+                        if(resourceNumber==0)
+                        {
+                            sendAction(new EndMarket());
+                            marketBtn.setText("Open Market");
+                            refresh();
+                            resourcePicker.close();
+                            try {
+                                board();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        setResourceData(getResourceData(client.getUserInteraction().getGame().getMyPlayer()));
+                    }
+                    /* let the source know whether the string was successfully
+                     * transferred and used */
+                    event.setDropCompleted(success);
+                    event.consume();
+                }
+            });
+        }
         Scene scene = new Scene(getResources);
         resourcePicker.setScene(scene);
         resourcePicker.showAndWait();
@@ -564,6 +639,7 @@ public class GuiBoardController extends GuiInitController{
             Stage payResources = new Stage();
             payResources.initModality(Modality.APPLICATION_MODAL);
             payResources.setTitle("Pay Resource");
+            payResources.setResizable(false);
             RedResourceStack resourcesToPay = this.client.getUserInteraction().getGame().getMyPlayer().getTemporaryResources();
 
             Scene scene = new Scene(payResource);
@@ -715,6 +791,9 @@ public class GuiBoardController extends GuiInitController{
                     }
                 }
             });
+
+
+
         if(Integer.parseInt(strongboxStones.getText())>0)
             strongboxStonesClickable.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -820,6 +899,21 @@ public class GuiBoardController extends GuiInitController{
         if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_CARD_SLOT)) {
             cardTableBtn.setText("Choose card slot");
         }
+        if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_PRODUCTION_OUTPUT)){
+            if(productionOutput[0]||productionOutput[1]||productionOutput[2]){
+                produciton.setText("Choose Output");
+            }else {
+                ChooseProductionOutput productionOutputAction = new ChooseProductionOutput();
+                ArrayList<ResourceType> emptyResource = new ArrayList<>();
+                productionOutputAction.setBasicProductionOutput(emptyResource);
+                productionOutputAction.setBasicProduction(false);
+                productionOutputAction.setFirstLeaderCard(false);
+                productionOutputAction.setFirstLeaderCardOutput(emptyResource);
+                productionOutputAction.setSecondLeaderCard(false);
+                productionOutputAction.setSecondLeaderCardOutput(emptyResource);
+                sendAction(productionOutputAction);
+            }
+        }
     }
 
     @FXML
@@ -853,7 +947,7 @@ public class GuiBoardController extends GuiInitController{
             cardTitle.setText("Choose a development card slot");
             ImageView card1,card2,card3,cardToAdd;
 
-            submitMarket.setDisable(true);
+            submit.setDisable(true);
 
             chooserPane.add(cardToAdd = new ImageView(getImage(temporaryCard.getCardId(),true)),5,0);
             cardToAdd.setFitHeight(250);
@@ -895,30 +989,34 @@ public class GuiBoardController extends GuiInitController{
                     else
                 slotThree.setDisable(true);
 
+                    slotZero.setDisable(true);
+                    slotFour.setDisable(true);
+                    slotFive.setDisable(true);
+
             System.out.println("temporary Card Id is: "+temporaryCard.getCardId());
                 slotOne.setOnAction(event -> {
                 if(slotOne.isArmed()){
                     slotTwo.setSelected(false);
                     slotThree.setSelected(false);
-                    submitMarket.setDisable(!slotOne.isSelected());
+                    submit.setDisable(!slotOne.isSelected());
                 }
             });
                 slotTwo.setOnAction(event -> {
                 if(slotTwo.isArmed()){
                     slotOne.setSelected(false);
                     slotThree.setSelected(false);
-                    submitMarket.setDisable(!slotTwo.isSelected());
+                    submit.setDisable(!slotTwo.isSelected());
                 }
             });
                 slotThree.setOnAction(event -> {
                 if(slotThree.isArmed()){
                     slotTwo.setSelected(false);
                     slotOne.setSelected(false);
-                    submitMarket.setDisable(!slotThree.isSelected());
+                    submit.setDisable(!slotThree.isSelected());
                 }
             });
 
-            submitMarket.setOnAction(event -> {
+            submit.setOnAction(event -> {
                 cardTableBtn.setText("Open Card Table");
                 int slot=-9;
                 if(slotOne.isSelected())
@@ -933,7 +1031,7 @@ public class GuiBoardController extends GuiInitController{
                 chooser.close();
             });
         }
-        if(myPlayer().getPossibleActions().contains(ActionType.ACTIVATE_PRODUCTION)){
+        else if(myPlayer().getPossibleActions().contains(ActionType.ACTIVATE_PRODUCTION)){
 
             cardTitle.setText("Choose the productions to activate");
             AtomicReference<Boolean> basicProduction = new AtomicReference<>(false);
@@ -1010,7 +1108,7 @@ public class GuiBoardController extends GuiInitController{
             }
 
 
-            submitMarket.setOnAction(event -> {
+            submit.setOnAction(event -> {
                 //Basic production has been activated
 
                 if(slotThree.isSelected()&&basicProduction.get()==false){
@@ -1047,9 +1145,12 @@ public class GuiBoardController extends GuiInitController{
                     card3.setFitWidth(167);
                     card0.setPreserveRatio(true);card1.setPreserveRatio(true);card2.setPreserveRatio(true);card3.setPreserveRatio(true);
                     slotFour.setDisable(true);
-                }else if(slotThree.isSelected()==false&&basicProduction.get()==false){
+                }
+                else if(slotThree.isSelected()==false&&basicProduction.get()==false){
+
                     productionOutput[0]=false;productionOutput[1]=slotFour.isSelected();productionOutput[2]=slotFive.isSelected();
-                    sendAction(new ActivateProduction(slotZero.isSelected(),slotOne.isSelected(),slotTwo.isSelected(),slotFour.isSelected(),slotFive.isSelected(),slotThree.isSelected(),productionInputs));
+                    sendAction(new ActivateProduction(slotZero.isSelected(),slotOne.isSelected(),slotTwo.isSelected(),slotFour.isSelected(),slotFive.isSelected(),
+                            slotThree.isSelected(),productionInputs));
                     refresh();
                     chooser.close();
                 }else if(basicProduction.get()==true){
@@ -1083,6 +1184,7 @@ public class GuiBoardController extends GuiInitController{
 
                         sendAction(new ActivateProduction(activations[0],activations[1],activations[2],activations[3],activations[4],true,productionInputs));
                         refresh();
+                        produciton.setText("Choose Output");
                         chooser.close();
                         }
                     }else {
@@ -1093,14 +1195,17 @@ public class GuiBoardController extends GuiInitController{
 
             });
         }
-        if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_PRODUCTION_OUTPUT)){
+        else if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_PRODUCTION_OUTPUT)){
+            cardTitle.setText("Choose the production output");
+
             ArrayList<ResourceType> basicArray,leader1Array,leader2Array;
             basicArray=new ArrayList<>();leader1Array=new ArrayList<>();leader2Array=new ArrayList<>();
             ObservableList<String> resources = FXCollections.observableArrayList("Coins","Servants","Shields","Stones");
             ChoiceBox basicProd,leader1,leader2;
+            slotZero.setDisable(true);slotOne.setDisable(true);slotTwo.setDisable(true);slotThree.setDisable(true);slotFour.setDisable(true);slotFive.setDisable(true);
             basicProd=new ChoiceBox(resources);leader1=new ChoiceBox(resources);leader2=new ChoiceBox(resources);
             cardTitle2.setText(null);
-            if(productionOutput[0]==true)
+            if(productionOutput[0])
             {
                 cardTitle1.setText("Basic\nProd");
                 chooserPane.add(basicProd,2,0);
@@ -1111,21 +1216,20 @@ public class GuiBoardController extends GuiInitController{
                 cardTitle3.setText("Leader\nCards");
             else
                 cardTitle3.setText(null);
-            if(productionOutput[1]==true)
+            if(productionOutput[1])
             {
                 chooserPane.add(leader1,4,0);
             }
             else
                 cardTitle1.setText(null);
-            if(productionOutput[2]==true)
+            if(productionOutput[2])
             {
                 cardTitle1.setText("Basic\nProd");
                 chooserPane.add(leader2,5,0);
             }
             else
                 cardTitle1.setText(null);
-
-            submitMarket.setOnAction(event -> {
+            submit.setOnAction(event -> {
                 ResourceType resBasic=null,resLeader1=null,resLeader2=null;
                 if(productionOutput[0])
                     if(basicProd.getValue()!=null){
@@ -1133,7 +1237,7 @@ public class GuiBoardController extends GuiInitController{
                         basicArray.add(resBasic);
                     }
                     else
-                        displayError("You must choose basic production output!");
+                        displayError("You must choose the basic production output!");
                 if(productionOutput[1])
                     if(basicProd.getValue()!=null){
                         resLeader1=stringToResource(basicProd.getValue().toString());
@@ -1159,13 +1263,66 @@ public class GuiBoardController extends GuiInitController{
                     productionOutputAction.setSecondLeaderCard(productionOutput[2]);
                     productionOutputAction.setSecondLeaderCardOutput(leader2Array);
 
+                    produciton.setText("Activate Production");
                     sendAction(productionOutputAction);
                     chooser.close();
                     refresh();
+                }
+            });
+        }
+        else if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_LEADER_CARD)){
+            //Whitemarble Ambiguity
+            cardTitle.setText("Choose White Marble to Activate");
+            ImageView card1,card2;
+            slotZero.setDisable(true);
+            slotOne.setDisable(true);
+            slotFour.setDisable(true);
+            slotFive.setDisable(true);
 
+            submit.setDisable(true);
+
+            chooserPane.add(card1 = new ImageView(getImage(myPlayer().getLeaderCards()[0].getCardId(),true)),2,0);
+            card1.setFitHeight(250);
+            card1.setFitWidth(165);
+
+            chooserPane.add(card2 = new ImageView(getImage(myPlayer().getLeaderCards()[1].getCardId(),true)),3,0);
+            card2.setFitHeight(250);
+            card2.setFitWidth(165);
+
+            System.out.println("temporary Card Id is: "+temporaryCard.getCardId());
+            slotOne.setOnAction(event -> {
+                if(slotOne.isArmed()){
+                    slotTwo.setSelected(false);
+                    slotThree.setSelected(false);
+                    submit.setDisable(!slotOne.isSelected());
+                }
+            });
+            slotTwo.setOnAction(event -> {
+                if(slotTwo.isArmed()){
+                    slotThree.setSelected(false);
+                    submit.setDisable(!slotTwo.isSelected());
+                }
+            });
+            slotThree.setOnAction(event -> {
+                if(slotThree.isArmed()){
+                    slotTwo.setSelected(false);
+                    submit.setDisable(!slotThree.isSelected());
                 }
             });
 
+            submit.setOnAction(event -> {
+                cardTableBtn.setText("Open Card Table");
+                int slot=-9;
+                if(slotTwo.isSelected())
+                    slot=0;
+                if(slotThree.isSelected())
+                    slot=1;
+                System.out.println("Slot value is "+slot);
+                sendAction(new ChooseLeaderCard(slot));
+                produciton.setText("Activate Production");
+                refresh();
+                chooser.close();
+            });
         }
 
         Scene scene = new Scene(choose);
@@ -1200,7 +1357,7 @@ public class GuiBoardController extends GuiInitController{
             for(int cardColumn=0;cardColumn<4;cardColumn++)
                 for(int cardRow=0;cardRow<3;cardRow++)
                 {
-                    cardPane.add(card[cardColumn][cardRow] = new ImageView(super.getImage(this.client.getUserInteraction().getGame().getDevelopmentCardTable().getTopCardFromDeck(cardRow,cardColumn).getCardId(),true)),cardRow,cardColumn);
+                    cardPane.add(card[cardColumn][cardRow] = new ImageView(super.getImage(this.client.getUserInteraction().getGame().getDevelopmentCardTable().getTopCardFromDeck(cardRow,cardColumn).getCardId(),true)),cardColumn,cardRow);
                     card[cardColumn][cardRow].setCursor(Cursor.HAND);
                     card[cardColumn][cardRow].setFitHeight(190);
                     card[cardColumn][cardRow].setFitWidth(125);
@@ -1215,7 +1372,8 @@ public class GuiBoardController extends GuiInitController{
                                 e.printStackTrace();
                             }
                             sendAction(new BuyCard(finalCardRow,finalCardColumn));
-                        }
+                                    cardPicker.close();
+                            }
                     });
                 }
 
@@ -1363,6 +1521,9 @@ public class GuiBoardController extends GuiInitController{
                         market.close();
                         refresh();
                         marketBtn.setText("End Market");
+                        if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_LEADER_CARD)){
+                            produciton.setText("Marble Conversion");
+                        }
                     }
                 });
         button.setOnAction(e->market.close());
@@ -1474,7 +1635,7 @@ public class GuiBoardController extends GuiInitController{
      */
     protected void board(Player player) throws IOException {
         Parent playerBoard;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Assets/Fxml/Board.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Assets/Fxml/RedBoard.fxml"));
         loader.setController(this);
         playerBoard = loader.load();
         Scene scene = new Scene(playerBoard);
@@ -1483,21 +1644,15 @@ public class GuiBoardController extends GuiInitController{
         xtraBoard.initModality(Modality.APPLICATION_MODAL);
         xtraBoard.setTitle(player.getNickname()+"'s Board");
 
-        if(this.client.getUserInteraction().getGame().getGameType().equals(GameType.SINGLEPLAYER))
-        {
-            inkwell.setImage(getImage(false));
-        }
-        else {
-            if(!this.client.getUserInteraction().getGame().getMyPlayer().hasInkwell())
-                inkwell.setImage(null);
-        }
+        setResourceData(getResourceData(player));
+        setCardData(getCardData(player));
+        setFaithData(getFaithData());
 
-        produciton.setDisable(true);marketBtn.setDisable(true);storeResBtn.setDisable(true);
-        cardTableBtn.setDisable(true);payResBtn.setDisable(true);
-        nextTurn.setText("Close Board");
-        nextTurn.setOnAction(event1 -> {
-            xtraBoard.close();
-        });
+            if(player.hasInkwell())
+                inkwell.setImage(getImage(true));
+            else inkwell.setImage(null);
+        button.setOnAction(e->xtraBoard.close());
+
         xtraBoard.setScene(scene);
         xtraBoard.showAndWait();
     }
@@ -1525,36 +1680,42 @@ public class GuiBoardController extends GuiInitController{
      * @param event             The event triggered for getting the id of the Button pressed
      */
     @FXML
-    private void boardClickHandler(ActionEvent event){
+    private void boardClickHandler(ActionEvent event) {
         Node node = (Node) event.getTarget();
         ArrayList<Player> players = this.client.getUserInteraction().getGame().getPlayers();
-
         String parent=node.getId();
+
+        System.out.println(parent);
+
         switch (parent){
             case "activateLeader1":{
+                if(myPlayer().getPossibleActions().contains(ActionType.ACTIVATE_LEADERCARD))
                 sendAction(new ActivateLeaderCard(0));
-                break;
+                else displayError("You can't activate a Leader Card now");
+                return;
             }
             case "discardLeader1":{
+                if(myPlayer().getPossibleActions().contains(ActionType.DELETE_LEADERCARD))
                 sendAction(new DiscardLeaderCard(0));
-                break;
+                else displayError("You can't discard a Leader card now");
+                return;
             }
             case "activateLeader2":{
-                sendAction(new ActivateLeaderCard(1));
-                break;
+                if(myPlayer().getPossibleActions().contains(ActionType.ACTIVATE_LEADERCARD))
+                    sendAction(new ActivateLeaderCard(1));
+                else displayError("You can't activate a Leader Card now");
+                return;
             }case "discardLeader2":{
-                sendAction(new DiscardLeaderCard(1));
-                break;
+                if(myPlayer().getPossibleActions().contains(ActionType.DELETE_LEADERCARD))
+                    sendAction(new DiscardLeaderCard(1));
+                else displayError("You can't discard a Leader card now");
+                return;
             }
         }
-        for(int i=0;i<players.size();i++){
-            if(parent.equals(players.get(i).getNickname())) {
-                try {
-                    board(players.get(i));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+        try {
+            board(players.get(Integer.parseInt(parent)));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -1568,6 +1729,8 @@ public class GuiBoardController extends GuiInitController{
         if(myPlayer().getPossibleActions().contains(ActionType.ACTIVATE_PRODUCTION))
             choose();
         else if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_PRODUCTION_OUTPUT))
+            choose();
+        else if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_LEADER_CARD))
             choose();
         else
             displayError("You can't activate a production now!");
@@ -1622,11 +1785,11 @@ public class GuiBoardController extends GuiInitController{
      * @param action    The action to send
      */
     private void sendAction(Action action){
-        try {
-            this.clientConnection.send(action);
-        } catch (IOException e) {
-            displayError(e.toString());
-        }
+            try {
+                this.clientConnection.send(action);
+            } catch (IOException e) {
+                displayError(e.toString());
+            }
     }
 
     /**
@@ -1874,8 +2037,8 @@ public class GuiBoardController extends GuiInitController{
         //Show back of unactivated LeaderCards if looking another player's board
         if(this.client.getUserInteraction().getGame().getMyPlayer().equals(player))
         {
-            cardData[9] = getImage(leaderCards[0].getCardId(),!leaderCards[0].isActive());
-            cardData[10] = getImage(leaderCards[1].getCardId(),!leaderCards[1].isActive());
+            cardData[9] = getImage(leaderCards[0].getCardId(),!leaderCards[0].isDiscarded());
+            cardData[10] = getImage(leaderCards[1].getCardId(),!leaderCards[1].isDiscarded());
         }else
         {
             cardData[9] = getImage(leaderCards[0].getCardId(),leaderCards[0].isActive());

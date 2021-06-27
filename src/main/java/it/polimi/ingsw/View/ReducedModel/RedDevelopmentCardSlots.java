@@ -7,8 +7,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class RedDevelopmentCardSlots implements Serializable {
-    private static final long serialVersionUID = 0x1;
-
     protected final RedCardSlot[] slots;
     protected int cardsInSlot;
     protected Level level;

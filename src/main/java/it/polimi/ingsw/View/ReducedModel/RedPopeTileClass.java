@@ -8,8 +8,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class RedPopeTileClass implements Serializable {
-    private static final long serialVersionUID = 0x1;
-
     protected PopeTile popeTile;
     protected int victoryPoints;
 

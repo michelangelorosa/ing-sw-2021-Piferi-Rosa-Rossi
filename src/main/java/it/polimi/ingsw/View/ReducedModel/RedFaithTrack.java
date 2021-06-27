@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class RedFaithTrack implements Serializable {
-    protected static final long serialVersionUID = 0x1;
     /**A FaithTrack is an array of Faith Cell*/
     protected final RedFaithCell[] cells;
     /**The three vatican report sections*/

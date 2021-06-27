@@ -3,8 +3,6 @@ package it.polimi.ingsw.View.ReducedModel;
 import java.io.Serializable;
 
 public class RedVaticanReportSection implements Serializable {
-    private static final long serialVersionUID = 0x1;
-
     protected final int begin;
     protected final int end;
     protected final int points;

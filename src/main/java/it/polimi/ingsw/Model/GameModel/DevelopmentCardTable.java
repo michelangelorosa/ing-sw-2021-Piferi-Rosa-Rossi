@@ -14,8 +14,6 @@ import it.polimi.ingsw.Model.JSON.*;
  * All decks are stored in a 2D array of DevelopmentCardDeck-type object.
  */
 public class DevelopmentCardTable extends RedDevelopmentCardTable {
-    private static final long serialVersionUID = 0x1;
-
     /**
      * Constructor for DevelopmentCardTable Class.
      * <p>

@@ -22,8 +22,6 @@ import java.util.ArrayList;
  * @author redrick99
  */
 public class ResourceManager implements Serializable {
-    private static final long serialVersionUID = 0x1;
-
     private final Warehouse warehouse;
     private final Strongbox strongbox;
 

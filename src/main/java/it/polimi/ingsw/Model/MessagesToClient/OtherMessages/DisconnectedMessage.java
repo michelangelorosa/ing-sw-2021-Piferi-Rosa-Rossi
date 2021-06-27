@@ -22,7 +22,7 @@ public class DisconnectedMessage extends MessageToClient {
         this.playerNickname = actionController.getGame().getCurrentPlayerNickname();
         this.possibleActions = actionController.getGame().getCurrentPlayer().getPossibleActions();
         this.actionDone = ActionType.DISCONNECTION;
-        this.error = "Player " + ANSIfont.ITALIC + ANSIfont.BOLD + disconnectedPlayer + ANSIfont.RESET + " disconnected";
+        this.error = "Player " + disconnectedPlayer + " disconnected";
     }
 
     /**

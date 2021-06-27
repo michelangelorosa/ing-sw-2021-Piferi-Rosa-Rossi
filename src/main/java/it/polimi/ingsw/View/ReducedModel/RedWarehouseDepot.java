@@ -12,8 +12,6 @@ import java.util.ArrayList;
  *  a ResourceType-type private attribute indicating which type of resource is stored in the depot.
  */
 public class RedWarehouseDepot implements Serializable {
-    private static final long serialVersionUID = 0x1;
-
     protected final int maxResources;
     protected int storedResources;
     protected ResourceType resourceType;

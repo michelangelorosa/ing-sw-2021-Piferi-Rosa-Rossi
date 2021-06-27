@@ -73,6 +73,11 @@
             <Font name="Baskerville" size="20.0" />
          </font>
       </Text>
+      <ImageView fx:id="leader1" fitHeight="271.0" fitWidth="184.0" layoutX="351.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Cards/F54.png" />
+         </image>
+      </ImageView>
       <Label fx:id="remStones" layoutX="121.0" layoutY="110.0" text="999" textFill="WHITE">
          <font>
             <Font name="Baskerville" size="20.0" />
@@ -157,6 +162,11 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <ImageView fx:id="leader2" fitHeight="271.0" fitWidth="184.0" layoutX="530.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Cards/F54.png" />
+         </image>
+      </ImageView>
       <ImageView fitHeight="286.0" fitWidth="255.0" layoutX="28.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Game/Scaffale.png" />
@@ -182,22 +192,22 @@
             <Image url="@../Game/shield.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="leader1resource1" fitHeight="60.0" fitWidth="60.0" layoutX="381.0" layoutY="372.0">
+      <ImageView fx:id="leader1resource1" fitHeight="60.0" fitWidth="60.0" layoutX="381.0" layoutY="375.0">
          <image>
             <Image url="@../Game/servant.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="leader1resource2" fitHeight="60.0" fitWidth="60.0" layoutX="439.0" layoutY="373.0">
+      <ImageView fx:id="leader1resource2" fitHeight="60.0" fitWidth="60.0" layoutX="447.0" layoutY="375.0">
          <image>
             <Image url="@../Game/servant.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="leader2resource1" fitHeight="60.0" fitWidth="60.0" layoutX="543.0" layoutY="373.0">
+      <ImageView fx:id="leader2resource1" fitHeight="60.0" fitWidth="60.0" layoutX="560.0" layoutY="375.0">
          <image>
             <Image url="@../Game/servant.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="leader2resource2" fitHeight="60.0" fitWidth="60.0" layoutX="597.0" layoutY="375.0">
+      <ImageView fx:id="leader2resource2" fitHeight="60.0" fitWidth="60.0" layoutX="628.0" layoutY="375.0">
          <image>
             <Image url="@../Game/servant.png" />
          </image>

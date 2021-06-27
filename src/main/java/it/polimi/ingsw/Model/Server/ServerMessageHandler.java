@@ -6,7 +6,6 @@ import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
 import it.polimi.ingsw.Model.GameModel.LeaderCard;
-import it.polimi.ingsw.Model.GameModel.ParamValidator;
 import it.polimi.ingsw.Model.GameModel.Player;
 import it.polimi.ingsw.Model.MessagesToClient.GameSetMessage;
 import it.polimi.ingsw.Model.Persistance.Persistence;
@@ -200,17 +199,7 @@ public class ServerMessageHandler {
                 int action = serverConnection.getIn().readInt();
                 DEBUGGER.printDebug("Got action "+action);
                 synchronized (this) {
-                    if (action == 3){
-                        if(Server.getServerStatus().equals(GameStatus.PARAM))
-                            sendError(serverConnection, SE + "Somebody else is already modifying the Game Settings");
-                        else if(Server.getServerStatus().equals(GameStatus.LOBBY))
-                        {
-                            Server.setServerStatus(GameStatus.PARAM);
-                            paramModifier(serverConnection);
-                            Server.setServerStatus(GameStatus.LOBBY);
-                        }
-                    }
-                    else if(action == 4){
+                    if(action == 4){
                         serverConnection.setReady(true);
                         serverConnection.waitReady();
 
@@ -294,67 +283,6 @@ public class ServerMessageHandler {
             serverConnection.setReady(true);
 
             serverConnection.getServer().getController().notifyAll();
-        }
-    }
-
-    /**
-     * paramModifier handles the interaction with the param modifier, the int between 10 and 20 (included) are reserved for use by this application
-     * Decoder guide:
-     * 10:   Open param modifier
-     * int received: corresponding action
-     * 10+1: Card modifier                      :card number to modify
-     * 10+2: Base Production power modifier
-     * 10+3: Vatican Report section modifier    :vatican report to modify
-     * 10+4: Victory Points in Faith Track
-     * 10+5: Param modifier closing
-     */
-    public void paramModifier(ServerConnection serverConnection){
-        int action;
-        try{
-            serverConnection.send(10);
-            while (true){
-                action=serverConnection.getIn().readInt();
-                //Card modifier, 1-48 will be a Development Card, 48+ a leader card.
-                if(action==11){
-                    int cardId=serverConnection.getIn().readInt();
-                    if(cardId>48){
-                        //Leader card
-                        LeaderCard leaderCard;
-                        //TODO: get the card from the id
-                        //serverConnection.send(leaderCard);
-                        leaderCard = (LeaderCard) serverConnection.getIn().readObject();
-                        if(ParamValidator.validateCard(leaderCard)){
-                            //Add the leader card to the game
-
-                        }else sendError(serverConnection,"Invalid leader card!");
-                    }else if(cardId>1){
-                        //Development card
-                        DevelopmentCard developmentCard;
-                        //TODO: get the card from the id
-                        //serverConnection.send(developmentCard);
-                        developmentCard= (DevelopmentCard) serverConnection.getIn().readObject();
-                        if(ParamValidator.validateCard(developmentCard)){
-                            //Add card to the game
-                        }else sendError(serverConnection,"Invalid development card!");
-                    }
-                }
-                //Base production power modifier
-                else if(action==12){
-
-                }
-                //Vatican Report Section modifier
-                else if (action==13){
-
-                }
-                //Victory points in faith track modifier
-                else if (action==14){
-
-                }
-                else if(action<10||action==15)
-                    break;
-            }
-        }catch (IOException | ClassNotFoundException e){
-            serverConnection.close();
         }
     }
 

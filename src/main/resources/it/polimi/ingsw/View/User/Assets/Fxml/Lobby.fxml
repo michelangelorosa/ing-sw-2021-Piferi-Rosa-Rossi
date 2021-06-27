@@ -28,7 +28,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="gameSettings" layoutX="217.0" layoutY="337.0" mnemonicParsing="false" onAction="#openSettings" prefHeight="39.0" prefWidth="166.0" text="Game Settings">
+      <Button fx:id="stopMusic" layoutX="217.0" layoutY="337.0" mnemonicParsing="false" onAction="#stopMedia" prefHeight="39.0" prefWidth="166.0" text="Stop Music">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>

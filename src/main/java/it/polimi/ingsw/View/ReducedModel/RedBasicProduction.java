@@ -9,8 +9,6 @@ import java.util.ArrayList;
  * BasicProduction Class defines inputs and outputs of a basic production.
  */
 public class RedBasicProduction implements Serializable {
-    private static final long serialVersionUID = 0x1;
-
     /** Fixed inputs and outputs can be added before playing the game */
     protected RedResourceStack fixedInputs;
     protected RedResourceStack fixedOutputs;

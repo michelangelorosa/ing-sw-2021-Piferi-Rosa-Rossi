@@ -26,6 +26,16 @@
             <Image url="@../Game/coin.png" />
          </image>
       </ImageView>
+      <ImageView fx:id="leader2" fitHeight="271.0" fitWidth="184.0" layoutX="542.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Cards/F54.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="leader1" fitHeight="271.0" fitWidth="184.0" layoutX="363.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Cards/F54.png" />
+         </image>
+      </ImageView>
       <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="370.0" layoutY="60.0">
          <image>
             <Image url="@../Game/servant.png" />
@@ -131,7 +141,7 @@
             <Image url="@../Game/shield.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="warehouse22" fitHeight="60.0" fitWidth="60.0" layoutX="155.0" layoutY="279.0">
+      <ImageView fx:id="warehouse22" fitHeight="60.0" fitWidth="60.0" layoutX="151.0" layoutY="279.0">
          <image>
             <Image url="@../Game/shield.png" />
          </image>
@@ -156,17 +166,17 @@
             <Image url="@../Game/shield.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="leader2resource2" fitHeight="60.0" fitWidth="60.0" layoutX="643.0" layoutY="378.0">
+      <ImageView fx:id="leader2resource2" fitHeight="60.0" fitWidth="60.0" layoutX="634.0" layoutY="378.0">
          <image>
             <Image url="@../Game/servant.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="leader2resource1" fitHeight="60.0" fitWidth="60.0" layoutX="575.0" layoutY="378.0">
+      <ImageView fx:id="leader2resource1" fitHeight="60.0" fitWidth="60.0" layoutX="568.0" layoutY="378.0">
          <image>
             <Image url="@../Game/servant.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="leader1resource2" fitHeight="60.0" fitWidth="60.0" layoutX="462.0" layoutY="378.0">
+      <ImageView fx:id="leader1resource2" fitHeight="60.0" fitWidth="60.0" layoutX="455.0" layoutY="378.0">
          <image>
             <Image url="@../Game/servant.png" />
          </image>

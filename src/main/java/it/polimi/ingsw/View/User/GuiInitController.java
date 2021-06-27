@@ -64,7 +64,7 @@ public class GuiInitController implements UserInterface {
     @FXML protected ImageView card5image;
     @FXML private ChoiceBox<String> numberPlayers;
     @FXML private Button playerNumberConfirm;
-    @FXML private Button gameSettings;
+    @FXML private Button stopMusic;
     @FXML private Button readyToPlay;
     @FXML private Button button;
     protected ClientExceptionHandler gui;
@@ -275,14 +275,17 @@ public class GuiInitController implements UserInterface {
         System.exit(0);
     }
 
-    public void openSettings(ActionEvent event){
-        System.out.println("Open settings");
+    /**
+     * Stops the music in the Lobby if the user wants to
+     */
+    public void stopMedia(){
+        stopMusic.setDisable(true);
+        mediaPlayer.stop();
     }
 
     public void setReady(ActionEvent event) throws IOException{
         this.event=event;
         readyToPlay.setDisable(true);
-        gameSettings.setDisable(true);
         this.clientConnection.send(4);
     }
 

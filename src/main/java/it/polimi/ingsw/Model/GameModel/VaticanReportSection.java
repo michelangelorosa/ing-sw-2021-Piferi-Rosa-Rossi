@@ -3,8 +3,6 @@ package it.polimi.ingsw.Model.GameModel;
 import it.polimi.ingsw.View.ReducedModel.RedVaticanReportSection;
 
 public class VaticanReportSection extends RedVaticanReportSection {
-    private static final long serialVersionUID = 0x1;
-
     public VaticanReportSection(int begin, int end, int points) {
         super(begin, end, points);
     }
