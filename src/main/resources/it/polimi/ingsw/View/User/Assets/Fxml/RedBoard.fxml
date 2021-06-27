@@ -15,7 +15,7 @@
    <children>
       <ImageView fitHeight="962.0" fitWidth="479.0" layoutX="1191.0" layoutY="-2.0">
          <image>
-            <Image url="@../Game/green.jpg" />
+            <Image url="@../Game/green.png" />
          </image>
       </ImageView>
       <Pane layoutX="1191.0" layoutY="500.0" prefHeight="471.0" prefWidth="479.0">
@@ -180,7 +180,7 @@
          <children>
             <ImageView fitHeight="240.0" fitWidth="1190.0">
                <image>
-                  <Image url="@../Game/background.jpg" />
+                  <Image url="@../Game/background.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="115.0" fitWidth="239.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">

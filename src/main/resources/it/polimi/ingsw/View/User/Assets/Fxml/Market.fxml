@@ -15,7 +15,7 @@
    <children>
       <ImageView fitHeight="551.0" fitWidth="688.0" layoutX="-143.0" layoutY="-9.0">
          <image>
-            <Image url="@../Game/background.jpg" />
+            <Image url="@../Game/background.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="462.0" fitWidth="358.0" layoutX="22.0" layoutY="14.0">

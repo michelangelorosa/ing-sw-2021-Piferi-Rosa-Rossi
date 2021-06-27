@@ -210,7 +210,7 @@ public class GuiInitController implements UserInterface {
         Stage window = getStage();
         window.setScene(scene);
 
-        music(getClass().getResource("Assets/Music/Up Up Up!.mp3").toExternalForm());
+        music(getClass().getResource("Assets/Music/Up Up Up.mp3").toExternalForm());
     }
 
     /**

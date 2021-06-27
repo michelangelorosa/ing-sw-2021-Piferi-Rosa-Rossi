@@ -13,7 +13,7 @@
    <children>
       <ImageView fitHeight="491.0" fitWidth="600.0" layoutY="-151.0">
          <image>
-            <Image url="@/it/polimi/ingsw/View/User/Assets/Game/background.jpg" />
+            <Image url="@/it/polimi/ingsw/View/User/Assets/Game/background.png" />
          </image>
       </ImageView>
       <Text fx:id="messageTitle" fill="WHITE" layoutX="253.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error">

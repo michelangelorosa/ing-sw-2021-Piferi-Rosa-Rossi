@@ -13,7 +13,7 @@
    <children>
       <ImageView fitHeight="491.0" fitWidth="600.0" layoutY="-27.0">
          <image>
-            <Image url="@/it/polimi/ingsw/View/User/Assets/Game/background.jpg" />
+            <Image url="@/it/polimi/ingsw/View/User/Assets/Game/background.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="157.0" fitWidth="302.0" layoutX="149.0" layoutY="14.0">
