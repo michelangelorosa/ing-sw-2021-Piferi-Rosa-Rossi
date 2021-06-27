@@ -16,7 +16,7 @@
             <Image url="@/it/polimi/ingsw/View/User/Assets/Game/background.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="button" layoutX="507.0" layoutY="127.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="67.0" text="Exit">
+      <Button fx:id="button" layoutX="507.0" layoutY="127.0" mnemonicParsing="false" onAction="#close" prefHeight="39.0" prefWidth="67.0" text="Exit">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>
@@ -29,19 +29,19 @@
             <Image url="@/it/polimi/ingsw/View/User/Assets/Game/singletoken.png" />
          </image>
       </ImageView>
-      <Text fill="WHITE" layoutX="97.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Final Score: ">
+      <Text fill="WHITE" layoutX="181.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Final Score: ">
          <font>
-            <Font name="Dominican Italic" size="38.0" />
+            <Font name="Dominican" size="38.0" />
          </font>
       </Text>
-      <Label layoutX="300.0" layoutY="64.0" text="6666" textFill="WHITE">
+      <Label fx:id="score" layoutX="376.0" layoutY="64.0" text="6666" textFill="WHITE">
          <font>
-            <Font name="Dominican Italic" size="38.0" />
+            <Font name="Dominican" size="38.0" />
          </font>
       </Label>
-      <Label layoutX="223.0" text="You Lost" textFill="WHITE">
+      <Label fx:id="winner" layoutX="223.0" text="You Lost" textFill="WHITE">
          <font>
-            <Font name="Dominican Italic" size="38.0" />
+            <Font name="Dominican" size="38.0" />
          </font>
       </Label>
    </children>

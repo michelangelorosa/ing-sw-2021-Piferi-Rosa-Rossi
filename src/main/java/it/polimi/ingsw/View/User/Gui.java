@@ -8,17 +8,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
-import javax.imageio.ImageIO;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
@@ -28,9 +19,14 @@ public class Gui extends Application{
     public static Gui gui = null;
     @FXML private TextField port;
     @FXML private TextField server;
+    private Font Baskerville;
+    private Font Dominican;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        Baskerville=Font.loadFonts(getClass().getResource("Assets/Fonts/Baskerville.ttc").toExternalForm(),20)[0];
+        Dominican=Font.loadFont(getClass().getResource("Assets/Fonts/Dominican.ttf").toExternalForm(),38);
+
         ClientExceptionHandler gui= new ClientExceptionHandler();
         gui.visualType(false);
 
@@ -92,7 +88,7 @@ public class Gui extends Application{
                     if(arrayList.size()==2){
                         GuiInitController guiInitController;
                         guiInitController=new GuiInitController(client,(ClientConnection) arrayList.get(1),gui);
-                        guiInitController.nameSelection(event);
+                        guiInitController.nameSelection();
                     }else
                         System.out.println("Connection Error");
                 }

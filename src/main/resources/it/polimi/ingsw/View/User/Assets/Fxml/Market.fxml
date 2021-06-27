@@ -61,7 +61,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></RadioButton>
-      <Button fx:id="button" layoutX="266.0" layoutY="482.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="80.0" text="Close">
+      <Button fx:id="button" layoutX="254.0" layoutY="483.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="98.0" text="Close">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>
@@ -69,7 +69,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="submitMarket" layoutX="56.0" layoutY="483.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="87.0" text="Submit">
+      <Button fx:id="submitMarket" layoutX="35.0" layoutY="483.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="121.0" text="Submit">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>

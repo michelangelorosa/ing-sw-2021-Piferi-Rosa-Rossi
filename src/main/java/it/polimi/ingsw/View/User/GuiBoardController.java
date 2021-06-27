@@ -3,47 +3,44 @@ package it.polimi.ingsw.View.User;
 import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.Enums.LeaderCardAction;
-import it.polimi.ingsw.Model.Enums.Marble;
 import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.Model.Exceptions.ModelException;
-import it.polimi.ingsw.Model.GameModel.Warehouse;
-import it.polimi.ingsw.Model.GameModel.WarehouseDepot;
-import it.polimi.ingsw.Model.MessagesToClient.BoughtCardMessage;
-import it.polimi.ingsw.Model.MessagesToClient.EndTurnSingleplayerMessage;
 import it.polimi.ingsw.View.Client.Client;
 import it.polimi.ingsw.View.Client.ClientConnection;
 import it.polimi.ingsw.View.ReducedModel.*;
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.WeakEventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
-import javafx.scene.Group;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicReference;
+/**
+ * GuiBoardController handles all the gui interactions related with the user's interaction with the Game via the Board.
+ */
 
 public class GuiBoardController extends GuiInitController{
     private Stage cardPicker;
@@ -51,6 +48,7 @@ public class GuiBoardController extends GuiInitController{
     private Stage market;
     private Stage leaderSelection;
     private Stage resourcePicker;
+    private Stage xtraBoard;
     @FXML private Text cardTitle;
     @FXML private GridPane cardPane;
     private ImageView[][] card;
@@ -88,7 +86,6 @@ public class GuiBoardController extends GuiInitController{
     @FXML private ImageView warehouse31;
     @FXML private ImageView warehouse32;
     @FXML private ImageView warehouse33;
-    @FXML private ImageView leaderDepot;
     @FXML private ImageView leader1;
     @FXML private ImageView leader2;
     @FXML private ImageView leader1resource1;
@@ -114,26 +111,40 @@ public class GuiBoardController extends GuiInitController{
     @FXML private Button button;
     @FXML protected Button produciton;
     @FXML protected Button nextTurn;
+    @FXML protected Button payResBtn;
     @FXML protected Button cardTableBtn;
     @FXML protected Button marketBtn;
+    @FXML protected Button storeResBtn;
     @FXML protected ImageView strongboxStonesClickable;
     @FXML protected ImageView strongboxShieldsClickable;
     @FXML protected ImageView strongboxServantsClickable;
     @FXML protected ImageView strongboxCoinsClickable;
-
+    @FXML protected GridPane faithPane;
+    @FXML private GridPane otherBoards;
+    private Boolean[] productionOutput = new Boolean[3];
     private int resourceNumber;
 
     /**
-     * Constructor for Gui
-     *
-     * @param client
+     * Constructor for the GuiBoardController class
+     * @param client                    the client for getting the UI
+     * @param clientConnection          the clientConnection for network handling
+     * @param clientExceptionHandler    the clientExcepionHandler
      */
     protected GuiBoardController(Client client,ClientConnection clientConnection,ClientExceptionHandler clientExceptionHandler) {
         super(client,clientConnection,clientExceptionHandler);
     }
+
+    /**
+     * Gets the initial number of resources and sets them in the class
+     */
     private void getInitResource(){
         this.resourceNumber=this.client.getUserInteraction().getInitNumberOfResources();
     }
+
+    /**
+     * Method called when the user gets an inital resource.
+     * When called the resource number is decreased and the labels are set accordingly
+     */
     private void gotInitResource(){
         resourceNumber--;
         remServants.setText(String.valueOf(resourceNumber));
@@ -141,6 +152,11 @@ public class GuiBoardController extends GuiInitController{
         remCoins.setText(String.valueOf(resourceNumber));
         remShields.setText(String.valueOf(resourceNumber));
     }
+
+    /**
+     * Method called when the user successfully gets a resource.
+     * When called the resource number is decreased and the labels are set accordingly
+     */
     private void gotResource(String resource){
         resourceNumber--;
         ResourceType resourceType=stringToResource(resource);
@@ -153,10 +169,21 @@ public class GuiBoardController extends GuiInitController{
         else if (resourceType.equals(ResourceType.STONES))
             remStones.setText(String.valueOf((Integer.parseInt(remStones.getText())-1)));
     }
+
+    /**
+     * Method used to quickly get One's player reference
+     * @return  the player whose board is opened
+     */
     protected Player myPlayer(){
         return this.client.getUserInteraction().getGame().getMyPlayer();
     }
 
+    /**
+     * Allows the player to store the resources in his depots, if it has any, by drag-dropping for both the in-game phase and the initial resources.
+     * Once there are 0 resources left to store or when the player ends the transaction beforehand the board is reloaded to update the resources shown.
+     * @param initialResources      If the Player gets the initial resources or from other sources
+     * @throws IOException          If there are errors while loading the FXML
+     */
     protected void getResources(boolean initialResources) throws IOException {
         HashMap<Integer, ArrayList<ResourceType>> depotResource = new HashMap<>();
         ArrayList<ResourceType> firstDepot = new ArrayList<>();
@@ -359,6 +386,18 @@ public class GuiBoardController extends GuiInitController{
                         if(success){
                             warehouse1.setImage(getImage(stringToResource(resource)));
                             gotResource(resource);
+                            if(resourceNumber==0)
+                            {
+                                sendAction(new EndMarket());
+                                marketBtn.setText("Open Market");
+                                refresh();
+                                resourcePicker.close();
+                                try {
+                                    board();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                             setResourceData(getResourceData(client.getUserInteraction().getGame().getMyPlayer()));
 
                         }
@@ -406,6 +445,18 @@ public class GuiBoardController extends GuiInitController{
                         success=addResource(1,resource);
                         if(success)
                             gotResource(resource);
+                        if(resourceNumber==0)
+                        {
+                            sendAction(new EndMarket());
+                            marketBtn.setText("Open Market");
+                            refresh();
+                            resourcePicker.close();
+                            try {
+                                board();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
                         setResourceData(getResourceData(client.getUserInteraction().getGame().getMyPlayer()));
                     }
                 }
@@ -452,6 +503,17 @@ public class GuiBoardController extends GuiInitController{
                         success=addResource(0,resource);
                         if(success)
                             gotResource(resource);
+                        if(resourceNumber==0)
+                        {
+                            sendAction(new EndMarket());
+                            marketBtn.setText("Open Market");
+                            resourcePicker.close();
+                            try {
+                                board();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
                         setResourceData(getResourceData(client.getUserInteraction().getGame().getMyPlayer()));
                     }
                 }
@@ -466,12 +528,13 @@ public class GuiBoardController extends GuiInitController{
         });
 
         confirmPayment.setOnAction(e->{
-            resourcePicker.close();
             sendAction(new EndMarket());
+            marketBtn.setText("Open Market");
+            resourcePicker.close();
             try {
                 board();
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
+            } catch (IOException f) {
+                f.printStackTrace();
             }
         });
 
@@ -481,8 +544,14 @@ public class GuiBoardController extends GuiInitController{
         resourcePicker.showAndWait();
         }
     }
+
+    /**
+     * Allows the player to pay what he has to pay by clicking on the resource he wants to pay with.
+     * Once what is due is paid the board is reloaded to update the resources shown.
+     * @throws IOException          If there's a problem loading the FXML
+     */
     @FXML
-    protected void payResource() throws Exception{
+    protected void payResource() throws IOException{
         Player currentPlayer = this.client.getUserInteraction().getGame().getMyPlayer();
         if(!(currentPlayer.getPossibleActions().contains(ActionType.PAY_RESOURCE_CARD)||currentPlayer.getPossibleActions().contains(ActionType.PAY_RESOURCE_PRODUCTION))){
             displayError("You don't have anything to pay now.");
@@ -739,17 +808,37 @@ public class GuiBoardController extends GuiInitController{
         payResources.showAndWait();
     }
 
+    /**
+     * Called after a payment is completed for reloading the board and changing the text of the button if the user has to choose where to place a card
+     */
     private void afterPayment(){
+        try {
+            board();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_CARD_SLOT)) {
             cardTableBtn.setText("Choose card slot");
         }
-
     }
 
     @FXML
     private Text cardTitle1,cardTitle2,cardTitle3;
+
     @FXML
-    private RadioButton slotOne,slotTwo,slotThree;
+    private RadioButton slotZero,slotOne,slotTwo,slotThree,slotFour,slotFive;
+    @FXML
+    private GridPane chooserPane;
+
+    /**
+     * This method handles the interaction for when the user has to choose something, depending on his possible action:
+     * ‣ Choose Card Slot:      for choosing in which card slot to place the card
+     * ‣ Activate Production:   for choosing which production power to activate and if the Basic Production power it's activated
+     *                          the user is then prompted to choose which resources to activate the basic production which
+     * ‣ Choose Production      for choosing the production output if a jolly production output has been activated
+     *   output:
+     * @throws IOException      If there's a problem loading the FXML
+     */
     private void choose() throws IOException {
         Parent choose;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Assets/Fxml/Chooser.fxml"));
@@ -758,47 +847,41 @@ public class GuiBoardController extends GuiInitController{
         chooser = new Stage();
         chooser.initModality(Modality.APPLICATION_MODAL);
         chooser.setTitle("Choose an option");
+
         if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_CARD_SLOT)){
 
             cardTitle.setText("Choose a development card slot");
             ImageView card1,card2,card3,cardToAdd;
-            /*
-            marketPane.add(slotOne,1,1);
-            slotOne.setAlignment(Pos.CENTER);
-            marketPane.add(slotTwo,2,1);
-            slotTwo.setAlignment(Pos.CENTER);
-            marketPane.add(slotThree,3,1);
-            slotThree.setAlignment(Pos.CENTER);
-            */
+
             submitMarket.setDisable(true);
 
-            marketPane.add(cardToAdd = new ImageView(getImage(temporaryCard.getCardId(),true)),5,5);
+            chooserPane.add(cardToAdd = new ImageView(getImage(temporaryCard.getCardId(),true)),5,0);
             cardToAdd.setFitHeight(250);
             cardToAdd.setFitWidth(165);
 
             if(myPlayer().getSlots().getSlots()[0].isEmpty())
                 cardTitle1.setText("First\nSlot");
             else{
-                marketPane.add(card1 = new ImageView(getImage(myPlayer().getSlots().getSlots()[0].getFirstCard().getCardId(),true)),1,1);
+                chooserPane.add(card1 = new ImageView(getImage(myPlayer().getSlots().getSlots()[0].getFirstCard().getCardId(),true)),1,0);
                 card1.setFitHeight(250);
                 card1.setFitWidth(165);
             }
                 if(myPlayer().getSlots().getSlots()[1].isEmpty())
                     cardTitle2.setText("Second\nSlot");
                 else{
-                    marketPane.add(card2 = new ImageView(getImage(myPlayer().getSlots().getSlots()[1].getFirstCard().getCardId(),true)),2,2);
+                    chooserPane.add(card2 = new ImageView(getImage(myPlayer().getSlots().getSlots()[1].getFirstCard().getCardId(),true)),2,0);
                     card2.setFitHeight(250);
                     card2.setFitWidth(165);
                 }
             if(myPlayer().getSlots().getSlots()[2].isEmpty())
                 cardTitle3.setText("Third\nSlot");
             else {
-                marketPane.add(card3 = new ImageView(getImage(myPlayer().getSlots().getSlots()[2].getFirstCard().getCardId(),true)),3,3);
+                chooserPane.add(card3 = new ImageView(getImage(myPlayer().getSlots().getSlots()[2].getFirstCard().getCardId(),true)),3,0);
                 card3.setFitHeight(250);
                 card3.setFitWidth(165);
             }
 
-            /*
+
             if(myPlayer().getSlots().getSlots()[0].canAdd(temporaryCard)||myPlayer().getSlots().getSlots()[0].isEmpty())
                 slotOne.setDisable(false);
             else
@@ -811,7 +894,7 @@ public class GuiBoardController extends GuiInitController{
                 slotThree.setDisable(false);
                     else
                 slotThree.setDisable(true);
-            */
+
             System.out.println("temporary Card Id is: "+temporaryCard.getCardId());
                 slotOne.setOnAction(event -> {
                 if(slotOne.isArmed()){
@@ -850,13 +933,253 @@ public class GuiBoardController extends GuiInitController{
                 chooser.close();
             });
         }
+        if(myPlayer().getPossibleActions().contains(ActionType.ACTIVATE_PRODUCTION)){
+
+            cardTitle.setText("Choose the productions to activate");
+            AtomicReference<Boolean> basicProduction = new AtomicReference<>(false);
+            ImageView card0,card1,card2,card4,card5;
+
+            ArrayList<ResourceType> productionInputs = new ArrayList<>();
+
+            Boolean activations[] = new Boolean[5];
+            cardTitle3.setText("Basic\nProd");
+            if(myPlayer().getSlots().getSlots()[0].isEmpty())
+            {
+                chooserPane.add(card0 = new ImageView(getImage(60,false)),0,0);
+                card0.setPreserveRatio(true);
+                card0.setFitHeight(250);
+                card0.setFitWidth(165);
+                slotZero.setDisable(true);
+            }else{
+                chooserPane.add(card0 = new ImageView(getImage(myPlayer().getSlots().getSlots()[0].getFirstCard().getCardId(),true)),0,0);
+                card0.setPreserveRatio(true);
+                card0.setFitHeight(250);
+                card0.setFitWidth(165);
+            }
+            if(myPlayer().getSlots().getSlots()[1].isEmpty())
+            {
+                chooserPane.add(card1 = new ImageView(getImage(60,false)),1,0);
+                card1.setPreserveRatio(true);
+                card1.setFitHeight(250);
+                card1.setFitWidth(165);
+                slotOne.setDisable(true);
+            }else{
+                chooserPane.add(card1 = new ImageView(getImage(myPlayer().getSlots().getSlots()[1].getFirstCard().getCardId(),true)),1,0);
+                card1.setPreserveRatio(true);
+                card1.setFitHeight(250);
+                card1.setFitWidth(165);
+            }
+            if(myPlayer().getSlots().getSlots()[2].isEmpty())
+            {
+                chooserPane.add(card2 = new ImageView(getImage(60,false)),2,0);
+                card2.setPreserveRatio(true);
+                card2.setFitHeight(250);
+                card2.setFitWidth(165);
+                slotTwo.setDisable(true);
+            }else{
+                chooserPane.add(card2 = new ImageView(getImage(myPlayer().getSlots().getSlots()[2].getFirstCard().getCardId(),true)),2,0);
+                card2.setPreserveRatio(true);
+                card2.setFitHeight(250);
+                card2.setFitWidth(165);
+            }
+            if(myPlayer().getLeaderCards()[0].getAction().equals(LeaderCardAction.PRODUCTIONPOWER)&&myPlayer().getLeaderCards()[0].isActive())
+            {
+                chooserPane.add(card4 = new ImageView(getImage(myPlayer().getLeaderCards()[0].getCardId(),true)),4,0);
+                card4.setPreserveRatio(true);
+                card4.setFitHeight(250);
+                card4.setFitWidth(165);
+            }else{
+                chooserPane.add(card4 = new ImageView(getImage(60,false)),4,0);
+                card4.setPreserveRatio(true);
+                card4.setFitHeight(250);
+                card4.setFitWidth(165);
+                slotFour.setDisable(true);
+            }
+            if(myPlayer().getLeaderCards()[1].getAction().equals(LeaderCardAction.PRODUCTIONPOWER)&&myPlayer().getLeaderCards()[1].isActive())
+            {
+                chooserPane.add(card5 = new ImageView(getImage(myPlayer().getLeaderCards()[1].getCardId(),true)),5,0);
+                card5.setPreserveRatio(true);
+                card5.setFitHeight(250);
+                card5.setFitWidth(165);
+            }else{
+                chooserPane.add(card5 = new ImageView(getImage(60,false)),5,0);
+                card5.setPreserveRatio(true);
+                card5.setFitHeight(250);
+                card5.setFitWidth(165);
+                slotFive.setDisable(true);
+            }
+
+
+            submitMarket.setOnAction(event -> {
+                //Basic production has been activated
+
+                if(slotThree.isSelected()&&basicProduction.get()==false){
+                    productionOutput[0]=true;
+
+                    activations[0]=slotZero.isSelected();
+                    activations[1]=slotOne.isSelected();
+                    activations[2]=slotTwo.isSelected();
+                    activations[3]=productionOutput[1]=slotFour.isSelected();
+                    activations[4]=productionOutput[2]=slotFive.isSelected();
+
+                    ImageView card3;
+                    basicProduction.set(true);
+                    cardTitle.setText("Choose the input to use");
+                    slotZero.setSelected(false);slotZero.setDisable(false);
+                    slotOne.setSelected(false);slotOne.setDisable(false);
+                    slotTwo.setSelected(false);slotTwo.setDisable(false);
+                    slotThree.setSelected(false);slotTwo.setDisable(false);
+                    slotFour.setSelected(false);slotFour.setDisable(true);
+                    slotFive.setSelected(false);slotFive.setDisable(true);
+                    card0.setImage(getImage(ResourceType.STONES));
+                    card1.setImage(getImage(ResourceType.SERVANTS));
+                    card2.setImage(getImage(ResourceType.COINS));
+                    card4.setImage(null);
+                    card5.setImage(null);
+                    chooserPane.add(card3 = new ImageView(getImage(ResourceType.SHIELDS)),3,0);
+                    card0.setFitHeight(167);
+                    card0.setFitWidth(167);
+                    card1.setFitHeight(167);
+                    card1.setFitWidth(167);
+                    card2.setFitHeight(167);
+                    card2.setFitWidth(167);
+                    card3.setFitHeight(167);
+                    card3.setFitWidth(167);
+                    card0.setPreserveRatio(true);card1.setPreserveRatio(true);card2.setPreserveRatio(true);card3.setPreserveRatio(true);
+                    slotFour.setDisable(true);
+                }else if(slotThree.isSelected()==false&&basicProduction.get()==false){
+                    productionOutput[0]=false;productionOutput[1]=slotFour.isSelected();productionOutput[2]=slotFive.isSelected();
+                    sendAction(new ActivateProduction(slotZero.isSelected(),slotOne.isSelected(),slotTwo.isSelected(),slotFour.isSelected(),slotFive.isSelected(),slotThree.isSelected(),productionInputs));
+                    refresh();
+                    chooser.close();
+                }else if(basicProduction.get()==true){
+                    int selected = 0;
+                    selected+=slotZero.isSelected()?1:0;
+                    selected+=slotOne.isSelected()?1:0;
+                    selected+=slotTwo.isSelected()?1:0;
+                    selected+=slotThree.isSelected()?1:0;
+                    if(selected==2||selected==1){
+                        {
+                        if(slotZero.isSelected()){
+                            productionInputs.add(ResourceType.STONES);
+                            if(selected==1)
+                                productionInputs.add(ResourceType.STONES);
+                        }
+                        if(slotOne.isSelected()){
+                            productionInputs.add(ResourceType.SERVANTS);
+                            if(selected==1)
+                                productionInputs.add(ResourceType.SERVANTS);
+                        }
+                        if(slotTwo.isSelected()){
+                            productionInputs.add(ResourceType.COINS);
+                            if(selected==1)
+                                productionInputs.add(ResourceType.COINS);
+                        }
+                        if(slotThree.isSelected()){
+                            productionInputs.add(ResourceType.SHIELDS);
+                            if(selected==1)
+                                productionInputs.add(ResourceType.SHIELDS);
+                        }
+
+                        sendAction(new ActivateProduction(activations[0],activations[1],activations[2],activations[3],activations[4],true,productionInputs));
+                        refresh();
+                        chooser.close();
+                        }
+                    }else {
+                        displayError("Please select 2 inputs, not "+selected);
+                        chooser.close();
+                    }
+                }
+
+            });
+        }
+        if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_PRODUCTION_OUTPUT)){
+            ArrayList<ResourceType> basicArray,leader1Array,leader2Array;
+            basicArray=new ArrayList<>();leader1Array=new ArrayList<>();leader2Array=new ArrayList<>();
+            ObservableList<String> resources = FXCollections.observableArrayList("Coins","Servants","Shields","Stones");
+            ChoiceBox basicProd,leader1,leader2;
+            basicProd=new ChoiceBox(resources);leader1=new ChoiceBox(resources);leader2=new ChoiceBox(resources);
+            cardTitle2.setText(null);
+            if(productionOutput[0]==true)
+            {
+                cardTitle1.setText("Basic\nProd");
+                chooserPane.add(basicProd,2,0);
+            }
+            else
+                cardTitle1.setText(null);
+            if(productionOutput[1]||productionOutput[2])
+                cardTitle3.setText("Leader\nCards");
+            else
+                cardTitle3.setText(null);
+            if(productionOutput[1]==true)
+            {
+                chooserPane.add(leader1,4,0);
+            }
+            else
+                cardTitle1.setText(null);
+            if(productionOutput[2]==true)
+            {
+                cardTitle1.setText("Basic\nProd");
+                chooserPane.add(leader2,5,0);
+            }
+            else
+                cardTitle1.setText(null);
+
+            submitMarket.setOnAction(event -> {
+                ResourceType resBasic=null,resLeader1=null,resLeader2=null;
+                if(productionOutput[0])
+                    if(basicProd.getValue()!=null){
+                        resBasic=stringToResource(basicProd.getValue().toString());
+                        basicArray.add(resBasic);
+                    }
+                    else
+                        displayError("You must choose basic production output!");
+                if(productionOutput[1])
+                    if(basicProd.getValue()!=null){
+                        resLeader1=stringToResource(basicProd.getValue().toString());
+                        leader1Array.add(resLeader1);
+                    }
+                    else
+                        displayError("You must choose the output for Leader card 1!");
+                if(productionOutput[2])
+                    if(basicProd.getValue()!=null){
+                        resLeader2=stringToResource(basicProd.getValue().toString());
+                        leader2Array.add(resLeader2);
+                    }
+                    else
+                        displayError("You must choose the output for Leader card 2!");
+                if(     (productionOutput[0]&&basicProd.getValue()!=null)||!productionOutput[0]&&
+                        (productionOutput[1]&&leader1.getValue()!=null)||!productionOutput[1]&&
+                        (productionOutput[2]&&leader2.getValue()!=null)||!productionOutput[2]) {
+                    ChooseProductionOutput productionOutputAction = new ChooseProductionOutput();
+                    productionOutputAction.setBasicProductionOutput(basicArray);
+                    productionOutputAction.setBasicProduction(productionOutput[0]);
+                    productionOutputAction.setFirstLeaderCard(productionOutput[1]);
+                    productionOutputAction.setFirstLeaderCardOutput(leader1Array);
+                    productionOutputAction.setSecondLeaderCard(productionOutput[2]);
+                    productionOutputAction.setSecondLeaderCardOutput(leader2Array);
+
+                    sendAction(productionOutputAction);
+                    chooser.close();
+                    refresh();
+
+                }
+            });
+
+        }
+
         Scene scene = new Scene(choose);
         chooser.setScene(scene);
         chooser.showAndWait();
     }
 
+    /**
+     * This method opens the card board and allows to buy a card if it's clicked and the user can afford it as per game rules.
+     * If a buy card is successful the card value is set in temporaryCard for having it shown when the user has to choose the slot.
+     * @throws Exception    If there's a problem reading the FXML
+     */
     @FXML
-    private void cardPicker(ActionEvent event) throws Exception{
+    private void cardPicker() throws IOException, ModelException {
         if(cardTableBtn.getText().equals("Choose card slot"))
             try {
                 choose();
@@ -864,7 +1187,6 @@ public class GuiBoardController extends GuiInitController{
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        Boolean singleplayerDiscard=false;
         Parent developmentCardBoard;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Assets/Fxml/CardBoard.fxml"));
         loader.setController(this);
@@ -873,39 +1195,13 @@ public class GuiBoardController extends GuiInitController{
         cardPicker.initModality(Modality.APPLICATION_MODAL);
         cardPicker.setTitle("Card Board");
         card = new ImageView[4][3];
-
-        if(singleplayerDiscard){
-            //Handling of discard mode in singlePlayer game
-            cardTitle.setText("Choose the cards you want to discard");
-            for(int cardColumn=0;cardColumn<4;cardColumn++)
-                for(int cardRow=0;cardRow<3;cardRow++)
-                {
-                    cardPane.add(card[cardColumn][cardRow] = new ImageView(super.getImage(this.client.getUserInteraction().getGame().getDevelopmentCardTable().getTopCardFromDeck(cardColumn,cardRow).getCardId(),true)),cardColumn,cardRow);
-                    card[cardColumn][cardRow].setFitHeight(190);
-                    card[cardColumn][cardRow].setFitWidth(125);
-                    int finalCardColumn = cardColumn;
-                    int finalCardRow = cardRow;
-                    card[cardColumn][cardRow].setOnMouseClicked(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent event) {
-                            try {
-                                getClientConnection().send(new BuyCard(finalCardRow,finalCardColumn));
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            //if card is the required type...
-                            //card[finalCardColumn][finalCardRow].setImage(getImage(1+finalCardColumn+finalCardRow,false));
-                        }
-                    });
-                }
-        }
-        else {
             //Handling of buy mode in game
             cardTitle.setText("Click on the card you want to buy");
             for(int cardColumn=0;cardColumn<4;cardColumn++)
                 for(int cardRow=0;cardRow<3;cardRow++)
                 {
                     cardPane.add(card[cardColumn][cardRow] = new ImageView(super.getImage(this.client.getUserInteraction().getGame().getDevelopmentCardTable().getTopCardFromDeck(cardRow,cardColumn).getCardId(),true)),cardRow,cardColumn);
+                    card[cardColumn][cardRow].setCursor(Cursor.HAND);
                     card[cardColumn][cardRow].setFitHeight(190);
                     card[cardColumn][cardRow].setFitWidth(125);
                     int finalCardColumn = cardColumn;
@@ -922,15 +1218,22 @@ public class GuiBoardController extends GuiInitController{
                         }
                     });
                 }
-        }
+
         button.setOnAction(e->cardPicker.close());
         Scene scene = new Scene(developmentCardBoard);
         cardPicker.setScene(scene);
         cardPicker.showAndWait();
     }
 
+    /**
+     * The market screen, where the user can activate the market.
+     * Once the market has been activated successfully its button turns to "End Market" to click if the user wants to discard all of the resources gotten;
+     * otherwise the user can click onto "Store Resources" and store the resources he wants. Once the store resources is validated the resources not stored are discarded as per game rule.
+     *
+     * @throws IOException  If there's a problem loading the FXML file
+     */
     @FXML
-    private void market(ActionEvent actionEvent) throws Exception{
+    private void market() throws IOException{
         if(marketBtn.getText().equals("End Market"))
         {
             sendAction(new EndMarket());
@@ -947,12 +1250,11 @@ public class GuiBoardController extends GuiInitController{
         final boolean[] submitDisabled = {true};
         submitMarket.setDisable(submitDisabled[0]);
         activeMarket = new ImageView[4][3];
+        extraMarble.setImage(super.getImage(this.client.getUserInteraction().getGame().getMarket().getExtraMarble()));
 
         for(int marketColumn=0;marketColumn<4;marketColumn++)
             for(int marketRow=0;marketRow<3;marketRow++) {
                 marketPane.add(activeMarket[marketColumn][marketRow] = new ImageView(super.getImage(this.client.getUserInteraction().getGame().getMarket().getMarble(marketColumn, marketRow))), marketColumn, marketRow);
-                extraMarble.setImage(super.getImage(this.client.getUserInteraction().getGame().getMarket().getExtraMarble()));
-
                 activeMarket[marketColumn][marketRow].setFitHeight(41);
                 activeMarket[marketColumn][marketRow].setFitWidth(41);
             }
@@ -1059,6 +1361,7 @@ public class GuiBoardController extends GuiInitController{
                     if(this.client.getUserInteraction().getGame().getMyPlayer().getPossibleActions().contains(ActionType.MARKET_CHOOSE_ROW)){
                         sendAction(new MarketChooseRow(row, number));
                         market.close();
+                        refresh();
                         marketBtn.setText("End Market");
                     }
                 });
@@ -1068,11 +1371,33 @@ public class GuiBoardController extends GuiInitController{
         market.showAndWait();
     }
 
+    /**
+     * This method is used to check if a resource can be added where the user wants to, otherwise the user gets the error.
+     * If the resource can be added where the user wants to the method returns true, if it's not possible an explanation is given and false is returned.
+     * StoreResources calls this method so that if it returns true the resource is added as an image to the game and the labels of the
+     * remanining resources are updated accordingly.
+     * @param shelfNumber       The shelf number to add the resource to [0-2] warehouse, [3-4] for leader cards
+     * @param resource          The resource name to add to the shelf number
+     *                          it is a string because the resource is identified by his dragbord name once its dropped onto the shelf
+     * @return                  True if adding the resource is allowed on the depot, false otherwise
+     */
     private boolean addResource(int shelfNumber, String resource){
         ResourceType resourceType=stringToResource(resource);
         RedWarehouseDepot warehouse = null;
         if(shelfNumber>=0&&shelfNumber<=2){
+
             warehouse = myPlayer().getWarehouse().getWarehouseDepots()[shelfNumber];
+
+            if(
+                    shelfNumber==0&&(resourceType.equals(myPlayer().getWarehouse().getWarehouseDepots()[1].getResourceType())||resourceType.equals(myPlayer().getWarehouse().getWarehouseDepots()[2].getResourceType()))||
+                    shelfNumber==1&&(resourceType.equals(myPlayer().getWarehouse().getWarehouseDepots()[0].getResourceType())||resourceType.equals(myPlayer().getWarehouse().getWarehouseDepots()[2].getResourceType()))||
+                    shelfNumber==2&&(resourceType.equals(myPlayer().getWarehouse().getWarehouseDepots()[0].getResourceType())||resourceType.equals(myPlayer().getWarehouse().getWarehouseDepots()[1].getResourceType()))
+            )
+            {
+                displayError("There's another depot with the same type of resources!");
+                return false;
+            }
+
         }else if(shelfNumber==3||shelfNumber==4){
             if(shelfNumber==3){
                 if(myPlayer().getLeaderCards()[0].isActive()&&myPlayer().getLeaderCards()[0].getAction().equals(LeaderCardAction.EXTRADEPOT)){
@@ -1102,6 +1427,10 @@ public class GuiBoardController extends GuiInitController{
         return false;
     }
 
+    /**
+     * The board screen
+     * @throws IOException      if there's a problem loading the FXML
+     */
     protected void board() throws IOException {
         Parent board;
 
@@ -1112,8 +1441,25 @@ public class GuiBoardController extends GuiInitController{
         {
             inkwell.setImage(getImage(false));
         }
-        else if(!this.client.getUserInteraction().getGame().getMyPlayer().hasInkwell())
-            inkwell.setImage(null);
+        else {
+            ArrayList<Player> players = this.client.getUserInteraction().getGame().getPlayers();
+            for(int i=0;i<players.size();i++){
+                if(players.get(i).getNickname()!=myPlayer().getNickname()){
+                Button playBtn;
+                playBtn=new Button();
+                playBtn.setText(players.get(i).getNickname());
+                playBtn.setFont(Baskerville);
+                playBtn.setOnAction(this::boardClickHandler);
+                playBtn.setId(""+i);
+                otherBoards.add(playBtn,0,i);
+                GridPane.setHalignment(otherBoards,HPos.CENTER);
+                GridPane.setValignment(otherBoards,VPos.CENTER);
+                }
+            }
+            if(!this.client.getUserInteraction().getGame().getMyPlayer().hasInkwell())
+                inkwell.setImage(null);
+        }
+
 
         Scene scene = new Scene(board);
         refresh();
@@ -1121,85 +1467,47 @@ public class GuiBoardController extends GuiInitController{
         window.setScene(scene);
     }
 
-    protected void leaderChoser(boolean discount) throws IOException {
-            RedLeaderCard[] leaderCards = this.client.getUserInteraction().getGame().getMyPlayer().getLeaderCards();
-            LeaderCardAction action;
-            if(discount)
-                action=LeaderCardAction.DISCOUNT;
-            else
-                action=LeaderCardAction.WHITEMARBLE;
-            Image card2 = getImage(leaderCards[1].getCardId(),leaderCards[1].getAction().equals(action));
-            Image card3 = getImage(leaderCards[2].getCardId(),leaderCards[1].getAction().equals(action));
+    /**
+     * Method used to view other's board
+     * @param player
+     * @throws IOException
+     */
+    protected void board(Player player) throws IOException {
+        Parent playerBoard;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Assets/Fxml/Board.fxml"));
+        loader.setController(this);
+        playerBoard = loader.load();
+        Scene scene = new Scene(playerBoard);
 
-            Parent leaderCard;
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Assets/Fxml/Leader.fxml"));
-            loader.setController(this);
-            leaderCard = loader.load();
-            leaderSelection = new Stage();
-            leaderSelection.initModality(Modality.APPLICATION_MODAL);
-            leaderSelection.setTitle("Choose a Leader Card");
-            Scene scene = new Scene(leaderCard);
-            card1.setDisable(true);
-            card4.setDisable(true);
-            if(discount)
-            cardTitle.setText("Would you like a discount?");
-            else
-                cardTitle.setText("Which conversion would you like?");
-            card2image.setImage(card2);
-            card3image.setImage(card3);
-            leaderSelection.setScene(scene);
-            leaderSelection.showAndWait();
+        xtraBoard = new Stage();
+        xtraBoard.initModality(Modality.APPLICATION_MODAL);
+        xtraBoard.setTitle(player.getNickname()+"'s Board");
+
+        if(this.client.getUserInteraction().getGame().getGameType().equals(GameType.SINGLEPLAYER))
+        {
+            inkwell.setImage(getImage(false));
+        }
+        else {
+            if(!this.client.getUserInteraction().getGame().getMyPlayer().hasInkwell())
+                inkwell.setImage(null);
+        }
+
+        produciton.setDisable(true);marketBtn.setDisable(true);storeResBtn.setDisable(true);
+        cardTableBtn.setDisable(true);payResBtn.setDisable(true);
+        nextTurn.setText("Close Board");
+        nextTurn.setOnAction(event1 -> {
+            xtraBoard.close();
+        });
+        xtraBoard.setScene(scene);
+        xtraBoard.showAndWait();
     }
 
-    private void leaderCardCheck(ActionEvent event,FXMLLoader loader){
-        //Se sono entrambe WM deve sceglierne una
-        //Se una non è WM deve sceglierne fino a 2
-        card2image.setPickOnBounds(true);
-        card3image.setPickOnBounds(true);
-        card2image.setOnMouseClicked(new EventHandler() {
-            @Override
-            public void handle(Event event) {
-                card2.setSelected(!card2.isSelected());
-            }
-        });
-        card3image.setOnMouseClicked(new EventHandler() {
-            @Override
-            public void handle(Event event) {
-                card3.setSelected(!card3.isSelected());
-            }
-        });
-        confirmLeader.setOnAction((EventHandler) event1 -> {
-            int selected=0;
-            if(card2.isSelected()){
-                selected++;
-            }
-            if(card3.isSelected()){
-                selected++;
-            }
-            if(selected==2){
-
-            }else {
-                try {
-                    if(selected==1)
-                        displayError("You've picked just "+selected+" leader card!\nYou've got to pick two");
-                    else{
-                        displayError("You've picked "+selected+" leader cards!\nYou've got to pick two");
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
+    /**
+     * Method called when the user clicks on the "Next Action" button.
+     * If it's possible to end the turn a message is sent, otherwise an explanation is given
+     */
     @FXML
     private void turnHandler(){
-        if(this.client.getUserInteraction().getGame().getGameType().equals(GameType.SINGLEPLAYER)){
-            if(this.client.getUserInteraction().getGame().getMyPlayer().getPossibleActions().contains(ActionType.END_TURN_SINGLEPLAYER))
-                sendAction(new EndTurn());
-            else displayError("You can't pass the turn now!");
-        }
-        else
         {
             if(this.client.getUserInteraction().getGame().getMyPlayer().getPossibleActions().contains(ActionType.END_TURN))
                 sendAction(new EndTurn());
@@ -1207,9 +1515,20 @@ public class GuiBoardController extends GuiInitController{
         }
     }
 
+    /**
+     * This method handles some button tasks in the board.
+     * The task are identified by getting the Button's id from the ActionEvent triggered by the press
+     * The actions that are done trough this method are:
+     * ‣ Activate Leader Card:  if it's possible to activate a leader card a message is sent
+     * ‣ Discard Leader Card:   to discard an activated Leader Card
+     * ‣ View Other's Board:    for opening another window with their board
+     * @param event             The event triggered for getting the id of the Button pressed
+     */
     @FXML
     private void boardClickHandler(ActionEvent event){
         Node node = (Node) event.getTarget();
+        ArrayList<Player> players = this.client.getUserInteraction().getGame().getPlayers();
+
         String parent=node.getId();
         switch (parent){
             case "activateLeader1":{
@@ -1226,68 +1545,39 @@ public class GuiBoardController extends GuiInitController{
             }case "discardLeader2":{
                 sendAction(new DiscardLeaderCard(1));
                 break;
-            } case "inkwell":{
-                displayError("You have ye inkwell!");
+            }
+        }
+        for(int i=0;i<players.size();i++){
+            if(parent.equals(players.get(i).getNickname())) {
+                try {
+                    board(players.get(i));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
+    /**
+     * This method handles the Activate Production button, by opening the Activate Production screen if the user has the right to
+     * or by opening the Production Output otherwise
+     * @throws Exception
+     */
     @FXML
     public void activateProduction() throws Exception{
-        RedCardSlot[] slots = this.client.getUserInteraction().getGame().getMyPlayer().getSlots().getSlots();
-
-        Parent production;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Assets/Fxml/ProductionPowers.fxml"));
-        loader.setController(this);
-        production = loader.load();
-        Stage productionChoice = new Stage();
-        productionChoice.initModality(Modality.APPLICATION_MODAL);
-        productionChoice.setTitle("Activate a production power");
-        Scene scene = new Scene(production);
-
-        Image card1img,card2img,card3img,card4img,card5img;
-
-        if(slots[0].isEmpty()){
-            card1img=getImage(64,false);
-            card1.setDisable(true);
-        }else{
-            card1img=getImage(slots[0].getFirstCard().getCardId(),true);
-        }
-        if(slots[1].isEmpty()){
-            card2img=getImage(64,false);
-            card2.setDisable(true);
-        }else{
-            card2img=getImage(slots[0].getFirstCard().getCardId(),true);
-        }
-        if(slots[2].isEmpty()){
-            card3img=getImage(64,false);
-            card3.setDisable(true);
-        }else{
-            card3img=getImage(slots[0].getFirstCard().getCardId(),true);
-        }
-        if(this.client.getUserInteraction().getGame().getMyPlayer().getLeaderCards()[0].getAction().equals(LeaderCardAction.PRODUCTIONPOWER)&&this.client.getUserInteraction().getGame().getMyPlayer().getLeaderCards()[0].isActive()){
-            card4img=getImage(this.client.getUserInteraction().getGame().getMyPlayer().getLeaderCards()[0].getCardId(),true);
-        }else{
-            card4img=getImage(64,false);
-            card4.setDisable(true);
-        }if(this.client.getUserInteraction().getGame().getMyPlayer().getLeaderCards()[1].getAction().equals(LeaderCardAction.PRODUCTIONPOWER)&&this.client.getUserInteraction().getGame().getMyPlayer().getLeaderCards()[1].isActive()){
-            card5img=getImage(this.client.getUserInteraction().getGame().getMyPlayer().getLeaderCards()[1].getCardId(),true);
-        }else{
-            card5img=getImage(64,false);
-            card5.setDisable(true);
-        }
-
-        card1image.setImage(card1img);
-        card2image.setImage(card2img);
-        card3image.setImage(card3img);
-        card4image.setImage(card4img);
-        card5image.setImage(card5img);
-        leaderCardCheck(event,true);
-
-        productionChoice.setScene(scene);
-        productionChoice.showAndWait();
+        if(myPlayer().getPossibleActions().contains(ActionType.ACTIVATE_PRODUCTION))
+            choose();
+        else if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_PRODUCTION_OUTPUT))
+            choose();
+        else
+            displayError("You can't activate a production now!");
     }
 
+    /**
+     * This method is called when the user presses on the "Get Resource" button.
+     * If there are resources to store the Get resource screen is opened, otherwise the user is informed
+     * @throws IOException
+     */
     @FXML
     private void getResourcesGame() throws IOException {
         if(this.client.getUserInteraction().getGame().getMyPlayer().getPossibleActions().contains(ActionType.ADD_RESOURCE))
@@ -1296,6 +1586,12 @@ public class GuiBoardController extends GuiInitController{
             displayError("You don't have any resource left to store!");
     }
 
+    /**
+     * This methods transforms a string to a ResourceType.
+     * Used in the get resource because the resource is identified by his text property in the dragboard.
+     * @param resource      the resource string to get the resource type from
+     * @return              the corresponding ResourceType
+     */
     private ResourceType stringToResource(String resource){
         ResourceType resourceType;
         switch (resource.toLowerCase(Locale.ROOT)){
@@ -1321,6 +1617,10 @@ public class GuiBoardController extends GuiInitController{
         return resourceType;
     }
 
+    /**
+     * sendAction sends the action to the server. Useful for having less Exceptions around the code.
+     * @param action    The action to send
+     */
     private void sendAction(Action action){
         try {
             this.clientConnection.send(action);
@@ -1329,11 +1629,129 @@ public class GuiBoardController extends GuiInitController{
         }
     }
 
-    protected void refresh(){
-        setResourceData(getResourceData(this.client.getUserInteraction().getGame().getMyPlayer()));
-        setCardData(getCardData(this.client.getUserInteraction().getGame().getMyPlayer()));
+    /**
+     * By giving a Player's position into the faith track it returns the corresponding Row on the Faith Grid.
+     * @param position  The position onto the faith track
+     * @return          The corresponding row onto the Faith Grid
+     */
+    private int faithRow(int position){
+        if(position<=2||position>=11&&position<=16)
+            return 2;
+        else if(position==3||position==10||position==17)
+            return 1;
+        else return 0;
     }
 
+    /**
+     * By giving a Player's position into the faith track it returns the corresponding Column on the Faith Grid.
+     * @param position  The position onto the faith track
+     * @return          The corresponding column onto the Faith Grid
+     */
+    private int faithColumn(int position){
+        if(position<3)
+            return position;
+        if(position<=4)
+            return 2;
+        if(position<=9)
+            return position-2;
+        if(position==10||position==11)
+            return 7;
+        if(position<=16)
+            return position-4;
+        if(position==17)
+            return 12;
+        else
+            return position-6;
+    }
+
+    /**
+     * Refreshes the board by updating the resource data, the card data and the faith data.
+     */
+    protected void refresh(){
+                setResourceData(getResourceData(myPlayer()));
+                setCardData(getCardData(myPlayer()));
+                setFaithData(getFaithData());
+    }
+
+    /**
+     * Gets the faith information from the game as an Object[]
+     * @return Object[] of faith information, in particular:
+     * ‣ faithData[0]:   4 images of the players to display onto the track
+     * ‣ faithData[1]:   their Row position onto the Faith grid
+     * ‣ faithData[2]:   their Columns position onto the Faith grid.
+     */
+    protected Object[] getFaithData(){
+        ArrayList<Player> players = this.client.getUserInteraction().getGame().getPlayers();
+
+        Object[] faithData;
+        faithData = new Object[3];
+        Image[] resourceImages;
+        resourceImages = new Image[4];
+        int[] faithRow;
+        faithRow = new int[4];
+        int[] faithColumn;
+        faithColumn = new int[4];
+        for(int i=0;i<players.size();i++){
+            resourceImages[i]=getImage(players.get(i));
+            faithColumn[i]=faithColumn(players.get(i).getFaithTrackPosition());
+            faithRow[i]=faithRow(players.get(i).getFaithTrackPosition());
+        }
+        faithData[0] = resourceImages;
+        faithData[1] = faithRow;
+        faithData[2] = faithColumn;
+
+        return faithData;
+    }
+
+    /**
+     * Sets the faith data and information onto the grid for it to be shown.
+     * Each user is set to a corner of the grid so that up to 4 can be displayed
+     * @param faithData getFaithData()
+     */
+    protected void setFaithData(Object[] faithData){
+        ArrayList<Player> players = this.client.getUserInteraction().getGame().getPlayers();
+
+        Image[] resourceImages;
+        resourceImages = (Image[]) faithData[0];
+        int[] faithRow;
+        faithRow = (int[]) faithData[1];
+        int[] faithColumn;
+        faithColumn = (int[]) faithData[2];
+
+        faithPane.getChildren().clear();
+
+        for(int i=0;i<players.size();i++){
+            ImageView faithImage = new ImageView();
+            faithImage.setImage(resourceImages[i]);
+            faithImage.setFitHeight(38);
+            faithImage.setFitWidth(30);
+            faithPane.add(faithImage,faithColumn[i],faithRow[i]);
+            if(i==0){
+                GridPane.setHalignment(faithImage, HPos.LEFT);
+                GridPane.setValignment(faithImage, VPos.TOP);
+            }else if(i==1){
+                GridPane.setHalignment(faithImage, HPos.RIGHT);
+                GridPane.setValignment(faithImage, VPos.BOTTOM);
+            }else if(i==2){
+                GridPane.setHalignment(faithImage, HPos.LEFT);
+                GridPane.setValignment(faithImage, VPos.BOTTOM);
+            }else if(i==3){
+                GridPane.setHalignment(faithImage, HPos.RIGHT);
+                GridPane.setValignment(faithImage, VPos.TOP);
+            }
+
+        }
+    }
+
+    /**
+     * Gets the resource data for a given Player
+     * @param player        The player to get the data from
+     * @return              Object[] as described:
+     * ‣ resourceData[0]:   Image[10] with all the resource Image information orderly placed
+     *                      [0-5] Warehouse resources, [6-9] LeaderCard resources
+     * ‣ resourceData[1]:   String[4] with the number of resources stored into the Strongbox
+     *                      ordered as such: coins,shieds,servants,stoned
+     */
     protected Object[] getResourceData(Player player){
         Object[] resourceData;
         resourceData = new Object[2];
@@ -1413,8 +1831,11 @@ public class GuiBoardController extends GuiInitController{
         return resourceData;
     }
 
+    /**
+     * Sets the resourceData onto a Board
+     * @param resourceData  Object[] from getResourceData
+     */
     protected void setResourceData(Object[] resourceData){
-
                 Image[] resourceImage;
                 resourceImage=(Image[]) resourceData[0];
                 warehouse1.setImage(resourceImage[0]);
@@ -1433,9 +1854,17 @@ public class GuiBoardController extends GuiInitController{
                 strongboxShields.setText(resourceText[1]);
                 strongboxServants.setText(resourceText[2]);
                 strongboxStones.setText(resourceText[3]);
-
     }
 
+    /**
+     * Gets the card data for a given Player
+     * @param player        The player to get the cards data from
+     * @return              Image[11] as described:
+     *                     ‣ [0-8] The images of the DevelopmentCards
+     *                     ‣ [9-10] The images of the LeaderCards.
+     *                      If viewing another Player's board with the cards not activated
+     *                      or if One's Leader Card have been discarded the back of the card is shown.
+     */
     protected Image[] getCardData(Player player){
         Image[] cardData;
         cardData = new Image[11];
@@ -1504,8 +1933,11 @@ public class GuiBoardController extends GuiInitController{
         return cardData;
     }
 
+    /**
+     * Method used for setting the card data onto One's board.
+     * @param cardData  The Image[] from getCardData
+     */
     protected void setCardData(Image[] cardData){
-
         dev11.setImage(cardData[0]);
         dev12.setImage(cardData[1]);
         dev13.setImage(cardData[2]);
@@ -1517,7 +1949,6 @@ public class GuiBoardController extends GuiInitController{
         dev33.setImage(cardData[8]);
         leader1.setImage(cardData[9]);
         leader2.setImage(cardData[10]);
-
     }
 
 }

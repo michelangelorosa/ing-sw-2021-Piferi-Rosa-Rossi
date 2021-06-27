@@ -18,10 +18,10 @@
       </ImageView>
       <Text fill="WHITE" layoutX="142.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="How many players?">
          <font>
-            <Font name="Dominican Italic" size="38.0" />
+            <Font name="Dominican" size="38.0" />
          </font>
       </Text>
-      <Button layoutX="175.0" layoutY="337.0" mnemonicParsing="false" onAction="#close" prefHeight="39.0" prefWidth="90.0" text="Exit">
+      <Button layoutX="151.0" layoutY="337.0" mnemonicParsing="false" onAction="#close" prefHeight="39.0" prefWidth="114.0" text="Exit">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>
@@ -29,7 +29,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="playerNumberConfirm" layoutX="331.0" layoutY="337.0" mnemonicParsing="false" onAction="#playerNumberValidation" prefHeight="39.0" prefWidth="98.0" text="Confirm">
+      <Button fx:id="playerNumberConfirm" layoutX="331.0" layoutY="337.0" mnemonicParsing="false" onAction="#playerNumberValidation" prefHeight="39.0" prefWidth="128.0" text="Confirm">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>
@@ -37,11 +37,11 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Text fill="WHITE" layoutX="207.0" layoutY="206.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create a new game for" wrappingWidth="185.58984375">
+      <Text fill="WHITE" layoutX="170.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create a new game for" textAlignment="CENTER" wrappingWidth="260.58984375">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>
       </Text>
-      <ChoiceBox fx:id="numberPlayers" layoutX="225.0" layoutY="218.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="numberPlayers" layoutX="212.0" layoutY="219.0" prefHeight="25.0" prefWidth="168.0" />
    </children>
 </Pane>

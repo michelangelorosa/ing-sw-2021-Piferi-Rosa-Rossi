@@ -36,7 +36,7 @@
       </GridPane>
       <Text fx:id="cardTitle" fill="WHITE" layoutX="361.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click on the card you want to buy">
          <font>
-            <Font name="Dominican Italic" size="38.0" />
+            <Font name="Dominican" size="38.0" />
          </font>
       </Text>
       <Button fx:id="button" layoutX="1062.0" layoutY="755.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="75.0" text="Close">

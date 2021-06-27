@@ -17,10 +17,10 @@
       </ImageView>
       <Text fill="WHITE" layoutX="120.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Waiting other Players">
          <font>
-            <Font name="Dominican Italic" size="38.0" />
+            <Font name="Dominican" size="38.0" />
          </font>
       </Text>
-      <Button layoutX="110.0" layoutY="337.0" mnemonicParsing="false" onAction="#close" prefHeight="39.0" prefWidth="90.0" text="Exit">
+      <Button layoutX="98.0" layoutY="337.0" mnemonicParsing="false" onAction="#close" prefHeight="39.0" prefWidth="102.0" text="Exit">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>
@@ -28,7 +28,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="gameSettings" layoutX="227.0" layoutY="337.0" mnemonicParsing="false" onAction="#openSettings" prefHeight="39.0" prefWidth="146.0" text="Game Settings">
+      <Button fx:id="gameSettings" layoutX="217.0" layoutY="337.0" mnemonicParsing="false" onAction="#openSettings" prefHeight="39.0" prefWidth="166.0" text="Game Settings">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>
@@ -36,7 +36,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Text fill="WHITE" layoutX="153.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The game will start automatically once all the players are ready to play" wrappingWidth="294.58984375">
+      <Text fill="WHITE" layoutX="113.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The game will start automatically once all the players are ready to play" wrappingWidth="374.58984375">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>
@@ -46,7 +46,7 @@
             <Image url="@/it/polimi/ingsw/View/User/Assets/Game/loading.gif" />
          </image>
       </ImageView>
-      <Button fx:id="readyToPlay" layoutX="400.0" layoutY="337.0" mnemonicParsing="false" onAction="#setReady" prefHeight="39.0" prefWidth="146.0" text="Ready to Play">
+      <Button fx:id="readyToPlay" layoutX="401.0" layoutY="337.0" mnemonicParsing="false" onAction="#setReady" prefHeight="39.0" prefWidth="174.0" text="Ready to Play">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>

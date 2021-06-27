@@ -8,6 +8,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -19,13 +23,18 @@ public class ClientExceptionHandler {
     private Label errorLabel;
     @FXML
     private Button button;
-
+    private Font Baskerville;
+    private Font Dominican;
+    @FXML private ImageView boxedImage;
+    @FXML private Text messageTitle;
     /**
      * Sets the visualization type for the error generated Client-side
      * @param isCli defines if the error has to be generated in a Gui enviroment (false) or in a Cli enviroment (true).
      *              Has to be set at the beginning, after the selection of cli or gui.
      */
     public void visualType(boolean isCli){
+        Baskerville=Font.loadFonts(getClass().getResource("Assets/Fonts/Baskerville.ttc").toExternalForm(),20)[0];
+        Dominican=Font.loadFont(getClass().getResource("Assets/Fonts/Dominican.ttf").toExternalForm(),38);
         if(isCli)
             cli=true;
         else
@@ -77,12 +86,37 @@ public class ClientExceptionHandler {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Assets/Fxml/Error.fxml"));
         loader.setController(this);
         errorMessage = loader.load();
+        Scene scene = new Scene(errorMessage);
+
         errorBox = new Stage();
         errorBox.initModality(Modality.APPLICATION_MODAL);
         errorBox.setTitle("Error");
 
-        Scene scene = new Scene(errorMessage);
+        boxedImage.setImage(new Image(getClass().getResource("Assets/Game/singletoken.png").toExternalForm()));
         errorLabel.setText(message);
+        errorBox.setScene(scene);
+        button.setOnAction(e->errorBox.close());
+        errorBox.showAndWait();
+    }
+
+    /**
+     * Displays an Alert Box for the user to see if the game is set to Gui Mode.
+     */
+    public void guiMessage(String title, String text, Image image) throws Exception{
+        Parent guiMessage;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Assets/Fxml/Error.fxml"));
+        loader.setController(this);
+        guiMessage = loader.load();
+        errorBox = new Stage();
+        errorBox.initModality(Modality.APPLICATION_MODAL);
+
+        errorBox.setTitle(title);
+        messageTitle.setText(title);
+        errorLabel.setText(text);
+        boxedImage.setImage(image);
+
+        Scene scene = new Scene(guiMessage);
+
         errorBox.setScene(scene);
         button.setOnAction(e->errorBox.close());
         errorBox.showAndWait();

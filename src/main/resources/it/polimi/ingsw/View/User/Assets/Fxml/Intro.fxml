@@ -21,26 +21,26 @@
             <Image url="@/it/polimi/ingsw/View/User/Assets/Game/logo.png" />
          </image>
       </ImageView>
-      <TextField fx:id="port" layoutX="220.0" layoutY="277.0" text="8765">
+      <TextField fx:id="port" layoutX="176.0" layoutY="277.0" text="8765">
          <font>
-            <Font name="Baskerville" size="13.0" />
+            <Font name="Baskerville" size="20.0" />
          </font>
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor></TextField>
-      <TextField fx:id="server" layoutX="220.0" layoutY="200.0" text="localhost">
+      <TextField fx:id="server" layoutX="174.0" layoutY="200.0" text="localhost">
          <font>
-            <Font name="Baskerville" size="13.0" />
+            <Font name="Baskerville" size="20.0" />
          </font>
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor></TextField>
-      <Text fill="WHITE" layoutX="280.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Port:">
+      <Text fill="WHITE" layoutX="237.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Port:" textAlignment="CENTER" wrappingWidth="126.0">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="239.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server Address:">
+      <Text fill="WHITE" layoutX="176.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server Address:" textAlignment="CENTER" wrappingWidth="251.4609375">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>
@@ -53,7 +53,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="connect" layoutX="331.0" layoutY="337.0" mnemonicParsing="false" onAction="#addressPort" prefHeight="39.0" prefWidth="98.0" text="Connect">
+      <Button fx:id="connect" layoutX="331.0" layoutY="337.0" mnemonicParsing="false" onAction="#addressPort" prefHeight="39.0" prefWidth="126.0" text="Connect">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>

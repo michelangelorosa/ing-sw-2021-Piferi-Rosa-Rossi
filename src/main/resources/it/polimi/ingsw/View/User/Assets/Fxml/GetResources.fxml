@@ -18,7 +18,7 @@
       </ImageView>
       <Text fx:id="resourcesTitle" fill="WHITE" layoutX="22.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click on the resources you want to pay with">
          <font>
-            <Font name="Dominican Italic" size="38.0" />
+            <Font name="Dominican" size="38.0" />
          </font>
       </Text>
       <ImageView fx:id="coins" fitHeight="100.0" fitWidth="100.0" layoutX="548.0" layoutY="60.0">
@@ -133,7 +133,7 @@
             <Font name="Baskerville" size="20.0" />
          </font>
       </Label>
-      <Button fx:id="cancelPayment" layoutX="409.0" layoutY="491.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="166.0" text="Cancel and close">
+      <Button fx:id="cancelPayment" layoutX="393.0" layoutY="491.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="200.0" text="Cancel and close">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>
@@ -141,7 +141,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="resetPayment" layoutX="277.0" layoutY="491.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="94.0" text="Reset">
+      <Button fx:id="resetPayment" layoutX="257.0" layoutY="491.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="114.0" text="Reset">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>
@@ -149,7 +149,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="confirmPayment" layoutX="611.0" layoutY="491.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="100.0" text="Confirm">
+      <Button fx:id="confirmPayment" layoutX="611.0" layoutY="491.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="127.0" text="Confirm">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>

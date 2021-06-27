@@ -16,12 +16,12 @@
             <Image url="@/it/polimi/ingsw/View/User/Assets/Game/background.jpg" />
          </image>
       </ImageView>
-      <Text fill="WHITE" layoutX="253.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error">
+      <Text fx:id="messageTitle" fill="WHITE" layoutX="253.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error">
          <font>
-            <Font name="Dominican Italic" size="38.0" />
+            <Font name="Dominican" size="38.0" />
          </font>
       </Text>
-      <Button fx:id="button" layoutX="508.0" layoutY="127.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="58.0" text="Ok">
+      <Button fx:id="button" layoutX="497.0" layoutY="127.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="69.0" text="Ok">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>
@@ -29,12 +29,8 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <ImageView fitHeight="104.0" fitWidth="109.0" layoutX="14.0" layoutY="42.0">
-         <image>
-            <Image url="@/it/polimi/ingsw/View/User/Assets/Game/singletoken.png" />
-         </image>
-      </ImageView>
-      <Label fx:id="errorLabel" alignment="CENTER" layoutX="115.0" layoutY="53.0" prefHeight="132.0" prefWidth="369.0" textFill="WHITE" wrapText="true">
+      <ImageView fx:id="boxedImage" fitHeight="104.0" fitWidth="109.0" layoutX="14.0" layoutY="42.0" />
+      <Label fx:id="errorLabel" alignment="CENTER" layoutX="123.0" layoutY="54.0" prefHeight="132.0" prefWidth="369.0" textFill="WHITE" wrapText="true">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>

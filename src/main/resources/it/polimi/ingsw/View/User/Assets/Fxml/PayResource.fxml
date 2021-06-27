@@ -18,7 +18,7 @@
       </ImageView>
       <Text fill="WHITE" layoutX="22.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click on the resources you want to pay with">
          <font>
-            <Font name="Dominican Italic" size="38.0" />
+            <Font name="Dominican" size="38.0" />
          </font>
       </Text>
       <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="548.0" layoutY="60.0">
@@ -126,11 +126,6 @@
             <Font name="Baskerville" size="20.0" />
          </font>
       </Label>
-      <ImageView fx:id="leaderDepot" fitHeight="39.0" fitWidth="166.0" layoutX="72.0" layoutY="399.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Game/resource.png" />
-         </image>
-      </ImageView>
       <ImageView fx:id="warehouse1" fitHeight="60.0" fitWidth="60.0" layoutX="125.0" layoutY="207.0">
          <image>
             <Image url="@../Game/shield.png" />
@@ -161,27 +156,27 @@
             <Image url="@../Game/shield.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="leader2resource2" fitHeight="60.0" fitWidth="60.0" layoutX="185.0" layoutY="388.0">
+      <ImageView fx:id="leader2resource2" fitHeight="60.0" fitWidth="60.0" layoutX="643.0" layoutY="378.0">
          <image>
             <Image url="@../Game/servant.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="leader2resource1" fitHeight="60.0" fitWidth="60.0" layoutX="144.0" layoutY="388.0">
+      <ImageView fx:id="leader2resource1" fitHeight="60.0" fitWidth="60.0" layoutX="575.0" layoutY="378.0">
          <image>
             <Image url="@../Game/servant.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="leader1resource2" fitHeight="60.0" fitWidth="60.0" layoutX="106.0" layoutY="388.0">
+      <ImageView fx:id="leader1resource2" fitHeight="60.0" fitWidth="60.0" layoutX="462.0" layoutY="378.0">
          <image>
             <Image url="@../Game/servant.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="leader1resource1" fitHeight="60.0" fitWidth="60.0" layoutX="65.0" layoutY="388.0">
+      <ImageView fx:id="leader1resource1" fitHeight="60.0" fitWidth="60.0" layoutX="390.0" layoutY="378.0">
          <image>
             <Image url="@../Game/servant.png" />
          </image>
       </ImageView>
-      <Button fx:id="cancelPayment" layoutX="409.0" layoutY="491.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="166.0" text="Cancel and close">
+      <Button fx:id="cancelPayment" layoutX="394.0" layoutY="491.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="181.0" text="Cancel and close">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>
@@ -189,7 +184,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="resetPayment" layoutX="277.0" layoutY="491.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="94.0" text="Reset">
+      <Button fx:id="resetPayment" layoutX="277.0" layoutY="491.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="100.0" text="Reset">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>
@@ -197,7 +192,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="confirmPayment" layoutX="611.0" layoutY="491.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="100.0" text="Confirm">
+      <Button fx:id="confirmPayment" layoutX="596.0" layoutY="491.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="124.0" text="Confirm">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>
