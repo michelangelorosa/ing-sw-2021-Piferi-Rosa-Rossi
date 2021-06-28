@@ -153,6 +153,19 @@ public class GameTest {
         game.getDevelopmentCardTable().drawCardFromDeck(0,0);
 
         game.getPlayers().get(0).getBoard().getLeaderCards()[0].setActive(true);
+        Warehouse warehouse = new Warehouse();
+        warehouse.getWarehouseDepots()[0].setResourceType(ResourceType.SHIELDS);
+        warehouse.getWarehouseDepots()[0].addResources(2);
+        game.getPlayers().get(0).getBoard().getResourceManager().setWarehouse(warehouse);
+        game.getPlayers().get(1).getBoard().getResourceManager().setWarehouse(warehouse);
+        game.getPlayers().get(2).getBoard().getResourceManager().setWarehouse(warehouse);
+        game.getPlayers().get(3).getBoard().getResourceManager().setWarehouse(warehouse);
+        Strongbox strongbox = new Strongbox();
+        strongbox.addResourcesByType(3, ResourceType.SHIELDS);
+        strongbox.addResourcesByType(14, ResourceType.SERVANTS);
+        strongbox.addResourcesByType(10, ResourceType.COINS);
+        strongbox.addResourcesByType(99, ResourceType.STONES);
+        game.getPlayers().get(0).getBoard().getResourceManager().setStrongbox(strongbox);
         convert.convertGame(game);
 
         //System.out.println("---------- game2 = new Game AND game2.persistence() ----------");
@@ -186,8 +199,13 @@ public class GameTest {
         assertEquals(game.getPlayers().get(2).getBoard().getLeaderCards()[1].isActive(), game2.getPlayers().get(2).getBoard().getLeaderCards()[1].isActive());
         assertEquals(game.getPlayers().get(3).getBoard().getLeaderCards()[0].isActive(), game2.getPlayers().get(3).getBoard().getLeaderCards()[0].isActive());
         assertEquals(game.getPlayers().get(3).getBoard().getLeaderCards()[1].isActive(), game2.getPlayers().get(3).getBoard().getLeaderCards()[1].isActive());
-
-
+        for(int i = 0; i < 4; i++) {
+            assertEquals(game.getPlayers().get(i).getBoard().getResourceManager().getWarehouse().getWarehouseDepots()[0].getResourceType(), game2.getPlayers().get(i).getBoard().getResourceManager().getWarehouse().getWarehouseDepots()[0].getResourceType());
+            assertEquals(game.getPlayers().get(i).getBoard().getResourceManager().getWarehouse().getWarehouseDepots()[0].getStoredResources(), game2.getPlayers().get(i).getBoard().getResourceManager().getWarehouse().getWarehouseDepots()[0].getStoredResources());
+        }
+        for (int i = 0; i < 4; i++) {
+            assertEquals(game.getPlayers().get(i).getBoard().getResourceManager().getStrongbox().getStoredResources().getResource(ResourceType.STONES), game2.getPlayers().get(i).getBoard().getResourceManager().getStrongbox().getStoredResources().getResource(ResourceType.STONES));
+        }
     }
 
 

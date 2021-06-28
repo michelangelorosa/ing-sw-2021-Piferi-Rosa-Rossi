@@ -534,6 +534,11 @@ public class ConvertToJSON {
                     leader1 = value.getBoard().getLeaderCards()[1].getCardId();
                 else leader1 = -1;
             }
+
+            int strongboxShields = value.getBoard().getResourceManager().getStrongbox().countResourcesByType(ResourceType.SHIELDS);
+            int strongboxServants = value.getBoard().getResourceManager().getStrongbox().countResourcesByType(ResourceType.SERVANTS);
+            int strongboxCoins = value.getBoard().getResourceManager().getStrongbox().countResourcesByType(ResourceType.COINS);
+            int strongboxStones = value.getBoard().getResourceManager().getStrongbox().countResourcesByType(ResourceType.STONES);
             boolean CHOOSE_ACTION, GAME_SET,INIT_CHOOSE_RESOURCES, INIT_CHOOSE_LEADER_CARDS, MARKET_CHOOSE_ROW, CHOOSE_LEADER_CARD, ADD_RESOURCE, SWITCH_DEPOT, RESET_WAREHOUSE, END_MARKET, BUY_CARD, PAY_RESOURCE_CARD, PAY_RESOURCE_PRODUCTION, END_PAY_CARD, CHOOSE_CARD_SLOT, ACTIVATE_PRODUCTION, END_PAY_PRODUCTION, CHOOSE_PRODUCTION_OUTPUT, ACTIVATE_LEADERCARD, DELETE_LEADERCARD, END_TURN, FINAL_POINTS;
 
             CHOOSE_ACTION = value.getPossibleActions().contains(ActionType.CHOOSE_ACTION);
@@ -559,7 +564,7 @@ public class ConvertToJSON {
             END_TURN = value.getPossibleActions().contains(ActionType.END_TURN);
             FINAL_POINTS = value.getPossibleActions().contains(ActionType.FINAL_POINTS);
 
-            player.add(new PlayerJSON(nickname, turnPosition, hasInkwell, statusTemp, faithTrackPosition, victory, popeTile0, popeTile1, popeTile2, depot0Max, depot1Max, depot2Max, depot0Stored, depot1Stored, depot2Stored, depotLeader1Stored, depotLeader2Stored, depot0Type, depot1Type, depot2Type, leader0, leader1, CHOOSE_ACTION, GAME_SET,INIT_CHOOSE_RESOURCES, INIT_CHOOSE_LEADER_CARDS, MARKET_CHOOSE_ROW, CHOOSE_LEADER_CARD, ADD_RESOURCE, SWITCH_DEPOT, RESET_WAREHOUSE, END_MARKET, BUY_CARD, PAY_RESOURCE_CARD, PAY_RESOURCE_PRODUCTION, END_PAY_CARD, CHOOSE_CARD_SLOT, ACTIVATE_PRODUCTION, END_PAY_PRODUCTION, CHOOSE_PRODUCTION_OUTPUT, ACTIVATE_LEADERCARD, DELETE_LEADERCARD, END_TURN, FINAL_POINTS));
+            player.add(new PlayerJSON(nickname, turnPosition, hasInkwell, statusTemp, faithTrackPosition, victory, popeTile0, popeTile1, popeTile2, depot0Max, depot1Max, depot2Max, depot0Stored, depot1Stored, depot2Stored, depotLeader1Stored, depotLeader2Stored, depot0Type, depot1Type, depot2Type, leader0, leader1, strongboxShields, strongboxServants, strongboxCoins, strongboxStones, CHOOSE_ACTION, GAME_SET,INIT_CHOOSE_RESOURCES, INIT_CHOOSE_LEADER_CARDS, MARKET_CHOOSE_ROW, CHOOSE_LEADER_CARD, ADD_RESOURCE, SWITCH_DEPOT, RESET_WAREHOUSE, END_MARKET, BUY_CARD, PAY_RESOURCE_CARD, PAY_RESOURCE_PRODUCTION, END_PAY_CARD, CHOOSE_CARD_SLOT, ACTIVATE_PRODUCTION, END_PAY_PRODUCTION, CHOOSE_PRODUCTION_OUTPUT, ACTIVATE_LEADERCARD, DELETE_LEADERCARD, END_TURN, FINAL_POINTS));
         }
 
         Gson gson = new Gson();

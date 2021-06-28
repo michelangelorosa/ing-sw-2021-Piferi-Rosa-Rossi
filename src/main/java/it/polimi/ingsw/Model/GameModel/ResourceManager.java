@@ -22,8 +22,8 @@ import java.util.ArrayList;
  * @author redrick99
  */
 public class ResourceManager implements Serializable {
-    private final Warehouse warehouse;
-    private final Strongbox strongbox;
+    private Warehouse warehouse;
+    private Strongbox strongbox;
 
     private ResourceStack temporaryResourcesToPay;
     private int temporaryWhiteMarbles;
@@ -36,6 +36,14 @@ public class ResourceManager implements Serializable {
         strongbox = new Strongbox();
         temporaryResourcesToPay = new ResourceStack(0,0,0,0);
         temporaryWhiteMarbles = 0;
+    }
+
+    public void setStrongbox(Strongbox strongbox) {
+        this.strongbox = strongbox;
+    }
+
+    public void setWarehouse(Warehouse warehouse) {
+        this.warehouse = warehouse;
     }
 
     /**

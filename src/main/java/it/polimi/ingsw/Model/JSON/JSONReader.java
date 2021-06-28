@@ -439,6 +439,48 @@ public class JSONReader {
                 else player.setStatus(PlayerStatus.IDLE);
                 player.setFaithTrackPosition(faithTrackPosition);
 
+                int depot0stored = playerJsonObject.get("depot0Stored").getAsInt();
+                int depot1stored = playerJsonObject.get("depot1Stored").getAsInt();
+                int depot2stored = playerJsonObject.get("depot2Stored").getAsInt();
+                int depot0Max = playerJsonObject.get("depot0Max").getAsInt();
+                int depot1Max = playerJsonObject.get("depot1Max").getAsInt();
+                int depot2Max = playerJsonObject.get("depot2Max").getAsInt();
+
+                String depot0Type = playerJsonObject.get("depot0Type").getAsString();
+                String depot1Type = playerJsonObject.get("depot1Type").getAsString();
+                String depot2Type = playerJsonObject.get("depot2Type").getAsString();
+
+                ResourceType depot0 = ResourceType.NONE, depot1 = ResourceType.NONE, depot2 = ResourceType.NONE;
+
+                Warehouse warehouse = new Warehouse();
+
+                if(depot0Max < depot0stored) depot0stored = depot0Max;
+                if(depot1Max < depot1stored) depot1stored = depot1Max;
+                if(depot2Max < depot2stored) depot2stored = depot2Max;
+
+                player.getBoard().getResourceManager().getWarehouse().addResources(depot0stored, convertType(depot0Type), player.getBoard().getResourceManager().getWarehouse().getWarehouseDepots()[0]);
+
+                player.getBoard().getResourceManager().getWarehouse().addResources(depot1stored, convertType(depot1Type), player.getBoard().getResourceManager().getWarehouse().getWarehouseDepots()[1]);
+
+                player.getBoard().getResourceManager().getWarehouse().addResources(depot2stored, convertType(depot2Type), player.getBoard().getResourceManager().getWarehouse().getWarehouseDepots()[2]);
+
+                int depotLeader1Stored = playerJsonObject.get("depotLeader1Stored").getAsInt();
+                player.getBoard().getResourceManager().getWarehouse().getExtraWarehouseDepot1().addResources(depotLeader1Stored);
+
+                int depotLeader2Stored = playerJsonObject.get("depotLeader2Stored").getAsInt();
+                player.getBoard().getResourceManager().getWarehouse().getExtraWarehouseDepot1().addResources(depotLeader2Stored);
+
+                int strongboxShields = playerJsonObject.get("strongboxShields").getAsInt();
+                int strongboxServants = playerJsonObject.get("strongboxServants").getAsInt();
+                int strongboxCoins = playerJsonObject.get("strongboxCoins").getAsInt();
+                int strongboxStones = playerJsonObject.get("strongboxStones").getAsInt();
+                Strongbox strongbox = new Strongbox();
+                strongbox.addResourcesByType(strongboxShields, ResourceType.SHIELDS);
+                strongbox.addResourcesByType(strongboxServants, ResourceType.SERVANTS);
+                strongbox.addResourcesByType(strongboxCoins, ResourceType.COINS);
+                strongbox.addResourcesByType(strongboxStones, ResourceType.STONES);
+                player.getBoard().getResourceManager().setStrongbox(strongbox);
+
                 pope0 = playerJsonObject.get("pope0").getAsString();
                 switch (pope0) {
                     case "DOWN":
@@ -544,6 +586,20 @@ public class JSONReader {
         return readPlayer;
     }
 
+    public static ResourceType convertType(String type){
+        switch (type){
+            case "SHIELDS":
+                return ResourceType.SHIELDS;
+            case "SERVANTS":
+                return ResourceType.SERVANTS;
+            case "COINS":
+                return ResourceType.COINS;
+            case "STONES":
+                return ResourceType.STONES;
+            default:
+                return ResourceType.NONE;
+        }
+    }
     /**
      * Method to read the developmentCardDeck from the JSON file
      * @return a DevelopmentCardDeck that will be set in the game

@@ -368,9 +368,7 @@ public class Game {
     }
 
     public void persistence(){
-        ArrayList<Player> newPlayers = JSONReader.playersDisconnections();
-        for(int i = 0; i < newPlayers.size(); i++)
-            players.add(newPlayers.get(i));
+
 
         DevelopmentCardDeck[][] deck = JSONReader.developmentCardDecksDisconnection();
         DevelopmentCardTable table = new DevelopmentCardTable(deck);
@@ -391,8 +389,11 @@ public class Game {
 
         this.developmentCardTable = table;
 
-        Market market = JSONReader.convertMarketPersistence();
-        this.market = market;
+        ArrayList<Player> newPlayers = JSONReader.playersDisconnections();
+        players.addAll(newPlayers);
+
+
+        this.market = JSONReader.convertMarketPersistence();
         ArrayList<LeaderCard> leader = JSONReader.convertLeaderCardPersistence();
         if(this.players.size() > 0){
             this.getPlayers().get(0).getBoard().getLeaderCards()[0] = leader.get(0);
