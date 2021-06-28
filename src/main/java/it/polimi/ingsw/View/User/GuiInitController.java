@@ -280,6 +280,7 @@ public class GuiInitController implements UserInterface {
      */
     public void stopMedia(){
         stopMusic.setDisable(true);
+        if(mediaPlayer!=null)
         mediaPlayer.stop();
     }
 
@@ -360,6 +361,7 @@ public class GuiInitController implements UserInterface {
                         choice++;
                     }
                     if(choice==2){
+                        if(mediaPlayer!=null)
                         mediaPlayer.stop();
                         confirmLeader.setDisable(true);
                         if(!card1.isSelected())
