@@ -20,7 +20,7 @@ public class PersistenceServerController implements Runnable {
         synchronized (this) {
             try {
                 System.out.println("WAITING");
-                wait(30000L);
+                wait(300000L);
                 System.out.println("FINISHED WAITING");
             } catch (InterruptedException e) {
                 System.out.println("[PSC] caught InterruptedException when waiting");
