@@ -1,6 +1,8 @@
 package it.polimi.ingsw.ModelTest.OtherTests;
 
 import it.polimi.ingsw.Model.Persistance.Persistence;
+import it.polimi.ingsw.Model.Persistance.PersistenceServerController;
+import it.polimi.ingsw.Model.Server.Server;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -43,5 +45,24 @@ public class PersistenceTest {
         assertEquals("Two", testPersistence.getPlayerNames().get(1));
         assertEquals("Three", testPersistence.getPlayerNames().get(2));
         assertEquals("Four", testPersistence.getPlayerNames().get(3));
+
+        testPersistence.wantsToRestart();
+        assertTrue(testPersistence.majorityWantsToRestart());
+        testPersistence.wantsToContinue();
+        testPersistence.wantsToContinue();
+        assertFalse(testPersistence.majorityWantsToRestart());
+
+        try {
+            testPersistence.resetFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        testPersistence.readFile();
+        assertFalse(testPersistence.isGameStarted());
+    }
+
+    @Test
+    public void persistenceControllerTest() {
+        PersistenceServerController psc = new PersistenceServerController(new Server());
     }
 }

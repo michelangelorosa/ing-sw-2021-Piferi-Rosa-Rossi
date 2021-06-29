@@ -400,8 +400,12 @@ public class Game {
             this.getPlayers().get(0).getBoard().getLeaderCards()[1] = leader.get(1);
         }
         if(this.players.size() > 1 && !this.players.get(1).getNickname().equals("Lorenzo il Magnifico")){
+            this.gameType = GameType.MULTIPLAYER;
             this.getPlayers().get(1).getBoard().getLeaderCards()[0] = leader.get(2);
             this.getPlayers().get(1).getBoard().getLeaderCards()[1] = leader.get(3);
+        }
+        else if(this.players.get(1).getNickname().equals("Lorenzo il Magnifico")) {
+            this.gameType = GameType.SINGLEPLAYER;
         }
         if(this.players.size() > 2){
             this.getPlayers().get(2).getBoard().getLeaderCards()[0] = leader.get(4);

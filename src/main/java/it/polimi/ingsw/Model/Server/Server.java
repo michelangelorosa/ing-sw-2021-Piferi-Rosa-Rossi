@@ -4,6 +4,7 @@ import it.polimi.ingsw.Controller.ControllerClasses.Controller;
 import it.polimi.ingsw.Model.Enums.GameStatus;
 import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
+import it.polimi.ingsw.Model.Persistance.PersistenceServerController;
 import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 import it.polimi.ingsw.View.Utility.DebuggingTools.Debugger;
 import it.polimi.ingsw.View.Utility.DebuggingTools.DebuggerFactory;
@@ -91,6 +92,7 @@ public class Server {
             this.controller.getActionController().getPersistence().readFile();
             if (this.controller.getActionController().getPersistence().isGameStarted()) {
                 this.numberOfPlayers = this.controller.getActionController().getPersistence().getNumberOfPlayers();
+                new Thread(new PersistenceServerController(this)).start();
                 serverStatus = GameStatus.GAME;
             }
         }
@@ -303,5 +305,9 @@ public class Server {
 
     public synchronized boolean gameIsEmpty() {
         return this.controller.getActionController().gameIsEmpty();
+    }
+
+    public static void setCheatMode(boolean cheatMode) {
+        Server.cheatMode = cheatMode;
     }
 }

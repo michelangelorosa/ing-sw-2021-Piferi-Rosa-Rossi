@@ -327,23 +327,23 @@ public class ConvertToJSON {
             }
 
             if(value.getBoard().getDevelopmentCardSlots().getSlots()[1].getLevelOccupied() > 0){
-                slot2card1 = value.getBoard().getDevelopmentCardSlots().getSlots()[0].getCards()[0].getCardId();
+                slot2card1 = value.getBoard().getDevelopmentCardSlots().getSlots()[1].getCards()[0].getCardId();
             }
             if(value.getBoard().getDevelopmentCardSlots().getSlots()[1].getLevelOccupied() > 1){
-                slot2card2 = value.getBoard().getDevelopmentCardSlots().getSlots()[0].getCards()[1].getCardId();
+                slot2card2 = value.getBoard().getDevelopmentCardSlots().getSlots()[1].getCards()[1].getCardId();
             }
             if(value.getBoard().getDevelopmentCardSlots().getSlots()[1].getLevelOccupied() > 2){
-                slot2card3 = value.getBoard().getDevelopmentCardSlots().getSlots()[0].getCards()[2].getCardId();
+                slot2card3 = value.getBoard().getDevelopmentCardSlots().getSlots()[1].getCards()[2].getCardId();
             }
 
             if(value.getBoard().getDevelopmentCardSlots().getSlots()[2].getLevelOccupied() > 0){
-                slot3card1 = value.getBoard().getDevelopmentCardSlots().getSlots()[0].getCards()[0].getCardId();
+                slot3card1 = value.getBoard().getDevelopmentCardSlots().getSlots()[2].getCards()[0].getCardId();
             }
             if(value.getBoard().getDevelopmentCardSlots().getSlots()[2].getLevelOccupied() > 1){
-                slot3card2 = value.getBoard().getDevelopmentCardSlots().getSlots()[0].getCards()[1].getCardId();
+                slot3card2 = value.getBoard().getDevelopmentCardSlots().getSlots()[2].getCards()[1].getCardId();
             }
             if(value.getBoard().getDevelopmentCardSlots().getSlots()[2].getLevelOccupied() > 2){
-                slot3card3 = value.getBoard().getDevelopmentCardSlots().getSlots()[0].getCards()[2].getCardId();
+                slot3card3 = value.getBoard().getDevelopmentCardSlots().getSlots()[2].getCards()[2].getCardId();
             }
 
             int levelOccupied1 = value.getBoard().getDevelopmentCardSlots().getSlots()[0].getLevelOccupied();

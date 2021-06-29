@@ -14,16 +14,33 @@ import java.io.Serializable;
  * <p>
  * <b>Attributes:</b>
  * <ul>
- *     <li> ActionType actionType: enum indicating the Action requested </li>
- *     <li> String response: contains the Controller's response after trying to perform the action </li>
+ *     <li>String "nickname": name of the player who performed the action</li>
+ *     <li>ActionType "actionType": enum indicating the Action requested</li>
+ *     <li>String "response": contains the Controller's response after trying to perform the action</li>
+ *     <li>String "ILLEGAL_ACTION": standard message to be used when a player cannot perform a certain type of Action</li>
  * </ul>
  *
  * @author redrick99
  */
 public class Action implements Serializable {
+    private String nickname;
     protected ActionType actionType;
     protected String response = null;
     protected static final String ILLEGAL_ACTION = "You cannot perform this action at this moment";
+
+    /**
+     * Getter for "nickname" attribute.
+     */
+    public String getNickname() {
+        return nickname;
+    }
+
+    /**
+     * Setter for "nickname" attribute.
+     */
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
     /**
      * Getter for "actionType" attribute.

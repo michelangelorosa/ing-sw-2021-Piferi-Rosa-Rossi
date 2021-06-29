@@ -172,7 +172,7 @@ public class DevelopmentCardTable extends RedDevelopmentCardTable {
     /**
      * Getter for developmentCard from id
      */
-    public DevelopmentCard getCardFromId(int id){
+    public DevelopmentCard getCardFromId(int id) {
         for(int r = 0; r < 3; r++){
             for(int c = 0; c < 4; c++){
                 for(int pos = 0; pos < 4; pos ++){
@@ -180,6 +180,7 @@ public class DevelopmentCardTable extends RedDevelopmentCardTable {
                 }
             }
         }
+        System.out.println("\n\n!!! ERROR: CARD WAS NULL AT getCardFromId !!! \n");
         return null;
     }
 

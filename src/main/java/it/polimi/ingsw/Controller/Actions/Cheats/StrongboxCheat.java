@@ -8,7 +8,7 @@ import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
 import it.polimi.ingsw.Model.Server.Server;
 
 public class StrongboxCheat extends Action {
-    private final ResourceStack strongboxResources = new ResourceStack(100, 100, 100, 100);
+    private final ResourceStack strongboxResources = new ResourceStack(50, 50, 50, 50);
 
     public StrongboxCheat() {
         this.actionType = ActionType.STRONGBOX_CHEAT;

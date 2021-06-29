@@ -1,7 +1,7 @@
 package it.polimi.ingsw.ControllerTest;
 
 import it.polimi.ingsw.CommonTestMethods;
-import it.polimi.ingsw.Controller.Actions.Action;
+import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Controller.ControllerClasses.ActionController;
 import it.polimi.ingsw.Controller.ControllerClasses.Controller;
 import it.polimi.ingsw.Controller.ControllerClasses.Observable;
@@ -9,7 +9,8 @@ import static org.junit.Assert.*;
 
 import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.Player;
-import it.polimi.ingsw.Model.MessagesToClient.GameSetMessage;
+import it.polimi.ingsw.Model.GameModel.ResourceStack;
+import it.polimi.ingsw.Model.GameModel.Warehouse;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
 import it.polimi.ingsw.Model.MessagesToClient.ModelToView;
 import it.polimi.ingsw.Model.MessagesToClient.OtherMessages.DisconnectedMessage;
@@ -42,11 +43,13 @@ public class ControllerTest {
         ControllerTestClass controller2 = new ControllerTestClass();
 
         CommonTestMethods.gameInitOne(controller.getActionController().getGame());
+        CommonTestMethods.gameInitOne(controller2.getActionController().getGame());
 
         observableClass.addObserver(controller);
         observableClass.addObserver(controller2);
 
         Action action = new Action();
+        action.setNickname(controller.getActionController().getGame().getCurrentPlayerNickname());
 
         observableClass.notify(action);
 
@@ -73,11 +76,12 @@ public class ControllerTest {
     }
 
     @Test
-    public void controllerTest2() throws ModelException {
+    public void controllerTest2() {
         Action action = new Action();
         Controller controller = new Controller();
         ObservableClass observableClass = new ObservableClass();
         CommonTestMethods.gameInitOne(controller.getActionController().getGame());
+        action.setNickname(controller.getActionController().getGame().getCurrentPlayerNickname());
 
         observableClass.addObserver(controller);
         observableClass.notify(action);
@@ -92,6 +96,34 @@ public class ControllerTest {
 
         ModelToView modelToView = actionController.getModelToView();
         assertEquals(modelToView, actionController.getModelToView());
+    }
+
+    @Test
+    public void actionControllerTest() {
+        ActionController actionController = new ActionController();
+        CommonTestMethods.gameInitOne(actionController.getGame());
+
+        Action action = new ResetWarehouse();
+        actionController.getResetWarehouse().setBackupResources(new ResourceStack(0,0,0,0));
+        actionController.getResetWarehouse().setBackupWarehouse(new Warehouse());
+        action.setNickname(actionController.getGame().getCurrentPlayerNickname());
+        actionController.doAction(action);
+
+        action = new ChooseCardSlot(0);
+        actionController.getChooseCardSlot().setCardSlot(0);
+        action.setNickname(actionController.getGame().getCurrentPlayerNickname());
+        actionController.doAction(action);
+
+        action = new ChooseProductionOutput();
+        actionController.getChooseProductionOutput().setBasicProduction(false);
+        actionController.getChooseProductionOutput().setFirstLeaderCard(false);
+        actionController.getChooseProductionOutput().setSecondLeaderCard(false);
+        action.setNickname(actionController.getGame().getCurrentPlayerNickname());
+        actionController.doAction(action);
+
+        assertFalse(actionController.gameIsEmpty());
+        assertNotNull(actionController.getPersistence());
+
     }
 
     @Test

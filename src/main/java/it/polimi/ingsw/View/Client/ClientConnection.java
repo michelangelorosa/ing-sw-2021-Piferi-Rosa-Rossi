@@ -153,6 +153,7 @@ public class ClientConnection implements Runnable, Observer<Action> {
             }
         } catch (IOException e) {
             DEBUGGER.printDebug("Caught IOException in while loop");
+            System.exit(1);
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             DEBUGGER.printDebug("Caught ClassNotFoundException in while loop");

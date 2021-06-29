@@ -66,8 +66,8 @@ public class ServerMessageHandler {
                                 DEBUGGER.printDebug("Player: " + serverConnection.getName() + " successfully reconnected");
 
                                 serverConnection.getServer().addConnection(serverConnection);
-                                serverConnection.getServer().getController().getActionController().getModelToView().addObserver(serverConnection);
-                                serverConnection.addObserver(serverConnection.getServer().getController());
+                                //serverConnection.getServer().getController().getActionController().getModelToView().addObserver(serverConnection);
+                                //serverConnection.addObserver(serverConnection.getServer().getController());
 
                                 if (serverConnection.getServer().getConnectedPlayers() >= persistence.getNumberOfPlayers()) {
                                     System.out.println("Notifying all");
@@ -83,7 +83,7 @@ public class ServerMessageHandler {
                                 }
                             }
                             // ASKS THE PLAYER IF HE WANTS TO START A NEW GAME
-                            DEBUGGER.printDebug("Asking: " + serverConnection.getName() + " to Restart ot Continue");
+                            DEBUGGER.printDebug("Asking: " + serverConnection.getName() + " to Restart or Continue");
                             serverConnection.send(11);
                             boolean wantsToStartNewGame = serverConnection.readBoolean();
                             DEBUGGER.printDebug(serverConnection.getName() + " read boolean!");
@@ -100,6 +100,8 @@ public class ServerMessageHandler {
                             DEBUGGER.printDebug("Everyone is ready!");
 
                             if (persistence.majorityWantsToRestart()) {
+                                serverConnection.getServer().getController().getActionController().getModelToView().addObserver(serverConnection);
+                                serverConnection.addObserver(serverConnection.getServer().getController());
                                 DEBUGGER.printDebug("Majority wanted to RESTART!");
                                 synchronized (serverConnection.getServer()) {
                                     Server.setServerStatus(GameStatus.LOBBY);
@@ -107,9 +109,23 @@ public class ServerMessageHandler {
                                 return true;
                             }
                             else {
-                                if (serverConnection.getServer().getController().getActionController().getGame().getPlayers().size() == 0) {
-                                    //TODO SETS NEW GAME WITH JSON INFORMATION
+                                synchronized (serverConnection.getServer()) {
+                                    if (serverConnection.getServer().getController().getActionController().getGame().getPlayers().size() == 0) {
+
+                                        serverConnection.getServer().getController().getActionController().JSONToGamePersistence();
+                                        Server.setServerStatus(GameStatus.GAME);
+
+                                        try {
+                                            serverConnection.getServer().wait();
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                    else {
+                                        serverConnection.getServer().notifyAll();
+                                    }
                                 }
+                                DEBUGGER.printDebug("PERSISTENCE: Reconnecting player --> " + serverConnection.getName());
                                 reconnection(serverConnection);
                                 return false;
                             }
@@ -245,6 +261,10 @@ public class ServerMessageHandler {
             if(Server.getServerStatus() == GameStatus.LEADER) {
                 Server.setServerStatus(GameStatus.GAME);
                 GameSetMessage message = serverConnection.getServer().getController().getActionController().prepareViewGame();
+                //
+                //
+                //
+                serverConnection.getServer().getController().getActionController().overwritePersistenceJSON();
                 serverConnection.getServer().broadcast(message);
             }
         }

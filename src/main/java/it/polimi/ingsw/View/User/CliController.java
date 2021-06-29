@@ -297,6 +297,7 @@ public class CliController implements UserInterface {
                 else {
                     action = indexToAction(player.getPossibleActions().get(choiceInt - 1), game);
                     if(action != null) {
+                        action.setNickname(game.getMyNickname());
                         return action;
                     }
                 }
@@ -304,6 +305,7 @@ public class CliController implements UserInterface {
             else if(choice.equals("cheat") && Client.isCheatMode()) {
                 action = new CliCheatController().cheatParser();
                 if(action != null) {
+                    action.setNickname(game.getMyNickname());
                     return action;
                 }
             }

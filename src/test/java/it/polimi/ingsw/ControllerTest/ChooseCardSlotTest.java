@@ -37,6 +37,7 @@ public class ChooseCardSlotTest {
         slotExtra2.setColumnCardToBuy(5);
         assertEquals(2, slotExtra1.getRowCardToBuy());
         assertEquals(5, slotExtra2.getColumnCardToBuy());
+        slot0.setCardSlot(0);
     }
 
     /**Test to check if the card slot number is correct*/

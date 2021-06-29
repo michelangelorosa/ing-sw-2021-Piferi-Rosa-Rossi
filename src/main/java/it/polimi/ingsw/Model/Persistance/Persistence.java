@@ -68,7 +68,7 @@ public class Persistence {
      * @param numberOfPlayers number of players who are playing the game.
      * @param players ArrayList containing the name of the players who are playing the game.
      */
-    public void writeFile(boolean gameStarted, int numberOfPlayers, ArrayList<String> players){
+    public synchronized void writeFile(boolean gameStarted, int numberOfPlayers, ArrayList<String> players){
         try {
             createFile();
 
@@ -95,7 +95,7 @@ public class Persistence {
     /**
      * Reads the file and stores information inside the class itself.
      */
-    public void readFile() {
+    public synchronized void readFile() {
         try{
             Scanner sc = new Scanner(file);
             String gameStarted = sc.nextLine();
@@ -115,6 +115,13 @@ public class Persistence {
             this.gameStarted = false;
             e.printStackTrace();
         }
+    }
+
+    public synchronized void resetFile() throws IOException {
+        FileWriter fileWriter = new FileWriter(file);
+        fileWriter.write("");
+        fileWriter.write("0\n");
+        fileWriter.close();
     }
 
     /**

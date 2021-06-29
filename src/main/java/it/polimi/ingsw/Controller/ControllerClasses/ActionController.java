@@ -6,11 +6,13 @@ import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.Game;
 import it.polimi.ingsw.Model.GameModel.ResourceStack;
+import it.polimi.ingsw.Model.JSON.ConvertToJSON;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 import it.polimi.ingsw.Model.MessagesToClient.OtherMessages.DisconnectedMessage;
 import it.polimi.ingsw.Model.MessagesToClient.OtherMessages.ExceptionMessage;
 import it.polimi.ingsw.Model.Persistance.Persistence;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
@@ -41,6 +43,7 @@ public class ActionController {
     private final ChooseProductionOutput chooseProductionOutput = new ChooseProductionOutput();
 
     private final Persistence persistence = new Persistence();
+    private final ConvertToJSON convertToJSON = new ConvertToJSON();
 
     /**
      * Constructor for ActionController Class.
@@ -60,44 +63,48 @@ public class ActionController {
     public synchronized void doAction(Action action) {
         MessageToClient message;
 
-        try {
-            if (action instanceof ResetWarehouse) {
-                resetWarehouse.doAction(this);
-                message = resetWarehouse.messagePrepare(this);
-            } else if (action instanceof ChooseCardSlot) {
-                chooseCardSlot.setCardSlot(((ChooseCardSlot)action).getCardSlot());
-                chooseCardSlot.doAction(this);
+        if ((action instanceof InitChooseLeaderCards) || (action instanceof InitChooseResources) || action.getNickname().equals(game.getCurrentPlayerNickname())) {
+            try {
+                if (action instanceof ResetWarehouse) {
+                    resetWarehouse.doAction(this);
+                    message = resetWarehouse.messagePrepare(this);
+                } else if (action instanceof ChooseCardSlot) {
+                    chooseCardSlot.setCardSlot(((ChooseCardSlot) action).getCardSlot());
+                    chooseCardSlot.doAction(this);
 
-                message = chooseCardSlot.messagePrepare(this);
-            } else if (action instanceof ChooseProductionOutput) {
-                chooseProductionOutput.setBasicProductionOutput(((ChooseProductionOutput)action).getBasicProductionOutput());
-                chooseProductionOutput.setFirstLeaderCardOutput(((ChooseProductionOutput)action).getFirstLeaderCardOutput());
-                chooseProductionOutput.setSecondLeaderCardOutput(((ChooseProductionOutput)action).getSecondLeaderCardOutput());
-                chooseProductionOutput.doAction(this);
+                    message = chooseCardSlot.messagePrepare(this);
+                } else if (action instanceof ChooseProductionOutput) {
+                    chooseProductionOutput.setBasicProductionOutput(((ChooseProductionOutput) action).getBasicProductionOutput());
+                    chooseProductionOutput.setFirstLeaderCardOutput(((ChooseProductionOutput) action).getFirstLeaderCardOutput());
+                    chooseProductionOutput.setSecondLeaderCardOutput(((ChooseProductionOutput) action).getSecondLeaderCardOutput());
+                    chooseProductionOutput.doAction(this);
 
-                message = chooseProductionOutput.messagePrepare(this);
-            } else {
-                action.doAction(this);
-                message = action.messagePrepare(this);
+                    message = chooseProductionOutput.messagePrepare(this);
+                } else if (action instanceof EndTurn) {
+                    action.doAction(this);
+                    // Overwrites the Persistence JSON file ONLY when ending the turn
+                    overwritePersistenceJSON();
+                    message = action.messagePrepare(this);
+                } else {
+                    action.doAction(this);
+                    message = action.messagePrepare(this);
+                }
+            } catch (ModelException e) {
+                message = new ExceptionMessage(this.game.getCurrentPlayerNickname());
+                message.setError("ModelException Caught! " + e.getMessage());
+                e.printStackTrace();
+            } catch (IllegalArgumentException e) {
+                message = new ExceptionMessage(this.game.getCurrentPlayerNickname());
+                message.setError("IllegalArgumentException Caught! " + e.getMessage());
+                e.printStackTrace();
+            } catch (Exception e) {
+                message = new ExceptionMessage(this.game.getCurrentPlayerNickname());
+                message.setError("Exception Caught! " + e.getMessage());
+                e.printStackTrace();
             }
-        }
-        catch (ModelException e){
-            message = new ExceptionMessage(this.game.getCurrentPlayerNickname());
-            message.setError("ModelException Caught! " + e.getMessage());
-            e.printStackTrace();
-        }
-        catch (IllegalArgumentException e){
-            message = new ExceptionMessage(this.game.getCurrentPlayerNickname());
-            message.setError("IllegalArgumentException Caught! " + e.getMessage());
-            e.printStackTrace();
-        }
-        catch (Exception e){
-            message = new ExceptionMessage(this.game.getCurrentPlayerNickname());
-            message.setError("Exception Caught! " + e.getMessage());
-            e.printStackTrace();
-        }
 
-        modelToView.notify(message);
+            modelToView.notify(message);
+        }
     }
 
     public ModelToView getModelToView() {
@@ -201,5 +208,17 @@ public class ActionController {
      */
     public void endGamePersistence() {
         persistence.writeFile(false, 0, new ArrayList<>());
+    }
+
+    public void overwritePersistenceJSON() {
+        try {
+            convertToJSON.convertGame(this.game);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void JSONToGamePersistence() {
+        this.game.persistence();
     }
 }
