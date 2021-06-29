@@ -404,7 +404,7 @@ public class JSONReader {
      * Method to read the list of player from the JSON file
      * @return an ArrayList of players
      */
-    public static ArrayList<Player> playersDisconnections(){
+    public static ArrayList<Player> playersDisconnections(DevelopmentCardTable table){
         //File players = new File("src/main/resources/JSON/NamePlayers.json");
         File players = new File("Persistence.json");
         ArrayList<Player> readPlayer = new ArrayList<>();
@@ -522,6 +522,53 @@ public class JSONReader {
 
                 int leaderCard0 = playerJsonObject.get("leader0").getAsInt();
                 int leaderCard1 = playerJsonObject.get("leader1").getAsInt();
+
+                int levelOccupied1 = playerJsonObject.get("levelOccupied1").getAsInt();
+                int levelOccupied2 = playerJsonObject.get("levelOccupied2").getAsInt();
+                int levelOccupied3 = playerJsonObject.get("levelOccupied3").getAsInt();
+
+                int slot1card1 = playerJsonObject.get("slot1card1").getAsInt();
+                int slot1card2 = playerJsonObject.get("slot1card2").getAsInt();
+                int slot1card3 = playerJsonObject.get("slot1card3").getAsInt();
+
+                int slot2card1 = playerJsonObject.get("slot2card1").getAsInt();
+                int slot2card2 = playerJsonObject.get("slot2card2").getAsInt();
+                int slot2card3 = playerJsonObject.get("slot2card3").getAsInt();
+
+                int slot3card1 = playerJsonObject.get("slot3card1").getAsInt();
+                int slot3card2 = playerJsonObject.get("slot3card2").getAsInt();
+                int slot3card3 = playerJsonObject.get("slot3card3").getAsInt();
+
+                if(levelOccupied1 > 0){
+                    player.getBoard().getDevelopmentCardSlots().getSlots()[0].addCard(table.getCardFromId(slot1card1));
+                }
+                if(levelOccupied1 > 1){
+                    player.getBoard().getDevelopmentCardSlots().getSlots()[0].addCard(table.getCardFromId(slot1card2));
+                }
+                if(levelOccupied1 > 2){
+                    player.getBoard().getDevelopmentCardSlots().getSlots()[0].addCard(table.getCardFromId(slot1card3));
+                }
+
+                if(levelOccupied2 > 0){
+                    player.getBoard().getDevelopmentCardSlots().getSlots()[1].addCard(table.getCardFromId(slot2card1));
+                }
+                if(levelOccupied2 > 1){
+                    player.getBoard().getDevelopmentCardSlots().getSlots()[1].addCard(table.getCardFromId(slot2card2));
+
+                }
+                if(levelOccupied2 > 2){
+                    player.getBoard().getDevelopmentCardSlots().getSlots()[1].addCard(table.getCardFromId(slot2card3));
+                }
+
+                if(levelOccupied3 > 0){
+                    player.getBoard().getDevelopmentCardSlots().getSlots()[2].addCard(table.getCardFromId(slot3card1));
+                }
+                if(levelOccupied3 > 1){
+                    player.getBoard().getDevelopmentCardSlots().getSlots()[2].addCard(table.getCardFromId(slot3card2));
+                }
+                if(levelOccupied3 > 2){
+                    player.getBoard().getDevelopmentCardSlots().getSlots()[2].addCard(table.getCardFromId(slot3card3));
+                }
 
                 CHOOSE_ACTION = playerJsonObject.get("CHOOSE_ACTION").getAsBoolean();
                     if(CHOOSE_ACTION) player.addPossibleAction(ActionType.CHOOSE_ACTION);
