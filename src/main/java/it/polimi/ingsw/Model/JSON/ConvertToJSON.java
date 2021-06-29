@@ -539,6 +539,44 @@ public class ConvertToJSON {
             int strongboxServants = value.getBoard().getResourceManager().getStrongbox().countResourcesByType(ResourceType.SERVANTS);
             int strongboxCoins = value.getBoard().getResourceManager().getStrongbox().countResourcesByType(ResourceType.COINS);
             int strongboxStones = value.getBoard().getResourceManager().getStrongbox().countResourcesByType(ResourceType.STONES);
+
+            int slot1card1 = 0, slot1card2 = 0, slot1card3 = 0, slot2card1 = 0, slot2card2 = 0, slot2card3 = 0, slot3card1 = 0, slot3card2 = 0, slot3card3 = 0;
+
+            if(value.getBoard().getDevelopmentCardSlots().getSlots()[0].getLevelOccupied() > 0){
+                slot1card1 = value.getBoard().getDevelopmentCardSlots().getSlots()[0].getCards()[0].getCardId();
+            }
+            if(value.getBoard().getDevelopmentCardSlots().getSlots()[0].getLevelOccupied() > 1){
+                slot1card2 = value.getBoard().getDevelopmentCardSlots().getSlots()[0].getCards()[1].getCardId();
+            }
+            if(value.getBoard().getDevelopmentCardSlots().getSlots()[0].getLevelOccupied() > 2){
+                slot1card3 = value.getBoard().getDevelopmentCardSlots().getSlots()[0].getCards()[2].getCardId();
+            }
+
+            if(value.getBoard().getDevelopmentCardSlots().getSlots()[1].getLevelOccupied() > 0){
+                slot2card1 = value.getBoard().getDevelopmentCardSlots().getSlots()[0].getCards()[0].getCardId();
+            }
+            if(value.getBoard().getDevelopmentCardSlots().getSlots()[1].getLevelOccupied() > 1){
+                slot2card2 = value.getBoard().getDevelopmentCardSlots().getSlots()[0].getCards()[1].getCardId();
+            }
+            if(value.getBoard().getDevelopmentCardSlots().getSlots()[1].getLevelOccupied() > 2){
+                slot2card3 = value.getBoard().getDevelopmentCardSlots().getSlots()[0].getCards()[2].getCardId();
+            }
+
+            if(value.getBoard().getDevelopmentCardSlots().getSlots()[2].getLevelOccupied() > 0){
+                slot3card1 = value.getBoard().getDevelopmentCardSlots().getSlots()[0].getCards()[0].getCardId();
+            }
+            if(value.getBoard().getDevelopmentCardSlots().getSlots()[2].getLevelOccupied() > 1){
+                slot3card2 = value.getBoard().getDevelopmentCardSlots().getSlots()[0].getCards()[1].getCardId();
+            }
+            if(value.getBoard().getDevelopmentCardSlots().getSlots()[2].getLevelOccupied() > 2){
+                slot3card3 = value.getBoard().getDevelopmentCardSlots().getSlots()[0].getCards()[2].getCardId();
+            }
+
+            int levelOccupied1 = value.getBoard().getDevelopmentCardSlots().getSlots()[0].getLevelOccupied();
+            int levelOccupied2 = value.getBoard().getDevelopmentCardSlots().getSlots()[1].getLevelOccupied();
+            int levelOccupied3 = value.getBoard().getDevelopmentCardSlots().getSlots()[2].getLevelOccupied();
+
+
             boolean CHOOSE_ACTION, GAME_SET,INIT_CHOOSE_RESOURCES, INIT_CHOOSE_LEADER_CARDS, MARKET_CHOOSE_ROW, CHOOSE_LEADER_CARD, ADD_RESOURCE, SWITCH_DEPOT, RESET_WAREHOUSE, END_MARKET, BUY_CARD, PAY_RESOURCE_CARD, PAY_RESOURCE_PRODUCTION, END_PAY_CARD, CHOOSE_CARD_SLOT, ACTIVATE_PRODUCTION, END_PAY_PRODUCTION, CHOOSE_PRODUCTION_OUTPUT, ACTIVATE_LEADERCARD, DELETE_LEADERCARD, END_TURN, FINAL_POINTS;
 
             CHOOSE_ACTION = value.getPossibleActions().contains(ActionType.CHOOSE_ACTION);
@@ -564,7 +602,7 @@ public class ConvertToJSON {
             END_TURN = value.getPossibleActions().contains(ActionType.END_TURN);
             FINAL_POINTS = value.getPossibleActions().contains(ActionType.FINAL_POINTS);
 
-            player.add(new PlayerJSON(nickname, turnPosition, hasInkwell, statusTemp, faithTrackPosition, victory, popeTile0, popeTile1, popeTile2, depot0Max, depot1Max, depot2Max, depot0Stored, depot1Stored, depot2Stored, depotLeader1Stored, depotLeader2Stored, depot0Type, depot1Type, depot2Type, leader0, leader1, strongboxShields, strongboxServants, strongboxCoins, strongboxStones, CHOOSE_ACTION, GAME_SET,INIT_CHOOSE_RESOURCES, INIT_CHOOSE_LEADER_CARDS, MARKET_CHOOSE_ROW, CHOOSE_LEADER_CARD, ADD_RESOURCE, SWITCH_DEPOT, RESET_WAREHOUSE, END_MARKET, BUY_CARD, PAY_RESOURCE_CARD, PAY_RESOURCE_PRODUCTION, END_PAY_CARD, CHOOSE_CARD_SLOT, ACTIVATE_PRODUCTION, END_PAY_PRODUCTION, CHOOSE_PRODUCTION_OUTPUT, ACTIVATE_LEADERCARD, DELETE_LEADERCARD, END_TURN, FINAL_POINTS));
+            player.add(new PlayerJSON(nickname, turnPosition, hasInkwell, statusTemp, faithTrackPosition, victory, popeTile0, popeTile1, popeTile2, depot0Max, depot1Max, depot2Max, depot0Stored, depot1Stored, depot2Stored, depotLeader1Stored, depotLeader2Stored, depot0Type, depot1Type, depot2Type, leader0, leader1, strongboxShields, strongboxServants, strongboxCoins, strongboxStones, levelOccupied1, levelOccupied2, levelOccupied3, slot1card1, slot1card2, slot1card3, slot2card1, slot2card2, slot2card3, slot3card1, slot3card2, slot3card3, CHOOSE_ACTION, GAME_SET,INIT_CHOOSE_RESOURCES, INIT_CHOOSE_LEADER_CARDS, MARKET_CHOOSE_ROW, CHOOSE_LEADER_CARD, ADD_RESOURCE, SWITCH_DEPOT, RESET_WAREHOUSE, END_MARKET, BUY_CARD, PAY_RESOURCE_CARD, PAY_RESOURCE_PRODUCTION, END_PAY_CARD, CHOOSE_CARD_SLOT, ACTIVATE_PRODUCTION, END_PAY_PRODUCTION, CHOOSE_PRODUCTION_OUTPUT, ACTIVATE_LEADERCARD, DELETE_LEADERCARD, END_TURN, FINAL_POINTS));
         }
 
         Gson gson = new Gson();
@@ -638,9 +676,6 @@ public class ConvertToJSON {
      */
     public String convertDevelopmentCardsFromId(Game game){
         String one = "";
-        int color;
-        int level;
-
 
         Gson gson = new Gson();
         String json;
@@ -669,84 +704,84 @@ public class ConvertToJSON {
 
         ArrayList<LeaderCardJSONAbility> card = new ArrayList<>();
 
-            for(int i = 0; i < game.getPlayers().size(); i++){
-                for(int pos = 0; pos < 2; pos++) {
-                    int leaderAbility = 0, id = 0, victoryPoints = 0, needShields = 0, needServants = 0, needCoins = 0, needStones = 0, blueLv1 = 0, blueLv2 = 0, blueLv3 = 0, purpleLv1 = 0, purpleLv2 = 0, purpleLv3 = 0, yellowLv1 = 0, yellowLv2 = 0, yellowLv3 = 0, greenLv1 = 0, greenLv2 = 0, greenLv3 = 0, discountShields = 0, discountServants = 0, discountCoins = 0, discountStones = 0, depotType = 0, marbleConversion = 0, inputShields = 0, inputServants = 0, inputCoins = 0, inputStones = 0, jollyOut = 0, outputFaith = 0;
+        for(int i = 0; i < game.getPlayers().size(); i++){
+            for(int pos = 0; pos < 2; pos++) {
+                int leaderAbility = 0, id = 0, victoryPoints = 0, needShields = 0, needServants = 0, needCoins = 0, needStones = 0, blueLv1 = 0, blueLv2 = 0, blueLv3 = 0, purpleLv1 = 0, purpleLv2 = 0, purpleLv3 = 0, yellowLv1 = 0, yellowLv2 = 0, yellowLv3 = 0, greenLv1 = 0, greenLv2 = 0, greenLv3 = 0, discountShields = 0, discountServants = 0, discountCoins = 0, discountStones = 0, depotType = 0, marbleConversion = 0, inputShields = 0, inputServants = 0, inputCoins = 0, inputStones = 0, jollyOut = 0, outputFaith = 0;
 
-                    Board board = game.getPlayers().get(i).getBoard();
-                    boolean active = board.getLeaderCards()[pos].isActive();
-                    boolean discarded = board.getLeaderCards()[pos].isDiscarded();
+                Board board = game.getPlayers().get(i).getBoard();
+                boolean active = board.getLeaderCards()[pos].isActive();
+                boolean discarded = board.getLeaderCards()[pos].isDiscarded();
 
-                    ResourceStack required = board.getLeaderCards()[pos].getResourcesRequired();
+                ResourceStack required = board.getLeaderCards()[pos].getResourcesRequired();
 
-                    LeaderRequirements leaderRequirements;
+                LeaderRequirements leaderRequirements;
 
-                    ResourceStack discount = board.getLeaderCards()[pos].getDiscount();
+                ResourceStack discount = board.getLeaderCards()[pos].getDiscount();
 
-                    leaderRequirements = board.getLeaderCards()[pos].getCardsRequired();
+                leaderRequirements = board.getLeaderCards()[pos].getCardsRequired();
 
-                    ResourceType depotTypeTemp = board.getLeaderCards()[pos].getResource();
+                ResourceType depotTypeTemp = board.getLeaderCards()[pos].getResource();
 
-                    Marble marbleTemp = board.getLeaderCards()[pos].getMarble();
+                Marble marbleTemp = board.getLeaderCards()[pos].getMarble();
 
-                    ResourceStack inputStack = board.getLeaderCards()[pos].getInput();
+                ResourceStack inputStack = board.getLeaderCards()[pos].getInput();
 
 
-                    LeaderCardAction leaderAbilityEnum = board.getLeaderCards()[pos].getAction();
-                    if (leaderAbilityEnum == LeaderCardAction.DISCOUNT) leaderAbility = 0;
-                    else if (leaderAbilityEnum == LeaderCardAction.EXTRADEPOT) leaderAbility = 1;
-                    else if (leaderAbilityEnum == LeaderCardAction.WHITEMARBLE) leaderAbility = 2;
-                    else if (leaderAbilityEnum == LeaderCardAction.PRODUCTIONPOWER) leaderAbility = 3;
+                LeaderCardAction leaderAbilityEnum = board.getLeaderCards()[pos].getAction();
+                if (leaderAbilityEnum == LeaderCardAction.DISCOUNT) leaderAbility = 0;
+                else if (leaderAbilityEnum == LeaderCardAction.EXTRADEPOT) leaderAbility = 1;
+                else if (leaderAbilityEnum == LeaderCardAction.WHITEMARBLE) leaderAbility = 2;
+                else if (leaderAbilityEnum == LeaderCardAction.PRODUCTIONPOWER) leaderAbility = 3;
 
-                    id = board.getLeaderCards()[pos].getCardId();
+                id = board.getLeaderCards()[pos].getCardId();
 
-                    victoryPoints = board.getLeaderCards()[pos].getVictoryPoints();
+                victoryPoints = board.getLeaderCards()[pos].getVictoryPoints();
 
-                    needShields = required.getResource(ResourceType.SHIELDS);
-                    needServants = required.getResource(ResourceType.SERVANTS);
-                    needCoins = required.getResource(ResourceType.COINS);
-                    needStones = required.getResource(ResourceType.STONES);
+                needShields = required.getResource(ResourceType.SHIELDS);
+                needServants = required.getResource(ResourceType.SERVANTS);
+                needCoins = required.getResource(ResourceType.COINS);
+                needStones = required.getResource(ResourceType.STONES);
 
-                    blueLv1 = leaderRequirements.getBlueCardLv1();
-                    blueLv2 = leaderRequirements.getBlueCardLv2();
-                    blueLv3 = leaderRequirements.getBlueCardLv3();
-                    purpleLv1 = leaderRequirements.getPurpleCardLv1();
-                    purpleLv2 = leaderRequirements.getPurpleCardLv2();
-                    purpleLv3 = leaderRequirements.getPurpleCardLv3();
-                    yellowLv1 = leaderRequirements.getYellowCardLv1();
-                    yellowLv2 = leaderRequirements.getYellowCardLv2();
-                    yellowLv3 = leaderRequirements.getYellowCardLv3();
-                    greenLv1 = leaderRequirements.getGreenCardLv1();
-                    greenLv2 = leaderRequirements.getGreenCardLv2();
-                    greenLv3 = leaderRequirements.getGreenCardLv3();
+                blueLv1 = leaderRequirements.getBlueCardLv1();
+                blueLv2 = leaderRequirements.getBlueCardLv2();
+                blueLv3 = leaderRequirements.getBlueCardLv3();
+                purpleLv1 = leaderRequirements.getPurpleCardLv1();
+                purpleLv2 = leaderRequirements.getPurpleCardLv2();
+                purpleLv3 = leaderRequirements.getPurpleCardLv3();
+                yellowLv1 = leaderRequirements.getYellowCardLv1();
+                yellowLv2 = leaderRequirements.getYellowCardLv2();
+                yellowLv3 = leaderRequirements.getYellowCardLv3();
+                greenLv1 = leaderRequirements.getGreenCardLv1();
+                greenLv2 = leaderRequirements.getGreenCardLv2();
+                greenLv3 = leaderRequirements.getGreenCardLv3();
 
-                    if (leaderAbility == 0) {
-                        discountShields = discount.getResource(ResourceType.SHIELDS);
-                        discountServants = discount.getResource(ResourceType.SERVANTS);
-                        discountCoins = discount.getResource(ResourceType.COINS);
-                        discountStones = discount.getResource(ResourceType.STONES);
-                    } else if (leaderAbility == 1) {
-                        if (depotTypeTemp == ResourceType.SHIELDS) depotType = 1;
-                        else if (depotTypeTemp == ResourceType.SERVANTS) depotType = 2;
-                        else if (depotTypeTemp == ResourceType.COINS) depotType = 3;
-                        else if (depotTypeTemp == ResourceType.STONES) depotType = 4;
-                    } else if (leaderAbility == 2) {
-                        if (marbleTemp == Marble.BLUE) marbleConversion = 1;
-                        else if (marbleTemp == Marble.PURPLE) marbleConversion = 4;
-                        else if (marbleTemp == Marble.YELLOW) marbleConversion = 3;
-                        else if (marbleTemp == Marble.GREY) marbleConversion = 2;
-                    } else {
-                        inputShields = inputStack.getResource(ResourceType.SHIELDS);
-                        inputServants = inputStack.getResource(ResourceType.SERVANTS);
-                        inputCoins = inputStack.getResource(ResourceType.COINS);
-                        inputStones = inputStack.getResource(ResourceType.STONES);
+                if (leaderAbility == 0) {
+                    discountShields = discount.getResource(ResourceType.SHIELDS);
+                    discountServants = discount.getResource(ResourceType.SERVANTS);
+                    discountCoins = discount.getResource(ResourceType.COINS);
+                    discountStones = discount.getResource(ResourceType.STONES);
+                } else if (leaderAbility == 1) {
+                    if (depotTypeTemp == ResourceType.SHIELDS) depotType = 1;
+                    else if (depotTypeTemp == ResourceType.SERVANTS) depotType = 2;
+                    else if (depotTypeTemp == ResourceType.COINS) depotType = 3;
+                    else if (depotTypeTemp == ResourceType.STONES) depotType = 4;
+                } else if (leaderAbility == 2) {
+                    if (marbleTemp == Marble.BLUE) marbleConversion = 1;
+                    else if (marbleTemp == Marble.PURPLE) marbleConversion = 4;
+                    else if (marbleTemp == Marble.YELLOW) marbleConversion = 3;
+                    else if (marbleTemp == Marble.GREY) marbleConversion = 2;
+                } else {
+                    inputShields = inputStack.getResource(ResourceType.SHIELDS);
+                    inputServants = inputStack.getResource(ResourceType.SERVANTS);
+                    inputCoins = inputStack.getResource(ResourceType.COINS);
+                    inputStones = inputStack.getResource(ResourceType.STONES);
 
-                        jollyOut = board.getLeaderCards()[pos].getJollyOut();
-                        outputFaith = board.getLeaderCards()[pos].getFaith();
-                    }
-                    card.add(new LeaderCardJSONAbility(active, discarded, leaderAbility, id, victoryPoints, needShields, needServants, needCoins, needStones, blueLv1, blueLv2, blueLv3, purpleLv1, purpleLv2, purpleLv3, yellowLv1, yellowLv2, yellowLv3, greenLv1, greenLv2, greenLv3, discountShields, discountServants, discountCoins, discountStones, depotType, marbleConversion, inputShields, inputServants, inputCoins, inputStones, jollyOut, outputFaith));
+                    jollyOut = board.getLeaderCards()[pos].getJollyOut();
+                    outputFaith = board.getLeaderCards()[pos].getFaith();
                 }
+                card.add(new LeaderCardJSONAbility(active, discarded, leaderAbility, id, victoryPoints, needShields, needServants, needCoins, needStones, blueLv1, blueLv2, blueLv3, purpleLv1, purpleLv2, purpleLv3, yellowLv1, yellowLv2, yellowLv3, greenLv1, greenLv2, greenLv3, discountShields, discountServants, discountCoins, discountStones, depotType, marbleConversion, inputShields, inputServants, inputCoins, inputStones, jollyOut, outputFaith));
             }
+        }
         Gson gson = new Gson();
         String json = gson.toJson(card);
         String temp;

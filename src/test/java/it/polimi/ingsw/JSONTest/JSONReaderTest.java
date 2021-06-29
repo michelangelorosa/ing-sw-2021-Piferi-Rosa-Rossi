@@ -536,7 +536,8 @@ public class JSONReaderTest {
 
     @Test
     public void playerDisconnectionTest(){
-        ArrayList<Player> players = JSONReader.playersDisconnections();
+        DevelopmentCardTable table = new DevelopmentCardTable();
+        ArrayList<Player> players = JSONReader.playersDisconnections(table);
         assertEquals("Giacomo", players.get(0).getNickname());
         assertEquals("Valentino", players.get(1).getNickname());
         assertEquals("Andrea", players.get(2).getNickname());

@@ -5,9 +5,7 @@ import static org.junit.Assert.*;
 import it.polimi.ingsw.CommonTestMethods;
 import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.Controller.Actions.EndMarket;
-import it.polimi.ingsw.Model.Enums.GameType;
-import it.polimi.ingsw.Model.Enums.Marble;
-import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.Model.Enums.*;
 import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.*;
 import it.polimi.ingsw.Model.JSON.ConvertToJSON;
@@ -166,6 +164,8 @@ public class GameTest {
         strongbox.addResourcesByType(10, ResourceType.COINS);
         strongbox.addResourcesByType(99, ResourceType.STONES);
         game.getPlayers().get(0).getBoard().getResourceManager().setStrongbox(strongbox);
+
+        game.getPlayers().get(0).getBoard().getDevelopmentCardSlots().getSlots()[0].addCard(game.getDevelopmentCardTable().getCardFromId(3));
         convert.convertGame(game);
 
         //System.out.println("---------- game2 = new Game AND game2.persistence() ----------");
@@ -206,6 +206,7 @@ public class GameTest {
         for (int i = 0; i < 4; i++) {
             assertEquals(game.getPlayers().get(i).getBoard().getResourceManager().getStrongbox().getStoredResources().getResource(ResourceType.STONES), game2.getPlayers().get(i).getBoard().getResourceManager().getStrongbox().getStoredResources().getResource(ResourceType.STONES));
         }
+        System.out.println("PRIMA: " + game.getPlayers().get(0).getBoard().getDevelopmentCardSlots().getSlots()[0].getCards()[0].getCost().getResource(ResourceType.COINS) + " DOPO: " + game2.getPlayers().get(0).getBoard().getDevelopmentCardSlots().getSlots()[0].getCards()[0].getCost().getResource(ResourceType.COINS));
     }
 
 

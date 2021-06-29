@@ -169,6 +169,20 @@ public class DevelopmentCardTable extends RedDevelopmentCardTable {
         resourceManager.setTemporaryResourcesToPay(cardCost);
     }
 
+    /**
+     * Getter for developmentCard from id
+     */
+    public DevelopmentCard getCardFromId(int id){
+        for(int r = 0; r < 3; r++){
+            for(int c = 0; c < 4; c++){
+                for(int pos = 0; pos < 4; pos ++){
+                    if(this.getDeck(r, c).getCards()[pos].getCardId() == id) return this.getDeck(r, c).getCards()[pos];
+                }
+            }
+        }
+        return null;
+    }
+
     public RedDevelopmentCardTable toView(){
         return (RedDevelopmentCardTable) this;
     }

@@ -389,7 +389,7 @@ public class Game {
 
         this.developmentCardTable = table;
 
-        ArrayList<Player> newPlayers = JSONReader.playersDisconnections();
+        ArrayList<Player> newPlayers = JSONReader.playersDisconnections(table);
         players.addAll(newPlayers);
 
 

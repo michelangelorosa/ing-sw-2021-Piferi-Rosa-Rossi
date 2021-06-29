@@ -211,4 +211,9 @@ public class DevelopmentCardTableTest {
                 assertEquals(table.getDeck(row, column).toString(), tableView.getDeck(row, column).toString());
             }
     }
+
+    @Test
+    public void fromIdTest(){
+        System.out.println(table.getCardFromId(3).getCost().getResource(ResourceType.COINS));
+    }
 }
