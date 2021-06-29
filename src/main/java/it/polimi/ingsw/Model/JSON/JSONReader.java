@@ -9,9 +9,8 @@ import it.polimi.ingsw.Model.Enums.*;
 import it.polimi.ingsw.Model.GameModel.*;
 import it.polimi.ingsw.Model.Persistance.Persistence;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 /**
@@ -37,9 +36,6 @@ public class JSONReader {
          * A standard and handwritten file is overwritten whenever the player chooses to edit the game parameters.
          */
 
-        File cards = new File("src/main/resources/JSON/DevelopmentCards.json");
-        //File cards = new File("src/main/resources/JSON/DevelopmentCard2.json");
-        //File cards = new File("src/main/resources/JSON/FromServerToClientBegin.json");
         DevelopmentCard[] readCards = new DevelopmentCard[48];
         DevelopmentCard cardToRead;
         int cardsInDeck = 0;
@@ -54,7 +50,8 @@ public class JSONReader {
         int outputFaith;
 
         try {
-            JsonElement fileElement = JsonParser.parseReader(new FileReader(cards));
+            Reader reader = new InputStreamReader(JSONReader.class.getResourceAsStream("/JSON/DevelopmentCards.json"), StandardCharsets.UTF_8);
+            JsonElement fileElement = JsonParser.parseReader(reader);
             JsonObject fileObject = fileElement.getAsJsonObject();
 
             //int example = fileObject.get("NumberOfCards").getAsInt();
@@ -84,9 +81,6 @@ public class JSONReader {
                 cardsInDeck++;
             }
 
-        } catch (FileNotFoundException e) {
-            System.err.println("Error: Missing file!");
-            e.printStackTrace();
         } catch (Exception e) {
             System.err.println("Error: Input file is corrupt!");
             e.printStackTrace();
@@ -102,9 +96,6 @@ public class JSONReader {
 
     /**Json Reader for the vatican report section*/
     public static VaticanReportSection[] ReadVaticanReportSection() {
-        File cells = new File("src/main/resources/JSON/FaithTrack.json");
-        //File cells = new File("src/main/resources/JSON/FaithCell2.json");
-        //File cells = new File("src/main/resources/JSON/FromServerToClientBegin.json");
 
         VaticanReportSection[] readSection = new VaticanReportSection[3];
         VaticanReportSectionEnum[] vaticanReportSectionEnums = VaticanReportSectionEnum.values();
@@ -119,7 +110,8 @@ public class JSONReader {
         int victoryPoints;
 
         try {
-            JsonElement fileElement = JsonParser.parseReader(new FileReader(cells));
+            Reader reader = new InputStreamReader(JSONReader.class.getResourceAsStream("/JSON/FaithTrack.json"), StandardCharsets.UTF_8);
+            JsonElement fileElement = JsonParser.parseReader(reader);
             JsonObject fileObject = fileElement.getAsJsonObject();
 
 
@@ -135,9 +127,6 @@ public class JSONReader {
                 vaticans++;
             }
 
-        } catch (FileNotFoundException e) {
-            System.err.println("Error: Missing file!");
-            e.printStackTrace();
         } catch (Exception e) {
             System.err.println("Error: Input file is corrupt!");
             e.printStackTrace();
@@ -156,9 +145,6 @@ public class JSONReader {
         /**
          * A standard and handwritten file is overwritten whenever the player chooses to edit the game parameters.
          */
-        File cells = new File("src/main/resources/JSON/FaithTrack.json");
-        //File cells = new File("src/main/resources/JSON/FaithCell2.json");
-        //File cells = new File("src/main/resources/JSON/FromServerToClientBegin.json");
 
         FaithCell[] readCells = new FaithCell[25];
         FaithCell cellToRead;
@@ -175,7 +161,8 @@ public class JSONReader {
         int victoryPoints;
 
         try {
-            JsonElement fileElement = JsonParser.parseReader(new FileReader(cells));
+            Reader reader = new InputStreamReader(JSONReader.class.getResourceAsStream("/JSON/FaithTrack.json"), StandardCharsets.UTF_8);
+            JsonElement fileElement = JsonParser.parseReader(reader);
             JsonObject fileObject = fileElement.getAsJsonObject();
 
             JsonArray jsonArrayCards = fileObject.get("FaithCells").getAsJsonArray();
@@ -196,9 +183,6 @@ public class JSONReader {
                 cellsRead++;
             }
 
-        } catch (FileNotFoundException e) {
-            System.err.println("Error: Missing file!");
-            e.printStackTrace();
         } catch (Exception e) {
             System.err.println("Error: Input file is corrupt!");
             e.printStackTrace();
@@ -218,9 +202,6 @@ public class JSONReader {
         /**
          * A standard and handwritten file is overwritten whenever the player chooses to edit the game parameters.
          */
-        File cards = new File("src/main/resources/JSON/LeaderCards.json");
-        //File cards = new File("src/main/resources/JSON/LeaderCards2.json");
-        //File cards = new File("src/main/resources/JSON/FromServerToClientBegin.json");
 
         ArrayList<LeaderCard> leaderCards = new ArrayList<>();
         LeaderCard cardToRead;
@@ -231,7 +212,8 @@ public class JSONReader {
         int cardsInDeck = 0;
 
         try {
-            JsonElement fileElement = JsonParser.parseReader(new FileReader(cards));
+            Reader reader = new InputStreamReader(JSONReader.class.getResourceAsStream("/JSON/LeaderCards.json"), StandardCharsets.UTF_8);
+            JsonElement fileElement = JsonParser.parseReader(reader);
             JsonObject fileObject = fileElement.getAsJsonObject();
 
             //Extracting card values from JSON
@@ -319,9 +301,6 @@ public class JSONReader {
                     }
                 }
             }
-        } catch (FileNotFoundException e) {
-            System.err.println("Error: Missing file!");
-            e.printStackTrace();
         } catch (Exception e) {
             System.err.println("Error: Input file is corrupt!");
             e.printStackTrace();
@@ -333,8 +312,6 @@ public class JSONReader {
 
     /**JSON Reader for the players name*/
     public static ArrayList<Player> ReadPlayersName(){
-        File players = new File("src/main/resources/JSON/NamePlayers.json");
-        //File players = new File("src/main/resources/JSON/FromServerToClientBegin.json");
         ArrayList<Player> readPlayer = new ArrayList<>();
         int count = 0;
 
@@ -346,7 +323,8 @@ public class JSONReader {
         int faithTrackPosition;
 
         try {
-            JsonElement fileElement = JsonParser.parseReader(new FileReader(players));
+            Reader reader = new InputStreamReader(JSONReader.class.getResourceAsStream("/JSON/NamePlayers.json"), StandardCharsets.UTF_8);
+            JsonElement fileElement = JsonParser.parseReader(reader);
             JsonObject fileObject = fileElement.getAsJsonObject();
 
 
@@ -367,9 +345,9 @@ public class JSONReader {
                 count++;
             }
 
-        } catch (FileNotFoundException e) {
-            System.err.println("Error: Missing file!");
-            e.printStackTrace();
+        //} catch (FileNotFoundException e) {
+        //    System.err.println("Error: Missing file!");
+        //    e.printStackTrace();
         } catch (Exception e) {
             System.err.println("Error: Input file is corrupt!");
             e.printStackTrace();
