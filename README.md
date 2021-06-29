@@ -1,7 +1,6 @@
 # Ingegneria del Software - PROVA FINALE - 2020-2021
 
-## Group ID
-### GC46
+# Group ID: GC46
 
 ## Masters of Renaissance
 This project was commissioned by Politecnico di Milano. It consists in creating an implementation of [Masters of Renaissance](https://craniointernational.com/products/masters-of-renaissance/) board game using Java, following the MVC design pattern.
