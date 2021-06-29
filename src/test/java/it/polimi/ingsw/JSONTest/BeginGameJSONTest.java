@@ -20,6 +20,6 @@ public class BeginGameJSONTest {
         ArrayList<Player> players = JSONReader.ReadPlayersName();
 
 
-        begin.convert(developmentCards, leaderCards, 2, 1, cell, vaticanReportSections, players);
+        //begin.convert(developmentCards, leaderCards, 2, 1, cell, vaticanReportSections, players);
     }
 }
