@@ -5,9 +5,6 @@ import it.polimi.ingsw.View.Utility.DebuggingTools.Debugger;
 import it.polimi.ingsw.View.Utility.DebuggingTools.DebuggerFactory;
 import it.polimi.ingsw.View.Utility.DebuggingTools.DebuggerType;
 import javafx.application.Application;
-import javafx.stage.Stage;
-
-import java.awt.font.ShapeGraphicAttribute;
 import java.io.*;
 import java.net.Socket;
 import java.util.*;
@@ -168,6 +165,4 @@ public class Client {
     }
 
     public static void setUserInteraction(UserInterface userInterface) { userInteraction.setUi(userInterface);}
-
-
 }
