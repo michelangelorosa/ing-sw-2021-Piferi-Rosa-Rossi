@@ -8,11 +8,9 @@ import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.View.Client.Client;
 import it.polimi.ingsw.View.Client.ClientConnection;
 import it.polimi.ingsw.View.ReducedModel.*;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -110,7 +108,7 @@ public class GuiBoardController extends GuiInitController{
     @FXML private ImageView secondFloor;
     @FXML private ImageView thirdFloor;
     @FXML private Button button;
-    @FXML protected Button produciton;
+    @FXML protected Button production;
     @FXML protected Button nextTurn;
     @FXML protected Button payResBtn;
     @FXML protected Button cardTableBtn;
@@ -120,10 +118,11 @@ public class GuiBoardController extends GuiInitController{
     @FXML protected ImageView strongboxShieldsClickable;
     @FXML protected ImageView strongboxServantsClickable;
     @FXML protected ImageView strongboxCoinsClickable;
-    @FXML protected GridPane faithPane;
-    @FXML private GridPane otherBoards;
+    @FXML protected GridPane faithPane, otherBoards, chooserPane;
     private Boolean[] productionOutput = new Boolean[3];
     private int resourceNumber;
+    @FXML private Text cardTitle1,cardTitle2,cardTitle3;
+    @FXML private RadioButton slotZero,slotOne,slotTwo,slotThree,slotFour,slotFive;
 
     /**
      * Constructor for the GuiBoardController class
@@ -275,7 +274,6 @@ public class GuiBoardController extends GuiInitController{
                 db.setContent(content);
                 }else
                     displayError("You have no more servants to store");
-
                 event.consume();
             }
         });
@@ -899,30 +897,12 @@ public class GuiBoardController extends GuiInitController{
         if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_CARD_SLOT)) {
             cardTableBtn.setText("Choose card slot");
         }
-        if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_PRODUCTION_OUTPUT)){
+        if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_PRODUCTION_OUTPUT)||myPlayer().getPossibleActions().contains(ActionType.END_PAY_PRODUCTION)){
             if(productionOutput[0]||productionOutput[1]||productionOutput[2]){
-                produciton.setText("Choose Output");
-            }else {
-                ChooseProductionOutput productionOutputAction = new ChooseProductionOutput();
-                ArrayList<ResourceType> emptyResource = new ArrayList<>();
-                productionOutputAction.setBasicProductionOutput(emptyResource);
-                productionOutputAction.setBasicProduction(false);
-                productionOutputAction.setFirstLeaderCard(false);
-                productionOutputAction.setFirstLeaderCardOutput(emptyResource);
-                productionOutputAction.setSecondLeaderCard(false);
-                productionOutputAction.setSecondLeaderCardOutput(emptyResource);
-                sendAction(productionOutputAction);
+                production.setText("Choose Output");
             }
         }
     }
-
-    @FXML
-    private Text cardTitle1,cardTitle2,cardTitle3;
-
-    @FXML
-    private RadioButton slotZero,slotOne,slotTwo,slotThree,slotFour,slotFive;
-    @FXML
-    private GridPane chooserPane;
 
     /**
      * This method handles the interaction for when the user has to choose something, depending on his possible action:
@@ -1184,7 +1164,7 @@ public class GuiBoardController extends GuiInitController{
 
                         sendAction(new ActivateProduction(activations[0],activations[1],activations[2],activations[3],activations[4],true,productionInputs));
                         refresh();
-                        produciton.setText("Choose Output");
+                        production.setText("Choose Output");
                         chooser.close();
                         }
                     }else {
@@ -1196,79 +1176,96 @@ public class GuiBoardController extends GuiInitController{
             });
         }
         else if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_PRODUCTION_OUTPUT)){
-            cardTitle.setText("Choose the production output");
+            if(productionOutput[0]||productionOutput[1]||productionOutput[2]){
+                cardTitle.setText("Choose the production output");
 
-            ArrayList<ResourceType> basicArray,leader1Array,leader2Array;
-            basicArray=new ArrayList<>();leader1Array=new ArrayList<>();leader2Array=new ArrayList<>();
-            ObservableList<String> resources = FXCollections.observableArrayList("Coins","Servants","Shields","Stones");
-            ChoiceBox basicProd,leader1,leader2;
-            slotZero.setDisable(true);slotOne.setDisable(true);slotTwo.setDisable(true);slotThree.setDisable(true);slotFour.setDisable(true);slotFive.setDisable(true);
-            basicProd=new ChoiceBox(resources);leader1=new ChoiceBox(resources);leader2=new ChoiceBox(resources);
-            cardTitle2.setText(null);
-            if(productionOutput[0])
-            {
-                cardTitle1.setText("Basic\nProd");
-                chooserPane.add(basicProd,2,0);
-            }
-            else
-                cardTitle1.setText(null);
-            if(productionOutput[1]||productionOutput[2])
-                cardTitle3.setText("Leader\nCards");
-            else
-                cardTitle3.setText(null);
-            if(productionOutput[1])
-            {
-                chooserPane.add(leader1,4,0);
-            }
-            else
-                cardTitle1.setText(null);
-            if(productionOutput[2])
-            {
-                cardTitle1.setText("Basic\nProd");
-                chooserPane.add(leader2,5,0);
-            }
-            else
-                cardTitle1.setText(null);
-            submit.setOnAction(event -> {
-                ResourceType resBasic=null,resLeader1=null,resLeader2=null;
+                ArrayList<ResourceType> basicArray,leader1Array,leader2Array;
+                basicArray=new ArrayList<>();leader1Array=new ArrayList<>();leader2Array=new ArrayList<>();
+                ObservableList<String> resources = FXCollections.observableArrayList("Coins","Servants","Shields","Stones");
+                ChoiceBox basicProd,leader1,leader2;
+                slotZero.setDisable(true);slotOne.setDisable(true);slotTwo.setDisable(true);slotThree.setDisable(true);slotFour.setDisable(true);slotFive.setDisable(true);
+                basicProd=new ChoiceBox(resources);leader1=new ChoiceBox(resources);leader2=new ChoiceBox(resources);
+                cardTitle2.setText(null);
                 if(productionOutput[0])
-                    if(basicProd.getValue()!=null){
-                        resBasic=stringToResource(basicProd.getValue().toString());
-                        basicArray.add(resBasic);
-                    }
-                    else
-                        displayError("You must choose the basic production output!");
-                if(productionOutput[1])
-                    if(basicProd.getValue()!=null){
-                        resLeader1=stringToResource(basicProd.getValue().toString());
-                        leader1Array.add(resLeader1);
-                    }
-                    else
-                        displayError("You must choose the output for Leader card 1!");
-                if(productionOutput[2])
-                    if(basicProd.getValue()!=null){
-                        resLeader2=stringToResource(basicProd.getValue().toString());
-                        leader2Array.add(resLeader2);
-                    }
-                    else
-                        displayError("You must choose the output for Leader card 2!");
-                if(     (productionOutput[0]&&basicProd.getValue()!=null)||!productionOutput[0]&&
-                        (productionOutput[1]&&leader1.getValue()!=null)||!productionOutput[1]&&
-                        (productionOutput[2]&&leader2.getValue()!=null)||!productionOutput[2]) {
-                    ChooseProductionOutput productionOutputAction = new ChooseProductionOutput();
-                    productionOutputAction.setBasicProductionOutput(basicArray);
-                    productionOutputAction.setBasicProduction(productionOutput[0]);
-                    productionOutputAction.setFirstLeaderCard(productionOutput[1]);
-                    productionOutputAction.setFirstLeaderCardOutput(leader1Array);
-                    productionOutputAction.setSecondLeaderCard(productionOutput[2]);
-                    productionOutputAction.setSecondLeaderCardOutput(leader2Array);
-
-                    produciton.setText("Activate Production");
-                    sendAction(productionOutputAction);
-                    chooser.close();
-                    refresh();
+                {
+                    cardTitle1.setText("Basic\nProd");
+                    chooserPane.add(basicProd,2,0);
                 }
-            });
+                else
+                    cardTitle1.setText(null);
+                if(productionOutput[1]||productionOutput[2])
+                    cardTitle3.setText("Leader\nCards");
+                else
+                    cardTitle3.setText(null);
+                if(productionOutput[1])
+                {
+                    chooserPane.add(leader1,4,0);
+                }
+                else
+                    cardTitle1.setText(null);
+                if(productionOutput[2])
+                {
+                    cardTitle1.setText("Basic\nProd");
+                    chooserPane.add(leader2,5,0);
+                }
+                else
+                    cardTitle1.setText(null);
+                submit.setOnAction(event -> {
+                    ResourceType resBasic=null,resLeader1=null,resLeader2=null;
+                    if(productionOutput[0])
+                        if(basicProd.getValue()!=null){
+                            resBasic=stringToResource(basicProd.getValue().toString());
+                            basicArray.add(resBasic);
+                        }
+                        else
+                            displayError("You must choose the basic production output!");
+                    if(productionOutput[1])
+                        if(basicProd.getValue()!=null){
+                            resLeader1=stringToResource(basicProd.getValue().toString());
+                            leader1Array.add(resLeader1);
+                        }
+                        else
+                            displayError("You must choose the output for Leader card 1!");
+                    if(productionOutput[2])
+                        if(basicProd.getValue()!=null){
+                            resLeader2=stringToResource(basicProd.getValue().toString());
+                            leader2Array.add(resLeader2);
+                        }
+                        else
+                            displayError("You must choose the output for Leader card 2!");
+                    if(     (productionOutput[0]&&basicProd.getValue()!=null)||!productionOutput[0]&&
+                            (productionOutput[1]&&leader1.getValue()!=null)||!productionOutput[1]&&
+                            (productionOutput[2]&&leader2.getValue()!=null)||!productionOutput[2]) {
+                        ChooseProductionOutput productionOutputAction = new ChooseProductionOutput();
+                        productionOutputAction.setBasicProductionOutput(basicArray);
+                        productionOutputAction.setBasicProduction(productionOutput[0]);
+                        productionOutputAction.setFirstLeaderCard(productionOutput[1]);
+                        productionOutputAction.setFirstLeaderCardOutput(leader1Array);
+                        productionOutputAction.setSecondLeaderCard(productionOutput[2]);
+                        productionOutputAction.setSecondLeaderCardOutput(leader2Array);
+
+                        production.setText("Activate Production");
+                        sendAction(productionOutputAction);
+                        chooser.close();
+                        refresh();
+                    }
+                });
+            }else
+            {
+                ArrayList<ResourceType> emptyResource = new ArrayList<>();
+                ChooseProductionOutput productionOutputAction = new ChooseProductionOutput();
+                productionOutputAction.setBasicProductionOutput(emptyResource);
+                productionOutputAction.setBasicProduction(false);
+                productionOutputAction.setFirstLeaderCard(false);
+                productionOutputAction.setFirstLeaderCardOutput(emptyResource);
+                productionOutputAction.setSecondLeaderCard(false);
+                productionOutputAction.setSecondLeaderCardOutput(emptyResource);
+                production.setText("Activate Production");
+                sendAction(productionOutputAction);
+                refresh();
+                return;
+            }
+
         }
         else if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_LEADER_CARD)){
             //Whitemarble Ambiguity
@@ -1317,9 +1314,8 @@ public class GuiBoardController extends GuiInitController{
                     slot=0;
                 if(slotThree.isSelected())
                     slot=1;
-                System.out.println("Slot value is "+slot);
                 sendAction(new ChooseLeaderCard(slot));
-                produciton.setText("Activate Production");
+                production.setText("Activate Production");
                 refresh();
                 chooser.close();
             });
@@ -1521,8 +1517,11 @@ public class GuiBoardController extends GuiInitController{
                         market.close();
                         refresh();
                         marketBtn.setText("End Market");
-                        if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_LEADER_CARD)){
-                            produciton.setText("Marble Conversion");
+                        if(
+                                myPlayer().getLeaderCards()[0].isActive()&&myPlayer().getLeaderCards()[0].getAction().equals(LeaderCardAction.WHITEMARBLE)
+                                        && myPlayer().getLeaderCards()[1].isActive()&&myPlayer().getLeaderCards()[1].getAction().equals(LeaderCardAction.WHITEMARBLE)
+                        ){
+                            production.setText("Marble Conversion");
                         }
                     }
                 });
@@ -1664,9 +1663,43 @@ public class GuiBoardController extends GuiInitController{
     @FXML
     private void turnHandler(){
         {
-            if(this.client.getUserInteraction().getGame().getMyPlayer().getPossibleActions().contains(ActionType.END_TURN))
+            String nextAction =null;
+
+            if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_LEADER_CARD))
+                nextAction="choose which leader card to activate.";
+            else if(myPlayer().getPossibleActions().contains(ActionType.ADD_RESOURCE))
+                nextAction="add the resources you got.";
+            else if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_LEADER_CARD))
+                nextAction="add the resources you got.";
+            else if(myPlayer().getPossibleActions().contains(ActionType.END_MARKET))
+                nextAction="end the market interaction.";
+            else if(myPlayer().getPossibleActions().contains(ActionType.PAY_RESOURCE_CARD))
+                nextAction="pay the resources for the card you bought.";
+            else if(myPlayer().getPossibleActions().contains(ActionType.PAY_RESOURCE_PRODUCTION))
+                nextAction="pay the resources for the production cycle you activated.";
+            else if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_CARD_SLOT))
+                nextAction="choose the card slot.";
+            else if(myPlayer().getPossibleActions().contains(ActionType.PAY_RESOURCE_CARD))
+                nextAction="choose the production output for your cards.";
+
+            if(myPlayer().getPossibleActions().contains(ActionType.END_TURN)){
                 sendAction(new EndTurn());
+                //freeze(true);
+                refresh();
+            }
+            else if(nextAction!=null)
+                displayError("You can't pass the turn now!\nYou should "+nextAction);
             else displayError("You can't pass the turn now!");
+        }
+    }
+
+    void freeze(boolean freezeButtons){
+        if(freezeButtons){
+            production.setDisable(true);storeResBtn.setDisable(true);payResBtn.setDisable(true);
+            marketBtn.setDisable(true);cardTableBtn.setDisable(true);nextTurn.setDisable(true);
+        }else{
+            production.setDisable(false);storeResBtn.setDisable(false);payResBtn.setDisable(false);
+            marketBtn.setDisable(false);cardTableBtn.setDisable(false);nextTurn.setDisable(false);
         }
     }
 
@@ -1695,8 +1728,10 @@ public class GuiBoardController extends GuiInitController{
                 return;
             }
             case "discardLeader1":{
-                if(myPlayer().getPossibleActions().contains(ActionType.DELETE_LEADERCARD))
-                sendAction(new DiscardLeaderCard(0));
+                if(myPlayer().getPossibleActions().contains(ActionType.DELETE_LEADERCARD)){
+                    sendAction(new DiscardLeaderCard(0));
+                    refresh();
+                }
                 else displayError("You can't discard a Leader card now");
                 return;
             }
@@ -1706,8 +1741,10 @@ public class GuiBoardController extends GuiInitController{
                 else displayError("You can't activate a Leader Card now");
                 return;
             }case "discardLeader2":{
-                if(myPlayer().getPossibleActions().contains(ActionType.DELETE_LEADERCARD))
+                if(myPlayer().getPossibleActions().contains(ActionType.DELETE_LEADERCARD)){
                     sendAction(new DiscardLeaderCard(1));
+                    refresh();
+                }
                 else displayError("You can't discard a Leader card now");
                 return;
             }
@@ -1786,6 +1823,7 @@ public class GuiBoardController extends GuiInitController{
      */
     private void sendAction(Action action){
             try {
+                action.setNickname(myPlayer().getNickname());
                 this.clientConnection.send(action);
             } catch (IOException e) {
                 displayError(e.toString());
@@ -1834,6 +1872,7 @@ public class GuiBoardController extends GuiInitController{
                 setResourceData(getResourceData(myPlayer()));
                 setCardData(getCardData(myPlayer()));
                 setFaithData(getFaithData());
+                //freeze(!this.client.getUserInteraction().getMessage().getPlayerNickname().equals(myPlayer().getNickname()));
     }
 
     /**

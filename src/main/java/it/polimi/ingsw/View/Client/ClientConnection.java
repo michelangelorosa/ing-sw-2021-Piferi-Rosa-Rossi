@@ -17,7 +17,7 @@ import it.polimi.ingsw.View.Utility.DebuggingTools.DebuggerFactory;
 import it.polimi.ingsw.View.Utility.DebuggingTools.DebuggerType;
 
 /** ClientConnection handles the listening of messages from the server.
- * the messages are int coded
+ *  the messages are int coded
  */
 public class ClientConnection implements Runnable, Observer<Action> {
     private Socket server;
@@ -53,30 +53,21 @@ public class ClientConnection implements Runnable, Observer<Action> {
 
                 DEBUGGER.printDebug("Got action numbered: "+action);
 
-                //Action = 0, the server is asking the client to input a name!
+                //Action = 0, name request
                 if (action==0) {
                     DEBUGGER.printDebug("First Loop: choosing name");
                     if(this.client.getUserInteraction()!=null)
                     this.client.getUserInteraction().nextAction(UIActions.CHOOSE_NAME);
                 }
-                //Action = 1, first player to join, how many players?
+                //Action = 1, how many players
                 if(action==1){
                     DEBUGGER.printDebug("First Loop: choosing number of players");
                     this.client.getUserInteraction().nextAction(UIActions.CHOOSE_NUMBER_OF_PLAYERS);
                 }
+                //Opens the lobby, if applicable
                 else if(action==2){
-                    //Opens the lobby, if applicable, from the lobby a player can himself to be ready, or if no other players are modifying launches the param modifier
                     DEBUGGER.printDebug("First Loop: opening initial lobby");
                     this.client.getUserInteraction().nextAction(UIActions.INITIAL_LOBBY);
-                }
-                else if(action==10){
-                    //Opens the param modifier (GUI only!)
-                    //To be opened only if no other is modifying
-                    DEBUGGER.printDebug("First Loop: opening parameter modifier");
-
-                }
-                else if(action == 11) {
-                    this.client.getUserInteraction().nextAction(UIActions.RESTART_OR_CONTINUE);
                 }
                 else if(action==3) {
                     //Reconnected, the game has already started
@@ -133,18 +124,19 @@ public class ClientConnection implements Runnable, Observer<Action> {
                             break;
                         }
                     }
-
                     break;
                 }
-
+                //Generic error message
                 else if(action==9){
-                    //generic error, could be same name error, game has finished exception et al.
                     this.client.getUserInteraction().displayError(objectInputStream.readUTF());
                 }
+                //Start a new game or continue the saved one? (Persistence)
+                else if(action == 11) {
+                    this.client.getUserInteraction().nextAction(UIActions.RESTART_OR_CONTINUE);
+                }
             }
-
+            //Handling the "MessageToClient" message type
             while (true){
-                //Handling of the MessageToClient message type
                 DEBUGGER.printDebug("Waiting for MessageToClient");
                 MessageToClient messageToClient = (MessageToClient) objectInputStream.readObject();
                 DEBUGGER.printDebug("GOT MessageToClient!");
@@ -172,9 +164,9 @@ public class ClientConnection implements Runnable, Observer<Action> {
     }
 
     /**
-     * Sends a text message to the server. To be used only when the client wants to give the server a nickname
-     * @param name          the name to be sent
-     * @throws IOException    I/O error
+     * Sends a text message to the server.To be used only when the client wants to give the server a nickname
+     * @param   name            the name to be sent
+     * @throws  IOException     I/O error
      */
     public synchronized void send(String name) throws IOException {
         DEBUGGER.printDebug("Sending String: " + name);
@@ -185,8 +177,8 @@ public class ClientConnection implements Runnable, Observer<Action> {
 
     /**
      * Sends a LeaderCard object. To be used when selecting a leader card (startup) or in the param modifier
-     * @param card          The card to send
-     * @throws IOException    I/O error
+     * @param   card            The card to send
+     * @throws  IOException     I/O error
      */
     public synchronized void send(RedLeaderCard card) throws IOException {
         DEBUGGER.printDebug("Sending RedLeaderCard: " + card.getAction());
@@ -196,21 +188,9 @@ public class ClientConnection implements Runnable, Observer<Action> {
     }
 
     /**
-     * Sends a DevelopmentCard object. To be used in the param modifier
-     * @param card          The card to send
-     * @throws IOException    I/O error
-     */
-    public synchronized void send(RedDevelopmentCard card) throws IOException {
-        DEBUGGER.printDebug("Sending RedDevelopmentCard: " + card.getColor() + " " + card.getLevel());
-        objectOutputStream.writeObject(card);
-        objectOutputStream.flush();
-        objectOutputStream.reset();
-    }
-
-    /**
      * Sends an action to the Server's Controller.
-     * @param action        The action to send
-     * @throws IOException    I/O error
+     * @param   action          The action to send
+     * @throws  IOException     I/O error
      */
     public synchronized void send(Action action) throws IOException{
         DEBUGGER.printDebug("Sending Action: " + action.getActionType());
@@ -222,8 +202,8 @@ public class ClientConnection implements Runnable, Observer<Action> {
     /**
      * Sends a boolean to the server.
      * Used for setting the player to be ready to play
-     * @param bool          The boolean to send
-     * @throws IOException    I/O error
+     * @param   bool            The boolean to send
+     * @throws  IOException     I/O error
      */
     public synchronized void send(Boolean bool) throws IOException{
         DEBUGGER.printDebug("Sending boolean: " + bool);
@@ -234,28 +214,15 @@ public class ClientConnection implements Runnable, Observer<Action> {
 
     /**
      * Sends a number to the server.
-     * Used for setting the player to be ready to play
-     * @param number          The number to send
-     * @throws IOException    I/O error
+     * Used for the initial game phase
+     * @param   number          The number to send
+     * @throws  IOException     I/O error
      */
     public synchronized void send(int number) throws IOException{
         DEBUGGER.printDebug("Sending number: " + number);
         objectOutputStream.writeInt(number);
         objectOutputStream.flush();
         objectOutputStream.reset();
-    }
-
-    public synchronized int readInt(ObjectInputStream objectInputStream){
-        try {
-            int number;
-            number=objectInputStream.readInt();
-            objectInputStream.reset();
-            return number;
-        } catch (IOException e) {
-            DEBUGGER.printDebug("Caught IOException while reading an int");
-            e.printStackTrace();
-        }
-        return -1;
     }
 
     public Client getClient() {

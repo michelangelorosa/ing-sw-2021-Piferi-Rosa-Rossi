@@ -74,7 +74,7 @@ public class Cli implements Runnable{
                 break;
             case INITIAL_LOBBY: this.initialLobby();
                 break;
-            case RECONNECTION: //TODO reconnected, game already started
+            case RECONNECTION:
                 break;
             case INITIAL_CHOOSE_LEADER_CARDS: this.initialLeaderCards();
                 break;

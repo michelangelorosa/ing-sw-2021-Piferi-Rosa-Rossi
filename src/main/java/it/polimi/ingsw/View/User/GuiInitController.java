@@ -550,7 +550,7 @@ public class GuiInitController implements UserInterface {
     public void nextAction(UserInteraction userInteraction, UIActions action){
         try {
         switch(action) {
-            //Does nothing since the name selection screen is called only after establishing a connection
+            //Does nothing since the name selection screen is called only after a successful conncection is established
             case CHOOSE_NAME:{
                 break;
             }
