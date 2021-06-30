@@ -224,35 +224,6 @@ public class ConvertToJSON {
         return temp;
     }
 
-    /**
-     * Method to convert an ArrayList of Players in a String.
-     * @param players is an ArrayList of Players.
-     * @return a String in json template.
-     */
-    public String covertPlayerNameString(ArrayList<Player> players) {
-
-        ArrayList<PlayerJSON> player = new ArrayList<>();
-
-        for (Player value : players) {
-
-            PlayerStatus statusTemp = value.getStatus();
-            int status;
-
-            String nickname = value.getNickname();
-            int turnPosition = value.getTurnPosition();
-            boolean hasInkwell = value.hasInkwell();
-            int faithTrackPosition = value.getFaithTrackPosition();
-
-            player.add(new PlayerJSON(nickname, turnPosition, hasInkwell, statusTemp, faithTrackPosition));
-        }
-
-        Gson gson = new Gson();
-        String json = gson.toJson(player);
-        String temp;
-        temp = "\"PlayersName\": " + json;
-        return temp;
-    }
-
 
     /**
      * Method to convert a String in JSON template

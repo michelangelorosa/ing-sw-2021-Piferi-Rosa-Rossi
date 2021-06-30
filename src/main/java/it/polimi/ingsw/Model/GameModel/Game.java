@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model.GameModel;
 
 import it.polimi.ingsw.Model.Enums.GameType;
+import it.polimi.ingsw.Model.Enums.LeaderCardAction;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Enums.SoloActionToken;
 import it.polimi.ingsw.Model.GameModel.SinglePlayer.SinglePlayer;
@@ -415,23 +416,48 @@ public class Game {
         ArrayList<LeaderCard> leader = JSONReader.convertLeaderCardPersistence();
         if(this.players.size() > 0){
             this.getPlayers().get(0).getBoard().getLeaderCards()[0] = leader.get(0);
+            if(leader.get(0).isActive() && leader.get(0).getAction() == LeaderCardAction.EXTRADEPOT){
+                this.getPlayers().get(0).getBoard().getResourceManager().getWarehouse().activateLeaderDepot(leader.get(0).getResource());
+            }
             this.getPlayers().get(0).getBoard().getLeaderCards()[1] = leader.get(1);
+            if(leader.get(1).isActive() && leader.get(1).getAction() == LeaderCardAction.EXTRADEPOT){
+                this.getPlayers().get(0).getBoard().getResourceManager().getWarehouse().activateLeaderDepot(leader.get(1).getResource());
+            }
+
         }
         if(this.players.size() > 1 && !this.players.get(1).getNickname().equals("Lorenzo il Magnifico")){
             this.gameType = GameType.MULTIPLAYER;
             this.getPlayers().get(1).getBoard().getLeaderCards()[0] = leader.get(2);
+            if(leader.get(2).isActive() && leader.get(2).getAction() == LeaderCardAction.EXTRADEPOT){
+                this.getPlayers().get(1).getBoard().getResourceManager().getWarehouse().activateLeaderDepot(leader.get(2).getResource());
+            }
             this.getPlayers().get(1).getBoard().getLeaderCards()[1] = leader.get(3);
+            if(leader.get(3).isActive() && leader.get(3).getAction() == LeaderCardAction.EXTRADEPOT){
+                this.getPlayers().get(1).getBoard().getResourceManager().getWarehouse().activateLeaderDepot(leader.get(3).getResource());
+            }
         }
         else if(this.players.get(1).getNickname().equals("Lorenzo il Magnifico")) {
             this.gameType = GameType.SINGLEPLAYER;
         }
         if(this.players.size() > 2){
             this.getPlayers().get(2).getBoard().getLeaderCards()[0] = leader.get(4);
+            if(leader.get(4).isActive() && leader.get(4).getAction() == LeaderCardAction.EXTRADEPOT){
+                this.getPlayers().get(2).getBoard().getResourceManager().getWarehouse().activateLeaderDepot(leader.get(4).getResource());
+            }
             this.getPlayers().get(2).getBoard().getLeaderCards()[1] = leader.get(5);
+            if(leader.get(5).isActive() && leader.get(5).getAction() == LeaderCardAction.EXTRADEPOT){
+                this.getPlayers().get(2).getBoard().getResourceManager().getWarehouse().activateLeaderDepot(leader.get(5).getResource());
+            }
         }
         if(this.players.size() > 3){
             this.getPlayers().get(3).getBoard().getLeaderCards()[0] = leader.get(6);
+            if(leader.get(6).isActive() && leader.get(6).getAction() == LeaderCardAction.EXTRADEPOT){
+                this.getPlayers().get(3).getBoard().getResourceManager().getWarehouse().activateLeaderDepot(leader.get(6).getResource());
+            }
             this.getPlayers().get(3).getBoard().getLeaderCards()[1] = leader.get(7);
+            if(leader.get(7).isActive() && leader.get(7).getAction() == LeaderCardAction.EXTRADEPOT){
+                this.getPlayers().get(3).getBoard().getResourceManager().getWarehouse().activateLeaderDepot(leader.get(7).getResource());
+            }
         }
 
     }

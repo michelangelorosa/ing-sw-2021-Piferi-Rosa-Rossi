@@ -175,10 +175,6 @@ public class Player implements Serializable {
         this.temporaryResources = temporaryResources;
     }
 
-    public void printLeader(){
-        System.out.println(this.getLeaderCards()[0].getResourcesRequired().getResource(ResourceType.SHIELDS));
-        System.out.println(this.getLeaderCards()[1].getResourcesRequired().getResource(ResourceType.SHIELDS));
-    }
 
     public void setBasicProduction(RedBasicProduction basicProduction) {
         this.basicProduction = basicProduction;

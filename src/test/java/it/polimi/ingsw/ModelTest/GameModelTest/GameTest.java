@@ -235,5 +235,28 @@ public class GameTest {
         assertEquals("[Model.Game.gameStartResources]: player's position was 5", e.getMessage());
     }
 
+    @Test
+    public void changeCurrentPlayerReconnectionTest(){
+        joiner(game);
+        assertEquals("Giacomo", game.getCurrentPlayer().getNickname());
+        game.changeCurrentPlayerReconnection("Andrea");
+        assertEquals("Andrea", game.getCurrentPlayer().getNickname());
+    }
+
+    @Test
+    public void isPlayerInGameNicknameTest(){
+        joiner(game);
+        assertFalse(game.isPlayerInGameNickname("Antonio"));
+        assertTrue(game.isPlayerInGameNickname("Giacomo"));
+    }
+
+    @Test
+    public void removePlayerByNickname(){
+        joiner(game);
+        assertTrue(game.isPlayerInGameNickname("Giacomo"));
+        game.removePlayerByNickname("Giacomo");
+        assertFalse(game.isPlayerInGameNickname("Giacomo"));
+    }
+
 
 }

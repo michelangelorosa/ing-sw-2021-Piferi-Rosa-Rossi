@@ -86,26 +86,4 @@ public class RedWarehouseDepot implements Serializable {
         return arrayDepot;
     }
 
-    public ArrayList<String> toCliSymbol() {
-        ArrayList<String> arrayDepot = new ArrayList<>();
-        int i;
-        String depot = "";
-
-        if(!isFromLeaderCardAbility) {
-            for (i = 0; i < this.storedResources; i++)
-                depot += this.resourceType.toCliSymbol() + " ";
-            for (i = this.storedResources; i < this.maxResources; i++)
-                depot += ResourceType.NONE.toCliSymbol() + " ";
-            arrayDepot.add(depot);
-        }
-
-        else {
-            for (i = 0; i < this.storedResources; i++)
-                arrayDepot.add(this.resourceType.toCliSymbol());
-            for (i = this.storedResources; i < this.maxResources; i++)
-                arrayDepot.add(ResourceType.NONE.toCliSymbol());
-        }
-
-        return arrayDepot;
-    }
 }

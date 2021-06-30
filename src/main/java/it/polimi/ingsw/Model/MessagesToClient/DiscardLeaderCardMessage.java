@@ -71,10 +71,6 @@ public class DiscardLeaderCardMessage extends MessageToClient{
         this.faithPoints = faithPoints;
     }
 
-    public HashMap<String, PopeTileClass[]> getPlayersPopeTiles() {
-        return playersPopeTiles;
-    }
-
     public void setPlayersPopeTiles(HashMap<String, PopeTileClass[]> playersPopeTiles) {
         this.playersPopeTiles = playersPopeTiles;
     }

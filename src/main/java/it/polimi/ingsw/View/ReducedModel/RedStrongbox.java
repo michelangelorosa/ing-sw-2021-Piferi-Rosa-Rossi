@@ -1,6 +1,7 @@
 package it.polimi.ingsw.View.ReducedModel;
 
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.Model.GameModel.ResourceStack;
 import it.polimi.ingsw.View.Utility.ANSIColors;
 
 import java.io.Serializable;
@@ -20,7 +21,10 @@ public class RedStrongbox implements Serializable {
     public RedResourceStack getStoredResources() {
         return storedResources;
     }
-
+    //For tests only
+    public RedStrongbox(){
+        this.storedResources = new ResourceStack(0,0,0,0);
+    }
     /**
      * Override method used for printing the contents of a Strongbox-type object.
      * @return a String containing the information.

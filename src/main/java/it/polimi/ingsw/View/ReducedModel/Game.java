@@ -64,13 +64,6 @@ public class Game {
     }
 
     /**
-     * Getter for "currentPlayerIndex" attribute in Game Class.
-     */
-    public int getCurrentPlayerIndex() {
-        return currentPlayerIndex;
-    }
-
-    /**
      * Getter for "leaderCards" attribute in Game Class.
      */
     public RedLeaderCard[] getLeaderCards() {
@@ -96,13 +89,6 @@ public class Game {
      */
     public RedFaithTrack getFaithTrack() {
         return faithTrack;
-    }
-
-    /**
-     * Getter for "tokens" attribute in Game Class.
-     */
-    public SoloActionToken[] getTokens() {
-        return tokens;
     }
 
     public void setLeaderCards(RedLeaderCard[] leaderCards) {
@@ -132,10 +118,6 @@ public class Game {
 
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
-    }
-
-    public void setCurrentPlayerIndex(int currentPlayerIndex) {
-        this.currentPlayerIndex = currentPlayerIndex;
     }
 
     public void setMarket(RedMarket market) {

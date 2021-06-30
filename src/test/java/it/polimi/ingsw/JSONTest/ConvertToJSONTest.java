@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import static org.junit.Assert.*;
 
 
 public class ConvertToJSONTest {
@@ -26,5 +27,10 @@ public class ConvertToJSONTest {
         System.out.println(test.covertLeaderCardString(leaderCards));
     }
 
+    @Test
+    public void leaderConverterTest(){
+        LeaderCard leaderTest = leaderCards.get(0);
+        assertEquals(0, test.leaderCardAction(leaderTest));
+    }
 
 }
