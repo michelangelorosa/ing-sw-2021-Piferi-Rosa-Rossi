@@ -63,7 +63,7 @@ public class ActionController {
     public synchronized void doAction(Action action) {
         MessageToClient message;
 
-        if ((action instanceof InitChooseLeaderCards) || (action instanceof InitChooseResources) || action.getNickname().equals(game.getCurrentPlayerNickname())) {
+        if ((action instanceof InitChooseLeaderCards) || (action instanceof InitChooseResources) || (action.getNickname() != null && action.getNickname().equals(game.getCurrentPlayerNickname()))) {
             try {
                 if (action instanceof ResetWarehouse) {
                     resetWarehouse.doAction(this);

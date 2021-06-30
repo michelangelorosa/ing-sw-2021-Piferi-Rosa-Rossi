@@ -59,7 +59,7 @@ public class CliTest {
 
     @Test
     public void initialLobbyTest() {
-        changeSystemIn("n\n2\n123123123123\n1");
+        changeSystemIn("n\n2\n123123123123\ny");
         ui = new CliController();
         assertEquals(4, ui.initialLobby());
     }

@@ -191,16 +191,16 @@ public class CliController implements UserInterface {
         String choice;
         System.out.println("\n\n");
         System.out.println(ANSIColors.GAMEPLAY_ACTIONS + ANSIfont.BOLD + " - Welcome to the pre-game Lobby! - " + ANSIColors.RESET);
-        System.out.println("What do you want to do?");
-        System.out.println("[1] start the game");
-        System.out.println("[2] modify the game settings");
+        System.out.println("Do you wish to start "+ ANSIfont.BOLD + ANSIfont.ITALIC + "Masters of Renaissance?" + ANSIColors.RESET + " [Y]");
 
         while(true) {
             choice = sc.next();
-            if(choice.equalsIgnoreCase("1")) {
+            if(choice.equalsIgnoreCase("y")) {
                 return 4;
             }
-            else if(!choice.equals("n"))
+            else if(choice.equalsIgnoreCase("n"))
+                displayError("You can only start the game.");
+            else
                 displayError("Please insert a valid character");
         }
 
