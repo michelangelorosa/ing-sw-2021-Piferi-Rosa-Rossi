@@ -360,6 +360,31 @@ public class Game {
         this.currentPlayerIndex = player.getTurnPosition();
     }
 
+    public boolean isPlayerInGameNickname (String name) {
+        ArrayList<String> playersNames = new ArrayList<>();
+
+        if(this.players.isEmpty())
+            return false;
+
+        for(Player p : this.players)
+            playersNames.add(p.getNickname());
+
+        return playersNames.contains(name);
+    }
+
+    public void removePlayerByNickname(String name) {
+        Player player = null;
+
+        if(isPlayerInGameNickname(name))
+            player = getPlayerByNickname(name);
+
+        if(player != null) {
+            this.players.remove(player);
+            if(currentPlayerIndex >= players.size())
+                currentPlayerIndex = players.size() - 1;
+        }
+    }
+
     public void persistence(){
 
 

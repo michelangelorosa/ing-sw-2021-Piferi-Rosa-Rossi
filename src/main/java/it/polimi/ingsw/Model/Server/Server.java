@@ -54,6 +54,18 @@ public class Server {
             return true;
     }
 
+    public void removeFromNames(String name) {
+        this.names.remove(name);
+    }
+
+    public boolean isNameInConnections(String name) {
+        for(ServerConnection connection : connections)
+            if(connection.getName().equals(name))
+                return true;
+
+        return false;
+    }
+
     /**
      * Checks if a name in the Name is in the Hash Set
      * @param name the String of the name to insert

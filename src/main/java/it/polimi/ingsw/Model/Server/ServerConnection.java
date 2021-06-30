@@ -79,10 +79,8 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
                 DEBUGGER.printDebug("Received action: " + action.getActionType() + " from "+this.name);
                 notify(action);
             }
-        } catch (InterruptedException e) {
+        } catch (Exception e ) {
             DEBUGGER.printDebug("Caught InterruptedException from " + this.name);
-
-        } finally {
             if(name!=null){
                 /* DISCONNECTION PROCESSING */
                 System.out.println(name +" is leaving");
@@ -90,10 +88,12 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
                 DEBUGGER.printDebug(name + " disconnected successfully");
                 /*                          */
             }
+
         }
 
         try{
-            socket.close();
+            if(!socket.isClosed())
+                socket.close();
         }catch (IOException e){
             DEBUGGER.printDebug("Caught IOException when closing socket of "+this.name);
         }
@@ -120,6 +120,13 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
             action = (Action) this.in.readObject();
         } catch (IOException e) {
             DEBUGGER.printDebug("IOException when reading an Action from "+socket.toString());
+            if(name!=null){
+                /* DISCONNECTION PROCESSING */
+                System.out.println(name +" is leaving");
+                disconnected();
+                DEBUGGER.printDebug(name + " disconnected successfully");
+                /*                          */
+            }
             e.printStackTrace();
             close();
         } catch (ClassNotFoundException e) {
@@ -286,8 +293,12 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
      */
     public void close(){
         try{
-        socket.close();
-        Thread.currentThread().stop();
+            if(this.server.getController().getActionController().getModelToView().containsObserver(this))
+                this.server.getController().getActionController().getModelToView().removeObserver(this);
+            this.clearObservers();
+            this.server.removeFromConnections(this.socket);
+            socket.close();
+            Thread.currentThread().stop();
         }catch (IOException e){
             System.err.println("IOError closing socket of "+socket.toString());
             Thread.currentThread().interrupt();
@@ -344,6 +355,10 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public synchronized boolean nameInServer() {
+        return this.server.isNameInConnections(this.name);
     }
 
     public Server getServer() {

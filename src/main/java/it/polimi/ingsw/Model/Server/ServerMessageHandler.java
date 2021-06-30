@@ -156,8 +156,11 @@ public class ServerMessageHandler {
                                 serverConnection.getServer().playerReady();
                                 return true;
                             }
-                            else
-                                sendError(serverConnection,"You managed to stay on this screen for so long that the lobby is either full or the game is running. How time flies!");
+                            else {
+                                sendError(serverConnection, "You managed to stay on this screen for so long that the lobby is either full or the game is running. How time flies!");
+                                serverConnectionLeave(serverConnection);
+                                serverConnection.close();
+                            }
                     }
                     //New Name and game in Lobby mode
                     else if(newName&&isLobby()) {
@@ -167,17 +170,25 @@ public class ServerMessageHandler {
                                 System.out.println(S + "Name: \"" + name + "\" is valid");
                                 serverConnection.getServer().playerReady();
                                 return true;
-                            }
-                            else
-                                sendError(serverConnection,"This lobby is full!");
                         }
+                        else {
+                            sendError(serverConnection, "This lobby is full!");
+                            serverConnectionLeave(serverConnection);
+                            serverConnection.close();
+                        }
+                    }
                     //Used name and game in Lobby mode
                     else if(!newName&&isLobby()){
-                        DEBUGGER.printDebug("Old name in Lobby!");
-                        //TODO: check if the client is alive, if not accept request
                         serverConnection.setName(name);
-                        //if client alive return true
-                        sendError(serverConnection,"There's another player with the same name, change yours!");
+                        DEBUGGER.printDebug("Old name in Lobby!");
+                        if(serverConnection.nameInServer()) {
+                            nameInServerLeave(serverConnection);
+                        }
+                        else {
+                            serverConnection.setName(name);
+                            //if client alive return true
+                            sendError(serverConnection, "There's another player with the same name, change yours!");
+                        }
                     }
                     //Name is already in the game and the game is running,
                     else if(!newName&&!isLobby() && Server.getServerStatus() == GameStatus.GAME){
@@ -187,14 +198,25 @@ public class ServerMessageHandler {
                             reconnection(serverConnection);
                             return false;
                         }
-                            else sendError(serverConnection,"This game is full!");
+                        else {
+                            sendError(serverConnection, "This game is full!");
+                            serverConnectionLeave(serverConnection);
+                            serverConnection.close();
                         }
+                    }
+                    else if(newName && !isLobby() && (Server.getServerStatus() == GameStatus.GAME || Server.getServerStatus() == GameStatus.LEADER)) {
+                        DEBUGGER.printDebug("New name but Game already started and Game is NOT empty");
+                        sendError(serverConnection, "A game is already running in this server and you're not a player!\nGoodbye!");
+                        serverConnectionLeave(serverConnection);
+                        serverConnection.close();
+                    }
                     //Game running, new name
                     else if(!newName&&!isLobby()){
                         DEBUGGER.printDebug("Invalid name for game already running");
-                        sendError(serverConnection, SE + "A game is already running in this server and you're not a player!\nGoodbye!");
+                        sendError(serverConnection, "A game is already running in this server and you're not a player!\nGoodbye!");
+                        serverConnectionLeave(serverConnection);
                         serverConnection.close();
-                        }
+                    }
                     if(attempt>50)
                         serverConnection.close();
                 }
@@ -363,6 +385,19 @@ public class ServerMessageHandler {
         serverConnection.addObserver(serverConnection.getServer().getController());
         serverConnection.getServer().getController().getActionController().getModelToView().addObserver(serverConnection);
         serverConnection.getServer().addConnection(serverConnection);
+    }
+
+    public synchronized void serverConnectionLeave(ServerConnection serverConnection) {
+        serverConnection.getServer().getController().getActionController().getGame().removePlayerByNickname(serverConnection.getName());
+        serverConnection.getServer().removeFromNames(serverConnection.getName());
+        if (serverConnection.getServer().getNumberOfPlayers() != serverConnection.getServer().getController().getActionController().getGame().getPlayers().size())
+            serverConnection.getServer().setNumberOfPlayers(serverConnection.getServer().getController().getActionController().getGame().getPlayers().size());
+    }
+
+    public void nameInServerLeave(ServerConnection serverConnection) {
+        sendError(serverConnection, "A player with name " + serverConnection.getName() + " is already connected!");
+        serverConnectionLeave(serverConnection);
+        serverConnection.close();
     }
 
 

@@ -45,4 +45,20 @@ public class Observable<T> {
             }
         }
     }
+
+    /**
+     * Removes all Observers of an Observable object.
+     */
+    public void clearObservers() {
+        this.observers.clear();
+    }
+
+    /**
+     * Checks if an Observable object contains a given Observer.
+     * @param observer Observer to be searched.
+     * @return true if the List of Observers contains the Observer.
+     */
+    public boolean containsObserver(Observer<T> observer) {
+        return observers.contains(observer);
+    }
 }
