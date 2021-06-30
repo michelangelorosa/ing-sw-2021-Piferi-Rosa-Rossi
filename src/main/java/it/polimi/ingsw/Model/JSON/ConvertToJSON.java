@@ -116,6 +116,8 @@ public class ConvertToJSON {
 
             victoryPoints = leaderCards.get(i).getVictoryPoints();
 
+            boolean generic = leaderCards.get(i).getCardsRequired().getGeneric();
+
             needShields = required.getResource(ResourceType.SHIELDS);
             needServants = required.getResource(ResourceType.SERVANTS);
             needCoins = required.getResource(ResourceType.COINS);
@@ -133,6 +135,11 @@ public class ConvertToJSON {
             greenLv1 = leaderRequirements.getGreenCardLv1();
             greenLv2 = leaderRequirements.getGreenCardLv2();
             greenLv3 = leaderRequirements.getGreenCardLv3();
+
+            int blueCard = leaderRequirements.getNeedBlueCard();
+            int purpleCard = leaderRequirements.getNeedPurpleCard();
+            int yellowCard = leaderRequirements.getNeedYellowCard();
+            int greenCard = leaderRequirements.getNeedGreenCard();
 
             if (leaderAbility == 0) {
                 discountShields = discount.getResource(ResourceType.SHIELDS);
@@ -159,7 +166,7 @@ public class ConvertToJSON {
                 outputFaith = leaderCards.get(i).getFaith();
             }
 
-            leaderCard.add(new LeaderCardJSONAbility(active, discarded, leaderAbility, id, victoryPoints, needShields, needServants, needCoins, needStones, blueLv1, blueLv2, blueLv3, purpleLv1, purpleLv2, purpleLv3, yellowLv1, yellowLv2, yellowLv3, greenLv1, greenLv2, greenLv3, discountShields, discountServants, discountCoins, discountStones, depotType, marbleConversion, inputShields, inputServants, inputCoins, inputStones, jollyOut, outputFaith));
+            leaderCard.add(new LeaderCardJSONAbility(active, discarded, generic, leaderAbility, id, victoryPoints, needShields, needServants, needCoins, needStones, blueCard, purpleCard, yellowCard, greenCard, blueLv1, blueLv2, blueLv3, purpleLv1, purpleLv2, purpleLv3, yellowLv1, yellowLv2, yellowLv3, greenLv1, greenLv2, greenLv3, discountShields, discountServants, discountCoins, discountStones, depotType, marbleConversion, inputShields, inputServants, inputCoins, inputStones, jollyOut, outputFaith));
         }
 
         Gson gson = new Gson();
@@ -511,6 +518,7 @@ public class ConvertToJSON {
 
                 victoryPoints = board.getLeaderCards()[pos].getVictoryPoints();
 
+                boolean generic = board.getLeaderCards()[pos].getCardsRequired().getGeneric();
                 needShields = required.getResource(ResourceType.SHIELDS);
                 needServants = required.getResource(ResourceType.SERVANTS);
                 needCoins = required.getResource(ResourceType.COINS);
@@ -528,6 +536,12 @@ public class ConvertToJSON {
                 greenLv1 = leaderRequirements.getGreenCardLv1();
                 greenLv2 = leaderRequirements.getGreenCardLv2();
                 greenLv3 = leaderRequirements.getGreenCardLv3();
+
+                int blueCard = leaderRequirements.getNeedBlueCard();
+                int purpleCard = leaderRequirements.getNeedPurpleCard();
+                int yellowCard = leaderRequirements.getNeedYellowCard();
+                int greenCard = leaderRequirements.getNeedGreenCard();
+
 
                 if (leaderAbility == 0) {
                     discountShields = discount.getResource(ResourceType.SHIELDS);
@@ -553,7 +567,7 @@ public class ConvertToJSON {
                     jollyOut = board.getLeaderCards()[pos].getJollyOut();
                     outputFaith = board.getLeaderCards()[pos].getFaith();
                 }
-                card.add(new LeaderCardJSONAbility(active, discarded, leaderAbility, id, victoryPoints, needShields, needServants, needCoins, needStones, blueLv1, blueLv2, blueLv3, purpleLv1, purpleLv2, purpleLv3, yellowLv1, yellowLv2, yellowLv3, greenLv1, greenLv2, greenLv3, discountShields, discountServants, discountCoins, discountStones, depotType, marbleConversion, inputShields, inputServants, inputCoins, inputStones, jollyOut, outputFaith));
+                card.add(new LeaderCardJSONAbility(active, discarded, generic, leaderAbility, id, victoryPoints, needShields, needServants, needCoins, needStones, blueCard, greenCard, yellowCard, greenCard, blueLv1, blueLv2, blueLv3, purpleLv1, purpleLv2, purpleLv3, yellowLv1, yellowLv2, yellowLv3, greenLv1, greenLv2, greenLv3, discountShields, discountServants, discountCoins, discountStones, depotType, marbleConversion, inputShields, inputServants, inputCoins, inputStones, jollyOut, outputFaith));
             }
         }
         Gson gson = new Gson();

@@ -2,12 +2,13 @@ package it.polimi.ingsw.Model.JSON;
 
 public class LeaderCardJSONAbility {
     /**This class is use to create the file "LeaderCards.json"*/
-    boolean active, discarded;
-    int leaderAbility, cardId, victoryPoints, needsShields, needsServants, needsCoins, needsStones, needsBlueCardLv1, needsBlueCardLv2, needsBlueCardLv3, needsPurpleCardLv1, needsPurpleCardLv2, needsPurpleCardLv3, needsYellowCardLv1, needsYellowCardLv2, needsYellowCardLv3, needsGreenCardLv1, needsGreenCardLv2, needsGreenCardLv3, discountShields, discountServants, discountCoins, discountStones, marbleConversion, depotType, inputShields, inputServants, inputCoins, inputStones, jollyOut, outputFaith;
+    boolean active, discarded, generic;
+    int leaderAbility, cardId, victoryPoints, needsShields, needsServants, needsCoins, needsStones, needsBlueCard, needsPurpleCard, needsYellowCard, needsGreenCard, needsBlueCardLv1, needsBlueCardLv2, needsBlueCardLv3, needsPurpleCardLv1, needsPurpleCardLv2, needsPurpleCardLv3, needsYellowCardLv1, needsYellowCardLv2, needsYellowCardLv3, needsGreenCardLv1, needsGreenCardLv2, needsGreenCardLv3, discountShields, discountServants, discountCoins, discountStones, marbleConversion, depotType, inputShields, inputServants, inputCoins, inputStones, jollyOut, outputFaith;
 
-    public LeaderCardJSONAbility(boolean active, boolean discarded, int leaderAbility, int cardId, int victoryPoints, int needsShields, int needsServants, int needsCoins, int needsStones, int needsBlueCardLv1, int needsBlueCardLv2, int needsBlueCardLv3, int needsPurpleCardLv1, int needsPurpleCardLv2, int needsPurpleCardLv3, int needsYellowCardLv1, int needsYellowCardLv2, int needsYellowCardLv3, int needsGreenCardLv1, int needsGreenCardLv2, int needsGreenCardLv3, int discountShields, int discountServants, int discountCoins, int discountStones, int depotType, int marbleConversion, int inputShields, int inputServants, int inputCoins, int inputStones, int jollyOut, int outputFaith) {
+    public LeaderCardJSONAbility(boolean active, boolean discarded, boolean generic, int leaderAbility, int cardId, int victoryPoints, int needsShields, int needsServants, int needsCoins, int needsStones, int needsBlueCard, int needsPurpleCard, int needsYellowCard, int needsGreenCard, int needsBlueCardLv1, int needsBlueCardLv2, int needsBlueCardLv3, int needsPurpleCardLv1, int needsPurpleCardLv2, int needsPurpleCardLv3, int needsYellowCardLv1, int needsYellowCardLv2, int needsYellowCardLv3, int needsGreenCardLv1, int needsGreenCardLv2, int needsGreenCardLv3, int discountShields, int discountServants, int discountCoins, int discountStones, int depotType, int marbleConversion, int inputShields, int inputServants, int inputCoins, int inputStones, int jollyOut, int outputFaith) {
         this.active = active;
         this.discarded = discarded;
+        this.generic = generic;
         this.leaderAbility = leaderAbility;
         this.cardId = cardId;
         this.victoryPoints = victoryPoints;
@@ -15,6 +16,10 @@ public class LeaderCardJSONAbility {
         this.needsServants = needsServants;
         this.needsCoins = needsCoins;
         this.needsStones = needsStones;
+        this.needsBlueCard = needsBlueCard;
+        this.needsPurpleCard = needsPurpleCard;
+        this.needsYellowCard = needsYellowCard;
+        this.needsGreenCard = needsGreenCard;
         this.needsBlueCardLv1 = needsBlueCardLv1;
         this.needsBlueCardLv2 = needsBlueCardLv2;
         this.needsBlueCardLv3 = needsBlueCardLv3;

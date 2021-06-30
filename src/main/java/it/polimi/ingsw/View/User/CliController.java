@@ -703,12 +703,11 @@ public class CliController implements UserInterface {
 
             System.out.println("\nSelect Leader Card you want to discard: ");
             int i = 2;
-            if(!game.getMyPlayer().getLeaderCards()[0].isDiscarded()){
-                System.out.println("[" + i + "] Above");
-                i--;
-            }
             if(!game.getMyPlayer().getLeaderCards()[1].isDiscarded()){
-                System.out.println("[" + i + "] Below");
+                System.out.println("[2] Above");
+            }
+            if(!game.getMyPlayer().getLeaderCards()[0].isDiscarded()){
+                System.out.println("[1] Below");
             }
 
 

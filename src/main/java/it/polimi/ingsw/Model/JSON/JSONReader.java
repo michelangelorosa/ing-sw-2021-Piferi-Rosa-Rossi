@@ -245,10 +245,15 @@ public class JSONReader {
                         leaderCardJsonObject.get("needsPurpleCardLv3").getAsInt(),
                         leaderCardJsonObject.get("needsYellowCardLv3").getAsInt(),
                         leaderCardJsonObject.get("needsGreenCardLv3").getAsInt());
+                LeaderRequirements leaderGeneric = new LeaderRequirements(
+                        leaderCardJsonObject.get("needsBlueCard").getAsInt(),
+                        leaderCardJsonObject.get("needsPurpleCard").getAsInt(),
+                        leaderCardJsonObject.get("needsYellowCard").getAsInt(),
+                        leaderCardJsonObject.get("needsGreenCard").getAsInt());
                 //DISCOUNT
                 if (leaderAbility == 0) {
                     ResourceStack discount = new ResourceStack(leaderCardJsonObject.get("discountShields").getAsInt(), leaderCardJsonObject.get("discountServants").getAsInt(), leaderCardJsonObject.get("discountCoins").getAsInt(), leaderCardJsonObject.get("discountStones").getAsInt());
-                    cardToRead = new LeaderCard(cardId, victoryPoints, resourcesRequired, leaderRequirements, discount);
+                    cardToRead = new LeaderCard(cardId, victoryPoints, resourcesRequired, leaderGeneric, discount);
                     try {
                         leaderCards.add(cardToRead);
                     } catch (Exception e) {
@@ -261,7 +266,7 @@ public class JSONReader {
                 //WHITEMARBLE
                 else if (leaderAbility == 2) {
                     int marbleInt = leaderCardJsonObject.get("marbleConversion").getAsInt();
-                    cardToRead = new LeaderCard(cardId, victoryPoints, resourcesRequired, leaderRequirements, marbles[marbleInt]);
+                    cardToRead = new LeaderCard(cardId, victoryPoints, resourcesRequired, leaderGeneric, marbles[marbleInt]);
                     try {
                         leaderCards.add(cardToRead);
                     } catch (Exception e) {
@@ -878,10 +883,15 @@ public class JSONReader {
                         leaderCardJsonObject.get("needsPurpleCardLv3").getAsInt(),
                         leaderCardJsonObject.get("needsYellowCardLv3").getAsInt(),
                         leaderCardJsonObject.get("needsGreenCardLv3").getAsInt());
+                LeaderRequirements leaderGeneric = new LeaderRequirements(
+                        leaderCardJsonObject.get("needsBlueCard").getAsInt(),
+                        leaderCardJsonObject.get("needsPurpleCard").getAsInt(),
+                        leaderCardJsonObject.get("needsYellowCard").getAsInt(),
+                        leaderCardJsonObject.get("needsGreenCard").getAsInt());
                 //DISCOUNT
                 if (leaderAbility == 0) {
                     ResourceStack discount = new ResourceStack(leaderCardJsonObject.get("discountShields").getAsInt(), leaderCardJsonObject.get("discountServants").getAsInt(), leaderCardJsonObject.get("discountCoins").getAsInt(), leaderCardJsonObject.get("discountStones").getAsInt());
-                    cardToRead = new LeaderCard(cardId, victoryPoints, resourcesRequired, leaderRequirements, discount);
+                    cardToRead = new LeaderCard(cardId, victoryPoints, resourcesRequired, leaderGeneric, discount);
                     try {
                         cardToRead.setActive(active);
                         if(discard) cardToRead.discard();
@@ -896,7 +906,7 @@ public class JSONReader {
                 //WHITEMARBLE
                 else if (leaderAbility == 2) {
                     int marbleInt = leaderCardJsonObject.get("marbleConversion").getAsInt();
-                    cardToRead = new LeaderCard(cardId, victoryPoints, resourcesRequired, leaderRequirements, marbles[marbleInt]);
+                    cardToRead = new LeaderCard(cardId, victoryPoints, resourcesRequired, leaderGeneric, marbles[marbleInt]);
                     try {
                         cardToRead.setActive(active);
                         if(discard) cardToRead.discard();

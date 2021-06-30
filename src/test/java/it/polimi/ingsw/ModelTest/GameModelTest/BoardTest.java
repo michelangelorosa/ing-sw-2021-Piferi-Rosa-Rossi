@@ -261,10 +261,14 @@ public class BoardTest {
         LeaderRequirements leaderRequirements = new LeaderRequirements(0,0,0,1,1,0,0,0,0,1,0,0);
         ResourceStack stack = new ResourceStack(3,2,1,0);
         LeaderCard leaderCard = new LeaderCard(1, 1, stack, leaderRequirements, Marble.PURPLE);
+        LeaderRequirements leaderRequirements2 = new LeaderRequirements(0,0,1,0);
+        ResourceStack stack2 = new ResourceStack(3,2,1,0);
+        LeaderCard leaderCard2 = new LeaderCard(1, 1, stack2, leaderRequirements2, Marble.BLUE);
 
         Player player = new Player("Antonio", 0, true);
 
         assertFalse(player.getBoard().canActivateLeaderCard(leaderCard));
+        assertFalse(player.getBoard().canActivateLeaderCard(leaderCard2));
 
         setResourceManagerWarehouseOnly(player.getBoard().getResourceManager());
         assertFalse(player.getBoard().canActivateLeaderCard(leaderCard));
@@ -279,6 +283,8 @@ public class BoardTest {
 
         setResourceManagerBoth(player.getBoard().getResourceManager());
         assertTrue(player.getBoard().canActivateLeaderCard(leaderCard));
+        assertTrue(player.getBoard().canActivateLeaderCard(leaderCard2));
+
     }
 
     /**

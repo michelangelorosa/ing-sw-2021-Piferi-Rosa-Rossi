@@ -186,13 +186,16 @@ public class Board implements Serializable {
         LeaderRequirements leaderCardNeededCards = leaderCard.getCardsRequired();
         ResourceType[] resourceTypes = ResourceType.values();
 
-        if(!leaderCardNeededCards.hasRequirements(this.developmentCardSlots.sumResources()) || leaderCard.isDiscarded())
+        if(leaderCardNeededCards.getGeneric()){
+            if(!leaderCardNeededCards.hasRequirements(this.developmentCardSlots.sumColors()) || leaderCard.isDiscarded())
+                return false;
+        }
+        else if(!leaderCardNeededCards.hasRequirements(this.developmentCardSlots.sumResources()) || leaderCard.isDiscarded())
             return false;
 
-        else
-            for(int i = 1; i <= 4; i++)
-                if(this.resourceManager.countAllResourcesByType(resourceTypes[i]) < leaderCardCost.getResource(resourceTypes[i]))
-                    return false;
+        for(int i = 1; i <= 4; i++)
+            if(this.resourceManager.countAllResourcesByType(resourceTypes[i]) < leaderCardCost.getResource(resourceTypes[i]))
+                return false;
 
         return true;
     }

@@ -127,15 +127,16 @@ public class GameTest {
         ResourceStack resourceStackDiscount = new ResourceStack(5,7,0,0);
         ResourceStack resourceStackInput = new ResourceStack(4,3,0,0);
         LeaderRequirements leaderRequirements = new LeaderRequirements(blueCardLv1,purpleCardLv1,yellowCardLv1,greenCardLv1,blueCardLv2,purpleCardLv2,yellowCardLv2,greenCardLv2,blueCardLv3,purpleCardLv3,yellowCardLv3,greenCardLv3);
+        LeaderRequirements leaderGeneric = new LeaderRequirements(blueCardLv1, purpleCardLv1, yellowCardLv1, greenCardLv1);
 
         LeaderCard leaderCard1 = new LeaderCard(1,victoryPoints1,resourceStack1,leaderRequirements,resourceStackDiscount);
-        LeaderCard leaderCard2 = new LeaderCard(2,victoryPoints1,resourceStack1,leaderRequirements,resourceStackDiscount);
+        LeaderCard leaderCard2 = new LeaderCard(2,victoryPoints1,resourceStack1,leaderGeneric,resourceStackDiscount);
         LeaderCard leaderCard3 = new LeaderCard(3,victoryPoints1,resourceStack2,leaderRequirements,resourceStackDiscount);
-        LeaderCard leaderCard4 = new LeaderCard(4,victoryPoints1,resourceStack1,leaderRequirements,resourceStackDiscount);
+        LeaderCard leaderCard4 = new LeaderCard(4,victoryPoints1,resourceStack1,leaderGeneric,resourceStackDiscount);
         LeaderCard leaderCard5 = new LeaderCard(5,victoryPoints1,resourceStack1,leaderRequirements,resourceStackDiscount);
-        LeaderCard leaderCard6 = new LeaderCard(6,victoryPoints1,resourceStack3,leaderRequirements,resourceStackDiscount);
+        LeaderCard leaderCard6 = new LeaderCard(6,victoryPoints1,resourceStack3,leaderGeneric,resourceStackDiscount);
         LeaderCard leaderCard7 = new LeaderCard(7,victoryPoints1,resourceStack4,leaderRequirements,resourceStackDiscount);
-        LeaderCard leaderCard8 = new LeaderCard(8,victoryPoints1,resourceStack1,leaderRequirements,resourceStackDiscount);
+        LeaderCard leaderCard8 = new LeaderCard(8,victoryPoints1,resourceStack1,leaderGeneric,resourceStackDiscount);
 
 
         game.getPlayers().get(0).getBoard().getLeaderCards()[0] = leaderCard1;
@@ -206,7 +207,17 @@ public class GameTest {
         for (int i = 0; i < 4; i++) {
             assertEquals(game.getPlayers().get(i).getBoard().getResourceManager().getStrongbox().getStoredResources().getResource(ResourceType.STONES), game2.getPlayers().get(i).getBoard().getResourceManager().getStrongbox().getStoredResources().getResource(ResourceType.STONES));
         }
-        System.out.println("PRIMA: " + game.getPlayers().get(0).getBoard().getDevelopmentCardSlots().getSlots()[0].getCards()[0].getCost().getResource(ResourceType.COINS) + " DOPO: " + game2.getPlayers().get(0).getBoard().getDevelopmentCardSlots().getSlots()[0].getCards()[0].getCost().getResource(ResourceType.COINS));
+        //System.out.println("PRIMA: " + game.getPlayers().get(0).getBoard().getDevelopmentCardSlots().getSlots()[0].getCards()[0].getCost().getResource(ResourceType.COINS) + " DOPO: " + game2.getPlayers().get(0).getBoard().getDevelopmentCardSlots().getSlots()[0].getCards()[0].getCost().getResource(ResourceType.COINS));
+
+        for(int r = 0; r < 3; r++){
+            for(int c = 0; c < 4; c++){
+                for(int pos = 0; pos < 4; pos++){
+                    System.out.println("P: " + game.getDevelopmentCardTable().getDeck(r,c).getCards()[pos]);
+                    System.out.println("D: " + game2.getDevelopmentCardTable().getDeck(r,c).getCards()[pos]);
+                }
+                System.out.println("");
+            }
+        }
     }
 
     @Test

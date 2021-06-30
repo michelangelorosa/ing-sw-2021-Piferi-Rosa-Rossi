@@ -404,27 +404,27 @@ public class JSONReaderTest {
         LeaderCard[] cardsToTest = new LeaderCard[16];
 
         ResourceStack resourcesRequired = new ResourceStack(0,0,0,0);
-        LeaderRequirements cards = new LeaderRequirements(0,0,1,1,0,0,0,0,0,0,0,0);
+        LeaderRequirements cards = new LeaderRequirements(0,0,1,1);
         ResourceStack discount = new ResourceStack(0,1,0,0);
         cardsToTest[0] = new LeaderCard(49, 2, resourcesRequired, cards, discount);
 
         resourcesRequired = new ResourceStack(0,0,0,0);
-        cards = new LeaderRequirements(1,1,0,0,0,0,0,0,0,0,0,0);
+        cards = new LeaderRequirements(1,1,0,0);
         discount = new ResourceStack(1,0,0,0);
         cardsToTest[1] = new LeaderCard(50, 2, resourcesRequired, cards, discount);
 
         resourcesRequired = new ResourceStack(0,0,0,0);
-        cards = new LeaderRequirements(1,0,0,1,0,0,0,0,0,0,0,0);
+        cards = new LeaderRequirements(1,0,0,1);
         discount = new ResourceStack(0,0,0,1);
         cardsToTest[2] = new LeaderCard(51, 2, resourcesRequired, cards, discount);
 
         resourcesRequired = new ResourceStack(0,0,0,0);
-        cards = new LeaderRequirements(0,1,1,0,0,0,0,0,0,0,0,0);
+        cards = new LeaderRequirements(0,1,1,0);
         discount = new ResourceStack(0,0,1,0);
         cardsToTest[3] = new LeaderCard(52, 2, resourcesRequired, cards, discount);
 
         resourcesRequired = new ResourceStack(0,0,5,0);
-        cards = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
+        cards = new LeaderRequirements(0,0,0,0);
         ResourceType type = ResourceType.STONES;
         cardsToTest[4] = new LeaderCard(53, 3, resourcesRequired, cards, type);
 
@@ -444,22 +444,22 @@ public class JSONReaderTest {
         cardsToTest[7] = new LeaderCard(56, 3, resourcesRequired, cards, type);
 
         resourcesRequired = new ResourceStack(0,0,0,0);
-        cards = new LeaderRequirements(1,0,2,0,0,0,0,0,0,0,0,0);
+        cards = new LeaderRequirements(1,0,2,0);
         Marble marble = Marble.PURPLE;
         cardsToTest[8] = new LeaderCard(57, 5, resourcesRequired, cards, marble);
 
         resourcesRequired = new ResourceStack(0,0,0,0);
-        cards = new LeaderRequirements(0,1,0,2,0,0,0,0,0,0,0,0);
+        cards = new LeaderRequirements(0,1,0,2);
         marble = Marble.BLUE;
         cardsToTest[9] = new LeaderCard(58, 5, resourcesRequired, cards, marble);
 
         resourcesRequired = new ResourceStack(0,0,0,0);
-        cards = new LeaderRequirements(2,0,1,0,0,0,0,0,0,0,0,0);
+        cards = new LeaderRequirements(2,0,1,0);
         marble = Marble.GREY;
         cardsToTest[10] = new LeaderCard(59, 5, resourcesRequired, cards, marble);
 
         resourcesRequired = new ResourceStack(0,0,0,0);
-        cards = new LeaderRequirements(0,2,0,1,0,0,0,0,0,0,0,0);
+        cards = new LeaderRequirements(0,2,0,1);
         marble = Marble.YELLOW;
         cardsToTest[11] = new LeaderCard(60, 5, resourcesRequired, cards, marble);
 
@@ -496,6 +496,12 @@ public class JSONReaderTest {
             assertEquals(cardsToTest[i].getVictoryPoints(), LeaderCards.get(i).getVictoryPoints());
             assertEquals(cardsToTest[i].getAction(), LeaderCards.get(i).getAction());
             assertEquals(cardsToTest[i].getFaith(), LeaderCards.get(i).getFaith());
+
+            assertEquals(cardsToTest[i].getCardsRequired().getNeedBlueCard(), LeaderCards.get(i).getCardsRequired().getNeedBlueCard());
+            assertEquals(cardsToTest[i].getCardsRequired().getNeedPurpleCard(), LeaderCards.get(i).getCardsRequired().getNeedPurpleCard());
+            assertEquals(cardsToTest[i].getCardsRequired().getNeedYellowCard(), LeaderCards.get(i).getCardsRequired().getNeedYellowCard());
+            assertEquals(cardsToTest[i].getCardsRequired().getNeedGreenCard(), LeaderCards.get(i).getCardsRequired().getNeedGreenCard());
+
             assertEquals(cardsToTest[i].getCardsRequired().getBlueCardLv1(), LeaderCards.get(i).getCardsRequired().getBlueCardLv1());
             assertEquals(cardsToTest[i].getCardsRequired().getBlueCardLv2(), LeaderCards.get(i).getCardsRequired().getBlueCardLv2());
             assertEquals(cardsToTest[i].getCardsRequired().getBlueCardLv3(), LeaderCards.get(i).getCardsRequired().getBlueCardLv3());
@@ -508,6 +514,8 @@ public class JSONReaderTest {
             assertEquals(cardsToTest[i].getCardsRequired().getGreenCardLv1(), LeaderCards.get(i).getCardsRequired().getGreenCardLv1());
             assertEquals(cardsToTest[i].getCardsRequired().getGreenCardLv2(), LeaderCards.get(i).getCardsRequired().getGreenCardLv2());
             assertEquals(cardsToTest[i].getCardsRequired().getGreenCardLv3(), LeaderCards.get(i).getCardsRequired().getGreenCardLv3());
+
+
             if (i < 4) {
                 assertEquals(cardsToTest[i].getDiscount().getResource(ResourceType.SHIELDS), LeaderCards.get(i).getDiscount().getResource(ResourceType.SHIELDS));
                 assertEquals(cardsToTest[i].getDiscount().getResource(ResourceType.SERVANTS), LeaderCards.get(i).getDiscount().getResource(ResourceType.SERVANTS));

@@ -241,6 +241,8 @@ public class ChooseProductionOutput extends Action {
 
             if(actionController.getGame().getCurrentPlayer().canDo(ActionType.ACTIVATE_LEADERCARD))
                 message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
+            if(actionController.getGame().getCurrentPlayer().canDo(ActionType.DELETE_LEADERCARD))
+                message.addPossibleAction(ActionType.DELETE_LEADERCARD);
         }
         else
             message.addPossibleAction(ActionType.CHOOSE_PRODUCTION_OUTPUT);
