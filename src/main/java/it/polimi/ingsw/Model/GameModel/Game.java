@@ -64,13 +64,6 @@ public class Game {
     }
 
     /**
-     * Getter for "currentPlayerIndex" attribute in Game Class.
-     */
-    public int getCurrentPlayerIndex() {
-        return currentPlayerIndex;
-    }
-
-    /**
      * Getter for "leaderCards" attribute in Game Class.
      */
     public ArrayList<LeaderCard> getLeaderCards() {

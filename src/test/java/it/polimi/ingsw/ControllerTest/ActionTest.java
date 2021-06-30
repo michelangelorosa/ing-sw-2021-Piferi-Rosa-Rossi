@@ -24,7 +24,7 @@ public class ActionTest {
     }
 
     @Test
-    public void ActionTestAll() throws ModelException {
+    public void ActionTestAll() throws Exception {
         assertFalse(action.isCorrect());
         assertFalse(action.canBeApplied(actionController));
         assertNull(action.doAction(actionController));

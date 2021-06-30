@@ -135,4 +135,50 @@ public class ControllerTest {
         assertEquals(actionController.getGame().getPlayers().get(1), actionController.getGame().getCurrentPlayer());
         assertTrue(message instanceof DisconnectedMessage);
     }
+
+    @Test
+    public void exceptionTest() {
+        class ActionTest1 extends Action {
+            protected ActionTest1(ActionController actionController) {
+                this.setNickname(actionController.getGame().getCurrentPlayerNickname());
+            }
+
+            @Override
+            public String doAction(ActionController actionController) throws ModelException{
+                throw new ModelException("ModelException!");
+            }
+        }
+
+        class ActionTest2 extends Action {
+            protected ActionTest2(ActionController actionController) {
+                this.setNickname(actionController.getGame().getCurrentPlayerNickname());
+            }
+
+            @Override
+            public String doAction(ActionController actionController) throws IllegalArgumentException{
+                throw new IllegalArgumentException("IllegalArgumentException!");
+            }
+        }
+
+        class ActionTest3 extends Action {
+            protected ActionTest3(ActionController actionController) {
+                this.setNickname(actionController.getGame().getCurrentPlayerNickname());
+            }
+
+            @Override
+            public String doAction(ActionController actionController) throws Exception{
+                throw new Exception("Exception!");
+            }
+        }
+
+        ActionController actionController = new ActionController();
+        actionController.getGame().getPlayers().add(new Player("Zero", 0, true));
+
+        ActionTest1 actionTest1 = new ActionTest1(actionController);
+        actionController.doAction(actionTest1);
+        ActionTest2 actionTest2 = new ActionTest2(actionController);
+        actionController.doAction(actionTest2);
+        ActionTest3 actionTest3 = new ActionTest3(actionController);
+        actionController.doAction(actionTest3);
+    }
 }

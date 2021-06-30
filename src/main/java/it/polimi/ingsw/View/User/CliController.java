@@ -17,24 +17,37 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 /**
- * Cli Class contains all methods to let the Player decide which action he wants to perform, then
- * generate and Action Message to send to the Server accordingly.
+ * Cli Class contains all methods needed to show and parse the player's input into an Action object to be sent to the Server.
+ * <p><b>Attributes:</b></p>
+ * <ul>
+ *     <li>Scanner "sc": takes input from the player</li>
+ *     <li>boolean "firstLeaderCard": used to store information regarding a production activation</li>
+ *     <li>boolean "secondLeaderCard": used to store information regarding a production activation</li>
+ *     <li>boolean "basicProduction": used to store information regarding a production activation</li>
+ * </ul>
+ * @author redrick99
  */
 public class CliController implements UserInterface {
-    /** A Scanner is used to take input from the player */
     private final Scanner sc = new Scanner(System.in);
 
-    /** Booleans are needed to choose Production Outputs when the player has finished paying for a production */
     private boolean firstLeaderCard = false;
     private boolean secondLeaderCard = false;
     private boolean basicProduction = false;
 
+    /**
+     * Test method used to set all booleans inside an object of this class.
+     */
     protected void testSetter(boolean first, boolean second, boolean basic) {
         this.firstLeaderCard = first;
         this.secondLeaderCard = second;
         this.basicProduction = basic;
     }
 
+    /**
+     * Sets a new UIAction inside the UserInteraction to set the action which the player has to perform.
+     * @param userInteraction object containing all View information.
+     * @param action UIAction to be set.
+     */
     public void nextAction(UserInteraction userInteraction, UIActions action) {
         synchronized (userInteraction) {
             userInteraction.setUiAction(action);
@@ -42,6 +55,11 @@ public class CliController implements UserInterface {
         }
     }
 
+    /**
+     * Displays an Action performed by a player connected to the server. If the player calling the method is the one
+     * who has to play his turn, a new CLI interaction is started.
+     * @param userInteraction object containing all View information.
+     */
     public void displayAction(UserInteraction userInteraction) {
         Player player = userInteraction.getMessage().getPlayer(userInteraction);
         String playerString = userInteraction.getMessage().getPlayerNickname();
@@ -53,6 +71,11 @@ public class CliController implements UserInterface {
             player.toCli();
     }
 
+    /**
+     * Displays an error which occurred after a player tried to perform an Action on the server. If the player calling the method is the one
+     * who has to play his turn, a new CLI interaction is started.
+     * @param userInteraction object containing all View information.
+     */
     public void displayServerError(UserInteraction userInteraction) {
         String error = userInteraction.getMessage().getError();
 
@@ -114,8 +137,10 @@ public class CliController implements UserInterface {
         return objects;
     }
 
-
-
+    /**
+     * Gets from the user the desired total number of players who are going to play the game.
+     * @return The number of players.
+     */
     public int numberOfPlayers() {
         String choice;
         System.out.println();
@@ -131,6 +156,10 @@ public class CliController implements UserInterface {
         }
     }
 
+    /**
+     * Gets the user's chosen nickname.
+     * @return The chosen nickname.
+     */
     public String initialInsertName() {
         String choice;
         while(true) {
@@ -148,10 +177,16 @@ public class CliController implements UserInterface {
         }
     }
 
+    /**
+     * Prints a message to let the player know that he is waiting.
+     */
     public void waitingForPlayers() {
         System.out.println("\nWaiting for players to join...");
     }
 
+    /**
+     * Prints a lobby and gets input from the user to know if he wants to start the game.
+     */
     public int initialLobby() {
         String choice;
         System.out.println("\n\n");
@@ -171,6 +206,12 @@ public class CliController implements UserInterface {
 
     }
 
+    /**
+     * Makes the user choose his initial Leader Cards.
+     * @param leaderCardsArray Array of Leader Cards sent by the Server containing the Leader Cards to choose from.
+     * @return An InitChooseLeaderCard action.
+     * @throws IllegalArgumentException if the array sent by the Server is not of length 4.
+     */
     public Action initialChooseLeaderCards(RedLeaderCard[] leaderCardsArray) throws IllegalArgumentException{
         if(leaderCardsArray.length != 4)
             throw new IllegalArgumentException("Number of Leader Cards to choose from is" + leaderCardsArray.length + ", should be 4");
@@ -212,6 +253,11 @@ public class CliController implements UserInterface {
         }
     }
 
+    /**
+     * Makes the user choose is initial resources.
+     * @param resources int sent by the Server indicating the number of total resources to choose.
+     * @return An InitialChooseResources action.
+     */
     public Action initialChooseResources(int resources) {
         System.out.println();
         System.out.println(ANSIColors.VISUALIZE + ANSIfont.BOLD + " - PREPARING THE GAME - " + ANSIColors.RESET);
@@ -950,12 +996,21 @@ public class CliController implements UserInterface {
         }
     }
 
+    /**
+     * Shows the Singleplayer token drawn by Lorenzo il Magnifico.
+     * @param token Token drawn by Lorenzo il Magnifico.
+     */
     public void showToken(SoloActionToken token) {
         System.out.println(ANSIfont.BOLD + ANSIfont.ITALIC + "Lorenzo il Magnifico" + ANSIfont.RESET + ANSIfont.BOLD + " has drawn the following token:" + ANSIfont.RESET);
         for(String s : token.toCli())
             System.out.println(s);
     }
 
+    /**
+     * Shows a final message containing Victory Points of all players of the Game.
+     * <p>The user is also informed about whether he lost or won.</p>
+     * @param game Game from which to gather all players' Victory Points.
+     */
     public void finalPoints(Game game) {
         ArrayList<String> winningPlayers = new ArrayList<>();
         if(game.getMyPlayer().getStatus() == PlayerStatus.WON) System.out.println("YOU WON!");
@@ -1006,6 +1061,12 @@ public class CliController implements UserInterface {
         }
     }
 
+    /**
+     * Shows a final message containing Victory Points on a Singleplayer Game.
+     * <p>The user is also informed about whether he lost or won.</p>
+     * @param game Game from which to gather all players' Victory Points.
+     * @param youWon boolean indicating whether the player lost or won.
+     */
     public void finalSingleplayer(Game game, boolean youWon) {
         if(youWon)
             this.singleplayerWinner();
@@ -1014,14 +1075,24 @@ public class CliController implements UserInterface {
         System.out.println(ANSIfont.BOLD + "You made: " + game.getPlayers().get(0).getVictoryPoints() + " points!");
     }
 
+    /**
+     * Displays a message saying the user won.
+     */
     public void singleplayerWinner() {
         System.out.println(ANSIfont.BOLD + ANSIColors.FRONT_BRIGHT_GREEN + "CONGRATULATIONS! YOU WON! Lorenzo il Magnifico is no more!" + ANSIfont.RESET + "\n");
     }
 
+    /**
+     * Displays a message saying the user lost.
+     */
     public void singleplayerLooser() {
         System.out.println(ANSIfont.BOLD + ANSIColors.BACK_BRIGHT_RED + "Oh no... YOU LOST! Lorenzo il Magnifico will live on forever!" + ANSIfont.RESET + "\n");
     }
 
+    /**
+     * Asks the player whether he wants to start a new game or continue an existing one.
+     * @return a boolean indicating the user's choice.
+     */
     public boolean restartOrContinue() {
         String choice;
         System.out.println("\n\n");
@@ -1081,6 +1152,12 @@ public class CliController implements UserInterface {
         }
     }
 
+    /**
+     * Used to display InitialLeaderCards.
+     * @param leaderCards ArrayList containing Leader Cards to be displayed.
+     * @return An ArrayList of Strings which contains graphical information.
+     * @throws IllegalArgumentException if an error occurs while saving the Cards' CLI graphics
+     */
     public ArrayList<String> initLeaderCardsToCli(ArrayList<RedLeaderCard> leaderCards) throws IllegalArgumentException {
         ArrayList<String> stringLeaders = leaderCards.get(0).toCliUp();
 

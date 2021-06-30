@@ -187,15 +187,25 @@ public class Cli implements Runnable{
         }
     }
 
+    /**
+     * Begins a new turn Singleplayer interaction with the player, where a new Action instance is created and sent to the Server.
+     * @throws Exception if an error occurs during execution.
+     */
     public void singleplayerTurn() throws Exception {
         this.cliController.showToken(this.client.getUserInteraction().getLorenzoToken());
         this.actionParser(UIActions.PLAY_TURN);
     }
 
+    /**
+     * Displays a message telling the player he won (in SinglePlayer Mode).
+     */
     public void singleplayerEndWon() {
         this.cliController.finalSingleplayer(this.client.getUserInteraction().getGame(), true);
     }
 
+    /**
+     * Displays a message telling the player he lost (in SinglePlayer Mode).
+     */
     public void singleplayerEndLost() {
         this.cliController.finalSingleplayer(this.client.getUserInteraction().getGame(), false);
     }
@@ -207,6 +217,10 @@ public class Cli implements Runnable{
         this.cliController.finalPoints(this.client.getUserInteraction().getGame());
     }
 
+    /**
+     * Asks the player if he wants to either start a new game or continue the existing one (Persistence FA).
+     * @throws IOException if an error occurs while sending a message to the Server.
+     */
     public void restartOrContinue() throws IOException {
         boolean wantsToRestart = this.cliController.restartOrContinue();
         this.clientConnection.send(wantsToRestart);

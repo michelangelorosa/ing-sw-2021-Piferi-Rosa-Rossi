@@ -1,4 +1,5 @@
 package it.polimi.ingsw.ModelTest.GameModelTest;
+import it.polimi.ingsw.Model.GameModel.Game;
 import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.Model.GameModel.LeaderCardShuffle;
 import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
@@ -42,6 +43,9 @@ public class LeaderCardShuffleTest {
         }
         //Testing that too many calls result in Error
         assertNull(LeaderCardShuffle.getLeaderShuffled());
+
+        Game game = new Game();
+        game.gameStartLeaderCards();
     }
 
 }

@@ -209,5 +209,20 @@ public class GameTest {
         System.out.println("PRIMA: " + game.getPlayers().get(0).getBoard().getDevelopmentCardSlots().getSlots()[0].getCards()[0].getCost().getResource(ResourceType.COINS) + " DOPO: " + game2.getPlayers().get(0).getBoard().getDevelopmentCardSlots().getSlots()[0].getCards()[0].getCost().getResource(ResourceType.COINS));
     }
 
+    @Test
+    public void gameStartResourcesTest() {
+        joiner(game);
+        assertEquals(0, game.gameStartResources("Giacomo"));
+        assertEquals(1, game.gameStartResources("Valentino"));
+        assertEquals(1, game.gameStartResources("Andrea"));
+        assertEquals(1, game.getPlayers().get(2).getFaithTrackPosition());
+        assertEquals(2, game.gameStartResources("Lorenzo"));
+        assertEquals(1, game.getPlayers().get(3).getFaithTrackPosition());
+
+        game.getPlayers().add(new Player("pippo", 5, false));
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> {game.gameStartResources("pippo");});
+        assertEquals("[Model.Game.gameStartResources]: player's position was 5", e.getMessage());
+    }
+
 
 }

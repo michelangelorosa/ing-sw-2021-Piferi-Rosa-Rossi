@@ -7,8 +7,10 @@ import it.polimi.ingsw.Controller.ControllerClasses.ActionController;
 import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.Model.GameModel.Game;
+import it.polimi.ingsw.Model.GameModel.Player;
 import it.polimi.ingsw.Model.GameModel.ResourceStack;
 import it.polimi.ingsw.Model.GameModel.WarehouseDepot;
+import it.polimi.ingsw.Model.MessagesToClient.BoughtCardMessage;
 import it.polimi.ingsw.Model.MessagesToClient.EndProductionMessage;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
 import it.polimi.ingsw.Model.MessagesToClient.PaymentMessage;
@@ -151,5 +153,21 @@ public class PayResourceTest {
         assertEquals(ActionType.CHOOSE_PRODUCTION_OUTPUT, message.getPossibleActions().get(0));
 
         assertEquals(ResourceType.NONE, game.getCurrentPlayer().getBoard().getResourceManager().getWarehouseDepots()[0].getResourceType());
+    }
+
+    @Test
+    public void otherTests() {
+        PayResourceBuyCard action = new PayResourceBuyCard(false, 0, ResourceType.SHIELDS);
+        actionController.getGame().getPlayers().add(new Player("pippo", 0, true));
+        actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().setTemporaryResourcesToPay(new ResourceStack(1,0,0,0));
+        actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().addProductionResources(new ResourceStack(1,0,0,0));
+        actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.PAY_RESOURCE_CARD);
+        action.doAction(actionController);
+        MessageToClient message = action.messagePrepare(actionController);
+
+        assertTrue(message instanceof BoughtCardMessage);
+        assertEquals("SUCCESS", message.getError());
+        assertEquals(((BoughtCardMessage) message).getStrongbox(), actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getStrongbox());
+        assertEquals(((BoughtCardMessage) message).getWarehouse(), actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse());
     }
 }

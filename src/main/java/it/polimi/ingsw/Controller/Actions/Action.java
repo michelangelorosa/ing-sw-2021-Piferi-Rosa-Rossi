@@ -93,7 +93,7 @@ public class Action implements Serializable {
      * @param actionController Class used to compute Action messages coming from the Client.
      * @return A String to be used later to create a message to send to the Client.
      */
-    public String doAction(ActionController actionController) throws ModelException {
+    public String doAction(ActionController actionController) throws Exception {
         return null;
     }
 
