@@ -2,8 +2,12 @@ package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.ControllerClasses.ActionController;
 import it.polimi.ingsw.Model.GameModel.Game;
+import it.polimi.ingsw.Model.GameModel.Player;
+import it.polimi.ingsw.Model.GameModel.PopeTileClass;
 import it.polimi.ingsw.Model.MessagesToClient.DiscardLeaderCardMessage;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
+
+import java.util.HashMap;
 
 /**
  * DiscardLeaderCard class contains data and methods to resolve a Client request regarding Leader
@@ -82,7 +86,9 @@ public class DiscardLeaderCard extends Action{
         actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[this.number].discard();
         actionController.getGame().getCurrentPlayer().stepAhead(1); //The player who discards a leader card steps ahead on the faith track
         this.response = "SUCCESS";
+        actionController.getGame().getFaithTrack().popeSpaceSector(actionController.getGame().getPlayers());
         actionController.getGame().getCurrentPlayer().removePossibleAction(ActionType.DELETE_LEADERCARD);
+        actionController.getGame().getCurrentPlayer().removePossibleAction(ActionType.ACTIVATE_LEADERCARD);
         return "SUCCESS";
     }
 
@@ -102,6 +108,13 @@ public class DiscardLeaderCard extends Action{
         if(this.response.equals("SUCCESS")) {
             message.setNumber(this.number);
             message.setLeaderCard(actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[this.number]);
+            message.setFaithPoints(actionController.getGame().getCurrentPlayer().getFaithTrackPosition());
+
+            HashMap<String, PopeTileClass[]> playersPopeTiles = new HashMap<>();
+            for(Player player : actionController.getGame().getPlayers())
+                playersPopeTiles.put(player.getNickname(), player.getPopeTiles());
+
+            message.setPlayersPopeTiles(playersPopeTiles);
 
             for(ActionType type : actionController.getGame().getCurrentPlayer().getPossibleActions())
                 message.addPossibleAction(type);

@@ -81,6 +81,7 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
             }
         } catch (Exception e ) {
             DEBUGGER.printDebug("Caught InterruptedException from " + this.name);
+            e.printStackTrace();
             if(name!=null){
                 /* DISCONNECTION PROCESSING */
                 System.out.println(name +" is leaving");

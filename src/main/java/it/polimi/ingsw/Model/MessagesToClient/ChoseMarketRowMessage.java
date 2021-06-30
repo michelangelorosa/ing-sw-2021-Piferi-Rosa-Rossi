@@ -65,7 +65,7 @@ public class ChoseMarketRowMessage extends MessageToClient {
 
         Player player = this.getPlayer(userInteraction);
 
-        if(this.success()) {
+        if(this.success() || this.error.equals("Has Payed") || this.error.equals("Choose Leader Card")) {
             userInteraction.getGame().setMarket(this.market);
             player.setTemporaryResources(this.temporaryResources);
 

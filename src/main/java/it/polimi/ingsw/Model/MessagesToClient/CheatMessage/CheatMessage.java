@@ -2,14 +2,12 @@ package it.polimi.ingsw.Model.MessagesToClient.CheatMessage;
 
 import it.polimi.ingsw.Controller.ControllerClasses.ActionController;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
-import it.polimi.ingsw.View.ReducedModel.Player;
-import it.polimi.ingsw.View.ReducedModel.RedDevelopmentCardSlots;
-import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
-import it.polimi.ingsw.View.ReducedModel.RedStrongbox;
+import it.polimi.ingsw.View.ReducedModel.*;
 import it.polimi.ingsw.View.User.UserInteraction;
 
 public class CheatMessage extends MessageToClient {
     private final RedStrongbox strongbox;
+    private final RedWarehouse warehouse;
     private final RedDevelopmentCardSlots slots;
     private final RedLeaderCard[] leaderCards;
     private final int faithPoints;
@@ -17,6 +15,7 @@ public class CheatMessage extends MessageToClient {
 
     public CheatMessage(ActionController actionController) {
         this.strongbox = actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getStrongbox();
+        this.warehouse = actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse();
         this.slots = actionController.getGame().getCurrentPlayer().getBoard().getDevelopmentCardSlots();
         this.leaderCards = actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards();
         this.faithPoints = actionController.getGame().getCurrentPlayer().getFaithTrackPosition();
@@ -32,6 +31,7 @@ public class CheatMessage extends MessageToClient {
         if(this.success()) {
             Player player = this.getPlayer(userInteraction);
 
+            player.setWarehouse(warehouse);
             player.setStrongbox(strongbox);
             player.setSlots(slots);
             player.setLeaderCards(leaderCards);

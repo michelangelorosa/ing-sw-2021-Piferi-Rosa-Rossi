@@ -1268,18 +1268,16 @@ public class CliController implements UserInterface {
         String choice;
         int depot;
 
-        //TODO hide depots in different ways depending on ADDING or PAYING
-        //if(!warehouse.getWarehouseDepots()[2].isEmpty())
             System.out.println("[3] Third Depot (above)");
-        //if(!warehouse.getWarehouseDepots()[1].isEmpty())
             System.out.println("[2] Second Depot (center)");
-        //if(!warehouse.getWarehouseDepots()[0].isEmpty())
             System.out.println("[1] First depot (below)");
 
-        if(warehouse.isExtraWarehouseDepot1IsActive()) //&& !warehouse.getExtraWarehouseDepot1().isEmpty())
+        if(warehouse.isExtraWarehouseDepot1IsActive())
             System.out.print(  "[4] Extra Depot 1 (left)    ");
-        if(warehouse.isExtraWarehouseDepot2IsActive()) //&& !warehouse.getExtraWarehouseDepot2().isEmpty())
+        if(warehouse.isExtraWarehouseDepot2IsActive())
             System.out.println("[5] Extra Depot 2 (right)");
+        else if(warehouse.isExtraWarehouseDepot1IsActive())
+            System.out.println();
 
         while(true) {
             choice = sc.nextLine();

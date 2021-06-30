@@ -225,6 +225,9 @@ public class Warehouse extends RedWarehouse {
         if(firstDepot.isFromLeaderCardAbility() && secondDepot.isFromLeaderCardAbility() && firstDepot.getResourceType() == secondDepot.getResourceType())
             return true;
 
+        if(firstDepot.isFromLeaderCardAbility() && secondDepot.isFromLeaderCardAbility() && firstDepot.getResourceType() != secondDepot.getResourceType())
+            return false;
+
         if(firstDepot.isFromLeaderCardAbility())
             if(secondDepot.getResourceType() == firstDepot.getResourceType())
                 return true;
@@ -247,9 +250,11 @@ public class Warehouse extends RedWarehouse {
         ResourceType tempType = firstDepot.getResourceType();
         int tempStoredResources = firstDepot.getStoredResources();
 
-        firstDepot.setResourceType(secondDepot.getResourceType());
+        if(!firstDepot.isFromLeaderCardAbility())
+            firstDepot.setResourceType(secondDepot.getResourceType());
         firstDepot.setStoredResources(secondDepot.getStoredResources());
-        secondDepot.setResourceType(tempType);
+        if(!secondDepot.isFromLeaderCardAbility())
+            secondDepot.setResourceType(tempType);
         secondDepot.setStoredResources(tempStoredResources);
     }
 
@@ -292,17 +297,17 @@ public class Warehouse extends RedWarehouse {
         Warehouse copy = new Warehouse();
 
         for(int i = 0; i < 3; i++) {
-            ((WarehouseDepot)copy.getWarehouseDepots()[i]).setStoredResources(this.getWarehouseDepots()[i].getStoredResources());
-            ((WarehouseDepot)copy.getWarehouseDepots()[i]).setResourceType(this.getWarehouseDepots()[i].getResourceType());
+            (copy.getWarehouseDepots()[i]).setStoredResources(this.getWarehouseDepots()[i].getStoredResources());
+            (copy.getWarehouseDepots()[i]).setResourceType(this.getWarehouseDepots()[i].getResourceType());
         }
 
         if(this.isExtraWarehouseDepot1IsActive()) {
             copy.activateLeaderDepot(this.getExtraWarehouseDepot1().getResourceType());
-            ((WarehouseDepot)copy.getExtraWarehouseDepot1()).setStoredResources(this.getExtraWarehouseDepot1().getStoredResources());
+            (copy.getExtraWarehouseDepot1()).setStoredResources(this.getExtraWarehouseDepot1().getStoredResources());
         }
         if(this.isExtraWarehouseDepot2IsActive()) {
             copy.activateLeaderDepot(this.getExtraWarehouseDepot2().getResourceType());
-            ((WarehouseDepot)copy.getExtraWarehouseDepot2()).setStoredResources(this.getExtraWarehouseDepot2().getStoredResources());
+            (copy.getExtraWarehouseDepot2()).setStoredResources(this.getExtraWarehouseDepot2().getStoredResources());
         }
 
         return copy;
@@ -314,15 +319,15 @@ public class Warehouse extends RedWarehouse {
      */
     public void revertWarehouse(Warehouse warehouse) {
         for(int i = 0; i < 3; i++) {
-            ((WarehouseDepot)this.getWarehouseDepots()[i]).setStoredResources(warehouse.getWarehouseDepots()[i].getStoredResources());
-            ((WarehouseDepot)this.getWarehouseDepots()[i]).setResourceType(warehouse.getWarehouseDepots()[i].getResourceType());
+            (this.getWarehouseDepots()[i]).setStoredResources(warehouse.getWarehouseDepots()[i].getStoredResources());
+            (this.getWarehouseDepots()[i]).setResourceType(warehouse.getWarehouseDepots()[i].getResourceType());
         }
 
-        ((WarehouseDepot)this.getExtraWarehouseDepot1()).setStoredResources(warehouse.getExtraWarehouseDepot1().getStoredResources());
-        ((WarehouseDepot)this.getExtraWarehouseDepot1()).setResourceType(warehouse.getExtraWarehouseDepot1().getResourceType());
+        (this.getExtraWarehouseDepot1()).setStoredResources(warehouse.getExtraWarehouseDepot1().getStoredResources());
+        (this.getExtraWarehouseDepot1()).setResourceType(warehouse.getExtraWarehouseDepot1().getResourceType());
 
-        ((WarehouseDepot)this.getExtraWarehouseDepot2()).setStoredResources(warehouse.getExtraWarehouseDepot2().getStoredResources());
-        ((WarehouseDepot)this.getExtraWarehouseDepot2()).setResourceType(warehouse.getExtraWarehouseDepot2().getResourceType());
+        (this.getExtraWarehouseDepot2()).setStoredResources(warehouse.getExtraWarehouseDepot2().getStoredResources());
+        (this.getExtraWarehouseDepot2()).setResourceType(warehouse.getExtraWarehouseDepot2().getResourceType());
 
         this.extraWarehouseDepot1IsActive = warehouse.isExtraWarehouseDepot1IsActive();
         this.extraWarehouseDepot2IsActive = warehouse.isExtraWarehouseDepot2IsActive();

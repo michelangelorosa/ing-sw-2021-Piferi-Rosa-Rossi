@@ -1,6 +1,8 @@
 package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
+import it.polimi.ingsw.Model.Enums.SoloActionToken;
+import it.polimi.ingsw.Model.GameModel.PopeTileClass;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.Player;
 import it.polimi.ingsw.View.User.UserInteraction;
@@ -13,13 +15,14 @@ import java.util.HashMap;
  * a EndMarket request.
  * <p><b>Attributes:</b></p>
  * <ul>
- *     <li>ArrayList&lt;Integer&gt; "playersFaithPosition": contains all player</li>
+ *     <li>ArrayList&lt;Integer&gt; "playersFaithPosition": contains all players positions inside the Faith Track</li>
+ *     <li>HashMap&lt;String, PopeTileClass[]&gt; "playersPopeTiles": contains all players' Pope Tiles mapped to the players' names</li>
  * </ul>
  * @author redrick99
  */
 public class EndMarketMessage extends MessageToClient {
-    /** All players position onto the faith track is needed to update the clients' View */
     private HashMap<String, Integer> playersFaithPosition;
+    private HashMap<String, PopeTileClass[]> playersPopeTiles;
 
     /**
      * Constructor for EndMarketMessage Class.
@@ -44,6 +47,13 @@ public class EndMarketMessage extends MessageToClient {
     }
 
     /**
+     * Getter for "playersPopeTiles" attribute.
+     */
+    public void setPlayersPopeTiles(HashMap<String, PopeTileClass[]> playersPopeTiles) {
+        this.playersPopeTiles = playersPopeTiles;
+    }
+
+    /**
      * Checks if the message contains an error and updates the Client's view.
      * @param userInteraction Class containing the Reduced Game and the User Interface.
      */
@@ -52,8 +62,10 @@ public class EndMarketMessage extends MessageToClient {
         super.updateView(userInteraction);
 
         if(this.success()) {
-            for(Player player : userInteraction.getGame().getPlayers())
+            for(Player player : userInteraction.getGame().getPlayers()) {
                 player.setFaithTrackPosition(this.playersFaithPosition.get(player.getNickname()));
+                player.setPopeTiles(this.playersPopeTiles.get(player.getNickname()));
+            }
 
             this.displayAction(userInteraction);
         }

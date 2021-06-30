@@ -3,10 +3,13 @@ package it.polimi.ingsw.Controller.Actions;
 import it.polimi.ingsw.Controller.ControllerClasses.ActionController;
 import it.polimi.ingsw.Model.Enums.LeaderCardAction;
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.Model.GameModel.Player;
+import it.polimi.ingsw.Model.GameModel.PopeTileClass;
 import it.polimi.ingsw.Model.GameModel.ResourceStack;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * ChooseProductionOutput Class contains data and methods to be used when the player
@@ -218,6 +221,7 @@ public class ChooseProductionOutput extends Action {
         output = new ResourceStack(0,0,0,0);
 
         this.response = "SUCCESS";
+        actionController.getGame().getFaithTrack().popeSpaceSector(actionController.getGame().getPlayers());
         actionController.getGame().getCurrentPlayer().clearPossibleActions();
         actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.END_TURN);
         return "SUCCESS";
@@ -237,6 +241,12 @@ public class ChooseProductionOutput extends Action {
         message.setError(this.response);
         if(this.response.equals("SUCCESS")) {
             message.setStrongbox(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getStrongbox());
+            message.setFaithPoints(actionController.getGame().getCurrentPlayer().getFaithTrackPosition());
+            HashMap<String, PopeTileClass[]> playersPopeTiles = new HashMap<>();
+            for(Player p : actionController.getGame().getPlayers())
+                playersPopeTiles.put(p.getNickname(), p.getPopeTiles());
+            message.setPlayersPopeTiles(playersPopeTiles);
+
             message.addPossibleAction(ActionType.END_TURN);
 
             if(actionController.getGame().getCurrentPlayer().canDo(ActionType.ACTIVATE_LEADERCARD))

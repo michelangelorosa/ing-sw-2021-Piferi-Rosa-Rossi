@@ -77,9 +77,9 @@ public class MarketChooseRow extends Action {
         this.isCorrect();
 
         if(this.row)
-            actionController.getGame().getMarket().rowToResources(this.getRowOrColumnNumber(), actionController.getGame().getCurrentPlayer());
+            actionController.getGame().getMarket().rowToResources(this.rowOrColumnNumber, actionController.getGame().getCurrentPlayer());
         else
-            actionController.getGame().getMarket().columnToResources(this.getRowOrColumnNumber(), actionController.getGame().getCurrentPlayer());
+            actionController.getGame().getMarket().columnToResources(this.rowOrColumnNumber, actionController.getGame().getCurrentPlayer());
 
         actionController.getResetWarehouse().setBackupWarehouse(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse().copyWarehouse());
         actionController.getResetWarehouse().setBackupResources(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().copyStack());
@@ -117,7 +117,7 @@ public class MarketChooseRow extends Action {
     public String leaderCardCheck(ActionController actionController) {
         LeaderCard[] leaderCards = actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards();
 
-        if(leaderCards[0].isActive() && leaderCards[0].getAction() == LeaderCardAction.WHITEMARBLE && leaderCards[1].isActive() && leaderCards[1].getAction() == LeaderCardAction.WHITEMARBLE) {
+        if(leaderCards[0].isActive() && leaderCards[0].getAction() == LeaderCardAction.WHITEMARBLE && leaderCards[1].isActive() && leaderCards[1].getAction() == LeaderCardAction.WHITEMARBLE && actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryWhiteMarbles() > 0) {
             actionController.getGame().getCurrentPlayer().clearPossibleActions();
             actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.CHOOSE_LEADER_CARD);
             return "Choose Leader Card";

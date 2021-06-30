@@ -485,89 +485,91 @@ public class ConvertToJSON {
 
         ArrayList<LeaderCardJSONAbility> card = new ArrayList<>();
 
-        for(int i = 0; i < game.getPlayers().size(); i++){
-            for(int pos = 0; pos < 2; pos++) {
-                int leaderAbility = 0, id = 0, victoryPoints = 0, needShields = 0, needServants = 0, needCoins = 0, needStones = 0, blueLv1 = 0, blueLv2 = 0, blueLv3 = 0, purpleLv1 = 0, purpleLv2 = 0, purpleLv3 = 0, yellowLv1 = 0, yellowLv2 = 0, yellowLv3 = 0, greenLv1 = 0, greenLv2 = 0, greenLv3 = 0, discountShields = 0, discountServants = 0, discountCoins = 0, discountStones = 0, depotType = 0, marbleConversion = 0, inputShields = 0, inputServants = 0, inputCoins = 0, inputStones = 0, jollyOut = 0, outputFaith = 0;
+        for(int i = 0; i < game.getPlayers().size(); i++) {
+            if (!game.getPlayers().get(i).getNickname().equals("Lorenzo il Magnifico")) {
+                for (int pos = 0; pos < 2; pos++) {
+                    int leaderAbility = 0, id = 0, victoryPoints = 0, needShields = 0, needServants = 0, needCoins = 0, needStones = 0, blueLv1 = 0, blueLv2 = 0, blueLv3 = 0, purpleLv1 = 0, purpleLv2 = 0, purpleLv3 = 0, yellowLv1 = 0, yellowLv2 = 0, yellowLv3 = 0, greenLv1 = 0, greenLv2 = 0, greenLv3 = 0, discountShields = 0, discountServants = 0, discountCoins = 0, discountStones = 0, depotType = 0, marbleConversion = 0, inputShields = 0, inputServants = 0, inputCoins = 0, inputStones = 0, jollyOut = 0, outputFaith = 0;
 
-                Board board = game.getPlayers().get(i).getBoard();
-                boolean active = board.getLeaderCards()[pos].isActive();
-                boolean discarded = board.getLeaderCards()[pos].isDiscarded();
+                    Board board = game.getPlayers().get(i).getBoard();
+                    boolean active = board.getLeaderCards()[pos].isActive();
+                    boolean discarded = board.getLeaderCards()[pos].isDiscarded();
 
-                ResourceStack required = board.getLeaderCards()[pos].getResourcesRequired();
+                    ResourceStack required = board.getLeaderCards()[pos].getResourcesRequired();
 
-                LeaderRequirements leaderRequirements;
+                    LeaderRequirements leaderRequirements;
 
-                ResourceStack discount = board.getLeaderCards()[pos].getDiscount();
+                    ResourceStack discount = board.getLeaderCards()[pos].getDiscount();
 
-                leaderRequirements = board.getLeaderCards()[pos].getCardsRequired();
+                    leaderRequirements = board.getLeaderCards()[pos].getCardsRequired();
 
-                ResourceType depotTypeTemp = board.getLeaderCards()[pos].getResource();
+                    ResourceType depotTypeTemp = board.getLeaderCards()[pos].getResource();
 
-                Marble marbleTemp = board.getLeaderCards()[pos].getMarble();
+                    Marble marbleTemp = board.getLeaderCards()[pos].getMarble();
 
-                ResourceStack inputStack = board.getLeaderCards()[pos].getInput();
-
-
-                LeaderCardAction leaderAbilityEnum = board.getLeaderCards()[pos].getAction();
-                if (leaderAbilityEnum == LeaderCardAction.DISCOUNT) leaderAbility = 0;
-                else if (leaderAbilityEnum == LeaderCardAction.EXTRADEPOT) leaderAbility = 1;
-                else if (leaderAbilityEnum == LeaderCardAction.WHITEMARBLE) leaderAbility = 2;
-                else if (leaderAbilityEnum == LeaderCardAction.PRODUCTIONPOWER) leaderAbility = 3;
-
-                id = board.getLeaderCards()[pos].getCardId();
-
-                victoryPoints = board.getLeaderCards()[pos].getVictoryPoints();
-
-                boolean generic = board.getLeaderCards()[pos].getCardsRequired().getGeneric();
-                needShields = required.getResource(ResourceType.SHIELDS);
-                needServants = required.getResource(ResourceType.SERVANTS);
-                needCoins = required.getResource(ResourceType.COINS);
-                needStones = required.getResource(ResourceType.STONES);
-
-                blueLv1 = leaderRequirements.getBlueCardLv1();
-                blueLv2 = leaderRequirements.getBlueCardLv2();
-                blueLv3 = leaderRequirements.getBlueCardLv3();
-                purpleLv1 = leaderRequirements.getPurpleCardLv1();
-                purpleLv2 = leaderRequirements.getPurpleCardLv2();
-                purpleLv3 = leaderRequirements.getPurpleCardLv3();
-                yellowLv1 = leaderRequirements.getYellowCardLv1();
-                yellowLv2 = leaderRequirements.getYellowCardLv2();
-                yellowLv3 = leaderRequirements.getYellowCardLv3();
-                greenLv1 = leaderRequirements.getGreenCardLv1();
-                greenLv2 = leaderRequirements.getGreenCardLv2();
-                greenLv3 = leaderRequirements.getGreenCardLv3();
-
-                int blueCard = leaderRequirements.getNeedBlueCard();
-                int purpleCard = leaderRequirements.getNeedPurpleCard();
-                int yellowCard = leaderRequirements.getNeedYellowCard();
-                int greenCard = leaderRequirements.getNeedGreenCard();
+                    ResourceStack inputStack = board.getLeaderCards()[pos].getInput();
 
 
-                if (leaderAbility == 0) {
-                    discountShields = discount.getResource(ResourceType.SHIELDS);
-                    discountServants = discount.getResource(ResourceType.SERVANTS);
-                    discountCoins = discount.getResource(ResourceType.COINS);
-                    discountStones = discount.getResource(ResourceType.STONES);
-                } else if (leaderAbility == 1) {
-                    if (depotTypeTemp == ResourceType.SHIELDS) depotType = 1;
-                    else if (depotTypeTemp == ResourceType.SERVANTS) depotType = 2;
-                    else if (depotTypeTemp == ResourceType.COINS) depotType = 3;
-                    else if (depotTypeTemp == ResourceType.STONES) depotType = 4;
-                } else if (leaderAbility == 2) {
-                    if (marbleTemp == Marble.BLUE) marbleConversion = 1;
-                    else if (marbleTemp == Marble.PURPLE) marbleConversion = 4;
-                    else if (marbleTemp == Marble.YELLOW) marbleConversion = 3;
-                    else if (marbleTemp == Marble.GREY) marbleConversion = 2;
-                } else {
-                    inputShields = inputStack.getResource(ResourceType.SHIELDS);
-                    inputServants = inputStack.getResource(ResourceType.SERVANTS);
-                    inputCoins = inputStack.getResource(ResourceType.COINS);
-                    inputStones = inputStack.getResource(ResourceType.STONES);
+                    LeaderCardAction leaderAbilityEnum = board.getLeaderCards()[pos].getAction();
+                    if (leaderAbilityEnum == LeaderCardAction.DISCOUNT) leaderAbility = 0;
+                    else if (leaderAbilityEnum == LeaderCardAction.EXTRADEPOT) leaderAbility = 1;
+                    else if (leaderAbilityEnum == LeaderCardAction.WHITEMARBLE) leaderAbility = 2;
+                    else if (leaderAbilityEnum == LeaderCardAction.PRODUCTIONPOWER) leaderAbility = 3;
 
-                    jollyOut = board.getLeaderCards()[pos].getJollyOut();
-                    outputFaith = board.getLeaderCards()[pos].getFaith();
+                    id = board.getLeaderCards()[pos].getCardId();
+
+                    victoryPoints = board.getLeaderCards()[pos].getVictoryPoints();
+
+                    boolean generic = board.getLeaderCards()[pos].getCardsRequired().getGeneric();
+                    needShields = required.getResource(ResourceType.SHIELDS);
+                    needServants = required.getResource(ResourceType.SERVANTS);
+                    needCoins = required.getResource(ResourceType.COINS);
+                    needStones = required.getResource(ResourceType.STONES);
+
+                    blueLv1 = leaderRequirements.getBlueCardLv1();
+                    blueLv2 = leaderRequirements.getBlueCardLv2();
+                    blueLv3 = leaderRequirements.getBlueCardLv3();
+                    purpleLv1 = leaderRequirements.getPurpleCardLv1();
+                    purpleLv2 = leaderRequirements.getPurpleCardLv2();
+                    purpleLv3 = leaderRequirements.getPurpleCardLv3();
+                    yellowLv1 = leaderRequirements.getYellowCardLv1();
+                    yellowLv2 = leaderRequirements.getYellowCardLv2();
+                    yellowLv3 = leaderRequirements.getYellowCardLv3();
+                    greenLv1 = leaderRequirements.getGreenCardLv1();
+                    greenLv2 = leaderRequirements.getGreenCardLv2();
+                    greenLv3 = leaderRequirements.getGreenCardLv3();
+
+                    int blueCard = leaderRequirements.getNeedBlueCard();
+                    int purpleCard = leaderRequirements.getNeedPurpleCard();
+                    int yellowCard = leaderRequirements.getNeedYellowCard();
+                    int greenCard = leaderRequirements.getNeedGreenCard();
+
+
+                    if (leaderAbility == 0) {
+                        discountShields = discount.getResource(ResourceType.SHIELDS);
+                        discountServants = discount.getResource(ResourceType.SERVANTS);
+                        discountCoins = discount.getResource(ResourceType.COINS);
+                        discountStones = discount.getResource(ResourceType.STONES);
+                    } else if (leaderAbility == 1) {
+                        if (depotTypeTemp == ResourceType.SHIELDS) depotType = 1;
+                        else if (depotTypeTemp == ResourceType.SERVANTS) depotType = 2;
+                        else if (depotTypeTemp == ResourceType.COINS) depotType = 3;
+                        else if (depotTypeTemp == ResourceType.STONES) depotType = 4;
+                    } else if (leaderAbility == 2) {
+                        if (marbleTemp == Marble.BLUE) marbleConversion = 1;
+                        else if (marbleTemp == Marble.PURPLE) marbleConversion = 4;
+                        else if (marbleTemp == Marble.YELLOW) marbleConversion = 3;
+                        else if (marbleTemp == Marble.GREY) marbleConversion = 2;
+                    } else {
+                        inputShields = inputStack.getResource(ResourceType.SHIELDS);
+                        inputServants = inputStack.getResource(ResourceType.SERVANTS);
+                        inputCoins = inputStack.getResource(ResourceType.COINS);
+                        inputStones = inputStack.getResource(ResourceType.STONES);
+
+                        jollyOut = board.getLeaderCards()[pos].getJollyOut();
+                        outputFaith = board.getLeaderCards()[pos].getFaith();
+                    }
+                    card.add(new LeaderCardJSONAbility(active, discarded, generic, leaderAbility, id, victoryPoints, needShields, needServants, needCoins, needStones, blueCard, purpleCard, yellowCard, greenCard, blueLv1, blueLv2, blueLv3, purpleLv1, purpleLv2, purpleLv3, yellowLv1, yellowLv2, yellowLv3, greenLv1, greenLv2, greenLv3, discountShields, discountServants, discountCoins, discountStones, depotType, marbleConversion, inputShields, inputServants, inputCoins, inputStones, jollyOut, outputFaith));
                 }
-                card.add(new LeaderCardJSONAbility(active, discarded, generic, leaderAbility, id, victoryPoints, needShields, needServants, needCoins, needStones, blueCard, greenCard, yellowCard, greenCard, blueLv1, blueLv2, blueLv3, purpleLv1, purpleLv2, purpleLv3, yellowLv1, yellowLv2, yellowLv3, greenLv1, greenLv2, greenLv3, discountShields, discountServants, discountCoins, discountStones, depotType, marbleConversion, inputShields, inputServants, inputCoins, inputStones, jollyOut, outputFaith));
             }
         }
         Gson gson = new Gson();

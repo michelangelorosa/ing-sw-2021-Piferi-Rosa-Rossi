@@ -4,6 +4,7 @@ import it.polimi.ingsw.Controller.ControllerClasses.ActionController;
 import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.Player;
+import it.polimi.ingsw.Model.GameModel.PopeTileClass;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class EndMarket extends Action {
             actionController.getResetWarehouse().emptyBackupResource();
 
             this.response = "SUCCESS";
+            actionController.getGame().getFaithTrack().popeSpaceSector(actionController.getGame().getPlayers());
             actionController.getGame().getCurrentPlayer().clearPossibleActions();
             actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.END_TURN);
             return "SUCCESS";
@@ -67,11 +69,15 @@ public class EndMarket extends Action {
             return illegalAction(message, actionController);
 
         HashMap<String, Integer> playersFaithPosition = new HashMap<>();
+        HashMap<String, PopeTileClass[]> playersPopeTiles = new HashMap<>();
 
-        for(Player player : actionController.getGame().getPlayers())
+        for(Player player : actionController.getGame().getPlayers()) {
             playersFaithPosition.put(player.getNickname(), player.getFaithTrackPosition());
+            playersPopeTiles.put(player.getNickname(), player.getPopeTiles());
+        }
 
         message.setPlayersFaithPosition(playersFaithPosition);
+        message.setPlayersPopeTiles(playersPopeTiles);
         message.setError(this.response);
         message.addPossibleAction(ActionType.END_TURN);
 

@@ -2,6 +2,7 @@ package it.polimi.ingsw.Model.Server;
 
 import it.polimi.ingsw.Controller.Actions.Action;
 import it.polimi.ingsw.Model.Enums.GameStatus;
+import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
@@ -110,15 +111,18 @@ public class ServerMessageHandler {
                             }
                             else {
                                 synchronized (serverConnection.getServer()) {
+                                    DEBUGGER.printDebug("Majority wanted to CONTINUE!");
                                     if (serverConnection.getServer().getController().getActionController().getGame().getPlayers().size() == 0) {
 
                                         serverConnection.getServer().getController().getActionController().JSONToGamePersistence();
                                         Server.setServerStatus(GameStatus.GAME);
 
-                                        try {
-                                            serverConnection.getServer().wait();
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
+                                        if(serverConnection.getServer().getController().getActionController().getGame().getGameType() != GameType.SINGLEPLAYER) {
+                                            try {
+                                                serverConnection.getServer().wait();
+                                            } catch (InterruptedException e) {
+                                                e.printStackTrace();
+                                            }
                                         }
                                     }
                                     else {
@@ -205,6 +209,7 @@ public class ServerMessageHandler {
                         }
                     }
                     else if(newName && !isLobby() && (Server.getServerStatus() == GameStatus.GAME || Server.getServerStatus() == GameStatus.LEADER)) {
+                        serverConnection.setName(name);
                         DEBUGGER.printDebug("New name but Game already started and Game is NOT empty");
                         sendError(serverConnection, "A game is already running in this server and you're not a player!\nGoodbye!");
                         serverConnectionLeave(serverConnection);
@@ -212,6 +217,7 @@ public class ServerMessageHandler {
                     }
                     //Game running, new name
                     else if(!newName&&!isLobby()){
+                        serverConnection.setName(name);
                         DEBUGGER.printDebug("Invalid name for game already running");
                         sendError(serverConnection, "A game is already running in this server and you're not a player!\nGoodbye!");
                         serverConnectionLeave(serverConnection);
@@ -390,13 +396,13 @@ public class ServerMessageHandler {
     public synchronized void serverConnectionLeave(ServerConnection serverConnection) {
         serverConnection.getServer().getController().getActionController().getGame().removePlayerByNickname(serverConnection.getName());
         serverConnection.getServer().removeFromNames(serverConnection.getName());
-        if (serverConnection.getServer().getNumberOfPlayers() != serverConnection.getServer().getController().getActionController().getGame().getPlayers().size())
-            serverConnection.getServer().setNumberOfPlayers(serverConnection.getServer().getController().getActionController().getGame().getPlayers().size());
+        //if (serverConnection.getServer().getNumberOfPlayers() != serverConnection.getServer().getController().getActionController().getGame().getPlayers().size()) {
+        //    serverConnection.getServer().setNumberOfPlayers(serverConnection.getServer().getController().getActionController().getGame().getPlayers().size());
+        //}
     }
 
     public void nameInServerLeave(ServerConnection serverConnection) {
         sendError(serverConnection, "A player with name " + serverConnection.getName() + " is already connected!");
-        serverConnectionLeave(serverConnection);
         serverConnection.close();
     }
 

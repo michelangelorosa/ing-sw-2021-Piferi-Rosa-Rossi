@@ -26,8 +26,8 @@ public class LeaderCardsCheat extends Action {
     @Override
     public String doAction(ActionController actionController) {
         if(Server.isCheatMode()) {
-            actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[0].setActive(true);
-            actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[1].setActive(true);
+            actionController.getGame().getCurrentPlayer().getBoard().activateLeaderCard(actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[0]);
+            actionController.getGame().getCurrentPlayer().getBoard().activateLeaderCard(actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[1]);
             this.response = "SUCCESS";
             return "SUCCESS";
         }

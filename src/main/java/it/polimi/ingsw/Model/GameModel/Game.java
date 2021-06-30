@@ -381,7 +381,7 @@ public class Game {
         if(player != null) {
             this.players.remove(player);
             if(currentPlayerIndex >= players.size())
-                currentPlayerIndex = players.size() - 1;
+                currentPlayerIndex = 0;
         }
     }
 
