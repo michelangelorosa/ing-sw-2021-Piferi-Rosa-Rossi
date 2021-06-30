@@ -379,20 +379,7 @@ public class JSONReaderTest {
         assertEquals(3, vaticanReportSections[1].getPoints());
         assertEquals(4, vaticanReportSections[2].getPoints());
     }
-/*
-    @Test
-    public void ReadPlayers() {
 
-        ArrayList<Player> players = JSONReader.playersDisconnections();
-
-        assertEquals("Giacomo", players.get(0).getNickname());
-        assertEquals(PlayerStatus.IN_GAME, players.get(0).getStatus());
-        assertEquals(0, players.get(0).getFaithTrackPosition());
-        assertEquals(false, players.get(3).hasInkwell());
-        System.out.println(players.get(0).getPossibleActions());
-    }
-
- */
 
 
 
@@ -541,7 +528,7 @@ public class JSONReaderTest {
         //int size = LeaderCards.size();
         //System.out.println(size);
     }
-
+/*
     @Test
     public void playerDisconnectionTest(){
         DevelopmentCardTable table = new DevelopmentCardTable();
@@ -553,6 +540,8 @@ public class JSONReaderTest {
         assertEquals(PopeTile.DOWN, players.get(0).getPopeTiles()[0].getPopeTile());
     }
 
+ */
+/*
     @Test
     public void developmentDisconnectionTest(){
         DevelopmentCardDeck[][] deck = JSONReader.developmentCardDecksDisconnection();
@@ -565,6 +554,8 @@ public class JSONReaderTest {
         }
     }
 
+ */
+/*
     @Test
     public void leaderDisconnectionTest(){
         ArrayList<LeaderCard> leader = JSONReader.convertLeaderCardPersistence();
@@ -573,5 +564,7 @@ public class JSONReaderTest {
             System.out.println(leader.get(pos).isDiscarded());
         }
     }
+
+ */
 
 }

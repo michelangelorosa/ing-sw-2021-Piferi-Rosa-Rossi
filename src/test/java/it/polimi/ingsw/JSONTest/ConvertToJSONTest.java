@@ -18,11 +18,6 @@ public class ConvertToJSONTest {
     VaticanReportSection[] vaticanReportSections = JSONReader.ReadVaticanReportSection();
     FaithTrack track = new FaithTrack();
 
-
-
-
-
-
     @Test
     public void convertStringTest() throws FileNotFoundException {
         System.out.println(test.covertFaithString(track.getCells()));
