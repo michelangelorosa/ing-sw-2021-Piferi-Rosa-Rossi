@@ -1,6 +1,8 @@
 package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
+import it.polimi.ingsw.Model.Enums.LeaderCardAction;
+import it.polimi.ingsw.Model.GameModel.Warehouse;
 import it.polimi.ingsw.View.ReducedModel.Player;
 import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 import it.polimi.ingsw.View.User.UserInteraction;
@@ -19,6 +21,7 @@ import it.polimi.ingsw.View.User.UserInteraction;
 public class ActivateLeaderCardMessage extends MessageToClient {
     private int leaderCardPosition;
     private RedLeaderCard leaderCard;
+    private Warehouse warehouse;
 
     /**
      * Constructor for ActivateLeaderCardMessage Class.
@@ -56,6 +59,14 @@ public class ActivateLeaderCardMessage extends MessageToClient {
         this.leaderCard = leaderCard;
     }
 
+    public Warehouse getWarehouse() {
+        return warehouse;
+    }
+
+    public void setWarehouse(Warehouse warehouse) {
+        this.warehouse = warehouse;
+    }
+
     /**
      * Checks if the message contains an error and updates the Client's view.
      * @param userInteraction Class containing the Reduced Game and the User Interface.
@@ -68,6 +79,8 @@ public class ActivateLeaderCardMessage extends MessageToClient {
 
         if(this.success()) {
             player.getLeaderCards()[this.leaderCardPosition] = this.leaderCard;
+            if(this.leaderCard.getAction() == LeaderCardAction.EXTRADEPOT)
+                player.setWarehouse(this.warehouse);
             this.displayAction(userInteraction);
         }
         else {

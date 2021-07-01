@@ -88,6 +88,8 @@ public class ActivateLeaderCardTest {
 
         message = action.messagePrepare(actionController);
         assertTrue(message instanceof ActivateLeaderCardMessage);
+        assertEquals("SUCCESS", message.getError());
+        assertEquals(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse(), ((ActivateLeaderCardMessage) message).getWarehouse());
         assertEquals(actionController.getGame().getCurrentPlayerNickname(), message.getPlayerNickname());
         assertEquals(0, ((ActivateLeaderCardMessage) message).getLeaderCardPosition());
         assertEquals(actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[0], ((ActivateLeaderCardMessage) message).getLeaderCard());
