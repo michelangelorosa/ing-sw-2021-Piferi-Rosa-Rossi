@@ -237,6 +237,17 @@ public class Game {
     }
 
     /**
+     * Checks if all players of the game are Idle
+     * @return true if all players are Idle.
+     */
+    public boolean allIdle() {
+        for(Player player : this.players)
+            if(player.getStatus() != PlayerStatus.IDLE)
+                return false;
+        return true;
+    }
+
+    /**
      * Currently unused
      * @return the previous player
      */

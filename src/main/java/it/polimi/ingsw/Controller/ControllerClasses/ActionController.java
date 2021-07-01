@@ -189,7 +189,8 @@ public class ActionController {
         this.game.getPlayerByNickname(disconnectedPlayer).disconnectionPrepareTurn();
 
         if(this.game.getCurrentPlayerNickname().equals(disconnectedPlayer) && this.game.getGameType() == GameType.MULTIPLAYER) {
-            this.game.nextPlayer();
+            while(!this.game.allIdle() && this.game.getCurrentPlayer().getStatus() == PlayerStatus.IDLE)
+                this.game.nextPlayer();
         }
 
         return new DisconnectedMessage(this, disconnectedPlayer);

@@ -104,6 +104,7 @@ public class Server {
             this.controller.getActionController().getPersistence().readFile();
             if (this.controller.getActionController().getPersistence().isGameStarted()) {
                 this.numberOfPlayers = this.controller.getActionController().getPersistence().getNumberOfPlayers();
+                System.out.println(this.numberOfPlayers);
                 new Thread(new PersistenceServerController(this)).start();
                 serverStatus = GameStatus.GAME;
             }
@@ -304,7 +305,14 @@ public class Server {
     }
 
     public boolean canReconnect() {
+        System.out.println("\n\nCAN RECONNECT: " + (this.connections.size() < numberOfPlayers));
+        System.out.println("connections.size() = " + connections.size());
+        System.out.println("numberOfPlayers = " + numberOfPlayers + "\n\n");
         return this.connections.size() < numberOfPlayers;
+    }
+
+    public boolean notConnected(ServerConnection serverConnection) {
+        return !this.connections.contains(serverConnection);
     }
 
     public void addConnection(ServerConnection serverConnection) {

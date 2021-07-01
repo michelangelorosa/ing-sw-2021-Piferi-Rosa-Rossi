@@ -285,4 +285,13 @@ public class GameTest {
         assertEquals("Too many players", e1.getMessage());
     }
 
+    @Test
+    public void allIdleTest() {
+        joiner(game);
+        assertFalse(game.allIdle());
+        for(Player p : game.getPlayers())
+            p.setStatus(PlayerStatus.IDLE);
+        assertTrue(game.allIdle());
+    }
+
 }

@@ -62,7 +62,7 @@ public class ServerMessageHandler {
                     if(persistence.isGameStarted() && serverConnection.getServer().gameIsEmpty()) {
                         DEBUGGER.printDebug("Game was already started");
                         serverConnection.setName(name);
-                        if(persistence.getPlayerNames().contains(serverConnection.getName())) {
+                        if(persistence.getPlayerNames().contains(serverConnection.getName()) && newName) {
                             synchronized (serverConnection.getServer()) {
                                 DEBUGGER.printDebug("Player: " + serverConnection.getName() + " successfully reconnected");
 
@@ -133,6 +133,10 @@ public class ServerMessageHandler {
                                 reconnection(serverConnection);
                                 return false;
                             }
+                        }
+                        else if(!newName) {
+                            sendError(serverConnection, "Another player with you name joined. Please choose another name!");
+                            serverConnection.close();
                         }
                         else
                             sendError(serverConnection, "Your name is not on the list of players. Please choose another name!");
@@ -390,15 +394,15 @@ public class ServerMessageHandler {
         serverConnection.send(message);
         serverConnection.addObserver(serverConnection.getServer().getController());
         serverConnection.getServer().getController().getActionController().getModelToView().addObserver(serverConnection);
-        serverConnection.getServer().addConnection(serverConnection);
+
+        if(serverConnection.getServer().notConnected(serverConnection))
+            serverConnection.getServer().addConnection(serverConnection);
     }
 
     public synchronized void serverConnectionLeave(ServerConnection serverConnection) {
         serverConnection.getServer().getController().getActionController().getGame().removePlayerByNickname(serverConnection.getName());
         serverConnection.getServer().removeFromNames(serverConnection.getName());
-        //if (serverConnection.getServer().getNumberOfPlayers() != serverConnection.getServer().getController().getActionController().getGame().getPlayers().size()) {
-        //    serverConnection.getServer().setNumberOfPlayers(serverConnection.getServer().getController().getActionController().getGame().getPlayers().size());
-        //}
+
     }
 
     public void nameInServerLeave(ServerConnection serverConnection) {
