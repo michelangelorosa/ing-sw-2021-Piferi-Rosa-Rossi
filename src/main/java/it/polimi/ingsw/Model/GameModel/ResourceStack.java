@@ -6,6 +6,7 @@ import it.polimi.ingsw.View.ReducedModel.RedResourceStack;
 /**
  * ResourceStack Class contains four integer private attributes indicating the amount of each
  * different type of resource: shields, servants, coins, stones.
+ * @author redrick99
  */
 public class ResourceStack extends RedResourceStack{
 
@@ -22,7 +23,7 @@ public class ResourceStack extends RedResourceStack{
 
     /**
      * Setter for a specified type of resource inside the stack.
-     * @param resourceType is the specified resource type.
+     * @param resourceType Specified resource type.
      */
     public void setResource(int resources, ResourceType resourceType) {
         if(resourceType == ResourceType.SHIELDS)
@@ -36,9 +37,9 @@ public class ResourceStack extends RedResourceStack{
     }
 
     /**
-     * This method is used to add resources of a specified type to the stack.
-     * @param resourcesToAdd is the number of resources to add.
-     * @param resourceType is the specified resource type.
+     * Adds resources of a specified type to the stack.
+     * @param resourcesToAdd Number of resources to add.
+     * @param resourceType Specified resource type.
      */
     public void addResource(int resourcesToAdd, ResourceType resourceType) {
         if(resourceType == ResourceType.SHIELDS)
@@ -52,8 +53,8 @@ public class ResourceStack extends RedResourceStack{
     }
 
     /**
-     * This method is used to add the resources of different ResourceStack.
-     * @param resourceStack is the stack containing the resources to add.
+     * Adds the resources of a different ResourceStack.
+     * @param resourceStack Stack containing the resources to add.
      */
     public void addToAllTypes(ResourceStack resourceStack){
         ResourceType[] types = ResourceType.values();
@@ -63,9 +64,9 @@ public class ResourceStack extends RedResourceStack{
     }
 
     /**
-     * This method is used to remove resources of a specified type from the stack.
+     * Removes resources of a specified type from the stack.
      * @param resourcesToRemove is the number of resources to remove.
-     * @param resourceType is the specified resource type.
+     * @param resourceType Specified resource type.
      */
     public void removeResource(int resourcesToRemove, ResourceType resourceType) {
         if(resourceType == ResourceType.SHIELDS)
@@ -79,8 +80,8 @@ public class ResourceStack extends RedResourceStack{
     }
 
     /**
-     * This method is used to remove the resources of different ResourceStack.
-     * @param resourceStack is the stack containing the resources to remove.
+     * Removes the resources of different ResourceStack.
+     * @param resourceStack Stack containing the resources to remove.
      */
     public void removeFromAllTypes(ResourceStack resourceStack) {
         ResourceType[] types = ResourceType.values();
@@ -93,7 +94,7 @@ public class ResourceStack extends RedResourceStack{
     }
 
     /**
-     * This method is used to create a copy of the ResourceStack-type object.
+     * Creates a copy of the ResourceStack-type object.
      * @return a copy of the stack.
      */
     public ResourceStack copyStack() {
@@ -120,7 +121,7 @@ public class ResourceStack extends RedResourceStack{
     }
 
     /**
-     * This method counts the total number of all Types of resources.
+     * Counts the total number of all Types of resources.
      * @return the number of resources.
      */
     public int totalResourcesToInt() {
@@ -129,6 +130,6 @@ public class ResourceStack extends RedResourceStack{
 
     /**Method for converting model classes to view classes*/
     public RedResourceStack toView() {
-        return ((RedResourceStack)this);
+        return this;
     }
 }

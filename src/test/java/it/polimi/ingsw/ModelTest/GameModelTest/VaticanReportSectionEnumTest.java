@@ -39,8 +39,11 @@ public class VaticanReportSectionEnumTest {
 
     @Test
     public void isCorrectTest(){
-        VaticanReportSection vatican = new VaticanReportSection(8, 1, 3);
-        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, ()->{vatican.isCorrect();});
+        VaticanReportSection vatican = new VaticanReportSection(1, 6, 3);
+        vatican.isCorrect();
+
+        vatican = new VaticanReportSection(8, 1, 3);
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, vatican::isCorrect);
         assertEquals("Vatican Report Section index out of bound", e.getMessage());
     }
 }

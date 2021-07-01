@@ -215,5 +215,6 @@ public class DevelopmentCardTableTest {
     @Test
     public void fromIdTest(){
         System.out.println(table.getCardFromId(3).getCost().getResource(ResourceType.COINS));
+        assertNull(table.getCardFromId(100));
     }
 }

@@ -465,14 +465,13 @@ public class ResourceManagerTest {
         LeaderRequirements leaderRequirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
         LeaderCard extraDepot1 = new LeaderCard(1, 1, stack, leaderRequirements, ResourceType.COINS);
         LeaderCard extraDepot2 = new LeaderCard(1, 1, stack, leaderRequirements, ResourceType.SHIELDS);
+        LeaderCard notExtraDepot = new LeaderCard(1, 1, stack, leaderRequirements, Marble.RED);
 
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("EXTRADEPOT LeaderAbility has to be active to activate extra depot");
-        resourceManager.activateLeaderDepot(extraDepot1);
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> {resourceManager.activateLeaderDepot(extraDepot1);});
+        assertEquals("EXTRADEPOT LeaderAbility has to be active to activate extra depot", e.getMessage());
 
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("EXTRADEPOT LeaderAbility has to be active to activate extra depot");
-        resourceManager.activateLeaderDepot(extraDepot2);
+        e = assertThrows(IllegalArgumentException.class, () -> {resourceManager.activateLeaderDepot(extraDepot2);});
+        assertEquals("EXTRADEPOT LeaderAbility has to be active to activate extra depot", e.getMessage());
 
         assertFalse(resourceManager.getWarehouse().isExtraWarehouseDepot1IsActive());
         assertFalse(resourceManager.getWarehouse().isExtraWarehouseDepot2IsActive());
@@ -488,5 +487,9 @@ public class ResourceManagerTest {
 
         assertEquals(ResourceType.COINS ,resourceManager.getExtraWarehouseDepotOne().getResourceType());
         assertEquals(ResourceType.SHIELDS ,resourceManager.getExtraWarehouseDepotTwo().getResourceType());
+
+        e = assertThrows(IllegalArgumentException.class, () -> {resourceManager.activateLeaderDepot(notExtraDepot);});
+        assertEquals("Needed EXTRADEPOT LeaderAbility to activate extra depot (was WHITEMARBLE instead)", e.getMessage());
     }
+
 }

@@ -103,6 +103,9 @@ public class DevelopmentCardSlotsTest {
         assertEquals(card1, slots.getSlots()[0].getFirstCard());
         assertEquals(card1, slots.getSlots()[1].getFirstCard());
         assertEquals(card1, slots.getSlots()[2].getFirstCard());
+
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> slots.addCard(10, card1));
+        assertEquals("ERROR, the slot does not exists", e.getMessage());
     }
 
     /**

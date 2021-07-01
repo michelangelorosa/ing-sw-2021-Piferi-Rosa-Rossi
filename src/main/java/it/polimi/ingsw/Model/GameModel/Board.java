@@ -7,17 +7,20 @@ import it.polimi.ingsw.Model.Enums.*;
 
 /**
  * Board Class contains all parts defining the playing board for each Player.
+ * <p>Attributes:</p>
+ * <ul>
+ *     <li>ResourceManager "resourceManager" contains both the Warehouse and the Strongbox</li>
+ *     <li>DevelopmentCardSlots "developmentCardSlots" contains all three Development Card slots on the player's board</li>
+ *     <li>LeaderCard[] "leaderCards": contains both leader cards owned by the player</li>
+ *     <li>BasicProduction "basicProduction": defines the basic production power of the player's board</li>
+ * </ul>
+ * @author everyone
  */
 public class Board implements Serializable {
-    /** resourceManager contains both the Warehouse and the Strongbox */
     private final ResourceManager resourceManager;
-    /** developmentCardSlots contains all three slots on the board */
     private final DevelopmentCardSlots developmentCardSlots;
-    /** leaderCards contains both leader cards owned by the player */
     private final LeaderCard[] leaderCards;
-    /** basicProduction defines the basic production power of the board */
     private BasicProduction basicProduction;
-
 
     /**
      * Constructor for Board Class.
@@ -30,42 +33,42 @@ public class Board implements Serializable {
     }
 
     /**
-     * Getter for "resourceManager" attribute in Board Class.
+     * Getter for "resourceManager" attribute.
      */
     public ResourceManager getResourceManager() {
         return resourceManager;
     }
 
     /**
-     * Getter for "developmentCardSlots" attribute in Board Class.
+     * Getter for "developmentCardSlots" attribute.
      */
     public DevelopmentCardSlots getDevelopmentCardSlots() {
         return developmentCardSlots;
     }
 
     /**
-     * Getter for "leaderCards" attribute in Board Class.
+     * Getter for "leaderCards" attribute.
      */
     public LeaderCard[] getLeaderCards() {
         return leaderCards;
     }
 
     /**
-     * Getter for "basicProduction" attribute in Board Class.
+     * Getter for "basicProduction" attribute.
      */
     public BasicProduction getBasicProduction() {
         return basicProduction;
     }
 
     /**
-     * Setter for "basicProduction" attribute in Board Class.
+     * Setter for "basicProduction" attribute.
      */
     public void setBasicProduction(BasicProduction basicProduction) {
         this.basicProduction = basicProduction;
     }
 
     /**
-     * Method used by two other methods inside this Class to count input resources of the Production.
+     * Counts input resources of the Production.
      * @param developmentCards Cards chosen to activate production.
      * @param leaderCards Leader Cards chosen to activate production.
      * @param wantsBasicProduction True if the player wants to activate the basic production.
@@ -98,7 +101,7 @@ public class Board implements Serializable {
     }
 
     /**
-     * Method used to tell if the player has enough resources to start production.
+     * Checks if the player has enough resources to start a production.
      * @param developmentCards Cards chosen to activate production.
      * @param leaderCards Leader Cards chosen to activate production.
      * @param wantsBasicProduction True if the player wants to activate the basic production.
@@ -119,7 +122,7 @@ public class Board implements Serializable {
     }
 
     /**
-     * Method used to get the total cost needed to start the Production.
+     * Gets the total cost needed to start the Production.
      * @param developmentCards Cards chosen to activate production.
      * @param leaderCards Leader Cards chosen to activate production.
      * @param wantsBasicProduction True if the player wants to activate the basic production.
@@ -134,7 +137,7 @@ public class Board implements Serializable {
     }
 
     /**
-     * Method used to get the total output of non-choosable outputs of the Production.
+     * Gets the total output of non-choosable outputs of the Production.
      * @param player The player who started a Production (to get faith points).
      * @param developmentCards Cards chosen to activate production.
      * @param leaderCards Leader Cards chosen to activate production.
@@ -177,7 +180,7 @@ public class Board implements Serializable {
     }
 
     /**
-     * Method used to check if the player can activate a given leaderCard (checks both Resources and Cards).
+     * Checks if the player can activate a given leaderCard (checks both Resources and Cards).
      * @param leaderCard Leader Card to be activated.
      * @return True if the card can be activated.
      */
@@ -201,7 +204,7 @@ public class Board implements Serializable {
     }
 
     /**
-     * Method used to activate a given Leader Card.
+     * Activates a given Leader Card.
      * @param leaderCard Leader Card to be activated.
      */
     public void activateLeaderCard(LeaderCard leaderCard) {

@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Model.GameModel;
 
 import it.polimi.ingsw.Model.Enums.ResourceType;
-import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.View.ReducedModel.RedWarehouse;
 import it.polimi.ingsw.View.ReducedModel.RedWarehouseDepot;
 
@@ -29,14 +28,14 @@ public class Warehouse extends RedWarehouse {
     }
 
     /**
-     * Getter for "extraWarehouseDepot1" attribute in Warehouse Class.
+     * Getter for "extraWarehouseDepot1" attribute.
      */
     public WarehouseDepot getExtraWarehouseDepot1() {
         return (WarehouseDepot) extraWarehouseDepot1;
     }
 
     /**
-     * Getter for "extraWarehouseDepot2" attribute in Warehouse Class.
+     * Getter for "extraWarehouseDepot2" attribute.
      */
     public WarehouseDepot getExtraWarehouseDepot2() {
         return (WarehouseDepot) extraWarehouseDepot2;
@@ -44,7 +43,7 @@ public class Warehouse extends RedWarehouse {
 
 
     /**
-     * This method resets the Warehouse to its initial state.
+     * Resets the Warehouse to its initial state.
      */
     public void reset() {
         ((WarehouseDepot)this.warehouseDepots[0]).setStoredResources(0);
@@ -57,7 +56,7 @@ public class Warehouse extends RedWarehouse {
     }
 
     /**
-     * This method is used to activate the extra depots and set its resource type when a card leader
+     * Activates an extra depot and sets its resource type when a card leader
      * ability is active.
      * <p>
      * The first time it is called, it activates the first extra depot, while the second time it
@@ -80,8 +79,8 @@ public class Warehouse extends RedWarehouse {
     }
 
     /**
-     * This method is used to count all resources of a certain type
-     * inside the warehouse (including the leader-activated depots, if they are active).
+     * Counts all resources of a certain type inside the warehouse
+     * (including the leader-activated depots, if they are active).
      * Specifically, the standard depots and the active extra depots are added to an ArrayList and
      * the resources are counted in a cycle.
      * @param resourceType specifies the type of resource searched.
@@ -107,7 +106,7 @@ public class Warehouse extends RedWarehouse {
     }
 
     /**
-     * This method is used to add resources of a certain type to a WarehouseDepot-type object. It returns the
+     * Adds resources of a certain type to a WarehouseDepot-type object. It returns the
      * number of resources which don't fit inside the depot.
      * The method checks if the depot's resource type is not equal to the specified resource type or if the
      * depot is full, in which case it displays an error message and returns the full number of resources given.
@@ -135,7 +134,7 @@ public class Warehouse extends RedWarehouse {
     }
 
     /**
-     * Method used to check if a specified resource can be added to a specified depot.
+     * Checks if a specified resource can be added to a specified depot.
      * @param type Type of the resource to be added.
      * @param depot Depot where the player wants to add the resource
      * @return True if the resource can be added.
@@ -147,7 +146,7 @@ public class Warehouse extends RedWarehouse {
     }
 
     /**
-     * Method used to remove a resource from a specified depot.
+     * Removes a resource from a specified depot.
      * @param depot Depot the player wants to remove resources from.
      */
     public void removeResourceFromDepot(WarehouseDepot depot) {
@@ -156,68 +155,11 @@ public class Warehouse extends RedWarehouse {
     }
 
     /**
-     * This method is used to remove a number of resources of a certain type from the depot.
-     * <p>
-     * --ASSUMPTION--: When a production that requires resources is activated, the resources are automatically
-     * extracted in the following order (which we have considered to be the best possible order for the player):
-     * <ol>
-     * <li>From the standard(not coming from a leader ability) depot of the specified resource type (if there are any)</li>
-     * <li>From the first extra depot (if it is active and of the specified resource type)</li>
-     * <li>From the second extra depot (if it is active and of the specified resource type)</li>
-     * </ol>
-     * <p>
-     * If the number of resources to remove is greater than the total number of resources of the specified type,
-     * the method displays an error message and immediately returns.
-     * <p>
-     * @param resourcesToRemove is the number of resources to be removed from the warehouse.
-     * @param resourceType is the type of resource which are to be removed from the warehouse
+     * Checks if two given warehouse depots can be switched.
+     * @param firstDepot First depot to be switched.
+     * @param secondDepot Second depot to be switched.
+     * @return true if the depots can be switched.
      */
-    public void removeResourcesByType(int resourcesToRemove, ResourceType resourceType) throws ModelException {
-        int resourceCount;
-        if(resourcesToRemove > this.countResourcesByType(resourceType)) {
-            throw new ModelException("Error: Warehouse doesn't have that many " + resourceType + " type resources");
-        }
-
-        for(WarehouseDepot depot : ((WarehouseDepot[])warehouseDepots))
-            if(depot.getResourceType() == resourceType) {
-                resourceCount = depot.getStoredResources();
-
-                if(resourceCount >= resourcesToRemove) {
-                    depot.removeResources(resourcesToRemove);
-                    return;
-                } else {
-                    depot.removeResources(resourceCount);
-                    resourcesToRemove -= resourceCount;
-                }
-            }
-
-
-        if(extraWarehouseDepot1.getResourceType() == resourceType) {
-            resourceCount = extraWarehouseDepot1.getStoredResources();
-
-            if(resourceCount >= resourcesToRemove) {
-                ((WarehouseDepot)extraWarehouseDepot1).removeResources(resourcesToRemove);
-                return;
-            } else {
-                ((WarehouseDepot)extraWarehouseDepot1).removeResources(resourceCount);
-                resourcesToRemove -= resourceCount;
-            }
-        }
-
-
-        if(extraWarehouseDepot2.getResourceType() == resourceType) {
-            resourceCount = extraWarehouseDepot2.getStoredResources();
-            if(resourceCount >= resourcesToRemove)
-                ((WarehouseDepot)extraWarehouseDepot2).removeResources(resourcesToRemove);
-            else
-                System.err.println("Error: Control Failure(1) -> Tried to remove more resources than stored");
-            resourcesToRemove = 0;
-        }
-
-        if(resourcesToRemove != 0)
-            System.err.println("Error: Control Failure(2) -> Tried to remove more resources than stored");
-    }
-
     public boolean canSwitchDepots(WarehouseDepot firstDepot, WarehouseDepot secondDepot) {
         if(firstDepot.getStoredResources() > secondDepot.getMaxResources() || secondDepot.getStoredResources() > firstDepot.getMaxResources())
             return false;
@@ -242,7 +184,7 @@ public class Warehouse extends RedWarehouse {
     }
 
     /**
-     * Method used to switch resources of two depots.
+     * Switches resources of two depots.
      * @param firstDepot First Depot to switch.
      * @param secondDepot Second Depot to switch.
      */
@@ -259,38 +201,7 @@ public class Warehouse extends RedWarehouse {
     }
 
     /**
-     * This method is used to switch resources from a depot to another inside the warehouse.
-     * <p>
-     * Given both the depots which are to be switched, the method first checks if it is actually possible to switch
-     * them by confronting their maximum resource capacity and the number of stored resources.
-     * <p>
-     * @param firstDepot is the first depot to switch.
-     * @param secondDepot is the second depot to switch.
-     * @return true if the depots have been switched, false if they cannot be switched.
-     */
-    public boolean switchDepotResources(WarehouseDepot firstDepot, WarehouseDepot secondDepot) {
-        if(firstDepot.getStoredResources() > secondDepot.getMaxResources() || secondDepot.getStoredResources() > firstDepot.getMaxResources()) {
-            System.err.println("Error: Too many resources -> Can't switch depots");
-            return false;
-        }
-        else if(firstDepot.getStoredResources() == secondDepot.getStoredResources() || (firstDepot.getStoredResources() <= secondDepot.getMaxResources() && secondDepot.getStoredResources() <= firstDepot.getMaxResources())) {
-            ResourceType tempType = firstDepot.getResourceType();
-            int tempStoredResources = firstDepot.getStoredResources();
-
-            firstDepot.setResourceType(secondDepot.getResourceType());
-            firstDepot.setStoredResources(secondDepot.getStoredResources());
-            secondDepot.setResourceType(tempType);
-            secondDepot.setStoredResources(tempStoredResources);
-            return true;
-        }
-        else {
-            System.err.println("Error: Too many resources -> Can't switch depots");
-            return false;
-        }
-    }
-
-    /**
-     * Method used to create a copy of the player's Warehouse.
+     * Creates a copy of the player's Warehouse.
      * @return The copied Warehouse.
      */
     public Warehouse copyWarehouse() {
@@ -314,7 +225,7 @@ public class Warehouse extends RedWarehouse {
     }
 
     /**
-     * Method used to revert the Warehouse to a previous condition.
+     * Reverts the Warehouse to a previous condition.
      * @param warehouse Warehouse for the current warehouse to be reverted to.
      */
     public void revertWarehouse(Warehouse warehouse) {
@@ -335,7 +246,7 @@ public class Warehouse extends RedWarehouse {
 
     /**Method for converting model classes to view classes*/
     public RedWarehouse toView() {
-        return (RedWarehouse)this;
+        return this;
     }
 
 }

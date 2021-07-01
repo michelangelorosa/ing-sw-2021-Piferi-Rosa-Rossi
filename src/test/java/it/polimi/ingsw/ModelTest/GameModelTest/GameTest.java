@@ -129,15 +129,23 @@ public class GameTest {
         LeaderRequirements leaderRequirements = new LeaderRequirements(blueCardLv1,purpleCardLv1,yellowCardLv1,greenCardLv1,blueCardLv2,purpleCardLv2,yellowCardLv2,greenCardLv2,blueCardLv3,purpleCardLv3,yellowCardLv3,greenCardLv3);
         LeaderRequirements leaderGeneric = new LeaderRequirements(blueCardLv1, purpleCardLv1, yellowCardLv1, greenCardLv1);
 
-        LeaderCard leaderCard1 = new LeaderCard(1,victoryPoints1,resourceStack1,leaderRequirements,resourceStackDiscount);
-        LeaderCard leaderCard2 = new LeaderCard(2,victoryPoints1,resourceStack1,leaderGeneric,resourceStackDiscount);
-        LeaderCard leaderCard3 = new LeaderCard(3,victoryPoints1,resourceStack2,leaderRequirements,resourceStackDiscount);
-        LeaderCard leaderCard4 = new LeaderCard(4,victoryPoints1,resourceStack1,leaderGeneric,resourceStackDiscount);
-        LeaderCard leaderCard5 = new LeaderCard(5,victoryPoints1,resourceStack1,leaderRequirements,resourceStackDiscount);
-        LeaderCard leaderCard6 = new LeaderCard(6,victoryPoints1,resourceStack3,leaderGeneric,resourceStackDiscount);
-        LeaderCard leaderCard7 = new LeaderCard(7,victoryPoints1,resourceStack4,leaderRequirements,resourceStackDiscount);
-        LeaderCard leaderCard8 = new LeaderCard(8,victoryPoints1,resourceStack1,leaderGeneric,resourceStackDiscount);
+        LeaderCard leaderCard1 = new LeaderCard(1,victoryPoints1,resourceStack1,leaderRequirements,ResourceType.COINS);
+        LeaderCard leaderCard2 = new LeaderCard(2,victoryPoints1,resourceStack1,leaderGeneric,ResourceType.COINS);
+        LeaderCard leaderCard3 = new LeaderCard(3,victoryPoints1,resourceStack2,leaderRequirements,ResourceType.COINS);
+        LeaderCard leaderCard4 = new LeaderCard(4,victoryPoints1,resourceStack1,leaderGeneric,ResourceType.COINS);
+        LeaderCard leaderCard5 = new LeaderCard(5,victoryPoints1,resourceStack1,leaderRequirements,ResourceType.COINS);
+        LeaderCard leaderCard6 = new LeaderCard(6,victoryPoints1,resourceStack3,leaderGeneric,ResourceType.COINS);
+        LeaderCard leaderCard7 = new LeaderCard(7,victoryPoints1,resourceStack4,leaderRequirements,ResourceType.COINS);
+        LeaderCard leaderCard8 = new LeaderCard(8,victoryPoints1,resourceStack1,leaderGeneric,ResourceType.COINS);
 
+        leaderCard1.setActive(true);
+        leaderCard2.setActive(true);
+        leaderCard3.setActive(true);
+        leaderCard4.setActive(true);
+        leaderCard5.setActive(true);
+        leaderCard6.setActive(true);
+        leaderCard7.setActive(true);
+        leaderCard8.setActive(true);
 
         game.getPlayers().get(0).getBoard().getLeaderCards()[0] = leaderCard1;
         game.getPlayers().get(0).getBoard().getLeaderCards()[1] = leaderCard2;
@@ -190,8 +198,6 @@ public class GameTest {
         assertEquals(game.getPlayers().get(3).getBoard().getLeaderCards()[0].getCardId(), game2.getPlayers().get(3).getBoard().getLeaderCards()[0].getCardId());
         assertEquals(game.getPlayers().get(3).getBoard().getLeaderCards()[1].getCardId(), game2.getPlayers().get(3).getBoard().getLeaderCards()[1].getCardId());
 
-        assertEquals(game.getPlayers().get(0).getBoard().getLeaderCards()[0].getDiscount().getResource(ResourceType.SHIELDS), game2.getPlayers().get(0).getBoard().getLeaderCards()[0].getDiscount().getResource(ResourceType.SHIELDS));
-
         assertEquals(game.getPlayers().get(0).getBoard().getLeaderCards()[0].isActive(), game2.getPlayers().get(0).getBoard().getLeaderCards()[0].isActive());
         assertEquals(game.getPlayers().get(0).getBoard().getLeaderCards()[1].isActive(), game2.getPlayers().get(0).getBoard().getLeaderCards()[1].isActive());
         assertEquals(game.getPlayers().get(1).getBoard().getLeaderCards()[0].isActive(), game2.getPlayers().get(1).getBoard().getLeaderCards()[0].isActive());
@@ -218,6 +224,10 @@ public class GameTest {
                 System.out.println("");
             }
         }
+
+        game.getPlayers().remove(game.getPlayerByNickname("Valentino"));
+        game.getPlayers().add(1, new Player("Lorenzo il Magnifico", 1, false));
+        game.persistence();
     }
 
     @Test
@@ -245,6 +255,7 @@ public class GameTest {
 
     @Test
     public void isPlayerInGameNicknameTest(){
+        assertFalse(game.isPlayerInGameNickname("Giacomo"));
         joiner(game);
         assertFalse(game.isPlayerInGameNickname("Antonio"));
         assertTrue(game.isPlayerInGameNickname("Giacomo"));
@@ -258,5 +269,20 @@ public class GameTest {
         assertFalse(game.isPlayerInGameNickname("Giacomo"));
     }
 
+    @Test
+    public void fillerTest() {
+        joiner(game);
+        assertEquals("Lorenzo", game.getPreviousPlayer().getNickname());
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> game.join("Gianni"));
+        assertEquals("Maximum number of players reached!", e.getMessage());
+        game.nextPlayer();
+        game.nextPlayer();
+        game.nextPlayer();
+        game.removePlayerByNickname("Lorenzo");
+        game.join("Giacomo");
+
+        ModelException e1 = assertThrows(ModelException.class, () -> game.gameStartPlayers(new ArrayList<>(), 10));
+        assertEquals("Too many players", e1.getMessage());
+    }
 
 }

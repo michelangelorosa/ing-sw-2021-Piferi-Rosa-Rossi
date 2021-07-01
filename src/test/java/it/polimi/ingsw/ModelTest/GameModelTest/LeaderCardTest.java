@@ -269,4 +269,11 @@ public class LeaderCardTest {
             assertSame(resourceType, leaderView.getResource());
 
     }
+
+    @Test
+    public void discardLeaderCardTest() {
+        leaderCard1.setActive(true);
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, leaderCard1 :: discard);
+        assertEquals(e.getMessage(), "You cannot discard this Leader Card");
+    }
 }

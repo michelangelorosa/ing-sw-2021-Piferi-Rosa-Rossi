@@ -164,6 +164,10 @@ public class FaithTrackTest {
         assertEquals(0, players.get(2).getFaithTrackPosition());
         assertEquals(3, players.get(3).getFaithTrackPosition());
 
+        players.add(new Player("FOUR", 10, false));
+        ModelException e = assertThrows(ModelException.class, () -> test.allAhead(players.get(4), players, 10));
+        assertEquals("Error: No player corresponds to position 10", e.getMessage());
+
     }
 
 
@@ -260,6 +264,7 @@ public class FaithTrackTest {
         players.get(3).stepAhead(6);
         test.popeSpaceSector(players);
 
+        players.get(2).stepAhead(14);
         players.get(3).stepAhead(6);
         test.popeSpaceSector(players);
 
@@ -268,7 +273,7 @@ public class FaithTrackTest {
         players.get(3).endTrack();
         assertEquals(2, players.get(0).getVictoryPoints());
         assertEquals(5, players.get(1).getVictoryPoints());
-        assertEquals(0, players.get(2).getVictoryPoints());
+        assertEquals(4, players.get(2).getVictoryPoints());
         assertEquals(7, players.get(3).getVictoryPoints());
 
         System.out.println(players.get(0).getPopeTiles()[0].getPopeTile());

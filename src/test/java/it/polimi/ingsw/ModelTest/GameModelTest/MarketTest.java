@@ -147,9 +147,22 @@ public class MarketTest {
         assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.COINS));
         assertEquals(1, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.STONES));
 
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("No White Marbles to convert.");
-        market2.whiteMarbleToResource(player, whiteMarbleTwo);
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> {market2.rowToResources(10, player);});
+        assertEquals("Model: Row index out of bounds.", e.getMessage());
+
+        e = assertThrows(IllegalArgumentException.class, () -> {market2.whiteMarbleToResource(player, whiteMarbleOne);});
+        assertEquals("No White Marbles to convert.", e.getMessage());
+
+        whiteMarbleTwo.setActive(false);
+
+        player.getBoard().getResourceManager().setTemporaryWhiteMarbles(1);
+        e = assertThrows(IllegalArgumentException.class, () -> {market2.whiteMarbleToResource(player, whiteMarbleTwo);});
+        assertEquals("Card has to be active to convert White Marble.", e.getMessage());
+
+        LeaderCard leaderCard = new LeaderCard(1, 1, player.getBoard().getResourceManager().getTemporaryResourcesToPay(), leaderRequirements, ResourceType.COINS);
+        leaderCard.setActive(true);
+        e = assertThrows(IllegalArgumentException.class, () -> {market2.whiteMarbleToResource(player, leaderCard);});
+        assertEquals("Card has to be of type WHITEMARBLE to convert White Marble.", e.getMessage());
     }
 
     /**
@@ -283,6 +296,9 @@ public class MarketTest {
         assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.SERVANTS));
         assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.COINS));
         assertEquals(0, player.getBoard().getResourceManager().getTemporaryResourcesToPay().getResource(ResourceType.STONES));
+
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> {market2.columnToResources(10, player);});
+        assertEquals("Model: Column index out of bounds.", e.getMessage());
 
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("No White Marbles to convert.");

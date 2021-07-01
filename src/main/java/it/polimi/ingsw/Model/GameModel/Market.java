@@ -11,6 +11,7 @@ import java.util.Random;
  * Market Class defines the contents and behaviour of the game's market. A Market Class-type
  * object contains a 2D-array final attribute containing marbles and an extra marble to
  * push inside the market whenever a player buys resources.
+ * @author redrick99
  */
 public class Market extends RedMarket {
     /**
@@ -21,6 +22,9 @@ public class Market extends RedMarket {
         this.reset();
     }
 
+    /**
+     * Alternative constructor for Market Class.
+     */
     public Market(Marble[][] marbles) {
         super(marbles);
     }
@@ -125,6 +129,10 @@ public class Market extends RedMarket {
         player.getBoard().getResourceManager().setTemporaryResourcesToPay(resourceStack);
     }
 
+    /**
+     * Realigns Market after a column choice.
+     * @param column index of the column to change.
+     */
     public void columnChange(int column) {
         Marble[] newMarbles = new Marble[3];
         newMarbles[0] = this.marbles[1][column];
@@ -137,6 +145,13 @@ public class Market extends RedMarket {
         this.marbles[2][column] = newMarbles[2];
     }
 
+    /**
+     * Converts a white marble to a resource based on the Leader Card given.
+     * @param player player who bought from the market.
+     * @param leaderCard Leader Card from which to get the white marble.
+     * @throws IllegalArgumentException if there are no white marbles to convert or if the Leader Card is not active or not
+     * of type WHITEMARBLE.
+     */
     public void whiteMarbleToResource(Player player, LeaderCard leaderCard) throws IllegalArgumentException {
         if(player.getBoard().getResourceManager().getTemporaryWhiteMarbles() <= 0)
             throw new IllegalArgumentException("No White Marbles to convert.");
@@ -149,6 +164,9 @@ public class Market extends RedMarket {
         player.getBoard().getResourceManager().removeWhiteMarble();
     }
 
+    /**
+     * Setter for "extraMarble" attribute.
+     */
     public void setExtraMarble(Marble extraMarble) {
         this.extraMarble = extraMarble;
     }
@@ -164,6 +182,6 @@ public class Market extends RedMarket {
     }
 
     public RedMarket toView(){
-        return (RedMarket)this;
+        return this;
     }
 }

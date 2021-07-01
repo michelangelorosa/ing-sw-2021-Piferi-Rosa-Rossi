@@ -1,13 +1,13 @@
 package it.polimi.ingsw.Model.GameModel;
 
 import it.polimi.ingsw.Model.Enums.ResourceType;
-import it.polimi.ingsw.Model.GameModel.ResourceStack;
 import it.polimi.ingsw.View.ReducedModel.RedStrongbox;
 
 /**
  * Strongbox Class defines the contents and the behaviour of the strongbox inside the player's board.
  * Each strongbox contains a ResourceStack-type object which contains the numbers all the four
  * different resource types.
+ * @author redrick99
  */
 public class Strongbox extends RedStrongbox {
 
@@ -19,24 +19,24 @@ public class Strongbox extends RedStrongbox {
     }
 
     /**
-     * Getter for "storedResources" attribute in Strongbox Class.
+     * Getter for "storedResources" attribute.
      */
     public ResourceStack getStoredResources() {
         return (ResourceStack) storedResources;
     }
 
     /**
-     * This method resets the Strongbox to its initial state.
+     * Resets the Strongbox.
      */
     public void reset() {
         ResourceType[] resourceTypes = ResourceType.values();
         for(int i = 1; i <= 4; i++)
-            ((ResourceStack)this.storedResources).setResource(0, resourceTypes[i]);
+            this.storedResources.setResource(0, resourceTypes[i]);
     }
 
     /**
-     * This method adds a set of resources to the strongbox.
-     * @param resourceStack is the set of resources to be added.
+     * Adds a set of resources to the strongbox.
+     * @param resourceStack Set of resources to be added.
      */
     public void addToAllTypes(ResourceStack resourceStack) {
         ResourceType[] resourceTypes = ResourceType.values();
@@ -46,8 +46,8 @@ public class Strongbox extends RedStrongbox {
     }
 
     /**
-     * This method removes a set of resources from the strongbox.
-     * @param resourceStack is the set of resources to be removed.
+     * Removes a set of resources from the strongbox.
+     * @param resourceStack Set of resources to be removed.
      */
     public void removeFromAllTypes(ResourceStack resourceStack) {
         ResourceType[] resourceTypes = ResourceType.values();
@@ -63,8 +63,7 @@ public class Strongbox extends RedStrongbox {
     }
 
     /**
-     * This method is used to count all resources of a certain type
-     * inside the strongbox.
+     * Counts all resources of a certain type inside the strongbox.
      * @param resourceType specifies the type of resource searched.
      * @return the number of resources counted.
      */
@@ -73,7 +72,7 @@ public class Strongbox extends RedStrongbox {
     }
 
     /**
-     * This method is used to add resources of a specified type to the strongbox.
+     * Adds resources of a specified type to the strongbox.
      * @param resourcesToAdd is the number of resources to add.
      * @param resourceType is the type of the resources which are to be added.
      */
@@ -82,10 +81,10 @@ public class Strongbox extends RedStrongbox {
     }
 
     /**
-     * This method is used to remove one resource of a specified type to the strongbox.
+     * Removes one resource of a specified type from the strongbox.
      * If the strongbox's number of resources of the specified type is equal or less than 0,
      * an exception is thrown.
-     * @param resourceType is the type of the resources which are to be added.
+     * @param resourceType Type of the resources which are to be added.
      * @exception IllegalArgumentException Thrown if the number of specified Type resource is 0.
      */
     public void removeOneResourcesByType(ResourceType resourceType) throws IllegalArgumentException {
@@ -96,7 +95,7 @@ public class Strongbox extends RedStrongbox {
     }
 
     /**
-     * Override method used for printing the contents of a Strongbox-type object.
+     * Overridden method used for printing the contents of a Strongbox-type object.
      * @return a String containing the information.
      */
     public String toString() {
@@ -105,7 +104,7 @@ public class Strongbox extends RedStrongbox {
 
     /**Method for converting model classes to view classes*/
     public RedStrongbox toView() {
-        return (RedStrongbox)this;
+        return this;
     }
 
 }

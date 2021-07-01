@@ -404,4 +404,28 @@ public class BoardTest {
         setResourceManagerStrongboxOnly(resourceManager);
     }
 
+    @Test
+    public void testFiller() {
+        ArrayList<LeaderCard> leaderCards = new ArrayList<>();
+        ArrayList<DevelopmentCard> developmentCards = generateDevCards();
+        Player player = new Player("Antonio", 0, true);
+
+        ResourceStack stack1 = new ResourceStack(1,1,0,0);
+        ResourceStack stack2 = new ResourceStack(0,0,1,1);
+        LeaderRequirements requirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
+
+        LeaderCard productionOne = new LeaderCard(4, 3, stack2, requirements, stack1, 1, 1);
+        LeaderCard card2 = new LeaderCard(5, 1, stack2, requirements, ResourceType.SHIELDS);
+        leaderCards.add(productionOne);
+        leaderCards.add(card2);
+
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> board.getFixedProductionOutput(player, developmentCards, leaderCards, false));
+        assertEquals("Model.Board: Leader Card was not active.", e.getMessage());
+
+        leaderCards.get(0).setActive(true);
+        leaderCards.get(1).setActive(true);
+        e = assertThrows(IllegalArgumentException.class, () -> board.getFixedProductionOutput(player, developmentCards, leaderCards, false));
+        assertEquals("Model.Board: Leader Card was not of type PRODUCTIONPOWER.", e.getMessage());
+    }
+
 }

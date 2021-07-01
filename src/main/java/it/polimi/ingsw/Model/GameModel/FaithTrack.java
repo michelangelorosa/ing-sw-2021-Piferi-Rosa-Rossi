@@ -8,10 +8,14 @@ import it.polimi.ingsw.View.ReducedModel.RedVaticanReportSection;
 
 import java.util.ArrayList;
 
+/**
+ * FaithTrack Class includes new methods of the Faith Track to be used on the game's Faith Track.
+ * @author francescopiferi99
+ */
 public class FaithTrack extends RedFaithTrack {
 
     /**
-     * Constructors for FaithTrack
+     * Constructors for FaithTrack.
      */
     public FaithTrack() {
         super();
@@ -20,6 +24,9 @@ public class FaithTrack extends RedFaithTrack {
         this.popeSpaceTHREE = true;
     }
 
+    /**
+     * Alternative constructor for FaithTrack.
+     */
     public FaithTrack(VaticanReportSection ONE, VaticanReportSection TWO, VaticanReportSection THREE) {
         super(ONE, TWO, THREE);
         this.popeSpaceONE = true;
@@ -27,6 +34,9 @@ public class FaithTrack extends RedFaithTrack {
         this.popeSpaceTHREE = true;
     }
 
+    /**
+     * Alternative constructor for FaithTrack.
+     */
     public FaithTrack(ArrayList<RedVaticanReportSection> sections) {
         super(sections);
         this.popeSpaceONE = true;
@@ -35,41 +45,59 @@ public class FaithTrack extends RedFaithTrack {
     }
 
     /**
-     * Getter for FatithCell
+     * Getter for "cells" attribute.
      */
     public FaithCell[] getCells() {
         return (FaithCell[]) cells;
     }
 
+    /**
+     * Getter for "ONE" attribute.
+     */
     public VaticanReportSection getONE() {
         return (VaticanReportSection) ONE;
     }
 
+    /**
+     * Getter for "TWO" attribute.
+     */
     public VaticanReportSection getTWO() {
         return (VaticanReportSection) TWO;
     }
 
+    /**
+     * Getter for "THREE" attribute.
+     */
     public VaticanReportSection getTHREE() {
         return (VaticanReportSection) THREE;
     }
 
+    /**
+     * Setter for "popeSpaceONE" attribute.
+     */
     public void setPopeSpaceONE(boolean popeSpaceONE) {
         this.popeSpaceONE = popeSpaceONE;
     }
 
+    /**
+     * Setter for "popeSpaceTWO" attribute.
+     */
     public void setPopeSpaceTWO(boolean popeSpaceTWO) {
         this.popeSpaceTWO = popeSpaceTWO;
     }
 
+    /**
+     * Setter for "popeSpaceTHREE" attribute.
+     */
     public void setPopeSpaceTHREE(boolean popeSpaceTHREE) {
         this.popeSpaceTHREE = popeSpaceTHREE;
     }
 
     /**
      * In this method all the players except for one, go ahead in the Faith Track.
-     * This happens if the player is still on for the game.
+     * This only happens if the player is still connected to the game.
      */
-    public boolean allAhead(Player player, ArrayList<Player> players, int steps) throws ModelException {
+    public void allAhead(Player player, ArrayList<Player> players, int steps) throws ModelException {
         if (player.getTurnPosition() < 0 || player.getTurnPosition() > 3) {
             throw new ModelException("Error: No player corresponds to position " + player.getTurnPosition());
         }
@@ -85,11 +113,11 @@ public class FaithTrack extends RedFaithTrack {
             if (player.getTurnPosition() != 3 && players.get(3).getStatus() == PlayerStatus.IN_GAME)
                 players.get(3).stepAhead(steps);
 
-        return checkFinishedTrack(players);
+        checkFinishedTrack(players);
     }
 
     /**
-     * This method controls if any player arrives at the end of the track
+     * Controls if any player arrives at the end of the track
      */
     public boolean checkFinishedTrack(ArrayList<Player> players) {
         for (Player player : players) {
@@ -99,7 +127,7 @@ public class FaithTrack extends RedFaithTrack {
     }
 
     /**
-     * At the end of the game this method is used to add the point of the faith cell to thei points
+     * At the end of the game this method is used to add the point of the faith cell to the players' points
      */
     public void addFinalPoints(ArrayList<Player> players) {
         for (Player player : players) {
@@ -164,7 +192,7 @@ public class FaithTrack extends RedFaithTrack {
 
     /**Method for converting model classes to view classes*/
     public RedFaithTrack toView() {
-        return (RedFaithTrack) this;
+        return this;
     }
 
 }

@@ -210,6 +210,9 @@ public class ActionController {
         persistence.writeFile(false, 0, new ArrayList<>());
     }
 
+    /**
+     * Overwrites the file containing all information needed about the Game in case the Server shuts down.
+     */
     public void overwritePersistenceJSON() {
         try {
             convertToJSON.convertGame(this.game);
@@ -218,6 +221,9 @@ public class ActionController {
         }
     }
 
+    /**
+     * Reads the file containing info about the game and sets it in game.
+     */
     public void JSONToGamePersistence() {
         this.game.persistence();
     }

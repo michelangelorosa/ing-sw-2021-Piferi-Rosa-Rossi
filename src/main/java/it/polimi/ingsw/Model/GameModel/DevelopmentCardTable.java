@@ -95,17 +95,17 @@ public class DevelopmentCardTable extends RedDevelopmentCardTable {
 
             }
         }
-        if(cardsInDeck != 48)
-            System.err.println("Error: Too many cards in .json File");
-
     }
 
+    /**
+     * Alternative Constructor for DevelopmentCardTable Class.
+     */
     public DevelopmentCardTable(RedDevelopmentCardDeck[][] decks) {
         super(decks);
     }
 
     /**
-     * This method returns the deck corresponding to the specified coordinates.
+     * Returns the deck corresponding to the specified coordinates.
      * @param row is the row corresponding to the deck.
      * @param column is the column corresponding to the deck.
      * @return the requested Development Card deck.
@@ -115,7 +115,7 @@ public class DevelopmentCardTable extends RedDevelopmentCardTable {
     }
 
     /**
-     * This method returns the card at the top of the deck corresponding to the specified coordinates.
+     * Returns the card at the top of the deck corresponding to the specified coordinates.
      * @param row the deck's row index.
      * @param column the deck's column index.
      * @return the requested Development Card.
@@ -130,7 +130,7 @@ public class DevelopmentCardTable extends RedDevelopmentCardTable {
     }
 
     /**
-     * This method is used to shuffle each deck on the DevelopmentCardTable.
+     * Shuffles each deck on the DevelopmentCardTable.
      */
     public void shuffleTable() {
         for(int i = 0; i < 3; i++)
@@ -139,7 +139,7 @@ public class DevelopmentCardTable extends RedDevelopmentCardTable {
     }
 
     /**
-     * This method is used to draw one card from a specified deck inside the Development Card Table.
+     * Draws one card from a specified deck inside the Development Card Table.
      * @param row the deck's row index.
      * @param column the deck's column index.
      * @return the requested Development Card.
@@ -170,7 +170,8 @@ public class DevelopmentCardTable extends RedDevelopmentCardTable {
     }
 
     /**
-     * Getter for developmentCard from id
+     * Returns the Development Card corresponding to the given id.
+     * @param id Id of the card to get.
      */
     public DevelopmentCard getCardFromId(int id) {
         for(int r = 0; r < 3; r++){
@@ -180,11 +181,10 @@ public class DevelopmentCardTable extends RedDevelopmentCardTable {
                 }
             }
         }
-        System.out.println("\n\n!!! ERROR: CARD WAS NULL AT getCardFromId !!! \n");
         return null;
     }
 
     public RedDevelopmentCardTable toView(){
-        return (RedDevelopmentCardTable) this;
+        return this;
     }
 }

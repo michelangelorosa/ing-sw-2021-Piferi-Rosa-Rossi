@@ -2,6 +2,10 @@ package it.polimi.ingsw.Model.GameModel;
 
 import it.polimi.ingsw.View.ReducedModel.RedFaithCell;
 
+/**
+ * FaithCell Class includes new methods for a Faith Cell to be used on the Model
+ * @author francescopiferi99
+ */
 public class FaithCell extends RedFaithCell{
 
     /**FaithCell's constructor*/
@@ -17,7 +21,7 @@ public class FaithCell extends RedFaithCell{
 
     /**Method for converting model classes to view classes*/
     public RedFaithCell toView() {
-        return (RedFaithCell) this;
+        return this;
     }
 
 }

@@ -2,15 +2,14 @@ package it.polimi.ingsw.Model.GameModel;
 
 import it.polimi.ingsw.Model.Enums.Color;
 import it.polimi.ingsw.Model.Enums.Level;
-import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
 import it.polimi.ingsw.View.ReducedModel.RedDevelopmentCardDeck;
 
 import java.util.Arrays;
 import java.util.Collections;
 
  /**
-  * DevelopmentCardDeck Class contains three private attributes: an array of DevelopmentCards, a color and a level.
-  * Another private integer attribute (cardsInDeck) is used to keep track of how many cards are in the deck.
+  * DevelopmentCardDeck Class defines methods to be used on Development Card Deck objects inside the Model.
+  * @author everyone
   */
 public class DevelopmentCardDeck extends RedDevelopmentCardDeck {
 
@@ -25,58 +24,56 @@ public class DevelopmentCardDeck extends RedDevelopmentCardDeck {
     }
 
      /**
-      * Getter for "cards" attribute in DevelopmentCardDeck Class.
+      * Getter for "cards" attribute i.
       */
     public DevelopmentCard[] getCards() {
         return (DevelopmentCard[]) cards;
     }
 
      /**
-      * Setter for "cards" attribute in DevelopmentCardDeck
+      * Setter for "cards" attribute.
       */
     public void setCards(DevelopmentCard[] cards) {
         this.cards = cards;
     }
 
      /**
-      * Setter for "color" attribute in DevelopmentCardDeck
+      * Setter for "color" attribute.
       */
     public void setColor(Color color) {
         this.color = color;
     }
 
      /**
-      * Setter for "level" attribute in DevelopmentCardDeck
+      * Setter for "level" attribute.
       */
     public void setLevel(Level level) {
         this.level = level;
     }
 
      /**
-      * This method uses a java.util.Collections standard method tu shuffle all the cards in the deck.
+      * Uses a java.util.Collections standard method tu shuffle all the cards in the deck.
       */
     public void shuffle() {
         Collections.shuffle(Arrays.asList(cards));
     }
 
-
-    public void resetCardsInDeck(){
-        this.cardsInDeck = 0;
-    }
-
+     /**
+      * Setter for "cardsInDeck" attribute.
+      */
     public void setCardsInDeck(int cardsInDeck){
         this.cardsInDeck = cardsInDeck;
     }
 
      /**
-      * This method adds a card in the "cards" array attribute while also incrementing "cardsInDeck".
+      * Adds a card in the "cards" array attribute while also incrementing "cardsInDeck".
       */
     public void addCard(DevelopmentCard card) {
         this.cards[cardsInDeck++] = card;
     }
 
      /**
-      * This method draws a card from the deck and updates the deck's length. If the deck is empty, a new
+      * Draws a card from the deck and updates the deck's length. If the deck is empty, a new
       * exception is thrown indicating the absence of cards in the deck.
       */
     public DevelopmentCard drawCard() throws IllegalArgumentException {
@@ -88,29 +85,6 @@ public class DevelopmentCardDeck extends RedDevelopmentCardDeck {
 
      /**Method for converting model classes to view classes*/
      public RedDevelopmentCardDeck toView() {
-         return (RedDevelopmentCardDeck) this;
+         return this;
      }
-
-    /* public DevelopmentCardDeck[][] prepareToRead(DevelopmentCardDeck[][] developmentCardDecks){
-
-         developmentCardDecks[0][0] = new DevelopmentCardDeck(Color.GREEN, Level.THREE);
-         developmentCardDecks[1][0] = new DevelopmentCardDeck(Color.GREEN, Level.TWO);
-         developmentCardDecks[2][0] = new DevelopmentCardDeck(Color.GREEN, Level.ONE);
-
-         developmentCardDecks[0][1] = new DevelopmentCardDeck(Color.BLUE, Level.THREE);
-         developmentCardDecks[1][1] = new DevelopmentCardDeck(Color.BLUE, Level.TWO);
-         developmentCardDecks[2][1] = new DevelopmentCardDeck(Color.BLUE, Level.ONE);
-
-         developmentCardDecks[0][2] = new DevelopmentCardDeck(Color.YELLOW, Level.THREE);
-         developmentCardDecks[1][2] = new DevelopmentCardDeck(Color.YELLOW, Level.TWO);
-         developmentCardDecks[2][2] = new DevelopmentCardDeck(Color.YELLOW, Level.ONE);
-
-         developmentCardDecks[0][3] = new DevelopmentCardDeck(Color.PURPLE, Level.THREE);
-         developmentCardDecks[1][3] = new DevelopmentCardDeck(Color.PURPLE, Level.TWO);
-         developmentCardDecks[2][3] = new DevelopmentCardDeck(Color.PURPLE, Level.ONE);
-
-
-         return developmentCardDecks;
-     }
-     */
 }

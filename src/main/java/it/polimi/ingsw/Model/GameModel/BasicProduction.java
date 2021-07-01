@@ -52,6 +52,6 @@ public class BasicProduction extends RedBasicProduction {
 
     /**Method for converting model classes to view classes*/
     public RedBasicProduction toView() {
-        return (RedBasicProduction) this;
+        return this;
     }
 }

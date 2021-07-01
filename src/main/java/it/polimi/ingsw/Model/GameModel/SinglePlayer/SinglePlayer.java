@@ -83,7 +83,7 @@ public class SinglePlayer {
         return game.getPlayerByNickname("Lorenzo il Magnifico");
     }
 
-    private void lorenzoDrawsCards(Game game, Color color) {
+    protected void lorenzoDrawsCards(Game game, Color color) {
         DevelopmentCardTable table = game.getDevelopmentCardTable();
         Random random = new Random();
         int row = random.nextInt(3);
@@ -96,9 +96,7 @@ public class SinglePlayer {
             break;
             case YELLOW: column = 2;
             break;
-            case PURPLE: column = 3;
-            break;
-            default: column = -1;
+            default: column = 3;
         }
 
         DevelopmentCardDeck deck = table.getDeck(row, column);

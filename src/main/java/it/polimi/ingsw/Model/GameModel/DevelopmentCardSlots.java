@@ -6,6 +6,10 @@ import it.polimi.ingsw.View.ReducedModel.RedDevelopmentCardSlots;
 
 import java.util.ArrayList;
 
+/**
+ * DevelopmentCardSlots Class defines methods used on the Model to modify the player's Development Card Slots.
+ * @author francescopiferi99
+ */
 public class DevelopmentCardSlots extends RedDevelopmentCardSlots {
 
     /**
@@ -19,8 +23,7 @@ public class DevelopmentCardSlots extends RedDevelopmentCardSlots {
     }
 
     /**
-     * Getter
-     * @return an array of CardSlot
+     * Getter for "slots" attribute.
      */
     public CardSlot[] getSlots() {
         return (CardSlot[]) slots;
@@ -28,14 +31,14 @@ public class DevelopmentCardSlots extends RedDevelopmentCardSlots {
 
 
     /**
-     * If the player buys the seventh card he wins
+     * Checks if the player bought his 7th Development Card.
      */
     public boolean victory(){
         return (slots[0].getLevelOccupied() + slots[1].getLevelOccupied() + slots[2].getLevelOccupied()) == 7;
     }
 
     /**
-     * This method is use to count the final point
+     * Counts the final points.
      * @return points which is an int that contains the sum of the points of the player.
      */
     public int totalPoints(){
@@ -48,7 +51,7 @@ public class DevelopmentCardSlots extends RedDevelopmentCardSlots {
     }
 
     /**
-     * This method is used to count the number of cards, divided by color and level, on the player's board
+     * Counts the number of cards, divided by color and level, on the player's board.
      * @return sum
      */
     public LeaderRequirements sumResources(){
@@ -85,7 +88,7 @@ public class DevelopmentCardSlots extends RedDevelopmentCardSlots {
     }
 
     /**
-     * This method is used to count the number of cards, divided only by color, on the player's board
+     * Counts the number of cards, divided only by color, on the player's board
      * @return sum
      */
     public LeaderRequirements sumColors(){
@@ -106,7 +109,7 @@ public class DevelopmentCardSlots extends RedDevelopmentCardSlots {
     }
 
     /**
-     * This method use to add a card in a particular slot.
+     * Adds a card in a particular slot.
      * @param i is the number of the slot I want to use.
      * @param card Is the card I want to add.
      */
@@ -116,15 +119,18 @@ public class DevelopmentCardSlots extends RedDevelopmentCardSlots {
     }
 
     /**
-     * This method is used to count the total number of Development Cards on the Board
+     * Counts the total number of Development Cards on the Board
      * @return the number of cards
      */
     public int countAllCards() {
         return this.getSlots()[0].getLevelOccupied() + this.getSlots()[1].getLevelOccupied() + this.getSlots()[2].getLevelOccupied();
     }
 
+    /**
+     * Converts this to View.
+     */
     public RedDevelopmentCardSlots toView(){
 
-        return (RedDevelopmentCardSlots) this;
+        return this;
     }
 }

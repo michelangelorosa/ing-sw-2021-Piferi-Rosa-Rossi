@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 /**
  * Invoked at the start of the game this class shuffles the Leader Cards for the players to chose
+ * @author michelangelorosa
 */
 public class LeaderCardShuffle {
     private static boolean active = false;
@@ -38,23 +39,18 @@ public class LeaderCardShuffle {
      * Randomly gets 4 Leader Cards for the player to chose at the beginning of the game. The cards that aren't chosen are discarded.
      * @return      LeaderCard[4]
      */
-    public static RedLeaderCard[] getLeaderShuffled(){
+    public static RedLeaderCard[] getLeaderShuffled() {
         ArrayList<LeaderCard> LeaderCards = leaderCardsManager();
-        try{
         int size = LeaderCards.size();
-        if(size<4)
+        if (size < 4)
             return null;
         RedLeaderCard[] cardsPicked = new RedLeaderCard[4];
-        for(int i=0;i<4;i++){
+        for (int i = 0; i < 4; i++) {
             int rand = (int) (Math.random() * size);
-            cardsPicked[i]=LeaderCards.get(rand);
-            LeaderCards=leaderCardsManager(rand);
+            cardsPicked[i] = LeaderCards.get(rand);
+            LeaderCards = leaderCardsManager(rand);
             size--;
         }
-            return cardsPicked;
-        }catch (ArrayIndexOutOfBoundsException e){
-            e.printStackTrace();
-        }
-            return null;
-        }
+        return cardsPicked;
+    }
 }

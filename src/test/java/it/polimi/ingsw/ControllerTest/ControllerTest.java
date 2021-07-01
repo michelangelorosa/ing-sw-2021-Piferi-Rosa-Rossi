@@ -86,6 +86,9 @@ public class ControllerTest {
         observableClass.addObserver(controller);
         observableClass.notify(action);
 
+        assertTrue(observableClass.containsObserver(controller));
+        observableClass.clearObservers();
+        assertFalse(observableClass.containsObserver(controller));
     }
 
     @Test

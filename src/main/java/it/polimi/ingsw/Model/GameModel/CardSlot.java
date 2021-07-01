@@ -4,9 +4,14 @@ import it.polimi.ingsw.Model.Enums.Color;
 import it.polimi.ingsw.Model.Enums.Level;
 import it.polimi.ingsw.View.ReducedModel.RedCardSlot;
 
+/**
+ * CardSlot Class defines methods of a RedCardSlot object to be used only on the Model.
+ * @author francescopiferi99
+ */
 public class CardSlot extends RedCardSlot {
+
     /**
-     * constructor for CardSlot
+     * Constructor for CardSlot.
      */
     public CardSlot(){
         super();
@@ -14,31 +19,30 @@ public class CardSlot extends RedCardSlot {
     }
 
     /**
-     * Setter for CardSlot
+     * Setter for CardSlot.
      */
     public void setLevelOccupied(int levelOccupied){this.levelOccupied = levelOccupied;}
 
     /**
-     * Getter for levelOccupied
+     * Getter for levelOccupied.
      */
     public int getLevelOccupied(){
         return levelOccupied;
     }
 
     /**
-     * In this method firstly I check if the slot is full or if I can't add the card in this slot. If I can add the card
-     * I memorize it in the array cards.
-     * @param card is the card to add
+     * Check if the slot is full or if a card cannot be added to this slot. If the card can be added, it is stored in the cards array.
+     * @param card Card to add.
      */
-
     public void addCard(DevelopmentCard card){
         if(isFull()) System.out.println("Slot is full, select another slot!");
         else if(!canAdd(card)) System.out.println("Can't add a level " + card.getLevel() + " card in this slot!");
         else cards[levelOccupied++] = card;
     }
 
-    /** This method is use to calculate the points relative at the Card Slots
-     * @return an int which is the points relative at the cards on the slots
+    /**
+     * Calculates the points relative to the Card Slots.
+     * @return an int which is the total points relative to the cards in the slots.
      */
     public int finalPoints(){
         int points = 0;
@@ -50,8 +54,8 @@ public class CardSlot extends RedCardSlot {
     }
 
     /**
-     * This method is use to get the first card of the slot.
-     * @return the card on the top of the slot
+     * Gets the first card of the slot.
+     * @return the card on the top of the slot.
      */
     public DevelopmentCard getFirstCard(){
         if(levelOccupied == 0) return null;
@@ -60,9 +64,9 @@ public class CardSlot extends RedCardSlot {
 
     /**
      * Counts the number of cards of a certain color and level.
-     * @param color the color of the card I want to count
-     * @param level the level of the card I want to count
-     * @return the result of the counter
+     * @param color the color of the card to count.
+     * @param level the level of the card to count.
+     * @return the result of the counter.
      */
     public int sumType(Color color, Level level){
         int count = 0;
@@ -75,8 +79,8 @@ public class CardSlot extends RedCardSlot {
     }
 
     /**
-     * Counts the number of card of a certain color.
-     * @param color the color of the card I want to count
+     * Counts the number of cards of a certain color.
+     * @param color Color of the card to count
      * @return the result of the counter
      */
     public int sumColors(Color color){
@@ -89,12 +93,15 @@ public class CardSlot extends RedCardSlot {
         return count;
     }
 
+    /**
+     * Getter for cards attribute.
+     */
     public DevelopmentCard[] getCards() {
         return (DevelopmentCard[]) cards;
     }
 
-    /**Method for converting model classes to view classes*/
+    /**Converts model classes to view classes*/
     public RedCardSlot toView() {
-        return (RedCardSlot) this;
+        return  this;
     }
 }

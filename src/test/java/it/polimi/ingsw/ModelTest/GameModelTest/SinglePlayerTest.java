@@ -34,6 +34,7 @@ public class SinglePlayerTest {
         protected Player getLorenzo(Game game) {
             return super.getLorenzo(game);
         }
+
     }
     SinglePlayerTestClass singlePlayer = new SinglePlayerTestClass();
     Game game = new Game();
@@ -59,6 +60,7 @@ public class SinglePlayerTest {
     public void lorenzoTurnTest(){
         game.join("Pippo");
         game.join("Lorenzo il Magnifico");
+        game.getPlayers().get(1).stepAhead(25);
 
         assertEquals(game.getPlayers().get(1), singlePlayer.getLorenzo(game));
 
@@ -66,7 +68,7 @@ public class SinglePlayerTest {
             singlePlayer.tokenParser(game, t);
 
         assertEquals(4, singlePlayer.getLorenzoCards());
-        assertEquals(3, singlePlayer.getLorenzoFaithPoints());
+        assertEquals(24, singlePlayer.getLorenzoFaithPoints());
 
         singlePlayer.lorenzoTurn(game);
 

@@ -6,8 +6,8 @@ import it.polimi.ingsw.View.ReducedModel.RedDevelopmentCard;
 import it.polimi.ingsw.View.ReducedModel.RedResourceStack;
 
 /**
- * DevelopmentCard Class describes the different attributes and methods
- * needed for the creation of a Development Card.
+ * DevelopmentCard Class describes the different methods needed for the creation and usage of a Development Card inside the Model.
+ * @author everyone
  */
 public class DevelopmentCard extends RedDevelopmentCard {
 
@@ -24,63 +24,63 @@ public class DevelopmentCard extends RedDevelopmentCard {
     }
 
     /**
-     * Setter for "victoryPoints" attribute in DevelopmentCard Class.
+     * Setter for "victoryPoints" attribute.
      */
     public void setVictoryPoints(int victoryPoints) {
         this.victoryPoints = victoryPoints;
     }
 
     /**
-     * Setter for "outputFaith" attribute in DevelopmentCard Class.
+     * Setter for "outputFaith" attribute.
      */
     public void setOutputFaith(int outputFaith) {
         this.outputFaith = outputFaith;
     }
 
     /**
-     * Getter for "cost" attribute in DevelopmentCard Class.
+     * Getter for "cost" attribute.
      */
     public ResourceStack getCost() {
         return (ResourceStack) cost;
     }
 
     /**
-     * Setter for "cost" attribute in DevelopmentCard Class.
+     * Setter for "cost" attribute.
      */
     public void setCost(RedResourceStack cost) {
         this.cost = cost;
     }
 
     /**
-     * Getter for "input" attribute in DevelopmentCard Class.
+     * Getter for "input" attribute.
      */
     public ResourceStack getInput() {
         return (ResourceStack)input;
     }
 
     /**
-     * Setter for "input" attribute in DevelopmentCard Class.
+     * Setter for "input" attribute.
      */
     public void setInput(RedResourceStack input) {
         this.input = input;
     }
 
     /**
-     * Getter for "output" attribute in DevelopmentCard Class.
+     * Getter for "output" attribute.
      */
     public ResourceStack getOutput() {
         return (ResourceStack)output;
     }
 
     /**
-     * Setter for "output" attribute in DevelopmentCard Class.
+     * Setter for "output" attribute.
      */
     public void setOutput(RedResourceStack output) {
         this.output = output;
     }
 
-    /**Method for converting model classes to view classes*/
+    /**Converts model classes to view classes*/
     public RedDevelopmentCard toView() {
-        return (RedDevelopmentCard)this;
+        return this;
     }
 }

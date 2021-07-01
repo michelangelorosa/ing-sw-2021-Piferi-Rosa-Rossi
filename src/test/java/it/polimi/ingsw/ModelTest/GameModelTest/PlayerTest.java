@@ -4,10 +4,7 @@ import static org.junit.Assert.*;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
-import it.polimi.ingsw.Model.GameModel.FaithCell;
-import it.polimi.ingsw.Model.GameModel.FaithTrack;
 import it.polimi.ingsw.Model.GameModel.Player;
-import it.polimi.ingsw.Model.JSON.*;
 import org.junit.Test;
 
 /**
@@ -19,9 +16,6 @@ public class PlayerTest {
     Player playerTwo = new Player("nikola", 1, false);
     Player playerThree = new Player("roberto", 2, false);
     Player playerFour = new Player("giacomo", 3, false);
-
-    FaithTrack test = new FaithTrack();
-    FaithCell[] cells = JSONReader.ReadFaithCells();
 
     /**
      * Constructor and Getter test for Player Class.
@@ -109,6 +103,9 @@ public class PlayerTest {
         assertFalse(playerOne.canDo(ActionType.MARKET_CHOOSE_ROW));
         playerOne.clearPossibleActions();
         assertTrue(playerOne.getPossibleActions().isEmpty());
+
+        playerOne.addPossibleAction(ActionType.DELETE_LEADERCARD);
+        playerOne.clearPossibleActions();
     }
 
     /**Test for toView method*/

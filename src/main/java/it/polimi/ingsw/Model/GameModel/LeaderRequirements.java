@@ -5,6 +5,7 @@ import it.polimi.ingsw.View.ReducedModel.RedLeaderRequirements;
 /**
  * Defines a Card with the characteristics required from Leader Card; a Level and a Colour.
  * If The cards doesn't require a minimum level it is set to 1
+ * @author michelangelorosa, francescopiferi
  */
 public class LeaderRequirements extends RedLeaderRequirements {
 
@@ -46,6 +47,6 @@ public class LeaderRequirements extends RedLeaderRequirements {
     }
 
     public RedLeaderRequirements toView(){
-        return ((RedLeaderRequirements)this);
+        return this;
     }
 }

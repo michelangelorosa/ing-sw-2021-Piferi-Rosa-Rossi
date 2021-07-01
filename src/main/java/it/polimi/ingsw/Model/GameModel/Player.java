@@ -22,6 +22,7 @@ import java.util.ArrayList;
  *     <li>PopeTileClass[] "popeTiles": all popeTiles owned by the player</li>
  *     <li>ArrayList(ActionType) "possibleActions": list of all possible actions the player can perform at a certain moment.</li>
  * </ul>
+ * @author redrick99
  */
 public class Player implements Serializable {
     private final String nickname;
@@ -206,10 +207,16 @@ public class Player implements Serializable {
         this.victoryPoints += victoryPoints;
     }
 
+    /**
+     * Checks if the player meets requirements to finish the game.
+     */
     public boolean hasFinished() {
         return this.getBoard().getDevelopmentCardSlots().countAllCards() >= 7 || this.getFaithTrackPosition() >= 24;
     }
 
+    /**
+     * Counts the player's final victory points.
+     */
     public void countFinalVictoryPoints() {
         this.victoryPoints += this.getBoard().getDevelopmentCardSlots().totalPoints();
     }
@@ -240,11 +247,18 @@ public class Player implements Serializable {
         return player;
     }
 
+    /**
+     * Checks if the player was paying or adding resources.
+     * @return True if the player was paying or adding resource.
+     */
     public boolean wasPayingOrAdding() {
        return this.possibleActions.contains(ActionType.ADD_RESOURCE) || this.possibleActions.contains(ActionType.CHOOSE_CARD_SLOT) || this.possibleActions.contains(ActionType.CHOOSE_PRODUCTION_OUTPUT)
                || this.possibleActions.contains(ActionType.PAY_RESOURCE_CARD) || this.possibleActions.contains(ActionType.PAY_RESOURCE_PRODUCTION) || this.possibleActions.contains(ActionType.CHOOSE_LEADER_CARD);
     }
 
+    /**
+     * Prepares the player in case he disconnected from the game.
+     */
     public void disconnectionPrepareTurn() {
         clearPossibleActions();
         if(!this.possibleActions.contains(ActionType.ACTIVATE_LEADERCARD))
