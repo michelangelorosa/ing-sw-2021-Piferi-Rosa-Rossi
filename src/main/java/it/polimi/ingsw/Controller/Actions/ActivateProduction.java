@@ -211,14 +211,14 @@ public class ActivateProduction extends Action {
 
             actionController.getChooseProductionOutput().getOutput().addToAllTypes(actionController.getGame().getCurrentPlayer().getBoard().getFixedProductionOutput(actionController.getGame().getCurrentPlayer(), devCards, leaderCards, this.basicProduction));
 
-            if(this.firstLeaderCard)
-                actionController.getChooseProductionOutput().setFirstLeaderCard(true);
 
-            if(this.secondLeaderCard)
-                actionController.getChooseProductionOutput().setSecondLeaderCard(true);
+            actionController.getChooseProductionOutput().setFirstLeaderCard(this.firstLeaderCard);
 
-            if(this.basicProduction)
-                actionController.getChooseProductionOutput().setBasicProduction(true);
+
+            actionController.getChooseProductionOutput().setSecondLeaderCard(this.secondLeaderCard);
+
+
+            actionController.getChooseProductionOutput().setBasicProduction(this.basicProduction);
 
             if(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().isEmpty()) {
                 this.response = "No Payment";
