@@ -1,8 +1,8 @@
 package it.polimi.ingsw.Model.Enums;
 
 /**
- * Color enum-type Class contains all possible colors a
- * Development Card (or Development Card Deck) can have.
+ * Pope tile enum-type Class contains all possible positions for that a
+ * PopeTile can have as per Game rules.
  */
 
 public enum PopeTile {

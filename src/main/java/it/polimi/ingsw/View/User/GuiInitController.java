@@ -7,6 +7,7 @@ import it.polimi.ingsw.View.Client.ClientConnection;
 import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.Player;
 import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
+import it.polimi.ingsw.View.ReducedModel.RedPopeTileClass;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -51,6 +52,7 @@ public class GuiInitController implements UserInterface {
     @FXML private TextField port;
     @FXML private Button connect;
     @FXML protected Button confirmLeader;
+    @FXML protected Button nameExit;
     @FXML private TextField name;
     @FXML protected CheckBox card1;
     @FXML protected CheckBox card2;
@@ -122,6 +124,7 @@ public class GuiInitController implements UserInterface {
         loader.setController(this);
         winnerMessage = loader.load();
         Scene scene = new Scene(winnerMessage);
+        getStage().close();
 
         winnerStage = new Stage();
         winnerStage.initModality(Modality.APPLICATION_MODAL);
@@ -154,6 +157,7 @@ public class GuiInitController implements UserInterface {
         media = new Media(string);
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.play();
+            mediaPlayer.setVolume(0.3);
     }
 
     /**
@@ -161,13 +165,52 @@ public class GuiInitController implements UserInterface {
      * @throws IOException  If there's an error reading the FXML file
      */
     public void nameSelection() throws IOException {
-        //this.event=event;
         Parent nameSelection;
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Assets/Fxml/Name.fxml"));
         loader.setController(this);
         nameSelection = loader.load();
         Scene scene = new Scene(nameSelection);
+
+        //Getting the stage information
+        Stage window;
+        window = getStage();
+        window.setScene(scene);
+    }
+
+    /**
+     * Asks the user for a name
+     * @throws IOException  If there's an error reading the FXML file
+     */
+    public void persistence() throws IOException {
+        Parent nameSelection;
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Assets/Fxml/Name.fxml"));
+        loader.setController(this);
+        nameSelection = loader.load();
+        Scene scene = new Scene(nameSelection);
+        name.setText(this.clientConnection.getClient().getUser());
+        name.setDisable(true);
+        nameConfirm.setText("Resume");
+        nameExit.setText("Restart");
+        nameConfirm.setOnAction((EventHandler) event1 -> {
+                nameConfirm.setDisable(true);
+                nameExit.setDisable(true);
+            try {
+                this.clientConnection.send(false);
+            } catch (IOException e) {
+               displayError(e.toString());
+            }
+        });
+        nameExit.setOnAction((EventHandler) event1 -> {
+            nameConfirm.setDisable(true);
+            nameExit.setDisable(true);
+            try {
+                this.clientConnection.send(true);
+            } catch (IOException e) {
+                displayError(e.toString());
+            }
+        });
 
         //Getting the stage information
         Stage window;
@@ -527,6 +570,24 @@ public class GuiInitController implements UserInterface {
     }
 
     /**
+     * By giving a Pope tile it returns the corresponding image to visualize its activation
+     * @param popeTile      The pope tile to get the image from
+     * @param tileNumber    The pope tile number to get the resource from [2-4]
+     * @return              The pope image
+     */
+    protected Image getImage(PopeTile popeTile,int tileNumber){
+        String source = "Assets/Game/";
+        String token;
+        if(popeTile.equals(PopeTile.No))
+            return null;
+        if(popeTile.equals(PopeTile.UP))
+            token="pope"+tileNumber+"on.png";
+            else
+            token="pope"+tileNumber+"off.png";
+        return new Image(getClass().getResource(source+token).toExternalForm());
+    }
+
+    /**
      * Used to get the Server Address and Server Port as input from the player.
      * @return An ArrayList of object.
      * - First element in the ArrayList -> String containing server address.
@@ -660,11 +721,11 @@ public class GuiInitController implements UserInterface {
             //Opens an error message
             case DISPLAY_ERROR:
             {
-                Platform.runLater(new Runnable() {
+                if(userInteraction.getMessage().getPlayerNickname().equals(board.myPlayer().getNickname()))
+                    Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
                         try {
-                            if(userInteraction.getMessage().getPlayerNickname().equals(board.myPlayer().getNickname()))
                             displayError(userInteraction.getMessage().getError());
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -690,6 +751,19 @@ public class GuiInitController implements UserInterface {
                 break;
             }
             //Unused, it's for cli only
+            case RESTART_OR_CONTINUE:{
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            persistence();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                break;
+            }
             case WAITING:
                 break;
             default:

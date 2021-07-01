@@ -21,7 +21,7 @@
             <Font name="Dominican" size="38.0" />
          </font>
       </Text>
-      <Button layoutX="140.0" layoutY="337.0" mnemonicParsing="false" onAction="#close" prefHeight="39.0" prefWidth="125.0" text="Exit">
+      <Button fx:id="nameExit" layoutX="140.0" layoutY="337.0" mnemonicParsing="false" onAction="#close" prefHeight="39.0" prefWidth="125.0" text="Exit">
          <font>
             <Font name="Baskerville" size="20.0" />
          </font>

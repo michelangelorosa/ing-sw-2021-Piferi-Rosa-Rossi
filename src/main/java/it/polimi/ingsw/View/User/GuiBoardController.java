@@ -8,6 +8,7 @@ import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.View.Client.Client;
 import it.polimi.ingsw.View.Client.ClientConnection;
 import it.polimi.ingsw.View.ReducedModel.*;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -67,46 +68,17 @@ public class GuiBoardController extends GuiInitController{
     @FXML ImageView extraMarble;
     private ImageView[][] activeMarket;
     @FXML private Text resourcesTitle;
-    @FXML private Label remStones;
-    @FXML private Label remShields;
-    @FXML private Label remCoins;
-    @FXML private Label remServants;
-    @FXML private Label strongboxStones;
-    @FXML private Label strongboxShields;
-    @FXML private Label strongboxCoins;
-    @FXML private Label strongboxServants;
-    @FXML private Button resetPayment;
-    @FXML private Button cancelPayment;
-    @FXML private Button confirmPayment;
+    @FXML private Label remStones,remShields,remCoins,remServants;
+    @FXML private Label strongboxStones,strongboxShields,strongboxServants,strongboxCoins;
+    @FXML private Button resetPayment,cancelPayment,confirmPayment;
     @FXML private ImageView inkwell;
-    @FXML private ImageView warehouse1;
-    @FXML private ImageView warehouse21;
-    @FXML private ImageView warehouse22;
-    @FXML private ImageView warehouse31;
-    @FXML private ImageView warehouse32;
-    @FXML private ImageView warehouse33;
-    @FXML private ImageView leader1;
-    @FXML private ImageView leader2;
-    @FXML private ImageView leader1resource1;
-    @FXML private ImageView leader1resource2;
-    @FXML private ImageView leader2resource1;
-    @FXML private ImageView leader2resource2;
-    @FXML private ImageView dev11;
-    @FXML private ImageView dev12;
-    @FXML private ImageView dev13;
-    @FXML private ImageView dev21;
-    @FXML private ImageView dev22;
-    @FXML private ImageView dev23;
-    @FXML private ImageView dev31;
-    @FXML private ImageView dev32;
-    @FXML private ImageView dev33;
-    @FXML private ImageView shields;
-    @FXML private ImageView servants;
-    @FXML private ImageView stones;
-    @FXML private ImageView coins;
-    @FXML private ImageView firstFloor;
-    @FXML private ImageView secondFloor;
-    @FXML private ImageView thirdFloor;
+    @FXML private ImageView warehouse1,warehouse21,warehouse22,warehouse31,warehouse32,warehouse33;
+    @FXML private ImageView leader1,leader2;
+    @FXML private ImageView leader1resource1,leader1resource2,leader2resource1,leader2resource2;
+    @FXML private ImageView dev11,dev12,dev13,dev21,dev22,dev23,dev31,dev32,dev33;
+    @FXML private ImageView shields,servants,stones,coins;
+    @FXML private ImageView firstFloor,secondFloor,thirdFloor;
+    @FXML private ImageView pope2,pope3,pope4;
     @FXML private Button button;
     @FXML protected Button production;
     @FXML protected Button nextTurn;
@@ -114,11 +86,9 @@ public class GuiBoardController extends GuiInitController{
     @FXML protected Button cardTableBtn;
     @FXML protected Button marketBtn;
     @FXML protected Button storeResBtn;
-    @FXML protected ImageView strongboxStonesClickable;
-    @FXML protected ImageView strongboxShieldsClickable;
-    @FXML protected ImageView strongboxServantsClickable;
-    @FXML protected ImageView strongboxCoinsClickable;
+    @FXML protected ImageView strongboxStonesClickable,strongboxShieldsClickable,strongboxServantsClickable,strongboxCoinsClickable;
     @FXML protected GridPane faithPane, otherBoards, chooserPane;
+    @FXML protected RadioButton switch1,switch2,switch3;
     private Boolean[] productionOutput = new Boolean[3];
     private int resourceNumber;
     @FXML private Text cardTitle1,cardTitle2,cardTitle3;
@@ -218,6 +188,9 @@ public class GuiBoardController extends GuiInitController{
             leader1resource1.setImage(null);            leader1resource2.setImage(null);
             leader2resource1.setImage(null);            leader2resource2.setImage(null);
             leader1.setImage(null);                     leader2.setImage(null);
+            resetPayment.setDisable(true);          cancelPayment.setDisable(true);
+            switch1.setDisable(true);               switch2.setDisable(true);
+            switch3.setDisable(true);
         }
         else{
             if(this.client.getUserInteraction().getGame().getMyPlayer().getTemporaryResources().isEmpty()) {
@@ -239,7 +212,117 @@ public class GuiBoardController extends GuiInitController{
             resourcesTitle.setText("Drag the resources on the warehouse depot");
             remStones.setText(String.valueOf(resourcesToAdd.getResource(ResourceType.STONES)));                 remCoins.setText(String.valueOf(resourcesToAdd.getResource(ResourceType.COINS)));
             remShields.setText(String.valueOf(resourcesToAdd.getResource(ResourceType.SHIELDS)));               remServants.setText(String.valueOf(resourcesToAdd.getResource(ResourceType.SERVANTS)));
+            cancelPayment.setDisable(true);
             refresh();
+            switch1.setOnAction(event -> {
+                if(switch1.isSelected()){
+                    if(switch2.isSelected()&&switch3.isSelected()){
+                        switch2.setSelected(false);
+                    }
+                    else{
+                        if(switch2.isSelected())
+                            cancelPayment.setDisable(false);
+                        if(switch3.isSelected())
+                            cancelPayment.setDisable(false);
+                    }
+                }else{
+                    cancelPayment.setDisable(true);
+                }
+            });
+            switch2.setOnAction(event -> {
+                if(switch2.isSelected()){
+                    if(switch1.isSelected()&&switch3.isSelected()){
+                        switch1.setSelected(false);
+                    }
+                    else{
+                        if(switch1.isSelected())
+                            cancelPayment.setDisable(false);
+                        if(switch3.isSelected())
+                            cancelPayment.setDisable(false);
+                    }
+                }else{
+                    cancelPayment.setDisable(true);
+                }
+            });
+            switch3.setOnAction(event -> {
+                if(switch3.isSelected()){
+                    if(switch2.isSelected()&&switch1.isSelected()){
+                        switch2.setSelected(false);
+                    }
+                    else{
+                        if(switch2.isSelected())
+                            cancelPayment.setDisable(false);
+                        if(switch1.isSelected())
+                            cancelPayment.setDisable(false);
+                    }
+                }else{
+                    cancelPayment.setDisable(true);
+                }
+            });
+            cancelPayment.setOnAction(event -> {
+              if(myPlayer().getPossibleActions().contains(ActionType.SWITCH_DEPOT)){
+                  int depot1,depot2;
+                  if(switch1.isSelected())
+                  {
+                      depot1=2;
+                      if(switch2.isSelected())
+                          depot2=1;
+                      else
+                          depot2=0;
+                  }
+                  if(switch2.isSelected())
+                  {
+                      depot1=1;
+                      if(switch1.isSelected())
+                          depot2=2;
+                      else
+                          depot2=0;
+                  }
+                  else{
+                      depot1=0;
+                      if(switch2.isSelected())
+                          depot2=1;
+                      else
+                          depot2=2;
+                  }
+                  sendAction(new SwitchDepot(depot1,depot2));
+                  resourcePicker.close();
+
+                  Platform.runLater(new Runnable() {
+                      @Override
+                      public void run() {
+                          try {
+                              getResources(false);
+                          } catch (Exception e) {
+                              e.printStackTrace();
+                          }
+                      }
+                  });
+
+                  refresh();
+              }
+            });
+
+            resetPayment.setOnAction(event -> {
+                if(myPlayer().getPossibleActions().contains(ActionType.RESET_WAREHOUSE)){
+
+                    sendAction(new ResetWarehouse());
+                    resourcePicker.close();
+
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                getResources(false);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
+                    refresh();
+                }
+            });
         }
 
         shields.setOnDragDetected(new EventHandler<MouseEvent>() {
@@ -1254,12 +1337,12 @@ public class GuiBoardController extends GuiInitController{
             {
                 ArrayList<ResourceType> emptyResource = new ArrayList<>();
                 ChooseProductionOutput productionOutputAction = new ChooseProductionOutput();
-                productionOutputAction.setBasicProductionOutput(emptyResource);
+                productionOutputAction.setBasicProductionOutput(null);
                 productionOutputAction.setBasicProduction(false);
                 productionOutputAction.setFirstLeaderCard(false);
-                productionOutputAction.setFirstLeaderCardOutput(emptyResource);
+                productionOutputAction.setFirstLeaderCardOutput(null);
                 productionOutputAction.setSecondLeaderCard(false);
-                productionOutputAction.setSecondLeaderCardOutput(emptyResource);
+                productionOutputAction.setSecondLeaderCardOutput(null);
                 production.setText("Activate Production");
                 sendAction(productionOutputAction);
                 refresh();
@@ -1645,7 +1728,7 @@ public class GuiBoardController extends GuiInitController{
 
         setResourceData(getResourceData(player));
         setCardData(getCardData(player));
-        setFaithData(getFaithData());
+        setFaithData(getFaithData(player));
 
             if(player.hasInkwell())
                 inkwell.setImage(getImage(true));
@@ -1871,7 +1954,7 @@ public class GuiBoardController extends GuiInitController{
     protected void refresh(){
                 setResourceData(getResourceData(myPlayer()));
                 setCardData(getCardData(myPlayer()));
-                setFaithData(getFaithData());
+                setFaithData(getFaithData(myPlayer()));
                 //freeze(!this.client.getUserInteraction().getMessage().getPlayerNickname().equals(myPlayer().getNickname()));
     }
 
@@ -1881,26 +1964,50 @@ public class GuiBoardController extends GuiInitController{
      * ‣ faithData[0]:   4 images of the players to display onto the track
      * ‣ faithData[1]:   their Row position onto the Faith grid
      * ‣ faithData[2]:   their Columns position onto the Faith grid.
+     * ‣ faithData[3]:   3 images for the PopeTile data
      */
-    protected Object[] getFaithData(){
+    protected Object[] getFaithData(Player player){
         ArrayList<Player> players = this.client.getUserInteraction().getGame().getPlayers();
-
+        boolean bool=false;
         Object[] faithData;
-        faithData = new Object[3];
+        faithData = new Object[4];
         Image[] resourceImages;
         resourceImages = new Image[4];
         int[] faithRow;
         faithRow = new int[4];
         int[] faithColumn;
         faithColumn = new int[4];
-        for(int i=0;i<players.size();i++){
-            resourceImages[i]=getImage(players.get(i));
+        Image[] popeImages;
+        popeImages = new Image[3];
+        Player notMyPlayer=null;
+
+        if(this.client.getUserInteraction().getGame().getGameType().equals(GameType.MULTIPLAYER)){
+            if(myPlayer().equals(players.get(0)))
+                notMyPlayer=players.get(1);
+            else
+                notMyPlayer=players.get(0);
+        }
+
+            for(int i=0;i<players.size();i++){
+            if(this.client.getUserInteraction().getGame().getGameType().equals(GameType.MULTIPLAYER)){
+                if(players.get(i).equals(player)){
+                    resourceImages[i]=getImage(myPlayer());
+                }else
+                    resourceImages[i]=getImage(notMyPlayer);
+            }else
+                resourceImages[i]=getImage(players.get(i));
+
             faithColumn[i]=faithColumn(players.get(i).getFaithTrackPosition());
             faithRow[i]=faithRow(players.get(i).getFaithTrackPosition());
-        }
+            }
+        popeImages[0] = getImage(player.getPopeTiles()[0].getPopeTile(),2);
+        popeImages[1] = getImage(player.getPopeTiles()[0].getPopeTile(),3);
+        popeImages[2] = getImage(player.getPopeTiles()[0].getPopeTile(),4);
+
         faithData[0] = resourceImages;
         faithData[1] = faithRow;
         faithData[2] = faithColumn;
+        faithData[3] = popeImages;
 
         return faithData;
     }
@@ -1919,9 +2026,14 @@ public class GuiBoardController extends GuiInitController{
         faithRow = (int[]) faithData[1];
         int[] faithColumn;
         faithColumn = (int[]) faithData[2];
+        Image[] popeImages;
+        popeImages = (Image[]) faithData[3];
+
+        pope2.setImage(popeImages[0]);pope2.setFitHeight(80);pope2.setFitWidth(80);
+        pope3.setImage(popeImages[1]);pope3.setFitHeight(80);pope3.setFitWidth(80);
+        pope4.setImage(popeImages[2]);pope4.setFitHeight(80);pope4.setFitWidth(80);
 
         faithPane.getChildren().clear();
-
         for(int i=0;i<players.size();i++){
             ImageView faithImage = new ImageView();
             faithImage.setImage(resourceImages[i]);
@@ -1941,7 +2053,6 @@ public class GuiBoardController extends GuiInitController{
                 GridPane.setHalignment(faithImage, HPos.RIGHT);
                 GridPane.setValignment(faithImage, VPos.TOP);
             }
-
         }
     }
 
