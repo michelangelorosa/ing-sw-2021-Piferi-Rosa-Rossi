@@ -7,10 +7,8 @@ import java.util.ArrayList;
 import it.polimi.ingsw.Controller.ControllerClasses.Observer;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 import it.polimi.ingsw.View.ReducedModel.Game;
-import it.polimi.ingsw.View.ReducedModel.RedDevelopmentCard;
 import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 import it.polimi.ingsw.Controller.Actions.*;
-import it.polimi.ingsw.View.User.ClientExceptionHandler;
 import it.polimi.ingsw.View.User.UIActions;
 import it.polimi.ingsw.View.Utility.DebuggingTools.Debugger;
 import it.polimi.ingsw.View.Utility.DebuggingTools.DebuggerFactory;
@@ -226,6 +224,9 @@ public class ClientConnection implements Runnable, Observer<Action> {
         objectOutputStream.reset();
     }
 
+    /**
+     * Getter for "client" attribute.
+     */
     public Client getClient() {
         return client;
     }

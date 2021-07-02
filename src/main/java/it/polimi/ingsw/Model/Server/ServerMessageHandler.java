@@ -5,13 +5,10 @@ import it.polimi.ingsw.Model.Enums.GameStatus;
 import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Exceptions.ModelException;
-import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
-import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.Model.GameModel.Player;
 import it.polimi.ingsw.Model.MessagesToClient.GameSetMessage;
 import it.polimi.ingsw.Model.Persistance.Persistence;
 import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
-import it.polimi.ingsw.View.Utility.ANSIColors;
 import it.polimi.ingsw.View.Utility.DebuggingTools.Debugger;
 import it.polimi.ingsw.View.Utility.DebuggingTools.DebuggerFactory;
 import it.polimi.ingsw.View.Utility.DebuggingTools.DebuggerType;
@@ -20,17 +17,23 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
 
+/**
+ * ServerMessageHandler Class handles the majority of interactions held between the Client and the Server.
+ * <p><b>Attributes:</b></p>
+ * <ul>
+ *     <li>int "attempt": keeps count of the client's attempt at reconnecting to the server</li>
+ *     <li>Debugger "DEBUGGER": debugger for ServerMessageHandler</li>
+ * </ul>
+ */
 public class ServerMessageHandler {
     private int attempt=0;
-    private static final String S = "[SERVER] ";
-    private static final String SU = ANSIColors.FRONT_BRIGHT_BLUE + "[SERVER UTILITY] " + ANSIColors.RESET;
-    private static final String SE = ANSIColors.FRONT_BRIGHT_RED + "[SERVER ERROR] " + ANSIColors.RESET;
     private final Debugger DEBUGGER = DebuggerFactory.getDebugger(DebuggerType.SERVER_MESSAGE_HANDLER);
 
     /**
      * nameRequest is the first interaction the server has with the client, it asks for its name and validates it
      * If a game is not running the client is asked to proceed to the Lobby for further setup of the game
-     * If a game is running  the client can resume its game
+     * If a game is running  the client can resume its game.
+     * <p>Method also handles special cases like reconnection with Server and persistence reconnections</p>
      * @param serverConnection      the server connection
      * @return                      <b>true</b> if the client has to show the lobby
      *                              <b>false</b> if the client has to skip directly to the game
@@ -45,11 +48,11 @@ public class ServerMessageHandler {
                 name = serverConnection.getIn().readUTF();
                 System.out.print("[SmHANDLER] Got name: "+name);
                 if(name.isEmpty())
-                    sendError(serverConnection, SE + "Name is empty, pick another name!");
+                    sendError(serverConnection, "Name is empty, pick another name!");
                 else if(name.isBlank())
-                    sendError(serverConnection, SE + "Name is blank, pick another name!");
+                    sendError(serverConnection, "Name is blank, pick another name!");
                 else if(name.length() > 16)
-                    sendError(serverConnection, SE + "Name is longer than 16 characters, pick another name!");
+                    sendError(serverConnection, "Name is longer than 16 characters, pick another name!");
                 else {
                     //If the name is already in the game this value is FALSE, if the name is new it is added to the server and set to TRUE
                     boolean newName = nameInsert(serverConnection,name);
@@ -67,8 +70,6 @@ public class ServerMessageHandler {
                                 DEBUGGER.printDebug("Player: " + serverConnection.getName() + " successfully reconnected");
 
                                 serverConnection.getServer().addConnection(serverConnection);
-                                //serverConnection.getServer().getController().getActionController().getModelToView().addObserver(serverConnection);
-                                //serverConnection.addObserver(serverConnection.getServer().getController());
 
                                 if (serverConnection.getServer().getConnectedPlayers() >= persistence.getNumberOfPlayers()) {
                                     System.out.println("Notifying all");
@@ -175,7 +176,7 @@ public class ServerMessageHandler {
                         serverConnection.setName(name);
                         DEBUGGER.printDebug("New game in Lobby!");
                         if(freeSpace(serverConnection)){
-                                System.out.println(S + "Name: \"" + name + "\" is valid");
+                                DEBUGGER.printDebug("Name: \"" + name + "\" is valid");
                                 serverConnection.getServer().playerReady();
                                 return true;
                         }
@@ -281,6 +282,12 @@ public class ServerMessageHandler {
         }
     }
 
+    /**
+     * Handles the initial phase Server-Client interaction. Clients choose their initial leader cards and resources
+     * while simultaneously waiting for each other.
+     * @param serverConnection connection used to get the Server and operate on the Controller.
+     * @throws InterruptedException if an error occurs while a Thread waits
+     */
     public void initialPhase(ServerConnection serverConnection) throws InterruptedException {
         serverConnection.send(5);
         this.initialLeaderCards(serverConnection);
@@ -309,6 +316,12 @@ public class ServerMessageHandler {
         }
     }
 
+    /**
+     * Handles the initial choice of leader cards Server-Client interaction. Clients choose their initial leader cards and resources
+     * while simultaneously waiting for each other.
+     * @param serverConnection connection used to get the Server and operate on the Controller.
+     * @throws InterruptedException if an error occurs while a Thread waits
+     */
     public void initialLeaderCards(ServerConnection serverConnection) throws InterruptedException {
         synchronized (serverConnection.getServer().getController()) {
             while(!serverConnection.isMyTurn()) {
@@ -324,6 +337,12 @@ public class ServerMessageHandler {
         }
     }
 
+    /**
+     * Handles the initial choice of resources Server-Client interaction. Clients choose their initial leader cards and resources
+     * while simultaneously waiting for each other.
+     * @param serverConnection connection used to get the Server and operate on the Controller.
+     * @throws InterruptedException if an error occurs while a Thread waits
+     */
     public void initialResources(ServerConnection serverConnection) throws InterruptedException {
         synchronized (serverConnection.getServer().getController()) {
             while (!serverConnection.isMyTurn()) {
@@ -345,12 +364,21 @@ public class ServerMessageHandler {
         }
     }
 
+    /**
+     * Sends an error to the client via its socket.
+     * @param serverConnection connection used to get the Server and operate on the Controller.
+     * @param string error to be sent to the client.
+     */
     public void sendError(ServerConnection serverConnection, String string) {
         DEBUGGER.printDebug("Sending error to client String: " + string);
         serverConnection.send(9);
         serverConnection.send(string);
     }
 
+    /**
+     * Checks if the server status is set to LOBBY or PARAM
+     * @return true if the game is in lobby phase.
+     */
     public boolean isLobby(){
         GameStatus serverStatus = Server.getServerStatus();
         //noinspection RedundantIfStatement
@@ -390,6 +418,10 @@ public class ServerMessageHandler {
         return serverConnection.getServer().getNumberOfPlayers()>serverConnection.getServer().getReadyPlayers();
     }
 
+    /**
+     * Handles a client's reconnection.
+     * @param serverConnection connection used to get the Server and operate on the Controller.
+     */
     public void reconnection(ServerConnection serverConnection) {
         serverConnection.send(3);
 
@@ -406,28 +438,22 @@ public class ServerMessageHandler {
             serverConnection.getServer().addConnection(serverConnection);
     }
 
+    /**
+     * Removes a connection from all dependencies with the Server.
+     * @param serverConnection connection used to get the Server and operate on the Controller.
+     */
     public synchronized void serverConnectionLeave(ServerConnection serverConnection) {
         serverConnection.getServer().getController().getActionController().getGame().removePlayerByNickname(serverConnection.getName());
         serverConnection.getServer().removeFromNames(serverConnection.getName());
 
     }
 
+    /**
+     * Closes a Client-Server connection.
+     * @param serverConnection connection used to get the Server and operate on the Controller.
+     */
     public void nameInServerLeave(ServerConnection serverConnection) {
         sendError(serverConnection, "A player with name " + serverConnection.getName() + " is already connected!");
         serverConnection.close();
-    }
-
-
-    //Debug stuff
-    public static String getS() {
-        return S;
-    }
-
-    public static String getSU() {
-        return SU;
-    }
-
-    public static String getSE() {
-        return SE;
     }
 }
