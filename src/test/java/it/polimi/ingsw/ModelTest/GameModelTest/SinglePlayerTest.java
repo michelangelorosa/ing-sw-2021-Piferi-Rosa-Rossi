@@ -1,16 +1,12 @@
 package it.polimi.ingsw.ModelTest.GameModelTest;
 
-import it.polimi.ingsw.CommonTestMethods;
-import it.polimi.ingsw.Model.Enums.Color;
-import it.polimi.ingsw.Model.GameModel.DevelopmentCardDeck;
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.DevelopmentCardTable;
 import it.polimi.ingsw.Model.GameModel.Game;
 import it.polimi.ingsw.Model.GameModel.Player;
 import it.polimi.ingsw.Model.GameModel.SinglePlayer.SinglePlayer;
 import it.polimi.ingsw.Model.Enums.SoloActionToken;
 import org.junit.Test;
-
-import java.util.Random;
 
 import static org.junit.Assert.*;
 
@@ -83,5 +79,41 @@ public class SinglePlayerTest {
         assertTrue(singlePlayer.hasLorenzoWon());
 
         SoloActionToken token = singlePlayer.getLastToken();
+    }
+
+    @Test
+    public void lorenzoTurn2Test() {
+        game.join("Pippo");
+        game.join("Lorenzo il Magnifico");
+        singlePlayer.tokenParser(game, SoloActionToken.DELETE2GREEN);
+        assertEquals(2, singlePlayer.getLorenzoCards());
+        try {
+            game.getDevelopmentCardTable().drawCardFromDeck(2, 0);
+        } catch (ModelException e) {
+            e.printStackTrace();
+        }
+        singlePlayer.tokenParser(game, SoloActionToken.DELETE2GREEN);
+        assertEquals(4, singlePlayer.getLorenzoCards());
+
+        assertEquals(0, game.getDevelopmentCardTable().getDeck(2, 0).getCardsInDeck());
+        assertEquals(3, game.getDevelopmentCardTable().getDeck(1, 0).getCardsInDeck());
+
+        for(int i = 1; i < 3; i++) {
+            while(!game.getDevelopmentCardTable().getDeck(i, 0).isEmpty())
+                game.getDevelopmentCardTable().getDeck(i, 0).drawCard();
+        }
+
+        game.getDevelopmentCardTable().getDeck(0, 0).drawCard();
+        game.getDevelopmentCardTable().getDeck(0, 0).drawCard();
+        game.getDevelopmentCardTable().getDeck(0, 0).drawCard();
+
+        singlePlayer.tokenParser(game, SoloActionToken.DELETE2GREEN);
+        assertEquals(5, singlePlayer.getLorenzoCards());
+        assertTrue(singlePlayer.hasLorenzoWon());
+        assertTrue(game.getDevelopmentCardTable().columnIsEmpty(0));
+        assertNull(game.getDevelopmentCardTable().getLowestDeckByColumn(0));
+
+        singlePlayer.tokenParser(game, SoloActionToken.DELETE2GREEN);
+        assertEquals(5, singlePlayer.getLorenzoCards());
     }
 }

@@ -107,6 +107,14 @@ public class SinglePlayer {
                 deck.drawCard();
                 lorenzoCards++;
             }
+            else {
+                DevelopmentCardDeck deck2 = table.getLowestDeckByColumn(column);
+                if(deck2 != null)
+                    if(!deck2.isEmpty()) {
+                        deck2.drawCard();
+                        lorenzoCards++;
+                    }
+            }
         }
         if(table.columnIsEmpty(column))
             lorenzoWon = true;
