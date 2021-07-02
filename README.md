@@ -64,3 +64,14 @@ java -jar client.jar --cli
 ```
 java -jar client.jar
 ``` 
+#### Keep in Mind
+To correctly run the Game in GUI mode, one must use the client.jar file corresponding to his own Operative System.
+
+## Added Functionalities info
+### Persistence
+If the server shuts down or is closed while a game is in progress, to start a new game *with new players*:
+- restart the server and wait for 5 minutes without the players reconnecting ***OR***
+- forcefully delete _persistence_info.txt_ file from the folder where server.jar is stored and restart the server
+
+## Further Information
+- It is recommended to keep server.jar file in a folder as new files will be created during execution
