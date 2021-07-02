@@ -7,53 +7,63 @@ import java.util.ArrayList;
 
 /**
  * BasicProduction Class defines inputs and outputs of a basic production.
+ * <p><b>Attributes:</b></p>
+ * <ul>
+ *     <li>RedResourceStack "fixedInputs": contains fixed resource inputs of the basic production</li>
+ *     <li>RedResourceStack "fixedOutputs": contains fixed resource outputs of the basic production</li>
+ *     <li>int "jollyIn": number of non specified input resources of the basic production</li>
+ *     <li>int "jollyOut": number of non specified input resources of the basic production</li>
+ *     <li>int "outputFaith": number of output faith points of the basic production</li>
+ * </ul>
  */
 public class RedBasicProduction implements Serializable {
-    /** Fixed inputs and outputs can be added before playing the game */
     protected RedResourceStack fixedInputs;
     protected RedResourceStack fixedOutputs;
 
-    /** Jollies represent inputs and outputs the players can choose when starting the Production. */
     protected int jollyIn;
     protected int jollyOut;
 
     protected int outputFaith;
 
     /**
-     * Getter for "fixedInputs" attribute in BasicProduction Class.
+     * Getter for "fixedInputs" attribute.
      */
     public RedResourceStack getFixedInputs() {
         return fixedInputs;
     }
 
     /**
-     * Getter for "fixedInputs" attribute in BasicProduction Class.
+     * Getter for "fixedInputs" attribute.
      */
     public RedResourceStack getFixedOutputs() {
         return fixedOutputs;
     }
 
     /**
-     * Getter for "jollyIn" attribute in BasicProduction Class.
+     * Getter for "jollyIn" attribute.
      */
     public int getJollyIn() {
         return jollyIn;
     }
 
     /**
-     * Getter for "jollyOut" attribute in BasicProduction Class.
+     * Getter for "jollyOut" attribute.
      */
     public int getJollyOut() {
         return jollyOut;
     }
 
     /**
-     * Getter for "outputFaith" attribute in BasicProduction Class.
+     * Getter for "outputFaith" attribute.
      */
     public int getOutputFaith() {
         return outputFaith;
     }
 
+    /**
+     * Builds a visual representation of the basic production.
+     * @return An ArrayList of string containing the visual representation.
+     */
     public ArrayList<String> toCli() {
         ArrayList<String> basic = new ArrayList<>();
         String jolly1 = this.jollyToString(this.jollyIn);
@@ -83,6 +93,11 @@ public class RedBasicProduction implements Serializable {
         return basic;
     }
 
+    /**
+     * Builds a visual representation of jolly resources.
+     * @param jolly number of jolly resources.
+     * @return A String containing the visual representation.
+     */
     public String jollyToString(int jolly) {
         if(jolly > 9) return "?:"+jolly; else return "?: "+jolly;
     }

@@ -9,36 +9,35 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * DevelopmentCard Class describes the different attributes and methods
+ * RedDevelopmentCard Class describes the different attributes and methods
  * needed for the creation of a Development Card.
+ * <p><b>Attributes:</b></p>
+ * <ul>
+ *     <li>Color "color": color of the development card</li>
+ *     <li>Level "level": level of the development card</li>
+ *     <li>int "cardId": id of the development card</li>
+ *     <li>int "victoryPoints": victory points of the development cards</li>
+ *     <li>RedResourceStack "cost": cost of the development card</li>
+ *     <li>RedResourceStack "input": input resources of the development card</li>
+ *     <li>RedResourceStack "output": output resources of the development card</li>
+ *     <li>int "outputFaith": output faith of the development card</li>
+ * </ul>
  */
 public class RedDevelopmentCard implements Serializable {
-    /**
-     * Color and Level are enum type classes containing all possible colors and levels
-     * a Development Card could have.
-     * Each instantiated Development Card has two attributes (color and level) indicating the card's
-     * color and level, which are final, has they shall not be changed.
-     */
     protected final Color color;
     protected final Level level;
 
-    /**
-     * Each Development Card has its own unique cardId (hence the "final" declaration), used for
-     * recognition, and a finite number of victory points.
-     */
     protected final int cardId;
     protected int victoryPoints;
 
-    /**
-     * A Development Card has three ResourceStack Class - type attributes containing namely the cost,
-     * production input and production output of the card. As some cards can have faith points as a
-     * production outcome, an integer attribute called outputFaith is introduced.
-     */
     protected RedResourceStack cost;
     protected RedResourceStack input;
     protected RedResourceStack output;
     protected int outputFaith;
 
+    /**
+     * Constructor for RedDevelopmentCard Class.
+     */
     protected RedDevelopmentCard(int cardId, Color color, Level level) {
         this.cardId = cardId;
         this.color = color;
@@ -46,21 +45,21 @@ public class RedDevelopmentCard implements Serializable {
     }
 
     /**
-     * Getter for "color" attribute in DevelopmentCard Class.
+     * Getter for "color" attribute.
      */
     public Color getColor() {
         return this.color;
     }
 
     /**
-     * Getter for "level" attribute in DevelopmentCard Class.
+     * Getter for "level" attribute.
      */
     public Level getLevel() {
         return this.level;
     }
 
     /**
-     * Getter for "cardId" attribute in DevelopmentCard Class.
+     * Getter for "cardId" attribute.
      */
 
     public int getCardId() {
@@ -68,35 +67,35 @@ public class RedDevelopmentCard implements Serializable {
     }
 
     /**
-     * Getter for "victoryPoints" attribute in DevelopmentCard Class.
+     * Getter for "victoryPoints" attribute.
      */
     public int getVictoryPoints() {
         return victoryPoints;
     }
 
     /**
-     * Getter for "outputFaith" attribute in DevelopmentCard Class.
+     * Getter for "outputFaith" attribute.
      */
     public int getOutputFaith() {
         return outputFaith;
     }
 
     /**
-     * Getter for "cost" attribute in DevelopmentCard Class.
+     * Getter for "cost" attribute.
      */
     public RedResourceStack getCost() {
         return cost;
     }
 
     /**
-     * Getter for "input" attribute in DevelopmentCard Class.
+     * Getter for "input" attribute.
      */
     public RedResourceStack getInput() {
         return input;
     }
 
     /**
-     * Getter for "output" attribute in DevelopmentCard Class.
+     * Getter for "output" attribute.
      */
     public RedResourceStack getOutput() {
         return output;
@@ -110,6 +109,10 @@ public class RedDevelopmentCard implements Serializable {
         return cardId+" "+victoryPoints+" "+color+" "+level+" "+cost+" "+input+" "+output+" "+outputFaith;
     }
 
+    /**
+     * Builds a visual representation of the Development Card
+     * @return An ArrayList of Strings containing visual representation of the Development Card
+     */
     public ArrayList<String> toCli() {
         ArrayList<String> devCard = new ArrayList<>();
         ArrayList<String> level = this.cardLevelToCli();
@@ -138,6 +141,10 @@ public class RedDevelopmentCard implements Serializable {
         return devCard;
     }
 
+    /**
+     * Builds a visual representation of the Development Card's level
+     * @return An ArrayList of Strings containing visual representation of the Development Card's level
+     */
     public ArrayList<String> cardLevelToCli() {
         ArrayList<String> level = new ArrayList<>();
         if(this.level == Level.ONE) {
@@ -158,6 +165,10 @@ public class RedDevelopmentCard implements Serializable {
         return level;
     }
 
+    /**
+     * Builds a visual representation of the Development Card's victory points
+     * @return An ArrayList of Strings containing visual representation of the Development Card's victory points
+     */
     public String victoryPointsToCli() {
         Integer points = this.victoryPoints;
         if(this.victoryPoints > 9) return points.toString(); else return "0" + points.toString();

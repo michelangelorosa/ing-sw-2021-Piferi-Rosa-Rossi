@@ -1,15 +1,19 @@
 package it.polimi.ingsw.View.ReducedModel;
 
 import it.polimi.ingsw.Model.GameModel.CardSlot;
-import it.polimi.ingsw.Model.Enums.Level;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * RedDevelopmentCardSlots Class defines data and methods of the Development Card Slots of the user's reduced game.
+ * <p><b>Attributes:</b></p>
+ * <ul>
+ *     <li>RedCardSlot[] "slots": Card Slots contained inside the DevelopmentCardSlots</li>
+ * </ul>
+ */
 public class RedDevelopmentCardSlots implements Serializable {
     protected final RedCardSlot[] slots;
-    protected int cardsInSlot;
-    protected Level level;
 
     protected RedDevelopmentCardSlots() {
         this.slots = new CardSlot[3];

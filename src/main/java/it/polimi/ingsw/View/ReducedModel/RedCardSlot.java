@@ -6,14 +6,28 @@ import it.polimi.ingsw.Model.Enums.Level;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * RedCardSlot Class contains attributes and methods defining a Development Card slot in the user's View.
+ * <p><b>Attributes:</b></p>
+ * <ul>
+ *     <li>int "levelOccupied": number of cards stored in the slot</li>
+ *     <li>RedDevelopmentCard[] "cards": Development Cards stored in the slot</li>
+ * </ul>
+ */
 public class RedCardSlot implements Serializable {
     protected int levelOccupied;
     protected final RedDevelopmentCard[] cards;
 
+    /**
+     * Constructor for RedCardSlot Class.
+     */
     protected RedCardSlot () {
         this.cards = new DevelopmentCard[3];
     }
 
+    /**
+     * Getter for "cards" attribute.
+     */
     public RedDevelopmentCard[] getDevelopmentCards() {
         return cards;
     }
@@ -62,6 +76,10 @@ public class RedCardSlot implements Serializable {
         else return cards[levelOccupied - 1];
     }
 
+    /**
+     * Builds a visual representation of the Card Slot.
+     * @return An ArrayList of String containing the visual representation.
+     */
     public ArrayList<String> toCli() {
         ArrayList<String> cardSlot = new ArrayList<>();
         ArrayList<String> cardCli;

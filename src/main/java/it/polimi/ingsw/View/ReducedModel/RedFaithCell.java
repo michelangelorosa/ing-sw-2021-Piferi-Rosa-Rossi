@@ -6,11 +6,21 @@ import it.polimi.ingsw.Model.Enums.GameType;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * RedFaithCell Class contains data and methods used to create a faith cell inside the user's view.
+ * <p><b>Attributes:</b></p>
+ * <ul>
+ *     <li>int "idCell": id of the faith cell</li>
+ *     <li>int "victoryPoints": victory points of the faith cell</li>
+ * </ul>
+ */
 public class RedFaithCell implements Serializable{
-    /**Every card is characterized by an id and the point it gives*/
     protected final int idCell;
     protected int victoryPoints;
 
+    /**
+     * Constructor for RedFaithCell Class.
+     */
     protected RedFaithCell(int idCell) {
         this.idCell = idCell;
     }
@@ -25,10 +35,18 @@ public class RedFaithCell implements Serializable{
         return victoryPoints;
     }
 
+    /**
+     * Overridden toString method.
+     */
     public String toString() {
-        return idCell+" "+victoryPoints;// + " " + vaticanReportSectionEnum + " " +popeSpace;
+        return idCell+" "+victoryPoints;
     }
 
+    /**
+     * Builds a visual representation of the faith track.
+     * @param game game to extract information from.
+     * @return An ArrayList of Strings containing the representation.
+     */
     public ArrayList<String> toCli(Game game) {
         ArrayList<String> s = new ArrayList<>();
         s.add(" ");
@@ -70,6 +88,9 @@ public class RedFaithCell implements Serializable{
         return cell;
     }
 
+    /**
+     * Converts victory points into a viewable string.
+     */
     private String vpToCli() {
         if(this.victoryPoints > 9) return ((Integer)this.victoryPoints).toString(); else return " " + ((Integer)this.victoryPoints).toString();
     }

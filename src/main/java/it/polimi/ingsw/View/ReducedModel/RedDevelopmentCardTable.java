@@ -8,22 +8,32 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * DevelopmentCardTable Class contains all 12 Development Card decks available for the player to buy.
+ * RedDevelopmentCardTable Class contains all 12 Development Card decks available for the player to buy.
  * All decks are stored in a 2D array of DevelopmentCardDeck-type object.
+ * <p><b>Attributes:</b></p>
+ * <ul>
+ *     <li>RedDevelopmentCardDeck[][] "decks": matrix containing all decks</li>
+ * </ul>
  */
 public class RedDevelopmentCardTable implements Serializable {
     protected final RedDevelopmentCardDeck[][] decks;
 
+    /**
+     * Constructor for RedDevelopmentCardTable Class.
+     */
     protected RedDevelopmentCardTable() {
         this.decks = new DevelopmentCardDeck[3][4];
     }
 
+    /**
+     * Alternative constructor for RedDevelopmentCardTable Class.
+     */
     protected RedDevelopmentCardTable(RedDevelopmentCardDeck[][] decks) {
         this.decks = decks;
     }
 
     /**
-     * This method returns the deck corresponding to the specified coordinates.
+     * Returns the deck corresponding to the specified coordinates.
      * @param row is the row corresponding to the deck.
      * @param column is the column corresponding to the deck.
      * @return the requested Development Card deck.
@@ -33,7 +43,7 @@ public class RedDevelopmentCardTable implements Serializable {
     }
 
     /**
-     * This method returns the card at the top of the deck corresponding to the specified coordinates.
+     * Returns the card at the top of the deck corresponding to the specified coordinates.
      * @param row the deck's row index.
      * @param column the deck's column index.
      * @return the requested Development Card.
@@ -48,10 +58,10 @@ public class RedDevelopmentCardTable implements Serializable {
         }
     }
 
-    public RedDevelopmentCardDeck[][] getDecks() {
-        return decks;
-    }
-
+    /**
+     * Builds a visual representation of the DevelopmentCardTable.
+     * @return An ArrayList of Strings containing the visual representation.
+     */
     public ArrayList<String> toCli() {
         ArrayList<String> table = new ArrayList<>();
         ArrayList<String> column2 = new ArrayList<>();
