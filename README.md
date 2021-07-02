@@ -70,7 +70,8 @@ java -jar client.jar --cli
 ```
 java -jar client.jar
 ``` 
-Client jar name depends on the specific OS Version used.
+- Client jar name depends on the specific OS Version used.
+- For Windows only: to enable the colours in cmd.exe it is necessary to run the .bat file found inside the Windows folder.
 
 #### Keep in Mind
 To correctly run the Game in GUI mode, one must use the client.jar file corresponding to his own Operative System.
@@ -84,3 +85,4 @@ If the server shuts down or is closed while a game is in progress, to start a ne
 ## Further Information
 - It is recommended to keep server.jar file in a folder as new files will be created during execution
 - It is possible to activate some cheats in the CLI by typing "cheat" at the beginning of your turn.
+
