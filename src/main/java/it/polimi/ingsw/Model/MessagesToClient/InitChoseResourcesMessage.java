@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
+import it.polimi.ingsw.View.User.UIActions;
 import it.polimi.ingsw.View.User.UserInteraction;
 
 /**
@@ -31,7 +32,7 @@ public class InitChoseResourcesMessage extends MessageToClient {
     @Override
     public void updateView(UserInteraction userInteraction) {
         if(!success()) {
-            this.displayError(userInteraction);
+            userInteraction.nextAction(UIActions.INITIAL_CHOOSE_RESOURCES_ERROR);
         }
     }
 }

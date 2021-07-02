@@ -5,7 +5,6 @@ import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.Game;
-import it.polimi.ingsw.Model.GameModel.Player;
 import it.polimi.ingsw.Model.GameModel.ResourceStack;
 import it.polimi.ingsw.Model.JSON.ConvertToJSON;
 import it.polimi.ingsw.Model.MessagesToClient.*;
@@ -31,6 +30,7 @@ import java.util.ArrayList;
  *     <li>ChooseProductionOutput "chooseProductionOutput": Stores information to be used when a player has finished
  *     paying for a Production to remember which different types of productions he started</li>
  *     <li>Persistence "persistence": Contains information and methods needed for the the server's Persistence</li>
+ *     <li>ConvertToJSON "convertToJSON": object used to convert the Game to a .json file for persistence purposes</li>
  * </ul>
  * @author redrick99
  */
@@ -140,6 +140,9 @@ public class ActionController {
         return chooseProductionOutput;
     }
 
+    /**
+     * Getter for "persistence" attribute.
+     */
     public Persistence getPersistence() {
         return persistence;
     }

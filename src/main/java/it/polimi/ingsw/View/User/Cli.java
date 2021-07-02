@@ -80,6 +80,8 @@ public class Cli implements Runnable{
                 break;
             case INITIAL_CHOOSE_RESOURCES: this.initialResources();
                 break;
+            case INITIAL_CHOOSE_RESOURCES_ERROR: this.cliController.displayServerError(client.getUserInteraction());
+                break;
 
             case PLAY_TURN: this.turnInteraction();
                 break;

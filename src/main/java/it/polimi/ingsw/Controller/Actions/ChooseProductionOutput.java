@@ -18,9 +18,11 @@ import java.util.HashMap;
  * <b>Attributes:</b>
  * <ul>
  *     <li>boolean "firstLeaderCard", "secondLeaderCard", "basicProduction": they are set when activating
- *     a production and indicate which different Productions the player chose to activate.</li>
+ *     a production and indicate which different Productions the player chose to activate</li>
  *     <li>ArrayList&lt;ResourceType&gt; "firstLeaderCardOutput", "secondLeaderCardOutput", "basicProductionOutput":
- *     they contain the outputs chosen by the player.</li>
+ *     they contain the outputs chosen by the player</li>
+ *     <li>Contains the number of fixed resources of the production output. <i>Automatically set when a player
+ *     starts a production</i></li>
  * </ul>
  * @author redrick99
  */

@@ -15,15 +15,12 @@ import java.util.HashMap;
  * <p>
  * <b>Attributes:</b>
  * <ul>
- *     <li> int "number": represents the number of the leader card that the player wants to discard. </li>
+ *     <li> int "number": represents the number of the leader card that the player wants to discard </li>
  * </ul>
  * @author francescopiferi99
  */
 public class DiscardLeaderCard extends Action{
 
-    /**
-     * Number is an attribute to distinguish the two leader card a players owns.
-     */
     private final int number;
 
     /**

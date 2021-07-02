@@ -10,7 +10,7 @@ import it.polimi.ingsw.Model.MessagesToClient.*;
  * <p>
  * <b>Attributes:</b>
  * <ul>
- *     <li> int "leaderCard": contains the position, inside the player's deck, of the Leader Card. </li>
+ *     <li> int "leaderCard": contains the position, inside the player's deck, of the Leader Card </li>
  * </ul>
  * @author redrick99
  */

@@ -80,7 +80,7 @@ public class CliController implements UserInterface {
         String error = userInteraction.getMessage().getError();
 
         if(!userInteraction.getMessage().imPlaying(userInteraction))
-            System.out.println(ANSIfont.BOLD + userInteraction.getMessage().getPlayer(userInteraction).getNickname() + ":" + ANSIfont.RESET);
+            System.out.print(ANSIfont.BOLD + userInteraction.getMessage().getPlayer(userInteraction).getNickname() + ": " + ANSIfont.RESET);
 
         this.displayError(error);
     }
@@ -702,7 +702,6 @@ public class CliController implements UserInterface {
             }
 
             System.out.println("\nSelect Leader Card you want to discard: ");
-            int i = 2;
             if(!game.getMyPlayer().getLeaderCards()[1].isDiscarded()){
                 System.out.println("[2] Above");
             }

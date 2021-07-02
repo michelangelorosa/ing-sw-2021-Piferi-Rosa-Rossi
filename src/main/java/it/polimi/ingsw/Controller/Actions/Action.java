@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.ControllerClasses.ActionController;
-import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 import it.polimi.ingsw.Model.MessagesToClient.CheatMessage.CheatMessage;
 
@@ -125,6 +124,11 @@ public class Action implements Serializable {
         return message;
     }
 
+    /**
+     * Common method used by Cheat Actions to generate a new CheatMessage.
+     * @param actionController Class used to compute Action messages coming from the Client.
+     * @return A new CheatMessage.
+     */
     protected CheatMessage cheatMessage(ActionController actionController) {
         CheatMessage message = new CheatMessage(actionController);
         message.setError(this.response);

@@ -10,8 +10,8 @@ import it.polimi.ingsw.Model.MessagesToClient.*;
  * to reset his warehouse to initial conditions (when adding resources).
  * <p><b>Attributes:</b></p>
  * <ul>
- *     <li>Warehouse "backupWarehouse": Backed Up Warehouse use to reset the player's Warehouse to initial conditions</li>
- *     <li>ResourceStack "backupResources": </li>
+ *     <li>Warehouse "backupWarehouse": Backed Up Warehouse used to reset the player's Warehouse to initial conditions</li>
+ *     <li>ResourceStack "backupResources": Backed up Temporary Resources used to reset the player's Warehouse to initial conditions</li>
  * </ul>
  * @author redrick99
  */

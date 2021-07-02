@@ -63,7 +63,7 @@ public enum ActionType {
     }
 
     /**
-     * This method is used to get the enum value given its assigned String text.
+     * Returns the enum value given its assigned String text.
      * @param text is the String used to get the enum value.
      * @return the enum value
      */

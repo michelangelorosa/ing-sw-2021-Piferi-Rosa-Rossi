@@ -16,7 +16,7 @@ import java.util.HashMap;
  * <b>Attributes:</b>
  * <ul>
  *     <li>HashMap&lt;Integer, ArrayList&lt;ResourceType&gt;&gt; depotResource: Maps an ArrayList of Resources
- *     to an Integer key which indicates the depot chose by the player to put said resources.</li>
+ *     to an Integer key which indicates the depot chose by the player to put said resources</li>
  * </ul>
  * @author redrick99
  */
@@ -48,27 +48,27 @@ public class InitChooseResources extends Action{
     public boolean isCorrect() throws IllegalArgumentException{
         if(!depotResource.get(0).isEmpty())
             if(depotResource.get(0).size() > 3)
-                throw new IllegalArgumentException("Error: InitResourcesArray for Depot 0 bigger than 3");
+                throw new IllegalArgumentException("Cannot put more than 3 resources in Depot 1");
             else
                 for(ResourceType type : depotResource.get(0))
                     if(type == ResourceType.NONE)
-                        throw new IllegalArgumentException("Error: InitResourcesArray for Depot 0 has a type NONE resource");
+                        throw new IllegalArgumentException("Cannot put type NONE resources in Depots");
 
         if(!depotResource.get(1).isEmpty())
             if(depotResource.get(1).size() > 2)
-                throw new IllegalArgumentException("Error: InitResourcesArray for Depot 1 bigger than 2");
+                throw new IllegalArgumentException("Cannot put more than 2 resources in Depot 2");
             else
                 for(ResourceType type : depotResource.get(1))
                     if(type == ResourceType.NONE)
-                        throw new IllegalArgumentException("Error: InitResourcesArray for Depot 1 has a type NONE resource");
+                        throw new IllegalArgumentException("Cannot put type NONE resources in Depots");
 
         if(!depotResource.get(2).isEmpty())
             if(depotResource.get(2).size() > 1)
-                throw new IllegalArgumentException("Error: InitResourcesArray for Depot 2 bigger than 1");
+                throw new IllegalArgumentException("Cannot put more than 1 resource in Depot 1");
             else
                 for(ResourceType type : depotResource.get(2))
                     if(type == ResourceType.NONE)
-                        throw new IllegalArgumentException("Error: InitResourcesArray for Depot 2 has a type NONE resource");
+                        throw new IllegalArgumentException("Cannot put type NONE resources in Depots");
 
         return true;
     }
@@ -82,6 +82,13 @@ public class InitChooseResources extends Action{
      */
     @Override
     public boolean canBeApplied(ActionController actionController) {
+        try {
+            isCorrect();
+        } catch (IllegalArgumentException e) {
+            this.response = e.getMessage();
+            return false;
+        }
+
         if(depotResource.get(0).isEmpty() && depotResource.get(1).isEmpty() && depotResource.get(2).isEmpty())
             return true;
 
@@ -137,11 +144,9 @@ public class InitChooseResources extends Action{
     @Override
     public String doAction(ActionController actionController) throws IllegalArgumentException{
 
-        if(!this.isCorrect())
-            return null;
-
-        if(!this.canBeApplied(actionController))
+        if(!this.canBeApplied(actionController)) {
             return this.response;
+        }
 
         if(depotResource.get(0).isEmpty() && depotResource.get(1).isEmpty() && depotResource.get(2).isEmpty()) {
             this.response = "SUCCESS";

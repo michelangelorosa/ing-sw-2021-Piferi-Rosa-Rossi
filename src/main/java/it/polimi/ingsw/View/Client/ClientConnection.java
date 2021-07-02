@@ -114,6 +114,7 @@ public class ClientConnection implements Runnable, Observer<Action> {
                         else if (object instanceof InitChoseResourcesMessage) {
                             //Reads a message when a player chooses his Resources
                             DEBUGGER.printDebug("Resources MESSAGE block");
+                            client.getUserInteraction().getMessage().setError(((InitChoseResourcesMessage)object).getError());
                             ((InitChoseResourcesMessage)object).updateView(client.getUserInteraction());
                         }
                         else if (object instanceof GameSetMessage){

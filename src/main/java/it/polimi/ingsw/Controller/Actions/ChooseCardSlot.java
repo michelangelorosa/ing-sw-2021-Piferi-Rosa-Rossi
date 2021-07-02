@@ -11,7 +11,7 @@ import it.polimi.ingsw.Model.MessagesToClient.*;
  * <p>
  * <b>Attributes:</b>
  * <ul>
- *     <li>int "cardSlot": indicates where the player wants to put the Development Card.</li>
+ *     <li>int "cardSlot": indicates where the player wants to put the Development Card</li>
  *     <li>int "rowCardToBuy", "columnCardToBuy": they indicate the position of the DevelopmentCard
  *     bought by the player. <i>Automatically set when the player buys a new Card</i></li>
  * </ul>
