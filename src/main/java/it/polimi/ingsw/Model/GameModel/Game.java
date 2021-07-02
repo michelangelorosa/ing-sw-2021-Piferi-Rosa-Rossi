@@ -319,7 +319,7 @@ public class Game {
         this.getFaithTrack().addFinalPoints(this.players);
 
         for(Player player : this.players)
-            if(player.getNickname().equals("Lorenzo il Magnifico"))
+            if(!player.getNickname().equals("Lorenzo il Magnifico"))
                 player.countFinalVictoryPoints();
 
         this.finalCountVictory();

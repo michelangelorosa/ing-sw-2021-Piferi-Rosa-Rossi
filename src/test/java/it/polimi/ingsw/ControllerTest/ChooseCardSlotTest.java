@@ -108,7 +108,5 @@ public class ChooseCardSlotTest {
         assertEquals(game.getCurrentPlayerNickname(), messageToClient.getPlayerNickname());
         assertEquals(ActionType.END_TURN, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.ACTIVATE_LEADERCARD, messageToClient.getPossibleActions().get(1));
-
-        //TODO check ChoseCardSlot message attributes.
     }
 }

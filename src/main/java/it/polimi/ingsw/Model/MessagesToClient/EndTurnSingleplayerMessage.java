@@ -104,9 +104,11 @@ public class EndTurnSingleplayerMessage extends MessageToClient{
                 userInteraction.nextAction(UIActions.SINGLEPLAYER_TURN);
                 break;
             case "SINGLEPLAYER LOOSE":
+                userInteraction.getGame().getPlayers().get(0).setVictoryPoints(this.victoryPoints);
                 userInteraction.nextAction(UIActions.SINGLEPLAYER_END_LOST);
                 break;
             case "SINGLEPLAYER WIN":
+                userInteraction.getGame().getPlayers().get(0).setVictoryPoints(this.victoryPoints);
                 userInteraction.nextAction(UIActions.SINGLEPLAYER_END_WON);
                 break;
         }

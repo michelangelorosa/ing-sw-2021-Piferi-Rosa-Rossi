@@ -154,6 +154,5 @@ public class MarketChooseRowTest {
         assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getPossibleActions().get(2));
         assertEquals(ActionType.END_MARKET, messageToClient.getPossibleActions().get(3));
 
-        //TODO check ChoseMarketRow Message attributes
     }
 }

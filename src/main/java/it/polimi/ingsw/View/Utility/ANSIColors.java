@@ -60,7 +60,6 @@ public class ANSIColors {
 
     public static final String VISUALIZE = ANSIfont.UNDERLINE + "\u001B[1m" + "\u001B[38;5;202m";
 
-    //TODO choose colors
     public static final String FINAL_POINTS = "";
 
     public static final String BLANK = "\u2800";
