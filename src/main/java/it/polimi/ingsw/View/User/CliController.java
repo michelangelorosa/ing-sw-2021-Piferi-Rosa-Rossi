@@ -932,7 +932,7 @@ public class CliController implements UserInterface {
                     displayError(InputController.getError());
             }
             else {
-                System.out.println("\nWhich type of resource do you want to remove from the Strongbox? (Insert relative number");
+                System.out.println("\nWhich type of resource do you want to remove from the Strongbox? (Insert relative number)");
 
                 type = resourceIntIterator(sc);
 

@@ -208,7 +208,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Button fx:id="nextTurn" mnemonicParsing="false" onAction="#turnHandler" text="Close" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Button fx:id="button" mnemonicParsing="false" text="Close" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Baskerville" size="17.0" />
                      </font>

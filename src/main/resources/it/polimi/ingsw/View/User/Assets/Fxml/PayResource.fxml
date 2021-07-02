@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -186,29 +184,5 @@
             <Image url="@../Game/servant.png" />
          </image>
       </ImageView>
-      <Button fx:id="cancelPayment" layoutX="394.0" layoutY="491.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="181.0" text="Cancel and close">
-         <font>
-            <Font name="Baskerville" size="20.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="resetPayment" layoutX="277.0" layoutY="491.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="100.0" text="Reset">
-         <font>
-            <Font name="Baskerville" size="20.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="confirmPayment" layoutX="596.0" layoutY="491.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="124.0" text="Confirm">
-         <font>
-            <Font name="Baskerville" size="20.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
    </children>
 </Pane>

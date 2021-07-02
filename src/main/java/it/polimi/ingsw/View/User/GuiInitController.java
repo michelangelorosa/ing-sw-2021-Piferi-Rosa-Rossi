@@ -153,11 +153,10 @@ public class GuiInitController implements UserInterface {
      */
     public void music(String string){
         Media media;
-        System.out.println(string);
         media = new Media(string);
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.play();
-            mediaPlayer.setVolume(0.3);
+            mediaPlayer.setVolume(0.2);
     }
 
     /**
@@ -263,7 +262,6 @@ public class GuiInitController implements UserInterface {
      */
     public void nameValidation() throws Exception {
         String player=name.getText();
-        System.out.println(player);
         if(gui.nameValidator(player))
         {
             this.clientConnection.getClient().setUser(player);
@@ -277,7 +275,6 @@ public class GuiInitController implements UserInterface {
      */
     public void playerNumberValidation() throws IOException {
         if(numberPlayers.getValue()!=null){
-        System.out.println("Selected players: "+(numberPlayers.getSelectionModel().getSelectedIndex()+1));
         this.clientConnection.send(numberPlayers.getSelectionModel().getSelectedIndex()+1);}
         else displayError("Please select the number of players");
     }
@@ -671,9 +668,7 @@ public class GuiInitController implements UserInterface {
                 });
                 break;
             }
-            case PLAY_TURN:
-                break;
-                //Opens the win/lose screen
+            //Opens the win/lose screen
             case SINGLEPLAYER_END_LOST:
             case SINGLEPLAYER_END_WON:
             case FINAL_POINTS: {
@@ -701,7 +696,6 @@ public class GuiInitController implements UserInterface {
                         public void run() {
                             try {
                                 board.board();
-                                    firstRun=false;
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -741,7 +735,7 @@ public class GuiInitController implements UserInterface {
                     @Override
                     public void run() {
                         try {
-                                gui.guiMessage("Token","You draw the following token",getImage(token));
+                                gui.guiMessage("Token","You drew the following token",getImage(token));
                                 board.refresh();
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -750,7 +744,6 @@ public class GuiInitController implements UserInterface {
                 });
                 break;
             }
-            //Unused, it's for cli only
             case RESTART_OR_CONTINUE:{
                 Platform.runLater(new Runnable() {
                     @Override
@@ -764,6 +757,7 @@ public class GuiInitController implements UserInterface {
                 });
                 break;
             }
+            //Used only in cli
             case WAITING:
                 break;
             default:

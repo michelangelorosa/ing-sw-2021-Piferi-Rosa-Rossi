@@ -328,7 +328,6 @@ public class GuiBoardController extends GuiInitController{
         shields.setOnDragDetected(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 /* drag was detected, start drag-and-drop gesture*/
-                System.out.println("onDragDetected (shields)");
 
                 if(initialResources||getClientConnection().getClient().getUserInteraction().getGame().getMyPlayer().getTemporaryResources().hasResource(ResourceType.SHIELDS)){
                     /* allow any transfer mode */
@@ -346,7 +345,6 @@ public class GuiBoardController extends GuiInitController{
         servants.setOnDragDetected(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 /* drag was detected, start drag-and-drop gesture*/
-                System.out.println("onDragDetected (servants)");
 
                 if(initialResources||getClientConnection().getClient().getUserInteraction().getGame().getMyPlayer().getTemporaryResources().hasResource(ResourceType.SERVANTS)){
                     /* allow any transfer mode */
@@ -363,7 +361,6 @@ public class GuiBoardController extends GuiInitController{
         coins.setOnDragDetected(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 /* drag was detected, start drag-and-drop gesture*/
-                System.out.println("onDragDetected (coins)");
 
                 if(initialResources||getClientConnection().getClient().getUserInteraction().getGame().getMyPlayer().getTemporaryResources().hasResource(ResourceType.COINS)){
                     /* allow any transfer mode */
@@ -380,7 +377,6 @@ public class GuiBoardController extends GuiInitController{
         stones.setOnDragDetected(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 /* drag was detected, start drag-and-drop gesture*/
-                System.out.println("onDragDetected (stones)");
 
                 if(initialResources||getClientConnection().getClient().getUserInteraction().getGame().getMyPlayer().getTemporaryResources().hasResource(ResourceType.STONES)){
                     /* allow any transfer mode */
@@ -713,7 +709,10 @@ public class GuiBoardController extends GuiInitController{
             displayError("You don't have anything to pay now.");
             return;
         }
-            Parent payResource;
+        RedResourceStack resourcesToPay = this.client.getUserInteraction().getGame().getMyPlayer().getTemporaryResources();
+        resourceNumber=resourcesToPay.getResource(ResourceType.STONES)+resourcesToPay.getResource(ResourceType.SHIELDS)+resourcesToPay.getResource(ResourceType.COINS)+resourcesToPay.getResource(ResourceType.SERVANTS);
+
+        Parent payResource;
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Assets/Fxml/PayResource.fxml"));
             loader.setController(this);
             payResource = loader.load();
@@ -721,11 +720,8 @@ public class GuiBoardController extends GuiInitController{
             payResources.initModality(Modality.APPLICATION_MODAL);
             payResources.setTitle("Pay Resource");
             payResources.setResizable(false);
-            RedResourceStack resourcesToPay = this.client.getUserInteraction().getGame().getMyPlayer().getTemporaryResources();
 
             Scene scene = new Scene(payResource);
-
-            resourceNumber=resourcesToPay.getResource(ResourceType.STONES)+resourcesToPay.getResource(ResourceType.SHIELDS)+resourcesToPay.getResource(ResourceType.COINS)+resourcesToPay.getResource(ResourceType.SERVANTS);
 
             remCoins.setText(String.valueOf(resourcesToPay.getResource(ResourceType.COINS)));
             remServants.setText(String.valueOf(resourcesToPay.getResource(ResourceType.SERVANTS)));
@@ -1039,15 +1035,15 @@ public class GuiBoardController extends GuiInitController{
             }
 
 
-            if(myPlayer().getSlots().getSlots()[0].canAdd(temporaryCard)||myPlayer().getSlots().getSlots()[0].isEmpty())
+            if(myPlayer().getSlots().getSlots()[0].canAdd(temporaryCard))
                 slotOne.setDisable(false);
             else
                 slotOne.setDisable(true);
-            if(myPlayer().getSlots().getSlots()[1].canAdd(temporaryCard)||myPlayer().getSlots().getSlots()[1].isEmpty())
+            if(myPlayer().getSlots().getSlots()[1].canAdd(temporaryCard))
                 slotTwo.setDisable(false);
             else
                 slotTwo.setDisable(true);
-            if(myPlayer().getSlots().getSlots()[2].canAdd(temporaryCard)||myPlayer().getSlots().getSlots()[2].isEmpty())
+            if(myPlayer().getSlots().getSlots()[2].canAdd(temporaryCard))
                 slotThree.setDisable(false);
                     else
                 slotThree.setDisable(true);
@@ -1056,7 +1052,6 @@ public class GuiBoardController extends GuiInitController{
                     slotFour.setDisable(true);
                     slotFive.setDisable(true);
 
-            System.out.println("temporary Card Id is: "+temporaryCard.getCardId());
                 slotOne.setOnAction(event -> {
                 if(slotOne.isArmed()){
                     slotTwo.setSelected(false);
@@ -1088,7 +1083,6 @@ public class GuiBoardController extends GuiInitController{
                     slot=1;
                 if(slotThree.isSelected())
                     slot=2;
-                System.out.println("Slot value is "+slot);
                 sendAction(new ChooseCardSlot(slot));
                 refresh();
                 chooser.close();
@@ -1369,7 +1363,6 @@ public class GuiBoardController extends GuiInitController{
             card2.setFitHeight(250);
             card2.setFitWidth(165);
 
-            System.out.println("temporary Card Id is: "+temporaryCard.getCardId());
             slotOne.setOnAction(event -> {
                 if(slotOne.isArmed()){
                     slotTwo.setSelected(false);
@@ -1801,8 +1794,6 @@ public class GuiBoardController extends GuiInitController{
         ArrayList<Player> players = this.client.getUserInteraction().getGame().getPlayers();
         String parent=node.getId();
 
-        System.out.println(parent);
-
         switch (parent){
             case "activateLeader1":{
                 if(myPlayer().getPossibleActions().contains(ActionType.ACTIVATE_LEADERCARD))
@@ -2001,8 +1992,8 @@ public class GuiBoardController extends GuiInitController{
             faithRow[i]=faithRow(players.get(i).getFaithTrackPosition());
             }
         popeImages[0] = getImage(player.getPopeTiles()[0].getPopeTile(),2);
-        popeImages[1] = getImage(player.getPopeTiles()[0].getPopeTile(),3);
-        popeImages[2] = getImage(player.getPopeTiles()[0].getPopeTile(),4);
+        popeImages[1] = getImage(player.getPopeTiles()[1].getPopeTile(),3);
+        popeImages[2] = getImage(player.getPopeTiles()[2].getPopeTile(),4);
 
         faithData[0] = resourceImages;
         faithData[1] = faithRow;
