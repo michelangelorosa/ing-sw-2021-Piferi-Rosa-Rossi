@@ -35,7 +35,7 @@ This project was commissioned by Politecnico di Milano. It consists in creating 
 
 ### [Final UML](https://github.com/michelangelorosa/ing-sw-2021-Piferi-Rosa-Rossi/blob/master/deliverables/Final-UML/ing-sw-2021-Piferi-Rosa-Rossi_complete.pdf)
 
-### Generated JavaDOC
+### [Generated JavaDOC](https://github.com/michelangelorosa/ing-sw-2021-Piferi-Rosa-Rossi/tree/master/deliverables/Report-Coverage-Javadoc/Javadoc)
 
 ## Test Cases
 | Package | Class Coverage | Method Coverage | Line Coverage |
