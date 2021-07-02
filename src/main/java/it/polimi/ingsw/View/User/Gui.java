@@ -13,6 +13,9 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
+/**
+ * Gui class handles the opening of the javaFx window
+ */
 public class Gui extends Application{
 
     public static final CountDownLatch latch = new CountDownLatch(1);
@@ -22,6 +25,10 @@ public class Gui extends Application{
     private Font Baskerville;
     private Font Dominican;
 
+    /**
+     * Method that launches the window in JavaFx
+     * @throws Exception        If there's an error loading
+     */
     @Override
     public void start(Stage primaryStage) throws Exception{
         Baskerville=Font.loadFonts(getClass().getResource("Assets/Fonts/Baskerville.ttc").toExternalForm(),20)[0];
@@ -42,6 +49,10 @@ public class Gui extends Application{
         GuiInitController.setStage(primaryStage);
     }
 
+    /**
+     * Method that waits for the Gui to load
+     * @return
+     */
     public static Gui waitForStartUp() {
         try {
             latch.await();
@@ -51,14 +62,19 @@ public class Gui extends Application{
         return gui;
     }
 
-    public static void setStartUpTest(Gui startUpTest0) {
-        gui = startUpTest0;
+    /**
+     * Opens the gui by calling startUp method
+     */
+    public static void setStartUp(Gui startUp) {
+        gui = startUp;
         latch.countDown();
     }
 
-
+    /**
+     * Opens the Gui
+     */
     public Gui(){
-        setStartUpTest(this);
+        setStartUp(this);
     }
 
     /**
