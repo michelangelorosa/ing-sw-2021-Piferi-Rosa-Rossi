@@ -146,6 +146,16 @@ public class CommonTestMethods {
         player.getBoard().getDevelopmentCardSlots().addCard(2, card6);
     }
 
+    /**
+     * Method used to give resources to the player
+     * @param player current player
+     * @param num1 number of resource to add to the first depot
+     * @param num2 number of resource to add to the second depot
+     * @param num3 number of resource to add to the third depot
+     * @param type1 type of the first depot
+     * @param type2 type of the second depot
+     * @param type3 type of the third depot
+     */
     public static void giveResourcesToPlayer(Player player, int num1, int num2, int num3, ResourceType type1, ResourceType type2, ResourceType type3, ResourceStack stack) {
         ResourceManager manager = player.getBoard().getResourceManager();
         manager.reset();
@@ -155,57 +165,4 @@ public class CommonTestMethods {
         manager.addProductionResources(stack);
     }
 
-    public static void discountLeaderCardAdder(ArrayList<LeaderCard> leaderCards) {
-        LeaderRequirements leaderRequirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
-        ResourceStack required = new ResourceStack(0,0,0,0);
-        ResourceStack discount1 = new ResourceStack(1,1,0,0);
-        ResourceStack discount2 = new ResourceStack(0,0,1,1);
-        ResourceStack discount3 = new ResourceStack(3,0,0,0);
-
-        LeaderCard card1 = new LeaderCard(1, 1, required, leaderRequirements, discount1);
-        LeaderCard card2 = new LeaderCard(2, 2, required, leaderRequirements, discount2);
-        LeaderCard card3 = new LeaderCard(3, 3, required, leaderRequirements, discount3);
-        leaderCards.add(card1);
-        leaderCards.add(card2);
-        leaderCards.add(card3);
-    }
-
-    public static void whiteMarbleLeaderCardAdder(ArrayList<LeaderCard> leaderCards) {
-        LeaderRequirements leaderRequirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
-        ResourceStack required = new ResourceStack(0,0,0,0);
-
-        LeaderCard card1 = new LeaderCard(1, 1, required, leaderRequirements, Marble.BLUE);
-        LeaderCard card2 = new LeaderCard(2, 2, required, leaderRequirements, Marble.PURPLE);
-        LeaderCard card3 = new LeaderCard(3, 3, required, leaderRequirements, Marble.YELLOW);
-        leaderCards.add(card1);
-        leaderCards.add(card2);
-        leaderCards.add(card3);
-    }
-
-    public static void productionPowerLeaderCardAdder(ArrayList<LeaderCard> leaderCards) {
-        LeaderRequirements leaderRequirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
-        ResourceStack required = new ResourceStack(0,0,0,0);
-        ResourceStack input1 = new ResourceStack(1,1,0,0);
-        ResourceStack input2 = new ResourceStack(0,0,1,1);
-        ResourceStack input3 = new ResourceStack(3,0,0,0);
-
-        LeaderCard card1 = new LeaderCard(1, 1, required, leaderRequirements, input1, 1, 1);
-        LeaderCard card2 = new LeaderCard(2, 2, required, leaderRequirements, input2, 2, 2);
-        LeaderCard card3 = new LeaderCard(3, 3, required, leaderRequirements, input3, 3, 3);
-        leaderCards.add(card1);
-        leaderCards.add(card2);
-        leaderCards.add(card3);
-    }
-
-    public static void extraDepotLeaderCardAdder(ArrayList<LeaderCard> leaderCards) {
-        LeaderRequirements leaderRequirements = new LeaderRequirements(0,0,0,0,0,0,0,0,0,0,0,0);
-        ResourceStack required = new ResourceStack(0,0,0,0);
-
-        LeaderCard card1 = new LeaderCard(1, 1, required, leaderRequirements, ResourceType.SHIELDS);
-        LeaderCard card2 = new LeaderCard(2, 2, required, leaderRequirements, ResourceType.COINS);
-        LeaderCard card3 = new LeaderCard(3, 3, required, leaderRequirements, ResourceType.SERVANTS);
-        leaderCards.add(card1);
-        leaderCards.add(card2);
-        leaderCards.add(card3);
-    }
 }
