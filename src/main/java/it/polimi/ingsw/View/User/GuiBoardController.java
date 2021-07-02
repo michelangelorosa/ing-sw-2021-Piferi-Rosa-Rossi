@@ -42,29 +42,17 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 
 public class GuiBoardController extends GuiInitController{
-    private Stage cardPicker;
-    private Stage chooser;
-    private Stage market;
-    private Stage leaderSelection;
-    private Stage resourcePicker;
-    private Stage xtraBoard;
+    private Stage cardPicker,chooser,market,leaderSelection,resourcePicker,xtraBoard;
     @FXML private Text cardTitle;
     @FXML private GridPane cardPane;
     private ImageView[][] card;
-    private int cardColumn;
-    private int cardRow;
+    private int cardColumn,cardRow;
     protected ActionEvent event;
     private RedDevelopmentCard temporaryCard;
     @FXML GridPane marketPane;
-    @FXML RadioButton marketRow1;
-    @FXML RadioButton marketRow2;
-    @FXML RadioButton marketRow3;
-    @FXML RadioButton marketColumn1;
-    @FXML RadioButton marketColumn2;
-    @FXML RadioButton marketColumn3;
-    @FXML RadioButton marketColumn4;
-    @FXML Button submitMarket;
-    @FXML Button submit;
+    @FXML RadioButton marketRow1,marketRow2,marketRow3;
+    @FXML RadioButton marketColumn1,marketColumn2,marketColumn3,marketColumn4;
+    @FXML Button submitMarket,submit;
     @FXML ImageView extraMarble;
     private ImageView[][] activeMarket;
     @FXML private Text resourcesTitle;
@@ -80,12 +68,7 @@ public class GuiBoardController extends GuiInitController{
     @FXML private ImageView firstFloor,secondFloor,thirdFloor;
     @FXML private ImageView pope2,pope3,pope4;
     @FXML private Button button;
-    @FXML protected Button production;
-    @FXML protected Button nextTurn;
-    @FXML protected Button payResBtn;
-    @FXML protected Button cardTableBtn;
-    @FXML protected Button marketBtn;
-    @FXML protected Button storeResBtn;
+    @FXML protected Button production,nextTurn,payResBtn,cardTableBtn,marketBtn,storeResBtn;
     @FXML protected ImageView strongboxStonesClickable,strongboxShieldsClickable,strongboxServantsClickable,strongboxCoinsClickable;
     @FXML protected GridPane faithPane, otherBoards, chooserPane;
     @FXML protected RadioButton switch1,switch2,switch3;
@@ -190,7 +173,7 @@ public class GuiBoardController extends GuiInitController{
             leader1.setImage(null);                     leader2.setImage(null);
             resetPayment.setDisable(true);          cancelPayment.setDisable(true);
             switch1.setDisable(true);               switch2.setDisable(true);
-            switch3.setDisable(true);
+            switch3.setDisable(true);               confirmPayment.setDisable(true);
         }
         else{
             if(this.client.getUserInteraction().getGame().getMyPlayer().getTemporaryResources().isEmpty()) {
@@ -1000,8 +983,54 @@ public class GuiBoardController extends GuiInitController{
         chooser = new Stage();
         chooser.initModality(Modality.APPLICATION_MODAL);
         chooser.setTitle("Choose an option");
+        System.out.println(myPlayer().getPossibleActions().toString());
+        if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_LEADER_CARD)){
+            //Whitemarble Ambiguity
+            cardTitle.setText("Choose White Marble to Activate");
+            ImageView card1,card2;
+            slotZero.setDisable(true);
+            slotOne.setDisable(true);
+            slotFour.setDisable(true);
+            slotFive.setDisable(true);
 
-        if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_CARD_SLOT)){
+            submit.setDisable(true);
+
+            chooserPane.add(card1 = new ImageView(getImage(myPlayer().getLeaderCards()[0].getCardId(),true)),2,0);
+            card1.setFitHeight(250);
+            card1.setFitWidth(165);
+
+            chooserPane.add(card2 = new ImageView(getImage(myPlayer().getLeaderCards()[1].getCardId(),true)),3,0);
+            card2.setFitHeight(250);
+            card2.setFitWidth(165);
+
+            slotTwo.setOnAction(event -> {
+                if(slotTwo.isArmed()){
+                    slotThree.setSelected(false);
+                    submit.setDisable(!slotTwo.isSelected());
+                }
+            });
+            slotThree.setOnAction(event -> {
+                if(slotThree.isArmed()){
+                    slotTwo.setSelected(false);
+                    submit.setDisable(!slotThree.isSelected());
+                }
+            });
+
+            submit.setOnAction(event -> {
+                cardTableBtn.setText("Open Card Table");
+                int slot=-9;
+                if(slotTwo.isSelected())
+                    slot=0;
+                if(slotThree.isSelected())
+                    slot=1;
+                sendAction(new ChooseLeaderCard(slot));
+                if(!myPlayer().getPossibleActions().contains(ActionType.CHOOSE_LEADER_CARD))
+                production.setText("Activate Production");
+                refresh();
+                chooser.close();
+            });
+        }
+        else if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_CARD_SLOT)){
 
             cardTitle.setText("Choose a development card slot");
             ImageView card1,card2,card3,cardToAdd;
@@ -1344,58 +1373,6 @@ public class GuiBoardController extends GuiInitController{
             }
 
         }
-        else if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_LEADER_CARD)){
-            //Whitemarble Ambiguity
-            cardTitle.setText("Choose White Marble to Activate");
-            ImageView card1,card2;
-            slotZero.setDisable(true);
-            slotOne.setDisable(true);
-            slotFour.setDisable(true);
-            slotFive.setDisable(true);
-
-            submit.setDisable(true);
-
-            chooserPane.add(card1 = new ImageView(getImage(myPlayer().getLeaderCards()[0].getCardId(),true)),2,0);
-            card1.setFitHeight(250);
-            card1.setFitWidth(165);
-
-            chooserPane.add(card2 = new ImageView(getImage(myPlayer().getLeaderCards()[1].getCardId(),true)),3,0);
-            card2.setFitHeight(250);
-            card2.setFitWidth(165);
-
-            slotOne.setOnAction(event -> {
-                if(slotOne.isArmed()){
-                    slotTwo.setSelected(false);
-                    slotThree.setSelected(false);
-                    submit.setDisable(!slotOne.isSelected());
-                }
-            });
-            slotTwo.setOnAction(event -> {
-                if(slotTwo.isArmed()){
-                    slotThree.setSelected(false);
-                    submit.setDisable(!slotTwo.isSelected());
-                }
-            });
-            slotThree.setOnAction(event -> {
-                if(slotThree.isArmed()){
-                    slotTwo.setSelected(false);
-                    submit.setDisable(!slotThree.isSelected());
-                }
-            });
-
-            submit.setOnAction(event -> {
-                cardTableBtn.setText("Open Card Table");
-                int slot=-9;
-                if(slotTwo.isSelected())
-                    slot=0;
-                if(slotThree.isSelected())
-                    slot=1;
-                sendAction(new ChooseLeaderCard(slot));
-                production.setText("Activate Production");
-                refresh();
-                chooser.close();
-            });
-        }
 
         Scene scene = new Scene(choose);
         chooser.setScene(scene);
@@ -1429,7 +1406,10 @@ public class GuiBoardController extends GuiInitController{
             for(int cardColumn=0;cardColumn<4;cardColumn++)
                 for(int cardRow=0;cardRow<3;cardRow++)
                 {
-                    cardPane.add(card[cardColumn][cardRow] = new ImageView(super.getImage(this.client.getUserInteraction().getGame().getDevelopmentCardTable().getTopCardFromDeck(cardRow,cardColumn).getCardId(),true)),cardColumn,cardRow);
+                    if(this.client.getUserInteraction().getGame().getDevelopmentCardTable().getDeck(cardRow,cardColumn).isEmpty())
+                        cardPane.add(card[cardColumn][cardRow] = new ImageView(),cardColumn,cardRow);
+                    else
+                        cardPane.add(card[cardColumn][cardRow] = new ImageView(super.getImage(this.client.getUserInteraction().getGame().getDevelopmentCardTable().getTopCardFromDeck(cardRow,cardColumn).getCardId(),true)),cardColumn,cardRow);
                     card[cardColumn][cardRow].setCursor(Cursor.HAND);
                     card[cardColumn][cardRow].setFitHeight(190);
                     card[cardColumn][cardRow].setFitWidth(125);
@@ -1588,7 +1568,7 @@ public class GuiBoardController extends GuiInitController{
                         number=2;
                     else if(marketColumn4.isSelected())
                         number=3;
-                    if(this.client.getUserInteraction().getGame().getMyPlayer().getPossibleActions().contains(ActionType.MARKET_CHOOSE_ROW)){
+                    if(myPlayer().getPossibleActions().contains(ActionType.MARKET_CHOOSE_ROW)){
                         sendAction(new MarketChooseRow(row, number));
                         market.close();
                         refresh();
@@ -1745,8 +1725,6 @@ public class GuiBoardController extends GuiInitController{
                 nextAction="choose which leader card to activate.";
             else if(myPlayer().getPossibleActions().contains(ActionType.ADD_RESOURCE))
                 nextAction="add the resources you got.";
-            else if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_LEADER_CARD))
-                nextAction="add the resources you got.";
             else if(myPlayer().getPossibleActions().contains(ActionType.END_MARKET))
                 nextAction="end the market interaction.";
             else if(myPlayer().getPossibleActions().contains(ActionType.PAY_RESOURCE_CARD))
@@ -1760,7 +1738,9 @@ public class GuiBoardController extends GuiInitController{
 
             if(myPlayer().getPossibleActions().contains(ActionType.END_TURN)){
                 sendAction(new EndTurn());
-                //freeze(true);
+                if(client.getUserInteraction().getGame().getGameType().equals(GameType.MULTIPLAYER)){
+                    freeze(true);
+                }
                 refresh();
             }
             else if(nextAction!=null)
@@ -1837,11 +1817,11 @@ public class GuiBoardController extends GuiInitController{
      */
     @FXML
     public void activateProduction() throws Exception{
-        if(myPlayer().getPossibleActions().contains(ActionType.ACTIVATE_PRODUCTION))
+        if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_LEADER_CARD))
+            choose();
+        else if(myPlayer().getPossibleActions().contains(ActionType.ACTIVATE_PRODUCTION))
             choose();
         else if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_PRODUCTION_OUTPUT))
-            choose();
-        else if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_LEADER_CARD))
             choose();
         else
             displayError("You can't activate a production now!");

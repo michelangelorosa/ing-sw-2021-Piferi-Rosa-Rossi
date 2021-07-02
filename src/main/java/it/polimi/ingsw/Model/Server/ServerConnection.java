@@ -74,7 +74,7 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
             }
             //Accepts messages from client during game phase
             DEBUGGER.printDebug("Starting listening to "+socket);
-            while (true) {
+            while (Thread.currentThread().isAlive()) {
                 Action action = this.readAction();
                 DEBUGGER.printDebug("Received action: " + action.getActionType() + " from "+this.name);
                 notify(action);
@@ -299,7 +299,7 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
             this.clearObservers();
             this.server.removeFromConnections(this.socket);
             socket.close();
-            Thread.currentThread().stop();
+            Thread.currentThread().interrupt();
         }catch (IOException e){
             System.err.println("IOError closing socket of "+socket.toString());
             Thread.currentThread().interrupt();

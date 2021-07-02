@@ -46,33 +46,16 @@ public class GuiInitController implements UserInterface {
     private boolean firstRun = true;
     protected Stage winnerStage;
     @FXML private Button nameConfirm;
-    @FXML private Label score;
-    @FXML private Label winner;
-    @FXML private TextField server;
-    @FXML private TextField port;
-    @FXML private Button connect;
-    @FXML protected Button confirmLeader;
-    @FXML protected Button nameExit;
-    @FXML private TextField name;
-    @FXML protected CheckBox card1;
-    @FXML protected CheckBox card2;
-    @FXML protected CheckBox card3;
-    @FXML protected CheckBox card4;
-    @FXML protected CheckBox card5;
-    @FXML protected ImageView card1image;
-    @FXML protected ImageView card2image;
-    @FXML protected ImageView card3image;
-    @FXML protected ImageView card4image;
-    @FXML protected ImageView card5image;
+    @FXML private Label score,winner;
+    @FXML private TextField name,server,port;
+    @FXML private Button connect,confirmLeader,nameExit;
+    @FXML protected CheckBox card1,card2,card3,card4,card5;
+    @FXML protected ImageView card1image,card2image,card3image,card4image,card5image;
     @FXML private ChoiceBox<String> numberPlayers;
-    @FXML private Button playerNumberConfirm;
-    @FXML private Button stopMusic;
-    @FXML private Button readyToPlay;
-    @FXML private Button button;
+    @FXML private Button playerNumberConfirm,stopMusic,readyToPlay,button;
     protected ClientExceptionHandler gui;
     protected ActionEvent event;
-    protected Font Baskerville;
-    protected Font Dominican;
+    protected Font Baskerville,Dominican;
 
     /**
      * Constructor for the GuiInitController class
@@ -701,22 +684,59 @@ public class GuiInitController implements UserInterface {
                             }
                         }
                     });
-                }else{
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            board.refresh();
+                            System.out.println("I'm playing: "+getClientConnection().getClient().getUserInteraction().getMessage().imPlaying(getClientConnection().getClient().getUserInteraction()));
+                            System.out.println("Game type: "+getClientConnection().getClient().getUserInteraction().getGame().getGameType().toString());
+                            if(getClientConnection().getClient().getUserInteraction().getMessage().imPlaying(getClientConnection().getClient().getUserInteraction())
+                                    ||getClientConnection().getClient().getUserInteraction().getGame().getGameType().equals(GameType.SINGLEPLAYER))
+                                board.freeze(false);
+                            else
+                                board.freeze(true);
                         }
                     });
+                    break;
+                }else{
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                board.refresh();
+                                if(getClientConnection().getClient().getUserInteraction().getMessage().imPlaying(getClientConnection().getClient().getUserInteraction()))
+                                {
+                                    System.out.println("Active Play: "+getClientConnection().getClient().getUserInteraction().getMessage().imPlaying(getClientConnection().getClient().getUserInteraction()));
+                                    board.freeze(false);
+                                }else{
+                                    System.out.println("Inactive Play: "+getClientConnection().getClient().getUserInteraction().getMessage().imPlaying(getClientConnection().getClient().getUserInteraction()));
+                                    board.freeze(true);
+                                }
+                            }
+                        });
+                    }
+                if(
+                        this.client.getUserInteraction().getMessage().getActionDone().equals(ActionType.END_TURN)&&
+                                client.getUserInteraction().getGame().getGameType().equals(GameType.MULTIPLAYER)
+                ){
+                    if(getClientConnection().getClient().getUserInteraction().getMessage().imPlaying(getClientConnection().getClient().getUserInteraction())){
+                        music(getClass().getResource("Assets/Music/Turn.mp3").toExternalForm());
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    gui.guiMessage("Turn","It's your turn "+getClientConnection().getClient().getUser(),getImage(false));
+                                    board.refresh();
+                                    board.freeze(false);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    }
                 }
-
-            }
                 break;
-            //Opens an error message
-            case DISPLAY_ERROR:
-            {
-                if(userInteraction.getMessage().getPlayerNickname().equals(board.myPlayer().getNickname()))
-                    Platform.runLater(new Runnable() {
+            }
+            case INITIAL_CHOOSE_RESOURCES_ERROR:{
+                Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
                         try {
@@ -726,6 +746,43 @@ public class GuiInitController implements UserInterface {
                         }
                     }
                 });
+            }
+            //Opens an error message
+            case DISPLAY_ERROR:
+            {
+                if(userInteraction.getMessage().getPlayerNickname().equals(board.myPlayer().getNickname())){
+                    if(
+                            this.client.getUserInteraction().getMessage().getActionDone().equals(ActionType.DISCONNECTION)&&
+                                    client.getUserInteraction().getGame().getGameType().equals(GameType.MULTIPLAYER)
+                    ){
+                        if(getClientConnection().getClient().getUserInteraction().getMessage().imPlaying(getClientConnection().getClient().getUserInteraction())){
+                            music(getClass().getResource("Assets/Music/Turn.mp3").toExternalForm());
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        gui.guiMessage("Turn","It's your turn "+getClientConnection().getClient().getUser(),getImage(false));
+                                        board.refresh();
+                                        board.freeze(false);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+                        }
+                    }else{
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    displayError(userInteraction.getMessage().getError());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    }
+                }
             }
                 break;
             //Shows the token got from the single player interaction

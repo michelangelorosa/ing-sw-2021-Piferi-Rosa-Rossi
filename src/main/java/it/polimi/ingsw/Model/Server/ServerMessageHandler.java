@@ -36,8 +36,8 @@ public class ServerMessageHandler {
      *                              <b>false</b> if the client has to skip directly to the game
      */
     public boolean nameRequest(ServerConnection serverConnection) {
-        String name;
-        while(true) {
+        String name;Boolean activated=true;
+        while(Thread.currentThread().isAlive()&&activated) {
             DEBUGGER.printDebug("Sent request for Client's name (Action 0)");
             serverConnection.send(0);
             attempt++;
@@ -135,7 +135,7 @@ public class ServerMessageHandler {
                             }
                         }
                         else if(!newName) {
-                            sendError(serverConnection, "Another player with you name joined. Please choose another name!");
+                            sendError(serverConnection, "Another player with your name joined. Please choose another name!");
                             serverConnection.close();
                         }
                         else
@@ -210,6 +210,7 @@ public class ServerMessageHandler {
                             sendError(serverConnection, "This game is full!");
                             serverConnectionLeave(serverConnection);
                             serverConnection.close();
+                            activated=false;
                         }
                     }
                     else if(newName && !isLobby() && (Server.getServerStatus() == GameStatus.GAME || Server.getServerStatus() == GameStatus.LEADER)) {
@@ -218,6 +219,7 @@ public class ServerMessageHandler {
                         sendError(serverConnection, "A game is already running in this server and you're not a player!\nGoodbye!");
                         serverConnectionLeave(serverConnection);
                         serverConnection.close();
+                        activated=false;
                     }
                     //Game running, new name
                     else if(!newName&&!isLobby()){
@@ -226,14 +228,19 @@ public class ServerMessageHandler {
                         sendError(serverConnection, "A game is already running in this server and you're not a player!\nGoodbye!");
                         serverConnectionLeave(serverConnection);
                         serverConnection.close();
+                        activated=false;
                     }
-                    if(attempt>50)
-                        serverConnection.close();
                 }
             } catch(IOException e) {
                 serverConnection.close();
             }
+            if(attempt>5){
+                serverConnection.close();
+                activated=false;
+            }
         }
+        serverConnection.close();
+        return false;
     }
 
     /**
@@ -243,7 +250,7 @@ public class ServerMessageHandler {
     public void waitingForPlayers(ServerConnection serverConnection) {
         try {
             serverConnection.send(2);
-            while (true) {
+            while (Thread.currentThread().isAlive()) {
                 int action = serverConnection.getIn().readInt();
                 DEBUGGER.printDebug("Got action "+action);
                 synchronized (this) {
