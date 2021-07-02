@@ -687,7 +687,10 @@ public class CliController implements UserInterface {
     }
 
 
-
+    /**
+     * Mehtod called if the user wants to discard a Leader Card
+     * @return      DiscardLeaderCard action if the action is legal
+     */
     public Action discardLeaderCard(Game game){
         String choice;
         int choiceInt;

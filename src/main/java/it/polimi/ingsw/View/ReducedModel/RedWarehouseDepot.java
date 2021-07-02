@@ -63,6 +63,10 @@ public class RedWarehouseDepot implements Serializable {
         return this.storedResources == this.maxResources;
     }
 
+    /**
+     * Transform a Warehose Depot in text for cli mode
+     * @return      An arrayList to be visualized by the cli
+     */
     public ArrayList<String> toCli() {
         ArrayList<String> arrayDepot = new ArrayList<>();
         int i;

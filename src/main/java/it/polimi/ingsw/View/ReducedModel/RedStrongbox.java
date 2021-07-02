@@ -21,7 +21,10 @@ public class RedStrongbox implements Serializable {
     public RedResourceStack getStoredResources() {
         return storedResources;
     }
-    //For tests only
+
+    /**
+     * Creates a new ReducedStrongbox for testing purposes only
+     */
     public RedStrongbox(){
         this.storedResources = new ResourceStack(0,0,0,0);
     }
@@ -32,7 +35,10 @@ public class RedStrongbox implements Serializable {
     public String toString() {
         return storedResources.getResource(ResourceType.SHIELDS)+" "+storedResources.getResource(ResourceType.SERVANTS)+" "+storedResources.getResource(ResourceType.COINS)+" "+storedResources.getResource(ResourceType.STONES);
     }
-
+    /**
+     * Transform a Reduced Strongbox in text for cli mode
+     * @return      An arrayList to be visualized by the cli
+     */
     public ArrayList<String> toCli3() {
         ArrayList<String> strongbox = new ArrayList<>();
         strongbox.add(ANSIColors.BACK_BROWN + "╔═════════════════════════════╗"+ ANSIColors.RESET);

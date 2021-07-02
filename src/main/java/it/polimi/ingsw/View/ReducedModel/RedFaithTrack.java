@@ -21,6 +21,12 @@ public class RedFaithTrack implements Serializable {
     protected boolean popeSpaceTWO;
     protected boolean popeSpaceTHREE;
 
+    /**
+     * Constructor for a Reduced Faith Track
+     * @param ONE       First Vatican Report
+     * @param TWO       Second Vatican Report
+     * @param THREE     Third Vatican Report
+     */
     protected RedFaithTrack(VaticanReportSection ONE, VaticanReportSection TWO, VaticanReportSection THREE) {
         this.cells = new FaithCell[25];
         this.ONE = ONE;
@@ -28,6 +34,10 @@ public class RedFaithTrack implements Serializable {
         this.THREE = THREE;
     }
 
+    /**
+     * Constructor for ReducedFaithTrack from an ArrayList of RedVaticanReportSection
+     * @param sections
+     */
     protected RedFaithTrack(ArrayList<RedVaticanReportSection> sections) {
         this.cells = new FaithCell[25];
         this.ONE = sections.get(0);
@@ -35,6 +45,9 @@ public class RedFaithTrack implements Serializable {
         this.THREE = sections.get(2);
     }
 
+    /**
+     * Constructor for ReducedFaithTrack from JSONReader
+     */
     protected RedFaithTrack() {
         this.cells = JSONReader.ReadFaithCells();
         VaticanReportSection[] vaticanReportSection = JSONReader.ReadVaticanReportSection();
@@ -43,14 +56,23 @@ public class RedFaithTrack implements Serializable {
         this.THREE = vaticanReportSection[2];
     }
 
+    /**
+     * Getter for the First RedVaticanReportSection
+     */
     public RedVaticanReportSection getONE() {
         return ONE;
     }
 
+    /**
+     * Getter for the Second RedVaticanReportSection
+     */
     public RedVaticanReportSection getTWO() {
         return TWO;
     }
 
+    /**
+     * Getter for the Third RedVaticanReportSection
+     */
     public RedVaticanReportSection getTHREE() {
         return THREE;
     }
@@ -60,14 +82,23 @@ public class RedFaithTrack implements Serializable {
         return cells;
     }
 
+    /**
+     * True if the first pope space is active
+     */
     public boolean isPopeSpaceONE() {
         return popeSpaceONE;
     }
 
+    /**
+     * True if the second pope space is active
+     */
     public boolean isPopeSpaceTWO() {
         return popeSpaceTWO;
     }
 
+    /**
+     * True if the third pope space is active
+     */
     public boolean isPopeSpaceTHREE() {
         return popeSpaceTHREE;
     }
@@ -77,6 +108,10 @@ public class RedFaithTrack implements Serializable {
         return player.getVictoryPoints();
     }
 
+    /**
+     * ReducedFaithTrack to cli mode
+     * @return      ArrayList with the FaithTrack information
+     */
     public ArrayList<String> toCli(Game game) {
         ArrayList<String> track = this.cells[0].toCli(game);
         ArrayList<String> sections = this.sectionsToCli();
@@ -99,6 +134,10 @@ public class RedFaithTrack implements Serializable {
         return track;
     }
 
+    /**
+     * Faith Track section to cli
+     * @return  ArrayList with the section
+     */
     public ArrayList<String> sectionsToCli() {
         ArrayList<String> sections = new ArrayList<>();
         sections.add("");

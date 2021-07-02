@@ -7,29 +7,49 @@ import it.polimi.ingsw.View.Utility.ANSIColors;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Contains all the information regarding a PopeTile
+ */
 public class RedPopeTileClass implements Serializable {
     protected PopeTile popeTile;
     protected int victoryPoints;
 
-    /**Getter and setter*/
+    /**
+     * Getter for a RedPopeTile
+     * @return  PopeTile
+     */
     public PopeTile getPopeTile() {
         return popeTile;
     }
 
+    /**
+     * Gets the VictoryPoints of the PopeTile
+     * @return  number of victory points given by the tile
+     */
     public int getVictoryPoints() {
         return victoryPoints;
     }
 
+    /**
+     * Setter for the PopeTile
+     * @param popeTile
+     */
     public void setPopeTile(PopeTile popeTile) {
         this.popeTile = popeTile;
     }
 
+    /**
+     * Sets the victory points of the popetile
+     * @param victoryPoints
+     */
     public void setVictoryPoints(int victoryPoints) {
         this.victoryPoints = victoryPoints;
     }
 
-
-    /**Method to save in anArrayList the pope tile*/
+    /**
+     * Method used to convert a popetile into an ArrayList of strings for the cli to be shown
+     * @return  ArrayList of the given pope tile information
+     */
     public ArrayList<String> toCli(){
         ArrayList<String> favorTile = new ArrayList<>();
         String r = ANSIColors.RESET;

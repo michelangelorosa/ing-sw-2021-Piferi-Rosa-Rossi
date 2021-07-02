@@ -15,10 +15,17 @@ public class RedMarket implements Serializable {
     protected Marble[][] marbles;
     protected Marble extraMarble;
 
+    /**
+     * Constructor for reduced Market class
+     */
     protected RedMarket() {
         this.marbles = new Marble[3][4];
     }
 
+    /**
+     * Constructor for reduced Market with a MarbleArray
+     * @param marbles
+     */
     protected RedMarket(Marble[][] marbles) {
         this.marbles = marbles;
     }
@@ -29,10 +36,20 @@ public class RedMarket implements Serializable {
         return marbles;
     }
 
+    /**
+     * Setter for a Marble to the given place
+     * @param i         Row of the market
+     * @param j         Column of the market
+     * @param colour    Colour of the marble
+     */
     public void setMarbles(int i, int j, Marble colour) {
         this.marbles[i][j] = colour;
     }
 
+    /**
+     * Sets the extraMarble in the market
+     * @param extraMarble
+     */
     public void setExtraMarble(Marble extraMarble) {
         this.extraMarble = extraMarble;
     }
@@ -67,6 +84,10 @@ public class RedMarket implements Serializable {
                 marbles[2][0]+" "+marbles[2][1]+" "+marbles[2][2]+" "+marbles[2][3];
     }
 
+    /**
+     * Converts a Market into an ArrayList of strings for it to be visualized by the cli
+     * @return  an ArrayList of String
+     */
     public ArrayList<String> toCli() {
         ArrayList<String> market = new ArrayList<>();
 
@@ -91,6 +112,10 @@ public class RedMarket implements Serializable {
         return market;
     }
 
+    /**
+     * Generates an up arrow for the cli to be shown in the market
+     * @return  an ArrayList of string
+     */
     private static ArrayList<String> upArrowToCli() {
         ArrayList<String> arrow = new ArrayList<>();
         arrow.add("                ");
@@ -110,6 +135,10 @@ public class RedMarket implements Serializable {
         return arrow;
     }
 
+    /**
+     * Generates a left arrow for the cli to be shown in the market
+     * @return  an ArrayList of string
+     */
     private static ArrayList<String> leftArrowToCli() {
         ArrayList<String> arrow = new ArrayList<>();
         arrow.add("                    ");

@@ -6,9 +6,16 @@ import it.polimi.ingsw.View.Utility.ANSIColors;
 
 import java.util.Scanner;
 
+/**
+ * Handles the cheat interaction available only in cli mode
+ */
 public class CliCheatController {
     private final Scanner sc = new Scanner(System.in);
 
+    /**
+     * Displays all the possible cheats that can be activated
+     * @return  The corresponding cheat action if the interaction was legal
+     */
     public Action cheatParser() {
         String choice;
         while(true) {

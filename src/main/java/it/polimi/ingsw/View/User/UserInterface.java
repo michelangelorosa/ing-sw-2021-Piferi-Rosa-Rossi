@@ -23,6 +23,10 @@ public interface UserInterface {
      */
     void waitingForPlayers();
 
+    /**
+     * Displays an errot
+     * @param s     String with the error information
+     */
     void displayError(String s);
 
 }

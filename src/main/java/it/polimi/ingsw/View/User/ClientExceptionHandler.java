@@ -15,6 +15,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * Handles some validation and all the error messages in the Gui
+ */
 public class ClientExceptionHandler {
     private boolean cli;
     private boolean gui;

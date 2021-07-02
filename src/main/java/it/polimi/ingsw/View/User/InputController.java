@@ -195,6 +195,12 @@ public abstract class InputController {
         return true;
     }
 
+    /**
+     * Checks if a Leader Card can be discarded
+     * @param i         the leader card index
+     * @param game      the reference to the game
+     * @return          true if it can be discarded, false otherwise
+     */
     public static boolean checkDiscardLeaderCard(int i, Game game){
         if(i != MIN && i != LEADER_CARD_TWO){
             error = "Leader Card Index should be either 1 or 2!";

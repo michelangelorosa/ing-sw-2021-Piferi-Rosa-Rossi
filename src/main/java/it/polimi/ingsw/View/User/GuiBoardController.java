@@ -983,7 +983,6 @@ public class GuiBoardController extends GuiInitController{
         chooser = new Stage();
         chooser.initModality(Modality.APPLICATION_MODAL);
         chooser.setTitle("Choose an option");
-        System.out.println(myPlayer().getPossibleActions().toString());
         if(myPlayer().getPossibleActions().contains(ActionType.CHOOSE_LEADER_CARD)){
             //Whitemarble Ambiguity
             cardTitle.setText("Choose White Marble to Activate");

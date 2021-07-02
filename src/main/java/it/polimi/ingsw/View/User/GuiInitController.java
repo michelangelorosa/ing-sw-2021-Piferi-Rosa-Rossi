@@ -687,8 +687,6 @@ public class GuiInitController implements UserInterface {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            System.out.println("I'm playing: "+getClientConnection().getClient().getUserInteraction().getMessage().imPlaying(getClientConnection().getClient().getUserInteraction()));
-                            System.out.println("Game type: "+getClientConnection().getClient().getUserInteraction().getGame().getGameType().toString());
                             if(getClientConnection().getClient().getUserInteraction().getMessage().imPlaying(getClientConnection().getClient().getUserInteraction())
                                     ||getClientConnection().getClient().getUserInteraction().getGame().getGameType().equals(GameType.SINGLEPLAYER))
                                 board.freeze(false);
@@ -704,10 +702,8 @@ public class GuiInitController implements UserInterface {
                                 board.refresh();
                                 if(getClientConnection().getClient().getUserInteraction().getMessage().imPlaying(getClientConnection().getClient().getUserInteraction()))
                                 {
-                                    System.out.println("Active Play: "+getClientConnection().getClient().getUserInteraction().getMessage().imPlaying(getClientConnection().getClient().getUserInteraction()));
                                     board.freeze(false);
                                 }else{
-                                    System.out.println("Inactive Play: "+getClientConnection().getClient().getUserInteraction().getMessage().imPlaying(getClientConnection().getClient().getUserInteraction()));
                                     board.freeze(true);
                                 }
                             }

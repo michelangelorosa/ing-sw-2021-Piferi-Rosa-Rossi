@@ -17,7 +17,6 @@ public class RedResourceStack implements Serializable{
     protected int stones;
 
     public RedResourceStack() {
-
     }
 
     /**
@@ -65,6 +64,11 @@ public class RedResourceStack implements Serializable{
         return true;
     }
 
+    /**
+     * Method called to see if a resourceStack has a resource type of the given type
+     * @param type  The resource type to check
+     * @return      True if the resource type is in the stack, false otherwise
+     */
     public boolean hasResource(ResourceType type) {
         return this.getResource(type) > 0;
     }
@@ -76,6 +80,10 @@ public class RedResourceStack implements Serializable{
         return shields+" "+servants+" "+coins+" "+stones;
     }
 
+    /**
+     * Transform the informations of the stack in text for the cli
+     * @return       a string for it to be visualized by the cli
+     */
     public String toCliWord(ResourceType type) {
         switch(type) {
             case SHIELDS: if(this.shields > 99) return ANSIColors.FRONT_BLUE + "SHIELDS:99"; if(this.shields > 9) return ANSIColors.FRONT_BLUE +"SHIELDS:"+this.shields; else return ANSIColors.FRONT_BLUE +"SHIELDS: "+this.shields;
@@ -131,6 +139,10 @@ public class RedResourceStack implements Serializable{
         return stack;
     }
 
+    /**
+     * Transforms the resources to pay in text for cli mode
+     * @return      An ArrayList of string for the visualization onto the Cli
+     */
     public ArrayList<String> toCliPay() {
         ArrayList<String> stack = this.toCli();
         ArrayList<String> message = new ArrayList<>();

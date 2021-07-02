@@ -1,5 +1,8 @@
 package it.polimi.ingsw.View.Utility;
 
+/**
+ * Used for getting ANSI font codes in cli-like interfaces
+ */
 public class ANSIfont {
     public final static String RESET = "\u001B[0m";
     public final static String UNDERLINE = "\u001b[4m";

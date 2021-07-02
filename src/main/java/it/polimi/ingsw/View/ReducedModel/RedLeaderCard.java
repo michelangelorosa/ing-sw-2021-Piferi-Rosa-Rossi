@@ -32,6 +32,14 @@ public class RedLeaderCard implements Serializable {
     //ABILITY FOUR: Xtra Depot
     protected ResourceType resource;
 
+    /**
+     * Constructor for a ReducedLeaderCard
+     * @param cardId            the card id
+     * @param victoryPoints     the victory points
+     * @param action            the leader card action
+     * @param resourcesRequired the resources required for activation
+     * @param cardsRequired     the cards required
+     */
     protected RedLeaderCard(int cardId, int victoryPoints, LeaderCardAction action, ResourceStack resourcesRequired, LeaderRequirements cardsRequired) {
         this.cardId = cardId;
         this.victoryPoints = victoryPoints;
@@ -106,13 +114,19 @@ public class RedLeaderCard implements Serializable {
         return resource;
     }
 
+    /**
+     * Converts the victory points of the card to a string for the cli
+     * @return  a string with the victory points
+     */
     public String victoryPointsToCli() {
         int points = this.victoryPoints;
         if(this.victoryPoints > 9) return Integer.toString(points); else return "0" + Integer.toString(points);
     }
 
-
-
+    /**
+     * Prints the leader ability for the cli to be shown
+     * @return  a string with the ability
+     */
     public String printAbility(){
         if(this.action == LeaderCardAction.DISCOUNT) return "║         "+ this.action +"         ║";
         else if(this.action == LeaderCardAction.WHITEMARBLE) return "║        "+ this.action +"       ║";
@@ -121,6 +135,10 @@ public class RedLeaderCard implements Serializable {
         else return " ";
     }
 
+    /**
+     * Prints the ability of the LeaderCard
+     * @return  ArrayList with the given information
+     */
     public ArrayList<String> printEffect() {
         ArrayList<String> effect = new ArrayList<>();
 
@@ -175,6 +193,10 @@ public class RedLeaderCard implements Serializable {
         return effect;
     }
 
+    /**
+     * Prints the Marble ability
+     * @return  Strings for the marble ability
+     */
     public String printMarble(){
         if(this.marble == Marble.BLUE)return "║     ║   o → "+ ANSIColors.FRONT_BLUE+this.marble + ANSIColors.RESET+"   ║     ║";
         if(this.marble == Marble.PURPLE)return "║     ║  o → "+ ANSIColors.FRONT_PURPLE+this.marble + ANSIColors.RESET+"  ║     ║";
@@ -184,15 +206,28 @@ public class RedLeaderCard implements Serializable {
         else return "║     ║              ║     ║";
     }
 
+    /**
+     * Prints the jolly number on the card in cli mode
+     * @param jolly     the number of the output resources
+     * @return          String with the number of outputs
+     * */
     public String jollyToString(int jolly) {
         if(jolly > 9) return "?:"+jolly; else return "?: "+jolly;
     }
 
+    /**
+     * Gets a string with the activation status of the leader card
+     * @return          The status of the card
+     */
     public String state(){
         if(this.active) return ANSIColors.FRONT_GREEN + "  ACTIVE  " + ANSIColors.RESET;
         else return ANSIColors.FRONT_BRIGHT_RED + "NOT ACTIVE" + ANSIColors.RESET;
     }
 
+    /**
+     * Prints the front of a leader card
+     * @return  ArrayList of string with the leader card information
+     */
     public ArrayList<String> toCliUp(){
         ArrayList<String> leadCard = new ArrayList<>();
         String r = ANSIColors.RESET;
@@ -215,6 +250,10 @@ public class RedLeaderCard implements Serializable {
         return leadCard;
     }
 
+    /**
+     * Gets the back of a leader card
+     * @return      ArrayList of string with the back of the card
+     */
     public  ArrayList<String> toCliDown(){
         ArrayList<String> leadCard = new ArrayList<>();
         String r = ANSIColors.RESET;
@@ -238,6 +277,10 @@ public class RedLeaderCard implements Serializable {
         return leadCard;
     }
 
+    /**
+     * Used to get an empty LeaderCard slot
+     * @return  ArrayList with an empty card
+     */
     public  ArrayList<String> toCliNo(){
         ArrayList<String> leadCard = new ArrayList<>();
         String r = ANSIColors.RESET;
@@ -261,6 +304,10 @@ public class RedLeaderCard implements Serializable {
         return leadCard;
     }
 
+    /**
+     * Gets the resources information from a card
+     * @return  an ArrayList of strings with the required information
+     */
     public ArrayList<String> printResources(){
         ArrayList<String> leadCard = new ArrayList<>();
         String r = ANSIColors.RESET;
@@ -279,6 +326,11 @@ public class RedLeaderCard implements Serializable {
         return leadCard;
     }
 
+    /**
+     * Gets a string with the corresponding resource from the input
+     * @param input The information about the required card
+     * @return      The string with the resource
+     */
     public String resourceToCli(String input){
         int resource = 0;
         switch (input) {

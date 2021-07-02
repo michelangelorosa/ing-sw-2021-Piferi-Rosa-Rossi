@@ -20,6 +20,9 @@ public class RedWarehouse implements Serializable {
     protected boolean extraWarehouseDepot1IsActive;
     protected boolean extraWarehouseDepot2IsActive;
 
+    /**
+     * Constructor for a reduced warehouse
+     */
     protected RedWarehouse() {
         this.warehouseDepots = new WarehouseDepot[3];
         this.warehouseDepots[0] = new WarehouseDepot(3,false);
@@ -160,7 +163,10 @@ public class RedWarehouse implements Serializable {
 
         return canAdd;
     }
-
+    /**
+     * Transform a Reduced Warehouse Depot in text for cli mode
+     * @return      An arrayList to be visualized by the cli
+     */
     public ArrayList<String> toCli() {
         ArrayList<String> warehouse = new ArrayList<>();
 

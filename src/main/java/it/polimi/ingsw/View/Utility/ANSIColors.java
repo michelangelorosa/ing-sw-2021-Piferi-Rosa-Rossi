@@ -1,5 +1,8 @@
 package it.polimi.ingsw.View.Utility;
 
+/**
+ * Used as a Shortcut for getting ANSI colors
+ */
 public class ANSIColors {
     public final static String RESET = "\u001B[0m";
 

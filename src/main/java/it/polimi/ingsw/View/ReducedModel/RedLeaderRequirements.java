@@ -31,7 +31,9 @@ public class RedLeaderRequirements implements Serializable {
 
     }
 
-    /**Getters*/
+    /**
+     * Getters for the leader requirements
+     * */
     public int getBlueCardLv1() {
         return blueCardLv1;
     }

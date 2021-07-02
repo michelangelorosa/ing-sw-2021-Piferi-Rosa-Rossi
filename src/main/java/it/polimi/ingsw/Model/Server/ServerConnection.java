@@ -196,8 +196,8 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
     }
 
     /**
-     * Sends a RedLeaderCard array
-     * @param leaderCards array RedLeaderCards to be sent.
+     * Tries to send a RedLeaderCard[] to the client, used only in the game startup. If it fails the connection is closed.
+     * @param leaderCards       The RedLeaderCard[] to be sent
      */
     public synchronized void send(RedLeaderCard[] leaderCards) {
         DEBUGGER.printDebug("Sending RedLeaderCards" + Arrays.toString(leaderCards));
@@ -212,8 +212,8 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
     }
 
     /**
-     * Sends a bool to the client
-     * @param bool boolean to be sent.
+     * Tries to send a Boolean to the client. If it fails the connection is closed.
+     * @param bool          The boolean to be sent
      */
     public synchronized void send(boolean bool) {
         DEBUGGER.printDebug("Sending boolean: " + bool);
@@ -228,8 +228,8 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
     }
 
     /**
-     * Sends a MessageToClient to the client
-     * @param message   the message to send
+     * Tries to send a MessageToClient to the client. If it fails the connection is closed.
+     * @param message       The MessageToClient to be sent
      */
     public synchronized void send(MessageToClient message) {
         DEBUGGER.printDebug("Sending MessageToClient: " + message.getActionDone());
@@ -243,6 +243,10 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
         }
     }
 
+    /**
+     * Tries to send a LeaderCard to the client. If it fails the connection is closed.
+     * @param leaderCard    The leader card to be sent
+     */
     public synchronized void send(LeaderCard leaderCard){
         DEBUGGER.printDebug("Sending LeaderCard: " + leaderCard.getAction());
         try{
@@ -255,6 +259,10 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
         }
     }
 
+    /**
+     * Tries to send a DevelopmentCard to the client. If it fails the connection is closed.
+     * @param developmentCard The development card to be sent
+     */
     public synchronized void send(DevelopmentCard developmentCard){
         try{
             out.writeObject(developmentCard);
@@ -266,6 +274,10 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
         }
     }
 
+    /**
+     * Tries to send a GameType to the client. If it fails the connection is closed.
+     * @param gameType      The GameType to be sent
+     */
     public synchronized void send(GameType gameType){
         try{
             out.writeObject(gameType);
@@ -277,6 +289,10 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
         }
     }
 
+    /**
+     * Tries to send an ArrayList of names to the client. If it fails the connection is closed.
+     * @param names         The names to be sent
+     */
     public synchronized void send(ArrayList<String> names){
         DEBUGGER.printDebug("ArrayList<String>: " + names);
         try{
@@ -321,55 +337,108 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
         }
     }
 
+    /**
+     * Sends to the client if name matches
+     * @param name  username
+     * @param message     what to send
+     */
     public void conditionalSend(String name,String message){
         if(this.name.equals(name))
             send(message);
     }
 
+    /**
+     * Sends to the client if name matches
+     * @param name  username
+     * @param message     what to send
+     */
     public void conditionalSend(String name,MessageToClient message){
         if(this.name.equals(name))
             send(message);
     }
 
+    /**
+     * Sends to the client if name matches
+     * @param name  username
+     * @param gameType     what to send
+     */
     public void conditionalSend(String name, GameType gameType){
         if(this.name.equals(name))
             send(gameType);
     }
 
+    /**
+     * Sends to the client if name matches
+     * @param name  username
+     * @param bool     what to send
+     */
     public void conditionalSend(String name,boolean bool){
         if(this.name.equals(name))
             send(bool);
     }
 
+    /**
+     * Sends to the client if name matches
+     * @param name  username
+     * @param leaderCards     what to send
+     */
     public void conditionalSend(String name, RedLeaderCard[] leaderCards){
         if(this.name.equals(name))
             send(leaderCards);
     }
 
+    /**
+     * Getter for the ObjectInputStream
+     * @return  the objectInputStream
+     */
     public ObjectInputStream getIn() {
         return in;
     }
 
+    /**
+     * Getter for the name
+     * @return  the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Setter for the name
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Checks if the name is in the server
+     * @return  true if the name is in the server, false otherwise
+     */
     public synchronized boolean nameInServer() {
         return this.server.isNameInConnections(this.name);
     }
 
+    /**
+     * Getter for the server
+     * @return  server
+     */
     public Server getServer() {
         return server;
     }
 
+    /**
+     * Getter for ready
+     * @return  ready boolean
+     */
     public boolean isReady() {
         return ready;
     }
 
+    /**
+     * Setter for ready
+     * @param ready
+     */
     public void setReady(boolean ready) {
         this.ready = ready;
     }
@@ -394,10 +463,19 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
         }
     }
 
+    /**
+     * Method used to see if its One's turn
+     * @return
+     */
     public boolean isMyTurn() {
         return this.name.equals(this.server.getController().getActionController().getGame().getCurrentPlayerNickname());
     }
 
+    /**
+     * Checks if the socket is the same
+     * @param socket    the socket to check
+     * @return          true if equals, false otherwise
+     */
     public boolean socketEquals(Socket socket){
         return socket == this.socket;
     }

@@ -53,7 +53,6 @@ public class Cli implements Runnable{
 
         } while (action != UIActions.FINAL_POINTS && action != UIActions.SINGLEPLAYER_END_LOST && action != UIActions.SINGLEPLAYER_END_WON);
 
-        //TODO ending message "thanks for playing"
         System.out.println("[INFO] Closing Cli Thread...");
     }
 
