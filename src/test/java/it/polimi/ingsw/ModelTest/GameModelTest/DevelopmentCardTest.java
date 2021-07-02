@@ -140,35 +140,4 @@ public class DevelopmentCardTest {
 
         assertArrayEquals(testString.toCharArray(), card.toString().toCharArray());
     }
-
-    /**Test for toView method*/
-    @Test
-    public void toViewTest(){
-        RedDevelopmentCard developmentCardView;
-
-        developmentCardView = card.toView();
-
-        assertSame(Color.BLUE, developmentCardView.getColor());
-        assertSame(Level.ONE, developmentCardView.getLevel());
-        assertEquals(1, developmentCardView.getCardId());
-        assertEquals(100, developmentCardView.getVictoryPoints());
-
-        assertEquals(0, developmentCardView.getCost().getResource(ResourceType.SHIELDS));
-        assertEquals(1, developmentCardView.getCost().getResource(ResourceType.SERVANTS));
-        assertEquals(2, developmentCardView.getCost().getResource(ResourceType.COINS));
-        assertEquals(3, developmentCardView.getCost().getResource(ResourceType.STONES));
-
-        assertEquals(2, developmentCardView.getInput().getResource(ResourceType.SHIELDS));
-        assertEquals(6, developmentCardView.getInput().getResource(ResourceType.SERVANTS));
-        assertEquals(13, developmentCardView.getInput().getResource(ResourceType.COINS));
-        assertEquals(16, developmentCardView.getInput().getResource(ResourceType.STONES));
-
-        assertEquals(31, developmentCardView.getOutput().getResource(ResourceType.SHIELDS));
-        assertEquals(0, developmentCardView.getOutput().getResource(ResourceType.SERVANTS));
-        assertEquals(0, developmentCardView.getOutput().getResource(ResourceType.COINS));
-        assertEquals(0, developmentCardView.getOutput().getResource(ResourceType.STONES));
-
-        assertEquals(12, developmentCardView.getOutputFaith());
-
-    }
 }

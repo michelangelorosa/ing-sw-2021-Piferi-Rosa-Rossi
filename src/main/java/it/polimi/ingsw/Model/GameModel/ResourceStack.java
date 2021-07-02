@@ -127,9 +127,4 @@ public class ResourceStack extends RedResourceStack{
     public int totalResourcesToInt() {
         return this.shields + this.servants + this.coins + this.stones;
     }
-
-    /**Method for converting model classes to view classes*/
-    public RedResourceStack toView() {
-        return this;
-    }
 }

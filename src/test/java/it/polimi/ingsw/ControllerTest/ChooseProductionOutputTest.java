@@ -148,7 +148,7 @@ public class ChooseProductionOutputTest {
         assertEquals(ActionType.CHOOSE_PRODUCTION_OUTPUT, messageToClient.getActionDone());
         assertEquals(ActionType.END_TURN, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.ACTIVATE_LEADERCARD, messageToClient.getPossibleActions().get(1));
-        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getStrongbox().toView().toString(), ((ChoseProductionOutputMessage) messageToClient).getStrongbox().toString());
+        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getStrongbox().toString(), ((ChoseProductionOutputMessage) messageToClient).getStrongbox().toString());
 
         game.getCurrentPlayer().addPossibleAction(ActionType.CHOOSE_PRODUCTION_OUTPUT);
 
@@ -164,7 +164,7 @@ public class ChooseProductionOutputTest {
         assertEquals(ActionType.CHOOSE_PRODUCTION_OUTPUT, messageToClient.getActionDone());
         assertEquals(ActionType.END_TURN, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.ACTIVATE_LEADERCARD, messageToClient.getPossibleActions().get(1));
-        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getStrongbox().toView().toString(), ((ChoseProductionOutputMessage) messageToClient).getStrongbox().toString());
+        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getStrongbox().toString(), ((ChoseProductionOutputMessage) messageToClient).getStrongbox().toString());
 
         game.getCurrentPlayer().addPossibleAction(ActionType.CHOOSE_PRODUCTION_OUTPUT);
 
@@ -180,7 +180,7 @@ public class ChooseProductionOutputTest {
         assertEquals(ActionType.CHOOSE_PRODUCTION_OUTPUT, messageToClient.getActionDone());
         assertEquals(ActionType.END_TURN, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.ACTIVATE_LEADERCARD, messageToClient.getPossibleActions().get(1));
-        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getStrongbox().toView().toString(), ((ChoseProductionOutputMessage) messageToClient).getStrongbox().toString());
+        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getStrongbox().toString(), ((ChoseProductionOutputMessage) messageToClient).getStrongbox().toString());
 
         game.getCurrentPlayer().addPossibleAction(ActionType.CHOOSE_PRODUCTION_OUTPUT);
 
@@ -196,7 +196,7 @@ public class ChooseProductionOutputTest {
         assertEquals(ActionType.CHOOSE_PRODUCTION_OUTPUT, messageToClient.getActionDone());
         assertEquals(ActionType.END_TURN, messageToClient.getPossibleActions().get(0));
         assertEquals(ActionType.ACTIVATE_LEADERCARD, messageToClient.getPossibleActions().get(1));
-        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getStrongbox().toView().toString(), ((ChoseProductionOutputMessage) messageToClient).getStrongbox().toString());
+        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getStrongbox().toString(), ((ChoseProductionOutputMessage) messageToClient).getStrongbox().toString());
     }
 
 

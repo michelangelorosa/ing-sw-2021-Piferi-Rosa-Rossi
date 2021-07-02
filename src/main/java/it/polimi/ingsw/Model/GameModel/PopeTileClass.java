@@ -23,9 +23,4 @@ public class PopeTileClass extends RedPopeTileClass {
     public void setPopeTile(PopeTile popeTile) {
         this.popeTile = popeTile;
     }
-
-    /**Method for converting model classes to view classes*/
-    public RedPopeTileClass toView() {
-        return this;
-    }
 }

@@ -210,9 +210,9 @@ public class PayResource extends Action {
     protected PaymentMessage hasToPay(ActionController actionController, boolean card) {
         PaymentMessage paymentMessage = new PaymentMessage(actionController.getGame().getCurrentPlayerNickname());
         if(this.response.equals("HasToPay")) {
-            paymentMessage.setWarehouse(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse().toView());
-            paymentMessage.setStrongbox(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getStrongbox().toView());
-            paymentMessage.setTemporaryResources(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toView());
+            paymentMessage.setWarehouse(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse());
+            paymentMessage.setStrongbox(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getStrongbox());
+            paymentMessage.setTemporaryResources(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay());
         }
         paymentMessage.setError(this.response);
         if(card) {

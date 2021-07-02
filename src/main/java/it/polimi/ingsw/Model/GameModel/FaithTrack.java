@@ -189,12 +189,6 @@ public class FaithTrack extends RedFaithTrack {
             }
         }
     }
-
-    /**Method for converting model classes to view classes*/
-    public RedFaithTrack toView() {
-        return this;
-    }
-
 }
 
 

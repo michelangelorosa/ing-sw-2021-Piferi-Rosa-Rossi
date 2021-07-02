@@ -15,9 +15,4 @@ public class VaticanReportSection extends RedVaticanReportSection {
     public void isCorrect() throws  IllegalArgumentException {
         if(begin > end || begin < 0 || begin > 25 || end > 25) throw new IllegalArgumentException("Vatican Report Section index out of bound");
     }
-
-    /**Method for converting model classes to view classes*/
-    public RedVaticanReportSection toView() {
-        return this;
-    }
 }

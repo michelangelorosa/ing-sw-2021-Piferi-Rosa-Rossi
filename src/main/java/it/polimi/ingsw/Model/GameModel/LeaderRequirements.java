@@ -45,8 +45,4 @@ public class LeaderRequirements extends RedLeaderRequirements {
         }
         else return cardsHad.getNeedBlueCard() >= this.getNeedBlueCard() && cardsHad.getNeedPurpleCard() >= this.needPurpleCard && cardsHad.getNeedYellowCard() >= this.getNeedYellowCard() && cardsHad.getNeedGreenCard() >= this.getNeedGreenCard();
     }
-
-    public RedLeaderRequirements toView(){
-        return this;
-    }
 }

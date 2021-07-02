@@ -172,21 +172,6 @@ public class CardSlotTest {
         assertEquals(2, blueCards);
     }
 
-    /**Test for toView method*/
-    @Test
-    public void toViewTest(){
-        RedCardSlot slotView;
-        slotView = test.toView();
-        assertEquals(0, slotView.getLevelOccupied());
-
-        test.addCard(card);
-        test.addCard(cardTest);
-        test.addCard(card2Test);
-        test.addCard(card3Test);
-        slotView = test.toView();
-        assertEquals(3, slotView.getLevelOccupied());
-    }
-
     @Test
     public void getCardsTest(){
         test.addCard(card);

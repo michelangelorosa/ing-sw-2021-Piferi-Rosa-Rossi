@@ -119,6 +119,11 @@ public class DevelopmentCardSlots extends RedDevelopmentCardSlots {
         else throw new IllegalArgumentException("ERROR, the slot does not exists");
     }
 
+    /**
+     * Adds a Development Card to the first available free space inside the DevelopmentCardSlots.
+     * @param card Development Card to add.
+     * @throws ModelException if the card cannot be added.
+     */
     public void addCardInFirstFreeSpace(DevelopmentCard card) throws ModelException {
         if(canAddInThisSlot(0, card))
             addCard(0, card);
@@ -136,13 +141,5 @@ public class DevelopmentCardSlots extends RedDevelopmentCardSlots {
      */
     public int countAllCards() {
         return this.getSlots()[0].getLevelOccupied() + this.getSlots()[1].getLevelOccupied() + this.getSlots()[2].getLevelOccupied();
-    }
-
-    /**
-     * Converts this to View.
-     */
-    public RedDevelopmentCardSlots toView(){
-
-        return this;
     }
 }

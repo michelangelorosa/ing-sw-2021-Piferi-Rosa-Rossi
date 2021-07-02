@@ -19,9 +19,4 @@ public class FaithCell extends RedFaithCell{
         this.victoryPoints = victoryPoints;
     }
 
-    /**Method for converting model classes to view classes*/
-    public RedFaithCell toView() {
-        return this;
-    }
-
 }

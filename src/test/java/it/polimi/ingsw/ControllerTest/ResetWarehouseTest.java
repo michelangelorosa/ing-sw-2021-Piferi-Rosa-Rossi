@@ -121,8 +121,8 @@ public class ResetWarehouseTest {
         assertEquals(ActionType.RESET_WAREHOUSE, messageToClient.getPossibleActions().get(1));
         assertEquals(ActionType.SWITCH_DEPOT, messageToClient.getPossibleActions().get(2));
         assertEquals(ActionType.END_MARKET, messageToClient.getPossibleActions().get(3));
-        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().toView().isFull(), ((ResetWarehouseMessage)messageToClient).getWarehouse().isFull());
-        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toView().toString(), ((ResetWarehouseMessage)messageToClient).getTemporaryResources().toString());
+        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getWarehouse().isFull(), ((ResetWarehouseMessage)messageToClient).getWarehouse().isFull());
+        assertEquals(game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toString(), ((ResetWarehouseMessage)messageToClient).getTemporaryResources().toString());
 
 
         assertEquals("2 0 0 0", game.getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().toString());

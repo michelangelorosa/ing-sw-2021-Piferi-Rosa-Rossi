@@ -7,7 +7,6 @@ import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.FaithCell;
 import it.polimi.ingsw.Model.GameModel.FaithTrack;
 import it.polimi.ingsw.Model.GameModel.Player;
-import it.polimi.ingsw.View.ReducedModel.RedFaithTrack;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -37,6 +36,10 @@ public class FaithTrackTest {
         assertEquals(0, players.get(1).getFaithTrackPosition());
         assertEquals(0, players.get(2).getFaithTrackPosition());
         assertEquals(0, players.get(3).getFaithTrackPosition());
+
+        test.getONE();
+        test.getTWO();
+        test.getTHREE();
 
         assertEquals("0 0", test.getCells()[0].toString());
 
@@ -290,47 +293,5 @@ public class FaithTrackTest {
         System.out.println(players.get(1).getPopeTiles()[2].getPopeTile());
         System.out.println(players.get(2).getPopeTiles()[2].getPopeTile());
         System.out.println(players.get(3).getPopeTiles()[2].getPopeTile());
-    }
-
-    /**Test for toView method*/
-    @Test
-    public void toViewTest(){
-        RedFaithTrack trackView;
-
-        ArrayList<Player> players = new ArrayList <>();
-        players.add(new Player("zero", 0, true));
-        players.add(new Player("one", 1, false));
-        players.add(new Player("two", 2, false));
-        players.add(new Player("three", 3, false));
-
-        trackView = test.toView();
-
-        assertEquals(5, trackView.getONE().getBegin());
-        assertEquals(8, trackView.getONE().getEnd());
-        assertEquals(2, trackView.getONE().getPoints());
-        assertEquals(12, trackView.getTWO().getBegin());
-        assertEquals(16, trackView.getTWO().getEnd());
-        assertEquals(3, trackView.getTWO().getPoints());
-        assertEquals(19, trackView.getTHREE().getBegin());
-        assertEquals(24, trackView.getTHREE().getEnd());
-        assertEquals(4, trackView.getTHREE().getPoints());
-        players.get(0).stepAhead(8);
-        test.popeSpaceSector(players);
-
-        trackView = test.toView();
-
-        assertFalse(trackView.isPopeSpaceONE());
-        assertTrue(trackView.isPopeSpaceTWO());
-        assertTrue(trackView.isPopeSpaceTHREE());
-        trackView = test.toView();
-        assertFalse(trackView.isPopeSpaceONE());
-        assertTrue(trackView.isPopeSpaceTWO());
-        assertTrue(trackView.isPopeSpaceTHREE());
-        players.get(2).stepAhead(17);
-        test.popeSpaceSector(players);
-        trackView = test.toView();
-        assertFalse(trackView.isPopeSpaceONE());
-        assertFalse(trackView.isPopeSpaceTWO());
-        assertTrue(trackView.isPopeSpaceTHREE());
     }
 }

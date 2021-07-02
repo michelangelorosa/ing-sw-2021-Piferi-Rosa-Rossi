@@ -243,10 +243,4 @@ public class Warehouse extends RedWarehouse {
         this.extraWarehouseDepot1IsActive = warehouse.isExtraWarehouseDepot1IsActive();
         this.extraWarehouseDepot2IsActive = warehouse.isExtraWarehouseDepot2IsActive();
     }
-
-    /**Method for converting model classes to view classes*/
-    public RedWarehouse toView() {
-        return this;
-    }
-
 }

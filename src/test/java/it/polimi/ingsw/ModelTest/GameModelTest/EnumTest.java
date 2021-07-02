@@ -26,7 +26,6 @@ public class EnumTest {
             System.out.println(t.toCli());
             System.out.println(t.toCliSymbol());
             System.out.println(t.toCliNoColor());
-            System.out.println(t.viewToModel());
         }
     }
 

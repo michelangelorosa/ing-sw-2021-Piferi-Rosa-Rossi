@@ -101,10 +101,4 @@ public class Strongbox extends RedStrongbox {
     public String toString() {
         return storedResources.getResource(ResourceType.SHIELDS)+" "+storedResources.getResource(ResourceType.SERVANTS)+" "+storedResources.getResource(ResourceType.COINS)+" "+storedResources.getResource(ResourceType.STONES);
     }
-
-    /**Method for converting model classes to view classes*/
-    public RedStrongbox toView() {
-        return this;
-    }
-
 }

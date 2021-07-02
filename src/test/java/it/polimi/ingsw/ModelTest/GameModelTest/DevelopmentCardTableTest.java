@@ -199,19 +199,6 @@ public class DevelopmentCardTableTest {
         assertEquals(0, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.STONES));
     }
 
-    /**Test for toView method*/
-    @Test
-    public void toViewTest(){
-        RedDevelopmentCardTable tableView;
-
-        tableView = table.toView();
-
-        for(int column = 0; column <= 3; column++)
-            for(int row = 0; row <= 2; row++){
-                assertEquals(table.getDeck(row, column).toString(), tableView.getDeck(row, column).toString());
-            }
-    }
-
     @Test
     public void fromIdTest(){
         System.out.println(table.getCardFromId(3).getCost().getResource(ResourceType.COINS));

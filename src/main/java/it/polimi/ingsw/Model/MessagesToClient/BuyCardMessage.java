@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
-import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.Player;
 import it.polimi.ingsw.View.ReducedModel.RedResourceStack;
 import it.polimi.ingsw.View.User.UserInteraction;

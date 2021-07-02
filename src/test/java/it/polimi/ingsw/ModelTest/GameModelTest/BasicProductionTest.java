@@ -34,23 +34,4 @@ public class BasicProductionTest {
         assertEquals(2, basicProductionTwo.getJollyOut());
         assertEquals(3, basicProductionTwo.getOutputFaith());
     }
-
-    /**Test for toView method*/
-    @Test
-    public void toViewTest(){
-        RedBasicProduction basicView;
-
-        basicView = basicProductionOne.toView();
-
-        assertEquals(5, basicView.getJollyIn());
-        assertEquals(12, basicView.getJollyOut());
-
-        basicView = basicProductionTwo.toView();
-
-        assertEquals("1 1 1 1", basicView.getFixedInputs().toString());
-        assertEquals("2 2 2 2", basicView.getFixedOutputs().toString());
-        assertEquals(1, basicView.getJollyIn());
-        assertEquals(2, basicView.getJollyOut());
-        assertEquals(3, basicView.getOutputFaith());
-    }
 }

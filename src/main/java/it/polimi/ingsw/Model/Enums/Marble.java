@@ -11,6 +11,11 @@ import java.util.ArrayList;
 public enum Marble {
     WHITE,BLUE,GREY,YELLOW,PURPLE,RED;
 
+    /**
+     * Returns the resource corresponding to the marble.
+     * @param player used to advance in the faith track if the marble is red.
+     * @return the resource corresponding to the marble.
+     */
     public ResourceType marbleToResource(Player player) {
         switch(this) {
             case WHITE: player.getBoard().getResourceManager().addWhiteMarble();
@@ -29,6 +34,10 @@ public enum Marble {
         return null;
     }
 
+    /**
+     * Returns an ArrayList of String containing the visual representation of the given marble.
+     * @return an ArrayList of Strings.
+     */
     public ArrayList<String> toCli() {
         ArrayList<String> marble = new ArrayList<>();
 

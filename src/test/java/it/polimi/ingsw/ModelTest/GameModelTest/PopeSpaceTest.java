@@ -25,13 +25,4 @@ public class PopeSpaceTest {
         assertSame(PopeSpace.TWO, PopeSpace.getPopeSpace(2));
         assertSame(PopeSpace.THREE, PopeSpace.getPopeSpace(3));
     }
-
-    /**Test for toView method*/
-    @Test
-    public void toViewTest(){
-        RedPopeTileClass popeTileClassView;
-        PopeTileClass popeTileClass = new PopeTileClass(7);
-        popeTileClassView = popeTileClass.toView();
-        assertSame(7, popeTileClassView.getVictoryPoints());
-    }
 }

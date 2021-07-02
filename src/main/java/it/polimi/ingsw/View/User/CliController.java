@@ -548,7 +548,7 @@ public class CliController implements UserInterface {
             if(basicProduction) {
                 basicProductionInputsModel = new ArrayList<>();
                 for (ResourceType type : basicProductionInputs)
-                    basicProductionInputsModel.add(type.viewToModel());
+                    basicProductionInputsModel.add(type);
             }
 
             this.firstLeaderCard = firstLeaderCard;
@@ -582,7 +582,7 @@ public class CliController implements UserInterface {
             type = resourceIntIterator(sc);
 
             if(InputController.checkAddResource(depot - 1, type, game)) {
-                return new AddResource(depot - 1, type.viewToModel());
+                return new AddResource(depot - 1, type);
             }
             else
                 displayError(InputController.getError());
@@ -936,7 +936,7 @@ public class CliController implements UserInterface {
                 type = resourceIntIterator(sc);
 
                 if(InputController.checkPayResource(false, 0, type, game))
-                    return  new PayResource(false, 0, type.viewToModel());
+                    return  new PayResource(false, 0, type);
                 else
                     displayError(InputController.getError());
             }

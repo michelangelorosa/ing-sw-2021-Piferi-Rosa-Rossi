@@ -17,9 +17,19 @@ import java.util.*;
 
 /**
  *  Handles the connections to new clients, keeping an HashSet of active Names and active Sockets
- *  The default parameters are set to port 8765 for testing purposes.
- *  For every clients that gets connected an instance of ServerConnection is run, the thread pool is fixed at 4 so that
- *  there can't be more than 4 connections handled at the same time, for now they get ignored
+ *  The default parameters are set to port 8765.
+ *  <p><b>Attributes:</b></p>
+ *  <ul>
+ *      <li>Set&lt;String&gt; "names": Set containing the names of the players who connected to the server</li>
+ *      <li>Integer "numberOfPlayers": number of players of the game</li>
+ *      <li>ArrayList&lt;ServerConnection&gt; "connections": contains the server connection of all players who connected to the server</li>
+ *      <li>int "DEFAULT_PORT": default port of the server</li>
+ *      <li>int "readyPlayers": number of players who are ready for the next server request</li>
+ *      <li>GameStatus "serverStatus": indicates the phase of the game of the server</li>
+ *      <li>boolean "cheatMode": set tu true if the server has cheats enabled</li>
+ *      <li>Debugger "DEBUGGER": debugger specific to the server</li>
+ *  </ul>
+ * @author michelangelorosa, redrick99
  */
 public class Server {
     private Set<String> names = new HashSet<>();
@@ -33,18 +43,24 @@ public class Server {
 
     private static final Debugger DEBUGGER = DebuggerFactory.getDebugger(DebuggerType.SERVER);
 
+    /**
+     * Getter for "names" attribute.
+     */
     public Set<String> getNames() {
         return names;
     }
 
+    /**
+     * Setter for "names" attribute.
+     */
     public void setNames(Set<String> names) {
         this.names = names;
     }
 
     /**
-     * Sets a name in the Name Hash Set
-     * @param name the String of the name to insert
-     * @return true if the insertion is successful (and thus no other player is called in the same way) or false if the name is already taken
+     * Sets a name in the Name Hash Set.
+     * @param name the String of the name to insert.
+     * @return true if the insertion is successful (and thus no other player is called in the same way) or false if the name is already taken.
      */
     public boolean setName(String name){
         if(names.contains(name))
@@ -54,6 +70,10 @@ public class Server {
             return true;
     }
 
+    /**
+     * Removes a given name from the Set of names.
+     * @param name name to remove.
+     */
     public void removeFromNames(String name) {
         this.names.remove(name);
     }
@@ -67,14 +87,17 @@ public class Server {
     }
 
     /**
-     * Checks if a name in the Name is in the Hash Set
-     * @param name the String of the name to insert
-     * @return true if the name is found, false if the name is not found
+     * Checks if a name in the Name is in the Hash Set.
+     * @param name the String of the name to insert.
+     * @return true if the name is found, false if the name is not found.
      */
     public boolean matchName(String name){
         return names.contains(name);
     }
 
+    /**
+     * Main method to be executed on Server Startup.
+     */
     public static void main(String[] args){
 
         // Enables Cheats to be used on Server
@@ -95,6 +118,10 @@ public class Server {
         server.startUp(server_port);
     }
 
+    /**
+     * Starts the server and handles client connections.
+     * @param server_port port to start the server on.
+     */
     public void startUp(int server_port) {
 
         /* !! HAS TO BE COMMENTED FOR THE DEBUGGER TO STOP !! */
@@ -158,12 +185,20 @@ public class Server {
         }
     }
 
+    /**
+     * Broadcasts an ArrayList of Strings to every player connected
+     * @param names  ArrayList of strings to send
+     */
     public synchronized void broadcast(ArrayList<String> names) {
         for(ServerConnection connection : connections) {
             connection.send(names);
         }
     }
 
+    /**
+     * Broadcasts a MessageToClient to every player connected
+     * @param message MessageToClient to send
+     */
     public synchronized void broadcast(MessageToClient message) {
         for(ServerConnection connection : connections) {
             connection.send(message);
@@ -278,14 +313,25 @@ public class Server {
         serverStatus = setState;
     }
 
+    /**
+     * Getter for "controller" attribute.
+     */
     public synchronized Controller getController() {
         return controller;
     }
 
+    /**
+     * Removes a connections if it corresponds to a given socket.
+     * @param socket socket of the connection to remove.
+     */
     public void removeFromConnections(Socket socket){
         connections.removeIf(connection -> connection.socketEquals(socket));
     }
 
+    /**
+     * Checks if all player who connected are ready for the next connection phase.
+     * @return True if all players are ready.
+     */
     public boolean allAreReady() {
         int readyPlayers = 0;
         for(ServerConnection connection : this.connections)
@@ -295,38 +341,66 @@ public class Server {
         return readyPlayers == numberOfPlayers;
     }
 
+    /**
+     * Sets all players connected to ready or not ready.
+     * @param ready boolean corresponding to the ready status.
+     */
     public synchronized void setAllReady(boolean ready) {
         for(ServerConnection connection : this.connections)
             connection.setReady(ready);
     }
 
+    /**
+     * Checks if the Server is in CheatMode.
+     * @return true if the Server is in CheatMode.
+     */
     public static boolean isCheatMode() {
         return cheatMode;
     }
 
+    /**
+     * Checks if a client can reconnect to the server.
+     * @return True if the client can reconnect.
+     */
     public boolean canReconnect() {
-        System.out.println("\n\nCAN RECONNECT: " + (this.connections.size() < numberOfPlayers));
-        System.out.println("connections.size() = " + connections.size());
-        System.out.println("numberOfPlayers = " + numberOfPlayers + "\n\n");
         return this.connections.size() < numberOfPlayers;
     }
 
+    /**
+     * Returns true if the given server connections is not inside the list of connections.
+     * @param serverConnection to check.
+     * @return
+     */
     public boolean notConnected(ServerConnection serverConnection) {
         return !this.connections.contains(serverConnection);
     }
 
+    /**
+     * Adds a given serverConnection to the list of connections.
+     * @param serverConnection connection to add to the list.
+     */
     public void addConnection(ServerConnection serverConnection) {
         this.connections.add(serverConnection);
     }
 
+    /**
+     * Returns the number of connected players.
+     */
     public int getConnectedPlayers() {
         return connections.size();
     }
 
+    /**
+     * Checks if the game is empty.
+     * @return true if the game inside the server has no players.
+     */
     public synchronized boolean gameIsEmpty() {
         return this.controller.getActionController().gameIsEmpty();
     }
 
+    /**
+     * Setter for static "cheatMode" attribute.
+     */
     public static void setCheatMode(boolean cheatMode) {
         Server.cheatMode = cheatMode;
     }

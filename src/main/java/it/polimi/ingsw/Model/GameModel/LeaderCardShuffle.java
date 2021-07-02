@@ -7,6 +7,11 @@ import java.util.ArrayList;
 
 /**
  * Invoked at the start of the game this class shuffles the Leader Cards for the players to chose
+ * <p><b>Attributes:</b></p>
+ * <ul>
+ *     <li>boolean "active": needed to check if leader cards have already been read</li>
+ *     <li>ArrayList&lt;LeaderCard&gt; "LeaderCards": contains Leader Cards read from file</li>
+ * </ul>
  * @author michelangelorosa
 */
 public class LeaderCardShuffle {

@@ -117,6 +117,10 @@ public class Persistence {
         }
     }
 
+    /**
+     * Resets "persistence_info.txt" to initial conditions.
+     * @throws IOException if an error occurs while creating a FileWriter.
+     */
     public synchronized void resetFile() throws IOException {
         FileWriter fileWriter = new FileWriter(file);
         fileWriter.write("");
@@ -157,6 +161,10 @@ public class Persistence {
         return wantsToRestart > 0;
     }
 
+    /**
+     * Checks if "persistence_info.txt" exists.
+     * @return True if the file exists.
+     */
     public boolean fileExists(){
         return file.exists();
     }

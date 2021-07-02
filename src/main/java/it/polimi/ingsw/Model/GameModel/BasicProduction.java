@@ -50,8 +50,4 @@ public class BasicProduction extends RedBasicProduction {
         return (ResourceStack) fixedOutputs;
     }
 
-    /**Method for converting model classes to view classes*/
-    public RedBasicProduction toView() {
-        return this;
-    }
 }

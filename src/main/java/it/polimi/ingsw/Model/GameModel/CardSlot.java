@@ -99,9 +99,4 @@ public class CardSlot extends RedCardSlot {
     public DevelopmentCard[] getCards() {
         return (DevelopmentCard[]) cards;
     }
-
-    /**Converts model classes to view classes*/
-    public RedCardSlot toView() {
-        return  this;
-    }
 }

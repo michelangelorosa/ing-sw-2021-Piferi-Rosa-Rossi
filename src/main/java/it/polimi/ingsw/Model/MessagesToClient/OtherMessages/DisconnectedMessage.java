@@ -4,7 +4,6 @@ import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.Controller.ControllerClasses.ActionController;
 import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
 import it.polimi.ingsw.View.User.UserInteraction;
-import it.polimi.ingsw.View.Utility.ANSIfont;
 
 /**
  * DisconnectedMessage Class defines a message to be sent to all clients ONLY if the player who disconnected

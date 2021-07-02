@@ -1,13 +1,10 @@
 package it.polimi.ingsw.Model.MessagesToClient;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
-import it.polimi.ingsw.Model.Enums.SoloActionToken;
 import it.polimi.ingsw.Model.GameModel.PopeTileClass;
-import it.polimi.ingsw.View.ReducedModel.Game;
 import it.polimi.ingsw.View.ReducedModel.Player;
 import it.polimi.ingsw.View.User.UserInteraction;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**

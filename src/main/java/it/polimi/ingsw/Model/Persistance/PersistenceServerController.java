@@ -4,15 +4,32 @@ import it.polimi.ingsw.Model.Server.Server;
 
 import java.io.IOException;
 
+/**
+ * PersistenceServerController Class is used by the server to reset itself if it stopped and not enough players connected
+ * after five minutes.
+ * <p><b>Attributes:</b></p>
+ * <ul>
+ *     <li>Server "server": server to check</li>
+ *     <li>int "numberOfPlayers": number of the players of the server's game</li>
+ * </ul>
+ * @author redrick99
+ */
 public class PersistenceServerController implements Runnable {
     Server server;
     int numberOfPlayers;
 
+    /**
+     * Constructor for PersistenceServerController Class.
+     */
     public PersistenceServerController(Server server) {
         this.server = server;
 
     }
 
+    /**
+     * An instance of this class is to be run on a thread in parallel with the server.
+     * <p>This method makes the object wait for 5 minutes and then resets the server if not enough players connected.</p>
+     */
     @Override
     public void run() {
         numberOfPlayers = server.getController().getActionController().getPersistence().getNumberOfPlayers();

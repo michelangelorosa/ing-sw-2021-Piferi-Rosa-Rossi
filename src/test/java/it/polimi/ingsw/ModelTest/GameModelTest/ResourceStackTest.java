@@ -195,30 +195,4 @@ public class ResourceStackTest {
     public void toStringTest() {
         assertEquals("1 2 3 4", stack.toString());
     }
-
-    /**Test for toView method*/
-    @Test
-    public void toViewTest(){
-        RedResourceStack resourceStackView;
-
-        resourceStackView = stack.toView();
-
-        assertEquals(1, resourceStackView.getResource(ResourceType.SHIELDS));
-        assertEquals(2, resourceStackView.getResource(ResourceType.SERVANTS));
-        assertEquals(3, resourceStackView.getResource(ResourceType.COINS));
-        assertEquals(4, resourceStackView.getResource(ResourceType.STONES));
-
-        ResourceStack stack5 = new ResourceStack(50, 50, 50, 50);
-        ResourceStack stack6 = new ResourceStack(10, 15, 20, 25);
-        stack5.removeFromAllTypes(stack6);
-
-        resourceStackView = stack5.toView();
-
-        assertEquals(40, resourceStackView.getResource(ResourceType.SHIELDS));
-        assertEquals(35, resourceStackView.getResource(ResourceType.SERVANTS));
-        assertEquals(30, resourceStackView.getResource(ResourceType.COINS));
-        assertEquals(25, resourceStackView.getResource(ResourceType.STONES));
-
-    }
-
 }

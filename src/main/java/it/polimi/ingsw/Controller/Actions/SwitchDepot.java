@@ -133,7 +133,7 @@ public class SwitchDepot extends Action {
     public MessageToClient messagePrepare(ActionController actionController) {
         SwitchDepotMessage message = new SwitchDepotMessage(actionController.getGame().getCurrentPlayerNickname());
         if(this.response.equals("SUCCESS"))
-            message.setWarehouse(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse().toView());
+            message.setWarehouse(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse());
         message.setError(this.response);
         message.addPossibleAction(ActionType.ADD_RESOURCE);
         message.addPossibleAction(ActionType.RESET_WAREHOUSE);

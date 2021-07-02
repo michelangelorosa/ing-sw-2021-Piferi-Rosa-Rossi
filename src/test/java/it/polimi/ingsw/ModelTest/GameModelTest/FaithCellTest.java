@@ -91,17 +91,4 @@ public class FaithCellTest {
 
         assertArrayEquals(testString.toCharArray(), cells[21].toString().toCharArray());
     }
-
-
-    /**Test for toView method*/
-    @Test
-    public void toViewTest(){
-        RedFaithCell[] faithCellView = new RedFaithCell[25];
-
-        for(int i = 0; i < 25; i++){
-            faithCellView[i] = cellToTest[i].toView();
-            assertEquals(cellToTest[i].getIdCell(), faithCellView[i].getIdCell());
-            assertEquals(cellToTest[i].getVictoryPoints(), faithCellView[i].getVictoryPoints());
-        }
-    }
 }

@@ -89,6 +89,10 @@ public class Market extends RedMarket {
         player.getBoard().getResourceManager().setTemporaryResourcesToPay(resourceStack);
     }
 
+    /**
+     * Changes market after a row purchase.
+     * @param row row to be changes.
+     */
     public void rowChange(int row) {
         Marble[] newMarbles = new Marble[4];
         newMarbles[0] = this.marbles[row][1];
@@ -179,9 +183,5 @@ public class Market extends RedMarket {
         this.marbles[1][0] = Marble.GREY; this.marbles[1][1] = Marble.GREY; this.marbles[1][2] = Marble.WHITE; this.marbles[1][3] = Marble.WHITE;
         this.marbles[2][0] = Marble.PURPLE; this.marbles[2][1] = Marble.RED; this.marbles[2][2] = Marble.YELLOW; this.marbles[2][3] = Marble.RED;
         this.extraMarble = Marble.WHITE;
-    }
-
-    public RedMarket toView(){
-        return this;
     }
 }

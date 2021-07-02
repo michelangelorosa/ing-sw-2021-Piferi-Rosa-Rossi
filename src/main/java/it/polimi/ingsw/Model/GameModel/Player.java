@@ -20,7 +20,7 @@ import java.util.ArrayList;
  *     <li>int "faithTrackPosition": indicates the player's position inside the faithTrack</li>
  *     <li>Board "board": the player's personal board containing all objects of the game</li>
  *     <li>PopeTileClass[] "popeTiles": all popeTiles owned by the player</li>
- *     <li>ArrayList(ActionType) "possibleActions": list of all possible actions the player can perform at a certain moment.</li>
+ *     <li>ArrayList&lt;ActionType&gt; "possibleActions": list of all possible actions the player can perform at a certain moment.</li>
  * </ul>
  * @author redrick99
  */
@@ -226,14 +226,14 @@ public class Player implements Serializable {
         it.polimi.ingsw.View.ReducedModel.Player player = new it.polimi.ingsw.View.ReducedModel.Player(this.nickname, this.turnPosition, this.Inkwell);
         player.setVictoryPoints(this.victoryPoints);
         player.setFaithTrackPosition(this.faithTrackPosition);
-        player.setBasicProduction(this.board.getBasicProduction().toView());
+        player.setBasicProduction(this.board.getBasicProduction());
         player.setWarehouse(this.board.getResourceManager().getWarehouse());
         player.setStrongbox(this.board.getResourceManager().getStrongbox());
         player.setSlots(this.board.getDevelopmentCardSlots());
 
         RedPopeTileClass[] popeTileClasses = new RedPopeTileClass[3];
         for(int i = 0; i < 3; i++) {
-            popeTileClasses[i] = this.popeTiles[i].toView();
+            popeTileClasses[i] = this.popeTiles[i];
         }
         player.setPopeTiles(popeTileClasses);
 

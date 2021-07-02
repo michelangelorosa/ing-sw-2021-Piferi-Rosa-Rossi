@@ -6,11 +6,6 @@ import it.polimi.ingsw.View.User.UserInteraction;
 /**
  * InitChoseLeaderCards Class defines a response message to be sent to a client after
  * an InitChooseLeaderCards Action request.
- * <p><b>Attributes:</b></p>
- * <ul>
- *     <li>RedWarehouse "warehouse": Warehouse to be set to the corresponding player inside
- *     the reduced game</li>
- * </ul>
  * @author redrick99
  */
 public class InitChoseLeaderCardsMessage extends MessageToClient{

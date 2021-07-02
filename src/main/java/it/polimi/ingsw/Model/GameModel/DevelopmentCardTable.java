@@ -179,10 +179,20 @@ public class DevelopmentCardTable extends RedDevelopmentCardTable {
         return null;
     }
 
+    /**
+     * Checks if a given column of the Development Card Table is empty.
+     * @param column Column to check.
+     * @return true if the column is empty.
+     */
     public boolean columnIsEmpty(int column) {
         return column >= 0 && column <= 3 && decks[0][column].isEmpty() && decks[1][column].isEmpty() && decks[2][column].isEmpty();
     }
 
+    /**
+     * Returns the card of lowest level of a specified column.
+     * @param column Column of the deck to draw from.
+     * @return the drawn card or null if the card cannot be found.
+     */
     public DevelopmentCardDeck getLowestDeckByColumn(int column) {
         if (column < 0 || column > 3)
             return null;
@@ -195,9 +205,5 @@ public class DevelopmentCardTable extends RedDevelopmentCardTable {
             return (DevelopmentCardDeck) decks[0][column];
         else
             return null;
-    }
-
-    public RedDevelopmentCardTable toView(){
-        return this;
     }
 }

@@ -4,10 +4,8 @@ import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.Enums.LeaderCardAction;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
-import it.polimi.ingsw.Model.Enums.SoloActionToken;
 import it.polimi.ingsw.Model.GameModel.SinglePlayer.SinglePlayer;
 import it.polimi.ingsw.Model.Exceptions.ModelException;
-import it.polimi.ingsw.Model.JSON.ConvertToJSON;
 import it.polimi.ingsw.Model.JSON.JSONReader;
 import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 
@@ -17,15 +15,24 @@ import java.util.Random;
 
 /**
  * Game Class contains all attributes and methods needed when creating an instance of a new Game.
+ * <p><b>Attributes:</b></p>
+ * <ul>
+ *     <li>GameType "type": Type of the current game -> Single or Multi Player</li>
+ *     <li>ArrayList&lt;Player&gt; "players": ArrayList containing all players who joined the game</li>
+ *     <li>int "currentPlayerIndex": Index indicating the current player</li>
+ *     <li>ArrayList&lt;LeaderCard&gt; "leaderCards": contains all Leader Cards of the game</li>
+ *     <li>boolean "lastTurn": indicates if it's the last turn of the game</li>
+ *     <li>Market "market": market with marbles of the game</li>
+ *     <li>DevelopmentCardTable "table": Development Card table of the game</li>
+ *     <li>FaithTrack "faithTrack": faith track of the game</li>
+ *     <li>SinglePlayer "singlePlayer": contains attributes and methods to be used when playing a singleplayer game</li>
+ * </ul>
+ * @author everyone
  */
 public class Game {
-    /** Type of the current game -> Single or Multi Player */
     private GameType gameType;
-    /** ArrayList containing all players who joined the game */
     private final ArrayList<Player> players;
-    /** Index indicating the current player */
     private int currentPlayerIndex;
-    /** ArrayList containing all Leader Cards of the game */
     private ArrayList<LeaderCard> leaderCards;
 
     private boolean lastTurn = false;
@@ -104,6 +111,9 @@ public class Game {
         this.gameType = gameType;
     }
 
+    /**
+     * Getter for "singlePlayer" attribute.
+     */
     public SinglePlayer getSinglePlayer() {
         return singlePlayer;
     }
@@ -259,6 +269,10 @@ public class Game {
             return this.players.get(this.currentPlayerIndex - 1);
     }
 
+    /**
+     * Checks if the current player is the last player in order.
+     * @return true if the current player is last.
+     */
     public boolean currentPlayerIsLast() {
         return this.currentPlayerIndex == this.players.size() - 1;
     }
@@ -279,6 +293,9 @@ public class Game {
         player.setStatus(PlayerStatus.LOST);
     }
 
+    /**
+     * Getter for "lastTurn" attribute.
+     */
     public boolean isLastTurn() {
         return lastTurn;
     }
@@ -368,11 +385,20 @@ public class Game {
         return players;
     }
 
+    /**
+     * Changes current player when needed if a player reconnects to the game.
+     * @param playerName name of the player who reconnected.
+     */
     public void changeCurrentPlayerReconnection(String playerName) {
         Player player = this.getPlayerByNickname(playerName);
         this.currentPlayerIndex = player.getTurnPosition();
     }
 
+    /**
+     * Checks if the ArrayList of players of the game contains the player whose name corresponds to the given string.
+     * @param name Name of the player to check.
+     * @return true if the player with the given name is in the game.
+     */
     public boolean isPlayerInGameNickname (String name) {
         ArrayList<String> playersNames = new ArrayList<>();
 
@@ -385,6 +411,10 @@ public class Game {
         return playersNames.contains(name);
     }
 
+    /**
+     * Removes a player with the given name.
+     * @param name name of the player to remove.
+     */
     public void removePlayerByNickname(String name) {
         Player player = null;
 
@@ -398,6 +428,12 @@ public class Game {
         }
     }
 
+    /**
+     * Removes a card at given coordinates from the Development Card Table if a player disconnected while paying for a card.
+     * <p>If the player finished paying for a card, the card is automatically inserted in the player's first free Development Card slot.</p>
+     * @param row row of the card to remove.
+     * @param column column of the card to remove.
+     */
     public void removeCardWhenPayingDisconnection(int row, int column) {
         try {
             if(this.getCurrentPlayer().getPossibleActions().contains(ActionType.CHOOSE_CARD_SLOT)) {
@@ -412,6 +448,9 @@ public class Game {
         }
     }
 
+    /**
+     * Reads and resets the Game based on Persistence.json file.
+     */
     public void persistence(){
 
 

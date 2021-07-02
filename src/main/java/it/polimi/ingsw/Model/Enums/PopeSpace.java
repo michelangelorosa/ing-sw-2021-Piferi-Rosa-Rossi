@@ -9,10 +9,14 @@ public enum PopeSpace {
     No, ONE, TWO, THREE;
 
     /**
-     * This particular method uses an array of Color instances containing each different color
-     * to return a particular color based on the integer given when calling the method.
+     * Creates an array of all enum fields.
      */
     private static final PopeSpace[] popeSpaces = PopeSpace.values();
+
+    /**
+     * Uses an array of PopeSpace instances containing each different PopeSpace type
+     * to return a particular color based on the integer given when calling the method.
+     */
     public static PopeSpace getPopeSpace(int i) {
         return PopeSpace.popeSpaces[i];
     }

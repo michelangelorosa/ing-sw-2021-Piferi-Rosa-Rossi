@@ -15,6 +15,7 @@ import it.polimi.ingsw.View.User.UserInteraction;
  *     <li>int "leaderCardPosition": position, inside the player's array of Leader Cards, of the Leader Card
  *     the player wanted to activate</li>
  *     <li>RedLeaderCard "leaderCard": Leader Card which the player wanted to activate</li>
+ *     <li>Warehouse "warehouse": warehouse to be set on the player's view</li>
  * </ul>
  * @author redrick99
  */
@@ -59,10 +60,16 @@ public class ActivateLeaderCardMessage extends MessageToClient {
         this.leaderCard = leaderCard;
     }
 
+    /**
+     * Getter for "warehouse" attribute.
+     */
     public Warehouse getWarehouse() {
         return warehouse;
     }
 
+    /**
+     * Setter for "warehouse" attribute.
+     */
     public void setWarehouse(Warehouse warehouse) {
         this.warehouse = warehouse;
     }

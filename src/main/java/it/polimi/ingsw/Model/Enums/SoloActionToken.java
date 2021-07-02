@@ -10,10 +10,13 @@ import java.util.ArrayList;
 public enum SoloActionToken {
     BLACKCROSSPLUS2, BLACKCROSSSHUFFLE, DELETE2BLUE, DELETE2PURPLE, DELETE2YELLOW, DELETE2GREEN;
 
+    /**
+     * Returns an ArrayList of String containing a visual representation of the enum.
+     * @return an ArrayList of String.
+     */
     public ArrayList<String> toCli() {
         ArrayList<String> token = new ArrayList<>();
         String bc = ANSIColors.BACK_BLACK;
-        String c = "";
         String r = ANSIColors.RESET;
         String card = "";
 
@@ -37,22 +40,18 @@ public enum SoloActionToken {
                 return token;
 
             case DELETE2BLUE:
-                c = ANSIColors.FRONT_BLUE;
                 bc = ANSIColors.BACK_BLUE;
                 card = "B";
                 break;
             case DELETE2PURPLE:
-                c = ANSIColors.FRONT_PURPLE;
                 bc = ANSIColors.BACK_PURPLE;
                 card = "P";
                 break;
             case DELETE2YELLOW:
-                c = ANSIColors.FRONT_YELLOW;
                 bc = ANSIColors.BACK_DARK_YELLOW;
                 card = "Y";
                 break;
             case DELETE2GREEN:
-                c = ANSIColors.FRONT_GREEN;
                 bc = ANSIColors.BACK_GREEN;
                 card = "G";
                 break;

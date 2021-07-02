@@ -224,23 +224,4 @@ public class DevelopmentCardDeckTest {
 
         assertArrayEquals(testString.toCharArray(), deck.toString().toCharArray());
     }
-
-    /**Test for toView method*/
-    @Test
-    public void toViewTest(){
-        RedDevelopmentCardDeck deckView;
-
-        deck.addCard(card);
-        deck.addCard(card1);
-        deck.addCard(card3);
-
-        deckView = deck.toView();
-
-        assertSame(Color.BLUE, deckView.getColor());
-        assertSame(Level.ONE, deckView.getLevel());
-        assertEquals(deck.getCards()[0].getInput().getResource(ResourceType.STONES), deckView.getCards()[0].getInput().getResource(ResourceType.STONES));
-        assertEquals(deck.getCards()[1].getInput().getResource(ResourceType.STONES), deckView.getCards()[1].getInput().getResource(ResourceType.STONES));
-        assertEquals(deck.getCards()[2].getCost().getResource(ResourceType.COINS), deckView.getCards()[2].getCost().getResource(ResourceType.COINS));
-        assertEquals(deck.getCardsInDeck(), deckView.getCardsInDeck());
-    }
 }

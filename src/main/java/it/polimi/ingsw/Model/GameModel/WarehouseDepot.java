@@ -64,10 +64,4 @@ public class WarehouseDepot extends RedWarehouseDepot {
         if(storedResources == 0 && !isFromLeaderCardAbility)
             this.resourceType = ResourceType.NONE;
     }
-
-    /**Method for converting model classes to view classes*/
-    public RedWarehouseDepot toView() {
-        return this;
-    }
-
 }

@@ -78,9 +78,4 @@ public class DevelopmentCard extends RedDevelopmentCard {
     public void setOutput(RedResourceStack output) {
         this.output = output;
     }
-
-    /**Converts model classes to view classes*/
-    public RedDevelopmentCard toView() {
-        return this;
-    }
 }

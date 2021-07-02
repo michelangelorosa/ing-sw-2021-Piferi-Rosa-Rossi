@@ -81,10 +81,6 @@ public class LeaderCard extends RedLeaderCard {
         return (ResourceStack) input;
     }
 
-    public RedLeaderCard toView(){
-        return this;
-    }
-
     /**
      * Sets "discarded" to true if the card is not already discarded nor active.
      * @throws IllegalArgumentException if the card was already discarded or active.

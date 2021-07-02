@@ -232,28 +232,4 @@ public class DevelopmentCardSlotsTest {
         ModelException e = assertThrows(ModelException.class, () -> slots.addCardInFirstFreeSpace(card22));
         assertEquals("DISCONNECTION: Cannot add card to any depot", e.getMessage());
     }
-
-    /**Test for toView method*/
-    @Test
-    public void toViewTest(){
-        RedDevelopmentCardSlots slotsView;
-
-        slots.addCard(1,card1);
-        slots.addCard(2,card1);
-        slots.addCard(1,card2);
-        slots.addCard(1,card3);
-        slots.addCard(0,card);
-        slots.addCard(2,card2);
-
-        slotsView = slots.toView();
-
-        assertEquals(slots.getSlots()[0].getFirstCard().getCardId(), slotsView.getSlots()[0].getFirstCard().getCardId());
-        assertEquals(slots.getSlots()[1].getFirstCard().getCardId(), slotsView.getSlots()[1].getFirstCard().getCardId());
-        assertEquals(slots.getSlots()[2].getFirstCard().getCardId(), slotsView.getSlots()[2].getFirstCard().getCardId());
-
-        assertEquals(slots.getSlots()[0].getFirstCard().getInput().getResource(ResourceType.SHIELDS), slotsView.getSlots()[0].getFirstCard().getInput().getResource(ResourceType.SHIELDS));
-        assertEquals(slots.getSlots()[1].getFirstCard().getInput().getResource(ResourceType.COINS), slotsView.getSlots()[1].getFirstCard().getInput().getResource(ResourceType.COINS));
-        assertEquals(slots.getSlots()[2].getFirstCard().getInput().getResource(ResourceType.SERVANTS), slotsView.getSlots()[2].getFirstCard().getInput().getResource(ResourceType.SERVANTS));
-        assertEquals(slots.getSlots()[0].getFirstCard().getInput().getResource(ResourceType.STONES), slotsView.getSlots()[0].getFirstCard().getInput().getResource(ResourceType.STONES));
-    }
 }

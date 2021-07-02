@@ -82,9 +82,4 @@ public class DevelopmentCardDeck extends RedDevelopmentCardDeck {
         }
         return (DevelopmentCard) cards[--cardsInDeck];
     }
-
-     /**Method for converting model classes to view classes*/
-     public RedDevelopmentCardDeck toView() {
-         return this;
-     }
 }

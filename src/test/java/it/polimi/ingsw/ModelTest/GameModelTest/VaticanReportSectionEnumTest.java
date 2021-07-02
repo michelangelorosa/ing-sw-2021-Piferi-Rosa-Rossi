@@ -26,17 +26,6 @@ public class VaticanReportSectionEnumTest {
         assertSame(VaticanReportSectionEnum.THREE, VaticanReportSectionEnum.getReportSection(3));
     }
 
-    /**Test for toView method*/
-    @Test
-    public void toViewTest(){
-        RedVaticanReportSection vaticanView;
-        VaticanReportSection vatican = new VaticanReportSection(1, 4, 7);
-        vaticanView = vatican.toView();
-        assertSame(1, vaticanView.getBegin());
-        assertSame(4, vaticanView.getEnd());
-        assertSame(7, vaticanView.getPoints());
-    }
-
     @Test
     public void isCorrectTest(){
         VaticanReportSection vatican = new VaticanReportSection(1, 6, 3);

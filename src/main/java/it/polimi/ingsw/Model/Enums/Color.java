@@ -10,12 +10,20 @@ public enum Color {
     BLUE, PURPLE, YELLOW, GREEN;
 
     /**
-     * This particular method uses an array of Color instances containing each different color
-     * to return a particular color based on the integer given when calling the method.
+     * Creates an array of all enum fields.
      */
     private static final Color[] colors = Color.values();
+
+    /**
+     * Uses an array of Color instances containing each different color
+     * to return a particular color based on the integer given when calling the method.
+     */
     public static Color getColor(int i) { return Color.colors[i]; }
 
+    /**
+     * Returns ANSI color corresponding to given color's background representation.
+     * @return a string containing ANSI code.
+     */
     public String backColorToString() {
         String string;
         switch(this) {
@@ -33,6 +41,10 @@ public enum Color {
         return string;
     }
 
+    /**
+     * Returns ANSI color corresponding to given color's foreground representation.
+     * @return a string containing ANSI code.
+     */
     public String frontColorToString() {
         String string;
         switch(this) {
@@ -50,6 +62,10 @@ public enum Color {
         return string;
     }
 
+    /**
+     * Returns the letter corresponding to given color.
+     * @return a string containing the letter.
+     */
     public String colorToChar() {
         String string;
         switch(this) {

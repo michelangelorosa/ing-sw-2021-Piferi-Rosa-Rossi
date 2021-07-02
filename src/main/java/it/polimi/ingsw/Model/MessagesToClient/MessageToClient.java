@@ -119,6 +119,11 @@ public class MessageToClient implements Serializable {
         return this.error.equals("SUCCESS");
     }
 
+    /**
+     * Checks if the player who received the message was the one playing the current turn.
+     * @param userInteraction UserInteraction of the player's View.
+     * @return true if the player has to continue his turn.
+     */
     public boolean imPlaying(UserInteraction userInteraction) {
         if(this instanceof EndTurnMessage)
             return ((EndTurnMessage) this).getNextPlayerNickname().equals(userInteraction.getGame().getMyNickname());
