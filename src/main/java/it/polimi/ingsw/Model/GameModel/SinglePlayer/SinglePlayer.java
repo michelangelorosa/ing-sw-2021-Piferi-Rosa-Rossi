@@ -4,7 +4,6 @@ import it.polimi.ingsw.Model.Enums.Color;
 import it.polimi.ingsw.Model.Enums.SoloActionToken;
 import it.polimi.ingsw.Model.GameModel.*;
 
-import java.util.Random;
 
 /**
  * SinglePlayer Class contains data and methods used by the Model when playing a singleplayer game.
@@ -85,8 +84,6 @@ public class SinglePlayer {
 
     protected void lorenzoDrawsCards(Game game, Color color) {
         DevelopmentCardTable table = game.getDevelopmentCardTable();
-        Random random = new Random();
-        int row = random.nextInt(3);
         int column;
 
         switch (color) {
@@ -99,13 +96,19 @@ public class SinglePlayer {
             default: column = 3;
         }
 
-        DevelopmentCardDeck deck = table.getDeck(row, column);
+        DevelopmentCardDeck deck = table.getLowestDeckByColumn(column);
 
-        if(!deck.isEmpty()) {
-            deck.drawCard();
-            lorenzoCards ++;
+        if(deck != null) {
+            if (!deck.isEmpty()) {
+                deck.drawCard();
+                lorenzoCards++;
+            }
+            if (!deck.isEmpty()) {
+                deck.drawCard();
+                lorenzoCards++;
+            }
         }
-        if(deck.isEmpty())
+        if(table.columnIsEmpty(column))
             lorenzoWon = true;
     }
 

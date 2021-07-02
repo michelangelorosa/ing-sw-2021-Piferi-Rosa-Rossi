@@ -23,7 +23,6 @@ public class DevelopmentCardTable extends RedDevelopmentCardTable {
     public DevelopmentCardTable() {
         super();
         DevelopmentCard[] cards = JSONReader.ReadDevelopmentCards();
-        int cardsInDeck = 0;
 
         Color[] colors = Color.values();
         Level[] levels = Level.values();
@@ -54,7 +53,6 @@ public class DevelopmentCardTable extends RedDevelopmentCardTable {
                 } else if(card.getLevel() == levels[2]) {
                     ((DevelopmentCardDeck)decks[0][1]).addCard(card);
                 }
-                cardsInDeck ++;
 
             } else if(card.getColor() == colors[1]) {
                 if(card.getLevel() == levels[0]) {
@@ -66,7 +64,6 @@ public class DevelopmentCardTable extends RedDevelopmentCardTable {
                 } else if(card.getLevel() == levels[2]) {
                     ((DevelopmentCardDeck)decks[0][3]).addCard(card);
                 }
-                cardsInDeck ++;
 
             } else if(card.getColor() == colors[2]) {
                 if(card.getLevel() == levels[0]) {
@@ -79,7 +76,6 @@ public class DevelopmentCardTable extends RedDevelopmentCardTable {
                     ((DevelopmentCardDeck)decks[0][2]).addCard(card);
 
                 }
-                cardsInDeck ++;
 
             } else if(card.getColor() == colors[3]) {
                 if(card.getLevel() == levels[0]) {
@@ -91,7 +87,6 @@ public class DevelopmentCardTable extends RedDevelopmentCardTable {
                 } else if(card.getLevel() == levels[2]) {
                     ((DevelopmentCardDeck)decks[0][0]).addCard(card);
                 }
-                cardsInDeck ++;
 
             }
         }
@@ -182,6 +177,24 @@ public class DevelopmentCardTable extends RedDevelopmentCardTable {
             }
         }
         return null;
+    }
+
+    public boolean columnIsEmpty(int column) {
+        return column >= 0 && column <= 3 && decks[0][column].isEmpty() && decks[1][column].isEmpty() && decks[2][column].isEmpty();
+    }
+
+    public DevelopmentCardDeck getLowestDeckByColumn(int column) {
+        if (column < 0 || column > 3)
+            return null;
+
+        if(!decks[2][column].isEmpty())
+            return (DevelopmentCardDeck) decks[2][column];
+        else if(!decks[1][column].isEmpty())
+            return (DevelopmentCardDeck) decks[1][column];
+        else if(!decks[0][column].isEmpty())
+            return (DevelopmentCardDeck) decks[0][column];
+        else
+            return null;
     }
 
     public RedDevelopmentCardTable toView(){

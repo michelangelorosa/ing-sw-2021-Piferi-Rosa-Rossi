@@ -99,7 +99,7 @@ public class DevelopmentCardTableTest {
         table.getDeck(1,3).drawCard();
         assertEquals("18 5 PURPLE TWO 0 4 0 0 0 0 1 0 0 0 0 0 2", table.getTopCardFromDeck(1,3).toString());
         table.getDeck(1,3).drawCard();
-        ModelException e = assertThrows(ModelException.class, ()->{table.getTopCardFromDeck(1,3);});
+        ModelException e = assertThrows(ModelException.class, ()-> table.getTopCardFromDeck(1,3));
         assertEquals("This deck is empty. Choose another deck!", e.getMessage());
 
 
@@ -130,7 +130,7 @@ public class DevelopmentCardTableTest {
         assertEquals("6 2 PURPLE ONE 1 1 1 0 0 0 1 0 1 0 0 0 0", table.drawCardFromDeck(2,3).toString());
         assertEquals("2 1 PURPLE ONE 0 2 0 0 0 0 0 1 0 0 0 0 1", table.drawCardFromDeck(2,3).toString());
 
-        ModelException e = assertThrows(ModelException.class, ()->{table.drawCardFromDeck(0,0);});
+        ModelException e = assertThrows(ModelException.class, ()-> table.drawCardFromDeck(0,0));
         assertEquals("This deck is empty. Choose another deck!", e.getMessage());
     }
 
@@ -216,5 +216,49 @@ public class DevelopmentCardTableTest {
     public void fromIdTest(){
         System.out.println(table.getCardFromId(3).getCost().getResource(ResourceType.COINS));
         assertNull(table.getCardFromId(100));
+    }
+
+    @Test
+    public void columnIsEmpty() {
+        for(int i = 0; i < 3; i++) {
+            while(!table.getDeck(i, 0).isEmpty())
+                table.getDeck(i, 0).drawCard();
+        }
+
+        assertFalse(table.columnIsEmpty(1));
+        assertTrue(table.columnIsEmpty(0));
+    }
+
+    @Test
+    public void getLowestDeckByColumn() {
+        assertNull(table.getLowestDeckByColumn(-1));
+        assertNull(table.getLowestDeckByColumn(4));
+        assertEquals(table.getDeck(2, 0), table.getLowestDeckByColumn(0));
+
+        while (!table.getDeck(2, 0).isEmpty())
+            table.getDeck(2, 0).drawCard();
+        assertEquals(table.getDeck(1, 0), table.getLowestDeckByColumn(0));
+
+        while (!table.getDeck(1, 0).isEmpty())
+            table.getDeck(1, 0).drawCard();
+        assertEquals(table.getDeck(0, 0), table.getLowestDeckByColumn(0));
+
+        while (!table.getDeck(0, 0).isEmpty())
+            table.getDeck(0, 0).drawCard();
+        assertNull(table.getLowestDeckByColumn(0));
+
+        assertEquals(table.getDeck(2, 1), table.getLowestDeckByColumn(1));
+
+        while (!table.getDeck(2, 1).isEmpty())
+            table.getDeck(2, 1).drawCard();
+        assertEquals(table.getDeck(1, 1), table.getLowestDeckByColumn(1));
+
+        while (!table.getDeck(1, 1).isEmpty())
+            table.getDeck(1, 1).drawCard();
+        assertEquals(table.getDeck(0, 1), table.getLowestDeckByColumn(1));
+
+        while (!table.getDeck(0, 1).isEmpty())
+            table.getDeck(0, 1).drawCard();
+        assertNull(table.getLowestDeckByColumn(1));
     }
 }

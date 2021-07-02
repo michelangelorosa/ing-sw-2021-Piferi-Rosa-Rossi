@@ -67,7 +67,7 @@ public class SinglePlayerTest {
         for(SoloActionToken t : SoloActionToken.values())
             singlePlayer.tokenParser(game, t);
 
-        assertEquals(4, singlePlayer.getLorenzoCards());
+        assertEquals(8, singlePlayer.getLorenzoCards());
         assertEquals(24, singlePlayer.getLorenzoFaithPoints());
 
         singlePlayer.lorenzoTurn(game);
