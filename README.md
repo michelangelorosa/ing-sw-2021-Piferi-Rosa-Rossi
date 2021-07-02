@@ -27,7 +27,6 @@ This project was commissioned by Politecnico di Milano. It consists in creating 
 | Multiple games | ![RED](http://placehold.it/15/f03c15/f03c15)|
 | Local Match | ![RED](http://placehold.it/15/f03c15/f03c15)|
 
-#### Legend
 [![GREEN](http://placehold.it/15/44bb44/44bb44)]() Implemented &nbsp;&nbsp;&nbsp;&nbsp; [![RED](http://placehold.it/15/f03c15/f03c15)]() Not Implemented
 
 ## Documentation
@@ -52,9 +51,16 @@ Java JRE version 15 (or higher) is required to correctly run the JAR files.
 
 ## Run Procedure
 ### Run the server (it is recommended to run the JAR file inside a subfolder as other files will be created)
+#### USING DEFAULT PORT (8765)
 ```
 java -jar server.jar
 ```
+#### USING A GIVEN PORT
+```
+java -jar server.jar --port [portnumber]
+```
+where \[portnumber\] is the number of the port to use. If the chosen number is out of range or corresponds to a standard port on the router, the server will start on the default port (8765).
+
 ### Run the client using:
 #### CLI
 ```
