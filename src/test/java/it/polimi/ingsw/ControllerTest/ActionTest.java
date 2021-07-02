@@ -9,11 +9,17 @@ import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ * Test class for Action
+ */
 public class ActionTest {
 
     Action action = new Action();
     ActionController actionController = new ActionController();
 
+    /**
+     * test ActionType for Action class
+     */
     @Test
     public void actionTypeTest() {
         ActionType type = ActionType.fromString("choose_action");
@@ -23,6 +29,9 @@ public class ActionTest {
         assertNull(ActionType.fromString("i am not an ActionType"));
     }
 
+    /**
+     * tests for Action class
+     */
     @Test
     public void ActionTestAll() throws Exception {
         assertFalse(action.isCorrect());
@@ -31,6 +40,9 @@ public class ActionTest {
         assertNull(action.messagePrepare(actionController));
     }
 
+    /**
+     * tests for all the methods for Action class
+     */
     @Test
     public void methodTest() {
         ActionController actionController = new ActionController();

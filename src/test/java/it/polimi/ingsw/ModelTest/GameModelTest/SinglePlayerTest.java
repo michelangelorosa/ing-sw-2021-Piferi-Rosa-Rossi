@@ -81,6 +81,9 @@ public class SinglePlayerTest {
         SoloActionToken token = singlePlayer.getLastToken();
     }
 
+    /**
+     * Test to check if the methods work properly in SinglePlayer Class
+     */
     @Test
     public void lorenzoTurn2Test() {
         game.join("Pippo");

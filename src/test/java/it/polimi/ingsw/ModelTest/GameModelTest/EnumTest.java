@@ -8,14 +8,23 @@ import it.polimi.ingsw.View.Utility.ANSIColors;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ * Unit test for Enumerations Class.
+ */
 public class EnumTest {
 
+    /**
+     * Test to check if GameStatus enumeration works properly
+     */
     @Test
     public void GameStatusTest() {
         GameStatus status = GameStatus.END;
         assertEquals(GameStatus.END, status);
     }
 
+    /**
+     * Test to check if ResourceType enumeration works properly
+     */
     @Test
     public void ResourceTypeTest() {
         ResourceType type = ResourceType.COINS;
@@ -29,12 +38,18 @@ public class EnumTest {
         }
     }
 
+    /**
+     * Test to check if leaderCardAction enumeration works properly
+     */
     @Test
     public void leaderCardActionTest(){
         LeaderCardAction discount = LeaderCardAction.DISCOUNT;
         assertEquals(LeaderCardAction.DISCOUNT, discount);
     }
 
+    /**
+     * Test to check if soloActionToken enumeration works properly
+     */
     @Test
     public void soloActionTokensTest(){
         SoloActionToken black = SoloActionToken.BLACKCROSSPLUS2;

@@ -182,8 +182,11 @@ public class DevelopmentCardSlotsTest {
         assertEquals(1, total.getNeedGreenCard());
     }
 
+    /**
+     * Test to check if the method "addCardInFirstFreeSpace()" works properly in DevelopmentCardSlot Class
+     */
     @Test
-    public void addCardInFirstFreeSpace() {
+    public void addCardInFirstFreeSpaceTest() {
         ResourceStack cost = new ResourceStack(0, 1, 2, 3);
         ResourceStack input = new ResourceStack(2, 6, 13, 16);
         ResourceStack output = new ResourceStack(31, 0, 0, 0);

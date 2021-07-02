@@ -74,6 +74,9 @@ public class EndMarketTest {
                 assertEquals(4, player.getFaithTrackPosition());
     }
 
+    /**
+     * Test for "doAction" and "messagePrepare" methods in EndMarket Class when LorenzoIlMagnifico wins.
+     */
     @Test
     public void doActionLorenzoWonTest() {
         EndMarket action = new EndMarket();

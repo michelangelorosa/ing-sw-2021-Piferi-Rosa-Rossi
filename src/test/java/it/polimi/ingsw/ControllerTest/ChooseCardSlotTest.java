@@ -14,6 +14,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+/**
+ * Unit Test for ChooseCardSlot Class.
+ */
 public class ChooseCardSlotTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();

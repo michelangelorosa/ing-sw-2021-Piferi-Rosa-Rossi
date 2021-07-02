@@ -1,5 +1,9 @@
 package it.polimi.ingsw.Model.JSON;
 
+/**
+ * DevelopmentCardDeckJSON is a class used to write on JSON files
+ * @author francescopiferi99
+ */
 public class DevelopmentCardDeckJSON {
     int greenThree, blueThree, yellowThree, purpleThree, greenTwo, blueTwo, yellowTwo, purpleTwo, greenOne, blueOne, yellowOne, purpleOne;
 

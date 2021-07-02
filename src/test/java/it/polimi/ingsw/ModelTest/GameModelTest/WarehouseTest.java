@@ -168,6 +168,9 @@ public class WarehouseTest {
         assertSame(ResourceType.STONES,warehouse.getWarehouseDepots()[0].getResourceType());
     }
 
+    /**
+     * Test to check if the method "canAddToDepot()" works properly in Warehouse Class
+     */
     @Test
     public void canAddToDepotTest() {
         warehouse.getWarehouseDepots()[0].setResourceType(ResourceType.SHIELDS);
@@ -196,6 +199,9 @@ public class WarehouseTest {
         assertFalse(warehouse.canAddToDepot(ResourceType.SHIELDS, warehouse.getWarehouseDepots()[2]));
     }
 
+    /**
+     * Test to check if the method "removeResourceFromDepot()" works properly in Warehouse Class
+     */
     @Test
     public void removeResourcesFromDepotTest() {
         warehouse.getWarehouseDepots()[0].setResourceType(ResourceType.SHIELDS);
@@ -339,6 +345,9 @@ public class WarehouseTest {
         assertTrue(warehouse.areEmptyDepotsFillableByType(ResourceType.COINS));
     }
 
+    /**
+     * Test to check if the method "canAddResource()" works properly in Warehouse Class
+     */
     @Test
     public void canAddResourceTest() {
         warehouse.getWarehouseDepots()[0].setResourceType(ResourceType.SHIELDS);
@@ -386,8 +395,9 @@ public class WarehouseTest {
         assertTrue(warehouse.canAddResource(ResourceType.SERVANTS));
     }
 
-
-
+    /**
+     * Test to check if methods work properly in Warehouse Class
+     */
     @Test
     public void testFiller() {
         warehouse.addResources(3, ResourceType.SHIELDS, warehouse.getWarehouseDepots()[0]);

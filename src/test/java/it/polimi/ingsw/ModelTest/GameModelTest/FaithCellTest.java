@@ -8,6 +8,9 @@ import it.polimi.ingsw.Model.JSON.*;
 import it.polimi.ingsw.View.ReducedModel.RedFaithCell;
 import org.junit.Test;
 
+/**
+ * Unit test for FaithTrack Class.
+ */
 public class FaithCellTest {
     FaithCell[] cellToTest = JSONReader.ReadFaithCells();
     VaticanReportSection[] vaticanReportSections = JSONReader.ReadVaticanReportSection();

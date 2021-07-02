@@ -4,8 +4,14 @@ import it.polimi.ingsw.Model.Enums.SoloActionToken;
 import it.polimi.ingsw.Model.GameModel.SinglePlayer.SoloActionTokenDeck;
 import org.junit.Test;
 
+/**
+ * Class Test for SoloActionTokenDeck
+ */
 public class SoloActionTokenDeckTest {
 
+    /**
+     * creating TokenDeckTest that extends SoloActionTokenDeck
+     */
     static class TokenDeckTest extends SoloActionTokenDeck {
         public TokenDeckTest() {
             super();
@@ -19,6 +25,9 @@ public class SoloActionTokenDeckTest {
 
     TokenDeckTest deck = new TokenDeckTest();
 
+    /**
+     * Test to check if the method "draw()" works properly in SoloActionTokenDeck Class
+     */
     @Test
     public void drawTest() {
         for(SoloActionToken t : deck.getTokens())

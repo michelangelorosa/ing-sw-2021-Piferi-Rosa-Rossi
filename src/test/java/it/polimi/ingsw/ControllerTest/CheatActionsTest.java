@@ -12,10 +12,16 @@ import it.polimi.ingsw.Model.Server.Server;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ * Class to test CheatActions
+ */
 public class CheatActionsTest {
     ActionController actionController = new ActionController();
     MessageToClient message;
 
+    /**
+     * Test for DevCardsCheat in cheatAction class
+     */
     @Test
     public void devCardCheatTest() {
         actionController.getGame().getPlayers().add(new Player("pippo", 0, true));
@@ -42,6 +48,9 @@ public class CheatActionsTest {
         assertNotEquals(3, actionController.getGame().getCurrentPlayer().getBoard().getDevelopmentCardSlots().getSlots()[1].getLevelOccupied());
     }
 
+    /**
+     * Test for FaithTrackCheat in cheatAction class
+     */
     @Test
     public void faithTrackCheatTest() {
         actionController.getGame().getPlayers().add(new Player("pippo", 0, true));
@@ -65,6 +74,9 @@ public class CheatActionsTest {
         assertNotEquals(23, actionController.getGame().getCurrentPlayer().getFaithTrackPosition());
     }
 
+    /**
+     * Test for LeaderCardsCheat in cheatAction class
+     */
     @Test
     public void leaderCardsCheat() {
         actionController.getGame().getPlayers().add(new Player("pippo", 0, true));
@@ -102,6 +114,9 @@ public class CheatActionsTest {
         assertFalse(actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards()[1].isActive());
     }
 
+    /**
+     * Test for StrongboxCheat in cheatAction class
+     */
     @Test
     public void strongboxTestCheat() {
         actionController.getGame().getPlayers().add(new Player("pippo", 0, true));
@@ -125,6 +140,9 @@ public class CheatActionsTest {
         assertNotEquals("50 50 50 50", actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getStrongbox().toString());
     }
 
+    /**
+     * Test for VictoryPointsCheat in cheatAction class
+     */
     @Test
     public void victoryPointsCheat() {
         actionController.getGame().getPlayers().add(new Player("pippo", 0, true));

@@ -199,12 +199,18 @@ public class DevelopmentCardTableTest {
         assertEquals(0, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.STONES));
     }
 
+    /**
+     * Test to check if the method "fromId()" works properly in DevelopmentCardTable Class
+     */
     @Test
     public void fromIdTest(){
         System.out.println(table.getCardFromId(3).getCost().getResource(ResourceType.COINS));
         assertNull(table.getCardFromId(100));
     }
 
+    /**
+     * Test to check if the method "columIsEmpty()" works properly in DevelopmentCardTable Class
+     */
     @Test
     public void columnIsEmpty() {
         for(int i = 0; i < 3; i++) {
@@ -216,6 +222,9 @@ public class DevelopmentCardTableTest {
         assertTrue(table.columnIsEmpty(0));
     }
 
+    /**
+     * Test to check if the method "getLowestDeckByColumn()" works properly in DevelopmentCardTable Class
+     */
     @Test
     public void getLowestDeckByColumn() {
         assertNull(table.getLowestDeckByColumn(-1));

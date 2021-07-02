@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 /**
  * JSONReader Class contains all the methods needed to read a .json file whenever it is necessary.
+ * @author francescopiferi99
  */
 
 public class JSONReader {
@@ -451,7 +452,7 @@ public class JSONReader {
                 player.getBoard().getResourceManager().getWarehouse().getExtraWarehouseDepot1().addResources(depotLeader1Stored);
 
                 int depotLeader2Stored = playerJsonObject.get("depotLeader2Stored").getAsInt();
-                player.getBoard().getResourceManager().getWarehouse().getExtraWarehouseDepot1().addResources(depotLeader2Stored);
+                player.getBoard().getResourceManager().getWarehouse().getExtraWarehouseDepot2().addResources(depotLeader2Stored);
 
                 int strongboxShields = playerJsonObject.get("strongboxShields").getAsInt();
                 int strongboxServants = playerJsonObject.get("strongboxServants").getAsInt();

@@ -10,6 +10,9 @@ import it.polimi.ingsw.Model.GameModel.ResourceStack;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ * Test class for ActivateLeaderCard
+ */
 public class ActivateLeaderCardTest {
 
     ActivateLeaderCard action;

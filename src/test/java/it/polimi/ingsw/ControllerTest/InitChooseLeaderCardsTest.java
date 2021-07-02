@@ -13,11 +13,17 @@ import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ * Test class for InitChooseLeaderCard
+ */
 public class InitChooseLeaderCardsTest {
 
     InitChooseLeaderCards action;
     ActionController actionController = new ActionController();
 
+    /**
+     * Test to check if the method "isCorrect()" works properly in InitChooseLeaderCard Class
+     */
     @Test
     public void isCorrectTest() {
         ResourceStack resourceStack = new ResourceStack(0,0,0,0);
@@ -47,6 +53,9 @@ public class InitChooseLeaderCardsTest {
 
     }
 
+    /**
+     * Test to check if the method "doAction()" works properly in InitChooseLeaderCard Class
+     */
     @Test
     public void doActionTest() {
         ResourceStack resourceStack = new ResourceStack(0,0,0,0);

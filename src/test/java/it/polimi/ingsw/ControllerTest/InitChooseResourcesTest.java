@@ -14,6 +14,9 @@ import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
+/**
+ * Class Test for InitChooseResource
+ */
 public class InitChooseResourcesTest {
 
     HashMap<Integer, ArrayList<ResourceType>> depotResource = new HashMap<>();
@@ -25,6 +28,9 @@ public class InitChooseResourcesTest {
 
     ActionController actionController = new ActionController();
 
+    /**
+     * Test to check if the method "isCorrect()" works properly in InitChooseResource Class
+     */
     @Test
     public void isCorrectTest() {
         depotResource.put(0, depot0);
@@ -89,6 +95,9 @@ public class InitChooseResourcesTest {
         assertEquals("Cannot put more than 1 resource in Depot 1", e.getMessage());
     }
 
+    /**
+     * Test to check if the method "canBeApplied()" works properly in InitChooseResource Class
+     */
     @Test
     public void canBeAppliedTest() {
         depotResource.put(0, depot0);
@@ -159,6 +168,9 @@ public class InitChooseResourcesTest {
         assertEquals("Cannot put the same type of resources in two different depots!", action.getResponse());
     }
 
+    /**
+     * Test to check if the method "doAction()" and "messagePrepare()" work properly in InitChooseResource Class
+     */
     @Test
     public void doActionAndMessagePrepare() {
         MessageToClient message;

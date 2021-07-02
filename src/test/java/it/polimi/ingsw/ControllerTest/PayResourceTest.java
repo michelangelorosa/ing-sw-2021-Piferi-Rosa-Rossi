@@ -97,17 +97,7 @@ public class PayResourceTest {
     }
 
     /**
-     * I created a game, gave to the current player some resources and tried to pay the cards which costs 2 shields.
-     * I put the cost of the card in a temporary stack and start to pay.
-     * <ul>
-     *     <li>The first time I pay a shield from the strongbox, I have still a shield to pay, so it returns "HasToPay"</li>
-     *     <li>The second time I pay with a stone from the strongbox, but it is not necessary for the card, so it returns
-     *     "This type of resource is not needed"</li>
-     *     <li>The third time I try to pay with a coin from the strongbox, but there are no coins in the strongbox,
-     *     so it returns "No COINS left in Strongbox"</li>
-     *     <li>The fourth time I pay with a shield from the warehouse. There are no other resources to pay so it returns
-     *     "SUCCESS"</li>
-     * </ul>
+     * Test to check if the method "doAction()" and "messagePrepare()" work properly in PayResource Class
      */
     @Test
     public void doActionTest(){
@@ -155,6 +145,9 @@ public class PayResourceTest {
         assertEquals(ResourceType.NONE, game.getCurrentPlayer().getBoard().getResourceManager().getWarehouseDepots()[0].getResourceType());
     }
 
+    /**
+     * Test to check if the methods work properly in InitChooseResource Class
+     */
     @Test
     public void otherTests() {
         PayResourceBuyCard action = new PayResourceBuyCard(false, 0, ResourceType.SHIELDS);

@@ -10,7 +10,9 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import static org.junit.Assert.*;
 
-
+/**
+ * Class to test ConvertToJson class
+ */
 public class ConvertToJSONTest {
 
     ConvertToJSON test = new ConvertToJSON();
@@ -19,14 +21,20 @@ public class ConvertToJSONTest {
     VaticanReportSection[] vaticanReportSections = JSONReader.ReadVaticanReportSection();
     FaithTrack track = new FaithTrack();
 
+    /**
+     * Test to check if the methods convert...String work properly in convertToJson class
+     */
     @Test
-    public void convertStringTest() throws FileNotFoundException {
+    public void convertStringTest() {
         System.out.println(test.covertFaithString(track.getCells()));
         System.out.println(test.covertVaticanString(vaticanReportSections));
         System.out.println(test.covertDevelopmentCardString(cards));
         System.out.println(test.covertLeaderCardString(leaderCards));
     }
 
+    /**
+     * Test to check if the method works properly
+     */
     @Test
     public void leaderConverterTest(){
         LeaderCard leaderTest = leaderCards.get(0);

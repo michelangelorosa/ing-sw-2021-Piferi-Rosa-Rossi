@@ -16,12 +16,21 @@ import it.polimi.ingsw.Model.MessagesToClient.ModelToView;
 import it.polimi.ingsw.Model.MessagesToClient.OtherMessages.DisconnectedMessage;
 import org.junit.Test;
 
+/**
+ * Unit Test for Controller Class.
+ */
 public class ControllerTest {
 
+    /**
+     * Creating ObservableClass that extends Observable<Action>
+     */
     public static class ObservableClass extends Observable<Action> {
 
     }
 
+    /**
+     * Creating ControllerTestClass that extends Controller
+     */
     public static class ControllerTestClass extends Controller {
         boolean isUpdated = false;
 
@@ -36,6 +45,7 @@ public class ControllerTest {
         }
     }
 
+    /** Method to test controller*/
     @Test
     public void controllerTest() throws ModelException {
         ObservableClass observableClass = new ObservableClass();
@@ -75,6 +85,7 @@ public class ControllerTest {
         assertFalse(controller2.isUpdated);
     }
 
+    /** Method to test controller*/
     @Test
     public void controllerTest2() {
         Action action = new Action();
@@ -91,6 +102,7 @@ public class ControllerTest {
         assertFalse(observableClass.containsObserver(controller));
     }
 
+    /** Method to test prepareView in Controller*/
     @Test
     public void prepareViewTest() {
         ActionController actionController = new ActionController();
@@ -101,6 +113,7 @@ public class ControllerTest {
         assertEquals(modelToView, actionController.getModelToView());
     }
 
+    /** Method to test actionController in Conroller*/
     @Test
     public void actionControllerTest() {
         ActionController actionController = new ActionController();
@@ -129,6 +142,7 @@ public class ControllerTest {
 
     }
 
+    /** Method to test disconnected in Controller*/
     @Test
     public void disconnectedTest() {
         ActionController actionController = new ActionController();
@@ -139,6 +153,7 @@ public class ControllerTest {
         assertTrue(message instanceof DisconnectedMessage);
     }
 
+    /**Method to test exceptions*/
     @Test
     public void exceptionTest() {
         class ActionTest1 extends Action {

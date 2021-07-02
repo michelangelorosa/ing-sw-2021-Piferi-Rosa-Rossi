@@ -193,7 +193,7 @@ public class DevelopmentCardDeckTest {
         assertEquals(0, deck.getCardsInDeck());
     }
 
-    /*
+    /**
      * Test for "getTopCard" method in DevelopmentCardDeck Class.
      */
     @Test

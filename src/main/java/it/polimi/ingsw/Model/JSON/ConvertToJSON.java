@@ -10,12 +10,15 @@ import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.Model.Enums.*;
 import it.polimi.ingsw.Model.GameModel.*;
 
+/**
+ * ConvertToJSON Class contains all the methods to convert from java objects to JSON files.
+ *
+ * @author francescopiferi99
+ */
 public class ConvertToJSON {
     public ConvertToJSON() {
 
     }
-
-
 
     /**
      * Method to convert an Array of DevelopmentCard in a String.

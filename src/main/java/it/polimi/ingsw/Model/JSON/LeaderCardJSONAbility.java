@@ -1,10 +1,15 @@
 package it.polimi.ingsw.Model.JSON;
 
+/**
+ * LeaderCardJSONAbility is a class used to write on JSON files
+ * @author francescopiferi99
+ */
 public class LeaderCardJSONAbility {
-    /**This class is use to create the file "LeaderCards.json"*/
+
     boolean active, discarded, generic;
     int leaderAbility, cardId, victoryPoints, needsShields, needsServants, needsCoins, needsStones, needsBlueCard, needsPurpleCard, needsYellowCard, needsGreenCard, needsBlueCardLv1, needsBlueCardLv2, needsBlueCardLv3, needsPurpleCardLv1, needsPurpleCardLv2, needsPurpleCardLv3, needsYellowCardLv1, needsYellowCardLv2, needsYellowCardLv3, needsGreenCardLv1, needsGreenCardLv2, needsGreenCardLv3, discountShields, discountServants, discountCoins, discountStones, marbleConversion, depotType, inputShields, inputServants, inputCoins, inputStones, jollyOut, outputFaith;
 
+    /**This method is use to create the file "Persistence.json"*/
     public LeaderCardJSONAbility(boolean active, boolean discarded, boolean generic, int leaderAbility, int cardId, int victoryPoints, int needsShields, int needsServants, int needsCoins, int needsStones, int needsBlueCard, int needsPurpleCard, int needsYellowCard, int needsGreenCard, int needsBlueCardLv1, int needsBlueCardLv2, int needsBlueCardLv3, int needsPurpleCardLv1, int needsPurpleCardLv2, int needsPurpleCardLv3, int needsYellowCardLv1, int needsYellowCardLv2, int needsYellowCardLv3, int needsGreenCardLv1, int needsGreenCardLv2, int needsGreenCardLv3, int discountShields, int discountServants, int discountCoins, int discountStones, int depotType, int marbleConversion, int inputShields, int inputServants, int inputCoins, int inputStones, int jollyOut, int outputFaith) {
         this.active = active;
         this.discarded = discarded;

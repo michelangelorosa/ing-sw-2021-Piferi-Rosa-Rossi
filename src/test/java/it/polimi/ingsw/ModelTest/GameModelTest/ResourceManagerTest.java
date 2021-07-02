@@ -256,6 +256,9 @@ public class ResourceManagerTest {
 
     }
 
+    /**
+     * Test to check if the method "canAddMarket()" works properly in ResourceManager Class
+     */
     @Test
     public void canAddMarketResources() {
         resourceManager.reset();
@@ -269,6 +272,9 @@ public class ResourceManagerTest {
         assertTrue(resourceManager.canAddMarketResources());
     }
 
+    /**
+     * Test to check if the method "canAddDepot()" works properly in ResourceManager Class
+     */
     @Test
     public void canAddToDepot() {
         resourceManager.addMarketResourcesByType(3, ResourceType.SHIELDS, resourceManager.getWarehouseDepots()[0]);
@@ -280,6 +286,9 @@ public class ResourceManagerTest {
         assertTrue(resourceManager.canAddToDepot(ResourceType.COINS, resourceManager.getWarehouseDepots()[1]));
     }
 
+    /**
+     * Test to check if the method "addOneResourceToDepot()" works properly in ResourceManager Class
+     */
     @Test
     public void addOneResourceToDepotTest() {
         resourceManager.setTemporaryResourcesToPay(new ResourceStack(2, 1, 0, 0));
@@ -289,6 +298,9 @@ public class ResourceManagerTest {
         assertEquals(1, resourceManager.getTemporaryResourcesToPay().getResource(ResourceType.SHIELDS));
     }
 
+    /**
+     * Test to check if the method "hasPayed()" works properly in ResourceManager Class
+     */
     @Test
     public void hasPayedTest() {
         assertTrue(resourceManager.hasPayed());
@@ -297,6 +309,9 @@ public class ResourceManagerTest {
         assertFalse(resourceManager.hasPayed());
     }
 
+    /**
+     * Test to check if the method "resourceIsNeededToPay()" works properly in ResourceManager Class
+     */
     @Test
     public void resourceIsNeededToPayTest() {
         ResourceStack resource = new ResourceStack(0,0,1,1);
@@ -308,6 +323,9 @@ public class ResourceManagerTest {
         assertTrue(resourceManager.resourceIsNeededToPay(ResourceType.STONES));
     }
 
+    /**
+     * Test to check if the method "payOneResource()" works properly in ResourceManager Class
+     */
     @Test
     public void payOneResourceTest() {
         ResourceStack resource = new ResourceStack(1,0,1,1);
@@ -435,6 +453,9 @@ public class ResourceManagerTest {
         assertTrue(resourceManager.cardIsBuyable(card2, leaderCards));
     }
 
+    /**
+     * Test to check if the method "hasResourceToActivateCard()" works properly in ResourceManager Class
+     */
     @Test
     public void hasResourcesToActivateLeaderCardTest() {
         ResourceStack cost = new ResourceStack(1,1,1,1);

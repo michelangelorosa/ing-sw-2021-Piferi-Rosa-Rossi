@@ -2,7 +2,10 @@ package it.polimi.ingsw.Model.JSON;
 
 import it.polimi.ingsw.Model.Enums.Marble;
 
-/**This class is use to create the file "Persistence.json"*/
+/**
+ * MarketJSON is a class used to write on JSON files
+ * @author francescopiferi99
+ */
 public class MarketJSON {
     Marble one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, extra;
 

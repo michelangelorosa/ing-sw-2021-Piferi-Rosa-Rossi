@@ -122,6 +122,9 @@ public class LeaderCardTest {
         assertTrue(leaderCard4.isActive());
     }
 
+    /**
+     * Method to check if exceptions are thrown correctly
+     */
     @Test
     public void discardLeaderCardTest() {
         leaderCard1.setActive(true);

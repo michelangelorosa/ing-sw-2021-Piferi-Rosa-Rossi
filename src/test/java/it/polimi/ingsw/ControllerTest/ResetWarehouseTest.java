@@ -57,34 +57,7 @@ public class ResetWarehouseTest {
     }
 
     /**
-     * I created a game, gave to the current player some resources, tried to buy the cards and then check that with the
-     * reset the warehouse and the strongbox return at the beginning condition.
-     * At the beginning in the warehouse there are 1 shield, 2 coins and 1 servant.
-     * The price of the card is 2 shields, the first time I pay a shield from the strongbox, there still a shield to pay
-     * so it returns "HasToPay". The second time I try to pay again with a shield from the strongbox but there are no
-     * shields in the strongbox, so it returns "No SHIELDS left in Strongbox". Then I try to pay with a stone from the
-     * strongbox, but it is not necessary for the card so it returns "This type of resource is not needed". Then I pay
-     * with a shield from the warehouse. There are no resources needed than it returns "SUCCESS".
-     * The condition of the warehouse is now:
-     *      First depot   NOTHING
-     *      Second depot  2 COINS
-     *      Third depot   1 SERVANT
-     * The condition of the strongbox is:
-     *      0 SHIELDS
-     *      3 SERVANTS
-     *      0 COINS
-     *      2 STONES
-     * If I reset to the beginning condition the resources to pay returns to be 2 SHIELDS, and the conditions of the
-     * warehouse and of the strongbox became:
-     * Warehouse:
-     *      First depot   NOTHING
-     *      Second depot  2 COINS
-     *      Third depot   1 SERVANT
-     * Strongbox:
-     *      1 SHIELD
-     *      3 SERVANTS
-     *      0 COINS
-     *      2 STONES
+     * Test to check if the method "doAction()" work properly in ResetWarehouse Class
      */
     @Test
     public void doActionTest(){

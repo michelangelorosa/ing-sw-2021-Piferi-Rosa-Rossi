@@ -12,6 +12,10 @@ import it.polimi.ingsw.View.ReducedModel.Player;
 
 import java.util.ArrayList;
 
+/**
+ * PlayerJSON is a class used to write on JSON files
+ * @author francescopiferi99
+ */
 public class PlayerJSON {
     private final String nickname;
     private final int turnPosition;
@@ -25,7 +29,7 @@ public class PlayerJSON {
     int leader0, leader1, strongboxShields, strongboxServants, strongboxCoins, strongboxStones, levelOccupied1, levelOccupied2, levelOccupied3, slot1card1, slot1card2, slot1card3, slot2card1, slot2card2, slot2card3, slot3card1, slot3card2, slot3card3;
     boolean CHOOSE_ACTION, GAME_SET,INIT_CHOOSE_RESOURCES, INIT_CHOOSE_LEADER_CARDS, MARKET_CHOOSE_ROW, CHOOSE_LEADER_CARD, ADD_RESOURCE, SWITCH_DEPOT, RESET_WAREHOUSE, END_MARKET, BUY_CARD, PAY_RESOURCE_CARD, PAY_RESOURCE_PRODUCTION, END_PAY_CARD, CHOOSE_CARD_SLOT, ACTIVATE_PRODUCTION, END_PAY_PRODUCTION, CHOOSE_PRODUCTION_OUTPUT, ACTIVATE_LEADERCARD, DELETE_LEADERCARD, END_TURN, FINAL_POINTS;
 
-    /**This class is use to create the file "Persistence.json"*/
+    /**This method is use to create the file "Persistence.json"*/
     public PlayerJSON(String nickname, int turnPosition, boolean inkwell, PlayerStatus status, int faithTrackPosition, int victoryPoints, PopeTile pope0, PopeTile pope1, PopeTile pope2, int depot0Max, int depot1Max, int depot2Max, int depot0Stored, int depot1Stored, int depot2Stored, int depotLeader1Stored, int depotLeader2Stored, ResourceType depot0Type, ResourceType depot1Type, ResourceType depot2Type, int leader0, int leader1, int strongboxShields, int strongboxServants, int strongboxCoins, int strongboxStones, int levelOccupied1, int levelOccupied2, int levelOccupied3, int slot1card1, int slot1card2, int slot1card3, int slot2card1, int slot2card2, int slot2card3, int slot3card1, int slot3card2, int slot3card3, boolean CHOOSE_ACTION, boolean GAME_SET, boolean INIT_CHOOSE_RESOURCES, boolean INIT_CHOOSE_LEADER_CARDS, boolean MARKET_CHOOSE_ROW, boolean CHOOSE_LEADER_CARD, boolean ADD_RESOURCE, boolean SWITCH_DEPOT, boolean RESET_WAREHOUSE, boolean END_MARKET, boolean BUY_CARD, boolean PAY_RESOURCE_CARD, boolean PAY_RESOURCE_PRODUCTION, boolean END_PAY_CARD, boolean CHOOSE_CARD_SLOT, boolean ACTIVATE_PRODUCTION, boolean END_PAY_PRODUCTION, boolean CHOOSE_PRODUCTION_OUTPUT, boolean ACTIVATE_LEADERCARD, boolean DELETE_LEADERCARD, boolean END_TURN, boolean FINAL_POINTS) {
         this.nickname = nickname;
         this.turnPosition = turnPosition;

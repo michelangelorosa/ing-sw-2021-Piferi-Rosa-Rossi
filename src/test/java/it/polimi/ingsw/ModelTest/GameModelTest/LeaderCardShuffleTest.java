@@ -10,6 +10,9 @@ import static org.junit.Assert.*;
  */
 public class LeaderCardShuffleTest {
 
+    /**
+     * Test for LeaderCardShuffle
+     */
     @Test
     public void LeaderCardShuffleTests(){
         RedLeaderCard[] cardsPicked1;

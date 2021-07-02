@@ -91,6 +91,9 @@ public class EndTurnTest {
         assertEquals("Zero", ((EndTurnMessage)messageToClient).getNextPlayerNickname());
     }
 
+    /**
+     * Test for "doAction" and "messagePrepare" methods in EndTurn Class when someone finished.
+     */
     @Test
     public void doActionWhenSomeoneFinished() {
         CommonTestMethods.gameInitOne(actionController.getGame());
@@ -115,6 +118,9 @@ public class EndTurnTest {
         assertTrue(message instanceof FinalPointsMessage);
     }
 
+    /**
+     * Test for "doAction" and "messagePrepare" methods in EndTurn Class in single player mode.
+     */
     @Test
     public void doActionSingleplayer() {
         game.getPlayers().add(new Player("pippo", 0, true));

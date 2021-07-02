@@ -12,13 +12,22 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+/**
+ * Class to test JSONReader class
+ */
 public class JSONReaderTest {
 
+    /**
+     * Test to check if the constructor works properly in JSONReader Class
+     */
     @Test
     public void constructorTest() {
         Controller controller = new Controller();
     }
 
+    /**
+     * Test to check if the method "ReadDevelopmentCards()" works properly in JSONReader Class
+     */
     @Test
     public void ReadDevelopmentCardsTest() {
 
@@ -325,6 +334,9 @@ public class JSONReaderTest {
         }
     }
 
+    /**
+     * Test to check if the method "ReadFaithCells()" works properly in JSONReader Class
+     */
     @Test
     public void ReadFaithCellsTest() {
 
@@ -380,9 +392,9 @@ public class JSONReaderTest {
         assertEquals(4, vaticanReportSections[2].getPoints());
     }
 
-
-
-
+    /**
+     * Test to check if the method "ReadLeaderCard()" works properly in JSONReader Class
+     */
     @Test
     public void ReadLeaderCardTest(){
 

@@ -94,6 +94,9 @@ public class PlayerTest {
         assertEquals(21, playerOne.getVictoryPoints());
     }
 
+    /**
+     * Test to check if the method "addPossibleAction()" and "getPossibleAction()" works properly in LeaderRequirements Class
+     */
     @Test
     public void possibleActionsTest() {
         playerOne.addPossibleAction(ActionType.ACTIVATE_PRODUCTION);

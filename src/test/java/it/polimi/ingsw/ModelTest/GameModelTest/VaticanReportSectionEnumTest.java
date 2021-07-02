@@ -26,6 +26,9 @@ public class VaticanReportSectionEnumTest {
         assertSame(VaticanReportSectionEnum.THREE, VaticanReportSectionEnum.getReportSection(3));
     }
 
+    /**
+     * Test to check if the method "isCorrect()" works properly in VaticanReportSectionEnum Class
+     */
     @Test
     public void isCorrectTest(){
         VaticanReportSection vatican = new VaticanReportSection(1, 6, 3);
