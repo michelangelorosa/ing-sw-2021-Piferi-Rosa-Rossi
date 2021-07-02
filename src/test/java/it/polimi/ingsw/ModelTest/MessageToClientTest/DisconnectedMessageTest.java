@@ -9,8 +9,14 @@ import it.polimi.ingsw.View.User.CliController;
 import it.polimi.ingsw.View.User.UserInteraction;
 import org.junit.Test;
 
+/**
+ * Tests for DisconnectedMessage Class.
+ */
 public class DisconnectedMessageTest {
 
+    /**
+     * Test for constructor, getters and setters.
+     */
     @Test
     public void test() {
         ActionController actionController = new ActionController();

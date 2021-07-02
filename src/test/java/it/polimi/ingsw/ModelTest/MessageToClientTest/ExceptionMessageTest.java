@@ -7,8 +7,14 @@ import it.polimi.ingsw.View.User.CliController;
 import it.polimi.ingsw.View.User.UserInteraction;
 import org.junit.Test;
 
+/**
+ * Tests for ExceptionMessage Class.
+ */
 public class ExceptionMessageTest {
 
+    /**
+     * Test for constructor, getters and setters.
+     */
     @Test
     public void test() {
         UserInteraction userInteraction = new UserInteraction() {

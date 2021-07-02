@@ -13,11 +13,17 @@ import org.junit.Test;
 import static it.polimi.ingsw.Controller.Actions.ActionType.END_PAY_CARD;
 import static org.junit.Assert.*;
 
+/**
+ * Tests for BoughtCardMessage Class.
+ */
 public class BoughtCardMessageTest {
 
     BoughtCardMessage message = new BoughtCardMessage("antonio");
     UserInteraction userInteraction = CommonViewTestMethods.createUserInteraction();
 
+    /**
+     * Test for constructor, getters and setters.
+     */
     @Test
     public void genericMethodsTest(){
         assertEquals(END_PAY_CARD, message.getActionDone());
@@ -33,6 +39,9 @@ public class BoughtCardMessageTest {
         assertEquals(strongbox, message.getStrongbox());
     }
 
+    /**
+     * updateView method Test.
+     */
     @Test
     public void updateViewTest() {
         RedWarehouse warehouse = new Warehouse();

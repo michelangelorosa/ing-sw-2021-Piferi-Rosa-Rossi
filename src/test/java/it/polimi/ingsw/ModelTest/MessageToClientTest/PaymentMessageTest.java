@@ -16,6 +16,9 @@ import it.polimi.ingsw.View.User.UserInteraction;
 import it.polimi.ingsw.ViewTest.CommonViewTestMethods;
 import org.junit.Test;
 
+/**
+ * Tests for PaymentMessage Class.
+ */
 public class PaymentMessageTest {
 
     PaymentMessage paymentMessage = new PaymentMessage("franco");
@@ -27,7 +30,9 @@ public class PaymentMessageTest {
 
     UserInteraction userInteraction = CommonViewTestMethods.createUserInteraction();
 
-
+    /**
+     * Test for constructor, getters and setters.
+     */
     @Test
     public void genericMethodsTest(){
         paymentMessage.setActionDone(ActionType.PAY_RESOURCE_CARD);
@@ -43,6 +48,9 @@ public class PaymentMessageTest {
         assertEquals(messageTemporaryResources, paymentMessage.getTemporaryResources());
     }
 
+    /**
+     * updateView method Test.
+     */
     @Test
     public void updateView1Test(){
         paymentMessage.setActionDone(ActionType.PAY_RESOURCE_CARD);
@@ -68,6 +76,9 @@ public class PaymentMessageTest {
         assertEquals(messageTemporaryResources, player.getTemporaryResources());
     }
 
+    /**
+     * updateView method Test.
+     */
     @Test
     public void updateView2Test(){
         paymentMessage1.setActionDone(ActionType.PAY_RESOURCE_PRODUCTION);

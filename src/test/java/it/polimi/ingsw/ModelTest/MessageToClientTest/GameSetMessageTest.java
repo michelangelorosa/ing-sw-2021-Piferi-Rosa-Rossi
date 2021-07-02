@@ -11,11 +11,17 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/**
+ * Tests for GameSetMessage Class.
+ */
 public class GameSetMessageTest {
     GameSetMessage message = new GameSetMessage("antonio");
     UserInteraction userInteraction = new UserInteraction() {
     };
 
+    /**
+     * Test for constructor, getters and setters.
+     */
     @Test
     public void genericMethodsTest() {
         Game game = CommonViewTestMethods.gameCreator();
@@ -27,6 +33,9 @@ public class GameSetMessageTest {
         message.setFaithTrack(game.getFaithTrack());
     }
 
+    /**
+     * updateView method Test.
+     */
     @Test
     public void updateViewTest() {
         Game game = CommonViewTestMethods.gameCreator();

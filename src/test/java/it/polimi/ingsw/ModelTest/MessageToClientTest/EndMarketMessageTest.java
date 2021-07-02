@@ -12,10 +12,16 @@ import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
+/**
+ * Tests for EndMarketMessage Class.
+ */
 public class EndMarketMessageTest {
     EndMarketMessage message = new EndMarketMessage("antonio");
     UserInteraction userInteraction = CommonViewTestMethods.createUserInteraction();
 
+    /**
+     * Test for constructor, getters and setters.
+     */
     @Test
     public void genericMethodsTest() {
         assertEquals("antonio", message.getPlayerNickname());
@@ -32,6 +38,9 @@ public class EndMarketMessageTest {
         assertEquals(map, message.getPlayersFaithPosition());
     }
 
+    /**
+     * updateView method Test.
+     */
     @Test
     public void updateViewTest() {
         HashMap<String, Integer> map = new HashMap<>();

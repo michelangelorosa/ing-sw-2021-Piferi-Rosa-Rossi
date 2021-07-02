@@ -10,10 +10,16 @@ import it.polimi.ingsw.ViewTest.CommonViewTestMethods;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ * Tests for BuyCardMessage Class.
+ */
 public class BuyCardMessageTest {
     BuyCardMessage message = new BuyCardMessage("antonio");
     UserInteraction userInteraction = CommonViewTestMethods.createUserInteraction();
 
+    /**
+     * Test for constructor, getters and setters.
+     */
     @Test
     public void genericMethodsTest() {
         assertEquals("antonio", message.getPlayerNickname());
@@ -25,6 +31,9 @@ public class BuyCardMessageTest {
         assertEquals(stack, message.getTemporaryResources());
     }
 
+    /**
+     * updateView method Test.
+     */
     @Test
     public void updateViewTest() {
         RedResourceStack stack = new ResourceStack(1, 2, 3, 4);

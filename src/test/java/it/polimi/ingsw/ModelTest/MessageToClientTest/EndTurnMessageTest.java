@@ -8,11 +8,17 @@ import it.polimi.ingsw.View.User.UserInteraction;
 import it.polimi.ingsw.ViewTest.CommonViewTestMethods;
 import org.junit.Test;
 
+/**
+ * Tests for EndTurnMessage Class.
+ */
 public class EndTurnMessageTest {
 
     EndTurnMessage message = new EndTurnMessage("antonio");
     UserInteraction userInteraction = CommonViewTestMethods.createUserInteraction();
 
+    /**
+     * Test for constructor, getters and setters.
+     */
     @Test
     public void genericMethodsTest() {
         assertEquals("antonio", message.getPlayerNickname());
@@ -22,6 +28,9 @@ public class EndTurnMessageTest {
         assertEquals("franco", message.getNextPlayerNickname());
     }
 
+    /**
+     * updateView method Test.
+     */
     @Test
     public void updateViewTest() {
         message.setNextPlayerNickname("franco");

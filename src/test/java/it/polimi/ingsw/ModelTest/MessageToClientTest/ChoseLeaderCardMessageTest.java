@@ -12,11 +12,16 @@ import it.polimi.ingsw.View.User.UserInteraction;
 import it.polimi.ingsw.ViewTest.CommonViewTestMethods;
 import org.junit.Test;
 
+/**
+ * Tests for ChoseLeaderCardMessage Class.
+ */
 public class ChoseLeaderCardMessageTest {
     ChoseLeaderCardMessage leaderCardMessage = new ChoseLeaderCardMessage("franco");
     UserInteraction userInteraction = CommonViewTestMethods.createUserInteraction();
 
-
+    /**
+     * Test for constructor, getters and setters.
+     */
     @Test
     public void genericMethodsTest(){
         assertEquals(CHOOSE_LEADER_CARD, leaderCardMessage.getActionDone());
@@ -26,6 +31,10 @@ public class ChoseLeaderCardMessageTest {
         leaderCardMessage.setTemporaryResources(temporaryResources);
         assertEquals(temporaryResources, leaderCardMessage.getTemporaryResources());
     }
+
+    /**
+     * updateView method Test.
+     */
     @Test
     public void updateViewTest() {
         leaderCardMessage.setError("error");

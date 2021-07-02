@@ -17,10 +17,16 @@ import java.util.HashMap;
 import static it.polimi.ingsw.Controller.Actions.ActionType.*;
 import static org.junit.Assert.*;
 
+/**
+ * Tests for DiscardLeaderCardMessage Class.
+ */
 public class DiscardLeaderCardMessageTest {
     DiscardLeaderCardMessage leaderCardMessage = new DiscardLeaderCardMessage("antonio");
     UserInteraction userInteraction = CommonViewTestMethods.createUserInteraction();
 
+    /**
+     * Test for constructor, getters and setters.
+     */
     @Test
     public void genericMethodsTest(){
         assertEquals(DELETE_LEADERCARD, leaderCardMessage.getActionDone());
@@ -37,6 +43,9 @@ public class DiscardLeaderCardMessageTest {
         assertEquals(0, leaderCardMessage.getNumber());
     }
 
+    /**
+     * updateView method Test.
+     */
     @Test
     public void updateViewTest() {
         ResourceStack stack = new ResourceStack(1, 2, 3, 4);

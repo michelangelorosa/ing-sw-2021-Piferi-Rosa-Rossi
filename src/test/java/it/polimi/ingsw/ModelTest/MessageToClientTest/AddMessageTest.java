@@ -12,6 +12,9 @@ import it.polimi.ingsw.ViewTest.CommonViewTestMethods;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ * Tests for AddMessage Class.
+ */
 public class AddMessageTest {
     AddMessage message = new AddMessage("antonio");
     UserInteraction userInteraction = CommonViewTestMethods.createUserInteraction();
@@ -30,6 +33,9 @@ public class AddMessageTest {
         assertEquals(warehouse, message.getWarehouse());
     }
 
+    /**
+     * updateView method Test.
+     */
     @Test
     public void updateViewTest() {
         RedResourceStack stack = new ResourceStack(1, 2, 3, 4);

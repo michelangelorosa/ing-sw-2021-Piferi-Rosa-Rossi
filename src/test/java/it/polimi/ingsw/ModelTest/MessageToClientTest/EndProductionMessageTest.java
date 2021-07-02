@@ -13,17 +13,26 @@ import it.polimi.ingsw.View.User.UserInteraction;
 import it.polimi.ingsw.ViewTest.CommonViewTestMethods;
 import org.junit.Test;
 
+/**
+ * Tests for EndProductionMessage Class.
+ */
 public class EndProductionMessageTest {
 
     EndProductionMessage message = new EndProductionMessage("antonio");
     UserInteraction userInteraction = CommonViewTestMethods.createUserInteraction();
 
+    /**
+     * Test for constructor, getters and setters.
+     */
     @Test
     public void ConstructorTest(){
         assertEquals(END_PAY_PRODUCTION, message.getActionDone());
         assertEquals("antonio", message.getPlayerNickname());
     }
 
+    /**
+     * Test for constructor, getters and setters.
+     */
     @Test
     public void genericMethodsTest() {
         RedStrongbox strongbox = new Strongbox();
@@ -36,6 +45,9 @@ public class EndProductionMessageTest {
         assertEquals(warehouse, message.getWarehouse());
     }
 
+    /**
+     * updateView method Test.
+     */
     @Test
     public void updateViewTest() {
         RedStrongbox strongbox = new Strongbox();

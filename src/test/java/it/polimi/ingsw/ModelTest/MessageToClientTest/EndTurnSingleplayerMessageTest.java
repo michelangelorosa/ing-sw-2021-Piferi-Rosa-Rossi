@@ -11,10 +11,16 @@ import it.polimi.ingsw.View.User.UserInteraction;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ * Tests for EndTurnSingleplayerMessage Class.
+ */
 public class EndTurnSingleplayerMessageTest {
 
     EndTurnSingleplayerMessage message = new EndTurnSingleplayerMessage("pippo");
 
+    /**
+     * Test for constructor, getters and setters.
+     */
     @Test
     public void commonMethodsTest() {
         message.setLorenzoFaith(10);
@@ -26,6 +32,9 @@ public class EndTurnSingleplayerMessageTest {
         assertEquals(20, message.getVictoryPoints());
     }
 
+    /**
+     * updateView method Test.
+     */
     @Test
     public void updateViewTest() {
         UserInteraction userInteraction = new UserInteraction() {

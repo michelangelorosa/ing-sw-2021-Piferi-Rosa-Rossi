@@ -11,11 +11,17 @@ import it.polimi.ingsw.ViewTest.CommonViewTestMethods;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ * Tests for ChoseCardSlotMessage Class.
+ */
 public class ChoseCardSlotMessageTest {
 
     ChoseCardSlotMessage message = new ChoseCardSlotMessage("antonio");
     UserInteraction userInteraction = CommonViewTestMethods.createUserInteraction();
 
+    /**
+     * Test for constructor, getters and setters.
+     */
     @Test
     public void genericMethodsTest() {
         RedDevelopmentCardSlots slots = new DevelopmentCardSlots();
@@ -28,6 +34,9 @@ public class ChoseCardSlotMessageTest {
         assertEquals(message.getTable(), table);
     }
 
+    /**
+     * updateView method Test.
+     */
     @Test
     public void updateViewTest() {
         RedDevelopmentCardSlots slots = new DevelopmentCardSlots();

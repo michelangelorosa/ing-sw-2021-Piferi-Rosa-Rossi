@@ -12,10 +12,16 @@ import java.util.Objects;
 
 import static org.junit.Assert.*;
 
+/**
+ * Tests for MessageToClient Class.
+ */
 public class MessageToClientTest {
     MessageToClient message = new MessageToClient("antonio");
     UserInteraction userInteraction = CommonViewTestMethods.createUserInteraction();
 
+    /**
+     * Test for constructor.
+     */
     @Test
     public void constructorTest() {
         message = new MessageToClient();
@@ -26,6 +32,9 @@ public class MessageToClientTest {
         assertEquals("antonio", message.getPlayerNickname());
     }
 
+    /**
+     * Test for getters and setters.
+     */
     @Test
     public void setterAndGetterTest() {
         message.setError("error");
@@ -36,6 +45,9 @@ public class MessageToClientTest {
         assertEquals(ActionType.ADD_RESOURCE, message.getPossibleActions().get(0));
     }
 
+    /**
+     * updateView method Test.
+     */
     @Test
     public void methodTest() {
         Player player = message.getPlayer(userInteraction);
@@ -87,6 +99,9 @@ public class MessageToClientTest {
         message.displayAction(userInteraction);
     }
 
+    /**
+     * updateView method Test.
+     */
     @Test
     public void testFinisher() {
         EndTurnMessage message = new EndTurnMessage("antonio");

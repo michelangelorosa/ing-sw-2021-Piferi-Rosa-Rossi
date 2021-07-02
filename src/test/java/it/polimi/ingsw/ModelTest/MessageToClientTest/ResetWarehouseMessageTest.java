@@ -10,11 +10,17 @@ import it.polimi.ingsw.ViewTest.CommonViewTestMethods;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ * Tests for ResetWarehouseMessage Class.
+ */
 public class ResetWarehouseMessageTest {
 
     ResetWarehouseMessage message = new ResetWarehouseMessage("antonio");
     UserInteraction userInteraction = CommonViewTestMethods.createUserInteraction();
 
+    /**
+     * Test for constructor, getters and setters.
+     */
     @Test
     public void genericMethodsTest() {
         assertEquals("antonio", message.getPlayerNickname());
@@ -25,6 +31,9 @@ public class ResetWarehouseMessageTest {
         assertEquals(warehouse, message.getWarehouse());
     }
 
+    /**
+     * updateView method Test.
+     */
     @Test
     public void updateViewTest() {
         RedWarehouse warehouse = new Warehouse();

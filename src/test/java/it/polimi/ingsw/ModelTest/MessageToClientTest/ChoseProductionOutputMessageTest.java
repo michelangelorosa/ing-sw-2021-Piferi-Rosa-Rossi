@@ -14,10 +14,16 @@ import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
+/**
+ * Tests for ChoseProductionOutputMessageTest Class.
+ */
 public class ChoseProductionOutputMessageTest {
     ChoseProductionOutputMessage message = new ChoseProductionOutputMessage("antonio");
     UserInteraction userInteraction = CommonViewTestMethods.createUserInteraction();
 
+    /**
+     * Test for constructor, getters and setters.
+     */
     @Test
     public void genericMethodsTest() {
         assertEquals("antonio", message.getPlayerNickname());
@@ -29,6 +35,9 @@ public class ChoseProductionOutputMessageTest {
         assertEquals(strongbox, message.getStrongbox());
     }
 
+    /**
+     * updateView method Test.
+     */
     @Test
     public void updateViewTest() {
         RedStrongbox strongbox = new Strongbox();

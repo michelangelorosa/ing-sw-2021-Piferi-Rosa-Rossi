@@ -14,11 +14,17 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+/**
+ * Tests for ChoseMarketRow Class.
+ */
 public class ChoseMarketRowTest {
     UserInteraction userInteraction = CommonViewTestMethods.createUserInteraction();
     ChoseMarketRowMessage message = new ChoseMarketRowMessage("franco");
     RedResourceStack temporaryResources = new ResourceStack(2,2,2,1);
 
+    /**
+     * Test for constructor, getters and setters.
+     */
     @Test
     public void genericMethodsTest() {
         assertEquals("franco", message.getPlayerNickname());
@@ -31,6 +37,9 @@ public class ChoseMarketRowTest {
         assertEquals(temporaryResources, message.getTemporaryResources());
     }
 
+    /**
+     * updateView method Test.
+     */
     @Test
     public void updateView(){
         message.setError("error");

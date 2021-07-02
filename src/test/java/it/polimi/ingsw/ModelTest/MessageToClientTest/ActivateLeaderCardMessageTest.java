@@ -16,6 +16,9 @@ import it.polimi.ingsw.View.User.UserInteraction;
 import it.polimi.ingsw.ViewTest.CommonViewTestMethods;
 import org.junit.Test;
 
+/**
+ * Tests for ActivateLeaderCardMessage Class.
+ */
 public class ActivateLeaderCardMessageTest {
 
     ActivateLeaderCardMessage message = new ActivateLeaderCardMessage("antonio");
@@ -24,12 +27,18 @@ public class ActivateLeaderCardMessageTest {
 
     RedLeaderCard leaderCard = new LeaderCard(1, 1, stack, leaderRequirements, Marble.BLUE);
 
+    /**
+     * Constructor Test.
+     */
     @Test
     public void ConstructorTest(){
         assertEquals(ACTIVATE_LEADERCARD, message.getActionDone());
         assertEquals("antonio", message.getPlayerNickname());
     }
 
+    /**
+     * Getter and Setter Test.
+     */
     @Test
     public void setterAndGetterTest() {
         message.setLeaderCard(leaderCard);
@@ -42,6 +51,9 @@ public class ActivateLeaderCardMessageTest {
         assertEquals(0, message.getLeaderCardPosition());
     }
 
+    /**
+     * updateView method Test.
+     */
     @Test
     public void updateViewTest() {
         UserInteraction userInteraction = CommonViewTestMethods.createUserInteraction();

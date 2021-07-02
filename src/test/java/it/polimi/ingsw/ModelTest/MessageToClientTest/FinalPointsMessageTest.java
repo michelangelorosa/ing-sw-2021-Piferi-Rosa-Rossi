@@ -10,11 +10,17 @@ import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
+/**
+ * Tests for FinalPointsMessage Class.
+ */
 public class FinalPointsMessageTest {
 
     UserInteraction userInteraction = CommonViewTestMethods.createUserInteraction();
     FinalPointsMessage message = new FinalPointsMessage("antonio");
 
+    /**
+     * Test for constructor, getters and setters.
+     */
     @Test
     public void genericMethodsTest() {
         HashMap<String, Integer> namePoints = new HashMap<>();
@@ -31,6 +37,9 @@ public class FinalPointsMessageTest {
         assertEquals("Lorenzo il Magnifico", message.getWinningPlayers().get(0));
     }
 
+    /**
+     * updateView method Test.
+     */
     @Test
     public void updateViewTest() {
         HashMap<String, Integer> namePoints = new HashMap<>();

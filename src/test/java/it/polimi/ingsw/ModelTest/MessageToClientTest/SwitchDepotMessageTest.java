@@ -12,11 +12,17 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+/**
+ * Tests for SwitchDepotMessage Class.
+ */
 public class SwitchDepotMessageTest {
 
     SwitchDepotMessage message = new SwitchDepotMessage("antonio");
     UserInteraction userInteraction = CommonViewTestMethods.createUserInteraction();
 
+    /**
+     * Test for constructor, getters and setters.
+     */
     @Test
     public void genericMethodsTest() {
         assertEquals("antonio", message.getPlayerNickname());
@@ -27,6 +33,9 @@ public class SwitchDepotMessageTest {
         assertEquals(warehouse, message.getWarehouse());
     }
 
+    /**
+     * updateView method Test.
+     */
     @Test
     public void updateViewTest() {
         RedWarehouse warehouse = new Warehouse();
