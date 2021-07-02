@@ -40,9 +40,9 @@ This project was commissioned by Politecnico di Milano. It consists in creating 
 ## Test Cases
 | Package | Class Coverage | Method Coverage | Line Coverage |
 |---------------|-----------|-----------|-----------| 
-| Model | xx% lines coverage | | |
-| View | xx% lines coverage| | |
-| Controller | xx% lines coverage | | |
+| Model | 97% | 82% | 66% |
+| View | 44% | 53% | 41% |
+| Controller | 100% | 98% | 92% |
 
 For more information, see [Generated Test Coverage]()
 
