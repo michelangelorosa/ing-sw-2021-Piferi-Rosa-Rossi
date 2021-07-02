@@ -153,7 +153,7 @@ public class MessageToClient implements Serializable {
      * @param userInteraction Class containing the instance of the reduced Game seen by the player.
      */
     protected void changePossibleActions(UserInteraction userInteraction) {
-        if(this.success() || userInteraction.getGame().getGameType() == GameType.SINGLEPLAYER)
+        if(this.success() || userInteraction.getGame().getGameType() == GameType.SINGLEPLAYER || this.error.equals("Choose Leader Card") || this.error.equals("Has Payed"))
             this.getPlayer(userInteraction).setPossibleActions(this.possibleActions);
     }
 }

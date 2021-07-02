@@ -165,6 +165,8 @@ public class MarketChooseRow extends Action {
             message.addPossibleAction(ActionType.END_TURN);
             if(actionController.getGame().getCurrentPlayer().canDo(ActionType.ACTIVATE_LEADERCARD))
                 message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);
+            if(actionController.getGame().getCurrentPlayer().canDo(ActionType.DELETE_LEADERCARD))
+                message.addPossibleAction(ActionType.DELETE_LEADERCARD);
         }
         else
             message.addPossibleAction(ActionType.CHOOSE_LEADER_CARD);
