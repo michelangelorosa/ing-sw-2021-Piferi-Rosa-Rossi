@@ -78,10 +78,12 @@ public class EndTurn extends Action {
         else {
             actionController.getGame().getSinglePlayer().lorenzoTurn(actionController.getGame());
             if(actionController.getGame().getCurrentPlayer().hasFinished()) {
+                actionController.getGame().setFinalVictoryPoints();
                 actionController.endGamePersistence();
                 this.response = "SINGLEPLAYER WIN";
             }
             else if(actionController.getGame().getSinglePlayer().hasLorenzoWon()) {
+                actionController.getGame().setFinalVictoryPoints();
                 actionController.endGamePersistence();
                 this.response = "SINGLEPLAYER LOOSE";
             }

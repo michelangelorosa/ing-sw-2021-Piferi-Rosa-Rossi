@@ -7,7 +7,6 @@ import it.polimi.ingsw.Model.GameModel.Player;
 import it.polimi.ingsw.Model.GameModel.PopeTileClass;
 import it.polimi.ingsw.Model.MessagesToClient.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -54,6 +53,7 @@ public class EndMarket extends Action {
     public MessageToClient messagePrepare(ActionController actionController) {
         if(actionController.getGame().getGameType() == GameType.SINGLEPLAYER && actionController.getGame().getSinglePlayer().hasLorenzoWonMarket(actionController.getGame())) {
             actionController.endGamePersistence();
+            actionController.getGame().setFinalVictoryPoints();
             EndTurnSingleplayerMessage message = new EndTurnSingleplayerMessage(actionController.getGame().getCurrentPlayerNickname());
             message.setError("SINGLEPLAYER LOOSE");
             message.setToken(actionController.getGame().getSinglePlayer().getLastToken());

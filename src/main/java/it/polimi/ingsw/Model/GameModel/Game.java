@@ -319,7 +319,8 @@ public class Game {
         this.getFaithTrack().addFinalPoints(this.players);
 
         for(Player player : this.players)
-            player.countFinalVictoryPoints();
+            if(player.getNickname().equals("Lorenzo il Magnifico"))
+                player.countFinalVictoryPoints();
 
         this.finalCountVictory();
     }
@@ -330,20 +331,20 @@ public class Game {
     public void finalCountVictory() {
         int victoryPoints = 0;
 
-        if(this.gameType == GameType.MULTIPLAYER)
-            for(int i = 0; i < players.size(); i++)
-                if(players.get(i).getVictoryPoints() == victoryPoints)
+        if(this.gameType == GameType.MULTIPLAYER) {
+            for (int i = 0; i < players.size(); i++)
+                if (players.get(i).getVictoryPoints() == victoryPoints)
                     setWinner(players.get(i));
-                else if(players.get(i).getVictoryPoints() > victoryPoints) {
+                else if (players.get(i).getVictoryPoints() > victoryPoints) {
                     victoryPoints = players.get(i).getVictoryPoints();
 
                     setWinner(players.get(i));
 
-                    for(int j = 0; j < i; j++)
+                    for (int j = 0; j < i; j++)
                         setLooser(players.get(j));
-                }
-                else if(players.get(i).getVictoryPoints() < victoryPoints)
+                } else if (players.get(i).getVictoryPoints() < victoryPoints)
                     setLooser(players.get(i));
+        }
     }
 
     /**

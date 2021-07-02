@@ -79,6 +79,7 @@ public class ActivateLeaderCard extends Action {
         }
         else {
             board.activateLeaderCard(board.getLeaderCards()[this.leaderCard]);
+            actionController.getGame().getCurrentPlayer().addVictoryPoints(board.getLeaderCards()[this.leaderCard].getVictoryPoints());
             this.response = "SUCCESS";
             actionController.getGame().getCurrentPlayer().removePossibleAction(ActionType.ACTIVATE_LEADERCARD);
             return "SUCCESS";
