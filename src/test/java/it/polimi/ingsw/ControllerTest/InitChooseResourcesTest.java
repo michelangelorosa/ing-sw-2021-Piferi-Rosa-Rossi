@@ -38,7 +38,7 @@ public class InitChooseResourcesTest {
         depotResource.get(0).add(ResourceType.NONE);
 
         IllegalArgumentException e = assertThrows(IllegalArgumentException.class, action :: isCorrect);
-        assertEquals("Error: InitResourcesArray for Depot 0 has a type NONE resource", e.getMessage());
+        assertEquals("Cannot put type NONE resources in Depots", e.getMessage());
 
         depotResource.get(0).set(0, ResourceType.SHIELDS);
         depotResource.get(0).add(ResourceType.SHIELDS);
@@ -49,7 +49,7 @@ public class InitChooseResourcesTest {
         depotResource.get(0).add(ResourceType.SHIELDS);
 
         e = assertThrows(IllegalArgumentException.class, action :: isCorrect);
-        assertEquals("Error: InitResourcesArray for Depot 0 bigger than 3", e.getMessage());
+        assertEquals("Cannot put more than 3 resources in Depot 1", e.getMessage());
 
         if (depotResource.get(0).size() > 0) {
             depotResource.get(0).subList(0, depotResource.get(0).size()).clear();
@@ -58,7 +58,7 @@ public class InitChooseResourcesTest {
         depotResource.get(1).add(ResourceType.NONE);
 
         e = assertThrows(IllegalArgumentException.class, action :: isCorrect);
-        assertEquals("Error: InitResourcesArray for Depot 1 has a type NONE resource", e.getMessage());
+        assertEquals("Cannot put type NONE resources in Depots", e.getMessage());
 
         depotResource.get(1).set(0, ResourceType.SHIELDS);
         depotResource.get(1).add(ResourceType.SHIELDS);
@@ -68,7 +68,7 @@ public class InitChooseResourcesTest {
         depotResource.get(1).add(ResourceType.SHIELDS);
 
         e = assertThrows(IllegalArgumentException.class, action :: isCorrect);
-        assertEquals("Error: InitResourcesArray for Depot 1 bigger than 2", e.getMessage());
+        assertEquals("Cannot put more than 2 resources in Depot 2", e.getMessage());
 
         if (depotResource.get(1).size() > 0) {
             depotResource.get(1).subList(0, depotResource.get(1).size()).clear();
@@ -77,7 +77,7 @@ public class InitChooseResourcesTest {
         depotResource.get(2).add(ResourceType.NONE);
 
         e = assertThrows(IllegalArgumentException.class, action :: isCorrect);
-        assertEquals("Error: InitResourcesArray for Depot 2 has a type NONE resource", e.getMessage());
+        assertEquals("Cannot put type NONE resources in Depots", e.getMessage());
 
         depotResource.get(2).set(0, ResourceType.SHIELDS);
 
@@ -86,7 +86,7 @@ public class InitChooseResourcesTest {
         depotResource.get(2).add(ResourceType.SHIELDS);
 
         e = assertThrows(IllegalArgumentException.class, action :: isCorrect);
-        assertEquals("Error: InitResourcesArray for Depot 2 bigger than 1", e.getMessage());
+        assertEquals("Cannot put more than 1 resource in Depot 1", e.getMessage());
     }
 
     @Test
