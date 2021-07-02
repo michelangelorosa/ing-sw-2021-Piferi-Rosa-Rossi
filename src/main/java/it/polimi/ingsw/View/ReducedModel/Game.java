@@ -1,31 +1,35 @@
 package it.polimi.ingsw.View.ReducedModel;
 
 import it.polimi.ingsw.Model.GameModel.FaithTrack;
-import it.polimi.ingsw.Model.GameModel.LeaderCard;
 import it.polimi.ingsw.View.Utility.ANSIfont;
 import it.polimi.ingsw.Model.Enums.GameType;
-import it.polimi.ingsw.Model.Enums.SoloActionToken;
 
 import java.util.ArrayList;
 
 /**
- * Game Class contains all attributes needed when creating an instance of a new game.
+ * Game Class contains all attributes needed when creating an instance of a new game inside the user's View.
+ * <p><b>Attributes:</b></p>
+ * <ul>
+ *     <li>GameType "gameType": Type of the current game -> Single or Multi Player</li>
+ *     <li>ArrayList&lt;Player&gt; "players": ArrayList containing all players who joined the game</li>
+ *     <li>int "currentPlayerIndex": indicates the current players' index</li>
+ *     <li>RedLeaderCard[] "leaderCards": contains all leader cards of the game</li>
+ *     <li>RedMarket "market": market of the game</li>
+ *     <li>RedDevelopmentCardTable "developmentCardTable": Development Card table of the game</li>
+ *     <li>RedFaithTrack "faithTrack": faith track of the game</li>
+ *     <li>String "myNickname": name of the user playing the game</li>
+ * </ul>
  */
 public class Game {
-    /** Type of the current game -> Single or Multi Player */
     private GameType gameType;
-    /** ArrayList containing all players who joined the game */
     private ArrayList<Player> players;
-    /** Index indicating the current player */
     private int currentPlayerIndex;
-    /** ArrayList containing all Leader Cards of the game */
     private RedLeaderCard[] leaderCards;
 
     private RedMarket market;
     private RedDevelopmentCardTable developmentCardTable;
     private RedFaithTrack faithTrack;
 
-    private final SoloActionToken[] tokens;
     private String myNickname;
 
     /**
@@ -38,13 +42,18 @@ public class Game {
         this.market = new RedMarket();
         this.developmentCardTable = new RedDevelopmentCardTable();
         this.faithTrack = new FaithTrack();
-        this.tokens = new SoloActionToken[6];
     }
 
+    /**
+     * Getter for "myNickname" attribute.
+     */
     public String getMyNickname() {
         return myNickname;
     }
 
+    /**
+     * Setter for "myNickname" attribute.
+     */
     public void setMyNickname(String myNickname) {
         this.myNickname = myNickname;
     }
@@ -91,6 +100,9 @@ public class Game {
         return faithTrack;
     }
 
+    /**
+     * Getter for "leaderCards" attribute.
+     */
     public void setLeaderCards(RedLeaderCard[] leaderCards) {
         this.leaderCards = leaderCards;
     }
@@ -116,22 +128,39 @@ public class Game {
         return players.get(currentPlayerIndex);
     }
 
+    /**
+     * Setter for "players" attribute.
+     */
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
     }
 
+    /**
+     * Setter for "market" attribute.
+     */
     public void setMarket(RedMarket market) {
         this.market = market;
     }
 
+    /**
+     * Setter for "myNickname" attribute.
+     */
     public void setFaithTrack(RedFaithTrack faithTrack) {
         this.faithTrack = faithTrack;
     }
 
+    /**
+     * Setter for "developmentCardTable" attribute.
+     */
     public void setDevelopmentCardTable(RedDevelopmentCardTable developmentCardTable) {
         this.developmentCardTable = developmentCardTable;
     }
 
+    /**
+     * Converts a given player's board to its Cli visualization.
+     * @param player Player whose board is needed.
+     * @return An ArrayList of Strings containing visualization of the board.
+     */
     public ArrayList<String> boardToCli(Player player){
         if(player.getNickname().equals("Lorenzo il Magnifico")) {
             return lorenzoToCli();
@@ -168,6 +197,10 @@ public class Game {
         return board;
     }
 
+    /**
+     * Returns the player's board visualization corresponding to the player who's playing the game on this instance of the client.
+     * @return An ArrayList of Strings containing visualization of the board.
+     */
     public ArrayList<String> myBoardToCli() {
         return this.boardToCli(this.getMyPlayer());
     }
@@ -178,6 +211,11 @@ public class Game {
         return lorenzo;
     }
 
+    /**
+     * Returns the player whose name is equal to "myNickname".
+     * @return the player whose name is equal to "myNickname".
+     * @throws IllegalStateException if there is no player whose name is equal to "myNickname".
+     */
     public Player getMyPlayer() throws IllegalStateException{
         for(Player player : this.players)
             if(player.getNickname().equals(this.myNickname))

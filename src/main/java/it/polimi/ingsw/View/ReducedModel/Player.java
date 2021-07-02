@@ -2,7 +2,6 @@ package it.polimi.ingsw.View.ReducedModel;
 
 import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
-import it.polimi.ingsw.Model.Enums.ResourceType;
 import it.polimi.ingsw.Model.GameModel.*;
 import it.polimi.ingsw.View.Utility.ANSIfont;
 
@@ -13,13 +12,22 @@ import java.util.ArrayList;
  * Player Class defines attributes and methods of a player.
  * It consists in six attributes being respectively:
  * <ul>
- *     <li>nickname: the player's nickname</li>
- *     <li>turnPosition: the player's position in the defined turn changing mechanism</li>
- *     <li>Inkwell: if the player is the first to play, he has the inkwell</li>
- *     <li>status: the player's status indicating if he's playing, temporary disabled or has finished the game</li>
- *     <li>victoryPoints: the player's number of victory points</li>
- *     <li>board: the player's personal board containing all objects of the game</li>
+ *     <li>String "nickname": the player's nickname</li>
+ *     <li>int "turnPosition": the player's position in the defined turn changing mechanism</li>
+ *     <li>boolean "Inkwell": if the player is the first to play, he has the inkwell</li>
+ *     <li>PlayerStatus "status": the player's status indicating if he's playing, temporary disabled or has finished the game</li>
+ *     <li>int "victoryPoints": the player's number of victory points</li>
+ *     <li>int "faithTrackPosition": the player's position inside the faith track</li>
+ *     <li>RedBasicProduction "basicProduction": the game's basic production</li>
+ *     <li>RedWarehouse "warehouse": the user's warehouse</li>
+ *     <li>RedStrongbox "strongbox": the user's strongbox</li>
+ *     <li>RedDevelopmentCardSlots "slots": the user's DevelopmentCard Slots</li>
+ *     <li>RedResourceStack "temporaryResources": the user's temporary resources used when paying or adding new resources</li>
+ *     <li>RedLeaderCard[] "leaderCards": the user's owned leader cards</li>
+ *     <li>RedPopeTileClass[] "popeTiles": the user's owned pope tiles</li>
+ *     <li>ArrayList<ActionType> "possibleActions": the user's possible actions</li>
  * </ul>
+ * @author everyone
  */
 public class Player implements Serializable {
     private final String nickname;
@@ -66,6 +74,9 @@ public class Player implements Serializable {
         this.possibleActions = new ArrayList<>();
     }
 
+    /**
+     * Setter for "popeTiles" attribute.
+     */
     public void setPopeTiles(RedPopeTileClass[] popeTiles) {
         this.popeTiles = popeTiles;
     }
@@ -75,115 +86,170 @@ public class Player implements Serializable {
     }
 
     /**
-     * Getter for "nickname" attribute in Player Class.
+     * Getter for "nickname" attribute.
      */
     public String getNickname() {
         return nickname;
     }
 
     /**
-     * Getter for "turnPosition" attribute in Player Class.
+     * Getter for "turnPosition" attribute.
      */
     public int getTurnPosition() {
         return turnPosition;
     }
 
     /**
-     * Getter for "Inkwell" attribute in Player Class.
+     * Getter for "Inkwell" attribute.
      */
     public boolean hasInkwell() {
         return Inkwell;
     }
 
     /**
-     * Getter for "status" attribute in Player Class.
+     * Getter for "status" attribute.
      */
     public PlayerStatus getStatus() {
         return status;
     }
 
+    /**
+     * Setter for "status" attribute.
+     */
     public void setStatus(PlayerStatus status) {
         this.status = status;
     }
 
     /**
-     * Getter for "victoryPoints" attribute in Player Class.
+     * Getter for "victoryPoints" attribute.
      */
     public int getVictoryPoints() {
         return victoryPoints;
     }
+
     /**
-     * Getter for "faithTrackPosition" attribute in Player Class.
+     * Getter for "faithTrackPosition" attribute.
      */
     public int getFaithTrackPosition() {
         return faithTrackPosition;
     }
 
+    /**
+     * Getter for "basicProduction" attribute.
+     */
     public RedBasicProduction getBasicProduction() {
         return basicProduction;
     }
 
+    /**
+     * Getter for "faithTrackPosition" attribute.
+     */
     public RedWarehouse getWarehouse() {
         return warehouse;
     }
 
+    /**
+     * Getter for "faithTrackPosition" attribute.
+     */
     public RedStrongbox getStrongbox() {
         return strongbox;
     }
 
+    /**
+     * Getter for "faithTrackPosition" attribute.
+     */
     public RedDevelopmentCardSlots getSlots() {
         return slots;
     }
 
+    /**
+     * Getter for "faithTrackPosition" attribute.
+     */
     public RedResourceStack getTemporaryResources() {
         return temporaryResources;
     }
 
+    /**
+     * Getter for "faithTrackPosition" attribute.
+     */
     public RedLeaderCard[] getLeaderCards() {
         return leaderCards;
     }
 
+    /**
+     * Getter for "faithTrackPosition" attribute.
+     */
     public ArrayList<ActionType> getPossibleActions() {
         return possibleActions;
     }
 
+    /**
+     * Setter for "faithTrackPosition" attribute.
+     */
     public void setVictoryPoints(int victoryPoints) {
         this.victoryPoints = victoryPoints;
     }
 
+    /**
+     * Setter for "faithTrackPosition" attribute.
+     */
     public void setFaithTrackPosition(int faithTrackPosition) {
         this.faithTrackPosition = faithTrackPosition;
     }
 
+    /**
+     * Setter for "faithTrackPosition" attribute.
+     */
     public void setWarehouse(RedWarehouse warehouse) {
         this.warehouse = warehouse;
     }
 
+    /**
+     * Setter for "faithTrackPosition" attribute.
+     */
     public void setStrongbox(RedStrongbox strongbox) {
         this.strongbox = strongbox;
     }
 
+    /**
+     * Setter for "faithTrackPosition" attribute.
+     */
     public void setSlots(RedDevelopmentCardSlots slots) {
         this.slots = slots;
     }
 
+    /**
+     * Setter for "faithTrackPosition" attribute.
+     */
     public void setLeaderCards(RedLeaderCard[] leaderCards) {
         this.leaderCards = leaderCards;
     }
 
+    /**
+     * Setter for "faithTrackPosition" attribute.
+     */
     public void setTemporaryResources(RedResourceStack temporaryResources) {
         this.temporaryResources = temporaryResources;
     }
 
-
+    /**
+     * Setter for "faithTrackPosition" attribute.
+     */
     public void setBasicProduction(RedBasicProduction basicProduction) {
         this.basicProduction = basicProduction;
     }
 
+    /**
+     * Setter for "faithTrackPosition" attribute.
+     */
     public void setPossibleActions(ArrayList<ActionType> possibleActions) {
         this.possibleActions = possibleActions;
     }
 
+    /**
+     * Converts all player's information into strings to be visualized.
+     * @return An ArrayList of Strings containing a visual representation of the player.
+     */
     public ArrayList<String> toCli() {
         int i;
         ArrayList<String> player = this.warehouse.toCli();
@@ -292,6 +358,10 @@ public class Player implements Serializable {
         return leaderCards;
     }
 
+    /**
+     * Converts pope tiles to a viewable format.
+     * @return An ArrayList containing the visual representation of pope tiles.
+     */
     public ArrayList<String> popeTileToCli(){
         ArrayList<String> pope1 = popeTiles[0].toCli();
         ArrayList<String> pope2 = popeTiles[1].toCli();
