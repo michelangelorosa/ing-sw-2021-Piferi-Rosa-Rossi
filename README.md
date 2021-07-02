@@ -83,3 +83,4 @@ If the server shuts down or is closed while a game is in progress, to start a ne
 
 ## Further Information
 - It is recommended to keep server.jar file in a folder as new files will be created during execution
+- It is possible to activate some cheats in the CLI by typing "cheat" at the beginning of your turn.
