@@ -9,7 +9,18 @@ import java.io.*;
 import java.net.Socket;
 import java.util.*;
 
-/** The client handles the opening of the desired interface and than handles the connection to the server
+/**
+ * The client handles the opening of the desired interface and than handles the connection to the server
+ * <p><b>Attributes:</b></p>
+ * <ul>
+ *     <li>String "serverAddress": address of the server to connect to</li>
+ *     <li>int "serverPort": port of the server to connect to</li>
+ *     <li>String "user": name of the user who joined the server (same as player name)</li>
+ *     <li>UserInteraction "userInteraction": contains the View's Game and various methods to play</li>
+ *     <li>Debugger "DEBUGGER": debugger used for this specific class</li>
+ *     <li>boolean "cheatMode": set to true if the Client is in cheat mode</li>
+ * </ul>
+ * @author michelangelorosa
  */
 public class Client {
     static private String serverAddress;
@@ -156,13 +167,22 @@ public class Client {
         return serverPort;
     }
 
+    /**
+     * Getter for "userInteraction" attribute.
+     */
     public UserInteraction getUserInteraction() {
         return userInteraction;
     }
 
+    /**
+     * Getter for "cheatMode" attribute.
+     */
     public static boolean isCheatMode() {
         return cheatMode;
     }
 
+    /**
+     * Setter for "userInteraction" attribute.
+     */
     public static void setUserInteraction(UserInterface userInterface) { userInteraction.setUi(userInterface);}
 }
