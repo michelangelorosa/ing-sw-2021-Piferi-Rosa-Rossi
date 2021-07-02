@@ -152,7 +152,6 @@ public class ActionController {
      * @return A message containing all information about the Model's game.
      */
     public synchronized GameSetMessage prepareViewGame() {
-        System.out.println("[MODEL] current player: " + this.game.getCurrentPlayerNickname());
         GameSetMessage message = new GameSetMessage(this.game.getCurrentPlayerNickname());
         message.setPlayers(this.game.getViewPlayers());
         message.setMarket(this.game.getMarket());

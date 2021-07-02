@@ -487,7 +487,6 @@ public class ServerConnection extends Observable<Action> implements Runnable, Ob
     public void disconnected() {
         String currentPlayer = this.server.getController().getActionController().getGame().getCurrentPlayerNickname();
         MessageToClient message = this.server.getController().getActionController().disconnected(this.name);
-        System.out.println("\n\n " + server.getController().getActionController().getGame().getCurrentPlayerNickname() + "\n");
         this.server.removeFromConnections(this.socket);
         this.removeObserver(this.server.getController());
         this.server.getController().getActionController().getModelToView().removeObserver(this);

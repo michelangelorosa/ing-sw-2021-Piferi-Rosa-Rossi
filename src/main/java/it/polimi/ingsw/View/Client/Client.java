@@ -53,7 +53,7 @@ public class Client {
         cheatMode = true;
 
         /* !! HAS TO BE COMMENTED FOR THE DEBUGGER TO STOP !! */
-        Debugger.setAllActive(true);
+        //Debugger.setAllActive(true);
 
        try{
 

@@ -219,6 +219,7 @@ public class Player implements Serializable {
      */
     public void countFinalVictoryPoints() {
         this.victoryPoints += this.getBoard().getDevelopmentCardSlots().totalPoints();
+        this.victoryPoints += this.getBoard().getResourceManager().countResourcesToVictoryPoints();
     }
 
     /**Method for converting model classes to view classes*/

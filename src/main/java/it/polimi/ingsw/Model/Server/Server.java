@@ -125,13 +125,12 @@ public class Server {
     public void startUp(int server_port) {
 
         /* !! HAS TO BE COMMENTED FOR THE DEBUGGER TO STOP !! */
-        Debugger.setAllActive(true);
+        //Debugger.setAllActive(true);
 
         if(this.controller.getActionController().getPersistence().fileExists()) {
             this.controller.getActionController().getPersistence().readFile();
             if (this.controller.getActionController().getPersistence().isGameStarted()) {
                 this.numberOfPlayers = this.controller.getActionController().getPersistence().getNumberOfPlayers();
-                System.out.println(this.numberOfPlayers);
                 new Thread(new PersistenceServerController(this)).start();
                 serverStatus = GameStatus.GAME;
             }

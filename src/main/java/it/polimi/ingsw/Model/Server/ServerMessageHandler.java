@@ -46,7 +46,7 @@ public class ServerMessageHandler {
             attempt++;
             try {
                 name = serverConnection.getIn().readUTF();
-                System.out.print("[SmHANDLER] Got name: "+name);
+                DEBUGGER.printDebug("Got name: "+name);
                 if(name.isEmpty())
                     sendError(serverConnection, "Name is empty, pick another name!");
                 else if(name.isBlank())
@@ -56,11 +56,9 @@ public class ServerMessageHandler {
                 else {
                     //If the name is already in the game this value is FALSE, if the name is new it is added to the server and set to TRUE
                     boolean newName = nameInsert(serverConnection,name);
-                    System.out.println(", newName: "+newName);
+                    DEBUGGER.printDebug(", newName: "+newName);
 
                     Persistence persistence = serverConnection.getServer().getController().getActionController().getPersistence();
-                    System.out.println(persistence.getNumberOfPlayers());
-                    System.out.println(persistence.getPlayerNames());
 
                     if(persistence.isGameStarted() && serverConnection.getServer().gameIsEmpty()) {
                         DEBUGGER.printDebug("Game was already started");
@@ -72,12 +70,12 @@ public class ServerMessageHandler {
                                 serverConnection.getServer().addConnection(serverConnection);
 
                                 if (serverConnection.getServer().getConnectedPlayers() >= persistence.getNumberOfPlayers()) {
-                                    System.out.println("Notifying all");
+                                    DEBUGGER.printDebug("Notifying all");
                                     serverConnection.getServer().notifyAll();
                                 }
                                 while (serverConnection.getServer().getConnectedPlayers() < persistence.getNumberOfPlayers()) {
                                     try {
-                                        System.out.println("waiting");
+                                        DEBUGGER.printDebug("waiting");
                                         serverConnection.getServer().wait();
                                     } catch (InterruptedException e) {
                                         e.printStackTrace();
