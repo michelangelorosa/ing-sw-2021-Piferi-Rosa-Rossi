@@ -47,7 +47,7 @@ This project was commissioned by Politecnico di Milano. It consists in creating 
 For more information, see [Generated Test Coverage](https://github.com/michelangelorosa/ing-sw-2021-Piferi-Rosa-Rossi/tree/master/deliverables/Report-Coverage-Javadoc/Coverage)
 - Model line tests are only at 66% because a big chunk (JSON related stuff) of the Model cannot be tested as it creates files and it reads from created files.
 ## Requirements
-Java JRE version 15 (or higher) is required to correctly run the JAR files.
+Java JDK version 15 (or higher) is required to correctly run the JAR files.
 
 ## Run Procedure
 ### Run the server (it is recommended to run the JAR file inside a subfolder as other files will be created)
