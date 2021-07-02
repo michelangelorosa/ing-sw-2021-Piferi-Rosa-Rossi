@@ -15,7 +15,7 @@ import it.polimi.ingsw.Model.GameModel.*;
  *     <li>boolean "lorenzoWon": indicates if Lorenzo il Magnifico lost the game</li>
  *     <li>SoloActionToken "lastToken": last token drawn from the token deck by Lorenzo il Magnifico</li>
  * </ul>
- * @author redrick99 & michelangelorosa
+ * @author redrick99, michelangelorosa
  */
 public class SinglePlayer {
     private final SoloActionTokenDeck tokenDeck = new SoloActionTokenDeck();

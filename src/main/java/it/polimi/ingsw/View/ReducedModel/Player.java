@@ -25,7 +25,7 @@ import java.util.ArrayList;
  *     <li>RedResourceStack "temporaryResources": the user's temporary resources used when paying or adding new resources</li>
  *     <li>RedLeaderCard[] "leaderCards": the user's owned leader cards</li>
  *     <li>RedPopeTileClass[] "popeTiles": the user's owned pope tiles</li>
- *     <li>ArrayList<ActionType> "possibleActions": the user's possible actions</li>
+ *     <li>ArrayList&lt;ActionType&gt; "possibleActions": the user's possible actions</li>
  * </ul>
  * @author everyone
  */

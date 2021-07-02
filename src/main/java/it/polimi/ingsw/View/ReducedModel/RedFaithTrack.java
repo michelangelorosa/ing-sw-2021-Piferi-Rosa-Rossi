@@ -8,15 +8,25 @@ import it.polimi.ingsw.View.Utility.ANSIColors;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * RedFaithTrack Class contains data and methods for the faithTrack.
+ * <p><b>Attributes:</b></p>
+ * <ul>
+ *     <li>RedFaithCell[] "cells": cells of the faith track</li>
+ *     <li>RedVaticanReportSection "ONE": first vatican report section</li>
+ *     <li>RedVaticanReportSection "TWO": second vatican report section</li>
+ *     <li>RedVaticanReportSection "THREE": third vatican report section</li>
+ *     <li>boolean "popeSpaceONE": first pope space indicator</li>
+ *     <li>boolean "popeSpaceTWO": second pope space indicator</li>
+ *     <li>boolean "popeSpaceTHREE": third pope space indicator</li>
+ * </ul>
+ */
 public class RedFaithTrack implements Serializable {
-    /**A FaithTrack is an array of Faith Cell*/
     protected final RedFaithCell[] cells;
-    /**The three vatican report sections*/
     protected final RedVaticanReportSection ONE;
     protected final RedVaticanReportSection TWO;
     protected final RedVaticanReportSection THREE;
 
-    /**The three pope space, at the and of any report sections*/
     protected boolean popeSpaceONE;
     protected boolean popeSpaceTWO;
     protected boolean popeSpaceTHREE;

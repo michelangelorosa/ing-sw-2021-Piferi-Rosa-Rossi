@@ -13,7 +13,7 @@ import java.util.Random;
  *     <li>SoloActionToken[] "tokens": array containing all six tokens of the singleplayer game</li>
  *     <li>int "tokensInDeck": number of tokens remaining in the deck</li>
  * </ul>
- * @author redrick99 & michelangelorosa
+ * @author redrick99, michelangelorosa
  */
 public class SoloActionTokenDeck {
     private final SoloActionToken[] tokens = new SoloActionToken[6];

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * UserInteraction Class contains what a client needs to view the game being played and to access
  * methods to interact with the View to generate messages to be sent to the server.
- * <p><b>Attributes:</b><p/>
+ * <p><b>Attributes:</b></p>
  * <ul>
  *     <li>Game "game": Reduced version of the game used by the user interface to display changes made to the Model's Game</li>
  *     <li>UserInterface "ui": contains common methods shared by Cli and Gui user interfaces</li>
