@@ -70,6 +70,8 @@ java -jar client.jar --cli
 ```
 java -jar client.jar
 ``` 
+Client jar name depends on the specific OS Version used.
+
 #### Keep in Mind
 To correctly run the Game in GUI mode, one must use the client.jar file corresponding to his own Operative System.
 
