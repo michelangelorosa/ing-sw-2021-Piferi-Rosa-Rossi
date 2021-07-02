@@ -294,4 +294,26 @@ public class GameTest {
         assertTrue(game.allIdle());
     }
 
+    @Test
+    public void removeCardWhenPayingDisconnection() {
+        joiner(game);
+        game.getCurrentPlayer().getPossibleActions().add(ActionType.PAY_RESOURCE_CARD);
+        game.removeCardWhenPayingDisconnection(2,0);
+        assertEquals(0, game.getCurrentPlayer().getBoard().getDevelopmentCardSlots().getSlots()[0].getLevelOccupied());
+
+        game.getCurrentPlayer().getPossibleActions().add(ActionType.CHOOSE_CARD_SLOT);
+        game.removeCardWhenPayingDisconnection(2,0);
+        assertEquals(1, game.getCurrentPlayer().getBoard().getDevelopmentCardSlots().getSlots()[0].getLevelOccupied());
+
+        try {
+            game.getDevelopmentCardTable().drawCardFromDeck(2,0);
+            game.getDevelopmentCardTable().drawCardFromDeck(2,0);
+        } catch (ModelException e) {
+            e.printStackTrace();
+        }
+
+        game.removeCardWhenPayingDisconnection(2,0);
+
+    }
+
 }

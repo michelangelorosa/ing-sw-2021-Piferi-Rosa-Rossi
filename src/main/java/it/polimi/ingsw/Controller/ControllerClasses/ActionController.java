@@ -5,6 +5,7 @@ import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
 import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.Game;
+import it.polimi.ingsw.Model.GameModel.Player;
 import it.polimi.ingsw.Model.GameModel.ResourceStack;
 import it.polimi.ingsw.Model.JSON.ConvertToJSON;
 import it.polimi.ingsw.Model.MessagesToClient.*;
@@ -181,9 +182,14 @@ public class ActionController {
         this.game.getPlayerByNickname(disconnectedPlayer).setStatus(PlayerStatus.IDLE);
 
         if(this.game.getPlayerByNickname(disconnectedPlayer).wasPayingOrAdding()) {
-            this.resetWarehouse.doAction(this);
+            if(this.game.getCurrentPlayer().getPossibleActions().contains(ActionType.RESET_WAREHOUSE))
+                this.resetWarehouse.doAction(this);
             this.getGame().getPlayerByNickname(disconnectedPlayer).getBoard().getResourceManager().setTemporaryResourcesToPay(new ResourceStack(0, 0, 0, 0));
             this.getGame().getPlayerByNickname(disconnectedPlayer).getBoard().getResourceManager().setTemporaryWhiteMarbles(0);
+        }
+
+        if(this.game.getCurrentPlayerNickname().equals(disconnectedPlayer)) {
+            this.game.removeCardWhenPayingDisconnection(chooseCardSlot.getRowCardToBuy(), chooseCardSlot.getColumnCardToBuy());
         }
 
         this.game.getPlayerByNickname(disconnectedPlayer).disconnectionPrepareTurn();

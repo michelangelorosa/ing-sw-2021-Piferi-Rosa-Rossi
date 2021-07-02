@@ -2,6 +2,7 @@ package it.polimi.ingsw.Model.GameModel;
 
 import it.polimi.ingsw.Model.Enums.Color;
 import it.polimi.ingsw.Model.Enums.Level;
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.View.ReducedModel.RedDevelopmentCardSlots;
 
 import java.util.ArrayList;
@@ -116,6 +117,17 @@ public class DevelopmentCardSlots extends RedDevelopmentCardSlots {
     public void addCard(int i, DevelopmentCard card) throws IllegalArgumentException{
         if(i == 0 || i == 1 || i == 2) ((CardSlot)slots[i]).addCard(card);
         else throw new IllegalArgumentException("ERROR, the slot does not exists");
+    }
+
+    public void addCardInFirstFreeSpace(DevelopmentCard card) throws ModelException {
+        if(canAddInThisSlot(0, card))
+            addCard(0, card);
+        else if(canAddInThisSlot(1, card))
+            addCard(1, card);
+        else if(canAddInThisSlot(2, card))
+            addCard(2, card);
+        else
+            throw new ModelException("DISCONNECTION: Cannot add card to any depot");
     }
 
     /**

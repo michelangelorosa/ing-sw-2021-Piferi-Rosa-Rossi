@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import it.polimi.ingsw.Model.Enums.Color;
 import it.polimi.ingsw.Model.Enums.Level;
 import it.polimi.ingsw.Model.Enums.ResourceType;
+import it.polimi.ingsw.Model.Exceptions.ModelException;
 import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
 import it.polimi.ingsw.Model.GameModel.DevelopmentCardSlots;
 import it.polimi.ingsw.Model.GameModel.LeaderRequirements;
@@ -179,6 +180,57 @@ public class DevelopmentCardSlotsTest {
         assertEquals(2, total.getNeedPurpleCard());
         assertEquals(2, total.getNeedYellowCard());
         assertEquals(1, total.getNeedGreenCard());
+    }
+
+    @Test
+    public void addCardInFirstFreeSpace() {
+        ResourceStack cost = new ResourceStack(0, 1, 2, 3);
+        ResourceStack input = new ResourceStack(2, 6, 13, 16);
+        ResourceStack output = new ResourceStack(31, 0, 0, 0);
+        DevelopmentCard card = new DevelopmentCard(Color.BLUE, Level.ONE, 1, 100, cost, input, output, 0);
+
+        cost = new ResourceStack(0, 1, 2, 3);
+        input = new ResourceStack(2, 6, 13, 16);
+        output = new ResourceStack(31, 0, 0, 0);
+        DevelopmentCard card11 = new DevelopmentCard(Color.BLUE, Level.ONE, 1, 100, cost, input, output, 0);
+
+        ResourceStack cost1 = new ResourceStack(10, 20, 30, 40);
+        ResourceStack input1 = new ResourceStack(20, 60, 130, 160);
+        ResourceStack output1 = new ResourceStack(1, 1, 1, 1);
+        DevelopmentCard card1 = new DevelopmentCard(Color.PURPLE, Level.ONE, 2, 10, cost1, input1, output1, 1);
+
+        ResourceStack cost2 = new ResourceStack(4, 4, 4, 4);
+        ResourceStack input2 = new ResourceStack(4, 4, 4, 4);
+        ResourceStack output2 = new ResourceStack(4, 4, 4, 4);
+        DevelopmentCard card2 = new DevelopmentCard(Color.YELLOW, Level.TWO, 3, 11, cost2, input2, output2, 2);
+
+        ResourceStack cost3 = new ResourceStack(5, 5, 5, 5);
+        ResourceStack input3 = new ResourceStack(5, 5, 5, 5);
+        ResourceStack output3 = new ResourceStack(5, 5, 5, 5);
+        DevelopmentCard card3 = new DevelopmentCard(Color.GREEN, Level.THREE, 4, 12, cost3, input3, output3, 3);
+
+        try {
+            slots.addCardInFirstFreeSpace(card);
+            slots.addCardInFirstFreeSpace(card1);
+            slots.addCardInFirstFreeSpace(card11);
+            slots.addCardInFirstFreeSpace(card2);
+            slots.addCardInFirstFreeSpace(card3);
+        } catch (ModelException e) {
+            e.printStackTrace();
+        }
+
+        assertEquals(card, slots.getSlots()[0].getCards()[0]);
+        assertEquals(card1, slots.getSlots()[1].getCards()[0]);
+        assertEquals(card11, slots.getSlots()[2].getCards()[0]);
+        assertEquals(card2, slots.getSlots()[0].getCards()[1]);
+        assertEquals(card3, slots.getSlots()[0].getCards()[2]);
+
+        ResourceStack cost22 = new ResourceStack(0, 1, 2, 3);
+        ResourceStack input22 = new ResourceStack(2, 6, 13, 16);
+        ResourceStack output22 = new ResourceStack(31, 0, 0, 0);
+        DevelopmentCard card22 = new DevelopmentCard(Color.BLUE, Level.ONE, 1, 99, cost22, input22, output22, 0);
+        ModelException e = assertThrows(ModelException.class, () -> slots.addCardInFirstFreeSpace(card22));
+        assertEquals("DISCONNECTION: Cannot add card to any depot", e.getMessage());
     }
 
     /**Test for toView method*/

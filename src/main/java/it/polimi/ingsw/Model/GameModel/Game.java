@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model.GameModel;
 
+import it.polimi.ingsw.Controller.Actions.ActionType;
 import it.polimi.ingsw.Model.Enums.GameType;
 import it.polimi.ingsw.Model.Enums.LeaderCardAction;
 import it.polimi.ingsw.Model.Enums.PlayerStatus;
@@ -394,6 +395,20 @@ public class Game {
             this.players.remove(player);
             if(currentPlayerIndex >= players.size())
                 currentPlayerIndex = 0;
+        }
+    }
+
+    public void removeCardWhenPayingDisconnection(int row, int column) {
+        try {
+            if(this.getCurrentPlayer().getPossibleActions().contains(ActionType.CHOOSE_CARD_SLOT)) {
+                DevelopmentCard card = this.developmentCardTable.drawCardFromDeck(row, column);
+                this.getCurrentPlayer().getBoard().getDevelopmentCardSlots().addCardInFirstFreeSpace(card);
+            }
+            else if(this.getCurrentPlayer().getPossibleActions().contains(ActionType.PAY_RESOURCE_CARD)) {
+                this.developmentCardTable.drawCardFromDeck(row, column);
+            }
+        } catch (ModelException e) {
+            e.printStackTrace();
         }
     }
 
