@@ -1,0 +1,204 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: LeaderRequirements</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: LeaderRequirements (it.polimi.ingsw.Model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LeaderRequirements</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (19/ 19)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (40/ 40)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.io.Serializable;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;/**
+<i>6</i>&nbsp; * Defines a Card with the characteristics required from Leader Card; a Level and a Colour.
+<i>7</i>&nbsp; * If The cards doesn&#39;t require a minimum level it is set to 1
+<i>8</i>&nbsp; */
+<i>9</i>&nbsp;public class LeaderRequirements implements Serializable {
+<i>10</i>&nbsp;    private static final long serialVersionUID = 0x1;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;    private int blueCardLv1;
+<i>13</i>&nbsp;    private int purpleCardLv1;
+<i>14</i>&nbsp;    private int yellowCardLv1;
+<i>15</i>&nbsp;    private int greenCardLv1;
+<i>16</i>&nbsp;    private int blueCardLv2;
+<i>17</i>&nbsp;    private int purpleCardLv2;
+<i>18</i>&nbsp;    private int yellowCardLv2;
+<i>19</i>&nbsp;    private int greenCardLv2;
+<i>20</i>&nbsp;    private int blueCardLv3;
+<i>21</i>&nbsp;    private int purpleCardLv3;
+<i>22</i>&nbsp;    private int yellowCardLv3;
+<i>23</i>&nbsp;    private int greenCardLv3;
+<i>24</i>&nbsp;    private int needBlueCard;
+<i>25</i>&nbsp;    private int needPurpleCard;
+<i>26</i>&nbsp;    private int needYellowCard;
+<i>27</i>&nbsp;    private int needGreenCard;
+<i>28</i>&nbsp;
+<b class="fc"><i>29</i>&nbsp;    public LeaderRequirements(int blueCardLv1, int purpleCardLv1, int yellowCardLv1, int greenCardLv1, int blueCardLv2, int purpleCardLv2, int yellowCardLv2, int greenCardLv2, int blueCardLv3, int purpleCardLv3, int yellowCardLv3, int greenCardLv3) {</b>
+<b class="fc"><i>30</i>&nbsp;        this.blueCardLv1 = blueCardLv1;</b>
+<b class="fc"><i>31</i>&nbsp;        this.purpleCardLv1 = purpleCardLv1;</b>
+<b class="fc"><i>32</i>&nbsp;        this.yellowCardLv1 = yellowCardLv1;</b>
+<b class="fc"><i>33</i>&nbsp;        this.greenCardLv1 = greenCardLv1;</b>
+<b class="fc"><i>34</i>&nbsp;        this.blueCardLv2 = blueCardLv2;</b>
+<b class="fc"><i>35</i>&nbsp;        this.purpleCardLv2 = purpleCardLv2;</b>
+<b class="fc"><i>36</i>&nbsp;        this.yellowCardLv2 = yellowCardLv2;</b>
+<b class="fc"><i>37</i>&nbsp;        this.greenCardLv2 = greenCardLv2;</b>
+<b class="fc"><i>38</i>&nbsp;        this.blueCardLv3 = blueCardLv3;</b>
+<b class="fc"><i>39</i>&nbsp;        this.purpleCardLv3 = purpleCardLv3;</b>
+<b class="fc"><i>40</i>&nbsp;        this.yellowCardLv3 = yellowCardLv3;</b>
+<b class="fc"><i>41</i>&nbsp;        this.greenCardLv3 = greenCardLv3;</b>
+<b class="fc"><i>42</i>&nbsp;    }</b>
+<i>43</i>&nbsp;
+<b class="fc"><i>44</i>&nbsp;    public LeaderRequirements(int needBlueCard, int needPurpleCard, int needYellowCard, int needGreenCard){</b>
+<b class="fc"><i>45</i>&nbsp;        this.needBlueCard = needBlueCard;</b>
+<b class="fc"><i>46</i>&nbsp;        this.needPurpleCard = needPurpleCard;</b>
+<b class="fc"><i>47</i>&nbsp;        this.needYellowCard = needYellowCard;</b>
+<b class="fc"><i>48</i>&nbsp;        this.needGreenCard = needGreenCard;</b>
+<b class="fc"><i>49</i>&nbsp;    }</b>
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    public int getBlueCardLv1() {
+<b class="fc"><i>52</i>&nbsp;        return blueCardLv1;</b>
+<i>53</i>&nbsp;    }
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;    public int getPurpleCardLv1() {
+<b class="fc"><i>56</i>&nbsp;        return purpleCardLv1;</b>
+<i>57</i>&nbsp;    }
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    public int getYellowCardLv1() {
+<b class="fc"><i>60</i>&nbsp;        return yellowCardLv1;</b>
+<i>61</i>&nbsp;    }
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;    public int getGreenCardLv1() {
+<b class="fc"><i>64</i>&nbsp;        return greenCardLv1;</b>
+<i>65</i>&nbsp;    }
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    public int getBlueCardLv2() {
+<b class="fc"><i>68</i>&nbsp;        return blueCardLv2;</b>
+<i>69</i>&nbsp;    }
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;    public int getPurpleCardLv2() {
+<b class="fc"><i>72</i>&nbsp;        return purpleCardLv2;</b>
+<i>73</i>&nbsp;    }
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;    public int getYellowCardLv2() {
+<b class="fc"><i>76</i>&nbsp;        return yellowCardLv2;</b>
+<i>77</i>&nbsp;    }
+<i>78</i>&nbsp;
+<i>79</i>&nbsp;    public int getGreenCardLv2() {
+<b class="fc"><i>80</i>&nbsp;        return greenCardLv2;</b>
+<i>81</i>&nbsp;    }
+<i>82</i>&nbsp;
+<i>83</i>&nbsp;    public int getBlueCardLv3() {
+<b class="fc"><i>84</i>&nbsp;        return blueCardLv3;</b>
+<i>85</i>&nbsp;    }
+<i>86</i>&nbsp;
+<i>87</i>&nbsp;    public int getPurpleCardLv3() {
+<b class="fc"><i>88</i>&nbsp;        return purpleCardLv3;</b>
+<i>89</i>&nbsp;    }
+<i>90</i>&nbsp;
+<i>91</i>&nbsp;    public int getYellowCardLv3() {
+<b class="fc"><i>92</i>&nbsp;        return yellowCardLv3;</b>
+<i>93</i>&nbsp;    }
+<i>94</i>&nbsp;
+<i>95</i>&nbsp;    public int getGreenCardLv3() {
+<b class="fc"><i>96</i>&nbsp;        return greenCardLv3;</b>
+<i>97</i>&nbsp;    }
+<i>98</i>&nbsp;
+<i>99</i>&nbsp;    public int getNeedBlueCard() {
+<b class="fc"><i>100</i>&nbsp;        return needBlueCard;</b>
+<i>101</i>&nbsp;    }
+<i>102</i>&nbsp;
+<i>103</i>&nbsp;    public int getNeedPurpleCard() {
+<b class="fc"><i>104</i>&nbsp;        return needPurpleCard;</b>
+<i>105</i>&nbsp;    }
+<i>106</i>&nbsp;
+<i>107</i>&nbsp;    public int getNeedYellowCard() {
+<b class="fc"><i>108</i>&nbsp;        return needYellowCard;</b>
+<i>109</i>&nbsp;    }
+<i>110</i>&nbsp;
+<i>111</i>&nbsp;    public int getNeedGreenCard() {
+<b class="fc"><i>112</i>&nbsp;        return needGreenCard;</b>
+<i>113</i>&nbsp;    }
+<i>114</i>&nbsp;
+<i>115</i>&nbsp;    public boolean hasRequirements(LeaderRequirements cardsHad) {
+<b class="fc"><i>116</i>&nbsp;        return  cardsHad.getBlueCardLv1() &gt;= this.blueCardLv1 &amp;&amp; cardsHad.getBlueCardLv2() &gt;= this.blueCardLv2 &amp;&amp; cardsHad.getBlueCardLv3() &gt;= this.blueCardLv3 &amp;&amp;</b>
+<b class="fc"><i>117</i>&nbsp;                cardsHad.getPurpleCardLv1() &gt;= this.purpleCardLv1 &amp;&amp; cardsHad.getPurpleCardLv2() &gt;= this.purpleCardLv2 &amp;&amp; cardsHad.getPurpleCardLv3() &gt;= this.purpleCardLv3 &amp;&amp;</b>
+<b class="fc"><i>118</i>&nbsp;                cardsHad.getYellowCardLv1() &gt;= this.yellowCardLv1 &amp;&amp; cardsHad.getYellowCardLv2() &gt;= this.yellowCardLv2 &amp;&amp; cardsHad.getYellowCardLv3() &gt;= this.yellowCardLv3 &amp;&amp;</b>
+<b class="fc"><i>119</i>&nbsp;                cardsHad.getGreenCardLv1() &gt;= this.greenCardLv1 &amp;&amp; cardsHad.getGreenCardLv2() &gt;= this.greenCardLv2 &amp;&amp; cardsHad.getGreenCardLv3() &gt;= this.greenCardLv3;</b>
+<i>120</i>&nbsp;    }
+<i>121</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-12 23:55</div>
+</div>
+</body>
+</html>

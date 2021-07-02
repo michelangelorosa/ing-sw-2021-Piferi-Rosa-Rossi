@@ -1,0 +1,201 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: SinglePlayer</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: SinglePlayer (it.polimi.ingsw.Model)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SinglePlayer</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    83,9%
+  </span>
+  <span class="absValue">
+    (26/ 31)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">SinglePlayer$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    84,4%
+  </span>
+  <span class="absValue">
+    (27/ 32)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.Model.Enums.SoloActionToken;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import java.util.ArrayList;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;/**
+<i>8</i>&nbsp; * Handles all the interactions specific with the single player game,
+<i>9</i>&nbsp; * each ActionToken is
+<i>10</i>&nbsp; */
+<i>11</i>&nbsp;public class SinglePlayer {
+<i>12</i>&nbsp;    private SoloActionToken token;
+<i>13</i>&nbsp;    private SoloActionToken[] tokens;
+<i>14</i>&nbsp;    /**
+<i>15</i>&nbsp;     * Constructor for Single Player
+<i>16</i>&nbsp;     */
+<b class="fc"><i>17</i>&nbsp;    public SinglePlayer(){</b>
+<b class="fc"><i>18</i>&nbsp;        this.token=SoloActionToken.BLACKCROSSPLUS2;</b>
+<b class="fc"><i>19</i>&nbsp;        this.tokens=tokenShuffle();</b>
+<b class="fc"><i>20</i>&nbsp;    }</b>
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    /**
+<i>23</i>&nbsp;     * Handles all of the different solo action token actions.
+<i>24</i>&nbsp;     * Player 0 is always Lorenzo Il Magnifico,
+<i>25</i>&nbsp;     * Player 1 is always the Player
+<i>26</i>&nbsp;     * @return the solo action token deck
+<i>27</i>&nbsp;     */
+<i>28</i>&nbsp;    public SoloActionToken[] actionTokenHandler(SoloActionToken actionToken,SoloActionToken[] soloActionToken,ArrayList&lt;Player&gt; players){
+<b class="fc"><i>29</i>&nbsp;        Player lorenzo = players.get(0);</b>
+<b class="fc"><i>30</i>&nbsp;        Player player = players.get(1);</b>
+<b class="fc"><i>31</i>&nbsp;        switch (actionToken){</b>
+<i>32</i>&nbsp;            case DELETE2BLUE:{
+<i>33</i>&nbsp;
+<b class="nc"><i>34</i>&nbsp;                return soloActionToken;</b>
+<i>35</i>&nbsp;            }
+<i>36</i>&nbsp;            case DELETE2GREEN:{
+<i>37</i>&nbsp;
+<b class="nc"><i>38</i>&nbsp;                return soloActionToken;</b>
+<i>39</i>&nbsp;            }
+<i>40</i>&nbsp;            case DELETE2PURPLE:{
+<i>41</i>&nbsp;
+<b class="nc"><i>42</i>&nbsp;                return soloActionToken;</b>
+<i>43</i>&nbsp;            }
+<i>44</i>&nbsp;            case DELETE2YELLOW:{
+<i>45</i>&nbsp;
+<b class="nc"><i>46</i>&nbsp;                return soloActionToken;</b>
+<i>47</i>&nbsp;            }
+<i>48</i>&nbsp;            case BLACKCROSSPLUS2:{
+<i>49</i>&nbsp;
+<b class="fc"><i>50</i>&nbsp;                    lorenzo.stepAhead(2);</b>
+<b class="fc"><i>51</i>&nbsp;                return soloActionToken;</b>
+<i>52</i>&nbsp;            }
+<i>53</i>&nbsp;            case BLACKCROSSSHUFFLE:{
+<i>54</i>&nbsp;
+<b class="fc"><i>55</i>&nbsp;                    lorenzo.stepAhead(1);</b>
+<b class="fc"><i>56</i>&nbsp;                return tokenShuffle();</b>
+<i>57</i>&nbsp;            }
+<b class="nc"><i>58</i>&nbsp;            default: return soloActionToken;</b>
+<i>59</i>&nbsp;        }
+<i>60</i>&nbsp;    }
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;    /**
+<i>63</i>&nbsp;     * Returns a shuffled Solo Action Token array
+<i>64</i>&nbsp;     * @return tokenShuffled, an Array of SoloActionToken
+<i>65</i>&nbsp;     */
+<i>66</i>&nbsp;    private SoloActionToken[] tokenShuffle(){
+<b class="fc"><i>67</i>&nbsp;        ArrayList&lt;SoloActionToken&gt; defaultTokens = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>68</i>&nbsp;        SoloActionToken[] tokenShuffled = new SoloActionToken[7];</b>
+<i>69</i>&nbsp;
+<b class="fc"><i>70</i>&nbsp;        defaultTokens.add(SoloActionToken.DELETE2BLUE);</b>
+<b class="fc"><i>71</i>&nbsp;        defaultTokens.add(SoloActionToken.DELETE2GREEN);</b>
+<b class="fc"><i>72</i>&nbsp;        defaultTokens.add(SoloActionToken.DELETE2YELLOW);</b>
+<b class="fc"><i>73</i>&nbsp;        defaultTokens.add(SoloActionToken.DELETE2PURPLE);</b>
+<b class="fc"><i>74</i>&nbsp;        defaultTokens.add(SoloActionToken.BLACKCROSSSHUFFLE);</b>
+<b class="fc"><i>75</i>&nbsp;        defaultTokens.add(SoloActionToken.BLACKCROSSPLUS2);</b>
+<b class="fc"><i>76</i>&nbsp;        defaultTokens.add(SoloActionToken.BLACKCROSSPLUS2);</b>
+<i>77</i>&nbsp;
+<b class="fc"><i>78</i>&nbsp;        for(int i=0;i&lt;7;i++){</b>
+<b class="fc"><i>79</i>&nbsp;            int random=(int)(defaultTokens.size()*Math.random());</b>
+<b class="fc"><i>80</i>&nbsp;            tokenShuffled[i]=defaultTokens.get(random);</b>
+<b class="fc"><i>81</i>&nbsp;            defaultTokens.remove(random);</b>
+<i>82</i>&nbsp;        }
+<b class="fc"><i>83</i>&nbsp;        return tokenShuffled;</b>
+<i>84</i>&nbsp;    }
+<i>85</i>&nbsp;
+<i>86</i>&nbsp;    /**
+<i>87</i>&nbsp;     * Returns the singlePlayer actionToken Array
+<i>88</i>&nbsp;     */
+<i>89</i>&nbsp;    public SoloActionToken[] getTokens(SinglePlayer singlePlayer) {
+<b class="fc"><i>90</i>&nbsp;        return singlePlayer.tokens;</b>
+<i>91</i>&nbsp;    }
+<i>92</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-12 23:55</div>
+</div>
+</body>
+</html>

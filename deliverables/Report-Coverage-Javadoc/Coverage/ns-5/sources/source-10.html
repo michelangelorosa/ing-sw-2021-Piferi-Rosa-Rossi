@@ -1,0 +1,168 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ResetWarehouseMessage</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+    @import "../../.css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../.js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">it.polimi.ingsw.Model.MessagesToClient</a>
+</div>
+
+<h1>Coverage Summary for Class: ResetWarehouseMessage (it.polimi.ingsw.Model.MessagesToClient)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ResetWarehouseMessage</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    83,3%
+  </span>
+  <span class="absValue">
+    (5/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    62,5%
+  </span>
+  <span class="absValue">
+    (10/16)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package it.polimi.ingsw.Model.MessagesToClient;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import it.polimi.ingsw.Controller.Actions.ActionType;
+<i class="no-highlight">4</i>&nbsp;import it.polimi.ingsw.View.ReducedModel.*;
+<i class="no-highlight">5</i>&nbsp;
+<i class="no-highlight">6</i>&nbsp;/**
+<i class="no-highlight">7</i>&nbsp; * ResetWarehouseMessage Class contains data for a response message to be sent to the client
+<i class="no-highlight">8</i>&nbsp; * after a ResetWarehouse request.
+<i class="no-highlight">9</i>&nbsp; */
+<i class="no-highlight">10</i>&nbsp;public class ResetWarehouseMessage extends MessageToClient {
+<i class="no-highlight">11</i>&nbsp;    private RedWarehouse warehouse;
+<i class="no-highlight">12</i>&nbsp;    private RedResourceStack temporaryResources;
+<i class="no-highlight">13</i>&nbsp;
+<i class="no-highlight">14</i>&nbsp;    /**
+<i class="no-highlight">15</i>&nbsp;     * Constructor for ResetWarehouseMessage Class.
+<i class="no-highlight">16</i>&nbsp;     */
+<b class="fc"><i class="no-highlight">17</i>&nbsp;    public ResetWarehouseMessage(int playerId) {</b>
+<b class="fc"><i class="no-highlight">18</i>&nbsp;        this.actionDone = ActionType.RESET_WAREHOUSE;</b>
+<b class="fc"><i class="no-highlight">19</i>&nbsp;        this.playerId = playerId;</b>
+<b class="fc"><i class="no-highlight">20</i>&nbsp;    }</b>
+<i class="no-highlight">21</i>&nbsp;
+<i class="no-highlight">22</i>&nbsp;    /**
+<i class="no-highlight">23</i>&nbsp;     * Setter for &quot;warehouse&quot; attribute in ResetWarehouseMessage Class.
+<i class="no-highlight">24</i>&nbsp;     */
+<i class="no-highlight">25</i>&nbsp;    public void setWarehouse(RedWarehouse warehouse) {
+<b class="fc"><i class="no-highlight">26</i>&nbsp;        this.warehouse = warehouse;</b>
+<b class="fc"><i class="no-highlight">27</i>&nbsp;    }</b>
+<i class="no-highlight">28</i>&nbsp;
+<i class="no-highlight">29</i>&nbsp;    /**
+<i class="no-highlight">30</i>&nbsp;     * Setter for &quot;temporaryResources&quot; attribute in ResetWarehouseMessage Class.
+<i class="no-highlight">31</i>&nbsp;     */
+<i class="no-highlight">32</i>&nbsp;    public void setTemporaryResources(RedResourceStack temporaryResources) {
+<b class="fc"><i class="no-highlight">33</i>&nbsp;        this.temporaryResources = temporaryResources;</b>
+<b class="fc"><i class="no-highlight">34</i>&nbsp;    }</b>
+<i class="no-highlight">35</i>&nbsp;
+<i class="no-highlight">36</i>&nbsp;    /**
+<i class="no-highlight">37</i>&nbsp;     * Getter for &quot;warehouse&quot; attribute in ResetWarehouseMessage Class.
+<i class="no-highlight">38</i>&nbsp;     */
+<i class="no-highlight">39</i>&nbsp;    public RedWarehouse getWarehouse() {
+<b class="fc"><i class="no-highlight">40</i>&nbsp;        return warehouse;</b>
+<i class="no-highlight">41</i>&nbsp;    }
+<i class="no-highlight">42</i>&nbsp;
+<i class="no-highlight">43</i>&nbsp;    /**
+<i class="no-highlight">44</i>&nbsp;     * Getter for &quot;temporaryResources&quot; attribute in ResetWarehouseMessage Class.
+<i class="no-highlight">45</i>&nbsp;     */
+<i class="no-highlight">46</i>&nbsp;    public RedResourceStack getTemporaryResources() {
+<b class="fc"><i class="no-highlight">47</i>&nbsp;        return temporaryResources;</b>
+<i class="no-highlight">48</i>&nbsp;    }
+<i class="no-highlight">49</i>&nbsp;
+<i class="no-highlight">50</i>&nbsp;    /**
+<i class="no-highlight">51</i>&nbsp;     * Method used to update the client&#39;s view.
+<i class="no-highlight">52</i>&nbsp;     * @param game Game being played by the client.
+<i class="no-highlight">53</i>&nbsp;     */
+<i class="no-highlight">54</i>&nbsp;    @Override
+<i class="no-highlight">55</i>&nbsp;    public void updateView(Game game) {
+<b class="nc"><i class="no-highlight">56</i>&nbsp;        for(Player player : game.getPlayers())</b>
+<b class="nc"><i class="no-highlight">57</i>&nbsp;            if(player.getTurnPosition() == this.playerId) {</b>
+<b class="nc"><i class="no-highlight">58</i>&nbsp;                player.setWarehouse(this.warehouse);</b>
+<b class="nc"><i class="no-highlight">59</i>&nbsp;                player.setTemporaryResources(this.temporaryResources);</b>
+<b class="nc"><i class="no-highlight">60</i>&nbsp;                player.setPossibleActions(this.possibleActions);</b>
+<i class="no-highlight">61</i>&nbsp;            }
+<b class="nc"><i class="no-highlight">62</i>&nbsp;    }</b>
+<i class="no-highlight">63</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-28 14:27</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,292 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Market</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+    @import "../../.css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../.js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">it.polimi.ingsw.Model.GameModel</a>
+</div>
+
+<h1>Coverage Summary for Class: Market (it.polimi.ingsw.Model.GameModel)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Market</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (78/78)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package it.polimi.ingsw.Model.GameModel;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import it.polimi.ingsw.Model.Enums.LeaderCardAction;
+<i class="no-highlight">4</i>&nbsp;import it.polimi.ingsw.Model.Enums.Marble;
+<i class="no-highlight">5</i>&nbsp;import it.polimi.ingsw.View.ReducedModel.RedMarket;
+<i class="no-highlight">6</i>&nbsp;
+<i class="no-highlight">7</i>&nbsp;import java.util.ArrayList;
+<i class="no-highlight">8</i>&nbsp;import java.util.Random;
+<i class="no-highlight">9</i>&nbsp;
+<i class="no-highlight">10</i>&nbsp;/**
+<i class="no-highlight">11</i>&nbsp; * Market Class defines the contents and behaviour of the game&#39;s market. A Market Class-type
+<i class="no-highlight">12</i>&nbsp; * object contains a 2D-array final attribute containing marbles and an extra marble to
+<i class="no-highlight">13</i>&nbsp; * push inside the market whenever a player buys resources.
+<i class="no-highlight">14</i>&nbsp; * @author redrick99
+<i class="no-highlight">15</i>&nbsp; */
+<i class="no-highlight">16</i>&nbsp;public class Market extends RedMarket {
+<i class="no-highlight">17</i>&nbsp;    /**
+<i class="no-highlight">18</i>&nbsp;     * Constructor for Market Class.
+<i class="no-highlight">19</i>&nbsp;     */
+<i class="no-highlight">20</i>&nbsp;    public Market() {
+<b class="fc"><i class="no-highlight">21</i>&nbsp;        super();</b>
+<b class="fc"><i class="no-highlight">22</i>&nbsp;        this.reset();</b>
+<b class="fc"><i class="no-highlight">23</i>&nbsp;    }</b>
+<i class="no-highlight">24</i>&nbsp;
+<i class="no-highlight">25</i>&nbsp;    /**
+<i class="no-highlight">26</i>&nbsp;     * Alternative constructor for Market Class.
+<i class="no-highlight">27</i>&nbsp;     */
+<i class="no-highlight">28</i>&nbsp;    public Market(Marble[][] marbles) {
+<b class="fc"><i class="no-highlight">29</i>&nbsp;        super(marbles);</b>
+<b class="fc"><i class="no-highlight">30</i>&nbsp;    }</b>
+<i class="no-highlight">31</i>&nbsp;
+<i class="no-highlight">32</i>&nbsp;    /**
+<i class="no-highlight">33</i>&nbsp;     * This method is used to reset the market to initial conditions, with randomized marbles
+<i class="no-highlight">34</i>&nbsp;     * inside the 2D-array.
+<i class="no-highlight">35</i>&nbsp;     */
+<i class="no-highlight">36</i>&nbsp;    public void reset() {
+<b class="fc"><i class="no-highlight">37</i>&nbsp;        Random rand = new Random();</b>
+<i class="no-highlight">38</i>&nbsp;        int randomNumber;
+<b class="fc"><i class="no-highlight">39</i>&nbsp;        ArrayList&lt;Marble&gt; marbles = new ArrayList&lt;&gt;();</b>
+<i class="no-highlight">40</i>&nbsp;
+<b class="fc"><i class="no-highlight">41</i>&nbsp;        for(int i = 0; i &lt; 4; i++)</b>
+<b class="fc"><i class="no-highlight">42</i>&nbsp;            marbles.add(Marble.WHITE);</b>
+<i class="no-highlight">43</i>&nbsp;
+<b class="fc"><i class="no-highlight">44</i>&nbsp;        for(int i = 0; i &lt; 2; i++)</b>
+<b class="fc"><i class="no-highlight">45</i>&nbsp;            marbles.add(Marble.BLUE);</b>
+<i class="no-highlight">46</i>&nbsp;
+<b class="fc"><i class="no-highlight">47</i>&nbsp;        for(int i = 0; i &lt; 2; i++)</b>
+<b class="fc"><i class="no-highlight">48</i>&nbsp;            marbles.add(Marble.GREY);</b>
+<i class="no-highlight">49</i>&nbsp;
+<b class="fc"><i class="no-highlight">50</i>&nbsp;        for(int i = 0; i &lt; 2; i++)</b>
+<b class="fc"><i class="no-highlight">51</i>&nbsp;            marbles.add(Marble.YELLOW);</b>
+<i class="no-highlight">52</i>&nbsp;
+<b class="fc"><i class="no-highlight">53</i>&nbsp;        for(int i = 0; i &lt; 2; i++)</b>
+<b class="fc"><i class="no-highlight">54</i>&nbsp;            marbles.add(Marble.PURPLE);</b>
+<i class="no-highlight">55</i>&nbsp;
+<b class="fc"><i class="no-highlight">56</i>&nbsp;        marbles.add(Marble.RED);</b>
+<i class="no-highlight">57</i>&nbsp;
+<b class="fc"><i class="no-highlight">58</i>&nbsp;        for(int j = 0; j &lt;= 3; j++)</b>
+<b class="fc"><i class="no-highlight">59</i>&nbsp;            for(int i = 0; i &lt;= 2; i++) {</b>
+<b class="fc"><i class="no-highlight">60</i>&nbsp;                randomNumber = rand.nextInt(marbles.size());</b>
+<b class="fc"><i class="no-highlight">61</i>&nbsp;                this.marbles[i][j] = marbles.remove(randomNumber);</b>
+<i class="no-highlight">62</i>&nbsp;            }
+<b class="fc"><i class="no-highlight">63</i>&nbsp;        this.extraMarble = marbles.remove(0);</b>
+<b class="fc"><i class="no-highlight">64</i>&nbsp;    }</b>
+<i class="no-highlight">65</i>&nbsp;
+<i class="no-highlight">66</i>&nbsp;    /**
+<i class="no-highlight">67</i>&nbsp;     * This method is used when a player chooses a row he wants to buy from the market.
+<i class="no-highlight">68</i>&nbsp;     * &lt;p&gt;
+<i class="no-highlight">69</i>&nbsp;     * It transforms the selected row of marbles into a ResourceStack of resources which
+<i class="no-highlight">70</i>&nbsp;     * will then be processed by the Resource Manager.
+<i class="no-highlight">71</i>&nbsp;     * The player&#39;s faith is also updated if the row contains red marbles and the method transforms
+<i class="no-highlight">72</i>&nbsp;     * white marbles if it is necessary.
+<i class="no-highlight">73</i>&nbsp;     * @param row is the number indicating the row.
+<i class="no-highlight">74</i>&nbsp;     * @param player is the player corresponding to the action (needed to update faith).
+<i class="no-highlight">75</i>&nbsp;     */
+<i class="no-highlight">76</i>&nbsp;    public void rowToResources(int row, Player player) throws IllegalArgumentException {
+<b class="fc"><i class="no-highlight">77</i>&nbsp;        player.getBoard().getResourceManager().setTemporaryWhiteMarbles(0);</b>
+<i class="no-highlight">78</i>&nbsp;
+<b class="fc"><i class="no-highlight">79</i>&nbsp;        ResourceStack resourceStack = new ResourceStack(0,0,0,0);</b>
+<b class="fc"><i class="no-highlight">80</i>&nbsp;        if(row &lt; 0 || row &gt; 2)</b>
+<b class="fc"><i class="no-highlight">81</i>&nbsp;            throw new IllegalArgumentException(&quot;Model: Row index out of bounds.&quot;);</b>
+<i class="no-highlight">82</i>&nbsp;
+<b class="fc"><i class="no-highlight">83</i>&nbsp;        for(int j = 0; j &lt;= 3; j++)</b>
+<b class="fc"><i class="no-highlight">84</i>&nbsp;            resourceStack.addResource(1, this.marbles[row][j].marbleToResource(player));</b>
+<i class="no-highlight">85</i>&nbsp;
+<i class="no-highlight">86</i>&nbsp;
+<b class="fc"><i class="no-highlight">87</i>&nbsp;        this.rowChange(row);</b>
+<i class="no-highlight">88</i>&nbsp;
+<b class="fc"><i class="no-highlight">89</i>&nbsp;        player.getBoard().getResourceManager().setTemporaryResourcesToPay(resourceStack);</b>
+<b class="fc"><i class="no-highlight">90</i>&nbsp;    }</b>
+<i class="no-highlight">91</i>&nbsp;
+<i class="no-highlight">92</i>&nbsp;    /**
+<i class="no-highlight">93</i>&nbsp;     * Changes market after a row purchase.
+<i class="no-highlight">94</i>&nbsp;     * @param row row to be changes.
+<i class="no-highlight">95</i>&nbsp;     */
+<i class="no-highlight">96</i>&nbsp;    public void rowChange(int row) {
+<b class="fc"><i class="no-highlight">97</i>&nbsp;        Marble[] newMarbles = new Marble[4];</b>
+<b class="fc"><i class="no-highlight">98</i>&nbsp;        newMarbles[0] = this.marbles[row][1];</b>
+<b class="fc"><i class="no-highlight">99</i>&nbsp;        newMarbles[1] = this.marbles[row][2];</b>
+<b class="fc"><i class="no-highlight">100</i>&nbsp;        newMarbles[2] = this.marbles[row][3];</b>
+<b class="fc"><i class="no-highlight">101</i>&nbsp;        newMarbles[3] = extraMarble;</b>
+<i class="no-highlight">102</i>&nbsp;
+<b class="fc"><i class="no-highlight">103</i>&nbsp;        extraMarble = this.marbles[row][0];</b>
+<b class="fc"><i class="no-highlight">104</i>&nbsp;        this.marbles[row][0] = newMarbles[0];</b>
+<b class="fc"><i class="no-highlight">105</i>&nbsp;        this.marbles[row][1] = newMarbles[1];</b>
+<b class="fc"><i class="no-highlight">106</i>&nbsp;        this.marbles[row][2] = newMarbles[2];</b>
+<b class="fc"><i class="no-highlight">107</i>&nbsp;        this.marbles[row][3] = newMarbles[3];</b>
+<b class="fc"><i class="no-highlight">108</i>&nbsp;    }</b>
+<i class="no-highlight">109</i>&nbsp;
+<i class="no-highlight">110</i>&nbsp;    /**
+<i class="no-highlight">111</i>&nbsp;     * This method is used when a player chooses a column he wants to buy from the market.
+<i class="no-highlight">112</i>&nbsp;     * &lt;p&gt;
+<i class="no-highlight">113</i>&nbsp;     * It transforms the selected column of marbles into a ResourceStack of resources which
+<i class="no-highlight">114</i>&nbsp;     * will then be processed by the Resource Manager.
+<i class="no-highlight">115</i>&nbsp;     * The player&#39;s faith is also updated if the column contains red marbles and the method transforms
+<i class="no-highlight">116</i>&nbsp;     * white marbles if it is necessary.
+<i class="no-highlight">117</i>&nbsp;     * @param column is the number indicating the column.
+<i class="no-highlight">118</i>&nbsp;     * @param player is the player corresponding to the action (needed to update faith).
+<i class="no-highlight">119</i>&nbsp;     * not have such card, the parameter should be null.
+<i class="no-highlight">120</i>&nbsp;     */
+<i class="no-highlight">121</i>&nbsp;    public void columnToResources(int column, Player player) throws IllegalArgumentException{
+<b class="fc"><i class="no-highlight">122</i>&nbsp;        player.getBoard().getResourceManager().setTemporaryWhiteMarbles(0);</b>
+<i class="no-highlight">123</i>&nbsp;
+<b class="fc"><i class="no-highlight">124</i>&nbsp;        ResourceStack resourceStack = new ResourceStack(0,0,0,0);</b>
+<b class="fc"><i class="no-highlight">125</i>&nbsp;        if(column &lt; 0 || column &gt; 3)</b>
+<b class="fc"><i class="no-highlight">126</i>&nbsp;            throw new IllegalArgumentException(&quot;Model: Column index out of bounds.&quot;);</b>
+<i class="no-highlight">127</i>&nbsp;
+<b class="fc"><i class="no-highlight">128</i>&nbsp;        for(int i = 0; i &lt;= 2; i++)</b>
+<b class="fc"><i class="no-highlight">129</i>&nbsp;            resourceStack.addResource(1, this.marbles[i][column].marbleToResource(player));</b>
+<i class="no-highlight">130</i>&nbsp;
+<b class="fc"><i class="no-highlight">131</i>&nbsp;        this.columnChange(column);</b>
+<i class="no-highlight">132</i>&nbsp;
+<b class="fc"><i class="no-highlight">133</i>&nbsp;        player.getBoard().getResourceManager().setTemporaryResourcesToPay(resourceStack);</b>
+<b class="fc"><i class="no-highlight">134</i>&nbsp;    }</b>
+<i class="no-highlight">135</i>&nbsp;
+<i class="no-highlight">136</i>&nbsp;    /**
+<i class="no-highlight">137</i>&nbsp;     * Realigns Market after a column choice.
+<i class="no-highlight">138</i>&nbsp;     * @param column index of the column to change.
+<i class="no-highlight">139</i>&nbsp;     */
+<i class="no-highlight">140</i>&nbsp;    public void columnChange(int column) {
+<b class="fc"><i class="no-highlight">141</i>&nbsp;        Marble[] newMarbles = new Marble[3];</b>
+<b class="fc"><i class="no-highlight">142</i>&nbsp;        newMarbles[0] = this.marbles[1][column];</b>
+<b class="fc"><i class="no-highlight">143</i>&nbsp;        newMarbles[1] = this.marbles[2][column];</b>
+<b class="fc"><i class="no-highlight">144</i>&nbsp;        newMarbles[2] = extraMarble;</b>
+<i class="no-highlight">145</i>&nbsp;
+<b class="fc"><i class="no-highlight">146</i>&nbsp;        extraMarble = this.marbles[0][column];</b>
+<b class="fc"><i class="no-highlight">147</i>&nbsp;        this.marbles[0][column] = newMarbles[0];</b>
+<b class="fc"><i class="no-highlight">148</i>&nbsp;        this.marbles[1][column] = newMarbles[1];</b>
+<b class="fc"><i class="no-highlight">149</i>&nbsp;        this.marbles[2][column] = newMarbles[2];</b>
+<b class="fc"><i class="no-highlight">150</i>&nbsp;    }</b>
+<i class="no-highlight">151</i>&nbsp;
+<i class="no-highlight">152</i>&nbsp;    /**
+<i class="no-highlight">153</i>&nbsp;     * Converts a white marble to a resource based on the Leader Card given.
+<i class="no-highlight">154</i>&nbsp;     * @param player player who bought from the market.
+<i class="no-highlight">155</i>&nbsp;     * @param leaderCard Leader Card from which to get the white marble.
+<i class="no-highlight">156</i>&nbsp;     * @throws IllegalArgumentException if there are no white marbles to convert or if the Leader Card is not active or not
+<i class="no-highlight">157</i>&nbsp;     * of type WHITEMARBLE.
+<i class="no-highlight">158</i>&nbsp;     */
+<i class="no-highlight">159</i>&nbsp;    public void whiteMarbleToResource(Player player, LeaderCard leaderCard) throws IllegalArgumentException {
+<b class="fc"><i class="no-highlight">160</i>&nbsp;        if(player.getBoard().getResourceManager().getTemporaryWhiteMarbles() &lt;= 0)</b>
+<b class="fc"><i class="no-highlight">161</i>&nbsp;            throw new IllegalArgumentException(&quot;No White Marbles to convert.&quot;);</b>
+<b class="fc"><i class="no-highlight">162</i>&nbsp;        else if(!leaderCard.isActive())</b>
+<b class="fc"><i class="no-highlight">163</i>&nbsp;            throw new IllegalArgumentException(&quot;Card has to be active to convert White Marble.&quot;);</b>
+<b class="fc"><i class="no-highlight">164</i>&nbsp;        else if(leaderCard.getAction() != LeaderCardAction.WHITEMARBLE)</b>
+<b class="fc"><i class="no-highlight">165</i>&nbsp;            throw new IllegalArgumentException(&quot;Card has to be of type WHITEMARBLE to convert White Marble.&quot;);</b>
+<i class="no-highlight">166</i>&nbsp;
+<b class="fc"><i class="no-highlight">167</i>&nbsp;        player.getBoard().getResourceManager().getTemporaryResourcesToPay().addResource(1, leaderCard.getMarble().marbleToResource(player));</b>
+<b class="fc"><i class="no-highlight">168</i>&nbsp;        player.getBoard().getResourceManager().removeWhiteMarble();</b>
+<b class="fc"><i class="no-highlight">169</i>&nbsp;    }</b>
+<i class="no-highlight">170</i>&nbsp;
+<i class="no-highlight">171</i>&nbsp;    /**
+<i class="no-highlight">172</i>&nbsp;     * Setter for &quot;extraMarble&quot; attribute.
+<i class="no-highlight">173</i>&nbsp;     */
+<i class="no-highlight">174</i>&nbsp;    public void setExtraMarble(Marble extraMarble) {
+<b class="fc"><i class="no-highlight">175</i>&nbsp;        this.extraMarble = extraMarble;</b>
+<b class="fc"><i class="no-highlight">176</i>&nbsp;    }</b>
+<i class="no-highlight">177</i>&nbsp;
+<i class="no-highlight">178</i>&nbsp;    /**
+<i class="no-highlight">179</i>&nbsp;     * This method is used for test purposes only.
+<i class="no-highlight">180</i>&nbsp;     */
+<i class="no-highlight">181</i>&nbsp;    public void testMethod() {
+<b class="fc"><i class="no-highlight">182</i>&nbsp;        this.marbles[0][0] = Marble.BLUE; this.marbles[0][1] = Marble.YELLOW; this.marbles[0][2] = Marble.RED; this.marbles[0][3] = Marble.BLUE;</b>
+<b class="fc"><i class="no-highlight">183</i>&nbsp;        this.marbles[1][0] = Marble.GREY; this.marbles[1][1] = Marble.GREY; this.marbles[1][2] = Marble.WHITE; this.marbles[1][3] = Marble.WHITE;</b>
+<b class="fc"><i class="no-highlight">184</i>&nbsp;        this.marbles[2][0] = Marble.PURPLE; this.marbles[2][1] = Marble.RED; this.marbles[2][2] = Marble.YELLOW; this.marbles[2][3] = Marble.RED;</b>
+<b class="fc"><i class="no-highlight">185</i>&nbsp;        this.extraMarble = Marble.WHITE;</b>
+<b class="fc"><i class="no-highlight">186</i>&nbsp;    }</b>
+<i class="no-highlight">187</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-07-02 23:15</div>
+</div>
+</body>
+</html>

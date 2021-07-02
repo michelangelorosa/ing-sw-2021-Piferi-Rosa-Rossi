@@ -1,0 +1,175 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > SoloActionTokenDeck</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+    @import "../../.css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../.js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">it.polimi.ingsw.Model.GameModel.SinglePlayer</a>
+</div>
+
+<h1>Coverage Summary for Class: SoloActionTokenDeck (it.polimi.ingsw.Model.GameModel.SinglePlayer)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SoloActionTokenDeck</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (22/22)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package it.polimi.ingsw.Model.GameModel.SinglePlayer;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import it.polimi.ingsw.Model.Enums.SoloActionToken;
+<i class="no-highlight">4</i>&nbsp;
+<i class="no-highlight">5</i>&nbsp;import java.util.ArrayList;
+<i class="no-highlight">6</i>&nbsp;import java.util.Arrays;
+<i class="no-highlight">7</i>&nbsp;import java.util.Random;
+<i class="no-highlight">8</i>&nbsp;
+<i class="no-highlight">9</i>&nbsp;/**
+<i class="no-highlight">10</i>&nbsp; * SoloActionTokenDeck Class defines a deck object where all SoloActionTokens of the singleplayer game are stored.
+<i class="no-highlight">11</i>&nbsp; * &lt;p&gt;&lt;b&gt;Attributes:&lt;/b&gt;&lt;/p&gt;
+<i class="no-highlight">12</i>&nbsp; * &lt;ul&gt;
+<i class="no-highlight">13</i>&nbsp; *     &lt;li&gt;SoloActionToken[] &quot;tokens&quot;: array containing all six tokens of the singleplayer game&lt;/li&gt;
+<i class="no-highlight">14</i>&nbsp; *     &lt;li&gt;int &quot;tokensInDeck&quot;: number of tokens remaining in the deck&lt;/li&gt;
+<i class="no-highlight">15</i>&nbsp; * &lt;/ul&gt;
+<i class="no-highlight">16</i>&nbsp; * @author redrick99 &amp; michelangelorosa
+<i class="no-highlight">17</i>&nbsp; */
+<i class="no-highlight">18</i>&nbsp;public class SoloActionTokenDeck {
+<b class="fc"><i class="no-highlight">19</i>&nbsp;    private final SoloActionToken[] tokens = new SoloActionToken[6];</b>
+<i class="no-highlight">20</i>&nbsp;    private int tokensInDeck;
+<i class="no-highlight">21</i>&nbsp;
+<i class="no-highlight">22</i>&nbsp;    /**
+<i class="no-highlight">23</i>&nbsp;     * Constructor for SoloActionTokenDeck Class.
+<i class="no-highlight">24</i>&nbsp;     * &lt;p&gt;Fills the array with all SoloActionTokens, shuffles it and sets the number of tokensInDeck to 6.&lt;/p&gt;
+<i class="no-highlight">25</i>&nbsp;     */
+<b class="fc"><i class="no-highlight">26</i>&nbsp;    public SoloActionTokenDeck() {</b>
+<b class="fc"><i class="no-highlight">27</i>&nbsp;        tokens[0] = SoloActionToken.DELETE2BLUE;</b>
+<b class="fc"><i class="no-highlight">28</i>&nbsp;        tokens[1] = SoloActionToken.DELETE2GREEN;</b>
+<b class="fc"><i class="no-highlight">29</i>&nbsp;        tokens[2] = SoloActionToken.DELETE2PURPLE;</b>
+<b class="fc"><i class="no-highlight">30</i>&nbsp;        tokens[3] = SoloActionToken.DELETE2YELLOW;</b>
+<b class="fc"><i class="no-highlight">31</i>&nbsp;        tokens[4] = SoloActionToken.BLACKCROSSPLUS2;</b>
+<b class="fc"><i class="no-highlight">32</i>&nbsp;        tokens[5] = SoloActionToken.BLACKCROSSSHUFFLE;</b>
+<b class="fc"><i class="no-highlight">33</i>&nbsp;        shuffle();</b>
+<b class="fc"><i class="no-highlight">34</i>&nbsp;        tokensInDeck = 6;</b>
+<b class="fc"><i class="no-highlight">35</i>&nbsp;    }</b>
+<i class="no-highlight">36</i>&nbsp;
+<i class="no-highlight">37</i>&nbsp;    /**
+<i class="no-highlight">38</i>&nbsp;     * Draws a token from the array. If the BLACKCROSSSHUFFLE token is drawn, reshuffles the array.
+<i class="no-highlight">39</i>&nbsp;     * @return The token drawn from the array.
+<i class="no-highlight">40</i>&nbsp;     */
+<i class="no-highlight">41</i>&nbsp;    public SoloActionToken draw() {
+<b class="fc"><i class="no-highlight">42</i>&nbsp;        SoloActionToken token = tokens[--tokensInDeck];</b>
+<i class="no-highlight">43</i>&nbsp;
+<b class="fc"><i class="no-highlight">44</i>&nbsp;        if(token == SoloActionToken.BLACKCROSSSHUFFLE) {</b>
+<b class="fc"><i class="no-highlight">45</i>&nbsp;            shuffle();</b>
+<b class="fc"><i class="no-highlight">46</i>&nbsp;            tokensInDeck = 6;</b>
+<i class="no-highlight">47</i>&nbsp;        }
+<i class="no-highlight">48</i>&nbsp;
+<b class="fc"><i class="no-highlight">49</i>&nbsp;        return token;</b>
+<i class="no-highlight">50</i>&nbsp;    }
+<i class="no-highlight">51</i>&nbsp;
+<i class="no-highlight">52</i>&nbsp;    /**
+<i class="no-highlight">53</i>&nbsp;     * Shuffles the deck using java.util.Random.
+<i class="no-highlight">54</i>&nbsp;     */
+<i class="no-highlight">55</i>&nbsp;    private void shuffle() {
+<b class="fc"><i class="no-highlight">56</i>&nbsp;        ArrayList&lt;SoloActionToken&gt; tokensList = new ArrayList&lt;&gt;(Arrays.asList(tokens));</b>
+<b class="fc"><i class="no-highlight">57</i>&nbsp;        Random random = new Random();</b>
+<i class="no-highlight">58</i>&nbsp;
+<b class="fc"><i class="no-highlight">59</i>&nbsp;        for(int i = 0; i &lt; tokens.length; i++) {</b>
+<b class="fc"><i class="no-highlight">60</i>&nbsp;            tokens[i] = tokensList.remove(random.nextInt(tokensList.size()));</b>
+<i class="no-highlight">61</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">62</i>&nbsp;    }</b>
+<i class="no-highlight">63</i>&nbsp;
+<i class="no-highlight">64</i>&nbsp;    /**
+<i class="no-highlight">65</i>&nbsp;     * Getter for &quot;tokens&quot; attribute.
+<i class="no-highlight">66</i>&nbsp;     */
+<i class="no-highlight">67</i>&nbsp;    protected SoloActionToken[] getTokens() {
+<b class="fc"><i class="no-highlight">68</i>&nbsp;        return this.tokens;</b>
+<i class="no-highlight">69</i>&nbsp;    }
+<i class="no-highlight">70</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-07-02 23:15</div>
+</div>
+</body>
+</html>

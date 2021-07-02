@@ -1,0 +1,604 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ServerConnection</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+    @import "../../.css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../.js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">it.polimi.ingsw.Model.Server</a>
+</div>
+
+<h1>Coverage Summary for Class: ServerConnection (it.polimi.ingsw.Model.Server)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ServerConnection</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/33)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/184)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package it.polimi.ingsw.Model.Server;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import it.polimi.ingsw.Controller.Actions.Action;
+<i class="no-highlight">4</i>&nbsp;import it.polimi.ingsw.Controller.ControllerClasses.Observable;
+<i class="no-highlight">5</i>&nbsp;import it.polimi.ingsw.Controller.ControllerClasses.Observer;
+<i class="no-highlight">6</i>&nbsp;import it.polimi.ingsw.Model.Enums.GameType;
+<i class="no-highlight">7</i>&nbsp;import it.polimi.ingsw.Model.GameModel.DevelopmentCard;
+<i class="no-highlight">8</i>&nbsp;import it.polimi.ingsw.Model.GameModel.LeaderCard;
+<i class="no-highlight">9</i>&nbsp;import it.polimi.ingsw.Model.MessagesToClient.MessageToClient;
+<i class="no-highlight">10</i>&nbsp;import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
+<i class="no-highlight">11</i>&nbsp;import it.polimi.ingsw.View.Utility.DebuggingTools.Debugger;
+<i class="no-highlight">12</i>&nbsp;import it.polimi.ingsw.View.Utility.DebuggingTools.DebuggerFactory;
+<i class="no-highlight">13</i>&nbsp;import it.polimi.ingsw.View.Utility.DebuggingTools.DebuggerType;
+<i class="no-highlight">14</i>&nbsp;
+<i class="no-highlight">15</i>&nbsp;import java.io.*;
+<i class="no-highlight">16</i>&nbsp;import java.net.Socket;
+<i class="no-highlight">17</i>&nbsp;import java.util.ArrayList;
+<i class="no-highlight">18</i>&nbsp;import java.util.Arrays;
+<i class="no-highlight">19</i>&nbsp;
+<i class="no-highlight">20</i>&nbsp;/**
+<i class="no-highlight">21</i>&nbsp; * ServerConnection is a thread running on the server that manages connection to and from the clients.
+<i class="no-highlight">22</i>&nbsp; * For the messages to be sent a manual flushing has to be performed!
+<i class="no-highlight">23</i>&nbsp; */
+<i class="no-highlight">24</i>&nbsp;public class ServerConnection extends Observable&lt;Action&gt; implements Runnable, Observer&lt;MessageToClient&gt; {
+<i class="no-highlight">25</i>&nbsp;    private String name;
+<i class="no-highlight">26</i>&nbsp;    private Socket socket;
+<i class="no-highlight">27</i>&nbsp;    private final Server server;
+<i class="no-highlight">28</i>&nbsp;    private ObjectOutputStream out;
+<i class="no-highlight">29</i>&nbsp;    private ObjectInputStream in;
+<i class="no-highlight">30</i>&nbsp;    private final ServerMessageHandler messageHandler;
+<b class="nc"><i class="no-highlight">31</i>&nbsp;    private boolean ready = false;</b>
+<i class="no-highlight">32</i>&nbsp;
+<b class="nc"><i class="no-highlight">33</i>&nbsp;    private final Debugger DEBUGGER = DebuggerFactory.getDebugger(DebuggerType.SERVER_CONNECTION);</b>
+<i class="no-highlight">34</i>&nbsp;
+<i class="no-highlight">35</i>&nbsp;    /**
+<i class="no-highlight">36</i>&nbsp;     * Default constructor for a ServerConnection class. Tries to establish a connection to a client after it has contacted the server.
+<i class="no-highlight">37</i>&nbsp;     * Given the socket it creates the outputStream, the corresponding ObjectOutputStream and vice versa for the InputStream and the ObjectInputStream.
+<i class="no-highlight">38</i>&nbsp;     * If unable an IOException is caught and the connection is closed.
+<i class="no-highlight">39</i>&nbsp;     * @param client        The socket Server-Client
+<i class="no-highlight">40</i>&nbsp;     */
+<b class="nc"><i class="no-highlight">41</i>&nbsp;    public ServerConnection(Server server, Socket client) throws IOException{</b>
+<b class="nc"><i class="no-highlight">42</i>&nbsp;        this.server = server;</b>
+<b class="nc"><i class="no-highlight">43</i>&nbsp;        this.socket = client;</b>
+<b class="nc"><i class="no-highlight">44</i>&nbsp;        this.messageHandler = new ServerMessageHandler();</b>
+<i class="no-highlight">45</i>&nbsp;    }
+<i class="no-highlight">46</i>&nbsp;
+<i class="no-highlight">47</i>&nbsp;    /**
+<i class="no-highlight">48</i>&nbsp;     * Implemented Run method of the Runnable Interface. Defines, using a ServerMessageHandler object, the sequence
+<i class="no-highlight">49</i>&nbsp;     * through which a Client, connected to the Server, has to go through to effectively initiate a new Game
+<i class="no-highlight">50</i>&nbsp;     * to be played.
+<i class="no-highlight">51</i>&nbsp;     * &lt;p&gt;The order of communications is divided as follows:&lt;/p&gt;
+<i class="no-highlight">52</i>&nbsp;     * &lt;ol&gt;
+<i class="no-highlight">53</i>&nbsp;     *     &lt;li&gt;The Client is asked to input his name and the number of players (if he is the first who connected)&lt;/li&gt;
+<i class="no-highlight">54</i>&nbsp;     *     &lt;li&gt;The Client enters a Lobby where he can decide whether e wants to start the game or modify the game parameters&lt;/li&gt;
+<i class="no-highlight">55</i>&nbsp;     *     &lt;li&gt;Once all Clients are connected and ready to start, the Initial Phase of the game begins&lt;/li&gt;
+<i class="no-highlight">56</i>&nbsp;     *     &lt;li&gt;The actual game then follows the standard Masters Of Renaissance rules.&lt;/li&gt;
+<i class="no-highlight">57</i>&nbsp;     * &lt;/ol&gt;
+<i class="no-highlight">58</i>&nbsp;     */
+<i class="no-highlight">59</i>&nbsp;    public void run() {
+<i class="no-highlight">60</i>&nbsp;        try {
+<b class="nc"><i class="no-highlight">61</i>&nbsp;            OutputStream outputStream = this.socket.getOutputStream();</b>
+<b class="nc"><i class="no-highlight">62</i>&nbsp;            InputStream inputStream = this.socket.getInputStream();</b>
+<b class="nc"><i class="no-highlight">63</i>&nbsp;            this.out = new ObjectOutputStream(outputStream);</b>
+<b class="nc"><i class="no-highlight">64</i>&nbsp;            this.in = new ObjectInputStream(inputStream);</b>
+<b class="nc"><i class="no-highlight">65</i>&nbsp;        } catch (IOException e) { System.out.println(&quot;Caught exception&quot;); }</b>
+<i class="no-highlight">66</i>&nbsp;
+<b class="nc"><i class="no-highlight">67</i>&nbsp;        DEBUGGER.printDebug(&quot;Connection Connected to &quot; + socket.getInetAddress());</b>
+<i class="no-highlight">68</i>&nbsp;
+<i class="no-highlight">69</i>&nbsp;        try {
+<b class="nc"><i class="no-highlight">70</i>&nbsp;            if(messageHandler.nameRequest(this)){</b>
+<b class="nc"><i class="no-highlight">71</i>&nbsp;                DEBUGGER.printDebug(&quot;Name request TRUE, proceed to display lobby please!&quot;);</b>
+<b class="nc"><i class="no-highlight">72</i>&nbsp;                messageHandler.waitingForPlayers(this);</b>
+<b class="nc"><i class="no-highlight">73</i>&nbsp;                messageHandler.initialPhase(this);</b>
+<i class="no-highlight">74</i>&nbsp;            }
+<i class="no-highlight">75</i>&nbsp;            //Accepts messages from client during game phase
+<b class="nc"><i class="no-highlight">76</i>&nbsp;            DEBUGGER.printDebug(&quot;Starting listening to &quot;+socket);</b>
+<b class="nc"><i class="no-highlight">77</i>&nbsp;            while (Thread.currentThread().isAlive()) {</b>
+<b class="nc"><i class="no-highlight">78</i>&nbsp;                Action action = this.readAction();</b>
+<b class="nc"><i class="no-highlight">79</i>&nbsp;                DEBUGGER.printDebug(&quot;Received action: &quot; + action.getActionType() + &quot; from &quot;+this.name);</b>
+<b class="nc"><i class="no-highlight">80</i>&nbsp;                notify(action);</b>
+<b class="nc"><i class="no-highlight">81</i>&nbsp;            }</b>
+<b class="nc"><i class="no-highlight">82</i>&nbsp;        } catch (Exception e ) {</b>
+<b class="nc"><i class="no-highlight">83</i>&nbsp;            DEBUGGER.printDebug(&quot;Caught InterruptedException from &quot; + this.name);</b>
+<b class="nc"><i class="no-highlight">84</i>&nbsp;            e.printStackTrace();</b>
+<b class="nc"><i class="no-highlight">85</i>&nbsp;            if(name!=null){</b>
+<i class="no-highlight">86</i>&nbsp;                /* DISCONNECTION PROCESSING */
+<b class="nc"><i class="no-highlight">87</i>&nbsp;                System.out.println(name +&quot; is leaving&quot;);</b>
+<b class="nc"><i class="no-highlight">88</i>&nbsp;                disconnected();</b>
+<b class="nc"><i class="no-highlight">89</i>&nbsp;                DEBUGGER.printDebug(name + &quot; disconnected successfully&quot;);</b>
+<i class="no-highlight">90</i>&nbsp;                /*                          */
+<i class="no-highlight">91</i>&nbsp;            }
+<i class="no-highlight">92</i>&nbsp;
+<b class="nc"><i class="no-highlight">93</i>&nbsp;        }</b>
+<i class="no-highlight">94</i>&nbsp;
+<i class="no-highlight">95</i>&nbsp;        try{
+<b class="nc"><i class="no-highlight">96</i>&nbsp;            if(!socket.isClosed())</b>
+<b class="nc"><i class="no-highlight">97</i>&nbsp;                socket.close();</b>
+<b class="nc"><i class="no-highlight">98</i>&nbsp;        }catch (IOException e){</b>
+<b class="nc"><i class="no-highlight">99</i>&nbsp;            DEBUGGER.printDebug(&quot;Caught IOException when closing socket of &quot;+this.name);</b>
+<b class="nc"><i class="no-highlight">100</i>&nbsp;        }</b>
+<i class="no-highlight">101</i>&nbsp;    }
+<i class="no-highlight">102</i>&nbsp;
+<i class="no-highlight">103</i>&nbsp;    /**
+<i class="no-highlight">104</i>&nbsp;     * Overridden method of the Observer Interface.
+<i class="no-highlight">105</i>&nbsp;     * &lt;p&gt;It sends a message whenever an action is executed bu the ActionController.&lt;/p&gt;
+<i class="no-highlight">106</i>&nbsp;     * @param message MessageToClient to be sent to the client.
+<i class="no-highlight">107</i>&nbsp;     */
+<i class="no-highlight">108</i>&nbsp;    @Override
+<i class="no-highlight">109</i>&nbsp;    public synchronized void update(MessageToClient message) {
+<b class="nc"><i class="no-highlight">110</i>&nbsp;        send(message);</b>
+<i class="no-highlight">111</i>&nbsp;    }
+<i class="no-highlight">112</i>&nbsp;
+<i class="no-highlight">113</i>&nbsp;    /**
+<i class="no-highlight">114</i>&nbsp;     * Reads an Action object from the socket.
+<i class="no-highlight">115</i>&nbsp;     * @return The Action read.
+<i class="no-highlight">116</i>&nbsp;     */
+<i class="no-highlight">117</i>&nbsp;    public Action readAction() {
+<b class="nc"><i class="no-highlight">118</i>&nbsp;        Action action = null;</b>
+<i class="no-highlight">119</i>&nbsp;
+<i class="no-highlight">120</i>&nbsp;        try {
+<b class="nc"><i class="no-highlight">121</i>&nbsp;            action = (Action) this.in.readObject();</b>
+<b class="nc"><i class="no-highlight">122</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i class="no-highlight">123</i>&nbsp;            DEBUGGER.printDebug(&quot;IOException when reading an Action from &quot;+socket.toString());</b>
+<b class="nc"><i class="no-highlight">124</i>&nbsp;            if(name!=null){</b>
+<i class="no-highlight">125</i>&nbsp;                /* DISCONNECTION PROCESSING */
+<b class="nc"><i class="no-highlight">126</i>&nbsp;                System.out.println(name +&quot; is leaving&quot;);</b>
+<b class="nc"><i class="no-highlight">127</i>&nbsp;                disconnected();</b>
+<b class="nc"><i class="no-highlight">128</i>&nbsp;                DEBUGGER.printDebug(name + &quot; disconnected successfully&quot;);</b>
+<i class="no-highlight">129</i>&nbsp;                /*                          */
+<i class="no-highlight">130</i>&nbsp;            }
+<b class="nc"><i class="no-highlight">131</i>&nbsp;            e.printStackTrace();</b>
+<b class="nc"><i class="no-highlight">132</i>&nbsp;            close();</b>
+<b class="nc"><i class="no-highlight">133</i>&nbsp;        } catch (ClassNotFoundException e) {</b>
+<b class="nc"><i class="no-highlight">134</i>&nbsp;            DEBUGGER.printDebug(&quot;ClassNotFoundException when reading an Action from &quot;+socket.toString());</b>
+<b class="nc"><i class="no-highlight">135</i>&nbsp;            e.printStackTrace();</b>
+<b class="nc"><i class="no-highlight">136</i>&nbsp;            close();</b>
+<b class="nc"><i class="no-highlight">137</i>&nbsp;        }</b>
+<b class="nc"><i class="no-highlight">138</i>&nbsp;        return action;</b>
+<i class="no-highlight">139</i>&nbsp;    }
+<i class="no-highlight">140</i>&nbsp;
+<i class="no-highlight">141</i>&nbsp;    public boolean readBoolean() {
+<i class="no-highlight">142</i>&nbsp;        try {
+<b class="nc"><i class="no-highlight">143</i>&nbsp;            return this.in.readBoolean();</b>
+<b class="nc"><i class="no-highlight">144</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i class="no-highlight">145</i>&nbsp;            e.printStackTrace();</b>
+<b class="nc"><i class="no-highlight">146</i>&nbsp;            return false;</b>
+<i class="no-highlight">147</i>&nbsp;        }
+<i class="no-highlight">148</i>&nbsp;    }
+<i class="no-highlight">149</i>&nbsp;
+<i class="no-highlight">150</i>&nbsp;    /**
+<i class="no-highlight">151</i>&nbsp;     * Tries to send a number to the client. If it fails the connection is closed.
+<i class="no-highlight">152</i>&nbsp;     * @param i     Number to send
+<i class="no-highlight">153</i>&nbsp;     */
+<i class="no-highlight">154</i>&nbsp;    public synchronized void send(int i){
+<b class="nc"><i class="no-highlight">155</i>&nbsp;        DEBUGGER.printDebug(&quot;Sending int: &quot;+i);</b>
+<i class="no-highlight">156</i>&nbsp;        try{
+<b class="nc"><i class="no-highlight">157</i>&nbsp;            out.writeInt(i);</b>
+<b class="nc"><i class="no-highlight">158</i>&nbsp;            out.flush();</b>
+<b class="nc"><i class="no-highlight">159</i>&nbsp;            out.reset();</b>
+<b class="nc"><i class="no-highlight">160</i>&nbsp;        }catch (IOException e){</b>
+<b class="nc"><i class="no-highlight">161</i>&nbsp;            System.err.println(&quot;IOException when sending an int to &quot;+socket.toString());</b>
+<b class="nc"><i class="no-highlight">162</i>&nbsp;            close();</b>
+<b class="nc"><i class="no-highlight">163</i>&nbsp;        }</b>
+<i class="no-highlight">164</i>&nbsp;    }
+<i class="no-highlight">165</i>&nbsp;
+<i class="no-highlight">166</i>&nbsp;    /**
+<i class="no-highlight">167</i>&nbsp;     * Tries to send a number to the client. If it fails the connection is closed.
+<i class="no-highlight">168</i>&nbsp;     * @param i     Number to send
+<i class="no-highlight">169</i>&nbsp;     */
+<i class="no-highlight">170</i>&nbsp;    public synchronized void send(int[] i){
+<b class="nc"><i class="no-highlight">171</i>&nbsp;        DEBUGGER.printDebug(&quot;Sending int[]: &quot;+i[0]);</b>
+<i class="no-highlight">172</i>&nbsp;        try{
+<b class="nc"><i class="no-highlight">173</i>&nbsp;            out.writeObject(i);</b>
+<b class="nc"><i class="no-highlight">174</i>&nbsp;            out.flush();</b>
+<b class="nc"><i class="no-highlight">175</i>&nbsp;            out.reset();</b>
+<b class="nc"><i class="no-highlight">176</i>&nbsp;        }catch (IOException e){</b>
+<b class="nc"><i class="no-highlight">177</i>&nbsp;            System.err.println(&quot;IOException when sending an int to &quot;+socket.toString());</b>
+<b class="nc"><i class="no-highlight">178</i>&nbsp;            close();</b>
+<b class="nc"><i class="no-highlight">179</i>&nbsp;        }</b>
+<i class="no-highlight">180</i>&nbsp;    }
+<i class="no-highlight">181</i>&nbsp;
+<i class="no-highlight">182</i>&nbsp;    /**
+<i class="no-highlight">183</i>&nbsp;     * Tries to send a String to the client. If it fails the connection is closed.
+<i class="no-highlight">184</i>&nbsp;     * @param string The string to be sent
+<i class="no-highlight">185</i>&nbsp;     */
+<i class="no-highlight">186</i>&nbsp;    public synchronized void send(String string) {
+<b class="nc"><i class="no-highlight">187</i>&nbsp;        DEBUGGER.printDebug(&quot;Sending String: &quot; + string);</b>
+<i class="no-highlight">188</i>&nbsp;        try {
+<b class="nc"><i class="no-highlight">189</i>&nbsp;            out.writeUTF(string);</b>
+<b class="nc"><i class="no-highlight">190</i>&nbsp;            out.flush();</b>
+<b class="nc"><i class="no-highlight">191</i>&nbsp;            out.reset();</b>
+<b class="nc"><i class="no-highlight">192</i>&nbsp;        } catch(IOException e) {</b>
+<b class="nc"><i class="no-highlight">193</i>&nbsp;            System.err.println(&quot;IOException when sending a string to &quot;+socket.toString());</b>
+<b class="nc"><i class="no-highlight">194</i>&nbsp;            close();</b>
+<b class="nc"><i class="no-highlight">195</i>&nbsp;        }</b>
+<i class="no-highlight">196</i>&nbsp;    }
+<i class="no-highlight">197</i>&nbsp;
+<i class="no-highlight">198</i>&nbsp;    /**
+<i class="no-highlight">199</i>&nbsp;     * Tries to send a RedLeaderCard[] to the client, used only in the game startup. If it fails the connection is closed.
+<i class="no-highlight">200</i>&nbsp;     * @param leaderCards       The RedLeaderCard[] to be sent
+<i class="no-highlight">201</i>&nbsp;     */
+<i class="no-highlight">202</i>&nbsp;    public synchronized void send(RedLeaderCard[] leaderCards) {
+<b class="nc"><i class="no-highlight">203</i>&nbsp;        DEBUGGER.printDebug(&quot;Sending RedLeaderCards&quot; + Arrays.toString(leaderCards));</b>
+<i class="no-highlight">204</i>&nbsp;        try {
+<b class="nc"><i class="no-highlight">205</i>&nbsp;            out.writeObject(leaderCards);</b>
+<b class="nc"><i class="no-highlight">206</i>&nbsp;            out.flush();</b>
+<b class="nc"><i class="no-highlight">207</i>&nbsp;            out.reset();</b>
+<b class="nc"><i class="no-highlight">208</i>&nbsp;        } catch(IOException e) {</b>
+<b class="nc"><i class="no-highlight">209</i>&nbsp;            System.err.println(&quot;IOException when sending a Leader Card to &quot;+socket.toString());</b>
+<b class="nc"><i class="no-highlight">210</i>&nbsp;            close();</b>
+<b class="nc"><i class="no-highlight">211</i>&nbsp;        }</b>
+<i class="no-highlight">212</i>&nbsp;    }
+<i class="no-highlight">213</i>&nbsp;
+<i class="no-highlight">214</i>&nbsp;    /**
+<i class="no-highlight">215</i>&nbsp;     * Tries to send a Boolean to the client. If it fails the connection is closed.
+<i class="no-highlight">216</i>&nbsp;     * @param bool          The boolean to be sent
+<i class="no-highlight">217</i>&nbsp;     */
+<i class="no-highlight">218</i>&nbsp;    public synchronized void send(boolean bool) {
+<b class="nc"><i class="no-highlight">219</i>&nbsp;        DEBUGGER.printDebug(&quot;Sending boolean: &quot; + bool);</b>
+<i class="no-highlight">220</i>&nbsp;        try {
+<b class="nc"><i class="no-highlight">221</i>&nbsp;            out.writeBoolean(bool);</b>
+<b class="nc"><i class="no-highlight">222</i>&nbsp;            out.flush();</b>
+<b class="nc"><i class="no-highlight">223</i>&nbsp;            out.reset();</b>
+<b class="nc"><i class="no-highlight">224</i>&nbsp;        } catch(IOException e) {</b>
+<b class="nc"><i class="no-highlight">225</i>&nbsp;            System.err.println(&quot;IOException when sending a boolean to &quot;+socket.toString());</b>
+<b class="nc"><i class="no-highlight">226</i>&nbsp;            close();</b>
+<b class="nc"><i class="no-highlight">227</i>&nbsp;        }</b>
+<i class="no-highlight">228</i>&nbsp;    }
+<i class="no-highlight">229</i>&nbsp;
+<i class="no-highlight">230</i>&nbsp;    /**
+<i class="no-highlight">231</i>&nbsp;     * Tries to send a MessageToClient to the client. If it fails the connection is closed.
+<i class="no-highlight">232</i>&nbsp;     * @param message       The MessageToClient to be sent
+<i class="no-highlight">233</i>&nbsp;     */
+<i class="no-highlight">234</i>&nbsp;    public synchronized void send(MessageToClient message) {
+<b class="nc"><i class="no-highlight">235</i>&nbsp;        DEBUGGER.printDebug(&quot;Sending MessageToClient: &quot; + message.getActionDone());</b>
+<i class="no-highlight">236</i>&nbsp;        try {
+<b class="nc"><i class="no-highlight">237</i>&nbsp;            out.writeObject(message);</b>
+<b class="nc"><i class="no-highlight">238</i>&nbsp;            out.flush();</b>
+<b class="nc"><i class="no-highlight">239</i>&nbsp;            out.reset();</b>
+<b class="nc"><i class="no-highlight">240</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i class="no-highlight">241</i>&nbsp;            System.err.println(&quot;IOException when sending a MessageToClient to &quot;+socket.toString());</b>
+<b class="nc"><i class="no-highlight">242</i>&nbsp;            close();</b>
+<b class="nc"><i class="no-highlight">243</i>&nbsp;        }</b>
+<i class="no-highlight">244</i>&nbsp;    }
+<i class="no-highlight">245</i>&nbsp;
+<i class="no-highlight">246</i>&nbsp;    /**
+<i class="no-highlight">247</i>&nbsp;     * Tries to send a LeaderCard to the client. If it fails the connection is closed.
+<i class="no-highlight">248</i>&nbsp;     * @param leaderCard    The leader card to be sent
+<i class="no-highlight">249</i>&nbsp;     */
+<i class="no-highlight">250</i>&nbsp;    public synchronized void send(LeaderCard leaderCard){
+<b class="nc"><i class="no-highlight">251</i>&nbsp;        DEBUGGER.printDebug(&quot;Sending LeaderCard: &quot; + leaderCard.getAction());</b>
+<i class="no-highlight">252</i>&nbsp;        try{
+<b class="nc"><i class="no-highlight">253</i>&nbsp;            out.writeObject(leaderCard);</b>
+<b class="nc"><i class="no-highlight">254</i>&nbsp;            out.flush();</b>
+<b class="nc"><i class="no-highlight">255</i>&nbsp;            out.reset();</b>
+<b class="nc"><i class="no-highlight">256</i>&nbsp;        }catch(IOException e){</b>
+<b class="nc"><i class="no-highlight">257</i>&nbsp;            System.err.println(&quot;IOException when sending a Leader Card to &quot;+socket.toString());</b>
+<b class="nc"><i class="no-highlight">258</i>&nbsp;            close();</b>
+<b class="nc"><i class="no-highlight">259</i>&nbsp;        }</b>
+<i class="no-highlight">260</i>&nbsp;    }
+<i class="no-highlight">261</i>&nbsp;
+<i class="no-highlight">262</i>&nbsp;    /**
+<i class="no-highlight">263</i>&nbsp;     * Tries to send a DevelopmentCard to the client. If it fails the connection is closed.
+<i class="no-highlight">264</i>&nbsp;     * @param developmentCard The development card to be sent
+<i class="no-highlight">265</i>&nbsp;     */
+<i class="no-highlight">266</i>&nbsp;    public synchronized void send(DevelopmentCard developmentCard){
+<i class="no-highlight">267</i>&nbsp;        try{
+<b class="nc"><i class="no-highlight">268</i>&nbsp;            out.writeObject(developmentCard);</b>
+<b class="nc"><i class="no-highlight">269</i>&nbsp;            out.flush();</b>
+<b class="nc"><i class="no-highlight">270</i>&nbsp;            out.reset();</b>
+<b class="nc"><i class="no-highlight">271</i>&nbsp;        }catch(IOException e){</b>
+<b class="nc"><i class="no-highlight">272</i>&nbsp;            System.err.println(&quot;IOException when sending a Development Card to &quot;+socket.toString());</b>
+<b class="nc"><i class="no-highlight">273</i>&nbsp;            close();</b>
+<b class="nc"><i class="no-highlight">274</i>&nbsp;        }</b>
+<i class="no-highlight">275</i>&nbsp;    }
+<i class="no-highlight">276</i>&nbsp;
+<i class="no-highlight">277</i>&nbsp;    /**
+<i class="no-highlight">278</i>&nbsp;     * Tries to send a GameType to the client. If it fails the connection is closed.
+<i class="no-highlight">279</i>&nbsp;     * @param gameType      The GameType to be sent
+<i class="no-highlight">280</i>&nbsp;     */
+<i class="no-highlight">281</i>&nbsp;    public synchronized void send(GameType gameType){
+<i class="no-highlight">282</i>&nbsp;        try{
+<b class="nc"><i class="no-highlight">283</i>&nbsp;            out.writeObject(gameType);</b>
+<b class="nc"><i class="no-highlight">284</i>&nbsp;            out.flush();</b>
+<b class="nc"><i class="no-highlight">285</i>&nbsp;            out.reset();</b>
+<b class="nc"><i class="no-highlight">286</i>&nbsp;        }catch(IOException e){</b>
+<b class="nc"><i class="no-highlight">287</i>&nbsp;            System.err.println(&quot;IOException when sending a Development Card to &quot;+socket.toString());</b>
+<b class="nc"><i class="no-highlight">288</i>&nbsp;            close();</b>
+<b class="nc"><i class="no-highlight">289</i>&nbsp;        }</b>
+<i class="no-highlight">290</i>&nbsp;    }
+<i class="no-highlight">291</i>&nbsp;
+<i class="no-highlight">292</i>&nbsp;    /**
+<i class="no-highlight">293</i>&nbsp;     * Tries to send an ArrayList of names to the client. If it fails the connection is closed.
+<i class="no-highlight">294</i>&nbsp;     * @param names         The names to be sent
+<i class="no-highlight">295</i>&nbsp;     */
+<i class="no-highlight">296</i>&nbsp;    public synchronized void send(ArrayList&lt;String&gt; names){
+<b class="nc"><i class="no-highlight">297</i>&nbsp;        DEBUGGER.printDebug(&quot;ArrayList&lt;String&gt;: &quot; + names);</b>
+<i class="no-highlight">298</i>&nbsp;        try{
+<b class="nc"><i class="no-highlight">299</i>&nbsp;            out.writeObject(names);</b>
+<b class="nc"><i class="no-highlight">300</i>&nbsp;            out.flush();</b>
+<b class="nc"><i class="no-highlight">301</i>&nbsp;            out.reset();</b>
+<b class="nc"><i class="no-highlight">302</i>&nbsp;        }catch(IOException e){</b>
+<b class="nc"><i class="no-highlight">303</i>&nbsp;            System.err.println(&quot;IOException when sending an ArrayList of Strings to &quot;+socket.toString());</b>
+<b class="nc"><i class="no-highlight">304</i>&nbsp;            close();</b>
+<b class="nc"><i class="no-highlight">305</i>&nbsp;        }</b>
+<i class="no-highlight">306</i>&nbsp;    }
+<i class="no-highlight">307</i>&nbsp;
+<i class="no-highlight">308</i>&nbsp;    /**
+<i class="no-highlight">309</i>&nbsp;     * Tries to close the socket with the client
+<i class="no-highlight">310</i>&nbsp;     */
+<i class="no-highlight">311</i>&nbsp;    public void close(){
+<i class="no-highlight">312</i>&nbsp;        try{
+<b class="nc"><i class="no-highlight">313</i>&nbsp;            if(this.server.getController().getActionController().getModelToView().containsObserver(this))</b>
+<b class="nc"><i class="no-highlight">314</i>&nbsp;                this.server.getController().getActionController().getModelToView().removeObserver(this);</b>
+<b class="nc"><i class="no-highlight">315</i>&nbsp;            this.clearObservers();</b>
+<b class="nc"><i class="no-highlight">316</i>&nbsp;            this.server.removeFromConnections(this.socket);</b>
+<b class="nc"><i class="no-highlight">317</i>&nbsp;            socket.close();</b>
+<b class="nc"><i class="no-highlight">318</i>&nbsp;            Thread.currentThread().interrupt();</b>
+<b class="nc"><i class="no-highlight">319</i>&nbsp;        }catch (IOException e){</b>
+<b class="nc"><i class="no-highlight">320</i>&nbsp;            System.err.println(&quot;IOError closing socket of &quot;+socket.toString());</b>
+<b class="nc"><i class="no-highlight">321</i>&nbsp;            Thread.currentThread().interrupt();</b>
+<b class="nc"><i class="no-highlight">322</i>&nbsp;        }</b>
+<i class="no-highlight">323</i>&nbsp;    }
+<i class="no-highlight">324</i>&nbsp;
+<i class="no-highlight">325</i>&nbsp;    /**
+<i class="no-highlight">326</i>&nbsp;     * Sends to the client if name matches
+<i class="no-highlight">327</i>&nbsp;     * @param name  username
+<i class="no-highlight">328</i>&nbsp;     * @param i     what to send
+<i class="no-highlight">329</i>&nbsp;     */
+<i class="no-highlight">330</i>&nbsp;    public void conditionalSend(String name,int i){
+<b class="nc"><i class="no-highlight">331</i>&nbsp;        DEBUGGER.printDebug(&quot;Conditional send: &quot;+this.name+&quot; &quot;+name);</b>
+<b class="nc"><i class="no-highlight">332</i>&nbsp;        DEBUGGER.printDebug(&quot;condition is &quot;+this.name.equals(name));</b>
+<b class="nc"><i class="no-highlight">333</i>&nbsp;        if(this.name.equals(name))</b>
+<i class="no-highlight">334</i>&nbsp;        {
+<b class="nc"><i class="no-highlight">335</i>&nbsp;            DEBUGGER.printDebug(&quot;Sending to &quot;+name+&quot;the int &quot;+i);</b>
+<b class="nc"><i class="no-highlight">336</i>&nbsp;            send(i);</b>
+<i class="no-highlight">337</i>&nbsp;        }
+<i class="no-highlight">338</i>&nbsp;    }
+<i class="no-highlight">339</i>&nbsp;
+<i class="no-highlight">340</i>&nbsp;    /**
+<i class="no-highlight">341</i>&nbsp;     * Sends to the client if name matches
+<i class="no-highlight">342</i>&nbsp;     * @param name  username
+<i class="no-highlight">343</i>&nbsp;     * @param message     what to send
+<i class="no-highlight">344</i>&nbsp;     */
+<i class="no-highlight">345</i>&nbsp;    public void conditionalSend(String name,String message){
+<b class="nc"><i class="no-highlight">346</i>&nbsp;        if(this.name.equals(name))</b>
+<b class="nc"><i class="no-highlight">347</i>&nbsp;            send(message);</b>
+<i class="no-highlight">348</i>&nbsp;    }
+<i class="no-highlight">349</i>&nbsp;
+<i class="no-highlight">350</i>&nbsp;    /**
+<i class="no-highlight">351</i>&nbsp;     * Sends to the client if name matches
+<i class="no-highlight">352</i>&nbsp;     * @param name  username
+<i class="no-highlight">353</i>&nbsp;     * @param message     what to send
+<i class="no-highlight">354</i>&nbsp;     */
+<i class="no-highlight">355</i>&nbsp;    public void conditionalSend(String name,MessageToClient message){
+<b class="nc"><i class="no-highlight">356</i>&nbsp;        if(this.name.equals(name))</b>
+<b class="nc"><i class="no-highlight">357</i>&nbsp;            send(message);</b>
+<i class="no-highlight">358</i>&nbsp;    }
+<i class="no-highlight">359</i>&nbsp;
+<i class="no-highlight">360</i>&nbsp;    /**
+<i class="no-highlight">361</i>&nbsp;     * Sends to the client if name matches
+<i class="no-highlight">362</i>&nbsp;     * @param name  username
+<i class="no-highlight">363</i>&nbsp;     * @param gameType     what to send
+<i class="no-highlight">364</i>&nbsp;     */
+<i class="no-highlight">365</i>&nbsp;    public void conditionalSend(String name, GameType gameType){
+<b class="nc"><i class="no-highlight">366</i>&nbsp;        if(this.name.equals(name))</b>
+<b class="nc"><i class="no-highlight">367</i>&nbsp;            send(gameType);</b>
+<i class="no-highlight">368</i>&nbsp;    }
+<i class="no-highlight">369</i>&nbsp;
+<i class="no-highlight">370</i>&nbsp;    /**
+<i class="no-highlight">371</i>&nbsp;     * Sends to the client if name matches
+<i class="no-highlight">372</i>&nbsp;     * @param name  username
+<i class="no-highlight">373</i>&nbsp;     * @param bool     what to send
+<i class="no-highlight">374</i>&nbsp;     */
+<i class="no-highlight">375</i>&nbsp;    public void conditionalSend(String name,boolean bool){
+<b class="nc"><i class="no-highlight">376</i>&nbsp;        if(this.name.equals(name))</b>
+<b class="nc"><i class="no-highlight">377</i>&nbsp;            send(bool);</b>
+<i class="no-highlight">378</i>&nbsp;    }
+<i class="no-highlight">379</i>&nbsp;
+<i class="no-highlight">380</i>&nbsp;    /**
+<i class="no-highlight">381</i>&nbsp;     * Sends to the client if name matches
+<i class="no-highlight">382</i>&nbsp;     * @param name  username
+<i class="no-highlight">383</i>&nbsp;     * @param leaderCards     what to send
+<i class="no-highlight">384</i>&nbsp;     */
+<i class="no-highlight">385</i>&nbsp;    public void conditionalSend(String name, RedLeaderCard[] leaderCards){
+<b class="nc"><i class="no-highlight">386</i>&nbsp;        if(this.name.equals(name))</b>
+<b class="nc"><i class="no-highlight">387</i>&nbsp;            send(leaderCards);</b>
+<i class="no-highlight">388</i>&nbsp;    }
+<i class="no-highlight">389</i>&nbsp;
+<i class="no-highlight">390</i>&nbsp;    /**
+<i class="no-highlight">391</i>&nbsp;     * Getter for the ObjectInputStream
+<i class="no-highlight">392</i>&nbsp;     * @return  the objectInputStream
+<i class="no-highlight">393</i>&nbsp;     */
+<i class="no-highlight">394</i>&nbsp;    public ObjectInputStream getIn() {
+<b class="nc"><i class="no-highlight">395</i>&nbsp;        return in;</b>
+<i class="no-highlight">396</i>&nbsp;    }
+<i class="no-highlight">397</i>&nbsp;
+<i class="no-highlight">398</i>&nbsp;    /**
+<i class="no-highlight">399</i>&nbsp;     * Getter for the name
+<i class="no-highlight">400</i>&nbsp;     * @return  the name
+<i class="no-highlight">401</i>&nbsp;     */
+<i class="no-highlight">402</i>&nbsp;    public String getName() {
+<b class="nc"><i class="no-highlight">403</i>&nbsp;        return name;</b>
+<i class="no-highlight">404</i>&nbsp;    }
+<i class="no-highlight">405</i>&nbsp;
+<i class="no-highlight">406</i>&nbsp;    /**
+<i class="no-highlight">407</i>&nbsp;     * Setter for the name
+<i class="no-highlight">408</i>&nbsp;     * @param name
+<i class="no-highlight">409</i>&nbsp;     */
+<i class="no-highlight">410</i>&nbsp;    public void setName(String name) {
+<b class="nc"><i class="no-highlight">411</i>&nbsp;        this.name = name;</b>
+<i class="no-highlight">412</i>&nbsp;    }
+<i class="no-highlight">413</i>&nbsp;
+<i class="no-highlight">414</i>&nbsp;    /**
+<i class="no-highlight">415</i>&nbsp;     * Checks if the name is in the server
+<i class="no-highlight">416</i>&nbsp;     * @return  true if the name is in the server, false otherwise
+<i class="no-highlight">417</i>&nbsp;     */
+<i class="no-highlight">418</i>&nbsp;    public synchronized boolean nameInServer() {
+<b class="nc"><i class="no-highlight">419</i>&nbsp;        return this.server.isNameInConnections(this.name);</b>
+<i class="no-highlight">420</i>&nbsp;    }
+<i class="no-highlight">421</i>&nbsp;
+<i class="no-highlight">422</i>&nbsp;    /**
+<i class="no-highlight">423</i>&nbsp;     * Getter for the server
+<i class="no-highlight">424</i>&nbsp;     * @return  server
+<i class="no-highlight">425</i>&nbsp;     */
+<i class="no-highlight">426</i>&nbsp;    public Server getServer() {
+<b class="nc"><i class="no-highlight">427</i>&nbsp;        return server;</b>
+<i class="no-highlight">428</i>&nbsp;    }
+<i class="no-highlight">429</i>&nbsp;
+<i class="no-highlight">430</i>&nbsp;    /**
+<i class="no-highlight">431</i>&nbsp;     * Getter for ready
+<i class="no-highlight">432</i>&nbsp;     * @return  ready boolean
+<i class="no-highlight">433</i>&nbsp;     */
+<i class="no-highlight">434</i>&nbsp;    public boolean isReady() {
+<b class="nc"><i class="no-highlight">435</i>&nbsp;        return ready;</b>
+<i class="no-highlight">436</i>&nbsp;    }
+<i class="no-highlight">437</i>&nbsp;
+<i class="no-highlight">438</i>&nbsp;    /**
+<i class="no-highlight">439</i>&nbsp;     * Setter for ready
+<i class="no-highlight">440</i>&nbsp;     * @param ready
+<i class="no-highlight">441</i>&nbsp;     */
+<i class="no-highlight">442</i>&nbsp;    public void setReady(boolean ready) {
+<b class="nc"><i class="no-highlight">443</i>&nbsp;        this.ready = ready;</b>
+<i class="no-highlight">444</i>&nbsp;    }
+<i class="no-highlight">445</i>&nbsp;
+<i class="no-highlight">446</i>&nbsp;    /**
+<i class="no-highlight">447</i>&nbsp;     * Method used for synchronization purposes between different Server-Client connections.
+<i class="no-highlight">448</i>&nbsp;     * &lt;p&gt;It works buy stopping the caller Thread until all players are ready to proceed to the next phase of
+<i class="no-highlight">449</i>&nbsp;     * the game.&lt;/p&gt;
+<i class="no-highlight">450</i>&nbsp;     */
+<i class="no-highlight">451</i>&nbsp;    public void waitReady() {
+<b class="nc"><i class="no-highlight">452</i>&nbsp;        synchronized (this.server) {</b>
+<b class="nc"><i class="no-highlight">453</i>&nbsp;            if(this.server.allAreReady()) {</b>
+<b class="nc"><i class="no-highlight">454</i>&nbsp;                this.server.notifyAll();</b>
+<b class="nc"><i class="no-highlight">455</i>&nbsp;                this.server.setAllReady(false);</b>
+<i class="no-highlight">456</i>&nbsp;            }
+<i class="no-highlight">457</i>&nbsp;            else
+<i class="no-highlight">458</i>&nbsp;                try {
+<b class="nc"><i class="no-highlight">459</i>&nbsp;                    this.server.wait();</b>
+<b class="nc"><i class="no-highlight">460</i>&nbsp;                } catch (InterruptedException e) {</b>
+<b class="nc"><i class="no-highlight">461</i>&nbsp;                    e.printStackTrace();</b>
+<b class="nc"><i class="no-highlight">462</i>&nbsp;                }</b>
+<b class="nc"><i class="no-highlight">463</i>&nbsp;        }</b>
+<i class="no-highlight">464</i>&nbsp;    }
+<i class="no-highlight">465</i>&nbsp;
+<i class="no-highlight">466</i>&nbsp;    /**
+<i class="no-highlight">467</i>&nbsp;     * Method used to see if its One&#39;s turn
+<i class="no-highlight">468</i>&nbsp;     * @return
+<i class="no-highlight">469</i>&nbsp;     */
+<i class="no-highlight">470</i>&nbsp;    public boolean isMyTurn() {
+<b class="nc"><i class="no-highlight">471</i>&nbsp;        return this.name.equals(this.server.getController().getActionController().getGame().getCurrentPlayerNickname());</b>
+<i class="no-highlight">472</i>&nbsp;    }
+<i class="no-highlight">473</i>&nbsp;
+<i class="no-highlight">474</i>&nbsp;    /**
+<i class="no-highlight">475</i>&nbsp;     * Checks if the socket is the same
+<i class="no-highlight">476</i>&nbsp;     * @param socket    the socket to check
+<i class="no-highlight">477</i>&nbsp;     * @return          true if equals, false otherwise
+<i class="no-highlight">478</i>&nbsp;     */
+<i class="no-highlight">479</i>&nbsp;    public boolean socketEquals(Socket socket){
+<b class="nc"><i class="no-highlight">480</i>&nbsp;        return socket == this.socket;</b>
+<i class="no-highlight">481</i>&nbsp;    }
+<i class="no-highlight">482</i>&nbsp;
+<i class="no-highlight">483</i>&nbsp;    /**
+<i class="no-highlight">484</i>&nbsp;     * Updates the Model about a disconnection and &lt;b&gt;if the player who disconnected was CURRENTLY playing&lt;/b&gt;, uses
+<i class="no-highlight">485</i>&nbsp;     * the Server to broadcast a message to all Clients so that the next player can start his turn.
+<i class="no-highlight">486</i>&nbsp;     */
+<i class="no-highlight">487</i>&nbsp;    public void disconnected() {
+<b class="nc"><i class="no-highlight">488</i>&nbsp;        String currentPlayer = this.server.getController().getActionController().getGame().getCurrentPlayerNickname();</b>
+<b class="nc"><i class="no-highlight">489</i>&nbsp;        MessageToClient message = this.server.getController().getActionController().disconnected(this.name);</b>
+<b class="nc"><i class="no-highlight">490</i>&nbsp;        this.server.removeFromConnections(this.socket);</b>
+<b class="nc"><i class="no-highlight">491</i>&nbsp;        this.removeObserver(this.server.getController());</b>
+<b class="nc"><i class="no-highlight">492</i>&nbsp;        this.server.getController().getActionController().getModelToView().removeObserver(this);</b>
+<i class="no-highlight">493</i>&nbsp;
+<b class="nc"><i class="no-highlight">494</i>&nbsp;        if(this.name.equals(currentPlayer))</b>
+<b class="nc"><i class="no-highlight">495</i>&nbsp;            this.server.broadcast(message);</b>
+<i class="no-highlight">496</i>&nbsp;    }
+<i class="no-highlight">497</i>&nbsp;
+<i class="no-highlight">498</i>&nbsp;
+<i class="no-highlight">499</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-07-02 23:15</div>
+</div>
+</body>
+</html>

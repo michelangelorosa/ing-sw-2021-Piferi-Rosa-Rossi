@@ -1,0 +1,127 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Client2</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.View</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Client2 (it.polimi.ingsw.View)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Client2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 22)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.View;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.awt.event.ActionEvent;
+<i>4</i>&nbsp;import java.awt.event.ActionListener;
+<i>5</i>&nbsp;import java.io.*;
+<i>6</i>&nbsp;import java.net.Socket;
+<i>7</i>&nbsp;import java.util.Scanner;
+<i>8</i>&nbsp;
+<b class="nc"><i>9</i>&nbsp;public class Client2 {</b>
+<b class="nc"><i>10</i>&nbsp;    static private String serverAddress=&quot;localhost&quot;;</b>
+<b class="nc"><i>11</i>&nbsp;    static private int server_port=8765;</b>
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    public static void main(String[] args) throws Exception {
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;        try {
+<b class="nc"><i>16</i>&nbsp;            Socket socket = new Socket(serverAddress, server_port);</b>
+<i>17</i>&nbsp;
+<b class="nc"><i>18</i>&nbsp;            OutputStream outputStream = socket.getOutputStream();</b>
+<b class="nc"><i>19</i>&nbsp;            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);</b>
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;
+<b class="nc"><i>22</i>&nbsp;            InputStream inputStream = socket.getInputStream();</b>
+<b class="nc"><i>23</i>&nbsp;            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);</b>
+<i>24</i>&nbsp;
+<b class="nc"><i>25</i>&nbsp;            System.out.println(&quot;Connected to server!&quot;);</b>
+<i>26</i>&nbsp;            while (true) {
+<b class="nc"><i>27</i>&nbsp;                int action = objectInputStream.readInt();</b>
+<b class="nc"><i>28</i>&nbsp;                System.out.print(&quot;Got &quot;+action);</b>
+<i>29</i>&nbsp;
+<b class="nc"><i>30</i>&nbsp;                if (action==0) {</b>
+<b class="nc"><i>31</i>&nbsp;                    System.out.print(&quot;Enter name: &quot;);</b>
+<b class="nc"><i>32</i>&nbsp;                    String name =&quot;Giorgio&quot;;</b>
+<b class="nc"><i>33</i>&nbsp;                    objectOutputStream.writeUTF(name);</b>
+<b class="nc"><i>34</i>&nbsp;                    objectOutputStream.flush();</b>
+<b class="nc"><i>35</i>&nbsp;                } //Tutti gli switch case</b>
+<b class="nc"><i>36</i>&nbsp;                else if(action==1){</b>
+<b class="nc"><i>37</i>&nbsp;                    System.out.println(&quot;Qualcosa&quot;);</b>
+<i>38</i>&nbsp;                }
+<b class="nc"><i>39</i>&nbsp;            }</b>
+<b class="nc"><i>40</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>41</i>&nbsp;            e.printStackTrace();</b>
+<i>42</i>&nbsp;        }
+<i>43</i>&nbsp;    }
+<i>44</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-12 23:55</div>
+</div>
+</body>
+</html>

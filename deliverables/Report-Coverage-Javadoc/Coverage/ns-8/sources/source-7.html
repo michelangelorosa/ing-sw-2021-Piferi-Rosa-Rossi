@@ -1,0 +1,200 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > PlayerJSON</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+    @import "../../.css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../.js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">it.polimi.ingsw.Model.JSON</a>
+</div>
+
+<h1>Coverage Summary for Class: PlayerJSON (it.polimi.ingsw.Model.JSON)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PlayerJSON</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (62/62)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package it.polimi.ingsw.Model.JSON;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import it.polimi.ingsw.Controller.Actions.ActionType;
+<i class="no-highlight">4</i>&nbsp;import it.polimi.ingsw.Model.Enums.GameStatus;
+<i class="no-highlight">5</i>&nbsp;import it.polimi.ingsw.Model.Enums.PlayerStatus;
+<i class="no-highlight">6</i>&nbsp;import it.polimi.ingsw.Model.Enums.PopeTile;
+<i class="no-highlight">7</i>&nbsp;import it.polimi.ingsw.Model.Enums.ResourceType;
+<i class="no-highlight">8</i>&nbsp;import it.polimi.ingsw.Model.GameModel.Board;
+<i class="no-highlight">9</i>&nbsp;import it.polimi.ingsw.Model.GameModel.Warehouse;
+<i class="no-highlight">10</i>&nbsp;import it.polimi.ingsw.Model.GameModel.WarehouseDepot;
+<i class="no-highlight">11</i>&nbsp;import it.polimi.ingsw.View.ReducedModel.Player;
+<i class="no-highlight">12</i>&nbsp;
+<i class="no-highlight">13</i>&nbsp;import java.util.ArrayList;
+<i class="no-highlight">14</i>&nbsp;
+<i class="no-highlight">15</i>&nbsp;/**
+<i class="no-highlight">16</i>&nbsp; * PlayerJSON is a class used to write on JSON files
+<i class="no-highlight">17</i>&nbsp; * @author francescopiferi99
+<i class="no-highlight">18</i>&nbsp; */
+<i class="no-highlight">19</i>&nbsp;public class PlayerJSON {
+<i class="no-highlight">20</i>&nbsp;    private final String nickname;
+<i class="no-highlight">21</i>&nbsp;    private final int turnPosition;
+<i class="no-highlight">22</i>&nbsp;    private final boolean Inkwell;
+<i class="no-highlight">23</i>&nbsp;    PlayerStatus status;
+<i class="no-highlight">24</i>&nbsp;    private final int faithTrackPosition;
+<i class="no-highlight">25</i>&nbsp;    int victoryPoints;
+<i class="no-highlight">26</i>&nbsp;    PopeTile pope0, pope1, pope2;
+<i class="no-highlight">27</i>&nbsp;    int depot0Max, depot1Max, depot2Max, depot0Stored, depot1Stored, depot2Stored, depotLeader1Stored, depotLeader2Stored;
+<i class="no-highlight">28</i>&nbsp;    ResourceType depot0Type, depot1Type, depot2Type;
+<i class="no-highlight">29</i>&nbsp;    int leader0, leader1, strongboxShields, strongboxServants, strongboxCoins, strongboxStones, levelOccupied1, levelOccupied2, levelOccupied3, slot1card1, slot1card2, slot1card3, slot2card1, slot2card2, slot2card3, slot3card1, slot3card2, slot3card3;
+<i class="no-highlight">30</i>&nbsp;    boolean CHOOSE_ACTION, GAME_SET,INIT_CHOOSE_RESOURCES, INIT_CHOOSE_LEADER_CARDS, MARKET_CHOOSE_ROW, CHOOSE_LEADER_CARD, ADD_RESOURCE, SWITCH_DEPOT, RESET_WAREHOUSE, END_MARKET, BUY_CARD, PAY_RESOURCE_CARD, PAY_RESOURCE_PRODUCTION, END_PAY_CARD, CHOOSE_CARD_SLOT, ACTIVATE_PRODUCTION, END_PAY_PRODUCTION, CHOOSE_PRODUCTION_OUTPUT, ACTIVATE_LEADERCARD, DELETE_LEADERCARD, END_TURN, FINAL_POINTS;
+<i class="no-highlight">31</i>&nbsp;
+<i class="no-highlight">32</i>&nbsp;    /**This method is use to create the file &quot;Persistence.json&quot;*/
+<b class="fc"><i class="no-highlight">33</i>&nbsp;    public PlayerJSON(String nickname, int turnPosition, boolean inkwell, PlayerStatus status, int faithTrackPosition, int victoryPoints, PopeTile pope0, PopeTile pope1, PopeTile pope2, int depot0Max, int depot1Max, int depot2Max, int depot0Stored, int depot1Stored, int depot2Stored, int depotLeader1Stored, int depotLeader2Stored, ResourceType depot0Type, ResourceType depot1Type, ResourceType depot2Type, int leader0, int leader1, int strongboxShields, int strongboxServants, int strongboxCoins, int strongboxStones, int levelOccupied1, int levelOccupied2, int levelOccupied3, int slot1card1, int slot1card2, int slot1card3, int slot2card1, int slot2card2, int slot2card3, int slot3card1, int slot3card2, int slot3card3, boolean CHOOSE_ACTION, boolean GAME_SET, boolean INIT_CHOOSE_RESOURCES, boolean INIT_CHOOSE_LEADER_CARDS, boolean MARKET_CHOOSE_ROW, boolean CHOOSE_LEADER_CARD, boolean ADD_RESOURCE, boolean SWITCH_DEPOT, boolean RESET_WAREHOUSE, boolean END_MARKET, boolean BUY_CARD, boolean PAY_RESOURCE_CARD, boolean PAY_RESOURCE_PRODUCTION, boolean END_PAY_CARD, boolean CHOOSE_CARD_SLOT, boolean ACTIVATE_PRODUCTION, boolean END_PAY_PRODUCTION, boolean CHOOSE_PRODUCTION_OUTPUT, boolean ACTIVATE_LEADERCARD, boolean DELETE_LEADERCARD, boolean END_TURN, boolean FINAL_POINTS) {</b>
+<b class="fc"><i class="no-highlight">34</i>&nbsp;        this.nickname = nickname;</b>
+<b class="fc"><i class="no-highlight">35</i>&nbsp;        this.turnPosition = turnPosition;</b>
+<b class="fc"><i class="no-highlight">36</i>&nbsp;        this.Inkwell = inkwell;</b>
+<b class="fc"><i class="no-highlight">37</i>&nbsp;        this.status = status;</b>
+<b class="fc"><i class="no-highlight">38</i>&nbsp;        this.faithTrackPosition = faithTrackPosition;</b>
+<b class="fc"><i class="no-highlight">39</i>&nbsp;        this.victoryPoints = victoryPoints;</b>
+<b class="fc"><i class="no-highlight">40</i>&nbsp;        this.pope0 = pope0;</b>
+<b class="fc"><i class="no-highlight">41</i>&nbsp;        this.pope1 = pope1;</b>
+<b class="fc"><i class="no-highlight">42</i>&nbsp;        this.pope2 = pope2;</b>
+<b class="fc"><i class="no-highlight">43</i>&nbsp;        this.depot0Max = depot0Max;</b>
+<b class="fc"><i class="no-highlight">44</i>&nbsp;        this.depot1Max = depot1Max;</b>
+<b class="fc"><i class="no-highlight">45</i>&nbsp;        this.depot2Max = depot2Max;</b>
+<b class="fc"><i class="no-highlight">46</i>&nbsp;        this.depot0Stored = depot0Stored;</b>
+<b class="fc"><i class="no-highlight">47</i>&nbsp;        this.depot1Stored = depot1Stored;</b>
+<b class="fc"><i class="no-highlight">48</i>&nbsp;        this.depot2Stored = depot2Stored;</b>
+<b class="fc"><i class="no-highlight">49</i>&nbsp;        this.depotLeader1Stored = depotLeader1Stored;</b>
+<b class="fc"><i class="no-highlight">50</i>&nbsp;        this.depotLeader2Stored = depotLeader2Stored;</b>
+<b class="fc"><i class="no-highlight">51</i>&nbsp;        this.depot0Type = depot0Type;</b>
+<b class="fc"><i class="no-highlight">52</i>&nbsp;        this.depot1Type = depot1Type;</b>
+<b class="fc"><i class="no-highlight">53</i>&nbsp;        this.depot2Type = depot2Type;</b>
+<b class="fc"><i class="no-highlight">54</i>&nbsp;        this.leader0 = leader0;</b>
+<b class="fc"><i class="no-highlight">55</i>&nbsp;        this.leader1 = leader1;</b>
+<b class="fc"><i class="no-highlight">56</i>&nbsp;        this.strongboxShields = strongboxShields;</b>
+<b class="fc"><i class="no-highlight">57</i>&nbsp;        this.strongboxServants = strongboxServants;</b>
+<b class="fc"><i class="no-highlight">58</i>&nbsp;        this.strongboxCoins = strongboxCoins;</b>
+<b class="fc"><i class="no-highlight">59</i>&nbsp;        this.strongboxStones = strongboxStones;</b>
+<b class="fc"><i class="no-highlight">60</i>&nbsp;        this.levelOccupied1 = levelOccupied1;</b>
+<b class="fc"><i class="no-highlight">61</i>&nbsp;        this.levelOccupied2 = levelOccupied2;</b>
+<b class="fc"><i class="no-highlight">62</i>&nbsp;        this.levelOccupied3 = levelOccupied3;</b>
+<b class="fc"><i class="no-highlight">63</i>&nbsp;        this.slot1card1 = slot1card1;</b>
+<b class="fc"><i class="no-highlight">64</i>&nbsp;        this.slot1card2 = slot1card2;</b>
+<b class="fc"><i class="no-highlight">65</i>&nbsp;        this.slot1card3 = slot1card3;</b>
+<b class="fc"><i class="no-highlight">66</i>&nbsp;        this.slot2card1 = slot2card1;</b>
+<b class="fc"><i class="no-highlight">67</i>&nbsp;        this.slot2card2 = slot2card2;</b>
+<b class="fc"><i class="no-highlight">68</i>&nbsp;        this.slot2card3 = slot2card3;</b>
+<b class="fc"><i class="no-highlight">69</i>&nbsp;        this.slot3card1 = slot3card1;</b>
+<b class="fc"><i class="no-highlight">70</i>&nbsp;        this.slot3card2 = slot3card2;</b>
+<b class="fc"><i class="no-highlight">71</i>&nbsp;        this.slot3card3 = slot3card3;</b>
+<b class="fc"><i class="no-highlight">72</i>&nbsp;        this.CHOOSE_ACTION = CHOOSE_ACTION;</b>
+<b class="fc"><i class="no-highlight">73</i>&nbsp;        this.GAME_SET = GAME_SET;</b>
+<b class="fc"><i class="no-highlight">74</i>&nbsp;        this.INIT_CHOOSE_RESOURCES = INIT_CHOOSE_RESOURCES;</b>
+<b class="fc"><i class="no-highlight">75</i>&nbsp;        this.INIT_CHOOSE_LEADER_CARDS = INIT_CHOOSE_LEADER_CARDS;</b>
+<b class="fc"><i class="no-highlight">76</i>&nbsp;        this.MARKET_CHOOSE_ROW = MARKET_CHOOSE_ROW;</b>
+<b class="fc"><i class="no-highlight">77</i>&nbsp;        this.CHOOSE_LEADER_CARD = CHOOSE_LEADER_CARD;</b>
+<b class="fc"><i class="no-highlight">78</i>&nbsp;        this.ADD_RESOURCE = ADD_RESOURCE;</b>
+<b class="fc"><i class="no-highlight">79</i>&nbsp;        this.SWITCH_DEPOT = SWITCH_DEPOT;</b>
+<b class="fc"><i class="no-highlight">80</i>&nbsp;        this.RESET_WAREHOUSE = RESET_WAREHOUSE;</b>
+<b class="fc"><i class="no-highlight">81</i>&nbsp;        this.END_MARKET = END_MARKET;</b>
+<b class="fc"><i class="no-highlight">82</i>&nbsp;        this.BUY_CARD = BUY_CARD;</b>
+<b class="fc"><i class="no-highlight">83</i>&nbsp;        this.PAY_RESOURCE_CARD = PAY_RESOURCE_CARD;</b>
+<b class="fc"><i class="no-highlight">84</i>&nbsp;        this.PAY_RESOURCE_PRODUCTION = PAY_RESOURCE_PRODUCTION;</b>
+<b class="fc"><i class="no-highlight">85</i>&nbsp;        this.END_PAY_CARD = END_PAY_CARD;</b>
+<b class="fc"><i class="no-highlight">86</i>&nbsp;        this.CHOOSE_CARD_SLOT = CHOOSE_CARD_SLOT;</b>
+<b class="fc"><i class="no-highlight">87</i>&nbsp;        this.ACTIVATE_PRODUCTION = ACTIVATE_PRODUCTION;</b>
+<b class="fc"><i class="no-highlight">88</i>&nbsp;        this.END_PAY_PRODUCTION = END_PAY_PRODUCTION;</b>
+<b class="fc"><i class="no-highlight">89</i>&nbsp;        this.CHOOSE_PRODUCTION_OUTPUT = CHOOSE_PRODUCTION_OUTPUT;</b>
+<b class="fc"><i class="no-highlight">90</i>&nbsp;        this.ACTIVATE_LEADERCARD = ACTIVATE_LEADERCARD;</b>
+<b class="fc"><i class="no-highlight">91</i>&nbsp;        this.DELETE_LEADERCARD = DELETE_LEADERCARD;</b>
+<b class="fc"><i class="no-highlight">92</i>&nbsp;        this.END_TURN = END_TURN;</b>
+<b class="fc"><i class="no-highlight">93</i>&nbsp;        this.FINAL_POINTS = FINAL_POINTS;</b>
+<b class="fc"><i class="no-highlight">94</i>&nbsp;    }</b>
+<i class="no-highlight">95</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-07-02 23:15</div>
+</div>
+</body>
+</html>

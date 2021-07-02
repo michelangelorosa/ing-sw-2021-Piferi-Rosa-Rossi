@@ -1,0 +1,180 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > EndTurn</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+    @import "../../.css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../.js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">it.polimi.ingsw.Controller.Actions</a>
+</div>
+
+<h1>Coverage Summary for Class: EndTurn (it.polimi.ingsw.Controller.Actions)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">EndTurn</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    92,3%
+  </span>
+  <span class="absValue">
+    (24/26)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package it.polimi.ingsw.Controller.Actions;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import it.polimi.ingsw.Controller.ActionController;
+<i class="no-highlight">4</i>&nbsp;import it.polimi.ingsw.Model.*;
+<i class="no-highlight">5</i>&nbsp;import it.polimi.ingsw.Model.Enums.GameType;
+<i class="no-highlight">6</i>&nbsp;import it.polimi.ingsw.Model.Enums.PlayerStatus;
+<i class="no-highlight">7</i>&nbsp;import it.polimi.ingsw.Model.MessagesToClient.*;
+<i class="no-highlight">8</i>&nbsp;
+<i class="no-highlight">9</i>&nbsp;/**
+<i class="no-highlight">10</i>&nbsp; * EndTurn class defines methods to end a player&#39;s turn and go to the next
+<i class="no-highlight">11</i>&nbsp; * one (if the game is Multiplayer)
+<i class="no-highlight">12</i>&nbsp; */
+<i class="no-highlight">13</i>&nbsp;public class EndTurn extends Action {
+<i class="no-highlight">14</i>&nbsp;    private int currentPlayer;
+<i class="no-highlight">15</i>&nbsp;
+<i class="no-highlight">16</i>&nbsp;    /**
+<i class="no-highlight">17</i>&nbsp;     * Constructor for EndTurn Class.
+<i class="no-highlight">18</i>&nbsp;     */
+<b class="fc"><i class="no-highlight">19</i>&nbsp;    public EndTurn() {</b>
+<b class="fc"><i class="no-highlight">20</i>&nbsp;        this.actionType = ActionType.END_TURN;</b>
+<b class="fc"><i class="no-highlight">21</i>&nbsp;    }</b>
+<i class="no-highlight">22</i>&nbsp;
+<i class="no-highlight">23</i>&nbsp;    /**
+<i class="no-highlight">24</i>&nbsp;     * Getter for &quot;actionType&quot; attribute in EndTurn Class.
+<i class="no-highlight">25</i>&nbsp;     */
+<i class="no-highlight">26</i>&nbsp;    public ActionType getActionType() {
+<b class="fc"><i class="no-highlight">27</i>&nbsp;        return this.actionType;</b>
+<i class="no-highlight">28</i>&nbsp;    }
+<i class="no-highlight">29</i>&nbsp;
+<i class="no-highlight">30</i>&nbsp;    /**
+<i class="no-highlight">31</i>&nbsp;     * Method used to execute the action on the Model.
+<i class="no-highlight">32</i>&nbsp;     * @return &quot;SUCCESS&quot; if the action went right, another String if it went wrong.
+<i class="no-highlight">33</i>&nbsp;     */
+<i class="no-highlight">34</i>&nbsp;    @Override
+<i class="no-highlight">35</i>&nbsp;    public String doAction(ActionController actionController) {
+<b class="fc"><i class="no-highlight">36</i>&nbsp;        int idlePlayers = 0;</b>
+<b class="fc"><i class="no-highlight">37</i>&nbsp;        this.currentPlayer = actionController.getGame().getCurrentPlayerIndex();</b>
+<b class="fc"><i class="no-highlight">38</i>&nbsp;        if(actionController.getGame().getGameType() == GameType.MULTIPLAYER) {</b>
+<b class="fc"><i class="no-highlight">39</i>&nbsp;            for(Player player : actionController.getGame().getPlayers())</b>
+<b class="fc"><i class="no-highlight">40</i>&nbsp;                if(player.getStatus() == PlayerStatus.IDLE)</b>
+<b class="fc"><i class="no-highlight">41</i>&nbsp;                    idlePlayers ++;</b>
+<i class="no-highlight">42</i>&nbsp;
+<b class="fc"><i class="no-highlight">43</i>&nbsp;            if(idlePlayers == actionController.getGame().getPlayers().size()) {</b>
+<b class="nc"><i class="no-highlight">44</i>&nbsp;                this.response = &quot;ALL PLAYERS DISCONNECTED&quot;;</b>
+<b class="nc"><i class="no-highlight">45</i>&nbsp;                return &quot;ALL PLAYERS DISCONNECTED&quot;;</b>
+<i class="no-highlight">46</i>&nbsp;            }
+<i class="no-highlight">47</i>&nbsp;            else {
+<b class="fc"><i class="no-highlight">48</i>&nbsp;                actionController.getGame().nextPlayer();</b>
+<b class="fc"><i class="no-highlight">49</i>&nbsp;                while(actionController.getGame().getCurrentPlayer().getStatus() == PlayerStatus.IDLE)</b>
+<b class="fc"><i class="no-highlight">50</i>&nbsp;                    actionController.getGame().nextPlayer();</b>
+<i class="no-highlight">51</i>&nbsp;            }
+<i class="no-highlight">52</i>&nbsp;        }
+<i class="no-highlight">53</i>&nbsp;
+<b class="fc"><i class="no-highlight">54</i>&nbsp;        this.response = &quot;SUCCESS&quot;;</b>
+<b class="fc"><i class="no-highlight">55</i>&nbsp;        return &quot;SUCCESS&quot;;</b>
+<i class="no-highlight">56</i>&nbsp;    }
+<i class="no-highlight">57</i>&nbsp;
+<i class="no-highlight">58</i>&nbsp;    /**
+<i class="no-highlight">59</i>&nbsp;     * Method used to prepare a messageToClient type object to be sent by the server to the client.
+<i class="no-highlight">60</i>&nbsp;     * @return A message to be sent to the client.
+<i class="no-highlight">61</i>&nbsp;     */
+<i class="no-highlight">62</i>&nbsp;    @Override
+<i class="no-highlight">63</i>&nbsp;    public MessageToClient messagePrepare(ActionController actionController) {
+<b class="fc"><i class="no-highlight">64</i>&nbsp;        EndTurnMessage message = new EndTurnMessage(this.currentPlayer);</b>
+<b class="fc"><i class="no-highlight">65</i>&nbsp;        message.setError(this.response);</b>
+<b class="fc"><i class="no-highlight">66</i>&nbsp;        message.setNextPlayerId(actionController.getGame().getCurrentPlayerIndex());</b>
+<i class="no-highlight">67</i>&nbsp;
+<b class="fc"><i class="no-highlight">68</i>&nbsp;        message.addPossibleAction(ActionType.ACTIVATE_PRODUCTION);</b>
+<b class="fc"><i class="no-highlight">69</i>&nbsp;        message.addPossibleAction(ActionType.BUY_CARD);</b>
+<b class="fc"><i class="no-highlight">70</i>&nbsp;        message.addPossibleAction(ActionType.MARKET_CHOOSE_ROW);</b>
+<b class="fc"><i class="no-highlight">71</i>&nbsp;        message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);</b>
+<i class="no-highlight">72</i>&nbsp;
+<b class="fc"><i class="no-highlight">73</i>&nbsp;        return message;</b>
+<i class="no-highlight">74</i>&nbsp;    }
+<i class="no-highlight">75</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-28 14:27</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,205 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > RedCardSlot</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+    @import "../../.css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../.js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">it.polimi.ingsw.View.ReducedModel</a>
+</div>
+
+<h1>Coverage Summary for Class: RedCardSlot (it.polimi.ingsw.View.ReducedModel)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RedCardSlot</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    62,5%
+  </span>
+  <span class="absValue">
+    (5/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    78,8%
+  </span>
+  <span class="absValue">
+    (26/33)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package it.polimi.ingsw.View.ReducedModel;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import it.polimi.ingsw.Model.DevelopmentCard;
+<i class="no-highlight">4</i>&nbsp;import it.polimi.ingsw.Model.Enums.Color;
+<i class="no-highlight">5</i>&nbsp;import it.polimi.ingsw.Model.Enums.Level;
+<i class="no-highlight">6</i>&nbsp;
+<i class="no-highlight">7</i>&nbsp;import java.io.Serializable;
+<i class="no-highlight">8</i>&nbsp;import java.util.ArrayList;
+<i class="no-highlight">9</i>&nbsp;
+<i class="no-highlight">10</i>&nbsp;public class RedCardSlot implements Serializable {
+<i class="no-highlight">11</i>&nbsp;    private static final long serialVersionUID = 0x1;
+<i class="no-highlight">12</i>&nbsp;
+<i class="no-highlight">13</i>&nbsp;    protected int levelOccupied;
+<i class="no-highlight">14</i>&nbsp;    protected final RedDevelopmentCard[] cards;
+<i class="no-highlight">15</i>&nbsp;
+<b class="fc"><i class="no-highlight">16</i>&nbsp;    protected RedCardSlot () {</b>
+<b class="fc"><i class="no-highlight">17</i>&nbsp;        this.cards = new DevelopmentCard[3];</b>
+<b class="fc"><i class="no-highlight">18</i>&nbsp;    }</b>
+<i class="no-highlight">19</i>&nbsp;
+<i class="no-highlight">20</i>&nbsp;    public RedDevelopmentCard[] getDevelopmentCards() {
+<b class="nc"><i class="no-highlight">21</i>&nbsp;        return cards;</b>
+<i class="no-highlight">22</i>&nbsp;    }
+<i class="no-highlight">23</i>&nbsp;
+<i class="no-highlight">24</i>&nbsp;    /**
+<i class="no-highlight">25</i>&nbsp;     * Getter for levelOccupied
+<i class="no-highlight">26</i>&nbsp;     */
+<i class="no-highlight">27</i>&nbsp;    public int getLevelOccupied(){
+<b class="nc"><i class="no-highlight">28</i>&nbsp;        return levelOccupied;</b>
+<i class="no-highlight">29</i>&nbsp;    }
+<i class="no-highlight">30</i>&nbsp;
+<i class="no-highlight">31</i>&nbsp;    /**
+<i class="no-highlight">32</i>&nbsp;     * This method returns true if a slot has 3 cards.
+<i class="no-highlight">33</i>&nbsp;     * @return true/false
+<i class="no-highlight">34</i>&nbsp;     */
+<i class="no-highlight">35</i>&nbsp;    public boolean isFull(){
+<b class="fc"><i class="no-highlight">36</i>&nbsp;        return levelOccupied == 3;</b>
+<i class="no-highlight">37</i>&nbsp;    }
+<i class="no-highlight">38</i>&nbsp;
+<i class="no-highlight">39</i>&nbsp;    /**
+<i class="no-highlight">40</i>&nbsp;     * This method returns true if a slot is empty.
+<i class="no-highlight">41</i>&nbsp;     * @return true/false
+<i class="no-highlight">42</i>&nbsp;     */
+<i class="no-highlight">43</i>&nbsp;    public boolean isEmpty() {
+<b class="fc"><i class="no-highlight">44</i>&nbsp;        return levelOccupied == 0;</b>
+<i class="no-highlight">45</i>&nbsp;    }
+<i class="no-highlight">46</i>&nbsp;
+<i class="no-highlight">47</i>&nbsp;    /**
+<i class="no-highlight">48</i>&nbsp;     * This method returns true if he can add the card i the slot
+<i class="no-highlight">49</i>&nbsp;     * @param card which is  the card that the player wants to add
+<i class="no-highlight">50</i>&nbsp;     * @return true if he can, false if he cannot
+<i class="no-highlight">51</i>&nbsp;     */
+<i class="no-highlight">52</i>&nbsp;    public boolean canAdd(RedDevelopmentCard card){
+<b class="fc"><i class="no-highlight">53</i>&nbsp;        if(levelOccupied == 0 &amp;&amp; card.getLevel() == Level.ONE) return true;</b>
+<b class="fc"><i class="no-highlight">54</i>&nbsp;        if(levelOccupied == 1 &amp;&amp; card.getLevel() == Level.TWO) return true;</b>
+<b class="fc"><i class="no-highlight">55</i>&nbsp;        if(levelOccupied == 2 &amp;&amp; card.getLevel() == Level.THREE) return true;</b>
+<b class="fc"><i class="no-highlight">56</i>&nbsp;        else return false;</b>
+<i class="no-highlight">57</i>&nbsp;    }
+<i class="no-highlight">58</i>&nbsp;
+<i class="no-highlight">59</i>&nbsp;    /**
+<i class="no-highlight">60</i>&nbsp;     * This method is use to get the first card of the slot.
+<i class="no-highlight">61</i>&nbsp;     * @return the card on the top of the slot
+<i class="no-highlight">62</i>&nbsp;     */
+<i class="no-highlight">63</i>&nbsp;    public RedDevelopmentCard getFirstCard(){
+<b class="nc"><i class="no-highlight">64</i>&nbsp;        if(levelOccupied == 0) return null;</b>
+<b class="nc"><i class="no-highlight">65</i>&nbsp;        else return cards[levelOccupied - 1];</b>
+<i class="no-highlight">66</i>&nbsp;    }
+<i class="no-highlight">67</i>&nbsp;
+<i class="no-highlight">68</i>&nbsp;    public ArrayList&lt;String&gt; toCli() {
+<b class="fc"><i class="no-highlight">69</i>&nbsp;        ArrayList&lt;String&gt; cardSlot = new ArrayList&lt;&gt;();</b>
+<i class="no-highlight">70</i>&nbsp;        ArrayList&lt;String&gt; cardCli;
+<b class="fc"><i class="no-highlight">71</i>&nbsp;        for(int j = 0; j &lt; 4; j++)</b>
+<b class="fc"><i class="no-highlight">72</i>&nbsp;            cardSlot.add(&quot;                              &quot;);</b>
+<i class="no-highlight">73</i>&nbsp;
+<b class="fc"><i class="no-highlight">74</i>&nbsp;        if(this.isEmpty()) {</b>
+<b class="nc"><i class="no-highlight">75</i>&nbsp;            for(int i = 0; i &lt; 15; i++)</b>
+<b class="nc"><i class="no-highlight">76</i>&nbsp;                cardSlot.add(&quot;                              &quot;);</b>
+<b class="nc"><i class="no-highlight">77</i>&nbsp;            return cardSlot;</b>
+<i class="no-highlight">78</i>&nbsp;        }
+<i class="no-highlight">79</i>&nbsp;
+<i class="no-highlight">80</i>&nbsp;        RedDevelopmentCard card;
+<b class="fc"><i class="no-highlight">81</i>&nbsp;        for(int i = 0; i &lt; this.levelOccupied; i++) {</b>
+<b class="fc"><i class="no-highlight">82</i>&nbsp;            card = this.cards[i];</b>
+<b class="fc"><i class="no-highlight">83</i>&nbsp;            if(i == 0)</b>
+<b class="fc"><i class="no-highlight">84</i>&nbsp;                cardSlot.addAll(card.toCli());</b>
+<i class="no-highlight">85</i>&nbsp;
+<b class="fc"><i class="no-highlight">86</i>&nbsp;            else if(i == 1) {</b>
+<b class="fc"><i class="no-highlight">87</i>&nbsp;                cardCli = card.toCli();</b>
+<b class="fc"><i class="no-highlight">88</i>&nbsp;                for(int k = 2; k &lt; cardSlot.size() - 2; k++)</b>
+<b class="fc"><i class="no-highlight">89</i>&nbsp;                    cardSlot.set(k, cardCli.get(k-2));</b>
+<i class="no-highlight">90</i>&nbsp;            }
+<b class="fc"><i class="no-highlight">91</i>&nbsp;            else if(i == 2) {</b>
+<b class="fc"><i class="no-highlight">92</i>&nbsp;                cardCli = card.toCli();</b>
+<b class="fc"><i class="no-highlight">93</i>&nbsp;                for(int k = 0; k &lt; cardSlot.size() - 4; k++)</b>
+<b class="fc"><i class="no-highlight">94</i>&nbsp;                    cardSlot.set(k, cardCli.get(k));</b>
+<i class="no-highlight">95</i>&nbsp;            }
+<i class="no-highlight">96</i>&nbsp;        }
+<i class="no-highlight">97</i>&nbsp;
+<b class="fc"><i class="no-highlight">98</i>&nbsp;        return cardSlot;</b>
+<i class="no-highlight">99</i>&nbsp;    }
+<i class="no-highlight">100</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-28 14:27</div>
+</div>
+</body>
+</html>

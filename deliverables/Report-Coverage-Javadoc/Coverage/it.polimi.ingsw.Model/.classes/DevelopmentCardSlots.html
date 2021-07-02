@@ -1,0 +1,265 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DevelopmentCardSlots</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DevelopmentCardSlots (it.polimi.ingsw.Model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DevelopmentCardSlots</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (9/ 12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    82,9%
+  </span>
+  <span class="absValue">
+    (58/ 70)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.Model.Enums.Color;
+<i>4</i>&nbsp;import it.polimi.ingsw.Model.Enums.Level;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import java.io.Serializable;
+<i>7</i>&nbsp;import java.util.ArrayList;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;public class DevelopmentCardSlots implements Serializable {
+<i>10</i>&nbsp;    private static final long serialVersionUID = 0x1;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;    private final CardSlot[] slots;
+<i>13</i>&nbsp;    private int cardsInSlot;
+<i>14</i>&nbsp;    private Level level;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    /**
+<i>18</i>&nbsp;     * DevelopmentCardSlot constructor.
+<i>19</i>&nbsp;     */
+<b class="fc"><i>20</i>&nbsp;    public DevelopmentCardSlots(){</b>
+<b class="fc"><i>21</i>&nbsp;        this.slots = new CardSlot[3];</b>
+<b class="fc"><i>22</i>&nbsp;        this.slots[0] = new CardSlot();</b>
+<b class="fc"><i>23</i>&nbsp;        this.slots[1] = new CardSlot();</b>
+<b class="fc"><i>24</i>&nbsp;        this.slots[2] = new CardSlot();</b>
+<b class="fc"><i>25</i>&nbsp;    }</b>
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    /**
+<i>28</i>&nbsp;     * Getter
+<i>29</i>&nbsp;     * @return an array of CardSlot
+<i>30</i>&nbsp;     */
+<i>31</i>&nbsp;    public CardSlot[] getSlots() {
+<b class="fc"><i>32</i>&nbsp;        return slots;</b>
+<i>33</i>&nbsp;    }
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    /**
+<i>36</i>&nbsp;     * This method is used to sum all the production input by receiving an ArrayList of all the Cards that the player
+<i>37</i>&nbsp;     * wants to use and create a new ResourceStack that contains the sum of the resources.
+<i>38</i>&nbsp;     * @param inputs is the ArrayList of DevelopmentCards
+<i>39</i>&nbsp;     * @return productionInput which is a ResourceStack that contains the sum of the resources needed
+<i>40</i>&nbsp;     */
+<i>41</i>&nbsp;    private ResourceStack getProductionInput(ArrayList&lt;DevelopmentCard&gt; inputs){
+<b class="nc"><i>42</i>&nbsp;        ResourceStack productionInput = new ResourceStack(0, 0, 0,0);</b>
+<b class="nc"><i>43</i>&nbsp;        for(DevelopmentCard card : inputs){</b>
+<b class="nc"><i>44</i>&nbsp;            productionInput.addToAllTypes(card.getInput());</b>
+<b class="nc"><i>45</i>&nbsp;        }</b>
+<b class="nc"><i>46</i>&nbsp;        return productionInput;</b>
+<i>47</i>&nbsp;    }
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;    /**
+<i>50</i>&nbsp;     * This method is used to sum all the production outputs by receiving an ArrayList of all the Cards that the player
+<i>51</i>&nbsp;     * wants to use and create a new ResourceStack that contains the sum of the resources.
+<i>52</i>&nbsp;     * @param outputs is the ArrayList of DevelopmentCards
+<i>53</i>&nbsp;     * @return productionOutput which is a ResourceStack that contains the sum of the resources needed
+<i>54</i>&nbsp;     */
+<i>55</i>&nbsp;    private ResourceStack getProductionOutput(ArrayList&lt;DevelopmentCard&gt; outputs){
+<b class="nc"><i>56</i>&nbsp;        ResourceStack productionOutput = new ResourceStack(0, 0, 0,0);</b>
+<b class="nc"><i>57</i>&nbsp;        for(DevelopmentCard card : outputs){</b>
+<b class="nc"><i>58</i>&nbsp;            productionOutput.addToAllTypes(card.getInput());</b>
+<b class="nc"><i>59</i>&nbsp;        }</b>
+<b class="nc"><i>60</i>&nbsp;        return productionOutput;</b>
+<i>61</i>&nbsp;    }
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;    /**
+<i>64</i>&nbsp;     * If the player buys the seventh card he wins
+<i>65</i>&nbsp;     */
+<i>66</i>&nbsp;    public boolean victory(){
+<b class="fc"><i>67</i>&nbsp;        return (slots[0].getLevelOccupied() + slots[1].getLevelOccupied() + slots[2].getLevelOccupied()) == 7;</b>
+<i>68</i>&nbsp;    }
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;    /**
+<i>71</i>&nbsp;     * This method is use to count the final point
+<i>72</i>&nbsp;     * @return points which is an int that contains the sum of the points of the player.
+<i>73</i>&nbsp;     */
+<i>74</i>&nbsp;    public int totalPoints(){
+<b class="fc"><i>75</i>&nbsp;        int points = 0;</b>
+<b class="fc"><i>76</i>&nbsp;        points += slots[0].finalPoints();</b>
+<b class="fc"><i>77</i>&nbsp;        points += slots[1].finalPoints();</b>
+<b class="fc"><i>78</i>&nbsp;        points += slots[2].finalPoints();</b>
+<i>79</i>&nbsp;
+<b class="fc"><i>80</i>&nbsp;        return points;</b>
+<i>81</i>&nbsp;    }
+<i>82</i>&nbsp;
+<i>83</i>&nbsp;
+<i>84</i>&nbsp;    /**
+<i>85</i>&nbsp;     * This method is use to see if the player can or cannot add a card in the slot
+<i>86</i>&nbsp;     * @param card is the Development card that the player wants to add
+<i>87</i>&nbsp;     * @return true if there is a slot available, false if not
+<i>88</i>&nbsp;     */
+<i>89</i>&nbsp;    public boolean canAdd(DevelopmentCard card){
+<b class="fc"><i>90</i>&nbsp;        for(int i = 0; i &lt; 3; i++){</b>
+<b class="fc"><i>91</i>&nbsp;            if(slots[i].canAdd(card)) return true;</b>
+<i>92</i>&nbsp;        }
+<b class="fc"><i>93</i>&nbsp;        return false;</b>
+<i>94</i>&nbsp;    }
+<i>95</i>&nbsp;
+<i>96</i>&nbsp;    /**
+<i>97</i>&nbsp;     * This method is used to count the number of cards, divided by color and level, on the player&#39;s board
+<i>98</i>&nbsp;     * @return sum
+<i>99</i>&nbsp;     */
+<i>100</i>&nbsp;    public LeaderRequirements sumResources(){
+<i>101</i>&nbsp;        LeaderRequirements sum;
+<b class="fc"><i>102</i>&nbsp;        int blueCardLv1 = 0;</b>
+<b class="fc"><i>103</i>&nbsp;        int purpleCardLv1 = 0;</b>
+<b class="fc"><i>104</i>&nbsp;        int yellowCardLv1 = 0;</b>
+<b class="fc"><i>105</i>&nbsp;        int greenCardLv1 = 0;</b>
+<b class="fc"><i>106</i>&nbsp;        int blueCardLv2 = 0;</b>
+<b class="fc"><i>107</i>&nbsp;        int purpleCardLv2 = 0;</b>
+<b class="fc"><i>108</i>&nbsp;        int yellowCardLv2 = 0;</b>
+<b class="fc"><i>109</i>&nbsp;        int greenCardLv2 = 0;</b>
+<b class="fc"><i>110</i>&nbsp;        int blueCardLv3 = 0;</b>
+<b class="fc"><i>111</i>&nbsp;        int purpleCardLv3 = 0;</b>
+<b class="fc"><i>112</i>&nbsp;        int yellowCardLv3 = 0;</b>
+<b class="fc"><i>113</i>&nbsp;        int greenCardLv3 = 0;</b>
+<b class="fc"><i>114</i>&nbsp;        for(int i = 0; i &lt; 3; i++){</b>
+<b class="fc"><i>115</i>&nbsp;            blueCardLv1 += slots[i].sumType(Color.BLUE, Level.ONE);</b>
+<b class="fc"><i>116</i>&nbsp;            blueCardLv2 += slots[i].sumType(Color.BLUE, Level.TWO);</b>
+<b class="fc"><i>117</i>&nbsp;            blueCardLv3 += slots[i].sumType(Color.BLUE, Level.THREE);</b>
+<b class="fc"><i>118</i>&nbsp;            purpleCardLv1 += slots[i].sumType(Color.PURPLE, Level.ONE);</b>
+<b class="fc"><i>119</i>&nbsp;            purpleCardLv2 += slots[i].sumType(Color.PURPLE, Level.TWO);</b>
+<b class="fc"><i>120</i>&nbsp;            purpleCardLv3 += slots[i].sumType(Color.PURPLE, Level.THREE);</b>
+<b class="fc"><i>121</i>&nbsp;            yellowCardLv1 += slots[i].sumType(Color.YELLOW, Level.ONE);</b>
+<b class="fc"><i>122</i>&nbsp;            yellowCardLv2 += slots[i].sumType(Color.YELLOW, Level.TWO);</b>
+<b class="fc"><i>123</i>&nbsp;            yellowCardLv3 += slots[i].sumType(Color.YELLOW, Level.THREE);</b>
+<b class="fc"><i>124</i>&nbsp;            greenCardLv1 += slots[i].sumType(Color.GREEN, Level.ONE);</b>
+<b class="fc"><i>125</i>&nbsp;            greenCardLv2 += slots[i].sumType(Color.GREEN, Level.TWO);</b>
+<b class="fc"><i>126</i>&nbsp;            greenCardLv3 += slots[i].sumType(Color.GREEN, Level.THREE);</b>
+<i>127</i>&nbsp;        }
+<i>128</i>&nbsp;
+<b class="fc"><i>129</i>&nbsp;        sum = new LeaderRequirements(blueCardLv1, purpleCardLv1, yellowCardLv1, greenCardLv1, blueCardLv2, purpleCardLv2, yellowCardLv2, greenCardLv2, blueCardLv3, purpleCardLv3, yellowCardLv3, greenCardLv3);</b>
+<b class="fc"><i>130</i>&nbsp;        return sum;</b>
+<i>131</i>&nbsp;    }
+<i>132</i>&nbsp;
+<i>133</i>&nbsp;    /**
+<i>134</i>&nbsp;     * This method is use to see if the player can or cannot add a card in a particular slot.
+<i>135</i>&nbsp;     * @param i is the number of the slot that the player wants.
+<i>136</i>&nbsp;     * @param card is the Development card that the player wants to add
+<i>137</i>&nbsp;     * @return true if the player can add the card in that slot, false if not
+<i>138</i>&nbsp;     */
+<i>139</i>&nbsp;    public boolean canAddInThisSlot(int i, DevelopmentCard card){
+<b class="fc"><i>140</i>&nbsp;        if(slots[i].canAdd(card)) return true;</b>
+<b class="fc"><i>141</i>&nbsp;        else return false;</b>
+<i>142</i>&nbsp;    }
+<i>143</i>&nbsp;
+<i>144</i>&nbsp;    /**
+<i>145</i>&nbsp;     * This method is used to count the number of cards, divided only by color, on the player&#39;s board
+<i>146</i>&nbsp;     * @return sum
+<i>147</i>&nbsp;     */
+<i>148</i>&nbsp;    public LeaderRequirements sumColors(){
+<i>149</i>&nbsp;        LeaderRequirements sum;
+<b class="fc"><i>150</i>&nbsp;        int blueCards = 0;</b>
+<b class="fc"><i>151</i>&nbsp;        int purpleCards = 0;</b>
+<b class="fc"><i>152</i>&nbsp;        int yellowCards = 0;</b>
+<b class="fc"><i>153</i>&nbsp;        int greenCards = 0;</b>
+<i>154</i>&nbsp;
+<b class="fc"><i>155</i>&nbsp;        for(int i = 0; i &lt; 3; i++){</b>
+<b class="fc"><i>156</i>&nbsp;            blueCards += slots[i].sumColors(Color.BLUE);</b>
+<b class="fc"><i>157</i>&nbsp;            purpleCards += slots[i].sumColors(Color.PURPLE);</b>
+<b class="fc"><i>158</i>&nbsp;            yellowCards += slots[i].sumColors(Color.YELLOW);</b>
+<b class="fc"><i>159</i>&nbsp;            greenCards += slots[i].sumColors(Color.GREEN);</b>
+<i>160</i>&nbsp;        }
+<b class="fc"><i>161</i>&nbsp;        sum = new LeaderRequirements(blueCards, purpleCards,yellowCards,greenCards);</b>
+<b class="fc"><i>162</i>&nbsp;        return sum;</b>
+<i>163</i>&nbsp;    }
+<i>164</i>&nbsp;
+<i>165</i>&nbsp;    /**
+<i>166</i>&nbsp;     * This method use to add a card in a particular slot.
+<i>167</i>&nbsp;     * @param i is the number of the slot I want to use.
+<i>168</i>&nbsp;     * @param card Is the card I want to add.
+<i>169</i>&nbsp;     */
+<i>170</i>&nbsp;    public void addCard(int i, DevelopmentCard card) throws IllegalArgumentException{
+<b class="fc"><i>171</i>&nbsp;        if(i == 0 || i == 1 || i == 2) slots[i].addCard(card);</b>
+<b class="nc"><i>172</i>&nbsp;        else throw new IllegalArgumentException(&quot;ERROR, the slot does not exists&quot;);</b>
+<b class="fc"><i>173</i>&nbsp;    }</b>
+<i>174</i>&nbsp;
+<i>175</i>&nbsp;    /**
+<i>176</i>&nbsp;     * This method is used to count the total number of Development Cards on the Board
+<i>177</i>&nbsp;     * @return the number of cards
+<i>178</i>&nbsp;     */
+<i>179</i>&nbsp;    public int countAllCards() {
+<b class="nc"><i>180</i>&nbsp;        return this.getSlots()[0].getLevelOccupied() + this.getSlots()[1].getLevelOccupied() + this.getSlots()[2].getLevelOccupied();</b>
+<i>181</i>&nbsp;    }
+<i>182</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-12 23:55</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,172 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DevelopmentCardTable</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.View.ReducedModel</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DevelopmentCardTable (it.polimi.ingsw.View.ReducedModel)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DevelopmentCardTable</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    90%
+  </span>
+  <span class="absValue">
+    (27/ 30)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;
+<i>2</i>&nbsp;package it.polimi.ingsw.View.ReducedModel;
+<i>3</i>&nbsp;
+<i>4</i>&nbsp;import java.io.Serializable;
+<i>5</i>&nbsp;import java.util.ArrayList;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;/**
+<i>8</i>&nbsp; * DevelopmentCardTable Class contains all 12 Development Card decks available for the player to buy.
+<i>9</i>&nbsp; * All decks are stored in a 2D array of DevelopmentCardDeck-type object.
+<i>10</i>&nbsp; */
+<i>11</i>&nbsp;public class DevelopmentCardTable implements Serializable {
+<i>12</i>&nbsp;    private static final long serialVersionUID = 0x1;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    private final DevelopmentCardDeck[][] decks;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    /**
+<i>17</i>&nbsp;     * Constructor for DevelopmentCardTable Class.
+<i>18</i>&nbsp;     */
+<b class="fc"><i>19</i>&nbsp;    public DevelopmentCardTable() {</b>
+<b class="fc"><i>20</i>&nbsp;        this.decks = new DevelopmentCardDeck[3][4];</b>
+<b class="fc"><i>21</i>&nbsp;    }</b>
+<i>22</i>&nbsp;
+<b class="fc"><i>23</i>&nbsp;    public DevelopmentCardTable(DevelopmentCardDeck[][] decks) {</b>
+<b class="fc"><i>24</i>&nbsp;        this.decks = decks;</b>
+<b class="fc"><i>25</i>&nbsp;    }</b>
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    /**
+<i>28</i>&nbsp;     * This method returns the deck corresponding to the specified coordinates.
+<i>29</i>&nbsp;     * @param row is the row corresponding to the deck.
+<i>30</i>&nbsp;     * @param column is the column corresponding to the deck.
+<i>31</i>&nbsp;     * @return the requested Development Card deck.
+<i>32</i>&nbsp;     */
+<i>33</i>&nbsp;    public DevelopmentCardDeck getDeck(int row, int column) {
+<b class="fc"><i>34</i>&nbsp;        return this.decks[row][column];</b>
+<i>35</i>&nbsp;    }
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    /**
+<i>38</i>&nbsp;     * This method returns the card at the top of the deck corresponding to the specified coordinates.
+<i>39</i>&nbsp;     * @param row the deck&#39;s row index.
+<i>40</i>&nbsp;     * @param column the deck&#39;s column index.
+<i>41</i>&nbsp;     * @return the requested Development Card.
+<i>42</i>&nbsp;     */
+<i>43</i>&nbsp;    public DevelopmentCard getTopCardFromDeck(int row, int column) {
+<b class="fc"><i>44</i>&nbsp;        DevelopmentCardDeck deck = getDeck(row, column);</b>
+<b class="fc"><i>45</i>&nbsp;        if(!deck.isEmpty())</b>
+<b class="fc"><i>46</i>&nbsp;            return deck.getCards()[deck.getCardsInDeck() - 1];</b>
+<i>47</i>&nbsp;        else {
+<b class="nc"><i>48</i>&nbsp;            System.out.println(&quot;This deck is empty. Choose another deck!&quot;);</b>
+<b class="nc"><i>49</i>&nbsp;            return null;</b>
+<i>50</i>&nbsp;        }
+<i>51</i>&nbsp;    }
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;    /**
+<i>54</i>&nbsp;     * This method is used to draw one card from a specified deck inside the Development Card Table.
+<i>55</i>&nbsp;     * @param row the deck&#39;s row index.
+<i>56</i>&nbsp;     * @param column the deck&#39;s column index.
+<i>57</i>&nbsp;     * @return the requested Development Card.
+<i>58</i>&nbsp;     */
+<i>59</i>&nbsp;    public DevelopmentCard drawCardFromDeck(int row, int column) {
+<b class="fc"><i>60</i>&nbsp;        DevelopmentCardDeck deck = getDeck(row, column);</b>
+<b class="fc"><i>61</i>&nbsp;        if(!deck.isEmpty())</b>
+<b class="fc"><i>62</i>&nbsp;            return deck.drawCard();</b>
+<i>63</i>&nbsp;        else
+<b class="nc"><i>64</i>&nbsp;            return null;</b>
+<i>65</i>&nbsp;    }
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    public ArrayList&lt;String&gt; toCli() {
+<b class="fc"><i>68</i>&nbsp;        ArrayList&lt;String&gt; table = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>69</i>&nbsp;        ArrayList&lt;String&gt; column2 = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>70</i>&nbsp;        ArrayList&lt;String&gt; column3 = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>71</i>&nbsp;        ArrayList&lt;String&gt; column4 = new ArrayList&lt;&gt;();</b>
+<i>72</i>&nbsp;        int i, j;
+<i>73</i>&nbsp;
+<b class="fc"><i>74</i>&nbsp;        for(i = 0; i &lt; 3; i++) {</b>
+<b class="fc"><i>75</i>&nbsp;            table.addAll(this.getTopCardFromDeck(i, 0).toCli());</b>
+<b class="fc"><i>76</i>&nbsp;            column2.addAll(this.getTopCardFromDeck(i, 1).toCli());</b>
+<b class="fc"><i>77</i>&nbsp;            column3.addAll(this.getTopCardFromDeck(i, 2).toCli());</b>
+<b class="fc"><i>78</i>&nbsp;            column4.addAll(this.getTopCardFromDeck(i, 3).toCli());</b>
+<i>79</i>&nbsp;        }
+<i>80</i>&nbsp;
+<b class="fc"><i>81</i>&nbsp;        for(i = 0; i &lt; table.size(); i++)</b>
+<b class="fc"><i>82</i>&nbsp;            table.set(i, &quot;  &quot; + table.get(i) + &quot; &quot; + column2.get(i) + &quot; &quot; + column3.get(i) + &quot; &quot; + column4.get(i));</b>
+<i>83</i>&nbsp;
+<b class="fc"><i>84</i>&nbsp;        table.add(0, &quot;???????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????&quot;);</b>
+<b class="fc"><i>85</i>&nbsp;        table.add(&quot;???????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????&quot;);</b>
+<i>86</i>&nbsp;
+<b class="fc"><i>87</i>&nbsp;        return table;</b>
+<i>88</i>&nbsp;    }
+<i>89</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-12 23:55</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,262 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ResourceStack</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.View.ReducedModel</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ResourceStack (it.polimi.ingsw.View.ReducedModel)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ResourceStack</td>
+<td class="coverageStat">
+  <span class="percent">
+    63,6%
+  </span>
+  <span class="absValue">
+    (7/ 11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    60,9%
+  </span>
+  <span class="absValue">
+    (39/ 64)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ResourceStack$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    66,7%
+  </span>
+  <span class="absValue">
+    (8/ 12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    61,5%
+  </span>
+  <span class="absValue">
+    (40/ 65)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.View.ReducedModel;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.Model.Enums.ResourceType;
+<i>4</i>&nbsp;import it.polimi.ingsw.View.ANSIColors;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import java.io.Serializable;
+<i>7</i>&nbsp;import java.util.ArrayList;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;/**
+<i>10</i>&nbsp; * ResourceStack Class contains four integer private attributes indicating the amount of each
+<i>11</i>&nbsp; * different type of resource: shields, servants, coins, stones.
+<i>12</i>&nbsp; */
+<i>13</i>&nbsp;public class ResourceStack implements Serializable{
+<i>14</i>&nbsp;    private static final long serialVersionUID = 0x1;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    private int shields;
+<i>17</i>&nbsp;    private int servants;
+<i>18</i>&nbsp;    private int coins;
+<i>19</i>&nbsp;    private int stones;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    /**
+<i>22</i>&nbsp;     * Constructor for ResourceStack Class.
+<i>23</i>&nbsp;     */
+<b class="fc"><i>24</i>&nbsp;    public ResourceStack(int shields, int servants, int coins, int stones) {</b>
+<b class="fc"><i>25</i>&nbsp;        this.shields = shields;</b>
+<b class="fc"><i>26</i>&nbsp;        this.servants = servants;</b>
+<b class="fc"><i>27</i>&nbsp;        this.coins = coins;</b>
+<b class="fc"><i>28</i>&nbsp;        this.stones = stones;</b>
+<b class="fc"><i>29</i>&nbsp;    }</b>
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    /**
+<i>32</i>&nbsp;     * Getter for a specified type of resource inside the stack.
+<i>33</i>&nbsp;     * @param resourceType is the specified resource type.
+<i>34</i>&nbsp;     * @return the number of resources of the specified type.
+<i>35</i>&nbsp;     */
+<i>36</i>&nbsp;    public int getResource(ResourceType resourceType) {
+<b class="fc"><i>37</i>&nbsp;        if(resourceType == ResourceType.SHIELDS)</b>
+<b class="fc"><i>38</i>&nbsp;            return shields;</b>
+<b class="fc"><i>39</i>&nbsp;        else if (resourceType == ResourceType.SERVANTS)</b>
+<b class="fc"><i>40</i>&nbsp;            return servants;</b>
+<b class="fc"><i>41</i>&nbsp;        else if (resourceType == ResourceType.COINS)</b>
+<b class="fc"><i>42</i>&nbsp;            return coins;</b>
+<b class="fc"><i>43</i>&nbsp;        else if (resourceType == ResourceType.STONES)</b>
+<b class="fc"><i>44</i>&nbsp;            return stones;</b>
+<i>45</i>&nbsp;        else
+<b class="nc"><i>46</i>&nbsp;            return -1;</b>
+<i>47</i>&nbsp;    }
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;    /**
+<i>50</i>&nbsp;     * Setter for a specified type of resource inside the stack.
+<i>51</i>&nbsp;     * @param resourceType is the specified resource type.
+<i>52</i>&nbsp;     */
+<i>53</i>&nbsp;    public void setResource(int resources, ResourceType resourceType) {
+<b class="fc"><i>54</i>&nbsp;        if(resourceType == ResourceType.SHIELDS)</b>
+<b class="fc"><i>55</i>&nbsp;            this.shields = resources;</b>
+<b class="fc"><i>56</i>&nbsp;        else if (resourceType == ResourceType.SERVANTS)</b>
+<b class="fc"><i>57</i>&nbsp;            this.servants = resources;</b>
+<b class="fc"><i>58</i>&nbsp;        else if (resourceType == ResourceType.COINS)</b>
+<b class="fc"><i>59</i>&nbsp;            this.coins = resources;</b>
+<b class="fc"><i>60</i>&nbsp;        else if (resourceType == ResourceType.STONES)</b>
+<b class="fc"><i>61</i>&nbsp;            this.stones = resources;</b>
+<b class="fc"><i>62</i>&nbsp;    }</b>
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;    /**
+<i>65</i>&nbsp;     * This method is used to check if a Resource Stack is empty,
+<i>66</i>&nbsp;     * @return true if the Resource Stack is empty.
+<i>67</i>&nbsp;     */
+<i>68</i>&nbsp;    public boolean isEmpty() {
+<b class="fc"><i>69</i>&nbsp;        ResourceType[] types = ResourceType.values();</b>
+<b class="fc"><i>70</i>&nbsp;        for(int i = 1; i &lt; 5; i++)</b>
+<b class="fc"><i>71</i>&nbsp;            if(this.getResource(types[i]) != 0)</b>
+<b class="fc"><i>72</i>&nbsp;                return false;</b>
+<b class="fc"><i>73</i>&nbsp;        return true;</b>
+<i>74</i>&nbsp;    }
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;    public boolean hasResource(ResourceType type) {
+<b class="fc"><i>77</i>&nbsp;        return this.getResource(type) &gt; 0;</b>
+<i>78</i>&nbsp;    }
+<i>79</i>&nbsp;
+<i>80</i>&nbsp;    /**
+<i>81</i>&nbsp;     * toString override method for ResourceStack Class.
+<i>82</i>&nbsp;     */
+<i>83</i>&nbsp;    public String toString() {
+<b class="nc"><i>84</i>&nbsp;        return shields+&quot; &quot;+servants+&quot; &quot;+coins+&quot; &quot;+stones;</b>
+<i>85</i>&nbsp;    }
+<i>86</i>&nbsp;
+<i>87</i>&nbsp;    public String toCliWord(ResourceType type) {
+<b class="fc"><i>88</i>&nbsp;        switch(type) {</b>
+<b class="fc"><i>89</i>&nbsp;            case SHIELDS: if(this.shields &gt; 9) return ANSIColors.FRONT_BLUE +&quot;SHIELDS:&quot;+this.shields; else return ANSIColors.FRONT_BLUE +&quot;SHIELDS: &quot;+this.shields;</b>
+<i>90</i>&nbsp;
+<b class="fc"><i>91</i>&nbsp;            case SERVANTS: if(this.servants &gt; 9) return ANSIColors.FRONT_PURPLE +&quot;SERVANTS:&quot;+this.servants; else return ANSIColors.FRONT_PURPLE +&quot;SERVANTS: &quot;+this.servants;</b>
+<i>92</i>&nbsp;
+<b class="fc"><i>93</i>&nbsp;            case COINS: if(this.coins &gt; 9) return ANSIColors.FRONT_YELLOW +&quot;COINS:&quot;+this.coins; else return ANSIColors.FRONT_YELLOW +&quot;COINS: &quot;+this.coins;</b>
+<i>94</i>&nbsp;
+<b class="fc"><i>95</i>&nbsp;            case STONES: if(this.stones &gt; 9) return ANSIColors.FRONT_GREY +&quot;STONES:&quot;+this.stones; else return ANSIColors.FRONT_GREY +&quot;STONES: &quot;+this.stones;</b>
+<i>96</i>&nbsp;
+<b class="nc"><i>97</i>&nbsp;            default: return null;</b>
+<i>98</i>&nbsp;        }
+<i>99</i>&nbsp;    }
+<i>100</i>&nbsp;
+<i>101</i>&nbsp;    public String toCliSymbol(ResourceType type) {
+<b class="fc"><i>102</i>&nbsp;        switch(type) {</b>
+<b class="fc"><i>103</i>&nbsp;            case SHIELDS: if(this.shields &gt; 9) return ANSIColors.FRONT_BLUE +ANSIColors.SHIELD+&quot;:&quot;+this.shields+ANSIColors.RESET; else return ANSIColors.FRONT_BLUE +ANSIColors.SHIELD+&quot;: &quot;+this.shields+ANSIColors.RESET;</b>
+<i>104</i>&nbsp;
+<b class="fc"><i>105</i>&nbsp;            case SERVANTS: if(this.servants &gt; 9) return ANSIColors.FRONT_PURPLE +ANSIColors.SERVANT+&quot;:&quot;+this.servants+ANSIColors.RESET; else return ANSIColors.FRONT_PURPLE +ANSIColors.SERVANT+&quot;: &quot;+this.servants+ANSIColors.RESET;</b>
+<i>106</i>&nbsp;
+<b class="fc"><i>107</i>&nbsp;            case COINS: if(this.coins &gt; 9) return ANSIColors.FRONT_YELLOW +ANSIColors.COIN+&quot;:&quot;+this.coins+ANSIColors.RESET; else return ANSIColors.FRONT_YELLOW +ANSIColors.COIN+&quot;: &quot;+this.coins+ANSIColors.RESET;</b>
+<i>108</i>&nbsp;
+<b class="fc"><i>109</i>&nbsp;            case STONES: if(this.stones &gt; 9) return ANSIColors.FRONT_GREY +ANSIColors.STONE+&quot;:&quot;+this.stones+ANSIColors.RESET; else return ANSIColors.FRONT_GREY +ANSIColors.STONE+&quot;: &quot;+this.stones+ANSIColors.RESET;</b>
+<i>110</i>&nbsp;
+<b class="nc"><i>111</i>&nbsp;            default: return null;</b>
+<i>112</i>&nbsp;        }
+<i>113</i>&nbsp;    }
+<i>114</i>&nbsp;
+<i>115</i>&nbsp;    public ArrayList&lt;String&gt; toCli() {
+<b class="nc"><i>116</i>&nbsp;        ArrayList&lt;String&gt; stack = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>117</i>&nbsp;        stack.add(&quot;?????????????????????????????&quot;);</b>
+<b class="nc"><i>118</i>&nbsp;        stack.add(&quot;?      ?      ?      ?      ?&quot;);</b>
+<b class="nc"><i>119</i>&nbsp;        stack.add(&quot;? &quot;+this.toCliSymbol(ResourceType.SHIELDS)+&quot; ? &quot;+this.toCliSymbol(ResourceType.SERVANTS)+&quot; ? &quot;+this.toCliSymbol(ResourceType.COINS)+&quot; ? &quot;+this.toCliSymbol(ResourceType.STONES)+&quot; ?&quot;);</b>
+<b class="nc"><i>120</i>&nbsp;        stack.add(&quot;?      ?      ?      ?      ?&quot;);</b>
+<b class="nc"><i>121</i>&nbsp;        stack.add(&quot;?????????????????????????????&quot;);</b>
+<i>122</i>&nbsp;
+<b class="nc"><i>123</i>&nbsp;        return stack;</b>
+<i>124</i>&nbsp;    }
+<i>125</i>&nbsp;
+<i>126</i>&nbsp;    public ArrayList&lt;String&gt; toCliAdd() {
+<b class="nc"><i>127</i>&nbsp;        ArrayList&lt;String&gt; stack = this.toCli();</b>
+<b class="nc"><i>128</i>&nbsp;        ArrayList&lt;String&gt; message = new ArrayList&lt;&gt;();</b>
+<i>129</i>&nbsp;
+<b class="nc"><i>130</i>&nbsp;        message.add( &quot;?????????????????????????????&quot;);</b>
+<b class="nc"><i>131</i>&nbsp;        message.add( &quot;? &quot;+ANSIColors.FRONT_GREEN+&quot;??? RESOURCES TO ADD  ???&quot;+ANSIColors.RESET+&quot; ?&quot;);</b>
+<b class="nc"><i>132</i>&nbsp;        stack.set(0, &quot;?????????????????????????????&quot;);</b>
+<i>133</i>&nbsp;
+<b class="nc"><i>134</i>&nbsp;        stack.addAll(0, message);</b>
+<i>135</i>&nbsp;
+<b class="nc"><i>136</i>&nbsp;        return stack;</b>
+<i>137</i>&nbsp;    }
+<i>138</i>&nbsp;
+<i>139</i>&nbsp;    public ArrayList&lt;String&gt; toCliPay() {
+<b class="nc"><i>140</i>&nbsp;        ArrayList&lt;String&gt; stack = this.toCli();</b>
+<b class="nc"><i>141</i>&nbsp;        ArrayList&lt;String&gt; message = new ArrayList&lt;&gt;();</b>
+<i>142</i>&nbsp;
+<b class="nc"><i>143</i>&nbsp;        message.add( &quot;?????????????????????????????&quot;);</b>
+<b class="nc"><i>144</i>&nbsp;        message.add( &quot;? &quot;+ANSIColors.FRONT_RED+&quot;??? RESOURCES TO PAY  ???&quot;+ANSIColors.RESET+&quot; ?&quot;);</b>
+<b class="nc"><i>145</i>&nbsp;        stack.set(0, &quot;?????????????????????????????&quot;);</b>
+<i>146</i>&nbsp;
+<b class="nc"><i>147</i>&nbsp;        stack.addAll(0, message);</b>
+<i>148</i>&nbsp;
+<b class="nc"><i>149</i>&nbsp;        return stack;</b>
+<i>150</i>&nbsp;    }
+<i>151</i>&nbsp;
+<i>152</i>&nbsp;
+<i>153</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-12 23:55</div>
+</div>
+</body>
+</html>

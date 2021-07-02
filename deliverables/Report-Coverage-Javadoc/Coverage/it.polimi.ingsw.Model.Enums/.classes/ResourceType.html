@@ -1,0 +1,200 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ResourceType</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Model.Enums</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ResourceType (it.polimi.ingsw.Model.Enums)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ResourceType</td>
+<td class="coverageStat">
+  <span class="percent">
+    66,7%
+  </span>
+  <span class="absValue">
+    (6/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    44,2%
+  </span>
+  <span class="absValue">
+    (23/ 52)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ResourceType$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    70%
+  </span>
+  <span class="absValue">
+    (7/ 10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    45,3%
+  </span>
+  <span class="absValue">
+    (24/ 53)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Model.Enums;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.View.ANSIColors;
+<i>4</i>&nbsp;
+<b class="fc"><i>5</i>&nbsp;public enum ResourceType {</b>
+<b class="fc"><i>6</i>&nbsp;    NONE, SHIELDS, SERVANTS, COINS, STONES;</b>
+<i>7</i>&nbsp;
+<b class="fc"><i>8</i>&nbsp;    private static final ResourceType[] resourceTypes = ResourceType.values();</b>
+<b class="nc"><i>9</i>&nbsp;    public static ResourceType getResourceType(int i) { return ResourceType.resourceTypes[i]; }</b>
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;    public String toCli() {
+<i>12</i>&nbsp;        String string;
+<b class="fc"><i>13</i>&nbsp;        switch (this) {</b>
+<b class="fc"><i>14</i>&nbsp;            case SHIELDS: string = ANSIColors.FRONT_BLUE + &quot;SHIELD &quot; + ANSIColors.RESET;</b>
+<b class="fc"><i>15</i>&nbsp;                break;</b>
+<b class="fc"><i>16</i>&nbsp;            case SERVANTS: string = ANSIColors.FRONT_PURPLE + &quot;SERVANT&quot; + ANSIColors.RESET;</b>
+<b class="fc"><i>17</i>&nbsp;                break;</b>
+<b class="fc"><i>18</i>&nbsp;            case COINS: string = ANSIColors.FRONT_YELLOW + &quot; COIN  &quot; + ANSIColors.RESET;</b>
+<b class="fc"><i>19</i>&nbsp;                break;</b>
+<b class="fc"><i>20</i>&nbsp;            case STONES: string = ANSIColors.FRONT_GREY + &quot; STONE &quot; + ANSIColors.RESET;</b>
+<b class="fc"><i>21</i>&nbsp;                break;</b>
+<b class="fc"><i>22</i>&nbsp;            case NONE: string = &quot;       &quot;;</b>
+<b class="fc"><i>23</i>&nbsp;                break;</b>
+<b class="nc"><i>24</i>&nbsp;            default: string = null;</b>
+<i>25</i>&nbsp;                break;
+<i>26</i>&nbsp;        }
+<b class="fc"><i>27</i>&nbsp;        return string;</b>
+<i>28</i>&nbsp;    }
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    public String toCliSymbol() {
+<i>31</i>&nbsp;        String string;
+<b class="nc"><i>32</i>&nbsp;        switch (this) {</b>
+<b class="nc"><i>33</i>&nbsp;            case SHIELDS: string = ANSIColors.FRONT_BLUE + ANSIColors.SHIELD + ANSIColors.RESET;</b>
+<b class="nc"><i>34</i>&nbsp;                break;</b>
+<b class="nc"><i>35</i>&nbsp;            case SERVANTS: string = ANSIColors.FRONT_PURPLE + ANSIColors.SERVANT + ANSIColors.RESET;</b>
+<b class="nc"><i>36</i>&nbsp;                break;</b>
+<b class="nc"><i>37</i>&nbsp;            case COINS: string = ANSIColors.FRONT_YELLOW + ANSIColors.COIN + ANSIColors.RESET;</b>
+<b class="nc"><i>38</i>&nbsp;                break;</b>
+<b class="nc"><i>39</i>&nbsp;            case STONES: string = ANSIColors.FRONT_GREY + ANSIColors.STONE + ANSIColors.RESET;</b>
+<b class="nc"><i>40</i>&nbsp;                break;</b>
+<b class="nc"><i>41</i>&nbsp;            case NONE: string = &quot; &quot;;</b>
+<b class="nc"><i>42</i>&nbsp;                break;</b>
+<b class="nc"><i>43</i>&nbsp;            default: string = null;</b>
+<i>44</i>&nbsp;                break;
+<i>45</i>&nbsp;        }
+<b class="nc"><i>46</i>&nbsp;        return string;</b>
+<i>47</i>&nbsp;    }
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;    public String toCliNoColor() {
+<i>50</i>&nbsp;        String string;
+<b class="fc"><i>51</i>&nbsp;        switch (this) {</b>
+<b class="nc"><i>52</i>&nbsp;            case SHIELDS:  string = &quot;SHIELDS &quot;;</b>
+<b class="nc"><i>53</i>&nbsp;                break;</b>
+<b class="fc"><i>54</i>&nbsp;            case SERVANTS: string = &quot;SERVANTS&quot;;</b>
+<b class="fc"><i>55</i>&nbsp;                break;</b>
+<b class="fc"><i>56</i>&nbsp;            case COINS:    string = &quot; COINS  &quot;;</b>
+<b class="fc"><i>57</i>&nbsp;                break;</b>
+<b class="nc"><i>58</i>&nbsp;            case STONES:   string = &quot; STONES &quot;;</b>
+<b class="nc"><i>59</i>&nbsp;                break;</b>
+<b class="nc"><i>60</i>&nbsp;            case NONE:     string = &quot;        &quot;;</b>
+<b class="nc"><i>61</i>&nbsp;                break;</b>
+<b class="nc"><i>62</i>&nbsp;            default:       string = null;</b>
+<i>63</i>&nbsp;                break;
+<i>64</i>&nbsp;        }
+<b class="fc"><i>65</i>&nbsp;        return string;</b>
+<i>66</i>&nbsp;    }
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;    public static String faithToCli() {
+<b class="fc"><i>69</i>&nbsp;        return ANSIColors.FRONT_RED + ANSIColors.FAITH;</b>
+<i>70</i>&nbsp;    }
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;    public static String faithPointsToCli(int points) {
+<b class="fc"><i>73</i>&nbsp;        if(points &gt; 9) return ANSIColors.FRONT_RED+faithToCli()+&quot;:&quot;+points+ANSIColors.RESET; else return ANSIColors.FRONT_RED+faithToCli()+&quot;: &quot;+points+ANSIColors.RESET;</b>
+<i>74</i>&nbsp;    }
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;    public ResourceType viewToModel() {
+<b class="nc"><i>77</i>&nbsp;        switch(this) {</b>
+<b class="nc"><i>78</i>&nbsp;            case SHIELDS:  return ResourceType.SHIELDS;</b>
+<i>79</i>&nbsp;
+<b class="nc"><i>80</i>&nbsp;            case SERVANTS: return ResourceType.SERVANTS;</b>
+<i>81</i>&nbsp;
+<b class="nc"><i>82</i>&nbsp;            case COINS:    return ResourceType.COINS;</b>
+<i>83</i>&nbsp;
+<b class="nc"><i>84</i>&nbsp;            case STONES:   return ResourceType.STONES;</b>
+<i>85</i>&nbsp;
+<b class="nc"><i>86</i>&nbsp;            case NONE:     return ResourceType.NONE;</b>
+<i>87</i>&nbsp;
+<b class="nc"><i>88</i>&nbsp;            default:       return null;</b>
+<i>89</i>&nbsp;        }
+<i>90</i>&nbsp;    }
+<i>91</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-12 23:55</div>
+</div>
+</body>
+</html>

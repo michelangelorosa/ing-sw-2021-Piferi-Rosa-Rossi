@@ -1,0 +1,562 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ServerMessageHandler</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+    @import "../../.css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../.js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">it.polimi.ingsw.Model.Server</a>
+</div>
+
+<h1>Coverage Summary for Class: ServerMessageHandler (it.polimi.ingsw.Model.Server)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ServerMessageHandler</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/233)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package it.polimi.ingsw.Model.Server;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import it.polimi.ingsw.Controller.Actions.Action;
+<i class="no-highlight">4</i>&nbsp;import it.polimi.ingsw.Model.Enums.GameStatus;
+<i class="no-highlight">5</i>&nbsp;import it.polimi.ingsw.Model.Enums.GameType;
+<i class="no-highlight">6</i>&nbsp;import it.polimi.ingsw.Model.Enums.PlayerStatus;
+<i class="no-highlight">7</i>&nbsp;import it.polimi.ingsw.Model.Exceptions.ModelException;
+<i class="no-highlight">8</i>&nbsp;import it.polimi.ingsw.Model.GameModel.Player;
+<i class="no-highlight">9</i>&nbsp;import it.polimi.ingsw.Model.MessagesToClient.GameSetMessage;
+<i class="no-highlight">10</i>&nbsp;import it.polimi.ingsw.Model.Persistance.Persistence;
+<i class="no-highlight">11</i>&nbsp;import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
+<i class="no-highlight">12</i>&nbsp;import it.polimi.ingsw.View.Utility.DebuggingTools.Debugger;
+<i class="no-highlight">13</i>&nbsp;import it.polimi.ingsw.View.Utility.DebuggingTools.DebuggerFactory;
+<i class="no-highlight">14</i>&nbsp;import it.polimi.ingsw.View.Utility.DebuggingTools.DebuggerType;
+<i class="no-highlight">15</i>&nbsp;
+<i class="no-highlight">16</i>&nbsp;import java.io.IOException;
+<i class="no-highlight">17</i>&nbsp;import java.util.ArrayList;
+<i class="no-highlight">18</i>&nbsp;import java.util.Set;
+<i class="no-highlight">19</i>&nbsp;
+<i class="no-highlight">20</i>&nbsp;/**
+<i class="no-highlight">21</i>&nbsp; * ServerMessageHandler Class handles the majority of interactions held between the Client and the Server.
+<i class="no-highlight">22</i>&nbsp; * &lt;p&gt;&lt;b&gt;Attributes:&lt;/b&gt;&lt;/p&gt;
+<i class="no-highlight">23</i>&nbsp; * &lt;ul&gt;
+<i class="no-highlight">24</i>&nbsp; *     &lt;li&gt;int &quot;attempt&quot;: keeps count of the client&#39;s attempt at reconnecting to the server&lt;/li&gt;
+<i class="no-highlight">25</i>&nbsp; *     &lt;li&gt;Debugger &quot;DEBUGGER&quot;: debugger for ServerMessageHandler&lt;/li&gt;
+<i class="no-highlight">26</i>&nbsp; * &lt;/ul&gt;
+<i class="no-highlight">27</i>&nbsp; */
+<b class="nc"><i class="no-highlight">28</i>&nbsp;public class ServerMessageHandler {</b>
+<b class="nc"><i class="no-highlight">29</i>&nbsp;    private int attempt=0;</b>
+<b class="nc"><i class="no-highlight">30</i>&nbsp;    private final Debugger DEBUGGER = DebuggerFactory.getDebugger(DebuggerType.SERVER_MESSAGE_HANDLER);</b>
+<i class="no-highlight">31</i>&nbsp;
+<i class="no-highlight">32</i>&nbsp;    /**
+<i class="no-highlight">33</i>&nbsp;     * nameRequest is the first interaction the server has with the client, it asks for its name and validates it
+<i class="no-highlight">34</i>&nbsp;     * If a game is not running the client is asked to proceed to the Lobby for further setup of the game
+<i class="no-highlight">35</i>&nbsp;     * If a game is running  the client can resume its game.
+<i class="no-highlight">36</i>&nbsp;     * &lt;p&gt;Method also handles special cases like reconnection with Server and persistence reconnections&lt;/p&gt;
+<i class="no-highlight">37</i>&nbsp;     * @param serverConnection      the server connection
+<i class="no-highlight">38</i>&nbsp;     * @return                      &lt;b&gt;true&lt;/b&gt; if the client has to show the lobby
+<i class="no-highlight">39</i>&nbsp;     *                              &lt;b&gt;false&lt;/b&gt; if the client has to skip directly to the game
+<i class="no-highlight">40</i>&nbsp;     */
+<i class="no-highlight">41</i>&nbsp;    public boolean nameRequest(ServerConnection serverConnection) {
+<b class="nc"><i class="no-highlight">42</i>&nbsp;        String name;Boolean activated=true;</b>
+<b class="nc"><i class="no-highlight">43</i>&nbsp;        while(Thread.currentThread().isAlive()&amp;&amp;activated) {</b>
+<b class="nc"><i class="no-highlight">44</i>&nbsp;            DEBUGGER.printDebug(&quot;Sent request for Client&#39;s name (Action 0)&quot;);</b>
+<b class="nc"><i class="no-highlight">45</i>&nbsp;            serverConnection.send(0);</b>
+<b class="nc"><i class="no-highlight">46</i>&nbsp;            attempt++;</b>
+<i class="no-highlight">47</i>&nbsp;            try {
+<b class="nc"><i class="no-highlight">48</i>&nbsp;                name = serverConnection.getIn().readUTF();</b>
+<b class="nc"><i class="no-highlight">49</i>&nbsp;                DEBUGGER.printDebug(&quot;Got name: &quot;+name);</b>
+<b class="nc"><i class="no-highlight">50</i>&nbsp;                if(name.isEmpty())</b>
+<b class="nc"><i class="no-highlight">51</i>&nbsp;                    sendError(serverConnection, &quot;Name is empty, pick another name!&quot;);</b>
+<b class="nc"><i class="no-highlight">52</i>&nbsp;                else if(name.isBlank())</b>
+<b class="nc"><i class="no-highlight">53</i>&nbsp;                    sendError(serverConnection, &quot;Name is blank, pick another name!&quot;);</b>
+<b class="nc"><i class="no-highlight">54</i>&nbsp;                else if(name.length() &gt; 16)</b>
+<b class="nc"><i class="no-highlight">55</i>&nbsp;                    sendError(serverConnection, &quot;Name is longer than 16 characters, pick another name!&quot;);</b>
+<i class="no-highlight">56</i>&nbsp;                else {
+<i class="no-highlight">57</i>&nbsp;                    //If the name is already in the game this value is FALSE, if the name is new it is added to the server and set to TRUE
+<b class="nc"><i class="no-highlight">58</i>&nbsp;                    boolean newName = nameInsert(serverConnection,name);</b>
+<b class="nc"><i class="no-highlight">59</i>&nbsp;                    DEBUGGER.printDebug(&quot;, newName: &quot;+newName);</b>
+<i class="no-highlight">60</i>&nbsp;
+<b class="nc"><i class="no-highlight">61</i>&nbsp;                    Persistence persistence = serverConnection.getServer().getController().getActionController().getPersistence();</b>
+<i class="no-highlight">62</i>&nbsp;
+<b class="nc"><i class="no-highlight">63</i>&nbsp;                    if(persistence.isGameStarted() &amp;&amp; serverConnection.getServer().gameIsEmpty()) {</b>
+<b class="nc"><i class="no-highlight">64</i>&nbsp;                        DEBUGGER.printDebug(&quot;Game was already started&quot;);</b>
+<b class="nc"><i class="no-highlight">65</i>&nbsp;                        serverConnection.setName(name);</b>
+<b class="nc"><i class="no-highlight">66</i>&nbsp;                        if(persistence.getPlayerNames().contains(serverConnection.getName()) &amp;&amp; newName) {</b>
+<b class="nc"><i class="no-highlight">67</i>&nbsp;                            synchronized (serverConnection.getServer()) {</b>
+<b class="nc"><i class="no-highlight">68</i>&nbsp;                                DEBUGGER.printDebug(&quot;Player: &quot; + serverConnection.getName() + &quot; successfully reconnected&quot;);</b>
+<i class="no-highlight">69</i>&nbsp;
+<b class="nc"><i class="no-highlight">70</i>&nbsp;                                serverConnection.getServer().addConnection(serverConnection);</b>
+<i class="no-highlight">71</i>&nbsp;
+<b class="nc"><i class="no-highlight">72</i>&nbsp;                                if (serverConnection.getServer().getConnectedPlayers() &gt;= persistence.getNumberOfPlayers()) {</b>
+<b class="nc"><i class="no-highlight">73</i>&nbsp;                                    DEBUGGER.printDebug(&quot;Notifying all&quot;);</b>
+<b class="nc"><i class="no-highlight">74</i>&nbsp;                                    serverConnection.getServer().notifyAll();</b>
+<i class="no-highlight">75</i>&nbsp;                                }
+<b class="nc"><i class="no-highlight">76</i>&nbsp;                                while (serverConnection.getServer().getConnectedPlayers() &lt; persistence.getNumberOfPlayers()) {</b>
+<i class="no-highlight">77</i>&nbsp;                                    try {
+<b class="nc"><i class="no-highlight">78</i>&nbsp;                                        DEBUGGER.printDebug(&quot;waiting&quot;);</b>
+<b class="nc"><i class="no-highlight">79</i>&nbsp;                                        serverConnection.getServer().wait();</b>
+<b class="nc"><i class="no-highlight">80</i>&nbsp;                                    } catch (InterruptedException e) {</b>
+<b class="nc"><i class="no-highlight">81</i>&nbsp;                                        e.printStackTrace();</b>
+<b class="nc"><i class="no-highlight">82</i>&nbsp;                                    }</b>
+<i class="no-highlight">83</i>&nbsp;                                }
+<b class="nc"><i class="no-highlight">84</i>&nbsp;                            }</b>
+<i class="no-highlight">85</i>&nbsp;                            // ASKS THE PLAYER IF HE WANTS TO START A NEW GAME
+<b class="nc"><i class="no-highlight">86</i>&nbsp;                            DEBUGGER.printDebug(&quot;Asking: &quot; + serverConnection.getName() + &quot; to Restart or Continue&quot;);</b>
+<b class="nc"><i class="no-highlight">87</i>&nbsp;                            serverConnection.send(11);</b>
+<b class="nc"><i class="no-highlight">88</i>&nbsp;                            boolean wantsToStartNewGame = serverConnection.readBoolean();</b>
+<b class="nc"><i class="no-highlight">89</i>&nbsp;                            DEBUGGER.printDebug(serverConnection.getName() + &quot; read boolean!&quot;);</b>
+<i class="no-highlight">90</i>&nbsp;
+<b class="nc"><i class="no-highlight">91</i>&nbsp;                            synchronized (serverConnection.getServer()) {</b>
+<b class="nc"><i class="no-highlight">92</i>&nbsp;                                if (wantsToStartNewGame)</b>
+<b class="nc"><i class="no-highlight">93</i>&nbsp;                                    persistence.wantsToRestart();</b>
+<i class="no-highlight">94</i>&nbsp;                                else
+<b class="nc"><i class="no-highlight">95</i>&nbsp;                                    persistence.wantsToContinue();</b>
+<b class="nc"><i class="no-highlight">96</i>&nbsp;                            }</b>
+<i class="no-highlight">97</i>&nbsp;
+<b class="nc"><i class="no-highlight">98</i>&nbsp;                            serverConnection.setReady(true);</b>
+<b class="nc"><i class="no-highlight">99</i>&nbsp;                            serverConnection.waitReady();</b>
+<b class="nc"><i class="no-highlight">100</i>&nbsp;                            DEBUGGER.printDebug(&quot;Everyone is ready!&quot;);</b>
+<i class="no-highlight">101</i>&nbsp;
+<b class="nc"><i class="no-highlight">102</i>&nbsp;                            if (persistence.majorityWantsToRestart()) {</b>
+<b class="nc"><i class="no-highlight">103</i>&nbsp;                                serverConnection.getServer().getController().getActionController().getModelToView().addObserver(serverConnection);</b>
+<b class="nc"><i class="no-highlight">104</i>&nbsp;                                serverConnection.addObserver(serverConnection.getServer().getController());</b>
+<b class="nc"><i class="no-highlight">105</i>&nbsp;                                DEBUGGER.printDebug(&quot;Majority wanted to RESTART!&quot;);</b>
+<b class="nc"><i class="no-highlight">106</i>&nbsp;                                synchronized (serverConnection.getServer()) {</b>
+<b class="nc"><i class="no-highlight">107</i>&nbsp;                                    Server.setServerStatus(GameStatus.LOBBY);</b>
+<b class="nc"><i class="no-highlight">108</i>&nbsp;                                }</b>
+<b class="nc"><i class="no-highlight">109</i>&nbsp;                                return true;</b>
+<i class="no-highlight">110</i>&nbsp;                            }
+<i class="no-highlight">111</i>&nbsp;                            else {
+<b class="nc"><i class="no-highlight">112</i>&nbsp;                                synchronized (serverConnection.getServer()) {</b>
+<b class="nc"><i class="no-highlight">113</i>&nbsp;                                    DEBUGGER.printDebug(&quot;Majority wanted to CONTINUE!&quot;);</b>
+<b class="nc"><i class="no-highlight">114</i>&nbsp;                                    if (serverConnection.getServer().getController().getActionController().getGame().getPlayers().size() == 0) {</b>
+<i class="no-highlight">115</i>&nbsp;
+<b class="nc"><i class="no-highlight">116</i>&nbsp;                                        serverConnection.getServer().getController().getActionController().JSONToGamePersistence();</b>
+<b class="nc"><i class="no-highlight">117</i>&nbsp;                                        Server.setServerStatus(GameStatus.GAME);</b>
+<i class="no-highlight">118</i>&nbsp;
+<b class="nc"><i class="no-highlight">119</i>&nbsp;                                        if(serverConnection.getServer().getController().getActionController().getGame().getGameType() != GameType.SINGLEPLAYER) {</b>
+<i class="no-highlight">120</i>&nbsp;                                            try {
+<b class="nc"><i class="no-highlight">121</i>&nbsp;                                                serverConnection.getServer().wait();</b>
+<b class="nc"><i class="no-highlight">122</i>&nbsp;                                            } catch (InterruptedException e) {</b>
+<b class="nc"><i class="no-highlight">123</i>&nbsp;                                                e.printStackTrace();</b>
+<b class="nc"><i class="no-highlight">124</i>&nbsp;                                            }</b>
+<i class="no-highlight">125</i>&nbsp;                                        }
+<i class="no-highlight">126</i>&nbsp;                                    }
+<i class="no-highlight">127</i>&nbsp;                                    else {
+<b class="nc"><i class="no-highlight">128</i>&nbsp;                                        serverConnection.getServer().notifyAll();</b>
+<i class="no-highlight">129</i>&nbsp;                                    }
+<b class="nc"><i class="no-highlight">130</i>&nbsp;                                }</b>
+<b class="nc"><i class="no-highlight">131</i>&nbsp;                                DEBUGGER.printDebug(&quot;PERSISTENCE: Reconnecting player --&gt; &quot; + serverConnection.getName());</b>
+<b class="nc"><i class="no-highlight">132</i>&nbsp;                                reconnection(serverConnection);</b>
+<b class="nc"><i class="no-highlight">133</i>&nbsp;                                return false;</b>
+<i class="no-highlight">134</i>&nbsp;                            }
+<i class="no-highlight">135</i>&nbsp;                        }
+<b class="nc"><i class="no-highlight">136</i>&nbsp;                        else if(!newName) {</b>
+<b class="nc"><i class="no-highlight">137</i>&nbsp;                            sendError(serverConnection, &quot;Another player with your name joined. Please choose another name!&quot;);</b>
+<b class="nc"><i class="no-highlight">138</i>&nbsp;                            serverConnection.close();</b>
+<i class="no-highlight">139</i>&nbsp;                        }
+<i class="no-highlight">140</i>&nbsp;                        else
+<b class="nc"><i class="no-highlight">141</i>&nbsp;                            sendError(serverConnection, &quot;Your name is not on the list of players. Please choose another name!&quot;);</b>
+<i class="no-highlight">142</i>&nbsp;
+<i class="no-highlight">143</i>&nbsp;                    }
+<i class="no-highlight">144</i>&nbsp;
+<i class="no-highlight">145</i>&nbsp;                    //Name is NOT in the server AND game status is the FIRST player to join
+<b class="nc"><i class="no-highlight">146</i>&nbsp;                    if(newName&amp;&amp; Server.getServerStatus().equals(GameStatus.READY)){</b>
+<b class="nc"><i class="no-highlight">147</i>&nbsp;                        serverConnection.setName(name);</b>
+<b class="nc"><i class="no-highlight">148</i>&nbsp;                        DEBUGGER.printDebug(&quot;A first player connected!&quot;);</b>
+<i class="no-highlight">149</i>&nbsp;                        //Asking for the number of players to start a game
+<b class="nc"><i class="no-highlight">150</i>&nbsp;                        serverConnection.send(1);</b>
+<b class="nc"><i class="no-highlight">151</i>&nbsp;                        int numberOfPlayers = serverConnection.getIn().readInt();</b>
+<b class="nc"><i class="no-highlight">152</i>&nbsp;                        DEBUGGER.printDebug(&quot;Requested to start a game for &quot;+ numberOfPlayers + &quot; players&quot;);</b>
+<i class="no-highlight">153</i>&nbsp;                        //Checking if somebody else in the meanwhile has started a new game
+<b class="nc"><i class="no-highlight">154</i>&nbsp;                        if(Server.getServerStatus().equals(GameStatus.READY)){</b>
+<b class="nc"><i class="no-highlight">155</i>&nbsp;                            serverConnection.getServer().setNumberOfPlayers(numberOfPlayers);</b>
+<b class="nc"><i class="no-highlight">156</i>&nbsp;                            serverConnection.getServer().playerReady();</b>
+<b class="nc"><i class="no-highlight">157</i>&nbsp;                            return true;</b>
+<i class="no-highlight">158</i>&nbsp;                        }
+<i class="no-highlight">159</i>&nbsp;                        else
+<b class="nc"><i class="no-highlight">160</i>&nbsp;                            if(freeSpace(serverConnection)&amp;&amp;isLobby()){</b>
+<b class="nc"><i class="no-highlight">161</i>&nbsp;                                serverConnection.setName(name);</b>
+<b class="nc"><i class="no-highlight">162</i>&nbsp;                                sendError(serverConnection,&quot;There&#39;s another Lobby open, you&#39;ll now join!&quot;);</b>
+<b class="nc"><i class="no-highlight">163</i>&nbsp;                                serverConnection.getServer().playerReady();</b>
+<b class="nc"><i class="no-highlight">164</i>&nbsp;                                return true;</b>
+<i class="no-highlight">165</i>&nbsp;                            }
+<i class="no-highlight">166</i>&nbsp;                            else {
+<b class="nc"><i class="no-highlight">167</i>&nbsp;                                sendError(serverConnection, &quot;You managed to stay on this screen for so long that the lobby is either full or the game is running. How time flies!&quot;);</b>
+<b class="nc"><i class="no-highlight">168</i>&nbsp;                                serverConnectionLeave(serverConnection);</b>
+<b class="nc"><i class="no-highlight">169</i>&nbsp;                                serverConnection.close();</b>
+<i class="no-highlight">170</i>&nbsp;                            }
+<b class="nc"><i class="no-highlight">171</i>&nbsp;                    }</b>
+<i class="no-highlight">172</i>&nbsp;                    //New Name and game in Lobby mode
+<b class="nc"><i class="no-highlight">173</i>&nbsp;                    else if(newName&amp;&amp;isLobby()) {</b>
+<b class="nc"><i class="no-highlight">174</i>&nbsp;                        serverConnection.setName(name);</b>
+<b class="nc"><i class="no-highlight">175</i>&nbsp;                        DEBUGGER.printDebug(&quot;New game in Lobby!&quot;);</b>
+<b class="nc"><i class="no-highlight">176</i>&nbsp;                        if(freeSpace(serverConnection)){</b>
+<b class="nc"><i class="no-highlight">177</i>&nbsp;                                DEBUGGER.printDebug(&quot;Name: \&quot;&quot; + name + &quot;\&quot; is valid&quot;);</b>
+<b class="nc"><i class="no-highlight">178</i>&nbsp;                                serverConnection.getServer().playerReady();</b>
+<b class="nc"><i class="no-highlight">179</i>&nbsp;                                return true;</b>
+<i class="no-highlight">180</i>&nbsp;                        }
+<i class="no-highlight">181</i>&nbsp;                        else {
+<b class="nc"><i class="no-highlight">182</i>&nbsp;                            sendError(serverConnection, &quot;This lobby is full!&quot;);</b>
+<b class="nc"><i class="no-highlight">183</i>&nbsp;                            serverConnectionLeave(serverConnection);</b>
+<b class="nc"><i class="no-highlight">184</i>&nbsp;                            serverConnection.close();</b>
+<i class="no-highlight">185</i>&nbsp;                        }
+<i class="no-highlight">186</i>&nbsp;                    }
+<i class="no-highlight">187</i>&nbsp;                    //Used name and game in Lobby mode
+<b class="nc"><i class="no-highlight">188</i>&nbsp;                    else if(!newName&amp;&amp;isLobby()){</b>
+<b class="nc"><i class="no-highlight">189</i>&nbsp;                        serverConnection.setName(name);</b>
+<b class="nc"><i class="no-highlight">190</i>&nbsp;                        DEBUGGER.printDebug(&quot;Old name in Lobby!&quot;);</b>
+<b class="nc"><i class="no-highlight">191</i>&nbsp;                        if(serverConnection.nameInServer()) {</b>
+<b class="nc"><i class="no-highlight">192</i>&nbsp;                            nameInServerLeave(serverConnection);</b>
+<i class="no-highlight">193</i>&nbsp;                        }
+<i class="no-highlight">194</i>&nbsp;                        else {
+<b class="nc"><i class="no-highlight">195</i>&nbsp;                            serverConnection.setName(name);</b>
+<i class="no-highlight">196</i>&nbsp;                            //if client alive return true
+<b class="nc"><i class="no-highlight">197</i>&nbsp;                            sendError(serverConnection, &quot;There&#39;s another player with the same name, change yours!&quot;);</b>
+<i class="no-highlight">198</i>&nbsp;                        }
+<i class="no-highlight">199</i>&nbsp;                    }
+<i class="no-highlight">200</i>&nbsp;                    //Name is already in the game and the game is running,
+<b class="nc"><i class="no-highlight">201</i>&nbsp;                    else if(!newName&amp;&amp;!isLobby() &amp;&amp; Server.getServerStatus() == GameStatus.GAME){</b>
+<b class="nc"><i class="no-highlight">202</i>&nbsp;                        DEBUGGER.printDebug(&quot;Reconnection attempt&quot;);</b>
+<b class="nc"><i class="no-highlight">203</i>&nbsp;                        serverConnection.setName(name);</b>
+<b class="nc"><i class="no-highlight">204</i>&nbsp;                        if(serverConnection.getServer().canReconnect()){</b>
+<b class="nc"><i class="no-highlight">205</i>&nbsp;                            reconnection(serverConnection);</b>
+<b class="nc"><i class="no-highlight">206</i>&nbsp;                            return false;</b>
+<i class="no-highlight">207</i>&nbsp;                        }
+<i class="no-highlight">208</i>&nbsp;                        else {
+<b class="nc"><i class="no-highlight">209</i>&nbsp;                            sendError(serverConnection, &quot;This game is full!&quot;);</b>
+<b class="nc"><i class="no-highlight">210</i>&nbsp;                            serverConnectionLeave(serverConnection);</b>
+<b class="nc"><i class="no-highlight">211</i>&nbsp;                            serverConnection.close();</b>
+<b class="nc"><i class="no-highlight">212</i>&nbsp;                            activated=false;</b>
+<i class="no-highlight">213</i>&nbsp;                        }
+<i class="no-highlight">214</i>&nbsp;                    }
+<b class="nc"><i class="no-highlight">215</i>&nbsp;                    else if(newName &amp;&amp; !isLobby() &amp;&amp; (Server.getServerStatus() == GameStatus.GAME || Server.getServerStatus() == GameStatus.LEADER)) {</b>
+<b class="nc"><i class="no-highlight">216</i>&nbsp;                        serverConnection.setName(name);</b>
+<b class="nc"><i class="no-highlight">217</i>&nbsp;                        DEBUGGER.printDebug(&quot;New name but Game already started and Game is NOT empty&quot;);</b>
+<b class="nc"><i class="no-highlight">218</i>&nbsp;                        sendError(serverConnection, &quot;A game is already running in this server and you&#39;re not a player!\nGoodbye!&quot;);</b>
+<b class="nc"><i class="no-highlight">219</i>&nbsp;                        serverConnectionLeave(serverConnection);</b>
+<b class="nc"><i class="no-highlight">220</i>&nbsp;                        serverConnection.close();</b>
+<b class="nc"><i class="no-highlight">221</i>&nbsp;                        activated=false;</b>
+<i class="no-highlight">222</i>&nbsp;                    }
+<i class="no-highlight">223</i>&nbsp;                    //Game running, new name
+<b class="nc"><i class="no-highlight">224</i>&nbsp;                    else if(!newName&amp;&amp;!isLobby()){</b>
+<b class="nc"><i class="no-highlight">225</i>&nbsp;                        serverConnection.setName(name);</b>
+<b class="nc"><i class="no-highlight">226</i>&nbsp;                        DEBUGGER.printDebug(&quot;Invalid name for game already running&quot;);</b>
+<b class="nc"><i class="no-highlight">227</i>&nbsp;                        sendError(serverConnection, &quot;A game is already running in this server and you&#39;re not a player!\nGoodbye!&quot;);</b>
+<b class="nc"><i class="no-highlight">228</i>&nbsp;                        serverConnectionLeave(serverConnection);</b>
+<b class="nc"><i class="no-highlight">229</i>&nbsp;                        serverConnection.close();</b>
+<b class="nc"><i class="no-highlight">230</i>&nbsp;                        activated=false;</b>
+<i class="no-highlight">231</i>&nbsp;                    }
+<i class="no-highlight">232</i>&nbsp;                }
+<b class="nc"><i class="no-highlight">233</i>&nbsp;            } catch(IOException e) {</b>
+<b class="nc"><i class="no-highlight">234</i>&nbsp;                serverConnection.close();</b>
+<b class="nc"><i class="no-highlight">235</i>&nbsp;            }</b>
+<b class="nc"><i class="no-highlight">236</i>&nbsp;            if(attempt&gt;5){</b>
+<b class="nc"><i class="no-highlight">237</i>&nbsp;                serverConnection.close();</b>
+<b class="nc"><i class="no-highlight">238</i>&nbsp;                activated=false;</b>
+<i class="no-highlight">239</i>&nbsp;            }
+<i class="no-highlight">240</i>&nbsp;        }
+<b class="nc"><i class="no-highlight">241</i>&nbsp;        serverConnection.close();</b>
+<b class="nc"><i class="no-highlight">242</i>&nbsp;        return false;</b>
+<i class="no-highlight">243</i>&nbsp;    }
+<i class="no-highlight">244</i>&nbsp;
+<i class="no-highlight">245</i>&nbsp;    /**
+<i class="no-highlight">246</i>&nbsp;     * This is the lobby in which a player can wait for other people to join or launch the Param Modifier or try to start the game once enough players are in there
+<i class="no-highlight">247</i>&nbsp;     * @param serverConnection connection used to get the Server and operate on the Controller.
+<i class="no-highlight">248</i>&nbsp;     */
+<i class="no-highlight">249</i>&nbsp;    public void waitingForPlayers(ServerConnection serverConnection) {
+<i class="no-highlight">250</i>&nbsp;        try {
+<b class="nc"><i class="no-highlight">251</i>&nbsp;            serverConnection.send(2);</b>
+<b class="nc"><i class="no-highlight">252</i>&nbsp;            while (Thread.currentThread().isAlive()) {</b>
+<b class="nc"><i class="no-highlight">253</i>&nbsp;                int action = serverConnection.getIn().readInt();</b>
+<b class="nc"><i class="no-highlight">254</i>&nbsp;                DEBUGGER.printDebug(&quot;Got action &quot;+action);</b>
+<b class="nc"><i class="no-highlight">255</i>&nbsp;                synchronized (this) {</b>
+<b class="nc"><i class="no-highlight">256</i>&nbsp;                    if(action == 4){</b>
+<b class="nc"><i class="no-highlight">257</i>&nbsp;                        serverConnection.setReady(true);</b>
+<b class="nc"><i class="no-highlight">258</i>&nbsp;                        serverConnection.waitReady();</b>
+<i class="no-highlight">259</i>&nbsp;
+<b class="nc"><i class="no-highlight">260</i>&nbsp;                        synchronized (serverConnection.getServer()) {</b>
+<b class="nc"><i class="no-highlight">261</i>&nbsp;                            if(Server.getServerStatus() == GameStatus.LOBBY) {</b>
+<b class="nc"><i class="no-highlight">262</i>&nbsp;                                DEBUGGER.printDebug(&quot;Starting Game!&quot;);</b>
+<b class="nc"><i class="no-highlight">263</i>&nbsp;                                Server.setServerStatus(GameStatus.LEADER);</b>
+<b class="nc"><i class="no-highlight">264</i>&nbsp;                                Set&lt;String&gt; namesSet = serverConnection.getServer().getNames();</b>
+<b class="nc"><i class="no-highlight">265</i>&nbsp;                                ArrayList&lt;String&gt; names = new ArrayList&lt;&gt;(namesSet);</b>
+<b class="nc"><i class="no-highlight">266</i>&nbsp;                                serverConnection.getServer().getController().getActionController().getGame().gameStartPlayers(names, serverConnection.getServer().getNumberOfPlayers());</b>
+<b class="nc"><i class="no-highlight">267</i>&nbsp;                                ArrayList&lt;String&gt; orderedPlayers = serverConnection.getServer().getController().getActionController().getGame().getAllPlayersNameInOrder();</b>
+<i class="no-highlight">268</i>&nbsp;
+<b class="nc"><i class="no-highlight">269</i>&nbsp;                                serverConnection.getServer().broadcast(4);</b>
+<b class="nc"><i class="no-highlight">270</i>&nbsp;                                serverConnection.getServer().broadcast(orderedPlayers);</b>
+<i class="no-highlight">271</i>&nbsp;                            }
+<b class="nc"><i class="no-highlight">272</i>&nbsp;                            return;</b>
+<b class="nc"><i class="no-highlight">273</i>&nbsp;                        }</b>
+<i class="no-highlight">274</i>&nbsp;                    }
+<i class="no-highlight">275</i>&nbsp;
+<b class="nc"><i class="no-highlight">276</i>&nbsp;                }</b>
+<b class="nc"><i class="no-highlight">277</i>&nbsp;            }</b>
+<b class="nc"><i class="no-highlight">278</i>&nbsp;        }catch (IOException | ModelException e){</b>
+<b class="nc"><i class="no-highlight">279</i>&nbsp;            serverConnection.close();</b>
+<b class="nc"><i class="no-highlight">280</i>&nbsp;        }</b>
+<i class="no-highlight">281</i>&nbsp;    }
+<i class="no-highlight">282</i>&nbsp;
+<i class="no-highlight">283</i>&nbsp;    /**
+<i class="no-highlight">284</i>&nbsp;     * Handles the initial phase Server-Client interaction. Clients choose their initial leader cards and resources
+<i class="no-highlight">285</i>&nbsp;     * while simultaneously waiting for each other.
+<i class="no-highlight">286</i>&nbsp;     * @param serverConnection connection used to get the Server and operate on the Controller.
+<i class="no-highlight">287</i>&nbsp;     * @throws InterruptedException if an error occurs while a Thread waits
+<i class="no-highlight">288</i>&nbsp;     */
+<i class="no-highlight">289</i>&nbsp;    public void initialPhase(ServerConnection serverConnection) throws InterruptedException {
+<b class="nc"><i class="no-highlight">290</i>&nbsp;        serverConnection.send(5);</b>
+<b class="nc"><i class="no-highlight">291</i>&nbsp;        this.initialLeaderCards(serverConnection);</b>
+<b class="nc"><i class="no-highlight">292</i>&nbsp;        serverConnection.waitReady();</b>
+<i class="no-highlight">293</i>&nbsp;
+<b class="nc"><i class="no-highlight">294</i>&nbsp;        this.initialResources(serverConnection);</b>
+<b class="nc"><i class="no-highlight">295</i>&nbsp;        serverConnection.waitReady();</b>
+<i class="no-highlight">296</i>&nbsp;
+<b class="nc"><i class="no-highlight">297</i>&nbsp;        synchronized (serverConnection.getServer()) {</b>
+<b class="nc"><i class="no-highlight">298</i>&nbsp;            DEBUGGER.printDebug(&quot;Initial Phase ended!&quot;);</b>
+<i class="no-highlight">299</i>&nbsp;
+<i class="no-highlight">300</i>&nbsp;            // DEBUGGING
+<b class="nc"><i class="no-highlight">301</i>&nbsp;            if(Debugger.isAllActive())</b>
+<b class="nc"><i class="no-highlight">302</i>&nbsp;                for(Player player : serverConnection.getServer().getController().getActionController().getGame().getPlayers())</b>
+<b class="nc"><i class="no-highlight">303</i>&nbsp;                    DEBUGGER.printDebug(player.getNickname());</b>
+<i class="no-highlight">304</i>&nbsp;
+<b class="nc"><i class="no-highlight">305</i>&nbsp;            if(Server.getServerStatus() == GameStatus.LEADER) {</b>
+<b class="nc"><i class="no-highlight">306</i>&nbsp;                Server.setServerStatus(GameStatus.GAME);</b>
+<b class="nc"><i class="no-highlight">307</i>&nbsp;                GameSetMessage message = serverConnection.getServer().getController().getActionController().prepareViewGame();</b>
+<i class="no-highlight">308</i>&nbsp;                //
+<i class="no-highlight">309</i>&nbsp;                //
+<i class="no-highlight">310</i>&nbsp;                //
+<b class="nc"><i class="no-highlight">311</i>&nbsp;                serverConnection.getServer().getController().getActionController().overwritePersistenceJSON();</b>
+<b class="nc"><i class="no-highlight">312</i>&nbsp;                serverConnection.getServer().broadcast(message);</b>
+<i class="no-highlight">313</i>&nbsp;            }
+<b class="nc"><i class="no-highlight">314</i>&nbsp;        }</b>
+<i class="no-highlight">315</i>&nbsp;    }
+<i class="no-highlight">316</i>&nbsp;
+<i class="no-highlight">317</i>&nbsp;    /**
+<i class="no-highlight">318</i>&nbsp;     * Handles the initial choice of leader cards Server-Client interaction. Clients choose their initial leader cards and resources
+<i class="no-highlight">319</i>&nbsp;     * while simultaneously waiting for each other.
+<i class="no-highlight">320</i>&nbsp;     * @param serverConnection connection used to get the Server and operate on the Controller.
+<i class="no-highlight">321</i>&nbsp;     * @throws InterruptedException if an error occurs while a Thread waits
+<i class="no-highlight">322</i>&nbsp;     */
+<i class="no-highlight">323</i>&nbsp;    public void initialLeaderCards(ServerConnection serverConnection) throws InterruptedException {
+<b class="nc"><i class="no-highlight">324</i>&nbsp;        synchronized (serverConnection.getServer().getController()) {</b>
+<b class="nc"><i class="no-highlight">325</i>&nbsp;            while(!serverConnection.isMyTurn()) {</b>
+<b class="nc"><i class="no-highlight">326</i>&nbsp;                serverConnection.getServer().getController().wait();</b>
+<i class="no-highlight">327</i>&nbsp;            }
+<b class="nc"><i class="no-highlight">328</i>&nbsp;            RedLeaderCard[] initialLeaderCards = serverConnection.getServer().getController().getActionController().getGame().gameStartLeaderCards();</b>
+<b class="nc"><i class="no-highlight">329</i>&nbsp;            serverConnection.send(initialLeaderCards);</b>
+<b class="nc"><i class="no-highlight">330</i>&nbsp;            Action action = serverConnection.readAction();</b>
+<b class="nc"><i class="no-highlight">331</i>&nbsp;            serverConnection.notify(action);</b>
+<b class="nc"><i class="no-highlight">332</i>&nbsp;            serverConnection.setReady(true);</b>
+<i class="no-highlight">333</i>&nbsp;
+<b class="nc"><i class="no-highlight">334</i>&nbsp;            serverConnection.getServer().getController().notifyAll();</b>
+<b class="nc"><i class="no-highlight">335</i>&nbsp;        }</b>
+<i class="no-highlight">336</i>&nbsp;    }
+<i class="no-highlight">337</i>&nbsp;
+<i class="no-highlight">338</i>&nbsp;    /**
+<i class="no-highlight">339</i>&nbsp;     * Handles the initial choice of resources Server-Client interaction. Clients choose their initial leader cards and resources
+<i class="no-highlight">340</i>&nbsp;     * while simultaneously waiting for each other.
+<i class="no-highlight">341</i>&nbsp;     * @param serverConnection connection used to get the Server and operate on the Controller.
+<i class="no-highlight">342</i>&nbsp;     * @throws InterruptedException if an error occurs while a Thread waits
+<i class="no-highlight">343</i>&nbsp;     */
+<i class="no-highlight">344</i>&nbsp;    public void initialResources(ServerConnection serverConnection) throws InterruptedException {
+<b class="nc"><i class="no-highlight">345</i>&nbsp;        synchronized (serverConnection.getServer().getController()) {</b>
+<b class="nc"><i class="no-highlight">346</i>&nbsp;            while (!serverConnection.isMyTurn()) {</b>
+<b class="nc"><i class="no-highlight">347</i>&nbsp;                serverConnection.getServer().getController().wait();</b>
+<i class="no-highlight">348</i>&nbsp;            }
+<b class="nc"><i class="no-highlight">349</i>&nbsp;            int[] array = new int[1];</b>
+<b class="nc"><i class="no-highlight">350</i>&nbsp;            int resources = serverConnection.getServer().getController().getActionController().getGame().gameStartResources(serverConnection.getName());</b>
+<b class="nc"><i class="no-highlight">351</i>&nbsp;            array[0] = resources;</b>
+<i class="no-highlight">352</i>&nbsp;
+<b class="nc"><i class="no-highlight">353</i>&nbsp;            Action action = null;</b>
+<b class="nc"><i class="no-highlight">354</i>&nbsp;            while (action == null || !action.canBeApplied(serverConnection.getServer().getController().getActionController())) {</b>
+<b class="nc"><i class="no-highlight">355</i>&nbsp;                serverConnection.send(array);</b>
+<b class="nc"><i class="no-highlight">356</i>&nbsp;                action = serverConnection.readAction();</b>
+<b class="nc"><i class="no-highlight">357</i>&nbsp;                serverConnection.notify(action);</b>
+<i class="no-highlight">358</i>&nbsp;            }
+<b class="nc"><i class="no-highlight">359</i>&nbsp;            serverConnection.setReady(true);</b>
+<i class="no-highlight">360</i>&nbsp;
+<b class="nc"><i class="no-highlight">361</i>&nbsp;            serverConnection.getServer().getController().notifyAll();</b>
+<b class="nc"><i class="no-highlight">362</i>&nbsp;        }</b>
+<i class="no-highlight">363</i>&nbsp;    }
+<i class="no-highlight">364</i>&nbsp;
+<i class="no-highlight">365</i>&nbsp;    /**
+<i class="no-highlight">366</i>&nbsp;     * Sends an error to the client via its socket.
+<i class="no-highlight">367</i>&nbsp;     * @param serverConnection connection used to get the Server and operate on the Controller.
+<i class="no-highlight">368</i>&nbsp;     * @param string error to be sent to the client.
+<i class="no-highlight">369</i>&nbsp;     */
+<i class="no-highlight">370</i>&nbsp;    public void sendError(ServerConnection serverConnection, String string) {
+<b class="nc"><i class="no-highlight">371</i>&nbsp;        DEBUGGER.printDebug(&quot;Sending error to client String: &quot; + string);</b>
+<b class="nc"><i class="no-highlight">372</i>&nbsp;        serverConnection.send(9);</b>
+<b class="nc"><i class="no-highlight">373</i>&nbsp;        serverConnection.send(string);</b>
+<i class="no-highlight">374</i>&nbsp;    }
+<i class="no-highlight">375</i>&nbsp;
+<i class="no-highlight">376</i>&nbsp;    /**
+<i class="no-highlight">377</i>&nbsp;     * Checks if the server status is set to LOBBY or PARAM
+<i class="no-highlight">378</i>&nbsp;     * @return true if the game is in lobby phase.
+<i class="no-highlight">379</i>&nbsp;     */
+<i class="no-highlight">380</i>&nbsp;    public boolean isLobby(){
+<b class="nc"><i class="no-highlight">381</i>&nbsp;        GameStatus serverStatus = Server.getServerStatus();</b>
+<i class="no-highlight">382</i>&nbsp;        //noinspection RedundantIfStatement
+<b class="nc"><i class="no-highlight">383</i>&nbsp;        if(serverStatus.equals(GameStatus.LOBBY) || serverStatus.equals(GameStatus.PARAM))</b>
+<b class="nc"><i class="no-highlight">384</i>&nbsp;            return true;</b>
+<i class="no-highlight">385</i>&nbsp;        else
+<b class="nc"><i class="no-highlight">386</i>&nbsp;            return false;</b>
+<i class="no-highlight">387</i>&nbsp;    }
+<i class="no-highlight">388</i>&nbsp;
+<i class="no-highlight">389</i>&nbsp;    /**
+<i class="no-highlight">390</i>&nbsp;     * nameInsert checks if the username is already set in the server, if not the name is inserted into the server
+<i class="no-highlight">391</i>&nbsp;     * @param serverConnection      the reference to the serverConnection
+<i class="no-highlight">392</i>&nbsp;     * @param name                  the name to check
+<i class="no-highlight">393</i>&nbsp;     * @return &lt;b&gt;true&lt;/b&gt; if the name is not in the server, &lt;b&gt;false&lt;/b&gt; if somebody has the same name
+<i class="no-highlight">394</i>&nbsp;     */
+<i class="no-highlight">395</i>&nbsp;    public synchronized boolean nameInsert(ServerConnection serverConnection,String name){
+<b class="nc"><i class="no-highlight">396</i>&nbsp;        return serverConnection.getServer().setName(name);</b>
+<i class="no-highlight">397</i>&nbsp;    }
+<i class="no-highlight">398</i>&nbsp;
+<i class="no-highlight">399</i>&nbsp;    /**
+<i class="no-highlight">400</i>&nbsp;     * nameOk checks if the username is in the server
+<i class="no-highlight">401</i>&nbsp;     * @param serverConnection      the reference to the serverConnection
+<i class="no-highlight">402</i>&nbsp;     * @param name                  the name to check
+<i class="no-highlight">403</i>&nbsp;     * @return &lt;b&gt;true&lt;/b&gt; if the name is in the server, &lt;b&gt;false&lt;/b&gt; otherwise
+<i class="no-highlight">404</i>&nbsp;     */
+<i class="no-highlight">405</i>&nbsp;    public boolean nameOk(ServerConnection serverConnection,String name){
+<b class="nc"><i class="no-highlight">406</i>&nbsp;        return serverConnection.getServer().matchName(name);</b>
+<i class="no-highlight">407</i>&nbsp;    }
+<i class="no-highlight">408</i>&nbsp;
+<i class="no-highlight">409</i>&nbsp;    /**
+<i class="no-highlight">410</i>&nbsp;     * freeSpace checks if there&#39;s space in the Lobby
+<i class="no-highlight">411</i>&nbsp;     * @param serverConnection      the reference to the serverConnection
+<i class="no-highlight">412</i>&nbsp;     * @return true if there&#39;s free space to join, false otherwise
+<i class="no-highlight">413</i>&nbsp;     */
+<i class="no-highlight">414</i>&nbsp;    public boolean freeSpace(ServerConnection serverConnection){
+<b class="nc"><i class="no-highlight">415</i>&nbsp;        DEBUGGER.printDebug(&quot;freeSpace: &quot;+(serverConnection.getServer().getNumberOfPlayers()&lt;serverConnection.getServer().getReadyPlayers()) +&quot; &quot;+serverConnection.getServer().getNumberOfPlayers()+&quot; &lt; &quot;+serverConnection.getServer().getReadyPlayers());</b>
+<b class="nc"><i class="no-highlight">416</i>&nbsp;        return serverConnection.getServer().getNumberOfPlayers()&gt;serverConnection.getServer().getReadyPlayers();</b>
+<i class="no-highlight">417</i>&nbsp;    }
+<i class="no-highlight">418</i>&nbsp;
+<i class="no-highlight">419</i>&nbsp;    /**
+<i class="no-highlight">420</i>&nbsp;     * Handles a client&#39;s reconnection.
+<i class="no-highlight">421</i>&nbsp;     * @param serverConnection connection used to get the Server and operate on the Controller.
+<i class="no-highlight">422</i>&nbsp;     */
+<i class="no-highlight">423</i>&nbsp;    public void reconnection(ServerConnection serverConnection) {
+<b class="nc"><i class="no-highlight">424</i>&nbsp;        serverConnection.send(3);</b>
+<i class="no-highlight">425</i>&nbsp;
+<b class="nc"><i class="no-highlight">426</i>&nbsp;        if(serverConnection.getServer().getConnectedPlayers() == 0)</b>
+<b class="nc"><i class="no-highlight">427</i>&nbsp;            serverConnection.getServer().getController().getActionController().getGame().changeCurrentPlayerReconnection(serverConnection.getName());</b>
+<i class="no-highlight">428</i>&nbsp;
+<b class="nc"><i class="no-highlight">429</i>&nbsp;        GameSetMessage message = serverConnection.getServer().getController().getActionController().prepareViewGame();</b>
+<b class="nc"><i class="no-highlight">430</i>&nbsp;        serverConnection.getServer().getController().getActionController().getGame().getPlayerByNickname(serverConnection.getName()).setStatus(PlayerStatus.IN_GAME);</b>
+<b class="nc"><i class="no-highlight">431</i>&nbsp;        serverConnection.send(message);</b>
+<b class="nc"><i class="no-highlight">432</i>&nbsp;        serverConnection.addObserver(serverConnection.getServer().getController());</b>
+<b class="nc"><i class="no-highlight">433</i>&nbsp;        serverConnection.getServer().getController().getActionController().getModelToView().addObserver(serverConnection);</b>
+<i class="no-highlight">434</i>&nbsp;
+<b class="nc"><i class="no-highlight">435</i>&nbsp;        if(serverConnection.getServer().notConnected(serverConnection))</b>
+<b class="nc"><i class="no-highlight">436</i>&nbsp;            serverConnection.getServer().addConnection(serverConnection);</b>
+<i class="no-highlight">437</i>&nbsp;    }
+<i class="no-highlight">438</i>&nbsp;
+<i class="no-highlight">439</i>&nbsp;    /**
+<i class="no-highlight">440</i>&nbsp;     * Removes a connection from all dependencies with the Server.
+<i class="no-highlight">441</i>&nbsp;     * @param serverConnection connection used to get the Server and operate on the Controller.
+<i class="no-highlight">442</i>&nbsp;     */
+<i class="no-highlight">443</i>&nbsp;    public synchronized void serverConnectionLeave(ServerConnection serverConnection) {
+<b class="nc"><i class="no-highlight">444</i>&nbsp;        serverConnection.getServer().getController().getActionController().getGame().removePlayerByNickname(serverConnection.getName());</b>
+<b class="nc"><i class="no-highlight">445</i>&nbsp;        serverConnection.getServer().removeFromNames(serverConnection.getName());</b>
+<i class="no-highlight">446</i>&nbsp;
+<i class="no-highlight">447</i>&nbsp;    }
+<i class="no-highlight">448</i>&nbsp;
+<i class="no-highlight">449</i>&nbsp;    /**
+<i class="no-highlight">450</i>&nbsp;     * Closes a Client-Server connection.
+<i class="no-highlight">451</i>&nbsp;     * @param serverConnection connection used to get the Server and operate on the Controller.
+<i class="no-highlight">452</i>&nbsp;     */
+<i class="no-highlight">453</i>&nbsp;    public void nameInServerLeave(ServerConnection serverConnection) {
+<b class="nc"><i class="no-highlight">454</i>&nbsp;        sendError(serverConnection, &quot;A player with name &quot; + serverConnection.getName() + &quot; is already connected!&quot;);</b>
+<b class="nc"><i class="no-highlight">455</i>&nbsp;        serverConnection.close();</b>
+<i class="no-highlight">456</i>&nbsp;    }
+<i class="no-highlight">457</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-07-02 23:15</div>
+</div>
+</body>
+</html>

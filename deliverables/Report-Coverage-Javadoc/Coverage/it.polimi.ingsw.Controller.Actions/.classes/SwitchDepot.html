@@ -1,0 +1,215 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: SwitchDepot</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Controller.Actions</a> ]
+</div>
+
+<h1>Coverage Summary for Class: SwitchDepot (it.polimi.ingsw.Controller.Actions)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SwitchDepot</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/ 8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    93,9%
+  </span>
+  <span class="absValue">
+    (46/ 49)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Controller.Actions;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.Controller.ActionController;
+<i>4</i>&nbsp;import it.polimi.ingsw.Model.*;
+<i>5</i>&nbsp;import it.polimi.ingsw.Model.MessagesToClient.*;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;/**
+<i>8</i>&nbsp; * SwitchDepot Class defines data and methods to complete a Client&#39;s request when wanting
+<i>9</i>&nbsp; * to switch two depots during an Add interaction.
+<i>10</i>&nbsp; */
+<i>11</i>&nbsp;public class SwitchDepot extends Action {
+<i>12</i>&nbsp;    private final int firstDepot;
+<i>13</i>&nbsp;    private final int secondDepot;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;    /**
+<i>16</i>&nbsp;     * Constructor for SwitchDepot Class.
+<i>17</i>&nbsp;     */
+<b class="fc"><i>18</i>&nbsp;    public SwitchDepot(int firstDepot, int secondDepot) {</b>
+<b class="fc"><i>19</i>&nbsp;        this.actionType = ActionType.SWITCH_DEPOT;</b>
+<b class="fc"><i>20</i>&nbsp;        this.firstDepot = firstDepot;</b>
+<b class="fc"><i>21</i>&nbsp;        this.secondDepot = secondDepot;</b>
+<b class="fc"><i>22</i>&nbsp;    }</b>
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    /**
+<i>25</i>&nbsp;     * Getter for &quot;actionType&quot; attribute in SwitchDepot Class.
+<i>26</i>&nbsp;     */
+<i>27</i>&nbsp;    public ActionType getActionType() {
+<b class="fc"><i>28</i>&nbsp;        return actionType;</b>
+<i>29</i>&nbsp;    }
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    /**
+<i>32</i>&nbsp;     * Getter for &quot;firstDepot&quot; attribute in SwitchDepot Class.
+<i>33</i>&nbsp;     */
+<i>34</i>&nbsp;    public int getFirstDepot() {
+<b class="fc"><i>35</i>&nbsp;        return firstDepot;</b>
+<i>36</i>&nbsp;    }
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    /**
+<i>39</i>&nbsp;     * Getter for &quot;secondDepot&quot; attribute in SwitchDepot Class.
+<i>40</i>&nbsp;     */
+<i>41</i>&nbsp;    public int getSecondDepot() {
+<b class="fc"><i>42</i>&nbsp;        return secondDepot;</b>
+<i>43</i>&nbsp;    }
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;    /**
+<i>46</i>&nbsp;     * This method checks if the input sent to the server is correct by assuring that the depot index
+<i>47</i>&nbsp;     * does not go out of bounds.
+<i>48</i>&nbsp;     * @throws IllegalArgumentException if the row or column index is out of bounds.
+<i>49</i>&nbsp;     */
+<i>50</i>&nbsp;    @Override
+<i>51</i>&nbsp;    public boolean isCorrect() throws IllegalArgumentException {
+<b class="fc"><i>52</i>&nbsp;        if(firstDepot &lt; 0 || firstDepot &gt; 4)</b>
+<b class="fc"><i>53</i>&nbsp;            throw new IllegalArgumentException(&quot;First Depot index out of bounds.&quot;);</b>
+<b class="fc"><i>54</i>&nbsp;        else if(secondDepot &lt; 0 || secondDepot &gt; 4)</b>
+<b class="fc"><i>55</i>&nbsp;            throw new IllegalArgumentException(&quot;Second Depot index out of bounds.&quot;);</b>
+<b class="fc"><i>56</i>&nbsp;        return true;</b>
+<i>57</i>&nbsp;    }
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    /**
+<i>60</i>&nbsp;     * Method used to check if the action is logically applicable by assuring that the depot
+<i>61</i>&nbsp;     * picked by the client is Active.
+<i>62</i>&nbsp;     */
+<i>63</i>&nbsp;    @Override
+<i>64</i>&nbsp;    public boolean canBeApplied(ActionController actionController) {
+<b class="fc"><i>65</i>&nbsp;        Player player = actionController.getGame().getCurrentPlayer();</b>
+<b class="fc"><i>66</i>&nbsp;        if(!player.getBoard().getResourceManager().isExtraDepotOneActive() &amp;&amp; (firstDepot == 3 || secondDepot == 3))</b>
+<b class="nc"><i>67</i>&nbsp;            return false;</b>
+<b class="fc"><i>68</i>&nbsp;        if(!player.getBoard().getResourceManager().isExtraDepotTwoActive() &amp;&amp; (firstDepot == 4 || secondDepot == 4))</b>
+<b class="fc"><i>69</i>&nbsp;            return false;</b>
+<i>70</i>&nbsp;
+<b class="fc"><i>71</i>&nbsp;        return true;</b>
+<i>72</i>&nbsp;    }
+<i>73</i>&nbsp;
+<i>74</i>&nbsp;    /**
+<i>75</i>&nbsp;     * Method used to execute the action on the Model.
+<i>76</i>&nbsp;     * @return &quot;SUCCESS&quot; if the action went right, another String if it went wrong.
+<i>77</i>&nbsp;     */
+<i>78</i>&nbsp;    @Override
+<i>79</i>&nbsp;    public String doAction(ActionController actionController) {
+<b class="fc"><i>80</i>&nbsp;        this.isCorrect();</b>
+<b class="fc"><i>81</i>&nbsp;        if(!this.canBeApplied(actionController)) {</b>
+<b class="fc"><i>82</i>&nbsp;            this.response = &quot;Can&#39;t switch from/to non active depot&quot;;</b>
+<b class="fc"><i>83</i>&nbsp;            return &quot;Can&#39;t switch from/to non active depot&quot;;</b>
+<i>84</i>&nbsp;        }
+<i>85</i>&nbsp;
+<b class="fc"><i>86</i>&nbsp;        ResourceManager resourceManager = actionController.getGame().getCurrentPlayer().getBoard().getResourceManager();</b>
+<i>87</i>&nbsp;        WarehouseDepot firstDepot, secondDepot;
+<i>88</i>&nbsp;
+<b class="fc"><i>89</i>&nbsp;        if(this.firstDepot == 3)</b>
+<b class="fc"><i>90</i>&nbsp;            firstDepot = resourceManager.getExtraWarehouseDepotOne();</b>
+<b class="fc"><i>91</i>&nbsp;        else if(this.firstDepot == 4)</b>
+<b class="nc"><i>92</i>&nbsp;            firstDepot = resourceManager.getExtraWarehouseDepotTwo();</b>
+<i>93</i>&nbsp;        else
+<b class="fc"><i>94</i>&nbsp;            firstDepot = resourceManager.getWarehouseDepots()[this.firstDepot];</b>
+<i>95</i>&nbsp;
+<b class="fc"><i>96</i>&nbsp;        if(this.secondDepot == 3)</b>
+<b class="nc"><i>97</i>&nbsp;            secondDepot = resourceManager.getExtraWarehouseDepotOne();</b>
+<b class="fc"><i>98</i>&nbsp;        else if(this.secondDepot == 4)</b>
+<b class="fc"><i>99</i>&nbsp;            secondDepot = resourceManager.getExtraWarehouseDepotTwo();</b>
+<i>100</i>&nbsp;        else
+<b class="fc"><i>101</i>&nbsp;            secondDepot = resourceManager.getWarehouseDepots()[this.secondDepot];</b>
+<i>102</i>&nbsp;
+<b class="fc"><i>103</i>&nbsp;        if(!resourceManager.getWarehouse().canSwitchDepots(firstDepot, secondDepot)) {</b>
+<b class="fc"><i>104</i>&nbsp;            this.response = &quot;Cannot switch depots&quot;;</b>
+<b class="fc"><i>105</i>&nbsp;            return &quot;Cannot switch depots&quot;;</b>
+<i>106</i>&nbsp;        }
+<i>107</i>&nbsp;
+<i>108</i>&nbsp;        else {
+<b class="fc"><i>109</i>&nbsp;            resourceManager.getWarehouse().switchDepots(firstDepot, secondDepot);</b>
+<b class="fc"><i>110</i>&nbsp;            this.response = &quot;SUCCESS&quot;;</b>
+<b class="fc"><i>111</i>&nbsp;            return &quot;SUCCESS&quot;;</b>
+<i>112</i>&nbsp;        }
+<i>113</i>&nbsp;    }
+<i>114</i>&nbsp;
+<i>115</i>&nbsp;    /**
+<i>116</i>&nbsp;     * Method used to prepare a messageToClient type object to be sent by the server to the client.
+<i>117</i>&nbsp;     * @return A message to be sent to the client.
+<i>118</i>&nbsp;     */
+<i>119</i>&nbsp;    @Override
+<i>120</i>&nbsp;    public MessageToClient messagePrepare(ActionController actionController) {
+<b class="fc"><i>121</i>&nbsp;        SwitchDepotMessage message = new SwitchDepotMessage(actionController.getGame().getCurrentPlayerIndex());</b>
+<b class="fc"><i>122</i>&nbsp;        if(this.response.equals(&quot;SUCCESS&quot;))</b>
+<b class="fc"><i>123</i>&nbsp;            message.setWarehouse(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse());</b>
+<b class="fc"><i>124</i>&nbsp;        message.setError(this.response);</b>
+<b class="fc"><i>125</i>&nbsp;        message.addPossibleAction(ActionType.ADD_RESOURCE);</b>
+<b class="fc"><i>126</i>&nbsp;        message.addPossibleAction(ActionType.RESET_WAREHOUSE);</b>
+<b class="fc"><i>127</i>&nbsp;        message.addPossibleAction(ActionType.SWITCH_DEPOT);</b>
+<b class="fc"><i>128</i>&nbsp;        message.addPossibleAction(ActionType.END_MARKET);</b>
+<i>129</i>&nbsp;
+<b class="fc"><i>130</i>&nbsp;        return message;</b>
+<i>131</i>&nbsp;    }
+<i>132</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-12 23:55</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,115 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: MessageToClient</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.View.MessagesToClient</a> ]
+</div>
+
+<h1>Coverage Summary for Class: MessageToClient (it.polimi.ingsw.View.MessagesToClient)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MessageToClient</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.View.MessagesToClient;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.Controller.Actions.ActionType;
+<i>4</i>&nbsp;import it.polimi.ingsw.View.ReducedModel.Game;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import java.io.Serializable;
+<i>7</i>&nbsp;import java.util.ArrayList;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;public class MessageToClient implements Serializable {
+<i>10</i>&nbsp;    /** actionDone defines the action requested by the client */
+<i>11</i>&nbsp;    protected ActionType actionDone;
+<i>12</i>&nbsp;    /**
+<i>13</i>&nbsp;     * possibleActions contains all possible actions a player could request after
+<i>14</i>&nbsp;     * the action he just requested.
+<i>15</i>&nbsp;     */
+<b class="nc"><i>16</i>&nbsp;    protected ArrayList&lt;ActionType&gt; possibleActions = new ArrayList&lt;&gt;();</b>
+<i>17</i>&nbsp;    /** error attribute specifies the message error (or SUCCESS) to be displayed client side */
+<i>18</i>&nbsp;    protected String error;
+<i>19</i>&nbsp;    /** playerId indicates the current player doing the actions */
+<i>20</i>&nbsp;    protected int playerId;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    /**
+<i>23</i>&nbsp;     * Default Constructor for MessageToClient Class.
+<i>24</i>&nbsp;     */
+<b class="nc"><i>25</i>&nbsp;    public MessageToClient() {</b>
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    }
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    public void updateView(Game game) {
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    }
+<i>32</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-12 23:55</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,381 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Player</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+    @import "../../.css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../.js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">it.polimi.ingsw.Model.GameModel</a>
+</div>
+
+<h1>Coverage Summary for Class: Player (it.polimi.ingsw.Model.GameModel)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Player</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (24/24)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (88/88)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package it.polimi.ingsw.Model.GameModel;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import it.polimi.ingsw.Controller.Actions.ActionType;
+<i class="no-highlight">4</i>&nbsp;import it.polimi.ingsw.Model.Enums.PlayerStatus;
+<i class="no-highlight">5</i>&nbsp;import it.polimi.ingsw.View.ReducedModel.RedLeaderCard;
+<i class="no-highlight">6</i>&nbsp;import it.polimi.ingsw.View.ReducedModel.RedPopeTileClass;
+<i class="no-highlight">7</i>&nbsp;
+<i class="no-highlight">8</i>&nbsp;import java.io.Serializable;
+<i class="no-highlight">9</i>&nbsp;import java.util.ArrayList;
+<i class="no-highlight">10</i>&nbsp;
+<i class="no-highlight">11</i>&nbsp;/**
+<i class="no-highlight">12</i>&nbsp; * Player Class defines attributes and methods of a player.
+<i class="no-highlight">13</i>&nbsp; * &lt;p&gt;&lt;b&gt;Attributes:&lt;/b&gt;&lt;/p&gt;&gt;
+<i class="no-highlight">14</i>&nbsp; * &lt;ul&gt;
+<i class="no-highlight">15</i>&nbsp; *     &lt;li&gt;String &quot;nickname&quot;: the player&#39;s nickname&lt;/li&gt;
+<i class="no-highlight">16</i>&nbsp; *     &lt;li&gt;int &quot;turnPosition&quot;: the player&#39;s position in the defined turn changing mechanism&lt;/li&gt;
+<i class="no-highlight">17</i>&nbsp; *     &lt;li&gt;boolean &quot;Inkwell&quot;: if the player is the first to play, he has the inkwell&lt;/li&gt;
+<i class="no-highlight">18</i>&nbsp; *     &lt;li&gt;PlayerStatus &quot;status&quot;: the player&#39;s status indicating if he&#39;s playing, temporary disabled or has finished the game&lt;/li&gt;
+<i class="no-highlight">19</i>&nbsp; *     &lt;li&gt;int &quot;victoryPoints&quot;: the player&#39;s number of victory points&lt;/li&gt;
+<i class="no-highlight">20</i>&nbsp; *     &lt;li&gt;int &quot;faithTrackPosition&quot;: indicates the player&#39;s position inside the faithTrack&lt;/li&gt;
+<i class="no-highlight">21</i>&nbsp; *     &lt;li&gt;Board &quot;board&quot;: the player&#39;s personal board containing all objects of the game&lt;/li&gt;
+<i class="no-highlight">22</i>&nbsp; *     &lt;li&gt;PopeTileClass[] &quot;popeTiles&quot;: all popeTiles owned by the player&lt;/li&gt;
+<i class="no-highlight">23</i>&nbsp; *     &lt;li&gt;ArrayList&amp;lt;ActionType&amp;gt; &quot;possibleActions&quot;: list of all possible actions the player can perform at a certain moment.&lt;/li&gt;
+<i class="no-highlight">24</i>&nbsp; * &lt;/ul&gt;
+<i class="no-highlight">25</i>&nbsp; * @author redrick99
+<i class="no-highlight">26</i>&nbsp; */
+<i class="no-highlight">27</i>&nbsp;public class Player implements Serializable {
+<i class="no-highlight">28</i>&nbsp;    private final String nickname;
+<i class="no-highlight">29</i>&nbsp;    private final int turnPosition;
+<i class="no-highlight">30</i>&nbsp;    private final boolean Inkwell;
+<i class="no-highlight">31</i>&nbsp;    private PlayerStatus status;
+<i class="no-highlight">32</i>&nbsp;    private int victoryPoints;
+<i class="no-highlight">33</i>&nbsp;    private int faithTrackPosition;
+<i class="no-highlight">34</i>&nbsp;    private final Board board;
+<i class="no-highlight">35</i>&nbsp;    private final PopeTileClass[] popeTiles;
+<i class="no-highlight">36</i>&nbsp;    private final ArrayList&lt;ActionType&gt; possibleActions;
+<i class="no-highlight">37</i>&nbsp;
+<i class="no-highlight">38</i>&nbsp;    /**
+<i class="no-highlight">39</i>&nbsp;     * Constructor for Player Class.
+<i class="no-highlight">40</i>&nbsp;     */
+<b class="fc"><i class="no-highlight">41</i>&nbsp;    public Player(String nickname, int turnPosition, boolean hasInkwell) {</b>
+<b class="fc"><i class="no-highlight">42</i>&nbsp;        this.nickname = nickname;</b>
+<b class="fc"><i class="no-highlight">43</i>&nbsp;        this.turnPosition = turnPosition;</b>
+<b class="fc"><i class="no-highlight">44</i>&nbsp;        this.Inkwell = hasInkwell;</b>
+<b class="fc"><i class="no-highlight">45</i>&nbsp;        this.status = PlayerStatus.IN_GAME;</b>
+<b class="fc"><i class="no-highlight">46</i>&nbsp;        this.victoryPoints = 0;</b>
+<b class="fc"><i class="no-highlight">47</i>&nbsp;        this.faithTrackPosition = 0;</b>
+<b class="fc"><i class="no-highlight">48</i>&nbsp;        this.board = new Board();</b>
+<b class="fc"><i class="no-highlight">49</i>&nbsp;        this.popeTiles = new PopeTileClass[3];</b>
+<b class="fc"><i class="no-highlight">50</i>&nbsp;        this.popeTiles[0] = new PopeTileClass(2);</b>
+<b class="fc"><i class="no-highlight">51</i>&nbsp;        this.popeTiles[1] = new PopeTileClass(3);</b>
+<b class="fc"><i class="no-highlight">52</i>&nbsp;        this.popeTiles[2] = new PopeTileClass(4);</b>
+<b class="fc"><i class="no-highlight">53</i>&nbsp;        this.possibleActions = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">54</i>&nbsp;    }</b>
+<i class="no-highlight">55</i>&nbsp;
+<i class="no-highlight">56</i>&nbsp;    /**
+<i class="no-highlight">57</i>&nbsp;     * Getter for &quot;popeTiles&quot; attribute.
+<i class="no-highlight">58</i>&nbsp;     */
+<i class="no-highlight">59</i>&nbsp;    public PopeTileClass[] getPopeTiles() {
+<b class="fc"><i class="no-highlight">60</i>&nbsp;        return popeTiles;</b>
+<i class="no-highlight">61</i>&nbsp;    }
+<i class="no-highlight">62</i>&nbsp;
+<i class="no-highlight">63</i>&nbsp;    /**
+<i class="no-highlight">64</i>&nbsp;     * Getter for &quot;nickname&quot; attribute.
+<i class="no-highlight">65</i>&nbsp;     */
+<i class="no-highlight">66</i>&nbsp;    public String getNickname() {
+<b class="fc"><i class="no-highlight">67</i>&nbsp;        return nickname;</b>
+<i class="no-highlight">68</i>&nbsp;    }
+<i class="no-highlight">69</i>&nbsp;
+<i class="no-highlight">70</i>&nbsp;    /**
+<i class="no-highlight">71</i>&nbsp;     * Getter for &quot;turnPosition&quot; attribute.
+<i class="no-highlight">72</i>&nbsp;     */
+<i class="no-highlight">73</i>&nbsp;    public int getTurnPosition() {
+<b class="fc"><i class="no-highlight">74</i>&nbsp;        return turnPosition;</b>
+<i class="no-highlight">75</i>&nbsp;    }
+<i class="no-highlight">76</i>&nbsp;
+<i class="no-highlight">77</i>&nbsp;    /**
+<i class="no-highlight">78</i>&nbsp;     * Getter for &quot;Inkwell&quot; attribute.
+<i class="no-highlight">79</i>&nbsp;     */
+<i class="no-highlight">80</i>&nbsp;    public boolean hasInkwell() {
+<b class="fc"><i class="no-highlight">81</i>&nbsp;        return Inkwell;</b>
+<i class="no-highlight">82</i>&nbsp;    }
+<i class="no-highlight">83</i>&nbsp;
+<i class="no-highlight">84</i>&nbsp;    /**
+<i class="no-highlight">85</i>&nbsp;     * Getter for &quot;status&quot; attribute.
+<i class="no-highlight">86</i>&nbsp;     */
+<i class="no-highlight">87</i>&nbsp;    public PlayerStatus getStatus() {
+<b class="fc"><i class="no-highlight">88</i>&nbsp;        return status;</b>
+<i class="no-highlight">89</i>&nbsp;    }
+<i class="no-highlight">90</i>&nbsp;
+<i class="no-highlight">91</i>&nbsp;    /**
+<i class="no-highlight">92</i>&nbsp;     * Setter for &quot;status&quot; attribute.
+<i class="no-highlight">93</i>&nbsp;     */
+<i class="no-highlight">94</i>&nbsp;    public void setStatus(PlayerStatus status) {
+<b class="fc"><i class="no-highlight">95</i>&nbsp;        this.status = status;</b>
+<b class="fc"><i class="no-highlight">96</i>&nbsp;    }</b>
+<i class="no-highlight">97</i>&nbsp;
+<i class="no-highlight">98</i>&nbsp;    /**
+<i class="no-highlight">99</i>&nbsp;     * Getter for &quot;victoryPoints&quot; attribute.
+<i class="no-highlight">100</i>&nbsp;     */
+<i class="no-highlight">101</i>&nbsp;    public int getVictoryPoints() {
+<b class="fc"><i class="no-highlight">102</i>&nbsp;        return victoryPoints;</b>
+<i class="no-highlight">103</i>&nbsp;    }
+<i class="no-highlight">104</i>&nbsp;
+<i class="no-highlight">105</i>&nbsp;    /**
+<i class="no-highlight">106</i>&nbsp;     * Getter for &quot;faithTrackPosition&quot; attribute.
+<i class="no-highlight">107</i>&nbsp;     */
+<i class="no-highlight">108</i>&nbsp;    public int getFaithTrackPosition() {
+<b class="fc"><i class="no-highlight">109</i>&nbsp;        return faithTrackPosition;</b>
+<i class="no-highlight">110</i>&nbsp;    }
+<i class="no-highlight">111</i>&nbsp;
+<i class="no-highlight">112</i>&nbsp;    /**
+<i class="no-highlight">113</i>&nbsp;     * Setter for &quot;faithTrackPosition&quot; attribute.
+<i class="no-highlight">114</i>&nbsp;     */
+<i class="no-highlight">115</i>&nbsp;    public void setFaithTrackPosition(int faithTrackPosition){
+<b class="fc"><i class="no-highlight">116</i>&nbsp;        this.faithTrackPosition = faithTrackPosition;</b>
+<b class="fc"><i class="no-highlight">117</i>&nbsp;    }</b>
+<i class="no-highlight">118</i>&nbsp;    /**
+<i class="no-highlight">119</i>&nbsp;     * Getter for &quot;board&quot; attribute in Player Class.
+<i class="no-highlight">120</i>&nbsp;     */
+<i class="no-highlight">121</i>&nbsp;    public Board getBoard() {
+<b class="fc"><i class="no-highlight">122</i>&nbsp;        return board;</b>
+<i class="no-highlight">123</i>&nbsp;    }
+<i class="no-highlight">124</i>&nbsp;
+<i class="no-highlight">125</i>&nbsp;    /**
+<i class="no-highlight">126</i>&nbsp;     * Getter for &quot;possibleActions&quot; attribute.
+<i class="no-highlight">127</i>&nbsp;     */
+<i class="no-highlight">128</i>&nbsp;    public ArrayList&lt;ActionType&gt; getPossibleActions() {
+<b class="fc"><i class="no-highlight">129</i>&nbsp;        return possibleActions;</b>
+<i class="no-highlight">130</i>&nbsp;    }
+<i class="no-highlight">131</i>&nbsp;
+<i class="no-highlight">132</i>&nbsp;    /**
+<i class="no-highlight">133</i>&nbsp;     * Removes all ActionTypes inside &quot;possibleActions&quot; attribute.
+<i class="no-highlight">134</i>&nbsp;     */
+<i class="no-highlight">135</i>&nbsp;    public void clearPossibleActions() {
+<b class="fc"><i class="no-highlight">136</i>&nbsp;        ActionType type = null;</b>
+<b class="fc"><i class="no-highlight">137</i>&nbsp;        ActionType type2 = null;</b>
+<i class="no-highlight">138</i>&nbsp;
+<b class="fc"><i class="no-highlight">139</i>&nbsp;        if(this.canDo(ActionType.ACTIVATE_LEADERCARD))</b>
+<b class="fc"><i class="no-highlight">140</i>&nbsp;            type = ActionType.ACTIVATE_LEADERCARD;</b>
+<i class="no-highlight">141</i>&nbsp;
+<b class="fc"><i class="no-highlight">142</i>&nbsp;        if(this.canDo(ActionType.DELETE_LEADERCARD))</b>
+<b class="fc"><i class="no-highlight">143</i>&nbsp;            type2 = ActionType.DELETE_LEADERCARD;</b>
+<i class="no-highlight">144</i>&nbsp;
+<b class="fc"><i class="no-highlight">145</i>&nbsp;        if(this.possibleActions.size() &gt; 0)</b>
+<b class="fc"><i class="no-highlight">146</i>&nbsp;            this.possibleActions.clear();</b>
+<i class="no-highlight">147</i>&nbsp;
+<b class="fc"><i class="no-highlight">148</i>&nbsp;        if(type != null)</b>
+<b class="fc"><i class="no-highlight">149</i>&nbsp;            this.possibleActions.add(type);</b>
+<b class="fc"><i class="no-highlight">150</i>&nbsp;        if(type2 != null)</b>
+<b class="fc"><i class="no-highlight">151</i>&nbsp;            this.possibleActions.add(type2);</b>
+<b class="fc"><i class="no-highlight">152</i>&nbsp;    }</b>
+<i class="no-highlight">153</i>&nbsp;
+<i class="no-highlight">154</i>&nbsp;    /**
+<i class="no-highlight">155</i>&nbsp;     * Removes one specified ActionType from &quot;possibleActions&quot; attribute.
+<i class="no-highlight">156</i>&nbsp;     * @param type ActionType to remove.
+<i class="no-highlight">157</i>&nbsp;     */
+<i class="no-highlight">158</i>&nbsp;    public void removePossibleAction(ActionType type) {
+<b class="fc"><i class="no-highlight">159</i>&nbsp;        if(this.possibleActions.size() &gt; 0)</b>
+<b class="fc"><i class="no-highlight">160</i>&nbsp;            this.possibleActions.remove(type);</b>
+<b class="fc"><i class="no-highlight">161</i>&nbsp;    }</b>
+<i class="no-highlight">162</i>&nbsp;
+<i class="no-highlight">163</i>&nbsp;    /**
+<i class="no-highlight">164</i>&nbsp;     * Adds a give ActionType to &quot;possibleActions&quot; attribute.
+<i class="no-highlight">165</i>&nbsp;     * @param type ActionType to be added.
+<i class="no-highlight">166</i>&nbsp;     */
+<i class="no-highlight">167</i>&nbsp;    public void addPossibleAction(ActionType type) {
+<b class="fc"><i class="no-highlight">168</i>&nbsp;        if(!this.possibleActions.contains(type))</b>
+<b class="fc"><i class="no-highlight">169</i>&nbsp;            this.possibleActions.add(type);</b>
+<b class="fc"><i class="no-highlight">170</i>&nbsp;    }</b>
+<i class="no-highlight">171</i>&nbsp;
+<i class="no-highlight">172</i>&nbsp;    /**
+<i class="no-highlight">173</i>&nbsp;     * Checks if the player can perform can perform a give action by searching for
+<i class="no-highlight">174</i>&nbsp;     * a given ActionType inside &quot;possibleActions&quot; attribute.
+<i class="no-highlight">175</i>&nbsp;     * @param type ActionType of the action the player is trying to perform.
+<i class="no-highlight">176</i>&nbsp;     * @return true if the given ActionType is found inside &quot;possibleActions&quot; attribute.
+<i class="no-highlight">177</i>&nbsp;     */
+<i class="no-highlight">178</i>&nbsp;    public boolean canDo(ActionType type) {
+<b class="fc"><i class="no-highlight">179</i>&nbsp;        return this.possibleActions.contains(type);</b>
+<i class="no-highlight">180</i>&nbsp;    }
+<i class="no-highlight">181</i>&nbsp;
+<i class="no-highlight">182</i>&nbsp;    /**
+<i class="no-highlight">183</i>&nbsp;     * This method is used to advance the player on the faith track.
+<i class="no-highlight">184</i>&nbsp;     * @param steps is the number of steps.
+<i class="no-highlight">185</i>&nbsp;     */
+<i class="no-highlight">186</i>&nbsp;    public void stepAhead(int steps){
+<b class="fc"><i class="no-highlight">187</i>&nbsp;        this.faithTrackPosition += steps;</b>
+<b class="fc"><i class="no-highlight">188</i>&nbsp;        endTrack();</b>
+<b class="fc"><i class="no-highlight">189</i>&nbsp;    }</b>
+<i class="no-highlight">190</i>&nbsp;
+<i class="no-highlight">191</i>&nbsp;    /**
+<i class="no-highlight">192</i>&nbsp;     * This method is used to see if any player reaches the last cell of the Faith Track
+<i class="no-highlight">193</i>&nbsp;     * @return true if the player wins
+<i class="no-highlight">194</i>&nbsp;     */
+<i class="no-highlight">195</i>&nbsp;    public boolean endTrack(){
+<b class="fc"><i class="no-highlight">196</i>&nbsp;        if(this.faithTrackPosition &gt;= 24){</b>
+<b class="fc"><i class="no-highlight">197</i>&nbsp;            this.faithTrackPosition = 24;</b>
+<b class="fc"><i class="no-highlight">198</i>&nbsp;            return true;</b>
+<i class="no-highlight">199</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">200</i>&nbsp;        else return false;</b>
+<i class="no-highlight">201</i>&nbsp;    }
+<i class="no-highlight">202</i>&nbsp;    /**
+<i class="no-highlight">203</i>&nbsp;     * This method adds victory points to the player&#39;s current amount.
+<i class="no-highlight">204</i>&nbsp;     * @param victoryPoints is the number of victory points to add.
+<i class="no-highlight">205</i>&nbsp;     */
+<i class="no-highlight">206</i>&nbsp;    public void addVictoryPoints(int victoryPoints) {
+<b class="fc"><i class="no-highlight">207</i>&nbsp;        this.victoryPoints += victoryPoints;</b>
+<b class="fc"><i class="no-highlight">208</i>&nbsp;    }</b>
+<i class="no-highlight">209</i>&nbsp;
+<i class="no-highlight">210</i>&nbsp;    /**
+<i class="no-highlight">211</i>&nbsp;     * Checks if the player meets requirements to finish the game.
+<i class="no-highlight">212</i>&nbsp;     */
+<i class="no-highlight">213</i>&nbsp;    public boolean hasFinished() {
+<b class="fc"><i class="no-highlight">214</i>&nbsp;        return this.getBoard().getDevelopmentCardSlots().countAllCards() &gt;= 7 || this.getFaithTrackPosition() &gt;= 24;</b>
+<i class="no-highlight">215</i>&nbsp;    }
+<i class="no-highlight">216</i>&nbsp;
+<i class="no-highlight">217</i>&nbsp;    /**
+<i class="no-highlight">218</i>&nbsp;     * Counts the player&#39;s final victory points.
+<i class="no-highlight">219</i>&nbsp;     */
+<i class="no-highlight">220</i>&nbsp;    public void countFinalVictoryPoints() {
+<b class="fc"><i class="no-highlight">221</i>&nbsp;        this.victoryPoints += this.getBoard().getDevelopmentCardSlots().totalPoints();</b>
+<b class="fc"><i class="no-highlight">222</i>&nbsp;        this.victoryPoints += this.getBoard().getResourceManager().countResourcesToVictoryPoints();</b>
+<b class="fc"><i class="no-highlight">223</i>&nbsp;    }</b>
+<i class="no-highlight">224</i>&nbsp;
+<i class="no-highlight">225</i>&nbsp;    /**Method for converting model classes to view classes*/
+<i class="no-highlight">226</i>&nbsp;    public it.polimi.ingsw.View.ReducedModel.Player toView() {
+<b class="fc"><i class="no-highlight">227</i>&nbsp;        it.polimi.ingsw.View.ReducedModel.Player player = new it.polimi.ingsw.View.ReducedModel.Player(this.nickname, this.turnPosition, this.Inkwell);</b>
+<b class="fc"><i class="no-highlight">228</i>&nbsp;        player.setVictoryPoints(this.victoryPoints);</b>
+<b class="fc"><i class="no-highlight">229</i>&nbsp;        player.setFaithTrackPosition(this.faithTrackPosition);</b>
+<b class="fc"><i class="no-highlight">230</i>&nbsp;        player.setBasicProduction(this.board.getBasicProduction());</b>
+<b class="fc"><i class="no-highlight">231</i>&nbsp;        player.setWarehouse(this.board.getResourceManager().getWarehouse());</b>
+<b class="fc"><i class="no-highlight">232</i>&nbsp;        player.setStrongbox(this.board.getResourceManager().getStrongbox());</b>
+<b class="fc"><i class="no-highlight">233</i>&nbsp;        player.setSlots(this.board.getDevelopmentCardSlots());</b>
+<i class="no-highlight">234</i>&nbsp;
+<b class="fc"><i class="no-highlight">235</i>&nbsp;        RedPopeTileClass[] popeTileClasses = new RedPopeTileClass[3];</b>
+<b class="fc"><i class="no-highlight">236</i>&nbsp;        for(int i = 0; i &lt; 3; i++) {</b>
+<b class="fc"><i class="no-highlight">237</i>&nbsp;            popeTileClasses[i] = this.popeTiles[i];</b>
+<i class="no-highlight">238</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">239</i>&nbsp;        player.setPopeTiles(popeTileClasses);</b>
+<i class="no-highlight">240</i>&nbsp;
+<b class="fc"><i class="no-highlight">241</i>&nbsp;        RedLeaderCard[] leaderCards = new RedLeaderCard[2];</b>
+<b class="fc"><i class="no-highlight">242</i>&nbsp;        leaderCards[0] = this.getBoard().getLeaderCards()[0];</b>
+<b class="fc"><i class="no-highlight">243</i>&nbsp;        leaderCards[1] = this.getBoard().getLeaderCards()[1];</b>
+<i class="no-highlight">244</i>&nbsp;
+<b class="fc"><i class="no-highlight">245</i>&nbsp;        player.setLeaderCards(leaderCards);</b>
+<b class="fc"><i class="no-highlight">246</i>&nbsp;        player.setPossibleActions(this.possibleActions);</b>
+<i class="no-highlight">247</i>&nbsp;
+<b class="fc"><i class="no-highlight">248</i>&nbsp;        return player;</b>
+<i class="no-highlight">249</i>&nbsp;    }
+<i class="no-highlight">250</i>&nbsp;
+<i class="no-highlight">251</i>&nbsp;    /**
+<i class="no-highlight">252</i>&nbsp;     * Checks if the player was paying or adding resources.
+<i class="no-highlight">253</i>&nbsp;     * @return True if the player was paying or adding resource.
+<i class="no-highlight">254</i>&nbsp;     */
+<i class="no-highlight">255</i>&nbsp;    public boolean wasPayingOrAdding() {
+<b class="fc"><i class="no-highlight">256</i>&nbsp;       return this.possibleActions.contains(ActionType.ADD_RESOURCE) || this.possibleActions.contains(ActionType.CHOOSE_CARD_SLOT) || this.possibleActions.contains(ActionType.CHOOSE_PRODUCTION_OUTPUT)</b>
+<b class="fc"><i class="no-highlight">257</i>&nbsp;               || this.possibleActions.contains(ActionType.PAY_RESOURCE_CARD) || this.possibleActions.contains(ActionType.PAY_RESOURCE_PRODUCTION) || this.possibleActions.contains(ActionType.CHOOSE_LEADER_CARD);</b>
+<i class="no-highlight">258</i>&nbsp;    }
+<i class="no-highlight">259</i>&nbsp;
+<i class="no-highlight">260</i>&nbsp;    /**
+<i class="no-highlight">261</i>&nbsp;     * Prepares the player in case he disconnected from the game.
+<i class="no-highlight">262</i>&nbsp;     */
+<i class="no-highlight">263</i>&nbsp;    public void disconnectionPrepareTurn() {
+<b class="fc"><i class="no-highlight">264</i>&nbsp;        clearPossibleActions();</b>
+<b class="fc"><i class="no-highlight">265</i>&nbsp;        if(!this.possibleActions.contains(ActionType.ACTIVATE_LEADERCARD))</b>
+<b class="fc"><i class="no-highlight">266</i>&nbsp;            this.possibleActions.add(ActionType.ACTIVATE_LEADERCARD);</b>
+<i class="no-highlight">267</i>&nbsp;
+<b class="fc"><i class="no-highlight">268</i>&nbsp;        this.possibleActions.add(ActionType.ACTIVATE_PRODUCTION);</b>
+<b class="fc"><i class="no-highlight">269</i>&nbsp;        this.possibleActions.add(ActionType.BUY_CARD);</b>
+<b class="fc"><i class="no-highlight">270</i>&nbsp;        this.possibleActions.add(ActionType.MARKET_CHOOSE_ROW);</b>
+<i class="no-highlight">271</i>&nbsp;
+<b class="fc"><i class="no-highlight">272</i>&nbsp;        if(!this.possibleActions.contains(ActionType.DELETE_LEADERCARD))</b>
+<b class="fc"><i class="no-highlight">273</i>&nbsp;            this.possibleActions.add(ActionType.DELETE_LEADERCARD);</b>
+<b class="fc"><i class="no-highlight">274</i>&nbsp;    }</b>
+<i class="no-highlight">275</i>&nbsp;
+<i class="no-highlight">276</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-07-02 23:15</div>
+</div>
+</body>
+</html>

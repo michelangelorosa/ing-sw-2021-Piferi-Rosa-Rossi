@@ -1,0 +1,482 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Player</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+    @import "../../.css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../.js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">it.polimi.ingsw.View.ReducedModel</a>
+</div>
+
+<h1>Coverage Summary for Class: Player (it.polimi.ingsw.View.ReducedModel)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Player</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (31/31)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    89,8%
+  </span>
+  <span class="absValue">
+    (115/128)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package it.polimi.ingsw.View.ReducedModel;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import it.polimi.ingsw.Controller.Actions.ActionType;
+<i class="no-highlight">4</i>&nbsp;import it.polimi.ingsw.Model.Enums.PlayerStatus;
+<i class="no-highlight">5</i>&nbsp;import it.polimi.ingsw.Model.GameModel.*;
+<i class="no-highlight">6</i>&nbsp;import it.polimi.ingsw.View.Utility.ANSIfont;
+<i class="no-highlight">7</i>&nbsp;
+<i class="no-highlight">8</i>&nbsp;import java.io.Serializable;
+<i class="no-highlight">9</i>&nbsp;import java.util.ArrayList;
+<i class="no-highlight">10</i>&nbsp;
+<i class="no-highlight">11</i>&nbsp;/**
+<i class="no-highlight">12</i>&nbsp; * Player Class defines attributes and methods of a player.
+<i class="no-highlight">13</i>&nbsp; * It consists in six attributes being respectively:
+<i class="no-highlight">14</i>&nbsp; * &lt;ul&gt;
+<i class="no-highlight">15</i>&nbsp; *     &lt;li&gt;String &quot;nickname&quot;: the player&#39;s nickname&lt;/li&gt;
+<i class="no-highlight">16</i>&nbsp; *     &lt;li&gt;int &quot;turnPosition&quot;: the player&#39;s position in the defined turn changing mechanism&lt;/li&gt;
+<i class="no-highlight">17</i>&nbsp; *     &lt;li&gt;boolean &quot;Inkwell&quot;: if the player is the first to play, he has the inkwell&lt;/li&gt;
+<i class="no-highlight">18</i>&nbsp; *     &lt;li&gt;PlayerStatus &quot;status&quot;: the player&#39;s status indicating if he&#39;s playing, temporary disabled or has finished the game&lt;/li&gt;
+<i class="no-highlight">19</i>&nbsp; *     &lt;li&gt;int &quot;victoryPoints&quot;: the player&#39;s number of victory points&lt;/li&gt;
+<i class="no-highlight">20</i>&nbsp; *     &lt;li&gt;int &quot;faithTrackPosition&quot;: the player&#39;s position inside the faith track&lt;/li&gt;
+<i class="no-highlight">21</i>&nbsp; *     &lt;li&gt;RedBasicProduction &quot;basicProduction&quot;: the game&#39;s basic production&lt;/li&gt;
+<i class="no-highlight">22</i>&nbsp; *     &lt;li&gt;RedWarehouse &quot;warehouse&quot;: the user&#39;s warehouse&lt;/li&gt;
+<i class="no-highlight">23</i>&nbsp; *     &lt;li&gt;RedStrongbox &quot;strongbox&quot;: the user&#39;s strongbox&lt;/li&gt;
+<i class="no-highlight">24</i>&nbsp; *     &lt;li&gt;RedDevelopmentCardSlots &quot;slots&quot;: the user&#39;s DevelopmentCard Slots&lt;/li&gt;
+<i class="no-highlight">25</i>&nbsp; *     &lt;li&gt;RedResourceStack &quot;temporaryResources&quot;: the user&#39;s temporary resources used when paying or adding new resources&lt;/li&gt;
+<i class="no-highlight">26</i>&nbsp; *     &lt;li&gt;RedLeaderCard[] &quot;leaderCards&quot;: the user&#39;s owned leader cards&lt;/li&gt;
+<i class="no-highlight">27</i>&nbsp; *     &lt;li&gt;RedPopeTileClass[] &quot;popeTiles&quot;: the user&#39;s owned pope tiles&lt;/li&gt;
+<i class="no-highlight">28</i>&nbsp; *     &lt;li&gt;ArrayList&lt;ActionType&gt; &quot;possibleActions&quot;: the user&#39;s possible actions&lt;/li&gt;
+<i class="no-highlight">29</i>&nbsp; * &lt;/ul&gt;
+<i class="no-highlight">30</i>&nbsp; * @author everyone
+<i class="no-highlight">31</i>&nbsp; */
+<i class="no-highlight">32</i>&nbsp;public class Player implements Serializable {
+<i class="no-highlight">33</i>&nbsp;    private final String nickname;
+<i class="no-highlight">34</i>&nbsp;    private final int turnPosition;
+<i class="no-highlight">35</i>&nbsp;    private final boolean Inkwell;
+<i class="no-highlight">36</i>&nbsp;    private PlayerStatus status;
+<i class="no-highlight">37</i>&nbsp;    private int victoryPoints;
+<i class="no-highlight">38</i>&nbsp;    private int faithTrackPosition;
+<i class="no-highlight">39</i>&nbsp;
+<i class="no-highlight">40</i>&nbsp;    private RedBasicProduction basicProduction;
+<i class="no-highlight">41</i>&nbsp;    private RedWarehouse warehouse;
+<i class="no-highlight">42</i>&nbsp;    private RedStrongbox strongbox;
+<i class="no-highlight">43</i>&nbsp;    private RedDevelopmentCardSlots slots;
+<i class="no-highlight">44</i>&nbsp;    private RedResourceStack temporaryResources;
+<i class="no-highlight">45</i>&nbsp;    private RedLeaderCard[] leaderCards;
+<i class="no-highlight">46</i>&nbsp;    private RedPopeTileClass[] popeTiles;
+<i class="no-highlight">47</i>&nbsp;
+<i class="no-highlight">48</i>&nbsp;    private ArrayList&lt;ActionType&gt; possibleActions;
+<i class="no-highlight">49</i>&nbsp;
+<i class="no-highlight">50</i>&nbsp;
+<i class="no-highlight">51</i>&nbsp;    /**
+<i class="no-highlight">52</i>&nbsp;     * Constructor for Player Class.
+<i class="no-highlight">53</i>&nbsp;     */
+<b class="fc"><i class="no-highlight">54</i>&nbsp;    public Player(String nickname, int turnPosition, boolean hasInkwell) {</b>
+<b class="fc"><i class="no-highlight">55</i>&nbsp;        this.nickname = nickname;</b>
+<b class="fc"><i class="no-highlight">56</i>&nbsp;        this.turnPosition = turnPosition;</b>
+<b class="fc"><i class="no-highlight">57</i>&nbsp;        this.Inkwell = hasInkwell;</b>
+<b class="fc"><i class="no-highlight">58</i>&nbsp;        this.status = PlayerStatus.IN_GAME;</b>
+<b class="fc"><i class="no-highlight">59</i>&nbsp;        this.victoryPoints = 0;</b>
+<b class="fc"><i class="no-highlight">60</i>&nbsp;        this.faithTrackPosition = 0;</b>
+<i class="no-highlight">61</i>&nbsp;
+<b class="fc"><i class="no-highlight">62</i>&nbsp;        this.basicProduction = new BasicProduction(2, 1);</b>
+<b class="fc"><i class="no-highlight">63</i>&nbsp;        this.warehouse = new Warehouse();</b>
+<b class="fc"><i class="no-highlight">64</i>&nbsp;        this.strongbox = new Strongbox();</b>
+<b class="fc"><i class="no-highlight">65</i>&nbsp;        this.slots = new DevelopmentCardSlots();</b>
+<b class="fc"><i class="no-highlight">66</i>&nbsp;        this.temporaryResources = new ResourceStack(0,0,0,0);</b>
+<b class="fc"><i class="no-highlight">67</i>&nbsp;        this.leaderCards = new LeaderCard[2];</b>
+<b class="fc"><i class="no-highlight">68</i>&nbsp;        this.popeTiles = new PopeTileClass[3];</b>
+<b class="fc"><i class="no-highlight">69</i>&nbsp;        this.popeTiles[0] = new PopeTileClass(2);</b>
+<b class="fc"><i class="no-highlight">70</i>&nbsp;        this.popeTiles[1] = new PopeTileClass(3);</b>
+<b class="fc"><i class="no-highlight">71</i>&nbsp;        this.popeTiles[2] = new PopeTileClass(4);</b>
+<i class="no-highlight">72</i>&nbsp;
+<i class="no-highlight">73</i>&nbsp;
+<b class="fc"><i class="no-highlight">74</i>&nbsp;        this.possibleActions = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">75</i>&nbsp;    }</b>
+<i class="no-highlight">76</i>&nbsp;
+<i class="no-highlight">77</i>&nbsp;    /**
+<i class="no-highlight">78</i>&nbsp;     * Setter for &quot;popeTiles&quot; attribute.
+<i class="no-highlight">79</i>&nbsp;     */
+<i class="no-highlight">80</i>&nbsp;    public void setPopeTiles(RedPopeTileClass[] popeTiles) {
+<b class="fc"><i class="no-highlight">81</i>&nbsp;        this.popeTiles = popeTiles;</b>
+<b class="fc"><i class="no-highlight">82</i>&nbsp;    }</b>
+<i class="no-highlight">83</i>&nbsp;
+<i class="no-highlight">84</i>&nbsp;    public RedPopeTileClass[] getPopeTiles() {
+<b class="fc"><i class="no-highlight">85</i>&nbsp;        return popeTiles;</b>
+<i class="no-highlight">86</i>&nbsp;    }
+<i class="no-highlight">87</i>&nbsp;
+<i class="no-highlight">88</i>&nbsp;    /**
+<i class="no-highlight">89</i>&nbsp;     * Getter for &quot;nickname&quot; attribute.
+<i class="no-highlight">90</i>&nbsp;     */
+<i class="no-highlight">91</i>&nbsp;    public String getNickname() {
+<b class="fc"><i class="no-highlight">92</i>&nbsp;        return nickname;</b>
+<i class="no-highlight">93</i>&nbsp;    }
+<i class="no-highlight">94</i>&nbsp;
+<i class="no-highlight">95</i>&nbsp;    /**
+<i class="no-highlight">96</i>&nbsp;     * Getter for &quot;turnPosition&quot; attribute.
+<i class="no-highlight">97</i>&nbsp;     */
+<i class="no-highlight">98</i>&nbsp;    public int getTurnPosition() {
+<b class="fc"><i class="no-highlight">99</i>&nbsp;        return turnPosition;</b>
+<i class="no-highlight">100</i>&nbsp;    }
+<i class="no-highlight">101</i>&nbsp;
+<i class="no-highlight">102</i>&nbsp;    /**
+<i class="no-highlight">103</i>&nbsp;     * Getter for &quot;Inkwell&quot; attribute.
+<i class="no-highlight">104</i>&nbsp;     */
+<i class="no-highlight">105</i>&nbsp;    public boolean hasInkwell() {
+<b class="fc"><i class="no-highlight">106</i>&nbsp;        return Inkwell;</b>
+<i class="no-highlight">107</i>&nbsp;    }
+<i class="no-highlight">108</i>&nbsp;
+<i class="no-highlight">109</i>&nbsp;    /**
+<i class="no-highlight">110</i>&nbsp;     * Getter for &quot;status&quot; attribute.
+<i class="no-highlight">111</i>&nbsp;     */
+<i class="no-highlight">112</i>&nbsp;    public PlayerStatus getStatus() {
+<b class="fc"><i class="no-highlight">113</i>&nbsp;        return status;</b>
+<i class="no-highlight">114</i>&nbsp;    }
+<i class="no-highlight">115</i>&nbsp;
+<i class="no-highlight">116</i>&nbsp;    /**
+<i class="no-highlight">117</i>&nbsp;     * Setter for &quot;status&quot; attribute.
+<i class="no-highlight">118</i>&nbsp;     */
+<i class="no-highlight">119</i>&nbsp;    public void setStatus(PlayerStatus status) {
+<b class="fc"><i class="no-highlight">120</i>&nbsp;        this.status = status;</b>
+<b class="fc"><i class="no-highlight">121</i>&nbsp;    }</b>
+<i class="no-highlight">122</i>&nbsp;
+<i class="no-highlight">123</i>&nbsp;    /**
+<i class="no-highlight">124</i>&nbsp;     * Getter for &quot;victoryPoints&quot; attribute.
+<i class="no-highlight">125</i>&nbsp;     */
+<i class="no-highlight">126</i>&nbsp;    public int getVictoryPoints() {
+<b class="fc"><i class="no-highlight">127</i>&nbsp;        return victoryPoints;</b>
+<i class="no-highlight">128</i>&nbsp;    }
+<i class="no-highlight">129</i>&nbsp;
+<i class="no-highlight">130</i>&nbsp;    /**
+<i class="no-highlight">131</i>&nbsp;     * Getter for &quot;faithTrackPosition&quot; attribute.
+<i class="no-highlight">132</i>&nbsp;     */
+<i class="no-highlight">133</i>&nbsp;    public int getFaithTrackPosition() {
+<b class="fc"><i class="no-highlight">134</i>&nbsp;        return faithTrackPosition;</b>
+<i class="no-highlight">135</i>&nbsp;    }
+<i class="no-highlight">136</i>&nbsp;
+<i class="no-highlight">137</i>&nbsp;    /**
+<i class="no-highlight">138</i>&nbsp;     * Getter for &quot;basicProduction&quot; attribute.
+<i class="no-highlight">139</i>&nbsp;     */
+<i class="no-highlight">140</i>&nbsp;    public RedBasicProduction getBasicProduction() {
+<b class="fc"><i class="no-highlight">141</i>&nbsp;        return basicProduction;</b>
+<i class="no-highlight">142</i>&nbsp;    }
+<i class="no-highlight">143</i>&nbsp;
+<i class="no-highlight">144</i>&nbsp;    /**
+<i class="no-highlight">145</i>&nbsp;     * Getter for &quot;faithTrackPosition&quot; attribute.
+<i class="no-highlight">146</i>&nbsp;     */
+<i class="no-highlight">147</i>&nbsp;    public RedWarehouse getWarehouse() {
+<b class="fc"><i class="no-highlight">148</i>&nbsp;        return warehouse;</b>
+<i class="no-highlight">149</i>&nbsp;    }
+<i class="no-highlight">150</i>&nbsp;
+<i class="no-highlight">151</i>&nbsp;    /**
+<i class="no-highlight">152</i>&nbsp;     * Getter for &quot;faithTrackPosition&quot; attribute.
+<i class="no-highlight">153</i>&nbsp;     */
+<i class="no-highlight">154</i>&nbsp;    public RedStrongbox getStrongbox() {
+<b class="fc"><i class="no-highlight">155</i>&nbsp;        return strongbox;</b>
+<i class="no-highlight">156</i>&nbsp;    }
+<i class="no-highlight">157</i>&nbsp;
+<i class="no-highlight">158</i>&nbsp;    /**
+<i class="no-highlight">159</i>&nbsp;     * Getter for &quot;faithTrackPosition&quot; attribute.
+<i class="no-highlight">160</i>&nbsp;     */
+<i class="no-highlight">161</i>&nbsp;    public RedDevelopmentCardSlots getSlots() {
+<b class="fc"><i class="no-highlight">162</i>&nbsp;        return slots;</b>
+<i class="no-highlight">163</i>&nbsp;    }
+<i class="no-highlight">164</i>&nbsp;
+<i class="no-highlight">165</i>&nbsp;    /**
+<i class="no-highlight">166</i>&nbsp;     * Getter for &quot;faithTrackPosition&quot; attribute.
+<i class="no-highlight">167</i>&nbsp;     */
+<i class="no-highlight">168</i>&nbsp;    public RedResourceStack getTemporaryResources() {
+<b class="fc"><i class="no-highlight">169</i>&nbsp;        return temporaryResources;</b>
+<i class="no-highlight">170</i>&nbsp;    }
+<i class="no-highlight">171</i>&nbsp;
+<i class="no-highlight">172</i>&nbsp;    /**
+<i class="no-highlight">173</i>&nbsp;     * Getter for &quot;faithTrackPosition&quot; attribute.
+<i class="no-highlight">174</i>&nbsp;     */
+<i class="no-highlight">175</i>&nbsp;    public RedLeaderCard[] getLeaderCards() {
+<b class="fc"><i class="no-highlight">176</i>&nbsp;        return leaderCards;</b>
+<i class="no-highlight">177</i>&nbsp;    }
+<i class="no-highlight">178</i>&nbsp;
+<i class="no-highlight">179</i>&nbsp;    /**
+<i class="no-highlight">180</i>&nbsp;     * Getter for &quot;faithTrackPosition&quot; attribute.
+<i class="no-highlight">181</i>&nbsp;     */
+<i class="no-highlight">182</i>&nbsp;    public ArrayList&lt;ActionType&gt; getPossibleActions() {
+<b class="fc"><i class="no-highlight">183</i>&nbsp;        return possibleActions;</b>
+<i class="no-highlight">184</i>&nbsp;    }
+<i class="no-highlight">185</i>&nbsp;
+<i class="no-highlight">186</i>&nbsp;    /**
+<i class="no-highlight">187</i>&nbsp;     * Setter for &quot;faithTrackPosition&quot; attribute.
+<i class="no-highlight">188</i>&nbsp;     */
+<i class="no-highlight">189</i>&nbsp;    public void setVictoryPoints(int victoryPoints) {
+<b class="fc"><i class="no-highlight">190</i>&nbsp;        this.victoryPoints = victoryPoints;</b>
+<b class="fc"><i class="no-highlight">191</i>&nbsp;    }</b>
+<i class="no-highlight">192</i>&nbsp;
+<i class="no-highlight">193</i>&nbsp;    /**
+<i class="no-highlight">194</i>&nbsp;     * Setter for &quot;faithTrackPosition&quot; attribute.
+<i class="no-highlight">195</i>&nbsp;     */
+<i class="no-highlight">196</i>&nbsp;    public void setFaithTrackPosition(int faithTrackPosition) {
+<b class="fc"><i class="no-highlight">197</i>&nbsp;        this.faithTrackPosition = faithTrackPosition;</b>
+<b class="fc"><i class="no-highlight">198</i>&nbsp;    }</b>
+<i class="no-highlight">199</i>&nbsp;
+<i class="no-highlight">200</i>&nbsp;    /**
+<i class="no-highlight">201</i>&nbsp;     * Setter for &quot;faithTrackPosition&quot; attribute.
+<i class="no-highlight">202</i>&nbsp;     */
+<i class="no-highlight">203</i>&nbsp;    public void setWarehouse(RedWarehouse warehouse) {
+<b class="fc"><i class="no-highlight">204</i>&nbsp;        this.warehouse = warehouse;</b>
+<b class="fc"><i class="no-highlight">205</i>&nbsp;    }</b>
+<i class="no-highlight">206</i>&nbsp;
+<i class="no-highlight">207</i>&nbsp;    /**
+<i class="no-highlight">208</i>&nbsp;     * Setter for &quot;faithTrackPosition&quot; attribute.
+<i class="no-highlight">209</i>&nbsp;     */
+<i class="no-highlight">210</i>&nbsp;    public void setStrongbox(RedStrongbox strongbox) {
+<b class="fc"><i class="no-highlight">211</i>&nbsp;        this.strongbox = strongbox;</b>
+<b class="fc"><i class="no-highlight">212</i>&nbsp;    }</b>
+<i class="no-highlight">213</i>&nbsp;
+<i class="no-highlight">214</i>&nbsp;    /**
+<i class="no-highlight">215</i>&nbsp;     * Setter for &quot;faithTrackPosition&quot; attribute.
+<i class="no-highlight">216</i>&nbsp;     */
+<i class="no-highlight">217</i>&nbsp;    public void setSlots(RedDevelopmentCardSlots slots) {
+<b class="fc"><i class="no-highlight">218</i>&nbsp;        this.slots = slots;</b>
+<b class="fc"><i class="no-highlight">219</i>&nbsp;    }</b>
+<i class="no-highlight">220</i>&nbsp;
+<i class="no-highlight">221</i>&nbsp;    /**
+<i class="no-highlight">222</i>&nbsp;     * Setter for &quot;faithTrackPosition&quot; attribute.
+<i class="no-highlight">223</i>&nbsp;     */
+<i class="no-highlight">224</i>&nbsp;    public void setLeaderCards(RedLeaderCard[] leaderCards) {
+<b class="fc"><i class="no-highlight">225</i>&nbsp;        this.leaderCards = leaderCards;</b>
+<b class="fc"><i class="no-highlight">226</i>&nbsp;    }</b>
+<i class="no-highlight">227</i>&nbsp;
+<i class="no-highlight">228</i>&nbsp;    /**
+<i class="no-highlight">229</i>&nbsp;     * Setter for &quot;faithTrackPosition&quot; attribute.
+<i class="no-highlight">230</i>&nbsp;     */
+<i class="no-highlight">231</i>&nbsp;    public void setTemporaryResources(RedResourceStack temporaryResources) {
+<b class="fc"><i class="no-highlight">232</i>&nbsp;        this.temporaryResources = temporaryResources;</b>
+<b class="fc"><i class="no-highlight">233</i>&nbsp;    }</b>
+<i class="no-highlight">234</i>&nbsp;
+<i class="no-highlight">235</i>&nbsp;    /**
+<i class="no-highlight">236</i>&nbsp;     * Setter for &quot;faithTrackPosition&quot; attribute.
+<i class="no-highlight">237</i>&nbsp;     */
+<i class="no-highlight">238</i>&nbsp;    public void setBasicProduction(RedBasicProduction basicProduction) {
+<b class="fc"><i class="no-highlight">239</i>&nbsp;        this.basicProduction = basicProduction;</b>
+<b class="fc"><i class="no-highlight">240</i>&nbsp;    }</b>
+<i class="no-highlight">241</i>&nbsp;
+<i class="no-highlight">242</i>&nbsp;    /**
+<i class="no-highlight">243</i>&nbsp;     * Setter for &quot;faithTrackPosition&quot; attribute.
+<i class="no-highlight">244</i>&nbsp;     */
+<i class="no-highlight">245</i>&nbsp;    public void setPossibleActions(ArrayList&lt;ActionType&gt; possibleActions) {
+<b class="fc"><i class="no-highlight">246</i>&nbsp;        this.possibleActions = possibleActions;</b>
+<b class="fc"><i class="no-highlight">247</i>&nbsp;    }</b>
+<i class="no-highlight">248</i>&nbsp;
+<i class="no-highlight">249</i>&nbsp;    /**
+<i class="no-highlight">250</i>&nbsp;     * Converts all player&#39;s information into strings to be visualized.
+<i class="no-highlight">251</i>&nbsp;     * @return An ArrayList of Strings containing a visual representation of the player.
+<i class="no-highlight">252</i>&nbsp;     */
+<i class="no-highlight">253</i>&nbsp;    public ArrayList&lt;String&gt; toCli() {
+<i class="no-highlight">254</i>&nbsp;        int i;
+<b class="fc"><i class="no-highlight">255</i>&nbsp;        ArrayList&lt;String&gt; player = this.warehouse.toCli();</b>
+<b class="fc"><i class="no-highlight">256</i>&nbsp;        player.addAll(this.strongbox.toCli3());</b>
+<b class="fc"><i class="no-highlight">257</i>&nbsp;        ArrayList&lt;String&gt; basic = this.basicProduction.toCli();</b>
+<b class="fc"><i class="no-highlight">258</i>&nbsp;        ArrayList&lt;String&gt; slots = this.slots.toCli();</b>
+<b class="fc"><i class="no-highlight">259</i>&nbsp;        ArrayList&lt;String&gt; popeTiles = popeTileToCli();</b>
+<i class="no-highlight">260</i>&nbsp;
+<b class="fc"><i class="no-highlight">261</i>&nbsp;        for(i = 0; i &lt; 5; i++)</b>
+<b class="fc"><i class="no-highlight">262</i>&nbsp;            if(i == 2) player.add(i, &quot;    &quot;+ ANSIfont.BOLD +ANSIfont.ITALIC +&quot;Masters of Renaissance&quot;+ANSIfont.RESET+&quot;     &quot;);</b>
+<b class="fc"><i class="no-highlight">263</i>&nbsp;            else player.add(i, &quot;                               &quot;);</b>
+<i class="no-highlight">264</i>&nbsp;        int j;
+<b class="fc"><i class="no-highlight">265</i>&nbsp;        for(i = 1; i &lt; 9; i++)</b>
+<b class="fc"><i class="no-highlight">266</i>&nbsp;            player.set(i, player.get(i) +&quot; &quot;+ basic.get(i-1));</b>
+<i class="no-highlight">267</i>&nbsp;
+<b class="fc"><i class="no-highlight">268</i>&nbsp;        for(i = 1; i &lt; 9; i++) {</b>
+<b class="fc"><i class="no-highlight">269</i>&nbsp;            if (i == 1) player.set(i, player.get(i));</b>
+<b class="fc"><i class="no-highlight">270</i>&nbsp;            if(i &gt; 4) player.set(i, player.get(i) + &quot;                  &quot; + popeTiles.get(i - 1));</b>
+<b class="fc"><i class="no-highlight">271</i>&nbsp;            else player.set(i, player.get(i) + &quot; &quot; + popeTiles.get(i - 1));</b>
+<i class="no-highlight">272</i>&nbsp;        }
+<i class="no-highlight">273</i>&nbsp;
+<b class="fc"><i class="no-highlight">274</i>&nbsp;        for(i = 9; i &gt; 6; i--)</b>
+<b class="fc"><i class="no-highlight">275</i>&nbsp;            player.set(i, player.get(i));</b>
+<i class="no-highlight">276</i>&nbsp;
+<i class="no-highlight">277</i>&nbsp;
+<i class="no-highlight">278</i>&nbsp;
+<b class="fc"><i class="no-highlight">279</i>&nbsp;        player.set(0, &quot;????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????&quot;);</b>
+<b class="fc"><i class="no-highlight">280</i>&nbsp;        for(i = 1; i &lt; 5; i++)</b>
+<b class="fc"><i class="no-highlight">281</i>&nbsp;            player.set(i, &quot; &quot;+player.get(i) + &quot;  &quot;);</b>
+<b class="fc"><i class="no-highlight">282</i>&nbsp;        for(i = 5; i &lt; 9; i++)</b>
+<b class="fc"><i class="no-highlight">283</i>&nbsp;            player.set(i, &quot; &quot;+player.get(i) + &quot;  &quot;);</b>
+<i class="no-highlight">284</i>&nbsp;
+<b class="fc"><i class="no-highlight">285</i>&nbsp;        for(i = 0; i &lt; slots.size(); i++) {</b>
+<b class="fc"><i class="no-highlight">286</i>&nbsp;            j = player.size() - slots.size() + i;</b>
+<b class="fc"><i class="no-highlight">287</i>&nbsp;            player.set(j, &quot; &quot;+player.get(j)+&quot; &quot;+slots.get(i));</b>
+<i class="no-highlight">288</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">289</i>&nbsp;        player.add(&quot;????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????&quot;);</b>
+<i class="no-highlight">290</i>&nbsp;
+<b class="fc"><i class="no-highlight">291</i>&nbsp;        return player;</b>
+<i class="no-highlight">292</i>&nbsp;    }
+<i class="no-highlight">293</i>&nbsp;
+<i class="no-highlight">294</i>&nbsp;    public ArrayList&lt;String&gt; toCliAdd() {
+<b class="fc"><i class="no-highlight">295</i>&nbsp;        ArrayList&lt;String&gt; warehouse = this.warehouse.toCli();</b>
+<b class="fc"><i class="no-highlight">296</i>&nbsp;        ArrayList&lt;String&gt; resources = this.temporaryResources.toCliAdd();</b>
+<i class="no-highlight">297</i>&nbsp;
+<b class="fc"><i class="no-highlight">298</i>&nbsp;        for(int i = 5; i &lt; 12; i++)</b>
+<b class="fc"><i class="no-highlight">299</i>&nbsp;            warehouse.set(i, warehouse.get(i) + &quot;      &quot; + resources.get(i - 5));</b>
+<i class="no-highlight">300</i>&nbsp;
+<b class="fc"><i class="no-highlight">301</i>&nbsp;        return warehouse;</b>
+<i class="no-highlight">302</i>&nbsp;    }
+<i class="no-highlight">303</i>&nbsp;
+<i class="no-highlight">304</i>&nbsp;    public ArrayList&lt;String&gt; toCliPay() {
+<b class="fc"><i class="no-highlight">305</i>&nbsp;        ArrayList&lt;String&gt; warehouse = this.warehouse.toCli();</b>
+<b class="fc"><i class="no-highlight">306</i>&nbsp;        ArrayList&lt;String&gt; resources = this.temporaryResources.toCliPay();</b>
+<i class="no-highlight">307</i>&nbsp;
+<b class="fc"><i class="no-highlight">308</i>&nbsp;        for(int i = 5; i &lt; 12; i++)</b>
+<b class="fc"><i class="no-highlight">309</i>&nbsp;            warehouse.set(i, warehouse.get(i) + &quot;      &quot; + resources.get(i - 5));</b>
+<i class="no-highlight">310</i>&nbsp;
+<b class="fc"><i class="no-highlight">311</i>&nbsp;        return warehouse;</b>
+<i class="no-highlight">312</i>&nbsp;    }
+<i class="no-highlight">313</i>&nbsp;
+<i class="no-highlight">314</i>&nbsp;    public ArrayList&lt;String&gt; leaderPrint(boolean up){
+<b class="fc"><i class="no-highlight">315</i>&nbsp;        ArrayList&lt;String&gt; leaderCards = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">316</i>&nbsp;        if(!this.leaderCards[1].isDiscarded() &amp;&amp; !this.leaderCards[0].isDiscarded()) {</b>
+<b class="fc"><i class="no-highlight">317</i>&nbsp;            if (up) {</b>
+<b class="fc"><i class="no-highlight">318</i>&nbsp;                leaderCards.addAll(this.leaderCards[1].toCliUp());</b>
+<b class="fc"><i class="no-highlight">319</i>&nbsp;                leaderCards.add(&quot;                            &quot;);</b>
+<b class="fc"><i class="no-highlight">320</i>&nbsp;                leaderCards.addAll(this.leaderCards[0].toCliUp());</b>
+<i class="no-highlight">321</i>&nbsp;            } else {
+<b class="fc"><i class="no-highlight">322</i>&nbsp;                if (this.getLeaderCards()[1].isActive()) leaderCards.addAll(this.leaderCards[1].toCliUp());</b>
+<b class="nc"><i class="no-highlight">323</i>&nbsp;                else leaderCards.addAll(this.leaderCards[1].toCliDown());</b>
+<b class="fc"><i class="no-highlight">324</i>&nbsp;                leaderCards.add(&quot;                            &quot;);</b>
+<b class="fc"><i class="no-highlight">325</i>&nbsp;                if (this.getLeaderCards()[0].isActive()) leaderCards.addAll(this.leaderCards[0].toCliUp());</b>
+<b class="fc"><i class="no-highlight">326</i>&nbsp;                else leaderCards.addAll(this.leaderCards[0].toCliDown());</b>
+<i class="no-highlight">327</i>&nbsp;            }
+<i class="no-highlight">328</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">329</i>&nbsp;        else if(this.leaderCards[1].isDiscarded()){</b>
+<b class="nc"><i class="no-highlight">330</i>&nbsp;            if(this.leaderCards[0].isDiscarded()){</b>
+<b class="nc"><i class="no-highlight">331</i>&nbsp;                leaderCards.addAll(this.leaderCards[1].toCliNo());</b>
+<b class="nc"><i class="no-highlight">332</i>&nbsp;                leaderCards.add(&quot;                            &quot;);</b>
+<b class="nc"><i class="no-highlight">333</i>&nbsp;                leaderCards.addAll(this.leaderCards[0].toCliNo());</b>
+<i class="no-highlight">334</i>&nbsp;            }
+<i class="no-highlight">335</i>&nbsp;            else{
+<b class="nc"><i class="no-highlight">336</i>&nbsp;                leaderCards.addAll(this.leaderCards[1].toCliNo());</b>
+<b class="nc"><i class="no-highlight">337</i>&nbsp;                leaderCards.add(&quot;                            &quot;);</b>
+<b class="nc"><i class="no-highlight">338</i>&nbsp;                if(up) leaderCards.addAll(this.leaderCards[0].toCliUp());</b>
+<b class="nc"><i class="no-highlight">339</i>&nbsp;                else leaderCards.addAll(this.leaderCards[0].toCliDown());</b>
+<i class="no-highlight">340</i>&nbsp;
+<i class="no-highlight">341</i>&nbsp;            }
+<i class="no-highlight">342</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">343</i>&nbsp;        else if(this.leaderCards[0].isDiscarded()){</b>
+<b class="fc"><i class="no-highlight">344</i>&nbsp;            if(this.leaderCards[1].isDiscarded()){</b>
+<b class="nc"><i class="no-highlight">345</i>&nbsp;                leaderCards.addAll(this.leaderCards[1].toCliNo());</b>
+<b class="nc"><i class="no-highlight">346</i>&nbsp;                leaderCards.add(&quot;                            &quot;);</b>
+<b class="nc"><i class="no-highlight">347</i>&nbsp;                leaderCards.addAll(this.leaderCards[0].toCliNo());</b>
+<i class="no-highlight">348</i>&nbsp;            }
+<i class="no-highlight">349</i>&nbsp;            else{
+<b class="fc"><i class="no-highlight">350</i>&nbsp;                if(up) leaderCards.addAll(this.leaderCards[1].toCliUp());</b>
+<b class="nc"><i class="no-highlight">351</i>&nbsp;                else leaderCards.addAll(this.leaderCards[1].toCliDown());</b>
+<b class="fc"><i class="no-highlight">352</i>&nbsp;                leaderCards.add(&quot;                            &quot;);</b>
+<b class="fc"><i class="no-highlight">353</i>&nbsp;                leaderCards.addAll(this.leaderCards[0].toCliNo());</b>
+<i class="no-highlight">354</i>&nbsp;
+<i class="no-highlight">355</i>&nbsp;            }
+<i class="no-highlight">356</i>&nbsp;        }
+<i class="no-highlight">357</i>&nbsp;
+<b class="fc"><i class="no-highlight">358</i>&nbsp;        return leaderCards;</b>
+<i class="no-highlight">359</i>&nbsp;    }
+<i class="no-highlight">360</i>&nbsp;
+<i class="no-highlight">361</i>&nbsp;    /**
+<i class="no-highlight">362</i>&nbsp;     * Converts pope tiles to a viewable format.
+<i class="no-highlight">363</i>&nbsp;     * @return An ArrayList containing the visual representation of pope tiles.
+<i class="no-highlight">364</i>&nbsp;     */
+<i class="no-highlight">365</i>&nbsp;    public ArrayList&lt;String&gt; popeTileToCli(){
+<b class="fc"><i class="no-highlight">366</i>&nbsp;        ArrayList&lt;String&gt; pope1 = popeTiles[0].toCli();</b>
+<b class="fc"><i class="no-highlight">367</i>&nbsp;        ArrayList&lt;String&gt; pope2 = popeTiles[1].toCli();</b>
+<b class="fc"><i class="no-highlight">368</i>&nbsp;        ArrayList&lt;String&gt; pope3 = popeTiles[2].toCli();</b>
+<i class="no-highlight">369</i>&nbsp;
+<b class="fc"><i class="no-highlight">370</i>&nbsp;        for(int i = 0; i &lt; 7; i++){</b>
+<b class="fc"><i class="no-highlight">371</i>&nbsp;            pope1.set(i, &quot; &quot; + pope1.get(i) +&quot;  &quot; + pope2.get(i) + &quot;  &quot; + pope3.get(i));</b>
+<i class="no-highlight">372</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">373</i>&nbsp;        pope1.add(0, &quot;????????????????????? POPE FAVOR TILES ?????????????????????&quot;);</b>
+<i class="no-highlight">374</i>&nbsp;
+<b class="fc"><i class="no-highlight">375</i>&nbsp;        return pope1;</b>
+<i class="no-highlight">376</i>&nbsp;    }
+<i class="no-highlight">377</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-07-02 23:15</div>
+</div>
+</body>
+</html>

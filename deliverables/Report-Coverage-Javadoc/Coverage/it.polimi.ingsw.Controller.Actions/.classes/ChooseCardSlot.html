@@ -1,0 +1,206 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ChooseCardSlot</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Controller.Actions</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ChooseCardSlot (it.polimi.ingsw.Controller.Actions)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ChooseCardSlot</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/ 10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (36/ 36)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Controller.Actions;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.Controller.ActionController;
+<i>4</i>&nbsp;import it.polimi.ingsw.Model.*;
+<i>5</i>&nbsp;import it.polimi.ingsw.Model.MessagesToClient.*;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;/**
+<i>8</i>&nbsp; * ChooseCardSlot Class contains data and methods to resolve a Client&#39;s request when choosing
+<i>9</i>&nbsp; * a card slot to put the just bought DevelopmentCard.
+<i>10</i>&nbsp; */
+<i>11</i>&nbsp;public class ChooseCardSlot extends Action {
+<i>12</i>&nbsp;    private final int cardSlot;
+<i>13</i>&nbsp;    private int rowCardToBuy;
+<i>14</i>&nbsp;    private int columnCardToBuy;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    /**
+<i>17</i>&nbsp;     * Constructor for ChooseCardSlot Class.
+<i>18</i>&nbsp;     */
+<b class="fc"><i>19</i>&nbsp;    public ChooseCardSlot(int cardSlot) {</b>
+<b class="fc"><i>20</i>&nbsp;        this.actionType = ActionType.CHOOSE_CARD_SLOT;</b>
+<b class="fc"><i>21</i>&nbsp;        this.cardSlot = cardSlot;</b>
+<b class="fc"><i>22</i>&nbsp;    }</b>
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    /**
+<i>25</i>&nbsp;     * Getter for &quot;actionType&quot; attribute in ChooseCardSlot.
+<i>26</i>&nbsp;     */
+<i>27</i>&nbsp;    public ActionType getActionType() {
+<b class="fc"><i>28</i>&nbsp;        return actionType;</b>
+<i>29</i>&nbsp;    }
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    /**
+<i>32</i>&nbsp;     * Getter for &quot;cardSlot&quot; attribute in ChooseCardSlot.
+<i>33</i>&nbsp;     */
+<i>34</i>&nbsp;    public int getCardSlot() {
+<b class="fc"><i>35</i>&nbsp;        return cardSlot;</b>
+<i>36</i>&nbsp;    }
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    /**
+<i>39</i>&nbsp;     * Getter for &quot;rowCardToBuy&quot; attribute in ChooseCardSlot.
+<i>40</i>&nbsp;     */
+<i>41</i>&nbsp;    public int getRowCardToBuy() {
+<b class="fc"><i>42</i>&nbsp;        return rowCardToBuy;</b>
+<i>43</i>&nbsp;    }
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;    /**
+<i>46</i>&nbsp;     * Setter for &quot;rowCardToBuy&quot; attribute in ChooseCardSlot.
+<i>47</i>&nbsp;     */
+<i>48</i>&nbsp;    public void setRowCardToBuy(int rowCardToBuy) {
+<b class="fc"><i>49</i>&nbsp;        this.rowCardToBuy = rowCardToBuy;</b>
+<b class="fc"><i>50</i>&nbsp;    }</b>
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;    /**
+<i>53</i>&nbsp;     * Getter for &quot;columnCardToBuy&quot; attribute in ChooseCardSlot.
+<i>54</i>&nbsp;     */
+<i>55</i>&nbsp;    public int getColumnCardToBuy() {
+<b class="fc"><i>56</i>&nbsp;        return columnCardToBuy;</b>
+<i>57</i>&nbsp;    }
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    /**
+<i>60</i>&nbsp;     * Setter for &quot;columnCardToBuy&quot; attribute in ChooseCardSlot.
+<i>61</i>&nbsp;     */
+<i>62</i>&nbsp;    public void setColumnCardToBuy(int columnCardToBuy) {
+<b class="fc"><i>63</i>&nbsp;        this.columnCardToBuy = columnCardToBuy;</b>
+<b class="fc"><i>64</i>&nbsp;    }</b>
+<i>65</i>&nbsp;
+<i>66</i>&nbsp;    /**
+<i>67</i>&nbsp;     * Method used to check if the specified action is formally correct.
+<i>68</i>&nbsp;     * @throws IllegalArgumentException if the row or column indexes are out of bounds.
+<i>69</i>&nbsp;     */
+<i>70</i>&nbsp;    @Override
+<i>71</i>&nbsp;    public boolean isCorrect() throws IllegalArgumentException {
+<b class="fc"><i>72</i>&nbsp;        if(cardSlot &lt; 0 || cardSlot &gt; 2)</b>
+<b class="fc"><i>73</i>&nbsp;            throw new IllegalArgumentException(&quot;Card Slot index out of bounds.&quot;);</b>
+<b class="fc"><i>74</i>&nbsp;        return true;</b>
+<i>75</i>&nbsp;    }
+<i>76</i>&nbsp;
+<i>77</i>&nbsp;    /**
+<i>78</i>&nbsp;     * Method used to execute the action on the Model.
+<i>79</i>&nbsp;     * @return &quot;SUCCESS&quot; if the action went right, another String if it went wrong.
+<i>80</i>&nbsp;     */
+<i>81</i>&nbsp;    @Override
+<i>82</i>&nbsp;    public String doAction(ActionController actionController) {
+<b class="fc"><i>83</i>&nbsp;        this.isCorrect();</b>
+<i>84</i>&nbsp;
+<b class="fc"><i>85</i>&nbsp;        DevelopmentCardSlots slots = actionController.getGame().getCurrentPlayer().getBoard().getDevelopmentCardSlots();</b>
+<b class="fc"><i>86</i>&nbsp;        DevelopmentCardDeck deck = actionController.getGame().getDevelopmentCardTable().getDeck(this.rowCardToBuy, this.columnCardToBuy);</b>
+<i>87</i>&nbsp;
+<b class="fc"><i>88</i>&nbsp;        if(slots.getSlots()[this.cardSlot].canAdd(deck.getTopCard())) {</b>
+<b class="fc"><i>89</i>&nbsp;            slots.getSlots()[this.cardSlot].addCard(deck.drawCard());</b>
+<b class="fc"><i>90</i>&nbsp;            response = &quot;SUCCESS&quot;;</b>
+<b class="fc"><i>91</i>&nbsp;            return &quot;SUCCESS&quot;;</b>
+<i>92</i>&nbsp;        }
+<i>93</i>&nbsp;        else {
+<b class="fc"><i>94</i>&nbsp;            response = &quot;Cannot put card in slot number &quot; + this.cardSlot;</b>
+<b class="fc"><i>95</i>&nbsp;            return &quot;Cannot put card in slot number &quot; + this.cardSlot;</b>
+<i>96</i>&nbsp;        }
+<i>97</i>&nbsp;
+<i>98</i>&nbsp;    }
+<i>99</i>&nbsp;
+<i>100</i>&nbsp;    /**
+<i>101</i>&nbsp;     * Method used to prepare a messageToClient type object to be sent by the server to the client.
+<i>102</i>&nbsp;     * @return A message to be sent to the client.
+<i>103</i>&nbsp;     */
+<i>104</i>&nbsp;    public MessageToClient messagePrepare(ActionController actionController) {
+<b class="fc"><i>105</i>&nbsp;        ChoseCardSlotMessage message = new ChoseCardSlotMessage(actionController.getGame().getCurrentPlayerIndex());</b>
+<b class="fc"><i>106</i>&nbsp;        message.setRow(this.rowCardToBuy);</b>
+<b class="fc"><i>107</i>&nbsp;        message.setColumn(this.columnCardToBuy);</b>
+<i>108</i>&nbsp;
+<b class="fc"><i>109</i>&nbsp;        this.rowCardToBuy = 0;</b>
+<b class="fc"><i>110</i>&nbsp;        this.columnCardToBuy = 0;</b>
+<i>111</i>&nbsp;
+<b class="fc"><i>112</i>&nbsp;        message.setSlot(this.cardSlot);</b>
+<b class="fc"><i>113</i>&nbsp;        message.setError(this.response);</b>
+<b class="fc"><i>114</i>&nbsp;        if(this.response.equals(&quot;SUCCESS&quot;)) {</b>
+<b class="fc"><i>115</i>&nbsp;            message.addPossibleAction(ActionType.END_TURN);</b>
+<b class="fc"><i>116</i>&nbsp;            message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);</b>
+<i>117</i>&nbsp;        }
+<i>118</i>&nbsp;        else
+<b class="fc"><i>119</i>&nbsp;            message.addPossibleAction(ActionType.CHOOSE_CARD_SLOT);</b>
+<i>120</i>&nbsp;
+<b class="fc"><i>121</i>&nbsp;        return message;</b>
+<i>122</i>&nbsp;    }
+<i>123</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-12 23:55</div>
+</div>
+</body>
+</html>

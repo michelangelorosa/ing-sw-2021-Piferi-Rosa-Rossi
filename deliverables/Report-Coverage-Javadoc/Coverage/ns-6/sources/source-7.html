@@ -1,0 +1,314 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > DevelopmentCardTable</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+    @import "../../.css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../.js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">it.polimi.ingsw.Model.GameModel</a>
+</div>
+
+<h1>Coverage Summary for Class: DevelopmentCardTable (it.polimi.ingsw.Model.GameModel)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DevelopmentCardTable</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (82/82)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;
+<i class="no-highlight">2</i>&nbsp;package it.polimi.ingsw.Model.GameModel;
+<i class="no-highlight">3</i>&nbsp;
+<i class="no-highlight">4</i>&nbsp;import it.polimi.ingsw.Model.Enums.Color;
+<i class="no-highlight">5</i>&nbsp;import it.polimi.ingsw.Model.Enums.LeaderCardAction;
+<i class="no-highlight">6</i>&nbsp;import it.polimi.ingsw.Model.Enums.Level;
+<i class="no-highlight">7</i>&nbsp;import it.polimi.ingsw.Model.Exceptions.ModelException;
+<i class="no-highlight">8</i>&nbsp;import it.polimi.ingsw.View.ReducedModel.RedDevelopmentCardDeck;
+<i class="no-highlight">9</i>&nbsp;import it.polimi.ingsw.View.ReducedModel.RedDevelopmentCardTable;
+<i class="no-highlight">10</i>&nbsp;import it.polimi.ingsw.Model.JSON.*;
+<i class="no-highlight">11</i>&nbsp;
+<i class="no-highlight">12</i>&nbsp;/**
+<i class="no-highlight">13</i>&nbsp; * DevelopmentCardTable Class contains all 12 Development Card decks available for the player to buy.
+<i class="no-highlight">14</i>&nbsp; * All decks are stored in a 2D array of DevelopmentCardDeck-type object.
+<i class="no-highlight">15</i>&nbsp; */
+<i class="no-highlight">16</i>&nbsp;public class DevelopmentCardTable extends RedDevelopmentCardTable {
+<i class="no-highlight">17</i>&nbsp;    /**
+<i class="no-highlight">18</i>&nbsp;     * Constructor for DevelopmentCardTable Class.
+<i class="no-highlight">19</i>&nbsp;     * &lt;p&gt;
+<i class="no-highlight">20</i>&nbsp;     * This method uses &quot;JSONReader&quot; Class to read all cards from a .json file. Development Cards are then
+<i class="no-highlight">21</i>&nbsp;     * stored inside the 2D array containing all decks.
+<i class="no-highlight">22</i>&nbsp;     */
+<i class="no-highlight">23</i>&nbsp;    public DevelopmentCardTable() {
+<b class="fc"><i class="no-highlight">24</i>&nbsp;        super();</b>
+<b class="fc"><i class="no-highlight">25</i>&nbsp;        DevelopmentCard[] cards = JSONReader.ReadDevelopmentCards();</b>
+<i class="no-highlight">26</i>&nbsp;
+<b class="fc"><i class="no-highlight">27</i>&nbsp;        Color[] colors = Color.values();</b>
+<b class="fc"><i class="no-highlight">28</i>&nbsp;        Level[] levels = Level.values();</b>
+<i class="no-highlight">29</i>&nbsp;
+<b class="fc"><i class="no-highlight">30</i>&nbsp;        decks[0][0] = new DevelopmentCardDeck(Color.GREEN, Level.THREE);</b>
+<b class="fc"><i class="no-highlight">31</i>&nbsp;        decks[0][1] = new DevelopmentCardDeck(Color.BLUE, Level.THREE);</b>
+<b class="fc"><i class="no-highlight">32</i>&nbsp;        decks[0][2] = new DevelopmentCardDeck(Color.YELLOW, Level.THREE);</b>
+<b class="fc"><i class="no-highlight">33</i>&nbsp;        decks[0][3] = new DevelopmentCardDeck(Color.PURPLE, Level.THREE);</b>
+<i class="no-highlight">34</i>&nbsp;
+<b class="fc"><i class="no-highlight">35</i>&nbsp;        decks[1][0] = new DevelopmentCardDeck(Color.GREEN, Level.TWO);</b>
+<b class="fc"><i class="no-highlight">36</i>&nbsp;        decks[1][1] = new DevelopmentCardDeck(Color.BLUE, Level.TWO);</b>
+<b class="fc"><i class="no-highlight">37</i>&nbsp;        decks[1][2] = new DevelopmentCardDeck(Color.YELLOW, Level.TWO);</b>
+<b class="fc"><i class="no-highlight">38</i>&nbsp;        decks[1][3] = new DevelopmentCardDeck(Color.PURPLE, Level.TWO);</b>
+<i class="no-highlight">39</i>&nbsp;
+<b class="fc"><i class="no-highlight">40</i>&nbsp;        decks[2][0] = new DevelopmentCardDeck(Color.GREEN, Level.ONE);</b>
+<b class="fc"><i class="no-highlight">41</i>&nbsp;        decks[2][1] = new DevelopmentCardDeck(Color.BLUE, Level.ONE);</b>
+<b class="fc"><i class="no-highlight">42</i>&nbsp;        decks[2][2] = new DevelopmentCardDeck(Color.YELLOW, Level.ONE);</b>
+<b class="fc"><i class="no-highlight">43</i>&nbsp;        decks[2][3] = new DevelopmentCardDeck(Color.PURPLE, Level.ONE);</b>
+<i class="no-highlight">44</i>&nbsp;
+<b class="fc"><i class="no-highlight">45</i>&nbsp;        for(DevelopmentCard card : cards) {</b>
+<b class="fc"><i class="no-highlight">46</i>&nbsp;            if(card.getColor() == colors[0]) {</b>
+<b class="fc"><i class="no-highlight">47</i>&nbsp;                if(card.getLevel() == levels[0]) {</b>
+<b class="fc"><i class="no-highlight">48</i>&nbsp;                    ((DevelopmentCardDeck)decks[2][1]).addCard(card);</b>
+<i class="no-highlight">49</i>&nbsp;
+<b class="fc"><i class="no-highlight">50</i>&nbsp;                } else if(card.getLevel() == levels[1]) {</b>
+<b class="fc"><i class="no-highlight">51</i>&nbsp;                    ((DevelopmentCardDeck)decks[1][1]).addCard(card);</b>
+<i class="no-highlight">52</i>&nbsp;
+<b class="fc"><i class="no-highlight">53</i>&nbsp;                } else if(card.getLevel() == levels[2]) {</b>
+<b class="fc"><i class="no-highlight">54</i>&nbsp;                    ((DevelopmentCardDeck)decks[0][1]).addCard(card);</b>
+<i class="no-highlight">55</i>&nbsp;                }
+<i class="no-highlight">56</i>&nbsp;
+<b class="fc"><i class="no-highlight">57</i>&nbsp;            } else if(card.getColor() == colors[1]) {</b>
+<b class="fc"><i class="no-highlight">58</i>&nbsp;                if(card.getLevel() == levels[0]) {</b>
+<b class="fc"><i class="no-highlight">59</i>&nbsp;                    ((DevelopmentCardDeck)decks[2][3]).addCard(card);</b>
+<i class="no-highlight">60</i>&nbsp;
+<b class="fc"><i class="no-highlight">61</i>&nbsp;                } else if(card.getLevel() == levels[1]) {</b>
+<b class="fc"><i class="no-highlight">62</i>&nbsp;                    ((DevelopmentCardDeck)decks[1][3]).addCard(card);</b>
+<i class="no-highlight">63</i>&nbsp;
+<b class="fc"><i class="no-highlight">64</i>&nbsp;                } else if(card.getLevel() == levels[2]) {</b>
+<b class="fc"><i class="no-highlight">65</i>&nbsp;                    ((DevelopmentCardDeck)decks[0][3]).addCard(card);</b>
+<i class="no-highlight">66</i>&nbsp;                }
+<i class="no-highlight">67</i>&nbsp;
+<b class="fc"><i class="no-highlight">68</i>&nbsp;            } else if(card.getColor() == colors[2]) {</b>
+<b class="fc"><i class="no-highlight">69</i>&nbsp;                if(card.getLevel() == levels[0]) {</b>
+<b class="fc"><i class="no-highlight">70</i>&nbsp;                    ((DevelopmentCardDeck)decks[2][2]).addCard(card);</b>
+<i class="no-highlight">71</i>&nbsp;
+<b class="fc"><i class="no-highlight">72</i>&nbsp;                } else if(card.getLevel() == levels[1]) {</b>
+<b class="fc"><i class="no-highlight">73</i>&nbsp;                    ((DevelopmentCardDeck)decks[1][2]).addCard(card);</b>
+<i class="no-highlight">74</i>&nbsp;
+<b class="fc"><i class="no-highlight">75</i>&nbsp;                } else if(card.getLevel() == levels[2]) {</b>
+<b class="fc"><i class="no-highlight">76</i>&nbsp;                    ((DevelopmentCardDeck)decks[0][2]).addCard(card);</b>
+<i class="no-highlight">77</i>&nbsp;
+<i class="no-highlight">78</i>&nbsp;                }
+<i class="no-highlight">79</i>&nbsp;
+<b class="fc"><i class="no-highlight">80</i>&nbsp;            } else if(card.getColor() == colors[3]) {</b>
+<b class="fc"><i class="no-highlight">81</i>&nbsp;                if(card.getLevel() == levels[0]) {</b>
+<b class="fc"><i class="no-highlight">82</i>&nbsp;                    ((DevelopmentCardDeck)decks[2][0]).addCard(card);</b>
+<i class="no-highlight">83</i>&nbsp;
+<b class="fc"><i class="no-highlight">84</i>&nbsp;                } else if(card.getLevel() == levels[1]) {</b>
+<b class="fc"><i class="no-highlight">85</i>&nbsp;                    ((DevelopmentCardDeck)decks[1][0]).addCard(card);</b>
+<i class="no-highlight">86</i>&nbsp;
+<b class="fc"><i class="no-highlight">87</i>&nbsp;                } else if(card.getLevel() == levels[2]) {</b>
+<b class="fc"><i class="no-highlight">88</i>&nbsp;                    ((DevelopmentCardDeck)decks[0][0]).addCard(card);</b>
+<i class="no-highlight">89</i>&nbsp;                }
+<i class="no-highlight">90</i>&nbsp;
+<i class="no-highlight">91</i>&nbsp;            }
+<i class="no-highlight">92</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">93</i>&nbsp;    }</b>
+<i class="no-highlight">94</i>&nbsp;
+<i class="no-highlight">95</i>&nbsp;    /**
+<i class="no-highlight">96</i>&nbsp;     * Alternative Constructor for DevelopmentCardTable Class.
+<i class="no-highlight">97</i>&nbsp;     */
+<i class="no-highlight">98</i>&nbsp;    public DevelopmentCardTable(RedDevelopmentCardDeck[][] decks) {
+<b class="fc"><i class="no-highlight">99</i>&nbsp;        super(decks);</b>
+<b class="fc"><i class="no-highlight">100</i>&nbsp;    }</b>
+<i class="no-highlight">101</i>&nbsp;
+<i class="no-highlight">102</i>&nbsp;    /**
+<i class="no-highlight">103</i>&nbsp;     * Returns the deck corresponding to the specified coordinates.
+<i class="no-highlight">104</i>&nbsp;     * @param row is the row corresponding to the deck.
+<i class="no-highlight">105</i>&nbsp;     * @param column is the column corresponding to the deck.
+<i class="no-highlight">106</i>&nbsp;     * @return the requested Development Card deck.
+<i class="no-highlight">107</i>&nbsp;     */
+<i class="no-highlight">108</i>&nbsp;    public DevelopmentCardDeck getDeck(int row, int column) {
+<b class="fc"><i class="no-highlight">109</i>&nbsp;        return (DevelopmentCardDeck)this.decks[row][column];</b>
+<i class="no-highlight">110</i>&nbsp;    }
+<i class="no-highlight">111</i>&nbsp;
+<i class="no-highlight">112</i>&nbsp;    /**
+<i class="no-highlight">113</i>&nbsp;     * Returns the card at the top of the deck corresponding to the specified coordinates.
+<i class="no-highlight">114</i>&nbsp;     * @param row the deck&#39;s row index.
+<i class="no-highlight">115</i>&nbsp;     * @param column the deck&#39;s column index.
+<i class="no-highlight">116</i>&nbsp;     * @return the requested Development Card.
+<i class="no-highlight">117</i>&nbsp;     */
+<i class="no-highlight">118</i>&nbsp;    public DevelopmentCard getTopCardFromDeck(int row, int column) throws ModelException {
+<b class="fc"><i class="no-highlight">119</i>&nbsp;        RedDevelopmentCardDeck deck = getDeck(row, column);</b>
+<b class="fc"><i class="no-highlight">120</i>&nbsp;        if(!deck.isEmpty())</b>
+<b class="fc"><i class="no-highlight">121</i>&nbsp;            return ((DevelopmentCard)deck.getCards()[deck.getCardsInDeck() - 1]);</b>
+<i class="no-highlight">122</i>&nbsp;        else {
+<b class="fc"><i class="no-highlight">123</i>&nbsp;            throw new ModelException(&quot;This deck is empty. Choose another deck!&quot;);</b>
+<i class="no-highlight">124</i>&nbsp;        }
+<i class="no-highlight">125</i>&nbsp;    }
+<i class="no-highlight">126</i>&nbsp;
+<i class="no-highlight">127</i>&nbsp;    /**
+<i class="no-highlight">128</i>&nbsp;     * Shuffles each deck on the DevelopmentCardTable.
+<i class="no-highlight">129</i>&nbsp;     */
+<i class="no-highlight">130</i>&nbsp;    public void shuffleTable() {
+<b class="fc"><i class="no-highlight">131</i>&nbsp;        for(int i = 0; i &lt; 3; i++)</b>
+<b class="fc"><i class="no-highlight">132</i>&nbsp;            for(int j = 0; j &lt; 4; j++)</b>
+<b class="fc"><i class="no-highlight">133</i>&nbsp;                ((DevelopmentCardDeck)this.decks[i][j]).shuffle();</b>
+<b class="fc"><i class="no-highlight">134</i>&nbsp;    }</b>
+<i class="no-highlight">135</i>&nbsp;
+<i class="no-highlight">136</i>&nbsp;    /**
+<i class="no-highlight">137</i>&nbsp;     * Draws one card from a specified deck inside the Development Card Table.
+<i class="no-highlight">138</i>&nbsp;     * @param row the deck&#39;s row index.
+<i class="no-highlight">139</i>&nbsp;     * @param column the deck&#39;s column index.
+<i class="no-highlight">140</i>&nbsp;     * @return the requested Development Card.
+<i class="no-highlight">141</i>&nbsp;     */
+<i class="no-highlight">142</i>&nbsp;    public DevelopmentCard drawCardFromDeck(int row, int column) throws ModelException {
+<b class="fc"><i class="no-highlight">143</i>&nbsp;        DevelopmentCardDeck deck = getDeck(row, column);</b>
+<b class="fc"><i class="no-highlight">144</i>&nbsp;        if(!deck.isEmpty())</b>
+<b class="fc"><i class="no-highlight">145</i>&nbsp;            return deck.drawCard();</b>
+<i class="no-highlight">146</i>&nbsp;        else
+<b class="fc"><i class="no-highlight">147</i>&nbsp;            throw new ModelException(&quot;This deck is empty. Choose another deck!&quot;);</b>
+<i class="no-highlight">148</i>&nbsp;    }
+<i class="no-highlight">149</i>&nbsp;
+<i class="no-highlight">150</i>&nbsp;    /**
+<i class="no-highlight">151</i>&nbsp;     * This method is used when a player wants to buy a specified Development Card to update the card&#39;s cost,
+<i class="no-highlight">152</i>&nbsp;     * preparing the player for the paying process.
+<i class="no-highlight">153</i>&nbsp;     * @param cardToBuy Development Card which the player wants to buy.
+<i class="no-highlight">154</i>&nbsp;     * @param leaderCards player&#39;s owned Leader Cards.
+<i class="no-highlight">155</i>&nbsp;     * @param resourceManager player&#39;s Resource Manager System.
+<i class="no-highlight">156</i>&nbsp;     */
+<i class="no-highlight">157</i>&nbsp;    public void updateCardToBuyCost(DevelopmentCard cardToBuy, LeaderCard[] leaderCards, ResourceManager resourceManager) {
+<b class="fc"><i class="no-highlight">158</i>&nbsp;        ResourceStack cardCost = cardToBuy.getCost().copyStack();</b>
+<i class="no-highlight">159</i>&nbsp;
+<b class="fc"><i class="no-highlight">160</i>&nbsp;        for(LeaderCard leaderCard : leaderCards)</b>
+<b class="fc"><i class="no-highlight">161</i>&nbsp;            if(leaderCard.isActive() &amp;&amp; leaderCard.getAction() == LeaderCardAction.DISCOUNT)</b>
+<b class="fc"><i class="no-highlight">162</i>&nbsp;                cardCost.removeFromAllTypes(leaderCard.getDiscount());</b>
+<i class="no-highlight">163</i>&nbsp;
+<b class="fc"><i class="no-highlight">164</i>&nbsp;        resourceManager.setTemporaryResourcesToPay(cardCost);</b>
+<b class="fc"><i class="no-highlight">165</i>&nbsp;    }</b>
+<i class="no-highlight">166</i>&nbsp;
+<i class="no-highlight">167</i>&nbsp;    /**
+<i class="no-highlight">168</i>&nbsp;     * Returns the Development Card corresponding to the given id.
+<i class="no-highlight">169</i>&nbsp;     * @param id Id of the card to get.
+<i class="no-highlight">170</i>&nbsp;     */
+<i class="no-highlight">171</i>&nbsp;    public DevelopmentCard getCardFromId(int id) {
+<b class="fc"><i class="no-highlight">172</i>&nbsp;        for(int r = 0; r &lt; 3; r++){</b>
+<b class="fc"><i class="no-highlight">173</i>&nbsp;            for(int c = 0; c &lt; 4; c++){</b>
+<b class="fc"><i class="no-highlight">174</i>&nbsp;                for(int pos = 0; pos &lt; 4; pos ++){</b>
+<b class="fc"><i class="no-highlight">175</i>&nbsp;                    if(this.getDeck(r, c).getCards()[pos].getCardId() == id) return this.getDeck(r, c).getCards()[pos];</b>
+<i class="no-highlight">176</i>&nbsp;                }
+<i class="no-highlight">177</i>&nbsp;            }
+<i class="no-highlight">178</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">179</i>&nbsp;        return null;</b>
+<i class="no-highlight">180</i>&nbsp;    }
+<i class="no-highlight">181</i>&nbsp;
+<i class="no-highlight">182</i>&nbsp;    /**
+<i class="no-highlight">183</i>&nbsp;     * Checks if a given column of the Development Card Table is empty.
+<i class="no-highlight">184</i>&nbsp;     * @param column Column to check.
+<i class="no-highlight">185</i>&nbsp;     * @return true if the column is empty.
+<i class="no-highlight">186</i>&nbsp;     */
+<i class="no-highlight">187</i>&nbsp;    public boolean columnIsEmpty(int column) {
+<b class="fc"><i class="no-highlight">188</i>&nbsp;        return column &gt;= 0 &amp;&amp; column &lt;= 3 &amp;&amp; decks[0][column].isEmpty() &amp;&amp; decks[1][column].isEmpty() &amp;&amp; decks[2][column].isEmpty();</b>
+<i class="no-highlight">189</i>&nbsp;    }
+<i class="no-highlight">190</i>&nbsp;
+<i class="no-highlight">191</i>&nbsp;    /**
+<i class="no-highlight">192</i>&nbsp;     * Returns the card of lowest level of a specified column.
+<i class="no-highlight">193</i>&nbsp;     * @param column Column of the deck to draw from.
+<i class="no-highlight">194</i>&nbsp;     * @return the drawn card or null if the card cannot be found.
+<i class="no-highlight">195</i>&nbsp;     */
+<i class="no-highlight">196</i>&nbsp;    public DevelopmentCardDeck getLowestDeckByColumn(int column) {
+<b class="fc"><i class="no-highlight">197</i>&nbsp;        if (column &lt; 0 || column &gt; 3)</b>
+<b class="fc"><i class="no-highlight">198</i>&nbsp;            return null;</b>
+<i class="no-highlight">199</i>&nbsp;
+<b class="fc"><i class="no-highlight">200</i>&nbsp;        if(!decks[2][column].isEmpty())</b>
+<b class="fc"><i class="no-highlight">201</i>&nbsp;            return (DevelopmentCardDeck) decks[2][column];</b>
+<b class="fc"><i class="no-highlight">202</i>&nbsp;        else if(!decks[1][column].isEmpty())</b>
+<b class="fc"><i class="no-highlight">203</i>&nbsp;            return (DevelopmentCardDeck) decks[1][column];</b>
+<b class="fc"><i class="no-highlight">204</i>&nbsp;        else if(!decks[0][column].isEmpty())</b>
+<b class="fc"><i class="no-highlight">205</i>&nbsp;            return (DevelopmentCardDeck) decks[0][column];</b>
+<i class="no-highlight">206</i>&nbsp;        else
+<b class="fc"><i class="no-highlight">207</i>&nbsp;            return null;</b>
+<i class="no-highlight">208</i>&nbsp;    }
+<i class="no-highlight">209</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-07-02 23:15</div>
+</div>
+</body>
+</html>

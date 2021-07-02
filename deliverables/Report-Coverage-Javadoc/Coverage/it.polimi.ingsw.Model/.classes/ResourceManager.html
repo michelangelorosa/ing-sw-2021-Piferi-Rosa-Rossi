@@ -1,0 +1,451 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ResourceManager</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ResourceManager (it.polimi.ingsw.Model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ResourceManager</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (31/ 31)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    99%
+  </span>
+  <span class="absValue">
+    (102/ 103)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.Model.Enums.LeaderCardAction;
+<i>4</i>&nbsp;import it.polimi.ingsw.Model.Enums.ResourceType;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import java.io.Serializable;
+<i>7</i>&nbsp;import java.util.ArrayList;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;/**
+<i>10</i>&nbsp; * ResourceManager Class contains both a Warehouse and a Strongbox type objects (as final
+<i>11</i>&nbsp; * attributes). It is used to group all methods regarding resource management.
+<i>12</i>&nbsp; */
+<i>13</i>&nbsp;public class ResourceManager implements Serializable {
+<i>14</i>&nbsp;    private static final long serialVersionUID = 0x1;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    private final Warehouse warehouse;
+<i>17</i>&nbsp;    private final Strongbox strongbox;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    /**
+<i>20</i>&nbsp;     * Every time the player buys from the Market, buys a Development Card or activates his Production,
+<i>21</i>&nbsp;     * temporary resources and white marbles are created to start the Add or Buy cycle.
+<i>22</i>&nbsp;     */
+<i>23</i>&nbsp;    private ResourceStack temporaryResourcesToPay;
+<i>24</i>&nbsp;    private int temporaryWhiteMarbles;
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    /**
+<i>27</i>&nbsp;     * Constructor for ResourceManagerClass.
+<i>28</i>&nbsp;     */
+<b class="fc"><i>29</i>&nbsp;    public ResourceManager() {</b>
+<b class="fc"><i>30</i>&nbsp;        warehouse = new Warehouse();</b>
+<b class="fc"><i>31</i>&nbsp;        strongbox = new Strongbox();</b>
+<b class="fc"><i>32</i>&nbsp;        temporaryResourcesToPay = new ResourceStack(0,0,0,0);</b>
+<b class="fc"><i>33</i>&nbsp;        temporaryWhiteMarbles = 0;</b>
+<b class="fc"><i>34</i>&nbsp;    }</b>
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    /**
+<i>37</i>&nbsp;     * Getter for &quot;warehouse&quot; attribute in ResourceManagerClass.
+<i>38</i>&nbsp;     */
+<i>39</i>&nbsp;    public Warehouse getWarehouse() {
+<b class="fc"><i>40</i>&nbsp;        return warehouse;</b>
+<i>41</i>&nbsp;    }
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    /**
+<i>44</i>&nbsp;     * Getter for &quot;warehouseDepots&quot; array inside &quot;warehouse&quot; attribute in ResourceManagerClass.
+<i>45</i>&nbsp;     */
+<i>46</i>&nbsp;    public WarehouseDepot[] getWarehouseDepots() {
+<b class="fc"><i>47</i>&nbsp;        return this.warehouse.getWarehouseDepots();</b>
+<i>48</i>&nbsp;    }
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    /**
+<i>51</i>&nbsp;     * Getter for &quot;extraWarehouseDepot1&quot; inside &quot;warehouse&quot; attribute in ResourceManagerClass.
+<i>52</i>&nbsp;     */
+<i>53</i>&nbsp;    public WarehouseDepot getExtraWarehouseDepotOne() {
+<b class="fc"><i>54</i>&nbsp;        return this.warehouse.getExtraWarehouseDepot1();</b>
+<i>55</i>&nbsp;    }
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;    /**
+<i>58</i>&nbsp;     * Getter for &quot;extraWarehouseDepot2&quot; inside &quot;warehouse&quot; attribute in ResourceManagerClass.
+<i>59</i>&nbsp;     */
+<i>60</i>&nbsp;    public WarehouseDepot getExtraWarehouseDepotTwo() {
+<b class="fc"><i>61</i>&nbsp;        return this.warehouse.getExtraWarehouseDepot2();</b>
+<i>62</i>&nbsp;    }
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;    /**
+<i>65</i>&nbsp;     * Getter for &quot;isExtraDepot1IsActive&quot; inside &quot;warehouse&quot; attribute in ResourceManagerClass.
+<i>66</i>&nbsp;     */
+<i>67</i>&nbsp;    public boolean isExtraDepotOneActive() {
+<b class="fc"><i>68</i>&nbsp;        return this.warehouse.isExtraWarehouseDepot1IsActive();</b>
+<i>69</i>&nbsp;    }
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;    /**
+<i>72</i>&nbsp;     * Getter for &quot;isExtraDepot2IsActive&quot; inside &quot;warehouse&quot; attribute in ResourceManagerClass.
+<i>73</i>&nbsp;     */
+<i>74</i>&nbsp;    public boolean isExtraDepotTwoActive() {
+<b class="fc"><i>75</i>&nbsp;        return this.warehouse.isExtraWarehouseDepot2IsActive();</b>
+<i>76</i>&nbsp;    }
+<i>77</i>&nbsp;
+<i>78</i>&nbsp;    /**
+<i>79</i>&nbsp;     * Getter for &quot;strongbox&quot; attribute in ResourceManagerClass.
+<i>80</i>&nbsp;     */
+<i>81</i>&nbsp;    public Strongbox getStrongbox() {
+<b class="fc"><i>82</i>&nbsp;        return strongbox;</b>
+<i>83</i>&nbsp;    }
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;    /**
+<i>86</i>&nbsp;     * Getter for &quot;temporaryResourcesToPay&quot; attribute in ResourceManagerClass.
+<i>87</i>&nbsp;     */
+<i>88</i>&nbsp;    public ResourceStack getTemporaryResourcesToPay() {
+<b class="fc"><i>89</i>&nbsp;        return temporaryResourcesToPay;</b>
+<i>90</i>&nbsp;    }
+<i>91</i>&nbsp;
+<i>92</i>&nbsp;    /**
+<i>93</i>&nbsp;     * Setter for &quot;temporaryResourcesToPay&quot; attribute in ResourceManagerClass.
+<i>94</i>&nbsp;     */
+<i>95</i>&nbsp;    public void setTemporaryResourcesToPay(ResourceStack temporaryResourcesToPay) {
+<b class="fc"><i>96</i>&nbsp;        this.temporaryResourcesToPay = temporaryResourcesToPay;</b>
+<b class="fc"><i>97</i>&nbsp;    }</b>
+<i>98</i>&nbsp;
+<i>99</i>&nbsp;    /**
+<i>100</i>&nbsp;     * Getter for &quot;temporaryWhiteMarbles&quot; attribute in ResourceManagerClass.
+<i>101</i>&nbsp;     */
+<i>102</i>&nbsp;    public int getTemporaryWhiteMarbles() {
+<b class="fc"><i>103</i>&nbsp;        return temporaryWhiteMarbles;</b>
+<i>104</i>&nbsp;    }
+<i>105</i>&nbsp;
+<i>106</i>&nbsp;    /**
+<i>107</i>&nbsp;     * Setter for &quot;temporaryResourcesToPay&quot; attribute in ResourceManagerClass.
+<i>108</i>&nbsp;     */
+<i>109</i>&nbsp;    public void setTemporaryWhiteMarbles(int temporaryWhiteMarbles) {
+<b class="fc"><i>110</i>&nbsp;        this.temporaryWhiteMarbles = temporaryWhiteMarbles;</b>
+<b class="fc"><i>111</i>&nbsp;    }</b>
+<i>112</i>&nbsp;
+<i>113</i>&nbsp;
+<i>114</i>&nbsp;    /**
+<i>115</i>&nbsp;     * This method adds one white marble to the temporaryWhiteMarble counter.
+<i>116</i>&nbsp;     */
+<i>117</i>&nbsp;    public void addWhiteMarble() {
+<b class="fc"><i>118</i>&nbsp;        temporaryWhiteMarbles++;</b>
+<b class="fc"><i>119</i>&nbsp;    }</b>
+<i>120</i>&nbsp;
+<i>121</i>&nbsp;    /**
+<i>122</i>&nbsp;     * This method removes one white marble from the temporaryWhiteMarble counter.
+<i>123</i>&nbsp;     */
+<i>124</i>&nbsp;    public void removeWhiteMarble() throws IllegalArgumentException {
+<b class="fc"><i>125</i>&nbsp;        temporaryWhiteMarbles--;</b>
+<b class="fc"><i>126</i>&nbsp;        if(temporaryWhiteMarbles &lt; 0)</b>
+<b class="fc"><i>127</i>&nbsp;            throw new IllegalArgumentException(&quot;TemporaryWhiteMarbles number is already 0.&quot;);</b>
+<b class="fc"><i>128</i>&nbsp;    }</b>
+<i>129</i>&nbsp;
+<i>130</i>&nbsp;    /**
+<i>131</i>&nbsp;     * This method is used to revert the Resource Manager to its initial conditions.
+<i>132</i>&nbsp;     */
+<i>133</i>&nbsp;    public void reset() {
+<b class="fc"><i>134</i>&nbsp;        this.warehouse.reset();</b>
+<b class="fc"><i>135</i>&nbsp;        this.strongbox.reset();</b>
+<b class="fc"><i>136</i>&nbsp;    }</b>
+<i>137</i>&nbsp;
+<i>138</i>&nbsp;    /**
+<i>139</i>&nbsp;     * This method is used to count the total number of resources stored in the warehouse and the strongbox,
+<i>140</i>&nbsp;     * divided by their type.
+<i>141</i>&nbsp;     * @return a stack containing the counted resources divided by type.
+<i>142</i>&nbsp;     */
+<i>143</i>&nbsp;    public ResourceStack countAllResources() {
+<b class="fc"><i>144</i>&nbsp;        ResourceStack resourceStack = new ResourceStack(0,0,0,0);</b>
+<b class="fc"><i>145</i>&nbsp;        ResourceType[] resourceTypes = ResourceType.values();</b>
+<i>146</i>&nbsp;
+<b class="fc"><i>147</i>&nbsp;        for(int i = 1; i &lt;= 4; i++)</b>
+<b class="fc"><i>148</i>&nbsp;            resourceStack.setResource(warehouse.countResourcesByType(resourceTypes[i]) + strongbox.countResourcesByType(resourceTypes[i]), resourceTypes[i]);</b>
+<i>149</i>&nbsp;
+<b class="fc"><i>150</i>&nbsp;        return resourceStack;</b>
+<i>151</i>&nbsp;    }
+<i>152</i>&nbsp;
+<i>153</i>&nbsp;    /**
+<i>154</i>&nbsp;     * This method is used to count the total number of resources of a specified type stored
+<i>155</i>&nbsp;     * in the warehouse and the strongbox.
+<i>156</i>&nbsp;     * @param resourceType is the type of resource to count.
+<i>157</i>&nbsp;     * @return the number of resources of the specified type
+<i>158</i>&nbsp;     */
+<i>159</i>&nbsp;    public int countAllResourcesByType(ResourceType resourceType) {
+<b class="fc"><i>160</i>&nbsp;        return this.warehouse.countResourcesByType(resourceType) + this.strongbox.countResourcesByType(resourceType);</b>
+<i>161</i>&nbsp;    }
+<i>162</i>&nbsp;
+<i>163</i>&nbsp;    /**
+<i>164</i>&nbsp;     * This method is used to count the number of victory points given to the player at the end of the
+<i>165</i>&nbsp;     * game based of how many resources he has in his warehouse and strongbox.
+<i>166</i>&nbsp;     * @return the corresponding victory points (total number of resources divided by 5).
+<i>167</i>&nbsp;     */
+<i>168</i>&nbsp;    public int countResourcesToVictoryPoints() {
+<b class="fc"><i>169</i>&nbsp;        int allResources = 0;</b>
+<b class="fc"><i>170</i>&nbsp;        ResourceType[] resourceTypes = ResourceType.values();</b>
+<b class="fc"><i>171</i>&nbsp;        for(int i = 1; i &lt;= 4; i++)</b>
+<b class="fc"><i>172</i>&nbsp;            allResources += warehouse.countResourcesByType(resourceTypes[i]) + strongbox.countResourcesByType(resourceTypes[i]);</b>
+<i>173</i>&nbsp;
+<b class="fc"><i>174</i>&nbsp;        return allResources/5;</b>
+<i>175</i>&nbsp;    }
+<i>176</i>&nbsp;
+<i>177</i>&nbsp;    /**
+<i>178</i>&nbsp;     * This method is used to add resources to the strongbox when a production process has been completed.
+<i>179</i>&nbsp;     * @param resourceStack is the stack containing the production&#39;s output, divided by type.
+<i>180</i>&nbsp;     */
+<i>181</i>&nbsp;    public void addProductionResources(ResourceStack resourceStack) {
+<b class="fc"><i>182</i>&nbsp;        this.strongbox.addToAllTypes(resourceStack);</b>
+<b class="fc"><i>183</i>&nbsp;    }</b>
+<i>184</i>&nbsp;
+<i>185</i>&nbsp;    /**
+<i>186</i>&nbsp;     * This method is used to add a number of resources of a specified type coming from the market to a depot
+<i>187</i>&nbsp;     * inside the Warehouse.
+<i>188</i>&nbsp;     * &lt;p&gt;
+<i>189</i>&nbsp;     * The method checks if it is possible to fit the specified type of resources inside the depot,
+<i>190</i>&nbsp;     * then either proceeds to compute the action, or notifies the player in case the resources
+<i>191</i>&nbsp;     * cannot be stored inside the depot.
+<i>192</i>&nbsp;     * @param resourcesToAdd is the number of resources to add.
+<i>193</i>&nbsp;     * @param type is the type of resources that have to be added
+<i>194</i>&nbsp;     * @param depot is the depot where the player wants the resources to be added.
+<i>195</i>&nbsp;     * @return the number of resources that could not fit inside the specified depot
+<i>196</i>&nbsp;     */
+<i>197</i>&nbsp;    public int addMarketResourcesByType(int resourcesToAdd, ResourceType type, WarehouseDepot depot) {
+<b class="fc"><i>198</i>&nbsp;        if(this.warehouse.isFull()) {</b>
+<b class="fc"><i>199</i>&nbsp;            System.out.println(&quot;The Warehouse is full!&quot;);</b>
+<b class="fc"><i>200</i>&nbsp;            return resourcesToAdd;</b>
+<b class="fc"><i>201</i>&nbsp;        } else if(!this.warehouse.resourceTypeFits(type)) {</b>
+<b class="fc"><i>202</i>&nbsp;            System.out.println(&quot;Can&#39;t fit any more &quot;+type+&quot; inside the Warehouse!&quot;);</b>
+<b class="fc"><i>203</i>&nbsp;            return resourcesToAdd;</b>
+<b class="fc"><i>204</i>&nbsp;        } else if(depot.getResourceType() != type &amp;&amp; depot.getResourceType() != ResourceType.NONE) {</b>
+<b class="fc"><i>205</i>&nbsp;            System.out.println(&quot;Can&#39;t fit &quot;+type+&quot; inside a &quot; + depot.getResourceType() + &quot; Depot!&quot;);</b>
+<b class="fc"><i>206</i>&nbsp;            return resourcesToAdd;</b>
+<b class="fc"><i>207</i>&nbsp;        } else if(depot.getResourceType() == ResourceType.NONE &amp;&amp; !this.warehouse.areEmptyDepotsFillableByType(type)) {</b>
+<b class="fc"><i>208</i>&nbsp;            System.out.println(&quot;Can&#39;t fit &quot;+type+&quot; inside empty depot as there are &quot;+type+&quot; already stored in the Warehouse!&quot;);</b>
+<b class="fc"><i>209</i>&nbsp;            return resourcesToAdd;</b>
+<b class="fc"><i>210</i>&nbsp;        } else if(depot.isFull()) {</b>
+<b class="fc"><i>211</i>&nbsp;            System.out.println(&quot;This Depot is full. Select a valid Depot!&quot;);</b>
+<b class="fc"><i>212</i>&nbsp;            return resourcesToAdd;</b>
+<i>213</i>&nbsp;        }
+<i>214</i>&nbsp;
+<b class="fc"><i>215</i>&nbsp;        return this.warehouse.addResources(resourcesToAdd, type, depot);</b>
+<i>216</i>&nbsp;    }
+<i>217</i>&nbsp;
+<i>218</i>&nbsp;    /**
+<i>219</i>&nbsp;     * This method is used to check if the player is able to fit any resource inside the Warehouse.
+<i>220</i>&nbsp;     * @return true if at least one resources of any type fits.
+<i>221</i>&nbsp;     */
+<i>222</i>&nbsp;    public boolean canAddMarketResources() {
+<b class="fc"><i>223</i>&nbsp;        ResourceType[] resourceTypes = ResourceType.values();</b>
+<i>224</i>&nbsp;
+<b class="fc"><i>225</i>&nbsp;        for(int i = 1; i &lt;= 4; i++)</b>
+<b class="fc"><i>226</i>&nbsp;            if (this.warehouse.canAddResource(resourceTypes[i]))</b>
+<b class="fc"><i>227</i>&nbsp;                return true;</b>
+<i>228</i>&nbsp;
+<b class="fc"><i>229</i>&nbsp;        return false;</b>
+<i>230</i>&nbsp;    }
+<i>231</i>&nbsp;
+<i>232</i>&nbsp;    /**
+<i>233</i>&nbsp;     * This method is used to check if one Type of resource can fit inside a specified Depot.
+<i>234</i>&nbsp;     * @param type ResourceType of the Resource to insert.
+<i>235</i>&nbsp;     * @param depot WarehouseDepot where the Resource needs to be inserted.
+<i>236</i>&nbsp;     * @return true if the resource can fit.
+<i>237</i>&nbsp;     */
+<i>238</i>&nbsp;    public boolean canAddToDepot(ResourceType type, WarehouseDepot depot) {
+<b class="fc"><i>239</i>&nbsp;        return this.warehouse.canAddToDepot(type, depot);</b>
+<i>240</i>&nbsp;    }
+<i>241</i>&nbsp;
+<i>242</i>&nbsp;    /**
+<i>243</i>&nbsp;     * This method is used to add one Resource of a specified Type inside a specified Depot.
+<i>244</i>&nbsp;     * The Resource is also removed from the Temporary Resources to Pay
+<i>245</i>&nbsp;     * @param type Type of the resource to be inserted
+<i>246</i>&nbsp;     * @param depot Depot where the Resource will be inserted.
+<i>247</i>&nbsp;     */
+<i>248</i>&nbsp;    public void addOneResourceToDepot(ResourceType type, WarehouseDepot depot) {
+<b class="fc"><i>249</i>&nbsp;        this.temporaryResourcesToPay.removeResource(1, type);</b>
+<b class="fc"><i>250</i>&nbsp;        this.warehouse.addResources(1, type, depot);</b>
+<b class="fc"><i>251</i>&nbsp;    }</b>
+<i>252</i>&nbsp;
+<i>253</i>&nbsp;    /**
+<i>254</i>&nbsp;     * Method used to transform remaining resources of a market interaction into faith points
+<i>255</i>&nbsp;     * for all non currently playing players.
+<i>256</i>&nbsp;     * @param player Player who&#39;s playing now.
+<i>257</i>&nbsp;     * @param players All player&#39;s of the current game.
+<i>258</i>&nbsp;     * @param faithTrack Faith Track of the current game.
+<i>259</i>&nbsp;     */
+<i>260</i>&nbsp;    public void remainingResourcesToFaith(Player player, ArrayList&lt;Player&gt; players, FaithTrack faithTrack) {
+<b class="fc"><i>261</i>&nbsp;        int faith = this.temporaryResourcesToPay.totalResourcesToInt();</b>
+<b class="fc"><i>262</i>&nbsp;        this.temporaryResourcesToPay = new ResourceStack(0,0,0,0);</b>
+<b class="fc"><i>263</i>&nbsp;        faithTrack.allAhead(player, players, faith);</b>
+<b class="fc"><i>264</i>&nbsp;    }</b>
+<i>265</i>&nbsp;
+<i>266</i>&nbsp;    /**
+<i>267</i>&nbsp;     * Method used is the player finished paying the correct amount when activating
+<i>268</i>&nbsp;     * production o buying a card.
+<i>269</i>&nbsp;     * @return True if the player has payed all.
+<i>270</i>&nbsp;     */
+<i>271</i>&nbsp;    public boolean hasPayed() {
+<b class="fc"><i>272</i>&nbsp;        return temporaryResourcesToPay.isEmpty();</b>
+<i>273</i>&nbsp;    }
+<i>274</i>&nbsp;
+<i>275</i>&nbsp;    /**
+<i>276</i>&nbsp;     * Method used to check if a specified Resource is needed to pay for the current
+<i>277</i>&nbsp;     * transaction.
+<i>278</i>&nbsp;     * @param resourceType Type the player specifies,
+<i>279</i>&nbsp;     * @return True if the Resource Type is needed to pay.
+<i>280</i>&nbsp;     */
+<i>281</i>&nbsp;    public boolean resourceIsNeededToPay(ResourceType resourceType) {
+<b class="fc"><i>282</i>&nbsp;        return temporaryResourcesToPay.getResource(resourceType) &gt; 0;</b>
+<i>283</i>&nbsp;    }
+<i>284</i>&nbsp;
+<i>285</i>&nbsp;    /**
+<i>286</i>&nbsp;     * Method used to pay one resource from a Warehouse Depot.
+<i>287</i>&nbsp;     * @param depot Warehouse Depot to take the resource from.
+<i>288</i>&nbsp;     */
+<i>289</i>&nbsp;    public void payOneResourceWarehouse(WarehouseDepot depot) {
+<b class="fc"><i>290</i>&nbsp;        temporaryResourcesToPay.removeResource(1, depot.getResourceType());</b>
+<b class="fc"><i>291</i>&nbsp;        depot.removeResources(1);</b>
+<b class="fc"><i>292</i>&nbsp;    }</b>
+<i>293</i>&nbsp;
+<i>294</i>&nbsp;    /**
+<i>295</i>&nbsp;     * Method used to pay one resource from the Strongbox.
+<i>296</i>&nbsp;     * @param type Resource Type the player wants to pay.
+<i>297</i>&nbsp;     */
+<i>298</i>&nbsp;    public void payOneResourceStrongbox(ResourceType type) {
+<b class="fc"><i>299</i>&nbsp;        temporaryResourcesToPay.removeResource(1, type);</b>
+<b class="fc"><i>300</i>&nbsp;        strongbox.removeOneResourcesByType(type);</b>
+<b class="fc"><i>301</i>&nbsp;    }</b>
+<i>302</i>&nbsp;
+<i>303</i>&nbsp;    /**
+<i>304</i>&nbsp;     * This method is used to check if a specified card is buyable from the player.
+<i>305</i>&nbsp;     * &lt;p&gt;
+<i>306</i>&nbsp;     * The player is notified if he doesn&#39;t have enough resources to buy the card.
+<i>307</i>&nbsp;     * @param developmentCard is the card the player wants to buy.
+<i>308</i>&nbsp;     * @return true if the card is buyable.
+<i>309</i>&nbsp;     */
+<i>310</i>&nbsp;    public boolean cardIsBuyable(DevelopmentCard developmentCard, LeaderCard[] leaderCards) {
+<b class="fc"><i>311</i>&nbsp;        boolean isBuyable = true;</b>
+<b class="fc"><i>312</i>&nbsp;        ResourceStack cardCost = developmentCard.getCost();</b>
+<b class="fc"><i>313</i>&nbsp;        ResourceStack cardToBuyCost = cardCost.copyStack();</b>
+<b class="fc"><i>314</i>&nbsp;        ResourceType[] resourceTypes = ResourceType.values();</b>
+<i>315</i>&nbsp;
+<b class="fc"><i>316</i>&nbsp;        for(LeaderCard leaderCard : leaderCards)</b>
+<b class="fc"><i>317</i>&nbsp;            if(leaderCard.isActive() &amp;&amp; leaderCard.getAction() == LeaderCardAction.DISCOUNT)</b>
+<b class="fc"><i>318</i>&nbsp;                cardToBuyCost.removeFromAllTypes(leaderCard.getDiscount());</b>
+<i>319</i>&nbsp;
+<b class="fc"><i>320</i>&nbsp;        for(int i = 1; i &lt;= 4; i++)</b>
+<b class="fc"><i>321</i>&nbsp;            if(cardToBuyCost.getResource(resourceTypes[i]) &gt; countAllResourcesByType(resourceTypes[i])) {</b>
+<b class="fc"><i>322</i>&nbsp;                System.out.println(&quot;Not enough &quot;+resourceTypes[i]+&quot; to buy card!&quot;);</b>
+<b class="fc"><i>323</i>&nbsp;                isBuyable = false;</b>
+<i>324</i>&nbsp;            }
+<i>325</i>&nbsp;
+<b class="fc"><i>326</i>&nbsp;        return isBuyable;</b>
+<i>327</i>&nbsp;    }
+<i>328</i>&nbsp;
+<i>329</i>&nbsp;    /**
+<i>330</i>&nbsp;     * This method is used to check if a specified leader card is activatable from the player.
+<i>331</i>&nbsp;     * &lt;p&gt;
+<i>332</i>&nbsp;     * The player is notified if he doesn&#39;t have enough resources to activate the leader card.
+<i>333</i>&nbsp;     * @param leaderCard is the card the player wants to activate.
+<i>334</i>&nbsp;     * @return true if the card is activatable.
+<i>335</i>&nbsp;     */
+<i>336</i>&nbsp;    public boolean hasResourcesToActivateLeaderCard(LeaderCard leaderCard) {
+<b class="fc"><i>337</i>&nbsp;        ResourceStack resourcesNeeded = leaderCard.getResourcesRequired();</b>
+<b class="fc"><i>338</i>&nbsp;        ResourceStack resourcesHad = this.countAllResources();</b>
+<b class="fc"><i>339</i>&nbsp;        ResourceType[] resourceTypes = ResourceType.values();</b>
+<i>340</i>&nbsp;
+<b class="fc"><i>341</i>&nbsp;        for(int i = 1; i &lt;= 4; i++)</b>
+<b class="fc"><i>342</i>&nbsp;            if(resourcesHad.getResource(resourceTypes[i]) &lt; resourcesNeeded.getResource(resourceTypes[i]))</b>
+<b class="fc"><i>343</i>&nbsp;                return false;</b>
+<i>344</i>&nbsp;
+<b class="fc"><i>345</i>&nbsp;        return true;</b>
+<i>346</i>&nbsp;    }
+<i>347</i>&nbsp;
+<i>348</i>&nbsp;    /**
+<i>349</i>&nbsp;     * This method is used to activate an extra Leader Depot of the type specified by a Leader Card.
+<i>350</i>&nbsp;     * &lt;p&gt;
+<i>351</i>&nbsp;     * **-- REQUIREMENTS --**: The LeaderCard&#39;s ability has to be of type &quot;EXTRADEPOT&quot; and ACTIVE, or else
+<i>352</i>&nbsp;     * an Error message is displayed.
+<i>353</i>&nbsp;     * &lt;p&gt;
+<i>354</i>&nbsp;     * -- ASSUMPTION --: This method is to be called ONCE (when it&#39;s activated) for each LeaderCard the player
+<i>355</i>&nbsp;     * possesses, only if the LeaderCard&#39;s ability is of type &quot;EXTRADEPOT&quot;.
+<i>356</i>&nbsp;     * @param leaderCard is the LeaderCard used to activate the depot
+<i>357</i>&nbsp;     */
+<i>358</i>&nbsp;    public void activateLeaderDepot(LeaderCard leaderCard) throws IllegalArgumentException {
+<b class="fc"><i>359</i>&nbsp;        if(leaderCard.getAction() != LeaderCardAction.EXTRADEPOT)</b>
+<b class="nc"><i>360</i>&nbsp;            throw new IllegalArgumentException(&quot;Needed EXTRADEPOT LeaderAbility to activate extra depot (was &quot;+leaderCard.getAction()+&quot; instead)&quot;);</b>
+<b class="fc"><i>361</i>&nbsp;        else if(!leaderCard.isActive())</b>
+<b class="fc"><i>362</i>&nbsp;            throw new IllegalArgumentException(&quot;EXTRADEPOT LeaderAbility has to be active to activate extra depot&quot;);</b>
+<i>363</i>&nbsp;        else
+<b class="fc"><i>364</i>&nbsp;            this.warehouse.activateLeaderDepot(leaderCard.getResource());</b>
+<b class="fc"><i>365</i>&nbsp;    }</b>
+<i>366</i>&nbsp;
+<i>367</i>&nbsp;
+<i>368</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-12 23:55</div>
+</div>
+</body>
+</html>

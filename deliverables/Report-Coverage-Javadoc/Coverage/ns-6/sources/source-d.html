@@ -1,0 +1,153 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > LeaderRequirements</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+    @import "../../.css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../.js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">it.polimi.ingsw.Model.GameModel</a>
+</div>
+
+<h1>Coverage Summary for Class: LeaderRequirements (it.polimi.ingsw.Model.GameModel)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LeaderRequirements</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (28/28)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package it.polimi.ingsw.Model.GameModel;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import it.polimi.ingsw.View.ReducedModel.RedLeaderRequirements;
+<i class="no-highlight">4</i>&nbsp;
+<i class="no-highlight">5</i>&nbsp;/**
+<i class="no-highlight">6</i>&nbsp; * Defines a Card with the characteristics required from Leader Card; a Level and a Colour.
+<i class="no-highlight">7</i>&nbsp; * If The cards doesn&#39;t require a minimum level it is set to 1
+<i class="no-highlight">8</i>&nbsp; * @author michelangelorosa, francescopiferi
+<i class="no-highlight">9</i>&nbsp; */
+<i class="no-highlight">10</i>&nbsp;public class LeaderRequirements extends RedLeaderRequirements {
+<i class="no-highlight">11</i>&nbsp;
+<i class="no-highlight">12</i>&nbsp;    /**Constructor for the requirements that need a specific number of card of a specific level*/
+<b class="fc"><i class="no-highlight">13</i>&nbsp;    public LeaderRequirements(int blueCardLv1, int purpleCardLv1, int yellowCardLv1, int greenCardLv1, int blueCardLv2, int purpleCardLv2, int yellowCardLv2, int greenCardLv2, int blueCardLv3, int purpleCardLv3, int yellowCardLv3, int greenCardLv3) {</b>
+<b class="fc"><i class="no-highlight">14</i>&nbsp;        this.blueCardLv1 = blueCardLv1;</b>
+<b class="fc"><i class="no-highlight">15</i>&nbsp;        this.purpleCardLv1 = purpleCardLv1;</b>
+<b class="fc"><i class="no-highlight">16</i>&nbsp;        this.yellowCardLv1 = yellowCardLv1;</b>
+<b class="fc"><i class="no-highlight">17</i>&nbsp;        this.greenCardLv1 = greenCardLv1;</b>
+<b class="fc"><i class="no-highlight">18</i>&nbsp;        this.blueCardLv2 = blueCardLv2;</b>
+<b class="fc"><i class="no-highlight">19</i>&nbsp;        this.purpleCardLv2 = purpleCardLv2;</b>
+<b class="fc"><i class="no-highlight">20</i>&nbsp;        this.yellowCardLv2 = yellowCardLv2;</b>
+<b class="fc"><i class="no-highlight">21</i>&nbsp;        this.greenCardLv2 = greenCardLv2;</b>
+<b class="fc"><i class="no-highlight">22</i>&nbsp;        this.blueCardLv3 = blueCardLv3;</b>
+<b class="fc"><i class="no-highlight">23</i>&nbsp;        this.purpleCardLv3 = purpleCardLv3;</b>
+<b class="fc"><i class="no-highlight">24</i>&nbsp;        this.yellowCardLv3 = yellowCardLv3;</b>
+<b class="fc"><i class="no-highlight">25</i>&nbsp;        this.greenCardLv3 = greenCardLv3;</b>
+<b class="fc"><i class="no-highlight">26</i>&nbsp;        this.generic = false;</b>
+<b class="fc"><i class="no-highlight">27</i>&nbsp;    }</b>
+<i class="no-highlight">28</i>&nbsp;
+<i class="no-highlight">29</i>&nbsp;    /**Constructor for the requirements that need a number of cards of a specific color ONLY*/
+<b class="fc"><i class="no-highlight">30</i>&nbsp;    public LeaderRequirements(int needBlueCard, int needPurpleCard, int needYellowCard, int needGreenCard){</b>
+<b class="fc"><i class="no-highlight">31</i>&nbsp;        this.needBlueCard = needBlueCard;</b>
+<b class="fc"><i class="no-highlight">32</i>&nbsp;        this.needPurpleCard = needPurpleCard;</b>
+<b class="fc"><i class="no-highlight">33</i>&nbsp;        this.needYellowCard = needYellowCard;</b>
+<b class="fc"><i class="no-highlight">34</i>&nbsp;        this.needGreenCard = needGreenCard;</b>
+<b class="fc"><i class="no-highlight">35</i>&nbsp;        this.generic = true;</b>
+<b class="fc"><i class="no-highlight">36</i>&nbsp;    }</b>
+<i class="no-highlight">37</i>&nbsp;
+<i class="no-highlight">38</i>&nbsp;    /**Method to check if the cards resources are enough*/
+<i class="no-highlight">39</i>&nbsp;    public boolean hasRequirements(LeaderRequirements cardsHad) {
+<b class="fc"><i class="no-highlight">40</i>&nbsp;        if(!cardsHad.generic){</b>
+<b class="fc"><i class="no-highlight">41</i>&nbsp;            return  cardsHad.getBlueCardLv1() &gt;= this.blueCardLv1 &amp;&amp; cardsHad.getBlueCardLv2() &gt;= this.blueCardLv2 &amp;&amp; cardsHad.getBlueCardLv3() &gt;= this.blueCardLv3 &amp;&amp;</b>
+<b class="fc"><i class="no-highlight">42</i>&nbsp;                    cardsHad.getPurpleCardLv1() &gt;= this.purpleCardLv1 &amp;&amp; cardsHad.getPurpleCardLv2() &gt;= this.purpleCardLv2 &amp;&amp; cardsHad.getPurpleCardLv3() &gt;= this.purpleCardLv3 &amp;&amp;</b>
+<b class="fc"><i class="no-highlight">43</i>&nbsp;                    cardsHad.getYellowCardLv1() &gt;= this.yellowCardLv1 &amp;&amp; cardsHad.getYellowCardLv2() &gt;= this.yellowCardLv2 &amp;&amp; cardsHad.getYellowCardLv3() &gt;= this.yellowCardLv3 &amp;&amp;</b>
+<b class="fc"><i class="no-highlight">44</i>&nbsp;                    cardsHad.getGreenCardLv1() &gt;= this.greenCardLv1 &amp;&amp; cardsHad.getGreenCardLv2() &gt;= this.greenCardLv2 &amp;&amp; cardsHad.getGreenCardLv3() &gt;= this.greenCardLv3;</b>
+<i class="no-highlight">45</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">46</i>&nbsp;        else return cardsHad.getNeedBlueCard() &gt;= this.getNeedBlueCard() &amp;&amp; cardsHad.getNeedPurpleCard() &gt;= this.needPurpleCard &amp;&amp; cardsHad.getNeedYellowCard() &gt;= this.getNeedYellowCard() &amp;&amp; cardsHad.getNeedGreenCard() &gt;= this.getNeedGreenCard();</b>
+<i class="no-highlight">47</i>&nbsp;    }
+<i class="no-highlight">48</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-07-02 23:15</div>
+</div>
+</body>
+</html>

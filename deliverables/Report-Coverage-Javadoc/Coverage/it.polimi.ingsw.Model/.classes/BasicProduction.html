@@ -1,0 +1,167 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: BasicProduction</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: BasicProduction (it.polimi.ingsw.Model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">BasicProduction</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (19/ 19)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.io.Serializable;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;/**
+<i>6</i>&nbsp; * BasicProduction Class defines inputs and outputs of a basic production.
+<i>7</i>&nbsp; */
+<i>8</i>&nbsp;public class BasicProduction implements Serializable {
+<i>9</i>&nbsp;    private static final long serialVersionUID = 0x1;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;    /** Fixed inputs and outputs can be added before playing the game */
+<i>12</i>&nbsp;    private final ResourceStack fixedInputs;
+<i>13</i>&nbsp;    private final ResourceStack fixedOutputs;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;    /** Jollies represent inputs and outputs the players can choose when starting the Production. */
+<i>16</i>&nbsp;    private final int jollyIn;
+<i>17</i>&nbsp;    private final int jollyOut;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    private final int outputFaith;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    /**
+<i>22</i>&nbsp;     * Constructor for Standard BasicProduction Class.
+<i>23</i>&nbsp;     * @param jollyIn Number of input resources to be chosen.
+<i>24</i>&nbsp;     * @param jollyOut Number of output resources to be chosen.
+<i>25</i>&nbsp;     */
+<b class="fc"><i>26</i>&nbsp;    public BasicProduction(int jollyIn, int jollyOut) {</b>
+<b class="fc"><i>27</i>&nbsp;        fixedInputs = new ResourceStack(0,0,0,0);</b>
+<b class="fc"><i>28</i>&nbsp;        fixedOutputs = new ResourceStack(0,0,0,0);</b>
+<b class="fc"><i>29</i>&nbsp;        this.jollyIn = jollyIn;</b>
+<b class="fc"><i>30</i>&nbsp;        this.jollyOut = jollyOut;</b>
+<b class="fc"><i>31</i>&nbsp;        this.outputFaith = 0;</b>
+<b class="fc"><i>32</i>&nbsp;    }</b>
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    /**
+<i>35</i>&nbsp;     * Constructor for Parametric BasicProduction Class.
+<i>36</i>&nbsp;     * @param jollyIn Number of input resources to be chosen.
+<i>37</i>&nbsp;     * @param jollyOut Number of output resources to be chosen.
+<i>38</i>&nbsp;     * @param fixedInputs ResourceStack containing fixed input resources.
+<i>39</i>&nbsp;     * @param fixedOutputs ResourceStack containing fixed output resources.
+<i>40</i>&nbsp;     * @param outputFaith Number of faith points given when completing the basic production.
+<i>41</i>&nbsp;     */
+<b class="fc"><i>42</i>&nbsp;    public BasicProduction(ResourceStack fixedInputs, ResourceStack fixedOutputs, int jollyIn, int jollyOut, int outputFaith) {</b>
+<b class="fc"><i>43</i>&nbsp;        this.fixedInputs = fixedInputs;</b>
+<b class="fc"><i>44</i>&nbsp;        this.fixedOutputs = fixedOutputs;</b>
+<b class="fc"><i>45</i>&nbsp;        this.jollyIn = jollyIn;</b>
+<b class="fc"><i>46</i>&nbsp;        this.jollyOut = jollyOut;</b>
+<b class="fc"><i>47</i>&nbsp;        this.outputFaith = outputFaith;</b>
+<b class="fc"><i>48</i>&nbsp;    }</b>
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    /**
+<i>51</i>&nbsp;     * Getter for &quot;fixedInputs&quot; attribute in BasicProduction Class.
+<i>52</i>&nbsp;     */
+<i>53</i>&nbsp;    public ResourceStack getFixedInputs() {
+<b class="fc"><i>54</i>&nbsp;        return fixedInputs;</b>
+<i>55</i>&nbsp;    }
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;    /**
+<i>58</i>&nbsp;     * Getter for &quot;fixedInputs&quot; attribute in BasicProduction Class.
+<i>59</i>&nbsp;     */
+<i>60</i>&nbsp;    public ResourceStack getFixedOutputs() {
+<b class="fc"><i>61</i>&nbsp;        return fixedOutputs;</b>
+<i>62</i>&nbsp;    }
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;    /**
+<i>65</i>&nbsp;     * Getter for &quot;jollyIn&quot; attribute in BasicProduction Class.
+<i>66</i>&nbsp;     */
+<i>67</i>&nbsp;    public int getJollyIn() {
+<b class="fc"><i>68</i>&nbsp;        return jollyIn;</b>
+<i>69</i>&nbsp;    }
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;    /**
+<i>72</i>&nbsp;     * Getter for &quot;jollyOut&quot; attribute in BasicProduction Class.
+<i>73</i>&nbsp;     */
+<i>74</i>&nbsp;    public int getJollyOut() {
+<b class="fc"><i>75</i>&nbsp;        return jollyOut;</b>
+<i>76</i>&nbsp;    }
+<i>77</i>&nbsp;
+<i>78</i>&nbsp;    /**
+<i>79</i>&nbsp;     * Getter for &quot;outputFaith&quot; attribute in BasicProduction Class.
+<i>80</i>&nbsp;     */
+<i>81</i>&nbsp;    public int getOutputFaith() {
+<b class="fc"><i>82</i>&nbsp;        return outputFaith;</b>
+<i>83</i>&nbsp;    }
+<i>84</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-12 23:55</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,281 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > MarketChooseRow</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+    @import "../../.css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../.js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">it.polimi.ingsw.Controller.Actions</a>
+</div>
+
+<h1>Coverage Summary for Class: MarketChooseRow (it.polimi.ingsw.Controller.Actions)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MarketChooseRow</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    80,6%
+  </span>
+  <span class="absValue">
+    (54/67)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package it.polimi.ingsw.Controller.Actions;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import it.polimi.ingsw.Controller.ControllerClasses.ActionController;
+<i class="no-highlight">4</i>&nbsp;import it.polimi.ingsw.Model.Enums.LeaderCardAction;
+<i class="no-highlight">5</i>&nbsp;import it.polimi.ingsw.Model.GameModel.LeaderCard;
+<i class="no-highlight">6</i>&nbsp;import it.polimi.ingsw.Model.GameModel.ResourceStack;
+<i class="no-highlight">7</i>&nbsp;import it.polimi.ingsw.Model.MessagesToClient.*;
+<i class="no-highlight">8</i>&nbsp;
+<i class="no-highlight">9</i>&nbsp;/**
+<i class="no-highlight">10</i>&nbsp; * MarketChooseTow Class contains data and methods to resolve a Client request regarding Market
+<i class="no-highlight">11</i>&nbsp; * shopping.
+<i class="no-highlight">12</i>&nbsp; * &lt;p&gt;
+<i class="no-highlight">13</i>&nbsp; * &lt;b&gt;Attributes:&lt;/b&gt;
+<i class="no-highlight">14</i>&nbsp; * &lt;ul&gt;
+<i class="no-highlight">15</i>&nbsp; *     &lt;li&gt;boolean &quot;row&quot;: set to true if the player chose a Row from the Market, false if he chose a Column&lt;/li&gt;
+<i class="no-highlight">16</i>&nbsp; *     &lt;li&gt;int &quot;rowOrColumnNumber&quot;: indicates the row or column the player chose&lt;/li&gt;
+<i class="no-highlight">17</i>&nbsp; *     &lt;li&gt;ResourceStack &quot;temporaryResource&quot;: contains resources gathered when choosing a row or a column
+<i class="no-highlight">18</i>&nbsp; *     from the market (needed to start a &lt;i&gt;Add Cycle&lt;/i&gt;)&lt;/li&gt;
+<i class="no-highlight">19</i>&nbsp; * &lt;/ul&gt;
+<i class="no-highlight">20</i>&nbsp; * @author redrick99
+<i class="no-highlight">21</i>&nbsp; */
+<i class="no-highlight">22</i>&nbsp;public class MarketChooseRow extends Action {
+<i class="no-highlight">23</i>&nbsp;    /** True if the player chose a Row, false if the player chose a Column */
+<i class="no-highlight">24</i>&nbsp;    private final boolean row;
+<i class="no-highlight">25</i>&nbsp;    private final int rowOrColumnNumber;
+<i class="no-highlight">26</i>&nbsp;    private ResourceStack temporaryResource;
+<i class="no-highlight">27</i>&nbsp;
+<i class="no-highlight">28</i>&nbsp;    /**
+<i class="no-highlight">29</i>&nbsp;     * Constructor for MarketChooseRow Class.
+<i class="no-highlight">30</i>&nbsp;     */
+<b class="fc"><i class="no-highlight">31</i>&nbsp;    public MarketChooseRow(boolean row, int rowOrColumnNumber) {</b>
+<b class="fc"><i class="no-highlight">32</i>&nbsp;        this.actionType = ActionType.MARKET_CHOOSE_ROW;</b>
+<b class="fc"><i class="no-highlight">33</i>&nbsp;        this.row = row;</b>
+<b class="fc"><i class="no-highlight">34</i>&nbsp;        this.rowOrColumnNumber = rowOrColumnNumber;</b>
+<b class="fc"><i class="no-highlight">35</i>&nbsp;        this.temporaryResource = null;</b>
+<b class="fc"><i class="no-highlight">36</i>&nbsp;    }</b>
+<i class="no-highlight">37</i>&nbsp;
+<i class="no-highlight">38</i>&nbsp;    /**
+<i class="no-highlight">39</i>&nbsp;     * Getter for &quot;row&quot; attribute.
+<i class="no-highlight">40</i>&nbsp;     */
+<i class="no-highlight">41</i>&nbsp;    public boolean isRow() {
+<b class="fc"><i class="no-highlight">42</i>&nbsp;        return row;</b>
+<i class="no-highlight">43</i>&nbsp;    }
+<i class="no-highlight">44</i>&nbsp;
+<i class="no-highlight">45</i>&nbsp;    /**
+<i class="no-highlight">46</i>&nbsp;     * Getter for &quot;rowOrColumnNumber&quot; attribute.
+<i class="no-highlight">47</i>&nbsp;     */
+<i class="no-highlight">48</i>&nbsp;    public int getRowOrColumnNumber() {
+<b class="fc"><i class="no-highlight">49</i>&nbsp;        return rowOrColumnNumber;</b>
+<i class="no-highlight">50</i>&nbsp;    }
+<i class="no-highlight">51</i>&nbsp;
+<i class="no-highlight">52</i>&nbsp;    /**
+<i class="no-highlight">53</i>&nbsp;     * Checks if the input sent to the server is correct by assuring that the row or
+<i class="no-highlight">54</i>&nbsp;     * column index does not go out of bounds.
+<i class="no-highlight">55</i>&nbsp;     * @return true if the row is between 0 and 2 or if the column is between 0 and 3.
+<i class="no-highlight">56</i>&nbsp;     * @throws IllegalArgumentException if the row or column index is out of bounds.
+<i class="no-highlight">57</i>&nbsp;     */
+<i class="no-highlight">58</i>&nbsp;    @Override
+<i class="no-highlight">59</i>&nbsp;    public boolean isCorrect() throws IllegalArgumentException {
+<b class="fc"><i class="no-highlight">60</i>&nbsp;        if(rowOrColumnNumber &lt; 0 || (row &amp;&amp; rowOrColumnNumber &gt; 2) || (!row &amp;&amp; rowOrColumnNumber &gt; 3))</b>
+<b class="fc"><i class="no-highlight">61</i>&nbsp;            throw new IllegalArgumentException(&quot;Row or Column index out of bounds.&quot;);</b>
+<i class="no-highlight">62</i>&nbsp;
+<b class="fc"><i class="no-highlight">63</i>&nbsp;        return true;</b>
+<i class="no-highlight">64</i>&nbsp;    }
+<i class="no-highlight">65</i>&nbsp;
+<i class="no-highlight">66</i>&nbsp;    /**
+<i class="no-highlight">67</i>&nbsp;     * Controls and executes the action on the Model. It saves resources got from the Market in a temporary ResourceStack
+<i class="no-highlight">68</i>&nbsp;     * inside the player&#39;s board to begin a &lt;i&gt;Add Cycle&lt;/i&gt;.
+<i class="no-highlight">69</i>&nbsp;     * @param actionController Class used to compute Action messages coming from the Client.
+<i class="no-highlight">70</i>&nbsp;     * @return &quot;SUCCESS&quot; if the action went right, another String if it went wrong.
+<i class="no-highlight">71</i>&nbsp;     */
+<i class="no-highlight">72</i>&nbsp;    @Override
+<i class="no-highlight">73</i>&nbsp;    public String doAction(ActionController actionController) throws IllegalArgumentException{
+<b class="fc"><i class="no-highlight">74</i>&nbsp;        if(!this.canDoAction(actionController))</b>
+<b class="nc"><i class="no-highlight">75</i>&nbsp;            return ILLEGAL_ACTION;</b>
+<i class="no-highlight">76</i>&nbsp;
+<b class="fc"><i class="no-highlight">77</i>&nbsp;        this.isCorrect();</b>
+<i class="no-highlight">78</i>&nbsp;
+<b class="fc"><i class="no-highlight">79</i>&nbsp;        if(this.row)</b>
+<b class="fc"><i class="no-highlight">80</i>&nbsp;            actionController.getGame().getMarket().rowToResources(this.rowOrColumnNumber, actionController.getGame().getCurrentPlayer());</b>
+<i class="no-highlight">81</i>&nbsp;        else
+<b class="fc"><i class="no-highlight">82</i>&nbsp;            actionController.getGame().getMarket().columnToResources(this.rowOrColumnNumber, actionController.getGame().getCurrentPlayer());</b>
+<i class="no-highlight">83</i>&nbsp;
+<b class="fc"><i class="no-highlight">84</i>&nbsp;        actionController.getResetWarehouse().setBackupWarehouse(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse().copyWarehouse());</b>
+<b class="fc"><i class="no-highlight">85</i>&nbsp;        actionController.getResetWarehouse().setBackupResources(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().copyStack());</b>
+<i class="no-highlight">86</i>&nbsp;
+<b class="fc"><i class="no-highlight">87</i>&nbsp;        this.response = this.leaderCardCheck(actionController);</b>
+<b class="fc"><i class="no-highlight">88</i>&nbsp;        if(this.response.equals(&quot;SUCCESS&quot;)) {</b>
+<b class="fc"><i class="no-highlight">89</i>&nbsp;            actionController.getGame().getCurrentPlayer().clearPossibleActions();</b>
+<i class="no-highlight">90</i>&nbsp;
+<b class="fc"><i class="no-highlight">91</i>&nbsp;            if(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().hasPayed()) {</b>
+<b class="nc"><i class="no-highlight">92</i>&nbsp;                this.response = &quot;Has Payed&quot;;</b>
+<b class="nc"><i class="no-highlight">93</i>&nbsp;                actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.END_TURN);</b>
+<i class="no-highlight">94</i>&nbsp;            }
+<i class="no-highlight">95</i>&nbsp;            else {
+<b class="fc"><i class="no-highlight">96</i>&nbsp;                this.temporaryResource = actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay();</b>
+<i class="no-highlight">97</i>&nbsp;
+<b class="fc"><i class="no-highlight">98</i>&nbsp;                actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.ADD_RESOURCE);</b>
+<b class="fc"><i class="no-highlight">99</i>&nbsp;                actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.RESET_WAREHOUSE);</b>
+<b class="fc"><i class="no-highlight">100</i>&nbsp;                actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.SWITCH_DEPOT);</b>
+<b class="fc"><i class="no-highlight">101</i>&nbsp;                actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.END_MARKET);</b>
+<i class="no-highlight">102</i>&nbsp;            }
+<i class="no-highlight">103</i>&nbsp;        }
+<i class="no-highlight">104</i>&nbsp;
+<b class="fc"><i class="no-highlight">105</i>&nbsp;        if(this.response.equals(&quot;SUCCESS&quot;) &amp;&amp; actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().hasPayed())</b>
+<b class="nc"><i class="no-highlight">106</i>&nbsp;            this.response = &quot;Has Payed&quot;;</b>
+<b class="fc"><i class="no-highlight">107</i>&nbsp;        return response;</b>
+<i class="no-highlight">108</i>&nbsp;    }
+<i class="no-highlight">109</i>&nbsp;
+<i class="no-highlight">110</i>&nbsp;    /**
+<i class="no-highlight">111</i>&nbsp;     * Checks if and how many Leader Cards of type WHITE MARBLE the player has.
+<i class="no-highlight">112</i>&nbsp;     * &lt;p&gt;If the player has more than one active card of type WHITE MARBLE, he has to choose which card he wants to use
+<i class="no-highlight">113</i>&nbsp;     * for a Market interaction for &lt;b&gt;each&lt;/b&gt; white marble.&lt;/p&gt;
+<i class="no-highlight">114</i>&nbsp;     * @param actionController Class used to compute Action messages coming from the Client.
+<i class="no-highlight">115</i>&nbsp;     * @return &quot;Choose Leader Card&quot; if the player has two active WHITE MARBLE ability Leader Cards.
+<i class="no-highlight">116</i>&nbsp;     */
+<i class="no-highlight">117</i>&nbsp;    public String leaderCardCheck(ActionController actionController) {
+<b class="fc"><i class="no-highlight">118</i>&nbsp;        LeaderCard[] leaderCards = actionController.getGame().getCurrentPlayer().getBoard().getLeaderCards();</b>
+<i class="no-highlight">119</i>&nbsp;
+<b class="fc"><i class="no-highlight">120</i>&nbsp;        if(leaderCards[0].isActive() &amp;&amp; leaderCards[0].getAction() == LeaderCardAction.WHITEMARBLE &amp;&amp; leaderCards[1].isActive() &amp;&amp; leaderCards[1].getAction() == LeaderCardAction.WHITEMARBLE &amp;&amp; actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryWhiteMarbles() &gt; 0) {</b>
+<b class="fc"><i class="no-highlight">121</i>&nbsp;            actionController.getGame().getCurrentPlayer().clearPossibleActions();</b>
+<b class="fc"><i class="no-highlight">122</i>&nbsp;            actionController.getGame().getCurrentPlayer().addPossibleAction(ActionType.CHOOSE_LEADER_CARD);</b>
+<b class="fc"><i class="no-highlight">123</i>&nbsp;            return &quot;Choose Leader Card&quot;;</b>
+<i class="no-highlight">124</i>&nbsp;        }
+<i class="no-highlight">125</i>&nbsp;
+<b class="fc"><i class="no-highlight">126</i>&nbsp;        else if(leaderCards[0].isActive() &amp;&amp; leaderCards[0].getAction() == LeaderCardAction.WHITEMARBLE &amp;&amp; (!leaderCards[1].isActive() || leaderCards[1].getAction() != LeaderCardAction.WHITEMARBLE)) {</b>
+<b class="fc"><i class="no-highlight">127</i>&nbsp;            while(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryWhiteMarbles() &gt; 0)</b>
+<b class="fc"><i class="no-highlight">128</i>&nbsp;                actionController.getGame().getMarket().whiteMarbleToResource(actionController.getGame().getCurrentPlayer(), leaderCards[0]);</b>
+<b class="fc"><i class="no-highlight">129</i>&nbsp;            return &quot;SUCCESS&quot;;</b>
+<i class="no-highlight">130</i>&nbsp;        }
+<i class="no-highlight">131</i>&nbsp;
+<b class="fc"><i class="no-highlight">132</i>&nbsp;        else if(leaderCards[1].isActive() &amp;&amp; leaderCards[1].getAction() == LeaderCardAction.WHITEMARBLE &amp;&amp; (!leaderCards[0].isActive() || leaderCards[0].getAction() != LeaderCardAction.WHITEMARBLE)) {</b>
+<b class="nc"><i class="no-highlight">133</i>&nbsp;            while(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryWhiteMarbles() &gt; 0)</b>
+<b class="nc"><i class="no-highlight">134</i>&nbsp;                actionController.getGame().getMarket().whiteMarbleToResource(actionController.getGame().getCurrentPlayer(), leaderCards[1]);</b>
+<b class="nc"><i class="no-highlight">135</i>&nbsp;            return &quot;SUCCESS&quot;;</b>
+<i class="no-highlight">136</i>&nbsp;        }
+<i class="no-highlight">137</i>&nbsp;
+<i class="no-highlight">138</i>&nbsp;        else {
+<b class="fc"><i class="no-highlight">139</i>&nbsp;            actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().setTemporaryWhiteMarbles(0);</b>
+<b class="fc"><i class="no-highlight">140</i>&nbsp;            return &quot;SUCCESS&quot;;</b>
+<i class="no-highlight">141</i>&nbsp;        }
+<i class="no-highlight">142</i>&nbsp;    }
+<i class="no-highlight">143</i>&nbsp;
+<i class="no-highlight">144</i>&nbsp;    /**
+<i class="no-highlight">145</i>&nbsp;     * Prepares a ChoseMarketRowMessage MessageToClient type object to be sent to the Client.
+<i class="no-highlight">146</i>&nbsp;     * @param actionController Class used to compute Action messages coming from the Client.
+<i class="no-highlight">147</i>&nbsp;     * @return A message to be sent to the Client.
+<i class="no-highlight">148</i>&nbsp;     */
+<i class="no-highlight">149</i>&nbsp;    @Override
+<i class="no-highlight">150</i>&nbsp;    public MessageToClient messagePrepare(ActionController actionController) {
+<b class="fc"><i class="no-highlight">151</i>&nbsp;        ChoseMarketRowMessage message = new ChoseMarketRowMessage(actionController.getGame().getCurrentPlayerNickname());</b>
+<b class="fc"><i class="no-highlight">152</i>&nbsp;        if(this.response.equals(ILLEGAL_ACTION))</b>
+<b class="nc"><i class="no-highlight">153</i>&nbsp;            return illegalAction(message, actionController);</b>
+<i class="no-highlight">154</i>&nbsp;
+<b class="fc"><i class="no-highlight">155</i>&nbsp;        message.setError(this.response);</b>
+<b class="fc"><i class="no-highlight">156</i>&nbsp;        message.setMarket(actionController.getGame().getMarket());</b>
+<b class="fc"><i class="no-highlight">157</i>&nbsp;        message.setTemporaryResources(this.temporaryResource);</b>
+<b class="fc"><i class="no-highlight">158</i>&nbsp;        if(this.response.equals(&quot;SUCCESS&quot;)) {</b>
+<b class="fc"><i class="no-highlight">159</i>&nbsp;            message.addPossibleAction(ActionType.ADD_RESOURCE);</b>
+<b class="fc"><i class="no-highlight">160</i>&nbsp;            message.addPossibleAction(ActionType.RESET_WAREHOUSE);</b>
+<b class="fc"><i class="no-highlight">161</i>&nbsp;            message.addPossibleAction(ActionType.SWITCH_DEPOT);</b>
+<b class="fc"><i class="no-highlight">162</i>&nbsp;            message.addPossibleAction(ActionType.END_MARKET);</b>
+<i class="no-highlight">163</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">164</i>&nbsp;        else if(this.response.equals(&quot;Has Payed&quot;)) {</b>
+<b class="nc"><i class="no-highlight">165</i>&nbsp;            message.addPossibleAction(ActionType.END_TURN);</b>
+<b class="nc"><i class="no-highlight">166</i>&nbsp;            if(actionController.getGame().getCurrentPlayer().canDo(ActionType.ACTIVATE_LEADERCARD))</b>
+<b class="nc"><i class="no-highlight">167</i>&nbsp;                message.addPossibleAction(ActionType.ACTIVATE_LEADERCARD);</b>
+<b class="nc"><i class="no-highlight">168</i>&nbsp;            if(actionController.getGame().getCurrentPlayer().canDo(ActionType.DELETE_LEADERCARD))</b>
+<b class="nc"><i class="no-highlight">169</i>&nbsp;                message.addPossibleAction(ActionType.DELETE_LEADERCARD);</b>
+<i class="no-highlight">170</i>&nbsp;        }
+<i class="no-highlight">171</i>&nbsp;        else
+<b class="fc"><i class="no-highlight">172</i>&nbsp;            message.addPossibleAction(ActionType.CHOOSE_LEADER_CARD);</b>
+<i class="no-highlight">173</i>&nbsp;
+<b class="fc"><i class="no-highlight">174</i>&nbsp;        return message;</b>
+<i class="no-highlight">175</i>&nbsp;    }
+<i class="no-highlight">176</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-07-02 23:15</div>
+</div>
+</body>
+</html>

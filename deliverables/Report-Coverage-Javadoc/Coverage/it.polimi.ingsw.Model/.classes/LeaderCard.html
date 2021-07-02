@@ -1,0 +1,210 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: LeaderCard</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: LeaderCard (it.polimi.ingsw.Model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LeaderCard</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (17/ 17)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (52/ 52)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.Model.Enums.LeaderCardAction;
+<i>4</i>&nbsp;import it.polimi.ingsw.Model.Enums.Marble;
+<i>5</i>&nbsp;import it.polimi.ingsw.Model.Enums.ResourceType;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import java.io.Serializable;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;/**
+<i>10</i>&nbsp; * There are 4 types of Leader Card, depending on the type of special effect they apply on the Game.
+<i>11</i>&nbsp; * All of them have the following attributes: a CardId for identification, victoryPoints for the score.
+<i>12</i>&nbsp; * Type is a byte identifying the type
+<i>13</i>&nbsp; *  */
+<i>14</i>&nbsp;public class LeaderCard implements Serializable {
+<i>15</i>&nbsp;    private static final long serialVersionUID = 0x1;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    private final int cardId;
+<i>18</i>&nbsp;    private final int victoryPoints;
+<i>19</i>&nbsp;    private final LeaderCardAction action;
+<i>20</i>&nbsp;    private boolean active;
+<i>21</i>&nbsp;    private final ResourceStack resourcesRequired;
+<i>22</i>&nbsp;    private final LeaderRequirements cardsRequired;
+<i>23</i>&nbsp;    //ABILITY ONE: Discount on Development Card
+<i>24</i>&nbsp;    private ResourceStack discount;
+<i>25</i>&nbsp;    //ABILITY TWO: White Marble to Resource
+<i>26</i>&nbsp;    private Marble marble;
+<i>27</i>&nbsp;    //ABILITY THREE: New Dev w/ faith
+<i>28</i>&nbsp;    private ResourceStack input;
+<i>29</i>&nbsp;    private int faith;
+<i>30</i>&nbsp;    private int jollyOut;
+<i>31</i>&nbsp;    //ABILITY FOUR: Xtra Depot
+<i>32</i>&nbsp;    private ResourceType resource;
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    /**
+<i>35</i>&nbsp;     * Constructor for LeaderCard Class. The override of ability is implicit in the parameters
+<i>36</i>&nbsp;     */
+<b class="fc"><i>37</i>&nbsp;    public LeaderCard(int cardId, int victoryPoints, ResourceStack resourcesRequired, LeaderRequirements cards, ResourceStack discount) {</b>
+<b class="fc"><i>38</i>&nbsp;        this.cardId = cardId;</b>
+<b class="fc"><i>39</i>&nbsp;        this.victoryPoints = victoryPoints;</b>
+<b class="fc"><i>40</i>&nbsp;        this.resourcesRequired = resourcesRequired;</b>
+<b class="fc"><i>41</i>&nbsp;        this.cardsRequired = cards;</b>
+<b class="fc"><i>42</i>&nbsp;        this.action = LeaderCardAction.DISCOUNT;</b>
+<b class="fc"><i>43</i>&nbsp;        this.active = false;</b>
+<b class="fc"><i>44</i>&nbsp;        this.discount=discount;</b>
+<b class="fc"><i>45</i>&nbsp;    }</b>
+<b class="fc"><i>46</i>&nbsp;    public LeaderCard(int cardId, int victoryPoints, ResourceStack resourcesRequired, LeaderRequirements cards, Marble marble) {</b>
+<b class="fc"><i>47</i>&nbsp;        this.cardId = cardId;</b>
+<b class="fc"><i>48</i>&nbsp;        this.victoryPoints = victoryPoints;</b>
+<b class="fc"><i>49</i>&nbsp;        this.resourcesRequired = resourcesRequired;</b>
+<b class="fc"><i>50</i>&nbsp;        this.cardsRequired = cards;</b>
+<b class="fc"><i>51</i>&nbsp;        this.action = LeaderCardAction.WHITEMARBLE;</b>
+<b class="fc"><i>52</i>&nbsp;        this.active = false;</b>
+<b class="fc"><i>53</i>&nbsp;        this.marble = marble;</b>
+<b class="fc"><i>54</i>&nbsp;    }</b>
+<b class="fc"><i>55</i>&nbsp;    public LeaderCard(int cardId, int victoryPoints, ResourceStack resourcesRequired, LeaderRequirements cards, ResourceStack input,int jollyOut, int faith) {</b>
+<b class="fc"><i>56</i>&nbsp;        this.cardId = cardId;</b>
+<b class="fc"><i>57</i>&nbsp;        this.victoryPoints = victoryPoints;</b>
+<b class="fc"><i>58</i>&nbsp;        this.resourcesRequired = resourcesRequired;</b>
+<b class="fc"><i>59</i>&nbsp;        this.cardsRequired = cards;</b>
+<b class="fc"><i>60</i>&nbsp;        this.action = LeaderCardAction.PRODUCTIONPOWER;</b>
+<b class="fc"><i>61</i>&nbsp;        this.active = false;</b>
+<b class="fc"><i>62</i>&nbsp;        this.input = input;</b>
+<b class="fc"><i>63</i>&nbsp;        this.faith = faith;</b>
+<b class="fc"><i>64</i>&nbsp;        this.jollyOut = jollyOut;</b>
+<b class="fc"><i>65</i>&nbsp;    }</b>
+<b class="fc"><i>66</i>&nbsp;    public LeaderCard(int cardId, int victoryPoints, ResourceStack resourcesRequired, LeaderRequirements cards, ResourceType resource) {</b>
+<b class="fc"><i>67</i>&nbsp;        this.cardId = cardId;</b>
+<b class="fc"><i>68</i>&nbsp;        this.victoryPoints = victoryPoints;</b>
+<b class="fc"><i>69</i>&nbsp;        this.resourcesRequired = resourcesRequired;</b>
+<b class="fc"><i>70</i>&nbsp;        this.cardsRequired = cards;</b>
+<b class="fc"><i>71</i>&nbsp;        this.action = LeaderCardAction.EXTRADEPOT;</b>
+<b class="fc"><i>72</i>&nbsp;        this.active = false;</b>
+<b class="fc"><i>73</i>&nbsp;        this.resource = resource;</b>
+<b class="fc"><i>74</i>&nbsp;    }</b>
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;    public void setActive(boolean active) {
+<b class="fc"><i>77</i>&nbsp;        this.active = active;</b>
+<b class="fc"><i>78</i>&nbsp;    }</b>
+<i>79</i>&nbsp;
+<i>80</i>&nbsp;    public int getCardId() {
+<b class="fc"><i>81</i>&nbsp;        return cardId;</b>
+<i>82</i>&nbsp;    }
+<i>83</i>&nbsp;
+<i>84</i>&nbsp;    public int getVictoryPoints() {
+<b class="fc"><i>85</i>&nbsp;        return victoryPoints;</b>
+<i>86</i>&nbsp;    }
+<i>87</i>&nbsp;
+<i>88</i>&nbsp;    public LeaderCardAction getAction() {
+<b class="fc"><i>89</i>&nbsp;        return action;</b>
+<i>90</i>&nbsp;    }
+<i>91</i>&nbsp;
+<i>92</i>&nbsp;    public boolean isActive() {
+<b class="fc"><i>93</i>&nbsp;        return active;</b>
+<i>94</i>&nbsp;    }
+<i>95</i>&nbsp;
+<i>96</i>&nbsp;    public ResourceStack getResourcesRequired() {
+<b class="fc"><i>97</i>&nbsp;        return resourcesRequired;</b>
+<i>98</i>&nbsp;    }
+<i>99</i>&nbsp;
+<i>100</i>&nbsp;    public LeaderRequirements getCardsRequired() {
+<b class="fc"><i>101</i>&nbsp;        return cardsRequired;</b>
+<i>102</i>&nbsp;    }
+<i>103</i>&nbsp;
+<i>104</i>&nbsp;    public ResourceStack getDiscount() {
+<b class="fc"><i>105</i>&nbsp;        return discount;</b>
+<i>106</i>&nbsp;    }
+<i>107</i>&nbsp;
+<i>108</i>&nbsp;    public Marble getMarble() {
+<b class="fc"><i>109</i>&nbsp;        return marble;</b>
+<i>110</i>&nbsp;    }
+<i>111</i>&nbsp;
+<i>112</i>&nbsp;    public ResourceStack getInput() {
+<b class="fc"><i>113</i>&nbsp;        return input;</b>
+<i>114</i>&nbsp;    }
+<i>115</i>&nbsp;
+<i>116</i>&nbsp;    public int getFaith() {
+<b class="fc"><i>117</i>&nbsp;        return faith;</b>
+<i>118</i>&nbsp;    }
+<i>119</i>&nbsp;
+<i>120</i>&nbsp;    public int getJollyOut() {
+<b class="fc"><i>121</i>&nbsp;        return jollyOut;</b>
+<i>122</i>&nbsp;    }
+<i>123</i>&nbsp;
+<i>124</i>&nbsp;    public ResourceType getResource() {
+<b class="fc"><i>125</i>&nbsp;        return resource;</b>
+<i>126</i>&nbsp;    }
+<i>127</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-12 23:55</div>
+</div>
+</body>
+</html>

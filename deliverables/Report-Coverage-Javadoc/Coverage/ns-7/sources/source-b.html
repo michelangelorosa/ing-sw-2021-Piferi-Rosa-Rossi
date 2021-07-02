@@ -1,0 +1,443 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > RedLeaderCard</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+    @import "../../.css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../.js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">it.polimi.ingsw.View.ReducedModel</a>
+</div>
+
+<h1>Coverage Summary for Class: RedLeaderCard (it.polimi.ingsw.View.ReducedModel)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RedLeaderCard</td>
+<td class="coverageStat">
+  <span class="percent">
+    78,3%
+  </span>
+  <span class="absValue">
+    (18/23)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    86,6%
+  </span>
+  <span class="absValue">
+    (136/157)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">RedLeaderCard$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    79,2%
+  </span>
+  <span class="absValue">
+    (19/24)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    86,8%
+  </span>
+  <span class="absValue">
+    (138/159)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package it.polimi.ingsw.View.ReducedModel;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import it.polimi.ingsw.Model.Enums.*;
+<i class="no-highlight">4</i>&nbsp;import it.polimi.ingsw.Model.LeaderRequirements;
+<i class="no-highlight">5</i>&nbsp;import it.polimi.ingsw.Model.ResourceStack;
+<i class="no-highlight">6</i>&nbsp;import it.polimi.ingsw.View.ANSIColors;
+<i class="no-highlight">7</i>&nbsp;
+<i class="no-highlight">8</i>&nbsp;import java.io.Serializable;
+<i class="no-highlight">9</i>&nbsp;import java.util.ArrayList;
+<i class="no-highlight">10</i>&nbsp;
+<i class="no-highlight">11</i>&nbsp;/**
+<i class="no-highlight">12</i>&nbsp; * There are 4 types of Leader Card, depending on the type of special effect they apply on the Game.
+<i class="no-highlight">13</i>&nbsp; * All of them have the following attributes: a CardId for identification, victoryPoints for the score.
+<i class="no-highlight">14</i>&nbsp; * Type is a byte identifying the type
+<i class="no-highlight">15</i>&nbsp; *  */
+<i class="no-highlight">16</i>&nbsp;public class RedLeaderCard implements Serializable {
+<i class="no-highlight">17</i>&nbsp;    private static final long serialVersionUID = 0x1;
+<i class="no-highlight">18</i>&nbsp;
+<i class="no-highlight">19</i>&nbsp;    protected final int cardId;
+<i class="no-highlight">20</i>&nbsp;    protected final int victoryPoints;
+<i class="no-highlight">21</i>&nbsp;    protected final LeaderCardAction action;
+<i class="no-highlight">22</i>&nbsp;    protected boolean active;
+<i class="no-highlight">23</i>&nbsp;    protected final RedResourceStack resourcesRequired;
+<i class="no-highlight">24</i>&nbsp;    protected final RedLeaderRequirements cardsRequired;
+<i class="no-highlight">25</i>&nbsp;    //ABILITY ONE: Discount on Development Card
+<i class="no-highlight">26</i>&nbsp;    protected RedResourceStack discount;
+<i class="no-highlight">27</i>&nbsp;    //ABILITY TWO: White Marble to Resource
+<i class="no-highlight">28</i>&nbsp;    protected Marble marble;
+<i class="no-highlight">29</i>&nbsp;    //ABILITY THREE: New Dev w/ faith
+<i class="no-highlight">30</i>&nbsp;    protected RedResourceStack input;
+<i class="no-highlight">31</i>&nbsp;    protected int faith;
+<i class="no-highlight">32</i>&nbsp;    protected int jollyOut;
+<i class="no-highlight">33</i>&nbsp;    //ABILITY FOUR: Xtra Depot
+<i class="no-highlight">34</i>&nbsp;    protected ResourceType resource;
+<i class="no-highlight">35</i>&nbsp;
+<b class="fc"><i class="no-highlight">36</i>&nbsp;    protected RedLeaderCard(int cardId, int victoryPoints, LeaderCardAction action, ResourceStack resourcesRequired, LeaderRequirements cardsRequired) {</b>
+<b class="fc"><i class="no-highlight">37</i>&nbsp;        this.cardId = cardId;</b>
+<b class="fc"><i class="no-highlight">38</i>&nbsp;        this.victoryPoints = victoryPoints;</b>
+<b class="fc"><i class="no-highlight">39</i>&nbsp;        this.action = action;</b>
+<b class="fc"><i class="no-highlight">40</i>&nbsp;        this.resourcesRequired = resourcesRequired;</b>
+<b class="fc"><i class="no-highlight">41</i>&nbsp;        this.cardsRequired = cardsRequired;</b>
+<b class="fc"><i class="no-highlight">42</i>&nbsp;    }</b>
+<i class="no-highlight">43</i>&nbsp;
+<i class="no-highlight">44</i>&nbsp;    /**Getter for cardId*/
+<i class="no-highlight">45</i>&nbsp;    public int getCardId() {
+<b class="fc"><i class="no-highlight">46</i>&nbsp;        return cardId;</b>
+<i class="no-highlight">47</i>&nbsp;    }
+<i class="no-highlight">48</i>&nbsp;
+<i class="no-highlight">49</i>&nbsp;    /**Getter for victoryPoints*/
+<i class="no-highlight">50</i>&nbsp;    public int getVictoryPoints() {
+<b class="fc"><i class="no-highlight">51</i>&nbsp;        return victoryPoints;</b>
+<i class="no-highlight">52</i>&nbsp;    }
+<i class="no-highlight">53</i>&nbsp;
+<i class="no-highlight">54</i>&nbsp;    /**Getter for Action*/
+<i class="no-highlight">55</i>&nbsp;    public LeaderCardAction getAction() {
+<b class="fc"><i class="no-highlight">56</i>&nbsp;        return action;</b>
+<i class="no-highlight">57</i>&nbsp;    }
+<i class="no-highlight">58</i>&nbsp;
+<i class="no-highlight">59</i>&nbsp;    /**Getter for Active*/
+<i class="no-highlight">60</i>&nbsp;    public boolean isActive() {
+<b class="fc"><i class="no-highlight">61</i>&nbsp;        return active;</b>
+<i class="no-highlight">62</i>&nbsp;    }
+<i class="no-highlight">63</i>&nbsp;
+<i class="no-highlight">64</i>&nbsp;    /**Getter for ResourceRequired*/
+<i class="no-highlight">65</i>&nbsp;    public RedResourceStack getResourcesRequired() {
+<b class="nc"><i class="no-highlight">66</i>&nbsp;        return resourcesRequired;</b>
+<i class="no-highlight">67</i>&nbsp;    }
+<i class="no-highlight">68</i>&nbsp;
+<i class="no-highlight">69</i>&nbsp;    /**Getter for cardsRequired*/
+<i class="no-highlight">70</i>&nbsp;    public RedLeaderRequirements getCardsRequired() {
+<b class="nc"><i class="no-highlight">71</i>&nbsp;        return cardsRequired;</b>
+<i class="no-highlight">72</i>&nbsp;    }
+<i class="no-highlight">73</i>&nbsp;
+<i class="no-highlight">74</i>&nbsp;    /**Getter for discount*/
+<i class="no-highlight">75</i>&nbsp;    public RedResourceStack getDiscount() {
+<b class="nc"><i class="no-highlight">76</i>&nbsp;        return discount;</b>
+<i class="no-highlight">77</i>&nbsp;    }
+<i class="no-highlight">78</i>&nbsp;
+<i class="no-highlight">79</i>&nbsp;    /**Getter for marble*/
+<i class="no-highlight">80</i>&nbsp;    public Marble getMarble() {
+<b class="nc"><i class="no-highlight">81</i>&nbsp;        return marble;</b>
+<i class="no-highlight">82</i>&nbsp;    }
+<i class="no-highlight">83</i>&nbsp;
+<i class="no-highlight">84</i>&nbsp;    /**Getter for input*/
+<i class="no-highlight">85</i>&nbsp;    public RedResourceStack getInput() {
+<b class="nc"><i class="no-highlight">86</i>&nbsp;        return input;</b>
+<i class="no-highlight">87</i>&nbsp;    }
+<i class="no-highlight">88</i>&nbsp;
+<i class="no-highlight">89</i>&nbsp;    /**Getter for faith*/
+<i class="no-highlight">90</i>&nbsp;    public int getFaith() {
+<b class="fc"><i class="no-highlight">91</i>&nbsp;        return faith;</b>
+<i class="no-highlight">92</i>&nbsp;    }
+<i class="no-highlight">93</i>&nbsp;
+<i class="no-highlight">94</i>&nbsp;    /**Getter for jollyOut*/
+<i class="no-highlight">95</i>&nbsp;    public int getJollyOut() {
+<b class="fc"><i class="no-highlight">96</i>&nbsp;        return jollyOut;</b>
+<i class="no-highlight">97</i>&nbsp;    }
+<i class="no-highlight">98</i>&nbsp;
+<i class="no-highlight">99</i>&nbsp;    /**Getter for Resource*/
+<i class="no-highlight">100</i>&nbsp;    public ResourceType getResource() {
+<b class="fc"><i class="no-highlight">101</i>&nbsp;        return resource;</b>
+<i class="no-highlight">102</i>&nbsp;    }
+<i class="no-highlight">103</i>&nbsp;
+<i class="no-highlight">104</i>&nbsp;    public String victoryPointsToCli() {
+<b class="fc"><i class="no-highlight">105</i>&nbsp;        int points = this.victoryPoints;</b>
+<b class="fc"><i class="no-highlight">106</i>&nbsp;        if(this.victoryPoints &gt; 9) return Integer.toString(points); else return &quot;0&quot; + Integer.toString(points);</b>
+<i class="no-highlight">107</i>&nbsp;    }
+<i class="no-highlight">108</i>&nbsp;
+<i class="no-highlight">109</i>&nbsp;
+<i class="no-highlight">110</i>&nbsp;
+<i class="no-highlight">111</i>&nbsp;    public String printAbility(){
+<b class="fc"><i class="no-highlight">112</i>&nbsp;        if(this.action == LeaderCardAction.DISCOUNT) return &quot;?         &quot;+ this.action +&quot;         ?&quot;;</b>
+<b class="fc"><i class="no-highlight">113</i>&nbsp;        else if(this.action == LeaderCardAction.WHITEMARBLE) return &quot;?        &quot;+ this.action +&quot;       ?&quot;;</b>
+<b class="fc"><i class="no-highlight">114</i>&nbsp;        else if(this.action == LeaderCardAction.EXTRADEPOT) return &quot;?        &quot;+ this.action +&quot;        ?&quot;;</b>
+<b class="fc"><i class="no-highlight">115</i>&nbsp;        else if(this.action == LeaderCardAction.PRODUCTIONPOWER) return &quot;?      &quot;+ this.action +&quot;     ?&quot;;</b>
+<b class="nc"><i class="no-highlight">116</i>&nbsp;        else return &quot; &quot;;</b>
+<i class="no-highlight">117</i>&nbsp;    }
+<i class="no-highlight">118</i>&nbsp;
+<i class="no-highlight">119</i>&nbsp;    public ArrayList&lt;String&gt; printEffect() {
+<b class="fc"><i class="no-highlight">120</i>&nbsp;        ArrayList&lt;String&gt; effect = new ArrayList&lt;&gt;();</b>
+<i class="no-highlight">121</i>&nbsp;
+<b class="fc"><i class="no-highlight">122</i>&nbsp;        switch (this.action) {</b>
+<i class="no-highlight">123</i>&nbsp;            case DISCOUNT:
+<b class="fc"><i class="no-highlight">124</i>&nbsp;                effect.add(&quot;?           &quot; + this.discount.toCliSymbol(ResourceType.SHIELDS) + &quot;           ?&quot;);</b>
+<b class="fc"><i class="no-highlight">125</i>&nbsp;                effect.add(&quot;?           &quot; + this.discount.toCliSymbol(ResourceType.SERVANTS) + &quot;           ?&quot;);</b>
+<b class="fc"><i class="no-highlight">126</i>&nbsp;                effect.add(&quot;?           &quot; + this.discount.toCliSymbol(ResourceType.COINS) + &quot;           ?&quot;);</b>
+<b class="fc"><i class="no-highlight">127</i>&nbsp;                effect.add(&quot;?           &quot; + this.discount.toCliSymbol(ResourceType.STONES) + &quot;           ?&quot;);</b>
+<b class="fc"><i class="no-highlight">128</i>&nbsp;                break;</b>
+<i class="no-highlight">129</i>&nbsp;            case WHITEMARBLE:
+<b class="fc"><i class="no-highlight">130</i>&nbsp;                effect.add(&quot;?                          ?&quot;);</b>
+<b class="fc"><i class="no-highlight">131</i>&nbsp;                effect.add(&quot;?     ????????????????     ?&quot;);</b>
+<b class="fc"><i class="no-highlight">132</i>&nbsp;                effect.add(printMarble());</b>
+<b class="fc"><i class="no-highlight">133</i>&nbsp;                effect.add(&quot;?     ????????????????     ?&quot;);</b>
+<b class="fc"><i class="no-highlight">134</i>&nbsp;                break;</b>
+<i class="no-highlight">135</i>&nbsp;            case EXTRADEPOT:
+<b class="fc"><i class="no-highlight">136</i>&nbsp;                switch (this.resource) {</b>
+<i class="no-highlight">137</i>&nbsp;                    case SHIELDS:
+<b class="nc"><i class="no-highlight">138</i>&nbsp;                        effect.add(&quot;? ???????????  ??????????? ?&quot;);</b>
+<b class="nc"><i class="no-highlight">139</i>&nbsp;                        effect.add(&quot;? ? &quot;+ANSIColors.FRONT_BLUE+&quot;SHIELDS&quot;+ANSIColors.RESET+&quot; ?  ? &quot;+ANSIColors.FRONT_BLUE+&quot;SHIELDS &quot;+ANSIColors.RESET+&quot;? ?&quot;);</b>
+<b class="nc"><i class="no-highlight">140</i>&nbsp;                        effect.add(&quot;? ???????????  ??????????? ?&quot;);</b>
+<b class="nc"><i class="no-highlight">141</i>&nbsp;                        effect.add(&quot;?                          ?&quot;);</b>
+<b class="nc"><i class="no-highlight">142</i>&nbsp;                        break;</b>
+<i class="no-highlight">143</i>&nbsp;                    case SERVANTS:
+<b class="nc"><i class="no-highlight">144</i>&nbsp;                        effect.add(&quot;? ???????????????????????? ?&quot;);</b>
+<b class="nc"><i class="no-highlight">145</i>&nbsp;                        effect.add(&quot;? ?&quot;+ANSIColors.FRONT_PURPLE+&quot; SERVANTS &quot;+ANSIColors.RESET+&quot;?? &quot;+ANSIColors.FRONT_PURPLE+&quot;SERVANTS &quot;+ANSIColors.RESET+&quot;? ?&quot;);</b>
+<b class="nc"><i class="no-highlight">146</i>&nbsp;                        effect.add(&quot;? ???????????????????????? ?&quot;);</b>
+<b class="nc"><i class="no-highlight">147</i>&nbsp;                        effect.add(&quot;?                          ?&quot;);</b>
+<b class="nc"><i class="no-highlight">148</i>&nbsp;                        break;</b>
+<i class="no-highlight">149</i>&nbsp;                    case COINS:
+<b class="fc"><i class="no-highlight">150</i>&nbsp;                        effect.add(&quot;? ???????????  ??????????? ?&quot;);</b>
+<b class="fc"><i class="no-highlight">151</i>&nbsp;                        effect.add(&quot;? ? &quot;+ANSIColors.FRONT_YELLOW+&quot; COINS &quot;+ANSIColors.RESET+&quot; ?  ? &quot;+ANSIColors.FRONT_YELLOW+&quot; COINS &quot;+ANSIColors.RESET+&quot; ? ?&quot;);</b>
+<b class="fc"><i class="no-highlight">152</i>&nbsp;                        effect.add(&quot;? ???????????  ??????????? ?&quot;);</b>
+<b class="fc"><i class="no-highlight">153</i>&nbsp;                        effect.add(&quot;?                          ?&quot;);</b>
+<b class="fc"><i class="no-highlight">154</i>&nbsp;                        break;</b>
+<i class="no-highlight">155</i>&nbsp;                    case STONES:
+<b class="nc"><i class="no-highlight">156</i>&nbsp;                        effect.add(&quot;? ???????????????????????? ?&quot;);</b>
+<b class="nc"><i class="no-highlight">157</i>&nbsp;                        effect.add(&quot;? ? &quot;+ANSIColors.FRONT_GREY+&quot; STONES &quot;+ANSIColors.RESET+&quot; ?? &quot;+ANSIColors.FRONT_GREY+&quot; STONES &quot;+ANSIColors.RESET+&quot; ? ?&quot;);</b>
+<b class="nc"><i class="no-highlight">158</i>&nbsp;                        effect.add(&quot;? ???????????????????????? ?&quot;);</b>
+<b class="nc"><i class="no-highlight">159</i>&nbsp;                        effect.add(&quot;?                          ?&quot;);</b>
+<i class="no-highlight">160</i>&nbsp;                        break;
+<i class="no-highlight">161</i>&nbsp;                }
+<b class="fc"><i class="no-highlight">162</i>&nbsp;                break;</b>
+<i class="no-highlight">163</i>&nbsp;            case PRODUCTIONPOWER:
+<b class="fc"><i class="no-highlight">164</i>&nbsp;                effect.add(&quot;?  ??????????????????????  ?&quot;);</b>
+<b class="fc"><i class="no-highlight">165</i>&nbsp;                effect.add(&quot;?  ? &quot;+ this.input.toCliSymbol(ResourceType.SHIELDS)+&quot; &quot;+this.input.toCliSymbol(ResourceType.SERVANTS)+&quot;  ? &quot;+jollyToString(this.jollyOut)+&quot;  ?  ?&quot;);</b>
+<b class="fc"><i class="no-highlight">166</i>&nbsp;                effect.add(&quot;?  ? &quot;+ this.input.toCliSymbol(ResourceType.COINS)+&quot; &quot;+this.input.toCliSymbol(ResourceType.STONES)+&quot;  ? &quot;+ResourceType.faithPointsToCli(this.faith)+&quot;  ?  ?&quot;);</b>
+<b class="fc"><i class="no-highlight">167</i>&nbsp;                effect.add(&quot;?  ??????????????????????  ?&quot;);</b>
+<i class="no-highlight">168</i>&nbsp;                break;
+<i class="no-highlight">169</i>&nbsp;            }
+<b class="fc"><i class="no-highlight">170</i>&nbsp;        return effect;</b>
+<i class="no-highlight">171</i>&nbsp;    }
+<i class="no-highlight">172</i>&nbsp;
+<i class="no-highlight">173</i>&nbsp;    public String printMarble(){
+<b class="fc"><i class="no-highlight">174</i>&nbsp;        if(this.marble == Marble.BLUE)return &quot;?     ?   o ? &quot;+ ANSIColors.FRONT_BLUE+this.marble + ANSIColors.RESET+&quot;   ?     ?&quot;;</b>
+<b class="fc"><i class="no-highlight">175</i>&nbsp;        if(this.marble == Marble.PURPLE)return &quot;?     ?  o ? &quot;+ ANSIColors.FRONT_PURPLE+this.marble + ANSIColors.RESET+&quot;  ?     ?&quot;;</b>
+<b class="fc"><i class="no-highlight">176</i>&nbsp;        if(this.marble == Marble.YELLOW)return &quot;?     ?  o ? &quot;+ ANSIColors.FRONT_YELLOW+this.marble + ANSIColors.RESET+&quot;  ?     ?&quot;;</b>
+<b class="fc"><i class="no-highlight">177</i>&nbsp;        if(this.marble == Marble.GREY)return &quot;?     ?   o ? &quot;+ ANSIColors.FRONT_GREY+this.marble + ANSIColors.RESET+&quot;   ?     ?&quot;;</b>
+<b class="fc"><i class="no-highlight">178</i>&nbsp;        if(this.marble == Marble.RED)return &quot;?     ?   o ? &quot;+ ANSIColors.FRONT_RED+this.marble + ANSIColors.RESET+&quot;    ?     ?&quot;;</b>
+<b class="nc"><i class="no-highlight">179</i>&nbsp;        else return &quot;?     ?              ?     ?&quot;;</b>
+<i class="no-highlight">180</i>&nbsp;    }
+<i class="no-highlight">181</i>&nbsp;
+<i class="no-highlight">182</i>&nbsp;    public String jollyToString(int jolly) {
+<b class="fc"><i class="no-highlight">183</i>&nbsp;        if(jolly &gt; 9) return &quot;?:&quot;+jolly; else return &quot;?: &quot;+jolly;</b>
+<i class="no-highlight">184</i>&nbsp;    }
+<i class="no-highlight">185</i>&nbsp;
+<i class="no-highlight">186</i>&nbsp;    public String state(){
+<b class="fc"><i class="no-highlight">187</i>&nbsp;        if(this.active) return ANSIColors.FRONT_GREEN + &quot;  ACTIVE  &quot; + ANSIColors.RESET;</b>
+<b class="fc"><i class="no-highlight">188</i>&nbsp;        else return ANSIColors.FRONT_BRIGHT_RED + &quot;NOT ACTIVE&quot; + ANSIColors.RESET;</b>
+<i class="no-highlight">189</i>&nbsp;    }
+<i class="no-highlight">190</i>&nbsp;
+<i class="no-highlight">191</i>&nbsp;    public ArrayList&lt;String&gt; toCliUp(){
+<b class="fc"><i class="no-highlight">192</i>&nbsp;        ArrayList&lt;String&gt; leadCard = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">193</i>&nbsp;        String r = ANSIColors.RESET;</b>
+<i class="no-highlight">194</i>&nbsp;
+<b class="fc"><i class="no-highlight">195</i>&nbsp;        leadCard.add(&quot;????????????????????????????&quot; + r);</b>
+<b class="fc"><i class="no-highlight">196</i>&nbsp;        leadCard.add(printResources().get(0));</b>
+<b class="fc"><i class="no-highlight">197</i>&nbsp;        leadCard.add(printResources().get(1));</b>
+<b class="fc"><i class="no-highlight">198</i>&nbsp;        leadCard.add(printResources().get(2));</b>
+<b class="fc"><i class="no-highlight">199</i>&nbsp;        leadCard.add(printResources().get(3));</b>
+<b class="fc"><i class="no-highlight">200</i>&nbsp;        leadCard.add(&quot;????????????????????????????&quot; + r);</b>
+<b class="fc"><i class="no-highlight">201</i>&nbsp;        leadCard.add(printAbility() + r);</b>
+<b class="fc"><i class="no-highlight">202</i>&nbsp;        leadCard.add(&quot;????????????????????????????&quot; + r);</b>
+<b class="fc"><i class="no-highlight">203</i>&nbsp;        leadCard.add(printEffect().get(0) + r);</b>
+<b class="fc"><i class="no-highlight">204</i>&nbsp;        leadCard.add(printEffect().get(1) + r);</b>
+<b class="fc"><i class="no-highlight">205</i>&nbsp;        leadCard.add(printEffect().get(2) + r);</b>
+<b class="fc"><i class="no-highlight">206</i>&nbsp;        leadCard.add(printEffect().get(3) + r);</b>
+<b class="fc"><i class="no-highlight">207</i>&nbsp;        leadCard.add(&quot;??????        ??????????????&quot; + r);</b>
+<b class="fc"><i class="no-highlight">208</i>&nbsp;        leadCard.add(&quot;? &quot; + victoryPointsToCli() + &quot; ?        ? &quot; + state() + &quot; ?&quot; + r);</b>
+<b class="fc"><i class="no-highlight">209</i>&nbsp;        leadCard.add(&quot;????????????????????????????&quot;);</b>
+<b class="fc"><i class="no-highlight">210</i>&nbsp;        return leadCard;</b>
+<i class="no-highlight">211</i>&nbsp;    }
+<i class="no-highlight">212</i>&nbsp;
+<i class="no-highlight">213</i>&nbsp;    public  ArrayList&lt;String&gt; toCliDown(){
+<b class="fc"><i class="no-highlight">214</i>&nbsp;        ArrayList&lt;String&gt; leadCard = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">215</i>&nbsp;        String r = ANSIColors.RESET;</b>
+<b class="fc"><i class="no-highlight">216</i>&nbsp;        String c = ANSIColors.FRONT_BRIGHT_CYAN;</b>
+<i class="no-highlight">217</i>&nbsp;
+<b class="fc"><i class="no-highlight">218</i>&nbsp;        leadCard.add(&quot;????????????????????????????&quot; + r);</b>
+<b class="fc"><i class="no-highlight">219</i>&nbsp;        leadCard.add(&quot;?&quot;+c+&quot; L &quot;+r+&quot;       __      _       ?&quot;);</b>
+<b class="fc"><i class="no-highlight">220</i>&nbsp;        leadCard.add(&quot;?&quot;+c+&quot; E &quot;+r+&quot;      /__\\__  //       ?&quot;);</b>
+<b class="fc"><i class="no-highlight">221</i>&nbsp;        leadCard.add(&quot;?&quot;+c+&quot; A &quot;+r+&quot;     //_____\\///     &quot;+c+&quot;L &quot;+r+&quot;?&quot;);</b>
+<b class="fc"><i class="no-highlight">222</i>&nbsp;        leadCard.add(&quot;?&quot;+c+&quot; D &quot;+r+&quot;    _| /-_-\\)|/_     &quot;+c+&quot;E &quot;+r+&quot;?&quot;);</b>
+<b class="fc"><i class="no-highlight">223</i>&nbsp;        leadCard.add(&quot;?&quot;+c+&quot; E &quot;+r+&quot;   (___\\ _ //___\\    &quot;+c+&quot;A &quot;+r+&quot;?&quot;);</b>
+<b class="fc"><i class="no-highlight">224</i>&nbsp;        leadCard.add(&quot;?&quot;+c+&quot; R &quot;+r+&quot;   (  |\\\\_/// * \\\\   &quot;+c+&quot;D &quot;+r+&quot;?&quot;);</b>
+<b class="fc"><i class="no-highlight">225</i>&nbsp;        leadCard.add(&quot;?&quot;+c+&quot;   &quot;+r+&quot;    \\_| \\_((*   *))  &quot;+c+&quot;E &quot;+r+&quot;?&quot;);</b>
+<b class="fc"><i class="no-highlight">226</i>&nbsp;        leadCard.add(&quot;?&quot;+c+&quot; C &quot;+r+&quot;    ( |__|_\\\\  *//   &quot;+c+&quot;R &quot;+r+&quot;?&quot;);</b>
+<b class="fc"><i class="no-highlight">227</i>&nbsp;        leadCard.add(&quot;?&quot;+c+&quot; A &quot;+r+&quot;    (o/  _  \\_*_/    &quot;+c+&quot;  &quot;+r+&quot;?&quot;);</b>
+<b class="fc"><i class="no-highlight">228</i>&nbsp;        leadCard.add(&quot;?&quot;+c+&quot; R &quot;+r+&quot;    //\\__|__/\\       &quot;+c+&quot;C &quot;+r+&quot;?&quot;);</b>
+<b class="fc"><i class="no-highlight">229</i>&nbsp;        leadCard.add(&quot;?&quot;+c+&quot; D &quot;+r+&quot;   // |  | |  |      &quot;+c+&quot;A &quot;+r+&quot;?&quot;);</b>
+<b class="fc"><i class="no-highlight">230</i>&nbsp;        leadCard.add(&quot;?     //  _\\ | |___)     &quot;+c+&quot;R &quot;+r+&quot;?&quot;);</b>
+<b class="fc"><i class="no-highlight">231</i>&nbsp;        leadCard.add(&quot;?    //  (___|           &quot;+c+&quot;D &quot;+r+&quot;?&quot;);</b>
+<b class="fc"><i class="no-highlight">232</i>&nbsp;        leadCard.add(&quot;????????????????????????????&quot;);</b>
+<b class="fc"><i class="no-highlight">233</i>&nbsp;        return leadCard;</b>
+<i class="no-highlight">234</i>&nbsp;    }
+<i class="no-highlight">235</i>&nbsp;
+<i class="no-highlight">236</i>&nbsp;    public ArrayList&lt;String&gt; printResources(){
+<b class="fc"><i class="no-highlight">237</i>&nbsp;        ArrayList&lt;String&gt; leadCard = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">238</i>&nbsp;        String r = ANSIColors.RESET;</b>
+<i class="no-highlight">239</i>&nbsp;
+<b class="fc"><i class="no-highlight">240</i>&nbsp;        if(!cardsRequired.getGeneric()){</b>
+<b class="fc"><i class="no-highlight">241</i>&nbsp;            leadCard.add(&quot;? &quot; + ANSIColors.FRONT_BLUE + &quot; B &quot; + ANSIColors.FRONT_PURPLE + &quot;  P &quot; + ANSIColors.FRONT_YELLOW + &quot;   Y  &quot; + ANSIColors.FRONT_BRIGHT_GREEN + &quot;  G    &quot; + this.getResourcesRequired().toCliSymbol(ResourceType.SHIELDS) + &quot; ?&quot; + r);</b>
+<b class="fc"><i class="no-highlight">242</i>&nbsp;            leadCard.add(&quot;? &quot; + ANSIColors.FRONT_BLUE + resourceToCli(&quot;BlueLv1&quot;) + &quot;  &quot; + ANSIColors.FRONT_PURPLE + resourceToCli(&quot;PurpleLv1&quot;) + &quot;   &quot; + ANSIColors.FRONT_YELLOW + resourceToCli(&quot;YellowLv1&quot;) + &quot;   &quot; + ANSIColors.FRONT_BRIGHT_GREEN + resourceToCli(&quot;GreenLv1&quot;) + &quot;    &quot; + this.getResourcesRequired().toCliSymbol(ResourceType.SERVANTS) + &quot; ?&quot; + r);</b>
+<b class="fc"><i class="no-highlight">243</i>&nbsp;            leadCard.add(&quot;? &quot; + ANSIColors.FRONT_BLUE + resourceToCli(&quot;BlueLv2&quot;) + &quot;  &quot; + ANSIColors.FRONT_PURPLE + resourceToCli(&quot;PurpleLv2&quot;) + &quot;   &quot; + ANSIColors.FRONT_YELLOW + resourceToCli(&quot;YellowLv2&quot;) + &quot;   &quot; + ANSIColors.FRONT_BRIGHT_GREEN + resourceToCli(&quot;GreenLv2&quot;) + &quot;    &quot; + this.getResourcesRequired().toCliSymbol(ResourceType.COINS) + &quot; ?&quot; + r);</b>
+<b class="fc"><i class="no-highlight">244</i>&nbsp;            leadCard.add(&quot;? &quot; + ANSIColors.FRONT_BLUE + resourceToCli(&quot;BlueLv3&quot;) + &quot;  &quot; + ANSIColors.FRONT_PURPLE + resourceToCli(&quot;PurpleLv3&quot;) + &quot;   &quot; + ANSIColors.FRONT_YELLOW + resourceToCli(&quot;YellowLv3&quot;) + &quot;   &quot; + ANSIColors.FRONT_BRIGHT_GREEN + resourceToCli(&quot;GreenLv3&quot;) + &quot;    &quot; + this.getResourcesRequired().toCliSymbol(ResourceType.STONES) + &quot; ?&quot; + r);</b>
+<i class="no-highlight">245</i>&nbsp;        }
+<i class="no-highlight">246</i>&nbsp;        else{
+<b class="fc"><i class="no-highlight">247</i>&nbsp;            leadCard.add(&quot;? &quot; + ANSIColors.FRONT_BLUE + &quot;  BLUE     &quot; + ANSIColors.FRONT_BLUE + resourceToCli(&quot;Blue&quot;) + &quot;     &quot; + this.getResourcesRequired().toCliSymbol(ResourceType.SHIELDS) + &quot;   ?&quot; + r);</b>
+<b class="fc"><i class="no-highlight">248</i>&nbsp;            leadCard.add(&quot;? &quot; + ANSIColors.FRONT_PURPLE + &quot;  PURPLE   &quot; + ANSIColors.FRONT_PURPLE  + resourceToCli(&quot;Purple&quot;) + &quot;     &quot;+ this.getResourcesRequired().toCliSymbol(ResourceType.SERVANTS) + &quot;   ?&quot; + r);</b>
+<b class="fc"><i class="no-highlight">249</i>&nbsp;            leadCard.add(&quot;? &quot; + ANSIColors.FRONT_YELLOW + &quot;  YELLOW   &quot; + ANSIColors.FRONT_YELLOW  + resourceToCli(&quot;Yellow&quot;) + &quot;     &quot;+ this.getResourcesRequired().toCliSymbol(ResourceType.COINS) + &quot;   ?&quot; + r);</b>
+<b class="fc"><i class="no-highlight">250</i>&nbsp;            leadCard.add(&quot;? &quot; + ANSIColors.FRONT_BRIGHT_GREEN + &quot;  GREEN    &quot; + ANSIColors.FRONT_BRIGHT_GREEN  + resourceToCli(&quot;Green&quot;) + &quot;     &quot;+ this.getResourcesRequired().toCliSymbol(ResourceType.STONES) + &quot;   ?&quot; + r);}</b>
+<b class="fc"><i class="no-highlight">251</i>&nbsp;        return leadCard;</b>
+<i class="no-highlight">252</i>&nbsp;    }
+<i class="no-highlight">253</i>&nbsp;
+<i class="no-highlight">254</i>&nbsp;    public String resourceToCli(String input){
+<b class="fc"><i class="no-highlight">255</i>&nbsp;        int resource = 0;</b>
+<b class="fc"><i class="no-highlight">256</i>&nbsp;        switch (input) {</b>
+<i class="no-highlight">257</i>&nbsp;            case &quot;BlueLv1&quot;:
+<b class="fc"><i class="no-highlight">258</i>&nbsp;                resource = this.cardsRequired.getBlueCardLv1();</b>
+<b class="fc"><i class="no-highlight">259</i>&nbsp;                break;</b>
+<i class="no-highlight">260</i>&nbsp;            case &quot;BlueLv2&quot;:
+<b class="fc"><i class="no-highlight">261</i>&nbsp;                resource = this.cardsRequired.getBlueCardLv2();</b>
+<b class="fc"><i class="no-highlight">262</i>&nbsp;                break;</b>
+<i class="no-highlight">263</i>&nbsp;            case &quot;BlueLv3&quot;:
+<b class="fc"><i class="no-highlight">264</i>&nbsp;                resource = this.cardsRequired.getBlueCardLv3();</b>
+<b class="fc"><i class="no-highlight">265</i>&nbsp;                break;</b>
+<i class="no-highlight">266</i>&nbsp;            case &quot;PurpleLv1&quot;:
+<b class="fc"><i class="no-highlight">267</i>&nbsp;                resource = this.cardsRequired.getPurpleCardLv1();</b>
+<b class="fc"><i class="no-highlight">268</i>&nbsp;                break;</b>
+<i class="no-highlight">269</i>&nbsp;            case &quot;PurpleLv2&quot;:
+<b class="fc"><i class="no-highlight">270</i>&nbsp;                resource = this.cardsRequired.getPurpleCardLv2();</b>
+<b class="fc"><i class="no-highlight">271</i>&nbsp;                break;</b>
+<i class="no-highlight">272</i>&nbsp;            case &quot;PurpleLv3&quot;:
+<b class="fc"><i class="no-highlight">273</i>&nbsp;                resource = this.cardsRequired.getPurpleCardLv3();</b>
+<b class="fc"><i class="no-highlight">274</i>&nbsp;                break;</b>
+<i class="no-highlight">275</i>&nbsp;            case &quot;YellowLv1&quot;:
+<b class="fc"><i class="no-highlight">276</i>&nbsp;                resource = this.cardsRequired.getYellowCardLv1();</b>
+<b class="fc"><i class="no-highlight">277</i>&nbsp;                break;</b>
+<i class="no-highlight">278</i>&nbsp;            case &quot;YellowLv2&quot;:
+<b class="fc"><i class="no-highlight">279</i>&nbsp;                resource = this.cardsRequired.getYellowCardLv2();</b>
+<b class="fc"><i class="no-highlight">280</i>&nbsp;                break;</b>
+<i class="no-highlight">281</i>&nbsp;            case &quot;YellowLv3&quot;:
+<b class="fc"><i class="no-highlight">282</i>&nbsp;                resource = this.cardsRequired.getYellowCardLv3();</b>
+<b class="fc"><i class="no-highlight">283</i>&nbsp;                break;</b>
+<i class="no-highlight">284</i>&nbsp;            case &quot;GreenLv1&quot;:
+<b class="fc"><i class="no-highlight">285</i>&nbsp;                resource = this.cardsRequired.getGreenCardLv1();</b>
+<b class="fc"><i class="no-highlight">286</i>&nbsp;                break;</b>
+<i class="no-highlight">287</i>&nbsp;            case &quot;GreenLv2&quot;:
+<b class="fc"><i class="no-highlight">288</i>&nbsp;                resource = this.cardsRequired.getGreenCardLv2();</b>
+<b class="fc"><i class="no-highlight">289</i>&nbsp;                break;</b>
+<i class="no-highlight">290</i>&nbsp;            case &quot;GreenLv3&quot;:
+<b class="fc"><i class="no-highlight">291</i>&nbsp;                resource = this.cardsRequired.getGreenCardLv3();</b>
+<b class="fc"><i class="no-highlight">292</i>&nbsp;                break;</b>
+<i class="no-highlight">293</i>&nbsp;            case &quot;Blue&quot;:
+<b class="fc"><i class="no-highlight">294</i>&nbsp;                resource = this.cardsRequired.getNeedBlueCard();</b>
+<b class="fc"><i class="no-highlight">295</i>&nbsp;                break;</b>
+<i class="no-highlight">296</i>&nbsp;            case &quot;Purple&quot;:
+<b class="fc"><i class="no-highlight">297</i>&nbsp;                resource = this.cardsRequired.getNeedPurpleCard();</b>
+<b class="fc"><i class="no-highlight">298</i>&nbsp;                break;</b>
+<i class="no-highlight">299</i>&nbsp;            case &quot;Yellow&quot;:
+<b class="fc"><i class="no-highlight">300</i>&nbsp;                resource = this.cardsRequired.getNeedYellowCard();</b>
+<b class="fc"><i class="no-highlight">301</i>&nbsp;                break;</b>
+<i class="no-highlight">302</i>&nbsp;            case &quot;Green&quot;:
+<b class="fc"><i class="no-highlight">303</i>&nbsp;                resource = this.cardsRequired.getNeedGreenCard();</b>
+<i class="no-highlight">304</i>&nbsp;                break;
+<i class="no-highlight">305</i>&nbsp;        }
+<i class="no-highlight">306</i>&nbsp;
+<b class="fc"><i class="no-highlight">307</i>&nbsp;        if(resource &lt; 9) return &quot; &quot; + resource;</b>
+<b class="fc"><i class="no-highlight">308</i>&nbsp;        else return &quot;&quot;+resource;</b>
+<i class="no-highlight">309</i>&nbsp;
+<i class="no-highlight">310</i>&nbsp;    }
+<i class="no-highlight">311</i>&nbsp;
+<i class="no-highlight">312</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-28 14:27</div>
+</div>
+</body>
+</html>

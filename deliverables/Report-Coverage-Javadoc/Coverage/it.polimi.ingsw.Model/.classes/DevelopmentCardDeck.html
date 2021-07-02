@@ -1,0 +1,217 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DevelopmentCardDeck</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DevelopmentCardDeck (it.polimi.ingsw.Model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DevelopmentCardDeck</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (14/ 14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (29/ 29)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.Model.Enums.Color;
+<i>4</i>&nbsp;import it.polimi.ingsw.Model.Enums.Level;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import java.io.Serializable;
+<i>7</i>&nbsp;import java.util.Arrays;
+<i>8</i>&nbsp;import java.util.Collections;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp; /**
+<i>11</i>&nbsp;  * DevelopmentCardDeck Class contains three private attributes: an array of DevelopmentCards, a color and a level.
+<i>12</i>&nbsp;  * Another private integer attribute (cardsInDeck) is used to keep track of how many cards are in the deck.
+<i>13</i>&nbsp;  */
+<i>14</i>&nbsp;public class DevelopmentCardDeck implements Serializable {
+<i>15</i>&nbsp;     private static final long serialVersionUID = 0x1;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;     private DevelopmentCard[] cards;
+<i>18</i>&nbsp;    private Color color;
+<i>19</i>&nbsp;    private Level level;
+<i>20</i>&nbsp;    private int cardsInDeck;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;     /**
+<i>23</i>&nbsp;      * Constructor for DevelopmentCardDeck Class.
+<i>24</i>&nbsp;      */
+<b class="fc"><i>25</i>&nbsp;    public DevelopmentCardDeck(Color color, Level level) {</b>
+<b class="fc"><i>26</i>&nbsp;        this.cards = new DevelopmentCard[4];</b>
+<b class="fc"><i>27</i>&nbsp;        this.color = color;</b>
+<b class="fc"><i>28</i>&nbsp;        this.level = level;</b>
+<b class="fc"><i>29</i>&nbsp;        this.cardsInDeck = 0;</b>
+<b class="fc"><i>30</i>&nbsp;    }</b>
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;     /**
+<i>33</i>&nbsp;      * Getter for &quot;cards&quot; attribute in DevelopmentCardDeck Class.
+<i>34</i>&nbsp;      */
+<i>35</i>&nbsp;    public DevelopmentCard[] getCards() {
+<b class="fc"><i>36</i>&nbsp;        return cards;</b>
+<i>37</i>&nbsp;    }
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;     /**
+<i>40</i>&nbsp;      * Setter for &quot;cards&quot; attribute in DevelopmentCardDeck
+<i>41</i>&nbsp;      */
+<i>42</i>&nbsp;    public void setCards(DevelopmentCard[] cards) {
+<b class="fc"><i>43</i>&nbsp;        this.cards = cards;</b>
+<b class="fc"><i>44</i>&nbsp;    }</b>
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;     /**
+<i>47</i>&nbsp;      * Getter for &quot;color&quot; attribute in DevelopmentCardDeck
+<i>48</i>&nbsp;      */
+<i>49</i>&nbsp;    public Color getColor() {
+<b class="fc"><i>50</i>&nbsp;        return color;</b>
+<i>51</i>&nbsp;    }
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;     /**
+<i>54</i>&nbsp;      * Setter for &quot;color&quot; attribute in DevelopmentCardDeck
+<i>55</i>&nbsp;      */
+<i>56</i>&nbsp;    public void setColor(Color color) {
+<b class="fc"><i>57</i>&nbsp;        this.color = color;</b>
+<b class="fc"><i>58</i>&nbsp;    }</b>
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;     /**
+<i>61</i>&nbsp;      * Getter for &quot;level&quot; attribute in DevelopmentCardDeck
+<i>62</i>&nbsp;      */
+<i>63</i>&nbsp;    public Level getLevel() {
+<b class="fc"><i>64</i>&nbsp;        return level;</b>
+<i>65</i>&nbsp;    }
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;     /**
+<i>68</i>&nbsp;      * Setter for &quot;level&quot; attribute in DevelopmentCardDeck
+<i>69</i>&nbsp;      */
+<i>70</i>&nbsp;    public void setLevel(Level level) {
+<b class="fc"><i>71</i>&nbsp;        this.level = level;</b>
+<b class="fc"><i>72</i>&nbsp;    }</b>
+<i>73</i>&nbsp;
+<i>74</i>&nbsp;     /**
+<i>75</i>&nbsp;      * Getter for &quot;cardsInDeck&quot; attribute in DevelopmentCardDeck
+<i>76</i>&nbsp;      */
+<i>77</i>&nbsp;     public int getCardsInDeck() {
+<b class="fc"><i>78</i>&nbsp;         return cardsInDeck;</b>
+<i>79</i>&nbsp;     }
+<i>80</i>&nbsp;
+<i>81</i>&nbsp;     /**
+<i>82</i>&nbsp;      * This method returns true if &quot;cardsInDeck&quot; equals zero, meaning there are no cards in the deck.
+<i>83</i>&nbsp;      */
+<i>84</i>&nbsp;    public boolean isEmpty() {
+<b class="fc"><i>85</i>&nbsp;        return cardsInDeck == 0;</b>
+<i>86</i>&nbsp;    }
+<i>87</i>&nbsp;
+<i>88</i>&nbsp;     /**
+<i>89</i>&nbsp;      * This method uses a java.util.Collections standard method tu shuffle all the cards in the deck.
+<i>90</i>&nbsp;      */
+<i>91</i>&nbsp;    public void shuffle() {
+<b class="fc"><i>92</i>&nbsp;        Collections.shuffle(Arrays.asList(cards));</b>
+<b class="fc"><i>93</i>&nbsp;    }</b>
+<i>94</i>&nbsp;
+<i>95</i>&nbsp;     /**
+<i>96</i>&nbsp;      * This method adds a card in the &quot;cards&quot; array attribute while also incrementing &quot;cardsInDeck&quot;.
+<i>97</i>&nbsp;      */
+<i>98</i>&nbsp;    public void addCard(DevelopmentCard card) {
+<b class="fc"><i>99</i>&nbsp;        this.cards[cardsInDeck++] = card;</b>
+<b class="fc"><i>100</i>&nbsp;    }</b>
+<i>101</i>&nbsp;
+<i>102</i>&nbsp;     /**
+<i>103</i>&nbsp;      * This method draws a card from the deck and updates the deck&#39;s length. If the deck is empty, a new
+<i>104</i>&nbsp;      * exception is thrown indicating the absence of cards in the deck.
+<i>105</i>&nbsp;      */
+<i>106</i>&nbsp;    public DevelopmentCard drawCard() throws IllegalArgumentException {
+<b class="fc"><i>107</i>&nbsp;        if(isEmpty()) {</b>
+<b class="fc"><i>108</i>&nbsp;            throw new IllegalArgumentException(&quot;Cannot draw card from empty deck!&quot;);</b>
+<i>109</i>&nbsp;        }
+<b class="fc"><i>110</i>&nbsp;        return cards[--cardsInDeck];</b>
+<i>111</i>&nbsp;    }
+<i>112</i>&nbsp;
+<i>113</i>&nbsp;     /**
+<i>114</i>&nbsp;      * Method to get the first card in a deck.
+<i>115</i>&nbsp;      * @return a DevelopmentCard
+<i>116</i>&nbsp;      * @throws IllegalArgumentException if the deck is empty.
+<i>117</i>&nbsp;      */
+<i>118</i>&nbsp;    public DevelopmentCard getTopCard() throws IllegalArgumentException {
+<b class="fc"><i>119</i>&nbsp;        int position = cardsInDeck - 1;</b>
+<b class="fc"><i>120</i>&nbsp;        if(isEmpty()) {</b>
+<b class="fc"><i>121</i>&nbsp;            throw new IllegalArgumentException(&quot;Cannot get card from empty deck!&quot;);</b>
+<i>122</i>&nbsp;        }
+<b class="fc"><i>123</i>&nbsp;        return cards[position];</b>
+<i>124</i>&nbsp;    }
+<i>125</i>&nbsp;
+<i>126</i>&nbsp;     /**
+<i>127</i>&nbsp;      * A method to return a string with che color and the level of a card
+<i>128</i>&nbsp;      * @return a string that contains the color and the level of the card
+<i>129</i>&nbsp;      */
+<i>130</i>&nbsp;    @Override
+<i>131</i>&nbsp;    public String toString() {
+<b class="fc"><i>132</i>&nbsp;        return color+&quot; &quot;+level;</b>
+<i>133</i>&nbsp;    }
+<i>134</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-12 23:55</div>
+</div>
+</body>
+</html>

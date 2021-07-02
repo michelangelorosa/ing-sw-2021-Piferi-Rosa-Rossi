@@ -1,0 +1,351 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Warehouse</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+    @import "../../.css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../.js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">it.polimi.ingsw.Model.GameModel</a>
+</div>
+
+<h1>Coverage Summary for Class: Warehouse (it.polimi.ingsw.Model.GameModel)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Warehouse</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (14/14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (97/97)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package it.polimi.ingsw.Model.GameModel;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import it.polimi.ingsw.Model.Enums.ResourceType;
+<i class="no-highlight">4</i>&nbsp;import it.polimi.ingsw.View.ReducedModel.RedWarehouse;
+<i class="no-highlight">5</i>&nbsp;import it.polimi.ingsw.View.ReducedModel.RedWarehouseDepot;
+<i class="no-highlight">6</i>&nbsp;
+<i class="no-highlight">7</i>&nbsp;import java.util.ArrayList;
+<i class="no-highlight">8</i>&nbsp;
+<i class="no-highlight">9</i>&nbsp;/**
+<i class="no-highlight">10</i>&nbsp; * Warehouse Class defines the contents and the behaviour of the warehouse inside the player&#39;s board.
+<i class="no-highlight">11</i>&nbsp; * Each warehouse contains three warehouseDepot-type objects organized in an array, plus two extra
+<i class="no-highlight">12</i>&nbsp; * warehouseDepot-type objects which are activated if the player has activated the relative Leader Card
+<i class="no-highlight">13</i>&nbsp; * ability (via the boolean attributes).
+<i class="no-highlight">14</i>&nbsp; */
+<i class="no-highlight">15</i>&nbsp;public class Warehouse extends RedWarehouse {
+<i class="no-highlight">16</i>&nbsp;    /**
+<i class="no-highlight">17</i>&nbsp;     * Constructor for Warehouse Class. It creates the &quot;pyramid&quot; of fixed-length depots and the two extra
+<i class="no-highlight">18</i>&nbsp;     * depots. In addiction to that, it initializes the boolean attributes to &quot;false&quot;.
+<i class="no-highlight">19</i>&nbsp;     */
+<i class="no-highlight">20</i>&nbsp;    public Warehouse() {
+<b class="fc"><i class="no-highlight">21</i>&nbsp;        super();</b>
+<b class="fc"><i class="no-highlight">22</i>&nbsp;        this.extraWarehouseDepot1IsActive = false;</b>
+<b class="fc"><i class="no-highlight">23</i>&nbsp;        this.extraWarehouseDepot2IsActive = false;</b>
+<b class="fc"><i class="no-highlight">24</i>&nbsp;    }</b>
+<i class="no-highlight">25</i>&nbsp;
+<i class="no-highlight">26</i>&nbsp;    public WarehouseDepot[] getWarehouseDepots() {
+<b class="fc"><i class="no-highlight">27</i>&nbsp;        return (WarehouseDepot[])this.warehouseDepots;</b>
+<i class="no-highlight">28</i>&nbsp;    }
+<i class="no-highlight">29</i>&nbsp;
+<i class="no-highlight">30</i>&nbsp;    /**
+<i class="no-highlight">31</i>&nbsp;     * Getter for &quot;extraWarehouseDepot1&quot; attribute.
+<i class="no-highlight">32</i>&nbsp;     */
+<i class="no-highlight">33</i>&nbsp;    public WarehouseDepot getExtraWarehouseDepot1() {
+<b class="fc"><i class="no-highlight">34</i>&nbsp;        return (WarehouseDepot) extraWarehouseDepot1;</b>
+<i class="no-highlight">35</i>&nbsp;    }
+<i class="no-highlight">36</i>&nbsp;
+<i class="no-highlight">37</i>&nbsp;    /**
+<i class="no-highlight">38</i>&nbsp;     * Getter for &quot;extraWarehouseDepot2&quot; attribute.
+<i class="no-highlight">39</i>&nbsp;     */
+<i class="no-highlight">40</i>&nbsp;    public WarehouseDepot getExtraWarehouseDepot2() {
+<b class="fc"><i class="no-highlight">41</i>&nbsp;        return (WarehouseDepot) extraWarehouseDepot2;</b>
+<i class="no-highlight">42</i>&nbsp;    }
+<i class="no-highlight">43</i>&nbsp;
+<i class="no-highlight">44</i>&nbsp;
+<i class="no-highlight">45</i>&nbsp;    /**
+<i class="no-highlight">46</i>&nbsp;     * Resets the Warehouse to its initial state.
+<i class="no-highlight">47</i>&nbsp;     */
+<i class="no-highlight">48</i>&nbsp;    public void reset() {
+<b class="fc"><i class="no-highlight">49</i>&nbsp;        ((WarehouseDepot)this.warehouseDepots[0]).setStoredResources(0);</b>
+<b class="fc"><i class="no-highlight">50</i>&nbsp;        ((WarehouseDepot)this.warehouseDepots[1]).setStoredResources(0);</b>
+<b class="fc"><i class="no-highlight">51</i>&nbsp;        ((WarehouseDepot)this.warehouseDepots[2]).setStoredResources(0);</b>
+<b class="fc"><i class="no-highlight">52</i>&nbsp;        ((WarehouseDepot)this.extraWarehouseDepot1).setStoredResources(0);</b>
+<b class="fc"><i class="no-highlight">53</i>&nbsp;        ((WarehouseDepot)this.extraWarehouseDepot2).setStoredResources(0);</b>
+<b class="fc"><i class="no-highlight">54</i>&nbsp;        this.extraWarehouseDepot1IsActive = false;</b>
+<b class="fc"><i class="no-highlight">55</i>&nbsp;        this.extraWarehouseDepot2IsActive = false;</b>
+<b class="fc"><i class="no-highlight">56</i>&nbsp;    }</b>
+<i class="no-highlight">57</i>&nbsp;
+<i class="no-highlight">58</i>&nbsp;    /**
+<i class="no-highlight">59</i>&nbsp;     * Activates an extra depot and sets its resource type when a card leader
+<i class="no-highlight">60</i>&nbsp;     * ability is active.
+<i class="no-highlight">61</i>&nbsp;     * &lt;p&gt;
+<i class="no-highlight">62</i>&nbsp;     * The first time it is called, it activates the first extra depot, while the second time it
+<i class="no-highlight">63</i>&nbsp;     * activates the second extra depot.
+<i class="no-highlight">64</i>&nbsp;     * If the method is called a third time, it just displays a message.
+<i class="no-highlight">65</i>&nbsp;     * @param resourceType is the resource type to assign to the extra depot to activate.
+<i class="no-highlight">66</i>&nbsp;     */
+<i class="no-highlight">67</i>&nbsp;    public void activateLeaderDepot(ResourceType resourceType) {
+<b class="fc"><i class="no-highlight">68</i>&nbsp;        if(!this.extraWarehouseDepot1IsActive) {</b>
+<b class="fc"><i class="no-highlight">69</i>&nbsp;            this.extraWarehouseDepot1IsActive = true;</b>
+<b class="fc"><i class="no-highlight">70</i>&nbsp;            ((WarehouseDepot)this.extraWarehouseDepot1).setResourceType(resourceType);</b>
+<i class="no-highlight">71</i>&nbsp;        }
+<i class="no-highlight">72</i>&nbsp;
+<b class="fc"><i class="no-highlight">73</i>&nbsp;        else if(!this.extraWarehouseDepot2IsActive) {</b>
+<b class="fc"><i class="no-highlight">74</i>&nbsp;            this.extraWarehouseDepot2IsActive = true;</b>
+<b class="fc"><i class="no-highlight">75</i>&nbsp;            ((WarehouseDepot)this.extraWarehouseDepot2).setResourceType(resourceType);</b>
+<i class="no-highlight">76</i>&nbsp;        }
+<i class="no-highlight">77</i>&nbsp;        else
+<b class="fc"><i class="no-highlight">78</i>&nbsp;            System.out.println(&quot;Max number of depots already reached!&quot;);</b>
+<b class="fc"><i class="no-highlight">79</i>&nbsp;    }</b>
+<i class="no-highlight">80</i>&nbsp;
+<i class="no-highlight">81</i>&nbsp;    /**
+<i class="no-highlight">82</i>&nbsp;     * Counts all resources of a certain type inside the warehouse
+<i class="no-highlight">83</i>&nbsp;     * (including the leader-activated depots, if they are active).
+<i class="no-highlight">84</i>&nbsp;     * Specifically, the standard depots and the active extra depots are added to an ArrayList and
+<i class="no-highlight">85</i>&nbsp;     * the resources are counted in a cycle.
+<i class="no-highlight">86</i>&nbsp;     * @param resourceType specifies the type of resource searched.
+<i class="no-highlight">87</i>&nbsp;     * @return the number of resources counted.
+<i class="no-highlight">88</i>&nbsp;     */
+<i class="no-highlight">89</i>&nbsp;    public int countResourcesByType(ResourceType resourceType) {
+<b class="fc"><i class="no-highlight">90</i>&nbsp;        int resources = 0;</b>
+<b class="fc"><i class="no-highlight">91</i>&nbsp;        ArrayList&lt;RedWarehouseDepot&gt; depots = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">92</i>&nbsp;        depots.add(warehouseDepots[0]);</b>
+<b class="fc"><i class="no-highlight">93</i>&nbsp;        depots.add(warehouseDepots[1]);</b>
+<b class="fc"><i class="no-highlight">94</i>&nbsp;        depots.add(warehouseDepots[2]);</b>
+<i class="no-highlight">95</i>&nbsp;
+<b class="fc"><i class="no-highlight">96</i>&nbsp;        if(extraWarehouseDepot1IsActive)</b>
+<b class="fc"><i class="no-highlight">97</i>&nbsp;            depots.add(extraWarehouseDepot1);</b>
+<b class="fc"><i class="no-highlight">98</i>&nbsp;        if(extraWarehouseDepot2IsActive)</b>
+<b class="fc"><i class="no-highlight">99</i>&nbsp;            depots.add(extraWarehouseDepot2);</b>
+<i class="no-highlight">100</i>&nbsp;
+<b class="fc"><i class="no-highlight">101</i>&nbsp;        for(RedWarehouseDepot depot : depots)</b>
+<b class="fc"><i class="no-highlight">102</i>&nbsp;            if(depot.getResourceType() == resourceType)</b>
+<b class="fc"><i class="no-highlight">103</i>&nbsp;                resources += depot.getStoredResources();</b>
+<i class="no-highlight">104</i>&nbsp;
+<b class="fc"><i class="no-highlight">105</i>&nbsp;        return resources;</b>
+<i class="no-highlight">106</i>&nbsp;    }
+<i class="no-highlight">107</i>&nbsp;
+<i class="no-highlight">108</i>&nbsp;    /**
+<i class="no-highlight">109</i>&nbsp;     * Adds resources of a certain type to a WarehouseDepot-type object. It returns the
+<i class="no-highlight">110</i>&nbsp;     * number of resources which don&#39;t fit inside the depot.
+<i class="no-highlight">111</i>&nbsp;     * The method checks if the depot&#39;s resource type is not equal to the specified resource type or if the
+<i class="no-highlight">112</i>&nbsp;     * depot is full, in which case it displays an error message and returns the full number of resources given.
+<i class="no-highlight">113</i>&nbsp;     * @param resourcesToAdd is the number of resources to add.
+<i class="no-highlight">114</i>&nbsp;     * @param resourceType is the type of resources to add.
+<i class="no-highlight">115</i>&nbsp;     * @param depot is the depot in which the resources are to be added (if possible).
+<i class="no-highlight">116</i>&nbsp;     * @return the number of resources which could not fit inside the depot.
+<i class="no-highlight">117</i>&nbsp;     */
+<i class="no-highlight">118</i>&nbsp;    public int addResources(int resourcesToAdd, ResourceType resourceType, WarehouseDepot depot) {
+<b class="fc"><i class="no-highlight">119</i>&nbsp;        int extraResources = resourcesToAdd;</b>
+<i class="no-highlight">120</i>&nbsp;
+<b class="fc"><i class="no-highlight">121</i>&nbsp;        if(this.isFull()) {</b>
+<b class="fc"><i class="no-highlight">122</i>&nbsp;            System.err.println(&quot;Error: Warehouse is Full!&quot;);</b>
+<b class="fc"><i class="no-highlight">123</i>&nbsp;            return extraResources;</b>
+<i class="no-highlight">124</i>&nbsp;        }
+<i class="no-highlight">125</i>&nbsp;
+<b class="fc"><i class="no-highlight">126</i>&nbsp;        if(depot.getResourceType() == ResourceType.NONE)</b>
+<b class="fc"><i class="no-highlight">127</i>&nbsp;            depot.setResourceType(resourceType);</b>
+<b class="fc"><i class="no-highlight">128</i>&nbsp;        if(depot.getResourceType() == resourceType &amp;&amp; depot.getStoredResources() &lt; depot.getMaxResources())</b>
+<b class="fc"><i class="no-highlight">129</i>&nbsp;            extraResources = depot.addResources(resourcesToAdd);</b>
+<i class="no-highlight">130</i>&nbsp;        else
+<b class="fc"><i class="no-highlight">131</i>&nbsp;            System.out.println(&quot;Choose a valid depot! (Has to be same type and not full)&quot;);</b>
+<i class="no-highlight">132</i>&nbsp;
+<b class="fc"><i class="no-highlight">133</i>&nbsp;        return extraResources;</b>
+<i class="no-highlight">134</i>&nbsp;    }
+<i class="no-highlight">135</i>&nbsp;
+<i class="no-highlight">136</i>&nbsp;    /**
+<i class="no-highlight">137</i>&nbsp;     * Checks if a specified resource can be added to a specified depot.
+<i class="no-highlight">138</i>&nbsp;     * @param type Type of the resource to be added.
+<i class="no-highlight">139</i>&nbsp;     * @param depot Depot where the player wants to add the resource
+<i class="no-highlight">140</i>&nbsp;     * @return True if the resource can be added.
+<i class="no-highlight">141</i>&nbsp;     */
+<i class="no-highlight">142</i>&nbsp;    public boolean canAddToDepot(ResourceType type, WarehouseDepot depot) {
+<b class="fc"><i class="no-highlight">143</i>&nbsp;            if(depot.getResourceType() == ResourceType.NONE &amp;&amp; this.areEmptyDepotsFillableByType(type))</b>
+<b class="fc"><i class="no-highlight">144</i>&nbsp;                return true;</b>
+<b class="fc"><i class="no-highlight">145</i>&nbsp;        return depot.getResourceType() == type &amp;&amp; !depot.isFull();</b>
+<i class="no-highlight">146</i>&nbsp;    }
+<i class="no-highlight">147</i>&nbsp;
+<i class="no-highlight">148</i>&nbsp;    /**
+<i class="no-highlight">149</i>&nbsp;     * Removes a resource from a specified depot.
+<i class="no-highlight">150</i>&nbsp;     * @param depot Depot the player wants to remove resources from.
+<i class="no-highlight">151</i>&nbsp;     */
+<i class="no-highlight">152</i>&nbsp;    public void removeResourceFromDepot(WarehouseDepot depot) {
+<b class="fc"><i class="no-highlight">153</i>&nbsp;        if(!depot.isEmpty())</b>
+<b class="fc"><i class="no-highlight">154</i>&nbsp;            depot.removeResources(1);</b>
+<b class="fc"><i class="no-highlight">155</i>&nbsp;    }</b>
+<i class="no-highlight">156</i>&nbsp;
+<i class="no-highlight">157</i>&nbsp;    /**
+<i class="no-highlight">158</i>&nbsp;     * Checks if two given warehouse depots can be switched.
+<i class="no-highlight">159</i>&nbsp;     * @param firstDepot First depot to be switched.
+<i class="no-highlight">160</i>&nbsp;     * @param secondDepot Second depot to be switched.
+<i class="no-highlight">161</i>&nbsp;     * @return true if the depots can be switched.
+<i class="no-highlight">162</i>&nbsp;     */
+<i class="no-highlight">163</i>&nbsp;    public boolean canSwitchDepots(WarehouseDepot firstDepot, WarehouseDepot secondDepot) {
+<b class="fc"><i class="no-highlight">164</i>&nbsp;        if(firstDepot.getStoredResources() &gt; secondDepot.getMaxResources() || secondDepot.getStoredResources() &gt; firstDepot.getMaxResources())</b>
+<b class="fc"><i class="no-highlight">165</i>&nbsp;            return false;</b>
+<i class="no-highlight">166</i>&nbsp;
+<b class="fc"><i class="no-highlight">167</i>&nbsp;        if(firstDepot.isFromLeaderCardAbility() &amp;&amp; secondDepot.isFromLeaderCardAbility() &amp;&amp; firstDepot.getResourceType() == secondDepot.getResourceType())</b>
+<b class="fc"><i class="no-highlight">168</i>&nbsp;            return true;</b>
+<i class="no-highlight">169</i>&nbsp;
+<b class="fc"><i class="no-highlight">170</i>&nbsp;        if(firstDepot.isFromLeaderCardAbility() &amp;&amp; secondDepot.isFromLeaderCardAbility() &amp;&amp; firstDepot.getResourceType() != secondDepot.getResourceType())</b>
+<b class="fc"><i class="no-highlight">171</i>&nbsp;            return false;</b>
+<i class="no-highlight">172</i>&nbsp;
+<b class="fc"><i class="no-highlight">173</i>&nbsp;        if(firstDepot.isFromLeaderCardAbility())</b>
+<b class="fc"><i class="no-highlight">174</i>&nbsp;            if(secondDepot.getResourceType() == firstDepot.getResourceType())</b>
+<b class="fc"><i class="no-highlight">175</i>&nbsp;                return true;</b>
+<b class="fc"><i class="no-highlight">176</i>&nbsp;            else return secondDepot.getResourceType() == ResourceType.NONE &amp;&amp; areEmptyDepotsFillableByType(firstDepot.getResourceType());</b>
+<i class="no-highlight">177</i>&nbsp;
+<b class="fc"><i class="no-highlight">178</i>&nbsp;        if(secondDepot.isFromLeaderCardAbility())</b>
+<b class="fc"><i class="no-highlight">179</i>&nbsp;            if(firstDepot.getResourceType() == secondDepot.getResourceType())</b>
+<b class="fc"><i class="no-highlight">180</i>&nbsp;                return true;</b>
+<b class="fc"><i class="no-highlight">181</i>&nbsp;            else return firstDepot.getResourceType() == ResourceType.NONE &amp;&amp; areEmptyDepotsFillableByType(secondDepot.getResourceType());</b>
+<i class="no-highlight">182</i>&nbsp;
+<b class="fc"><i class="no-highlight">183</i>&nbsp;        return true;</b>
+<i class="no-highlight">184</i>&nbsp;    }
+<i class="no-highlight">185</i>&nbsp;
+<i class="no-highlight">186</i>&nbsp;    /**
+<i class="no-highlight">187</i>&nbsp;     * Switches resources of two depots.
+<i class="no-highlight">188</i>&nbsp;     * @param firstDepot First Depot to switch.
+<i class="no-highlight">189</i>&nbsp;     * @param secondDepot Second Depot to switch.
+<i class="no-highlight">190</i>&nbsp;     */
+<i class="no-highlight">191</i>&nbsp;    public void switchDepots(WarehouseDepot firstDepot, WarehouseDepot secondDepot) {
+<b class="fc"><i class="no-highlight">192</i>&nbsp;        ResourceType tempType = firstDepot.getResourceType();</b>
+<b class="fc"><i class="no-highlight">193</i>&nbsp;        int tempStoredResources = firstDepot.getStoredResources();</b>
+<i class="no-highlight">194</i>&nbsp;
+<b class="fc"><i class="no-highlight">195</i>&nbsp;        if(!firstDepot.isFromLeaderCardAbility())</b>
+<b class="fc"><i class="no-highlight">196</i>&nbsp;            firstDepot.setResourceType(secondDepot.getResourceType());</b>
+<b class="fc"><i class="no-highlight">197</i>&nbsp;        firstDepot.setStoredResources(secondDepot.getStoredResources());</b>
+<b class="fc"><i class="no-highlight">198</i>&nbsp;        if(!secondDepot.isFromLeaderCardAbility())</b>
+<b class="fc"><i class="no-highlight">199</i>&nbsp;            secondDepot.setResourceType(tempType);</b>
+<b class="fc"><i class="no-highlight">200</i>&nbsp;        secondDepot.setStoredResources(tempStoredResources);</b>
+<b class="fc"><i class="no-highlight">201</i>&nbsp;    }</b>
+<i class="no-highlight">202</i>&nbsp;
+<i class="no-highlight">203</i>&nbsp;    /**
+<i class="no-highlight">204</i>&nbsp;     * Creates a copy of the player&#39;s Warehouse.
+<i class="no-highlight">205</i>&nbsp;     * @return The copied Warehouse.
+<i class="no-highlight">206</i>&nbsp;     */
+<i class="no-highlight">207</i>&nbsp;    public Warehouse copyWarehouse() {
+<b class="fc"><i class="no-highlight">208</i>&nbsp;        Warehouse copy = new Warehouse();</b>
+<i class="no-highlight">209</i>&nbsp;
+<b class="fc"><i class="no-highlight">210</i>&nbsp;        for(int i = 0; i &lt; 3; i++) {</b>
+<b class="fc"><i class="no-highlight">211</i>&nbsp;            (copy.getWarehouseDepots()[i]).setStoredResources(this.getWarehouseDepots()[i].getStoredResources());</b>
+<b class="fc"><i class="no-highlight">212</i>&nbsp;            (copy.getWarehouseDepots()[i]).setResourceType(this.getWarehouseDepots()[i].getResourceType());</b>
+<i class="no-highlight">213</i>&nbsp;        }
+<i class="no-highlight">214</i>&nbsp;
+<b class="fc"><i class="no-highlight">215</i>&nbsp;        if(this.isExtraWarehouseDepot1IsActive()) {</b>
+<b class="fc"><i class="no-highlight">216</i>&nbsp;            copy.activateLeaderDepot(this.getExtraWarehouseDepot1().getResourceType());</b>
+<b class="fc"><i class="no-highlight">217</i>&nbsp;            (copy.getExtraWarehouseDepot1()).setStoredResources(this.getExtraWarehouseDepot1().getStoredResources());</b>
+<i class="no-highlight">218</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">219</i>&nbsp;        if(this.isExtraWarehouseDepot2IsActive()) {</b>
+<b class="fc"><i class="no-highlight">220</i>&nbsp;            copy.activateLeaderDepot(this.getExtraWarehouseDepot2().getResourceType());</b>
+<b class="fc"><i class="no-highlight">221</i>&nbsp;            (copy.getExtraWarehouseDepot2()).setStoredResources(this.getExtraWarehouseDepot2().getStoredResources());</b>
+<i class="no-highlight">222</i>&nbsp;        }
+<i class="no-highlight">223</i>&nbsp;
+<b class="fc"><i class="no-highlight">224</i>&nbsp;        return copy;</b>
+<i class="no-highlight">225</i>&nbsp;    }
+<i class="no-highlight">226</i>&nbsp;
+<i class="no-highlight">227</i>&nbsp;    /**
+<i class="no-highlight">228</i>&nbsp;     * Reverts the Warehouse to a previous condition.
+<i class="no-highlight">229</i>&nbsp;     * @param warehouse Warehouse for the current warehouse to be reverted to.
+<i class="no-highlight">230</i>&nbsp;     */
+<i class="no-highlight">231</i>&nbsp;    public void revertWarehouse(Warehouse warehouse) {
+<b class="fc"><i class="no-highlight">232</i>&nbsp;        for(int i = 0; i &lt; 3; i++) {</b>
+<b class="fc"><i class="no-highlight">233</i>&nbsp;            (this.getWarehouseDepots()[i]).setStoredResources(warehouse.getWarehouseDepots()[i].getStoredResources());</b>
+<b class="fc"><i class="no-highlight">234</i>&nbsp;            (this.getWarehouseDepots()[i]).setResourceType(warehouse.getWarehouseDepots()[i].getResourceType());</b>
+<i class="no-highlight">235</i>&nbsp;        }
+<i class="no-highlight">236</i>&nbsp;
+<b class="fc"><i class="no-highlight">237</i>&nbsp;        (this.getExtraWarehouseDepot1()).setStoredResources(warehouse.getExtraWarehouseDepot1().getStoredResources());</b>
+<b class="fc"><i class="no-highlight">238</i>&nbsp;        (this.getExtraWarehouseDepot1()).setResourceType(warehouse.getExtraWarehouseDepot1().getResourceType());</b>
+<i class="no-highlight">239</i>&nbsp;
+<b class="fc"><i class="no-highlight">240</i>&nbsp;        (this.getExtraWarehouseDepot2()).setStoredResources(warehouse.getExtraWarehouseDepot2().getStoredResources());</b>
+<b class="fc"><i class="no-highlight">241</i>&nbsp;        (this.getExtraWarehouseDepot2()).setResourceType(warehouse.getExtraWarehouseDepot2().getResourceType());</b>
+<i class="no-highlight">242</i>&nbsp;
+<b class="fc"><i class="no-highlight">243</i>&nbsp;        this.extraWarehouseDepot1IsActive = warehouse.isExtraWarehouseDepot1IsActive();</b>
+<b class="fc"><i class="no-highlight">244</i>&nbsp;        this.extraWarehouseDepot2IsActive = warehouse.isExtraWarehouseDepot2IsActive();</b>
+<b class="fc"><i class="no-highlight">245</i>&nbsp;    }</b>
+<i class="no-highlight">246</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-07-02 23:15</div>
+</div>
+</body>
+</html>

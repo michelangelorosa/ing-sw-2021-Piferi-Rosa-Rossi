@@ -1,0 +1,118 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Client</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.View</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Client (it.polimi.ingsw.View)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Client</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 12)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.View;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.awt.event.ActionEvent;
+<i>4</i>&nbsp;import java.awt.event.ActionListener;
+<i>5</i>&nbsp;import java.io.*;
+<i>6</i>&nbsp;import java.net.Socket;
+<i>7</i>&nbsp;import java.util.Scanner;
+<i>8</i>&nbsp;/** This is the Client, and it handles all the Outputs to the server in this class,
+<i>9</i>&nbsp; * for testing purposes, for now, the connection is hardcoded to localhost:8765
+<i>10</i>&nbsp; * For listening the inputStream from the server it calls clientConnection in a new Thread
+<i>11</i>&nbsp; */
+<b class="nc"><i>12</i>&nbsp;public class Client {</b>
+<b class="nc"><i>13</i>&nbsp;    static private String serverAddress=&quot;localhost&quot;;</b>
+<b class="nc"><i>14</i>&nbsp;    static private int serverPort=8765;</b>
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    public static void main(String[] args) throws Exception {
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;        try {
+<b class="nc"><i>19</i>&nbsp;            Socket socket = new Socket(serverAddress, serverPort);</b>
+<b class="nc"><i>20</i>&nbsp;            System.out.println(&quot;Connected to server!&quot;);</b>
+<i>21</i>&nbsp;
+<b class="nc"><i>22</i>&nbsp;            ClientConnection clientConnection = new ClientConnection(socket);</b>
+<b class="nc"><i>23</i>&nbsp;            new Thread(clientConnection).start();</b>
+<i>24</i>&nbsp;
+<b class="nc"><i>25</i>&nbsp;            OutputStream outputStream = socket.getOutputStream();</b>
+<b class="nc"><i>26</i>&nbsp;            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);</b>
+<i>27</i>&nbsp;
+<b class="nc"><i>28</i>&nbsp;            while (true) {</b>
+<i>29</i>&nbsp;                //Gestione OutputStream
+<i>30</i>&nbsp;            }
+<b class="nc"><i>31</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>32</i>&nbsp;            e.printStackTrace();</b>
+<i>33</i>&nbsp;        }
+<i>34</i>&nbsp;    }
+<i>35</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-12 23:55</div>
+</div>
+</body>
+</html>

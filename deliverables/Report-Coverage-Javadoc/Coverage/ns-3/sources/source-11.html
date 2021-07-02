@@ -1,0 +1,150 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > LeaderCardShuffle</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+    @import "../../.css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../.js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">it.polimi.ingsw.Model</a>
+</div>
+
+<h1>Coverage Summary for Class: LeaderCardShuffle (it.polimi.ingsw.Model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LeaderCardShuffle</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    80%
+  </span>
+  <span class="absValue">
+    (4/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    78,3%
+  </span>
+  <span class="absValue">
+    (18/23)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package it.polimi.ingsw.Model;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import java.util.ArrayList;
+<i class="no-highlight">4</i>&nbsp;
+<i class="no-highlight">5</i>&nbsp;/**
+<i class="no-highlight">6</i>&nbsp; * Invoked at the start of the game this class shuffles the Leader Cards for the players to chose
+<i class="no-highlight">7</i>&nbsp;*/
+<b class="nc"><i class="no-highlight">8</i>&nbsp;public class LeaderCardShuffle {</b>
+<b class="fc"><i class="no-highlight">9</i>&nbsp;    private static boolean active = false;</b>
+<i class="no-highlight">10</i>&nbsp;    static ArrayList&lt;LeaderCard&gt; LeaderCards;
+<i class="no-highlight">11</i>&nbsp;    //Reads the cards once
+<i class="no-highlight">12</i>&nbsp;    private static ArrayList&lt;LeaderCard&gt; leaderCardsManager(){
+<b class="fc"><i class="no-highlight">13</i>&nbsp;        if(!active){</b>
+<b class="fc"><i class="no-highlight">14</i>&nbsp;            active=true;</b>
+<b class="fc"><i class="no-highlight">15</i>&nbsp;            LeaderCards = JSONReader.ReadLeaderCards();</b>
+<i class="no-highlight">16</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">17</i>&nbsp;        return LeaderCards;</b>
+<i class="no-highlight">18</i>&nbsp;    }
+<i class="no-highlight">19</i>&nbsp;    //Removes the cards
+<i class="no-highlight">20</i>&nbsp;    private static ArrayList&lt;LeaderCard&gt; leaderCardsManager(int remove){
+<b class="fc"><i class="no-highlight">21</i>&nbsp;        LeaderCards.remove(remove);</b>
+<b class="fc"><i class="no-highlight">22</i>&nbsp;        return LeaderCards;</b>
+<i class="no-highlight">23</i>&nbsp;    }
+<i class="no-highlight">24</i>&nbsp;    //Returns 4 different Leader Cards
+<i class="no-highlight">25</i>&nbsp;    public static LeaderCard[] getLeaderShuffled(){
+<b class="fc"><i class="no-highlight">26</i>&nbsp;        ArrayList&lt;LeaderCard&gt; LeaderCards = leaderCardsManager();</b>
+<i class="no-highlight">27</i>&nbsp;        try{
+<b class="fc"><i class="no-highlight">28</i>&nbsp;        int size = LeaderCards.size();</b>
+<b class="fc"><i class="no-highlight">29</i>&nbsp;        if(size&lt;4)</b>
+<b class="fc"><i class="no-highlight">30</i>&nbsp;            return null;</b>
+<b class="fc"><i class="no-highlight">31</i>&nbsp;        LeaderCard[] cardsPicked = new LeaderCard[4];</b>
+<b class="fc"><i class="no-highlight">32</i>&nbsp;        for(int i=0;i&lt;4;i++){</b>
+<b class="fc"><i class="no-highlight">33</i>&nbsp;            int rand = (int) (Math.random() * size);</b>
+<b class="fc"><i class="no-highlight">34</i>&nbsp;            cardsPicked[i]=LeaderCards.get(rand);</b>
+<b class="fc"><i class="no-highlight">35</i>&nbsp;            LeaderCards=leaderCardsManager(rand);</b>
+<b class="fc"><i class="no-highlight">36</i>&nbsp;            size--;</b>
+<i class="no-highlight">37</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">38</i>&nbsp;            return cardsPicked;</b>
+<b class="nc"><i class="no-highlight">39</i>&nbsp;        }catch (ArrayIndexOutOfBoundsException e){</b>
+<b class="nc"><i class="no-highlight">40</i>&nbsp;            System.err.println(&quot;Error: no more Leader Cards!&quot;);</b>
+<b class="nc"><i class="no-highlight">41</i>&nbsp;            e.printStackTrace();</b>
+<i class="no-highlight">42</i>&nbsp;        }
+<b class="nc"><i class="no-highlight">43</i>&nbsp;            return null;</b>
+<i class="no-highlight">44</i>&nbsp;        }
+<i class="no-highlight">45</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-28 14:27</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PlayerStatus</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Model.Enums</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PlayerStatus (it.polimi.ingsw.Model.Enums)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PlayerStatus</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66,7%
+  </span>
+  <span class="absValue">
+    (2/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (3/ 4)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Model.Enums;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;/**
+<i>4</i>&nbsp; * PlayerStatus enum-type Class contains all possible statuses a player could have
+<i>5</i>&nbsp; * while playing the game.
+<i>6</i>&nbsp; */
+<i>7</i>&nbsp;
+<b class="fc"><i>8</i>&nbsp;public enum PlayerStatus {</b>
+<b class="fc"><i>9</i>&nbsp;    IN_GAME, IDLE, LOST, WON;</b>
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;    /**
+<i>12</i>&nbsp;     * This particular method uses an array of PlayerStatus instances containing each different player status
+<i>13</i>&nbsp;     * to return a particular playerStatus based on the integer given when calling the method.
+<i>14</i>&nbsp;     */
+<b class="fc"><i>15</i>&nbsp;    private static final PlayerStatus[] playerStatuses = PlayerStatus.values();</b>
+<b class="nc"><i>16</i>&nbsp;    public static PlayerStatus getPlayerStatus(int i) { return PlayerStatus.playerStatuses[i]; }</b>
+<i>17</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-12 23:55</div>
+</div>
+</body>
+</html>

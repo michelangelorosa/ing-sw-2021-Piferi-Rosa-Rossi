@@ -1,0 +1,157 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DevelopmentCardSlots</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.View.ReducedModel</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DevelopmentCardSlots (it.polimi.ingsw.View.ReducedModel)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DevelopmentCardSlots</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (3/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    68,2%
+  </span>
+  <span class="absValue">
+    (15/ 22)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.View.ReducedModel;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.Model.Enums.Level;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import java.io.Serializable;
+<i>6</i>&nbsp;import java.util.ArrayList;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;public class DevelopmentCardSlots implements Serializable {
+<i>9</i>&nbsp;    private static final long serialVersionUID = 0x1;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;    private final CardSlot[] slots;
+<i>12</i>&nbsp;    private int cardsInSlot;
+<i>13</i>&nbsp;    private Level level;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    /**
+<i>17</i>&nbsp;     * DevelopmentCardSlot constructor.
+<i>18</i>&nbsp;     */
+<b class="fc"><i>19</i>&nbsp;    public DevelopmentCardSlots(){</b>
+<b class="fc"><i>20</i>&nbsp;        this.slots = new CardSlot[3];</b>
+<b class="fc"><i>21</i>&nbsp;        this.slots[0] = new CardSlot();</b>
+<b class="fc"><i>22</i>&nbsp;        this.slots[1] = new CardSlot();</b>
+<b class="fc"><i>23</i>&nbsp;        this.slots[2] = new CardSlot();</b>
+<b class="fc"><i>24</i>&nbsp;    }</b>
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    /**
+<i>27</i>&nbsp;     * Getter
+<i>28</i>&nbsp;     * @return an array of CardSlot
+<i>29</i>&nbsp;     */
+<i>30</i>&nbsp;    public CardSlot[] getSlots() {
+<b class="fc"><i>31</i>&nbsp;        return slots;</b>
+<i>32</i>&nbsp;    }
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    /**
+<i>36</i>&nbsp;     * This method is use to see if the player can or cannot add a card in the slot
+<i>37</i>&nbsp;     * @param card is the Development card that the player wants to add
+<i>38</i>&nbsp;     * @return true if there is a slot available, false if not
+<i>39</i>&nbsp;     */
+<i>40</i>&nbsp;    public boolean canAdd(DevelopmentCard card){
+<b class="nc"><i>41</i>&nbsp;        for(int i = 0; i &lt; 3; i++){</b>
+<b class="nc"><i>42</i>&nbsp;            if(slots[i].canAdd(card)) return true;</b>
+<i>43</i>&nbsp;        }
+<b class="nc"><i>44</i>&nbsp;        return false;</b>
+<i>45</i>&nbsp;    }
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;    /**
+<i>48</i>&nbsp;     * This method is use to see if the player can or cannot add a card in a particular slot.
+<i>49</i>&nbsp;     * @param i is the number of the slot that the player wants.
+<i>50</i>&nbsp;     * @param card is the Development card that the player wants to add
+<i>51</i>&nbsp;     * @return true if the player can add the card in that slot, false if not
+<i>52</i>&nbsp;     */
+<i>53</i>&nbsp;    public boolean canAddInThisSlot(int i, DevelopmentCard card){
+<b class="nc"><i>54</i>&nbsp;        if(slots[i].canAdd(card)) return true;</b>
+<b class="nc"><i>55</i>&nbsp;        else return false;</b>
+<i>56</i>&nbsp;    }
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    public void addCard(int slot, DevelopmentCard card) {
+<b class="nc"><i>59</i>&nbsp;        this.getSlots()[slot].addCard(card);</b>
+<b class="nc"><i>60</i>&nbsp;    }</b>
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;    public ArrayList&lt;String&gt; toCli() {
+<b class="fc"><i>63</i>&nbsp;        ArrayList&lt;String&gt; devSlots = this.slots[0].toCli();</b>
+<b class="fc"><i>64</i>&nbsp;        devSlots.add(0, &quot;??????????????????????????????????????????????????????????????????????????????????????????????&quot;);</b>
+<b class="fc"><i>65</i>&nbsp;        ArrayList&lt;String&gt; cardSlot2 = this.slots[1].toCli();</b>
+<b class="fc"><i>66</i>&nbsp;        ArrayList&lt;String&gt; cardSlot3 = this.slots[2].toCli();</b>
+<i>67</i>&nbsp;
+<b class="fc"><i>68</i>&nbsp;        for(int i = 1; i &lt; devSlots.size(); i++) {</b>
+<b class="fc"><i>69</i>&nbsp;            devSlots.set(i, (&quot;?&quot; + devSlots.get(i) + &quot; &quot; + cardSlot2.get(i-1) + &quot; &quot; + cardSlot3.get(i-1) + &quot;?&quot;));</b>
+<i>70</i>&nbsp;        }
+<b class="fc"><i>71</i>&nbsp;        devSlots.add(devSlots.size(), &quot;??????????????????????????????????????????????????????????????????????????????????????????????&quot;);</b>
+<b class="fc"><i>72</i>&nbsp;        return devSlots;</b>
+<i>73</i>&nbsp;    }
+<i>74</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-12 23:55</div>
+</div>
+</body>
+</html>

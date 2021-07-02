@@ -1,0 +1,111 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: BuyCardMessage</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Model.MessagesToClient</a> ]
+</div>
+
+<h1>Coverage Summary for Class: BuyCardMessage (it.polimi.ingsw.Model.MessagesToClient)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">BuyCardMessage</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66,7%
+  </span>
+  <span class="absValue">
+    (2/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    85,7%
+  </span>
+  <span class="absValue">
+    (6/ 7)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Model.MessagesToClient;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.Controller.Actions.ActionType;
+<i>4</i>&nbsp;import it.polimi.ingsw.Model.ResourceStack;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;/**
+<i>7</i>&nbsp; * BuyCardMessage Class contains data for a response message to be sent to the client
+<i>8</i>&nbsp; * after a BuyCard request.
+<i>9</i>&nbsp; */
+<i>10</i>&nbsp;public class BuyCardMessage extends MessageToClient{
+<i>11</i>&nbsp;    ResourceStack temporaryResources;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    /**
+<i>14</i>&nbsp;     * Constructor for BuyCardMessage Class.
+<i>15</i>&nbsp;     */
+<b class="fc"><i>16</i>&nbsp;    public BuyCardMessage(int playerId) {</b>
+<b class="fc"><i>17</i>&nbsp;        this.actionDone = ActionType.BUY_CARD;</b>
+<b class="fc"><i>18</i>&nbsp;        this.playerId = playerId;</b>
+<b class="fc"><i>19</i>&nbsp;    }</b>
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    public ResourceStack getTemporaryResources() {
+<b class="nc"><i>22</i>&nbsp;        return temporaryResources;</b>
+<i>23</i>&nbsp;    }
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    public void setTemporaryResources(ResourceStack temporaryResources) {
+<b class="fc"><i>26</i>&nbsp;        this.temporaryResources = temporaryResources;</b>
+<b class="fc"><i>27</i>&nbsp;    }</b>
+<i>28</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-12 23:55</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,277 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Game</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.View.ReducedModel</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Game (it.polimi.ingsw.View.ReducedModel)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Game</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    65,2%
+  </span>
+  <span class="absValue">
+    (15/ 23)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    81,7%
+  </span>
+  <span class="absValue">
+    (49/ 60)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.View.ReducedModel;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.Model.Enums.GameType;
+<i>4</i>&nbsp;import it.polimi.ingsw.Model.Enums.SoloActionToken;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import java.util.ArrayList;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;/**
+<i>9</i>&nbsp; * Game Class contains all attributes needed when creating an instance of a new game.
+<i>10</i>&nbsp; */
+<i>11</i>&nbsp;public class Game {
+<i>12</i>&nbsp;    /** Type of the current game -&gt; Single or Multi Player */
+<i>13</i>&nbsp;    private GameType gameType;
+<i>14</i>&nbsp;    /** ArrayList containing all players who joined the game */
+<i>15</i>&nbsp;    private ArrayList&lt;Player&gt; players;
+<i>16</i>&nbsp;    /** Index indicating the current player */
+<i>17</i>&nbsp;    private int currentPlayerIndex;
+<i>18</i>&nbsp;    /** ArrayList containing all Leader Cards of the game */
+<i>19</i>&nbsp;    private ArrayList&lt;LeaderCard&gt; leaderCards;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    private Market market;
+<i>22</i>&nbsp;    private DevelopmentCardTable developmentCardTable;
+<i>23</i>&nbsp;    private FaithTrack faithTrack;
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    private final SoloActionToken[] tokens;
+<i>26</i>&nbsp;    private String myNickname;
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    /**
+<i>29</i>&nbsp;     * Constructor for Game Class.
+<i>30</i>&nbsp;     */
+<b class="fc"><i>31</i>&nbsp;    public Game() {</b>
+<b class="fc"><i>32</i>&nbsp;        this.gameType = GameType.SINGLEPLAYER;</b>
+<b class="fc"><i>33</i>&nbsp;        this.players = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>34</i>&nbsp;        this.currentPlayerIndex = 0;</b>
+<b class="fc"><i>35</i>&nbsp;        this.leaderCards = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>36</i>&nbsp;        this.market = new Market();</b>
+<b class="fc"><i>37</i>&nbsp;        this.developmentCardTable = new DevelopmentCardTable();</b>
+<b class="fc"><i>38</i>&nbsp;        this.faithTrack = new FaithTrack();</b>
+<b class="fc"><i>39</i>&nbsp;        this.tokens = new SoloActionToken[6];</b>
+<b class="fc"><i>40</i>&nbsp;    }</b>
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;    public String getMyNickname() {
+<b class="fc"><i>43</i>&nbsp;        return myNickname;</b>
+<i>44</i>&nbsp;    }
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;    public void setMyNickname(String myNickname) {
+<b class="fc"><i>47</i>&nbsp;        this.myNickname = myNickname;</b>
+<b class="fc"><i>48</i>&nbsp;    }</b>
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    /**
+<i>51</i>&nbsp;     * Getter for &quot;gameType&quot; attribute in Game Class.
+<i>52</i>&nbsp;     */
+<i>53</i>&nbsp;    public GameType getGameType() {
+<b class="fc"><i>54</i>&nbsp;        return gameType;</b>
+<i>55</i>&nbsp;    }
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;    /**
+<i>58</i>&nbsp;     * Getter for &quot;getPlayers&quot; attribute in Game Class.
+<i>59</i>&nbsp;     */
+<i>60</i>&nbsp;    public ArrayList&lt;Player&gt; getPlayers() {
+<b class="fc"><i>61</i>&nbsp;        return players;</b>
+<i>62</i>&nbsp;    }
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;    /**
+<i>65</i>&nbsp;     * Getter for &quot;currentPlayerIndex&quot; attribute in Game Class.
+<i>66</i>&nbsp;     */
+<i>67</i>&nbsp;    public int getCurrentPlayerIndex() {
+<b class="nc"><i>68</i>&nbsp;        return currentPlayerIndex;</b>
+<i>69</i>&nbsp;    }
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;    /**
+<i>72</i>&nbsp;     * Getter for &quot;leaderCards&quot; attribute in Game Class.
+<i>73</i>&nbsp;     */
+<i>74</i>&nbsp;    public ArrayList&lt;LeaderCard&gt; getLeaderCards() {
+<b class="fc"><i>75</i>&nbsp;        return leaderCards;</b>
+<i>76</i>&nbsp;    }
+<i>77</i>&nbsp;
+<i>78</i>&nbsp;    /**
+<i>79</i>&nbsp;     * Getter for &quot;market&quot; attribute in Game Class.
+<i>80</i>&nbsp;     */
+<i>81</i>&nbsp;    public Market getMarket() {
+<b class="nc"><i>82</i>&nbsp;        return market;</b>
+<i>83</i>&nbsp;    }
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;    /**
+<i>86</i>&nbsp;     * Getter for &quot;developmentCardTable&quot; attribute in Game Class.
+<i>87</i>&nbsp;     */
+<i>88</i>&nbsp;    public DevelopmentCardTable getDevelopmentCardTable() {
+<b class="fc"><i>89</i>&nbsp;        return developmentCardTable;</b>
+<i>90</i>&nbsp;    }
+<i>91</i>&nbsp;
+<i>92</i>&nbsp;    /**
+<i>93</i>&nbsp;     * Getter for &quot;faithTrack&quot; attribute in Game Class.
+<i>94</i>&nbsp;     */
+<i>95</i>&nbsp;    public FaithTrack getFaithTrack() {
+<b class="nc"><i>96</i>&nbsp;        return faithTrack;</b>
+<i>97</i>&nbsp;    }
+<i>98</i>&nbsp;
+<i>99</i>&nbsp;    /**
+<i>100</i>&nbsp;     * Getter for &quot;tokens&quot; attribute in Game Class.
+<i>101</i>&nbsp;     */
+<i>102</i>&nbsp;    public SoloActionToken[] getTokens() {
+<b class="nc"><i>103</i>&nbsp;        return tokens;</b>
+<i>104</i>&nbsp;    }
+<i>105</i>&nbsp;
+<i>106</i>&nbsp;    public void setLeaderCards(ArrayList&lt;LeaderCard&gt; leaderCards) {
+<b class="fc"><i>107</i>&nbsp;        this.leaderCards = leaderCards;</b>
+<b class="fc"><i>108</i>&nbsp;    }</b>
+<i>109</i>&nbsp;
+<i>110</i>&nbsp;    /**
+<i>111</i>&nbsp;     * Setter for &quot;gameType&quot; attribute in Game Class.
+<i>112</i>&nbsp;     */
+<i>113</i>&nbsp;    public void setGameType(GameType gameType) {
+<b class="fc"><i>114</i>&nbsp;        this.gameType = gameType;</b>
+<b class="fc"><i>115</i>&nbsp;    }</b>
+<i>116</i>&nbsp;
+<i>117</i>&nbsp;    /**
+<i>118</i>&nbsp;     * Getter for the current player&#39;s nickname in Game Class.
+<i>119</i>&nbsp;     */
+<i>120</i>&nbsp;    public String getCurrentPlayerNickname() {
+<b class="nc"><i>121</i>&nbsp;        return players.get(currentPlayerIndex).getNickname();</b>
+<i>122</i>&nbsp;    }
+<i>123</i>&nbsp;
+<i>124</i>&nbsp;    /**
+<i>125</i>&nbsp;     * Getter for the current player (based on index) in Game Class.
+<i>126</i>&nbsp;     */
+<i>127</i>&nbsp;    public Player getCurrentPlayer() {
+<b class="fc"><i>128</i>&nbsp;        return players.get(currentPlayerIndex);</b>
+<i>129</i>&nbsp;    }
+<i>130</i>&nbsp;
+<i>131</i>&nbsp;    public void setPlayers(ArrayList&lt;Player&gt; players) {
+<b class="fc"><i>132</i>&nbsp;        this.players = players;</b>
+<b class="fc"><i>133</i>&nbsp;    }</b>
+<i>134</i>&nbsp;
+<i>135</i>&nbsp;    public void setCurrentPlayerIndex(int currentPlayerIndex) {
+<b class="nc"><i>136</i>&nbsp;        this.currentPlayerIndex = currentPlayerIndex;</b>
+<b class="nc"><i>137</i>&nbsp;    }</b>
+<i>138</i>&nbsp;
+<i>139</i>&nbsp;    public void setMarket(Market market) {
+<b class="nc"><i>140</i>&nbsp;        this.market = market;</b>
+<b class="nc"><i>141</i>&nbsp;    }</b>
+<i>142</i>&nbsp;
+<i>143</i>&nbsp;    public void setFaithTrack(FaithTrack faithTrack) {
+<b class="fc"><i>144</i>&nbsp;        this.faithTrack = faithTrack;</b>
+<b class="fc"><i>145</i>&nbsp;    }</b>
+<i>146</i>&nbsp;
+<i>147</i>&nbsp;    public void setDevelopmentCardTable(DevelopmentCardTable developmentCardTable) {
+<b class="fc"><i>148</i>&nbsp;        this.developmentCardTable = developmentCardTable;</b>
+<b class="fc"><i>149</i>&nbsp;    }</b>
+<i>150</i>&nbsp;
+<i>151</i>&nbsp;    public ArrayList&lt;String&gt; boardToCli(Player player){
+<b class="fc"><i>152</i>&nbsp;        boolean up = false;</b>
+<i>153</i>&nbsp;        ArrayList&lt;String&gt; leader;
+<i>154</i>&nbsp;        ArrayList&lt;String&gt; board;
+<b class="fc"><i>155</i>&nbsp;        ArrayList&lt;String&gt; faithTrack = this.faithTrack.toCli(this);</b>
+<i>156</i>&nbsp;
+<b class="fc"><i>157</i>&nbsp;        if(this.myNickname.equals(player.getNickname())) up = true;</b>
+<b class="fc"><i>158</i>&nbsp;        leader = player.leaderPrint(up);</b>
+<i>159</i>&nbsp;
+<b class="fc"><i>160</i>&nbsp;        board = player.toCli();</b>
+<i>161</i>&nbsp;
+<b class="fc"><i>162</i>&nbsp;        board.set(0, board.get(0) + &quot; &quot; + leader.get(0));</b>
+<i>163</i>&nbsp;
+<b class="fc"><i>164</i>&nbsp;        for(int i = 1; i &lt;= board.size()-1; i++){</b>
+<b class="fc"><i>165</i>&nbsp;            if(i == (board.size()-2)) board.set(i, board.get(i) + &quot;  &quot; + leader.get(i));</b>
+<b class="fc"><i>166</i>&nbsp;            else if(i == (board.size()-1)) board.set(i, board.get(i) + &quot; &quot; + leader.get(i));</b>
+<b class="fc"><i>167</i>&nbsp;            else if(i == 1) board.set(i, board.get(i) + &quot; &quot; + leader.get(i) );</b>
+<b class="fc"><i>168</i>&nbsp;            else board.set(i, board.get(i) + &quot;  &quot; + leader.get(i));</b>
+<i>169</i>&nbsp;        }
+<i>170</i>&nbsp;
+<b class="fc"><i>171</i>&nbsp;        if(!up) board.add(0, player.getNickname() + &quot;&#39;s board &quot;);</b>
+<b class="fc"><i>172</i>&nbsp;        else board.add(0, &quot;My board&quot;);</b>
+<i>173</i>&nbsp;
+<b class="fc"><i>174</i>&nbsp;        board.add(0, &quot;                                                                                                                                                             &quot;);</b>
+<i>175</i>&nbsp;
+<b class="fc"><i>176</i>&nbsp;        board.addAll(0, faithTrack);</b>
+<b class="fc"><i>177</i>&nbsp;        board.add(0, &quot;                                                                                                                                                             &quot;);</b>
+<b class="fc"><i>178</i>&nbsp;        board.add(0, &quot; - Faith Track - &quot;);</b>
+<i>179</i>&nbsp;
+<b class="fc"><i>180</i>&nbsp;        return board;</b>
+<i>181</i>&nbsp;    }
+<i>182</i>&nbsp;
+<i>183</i>&nbsp;    public ArrayList&lt;String&gt; myBoardToCli() {
+<b class="nc"><i>184</i>&nbsp;        return this.boardToCli(this.getMyPlayer());</b>
+<i>185</i>&nbsp;    }
+<i>186</i>&nbsp;
+<i>187</i>&nbsp;    public Player getMyPlayer() throws IllegalStateException{
+<b class="fc"><i>188</i>&nbsp;        for(Player player : this.players)</b>
+<b class="fc"><i>189</i>&nbsp;            if(player.getNickname().equals(this.myNickname))</b>
+<b class="fc"><i>190</i>&nbsp;                return player;</b>
+<i>191</i>&nbsp;
+<b class="nc"><i>192</i>&nbsp;        throw new IllegalStateException(&quot;THERE IS NO PLAYER WITH THIS NAME: &quot; + this.getMyNickname() + &quot; IN GAME!&quot;);</b>
+<i>193</i>&nbsp;    }
+<i>194</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-12 23:55</div>
+</div>
+</body>
+</html>

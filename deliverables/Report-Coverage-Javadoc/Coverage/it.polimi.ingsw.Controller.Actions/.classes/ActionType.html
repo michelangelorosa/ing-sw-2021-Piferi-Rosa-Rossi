@@ -1,0 +1,137 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ActionType</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Controller.Actions</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ActionType (it.polimi.ingsw.Controller.Actions)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ActionType</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    60%
+  </span>
+  <span class="absValue">
+    (3/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    81,5%
+  </span>
+  <span class="absValue">
+    (22/ 27)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Controller.Actions;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;/**
+<i>4</i>&nbsp; * ActionType enum Class contains every single possible action coming from a Client, going
+<i>5</i>&nbsp; * to the Server.
+<i>6</i>&nbsp; */
+<b class="fc"><i>7</i>&nbsp;public enum ActionType {</b>
+<b class="fc"><i>8</i>&nbsp;    CHOOSE_ACTION(&quot;choose_action&quot;),</b>
+<i>9</i>&nbsp;
+<b class="fc"><i>10</i>&nbsp;    BUY_FROM_MARKET(&quot;buy_market&quot;),</b>
+<b class="fc"><i>11</i>&nbsp;    MARKET_CHOOSE_ROW(&quot;market_choose_row&quot;),</b>
+<b class="fc"><i>12</i>&nbsp;    CHOOSE_LEADER_CARD(&quot;choose_leader_card&quot;),</b>
+<b class="fc"><i>13</i>&nbsp;    ADD_RESOURCE(&quot;add_resource&quot;),</b>
+<b class="fc"><i>14</i>&nbsp;    SWITCH_DEPOT(&quot;add_resource&quot;),</b>
+<b class="fc"><i>15</i>&nbsp;    RESET_WAREHOUSE(&quot;reset_warehouse&quot;),</b>
+<b class="fc"><i>16</i>&nbsp;    END_MARKET(&quot;end_market&quot;),</b>
+<i>17</i>&nbsp;
+<b class="fc"><i>18</i>&nbsp;    BUY_CARD(&quot;buy_card&quot;),</b>
+<b class="fc"><i>19</i>&nbsp;    PAY_RESOURCE_CARD(&quot;pay_resource_card&quot;),</b>
+<b class="fc"><i>20</i>&nbsp;    PAY_RESOURCE_PRODUCTION(&quot;pay_resource_production&quot;),</b>
+<b class="fc"><i>21</i>&nbsp;    END_PAY_CARD(&quot;end_pay&quot;),</b>
+<b class="fc"><i>22</i>&nbsp;    CHOOSE_CARD_SLOT(&quot;choose_card_slot&quot;),</b>
+<i>23</i>&nbsp;
+<b class="fc"><i>24</i>&nbsp;    ACTIVATE_PRODUCTION(&quot;activate_production&quot;),</b>
+<b class="fc"><i>25</i>&nbsp;    END_PAY_PRODUCTION(&quot;end_pay_production&quot;),</b>
+<b class="fc"><i>26</i>&nbsp;    CHOOSE_PRODUCTION_OUTPUT(&quot;choose_production_output&quot;),</b>
+<i>27</i>&nbsp;
+<b class="fc"><i>28</i>&nbsp;    ACTIVATE_LEADERCARD(&quot;activate_leadercard&quot;),</b>
+<i>29</i>&nbsp;
+<b class="fc"><i>30</i>&nbsp;    END_TURN(&quot;end_turn&quot;);</b>
+<i>31</i>&nbsp;    private String text;
+<i>32</i>&nbsp;
+<b class="fc"><i>33</i>&nbsp;    ActionType(String text) {</b>
+<b class="fc"><i>34</i>&nbsp;        this.text = text;</b>
+<b class="fc"><i>35</i>&nbsp;    }</b>
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    public String getText() {
+<b class="nc"><i>38</i>&nbsp;        return text;</b>
+<i>39</i>&nbsp;    }
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    /**
+<i>42</i>&nbsp;     * This method is used to get the enum value given its assigned String text.
+<i>43</i>&nbsp;     * @param text is the String used to get the enum value.
+<i>44</i>&nbsp;     * @return the enum value
+<i>45</i>&nbsp;     */
+<i>46</i>&nbsp;    public static  ActionType fromString(String text) {
+<b class="nc"><i>47</i>&nbsp;        for(ActionType actionType : ActionType.values())</b>
+<b class="nc"><i>48</i>&nbsp;            if(actionType.text.equalsIgnoreCase(text)) {</b>
+<b class="nc"><i>49</i>&nbsp;                return actionType;</b>
+<i>50</i>&nbsp;            }
+<b class="nc"><i>51</i>&nbsp;        return null;</b>
+<i>52</i>&nbsp;    }
+<i>53</i>&nbsp;}
+<i>54</i>&nbsp;
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-12 23:55</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,235 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ResourceStack</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+    @import "../../.css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../.js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">it.polimi.ingsw.Model.GameModel</a>
+</div>
+
+<h1>Coverage Summary for Class: ResourceStack (it.polimi.ingsw.Model.GameModel)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ResourceStack</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (53/53)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package it.polimi.ingsw.Model.GameModel;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import it.polimi.ingsw.Model.Enums.ResourceType;
+<i class="no-highlight">4</i>&nbsp;import it.polimi.ingsw.View.ReducedModel.RedResourceStack;
+<i class="no-highlight">5</i>&nbsp;
+<i class="no-highlight">6</i>&nbsp;/**
+<i class="no-highlight">7</i>&nbsp; * ResourceStack Class contains four integer private attributes indicating the amount of each
+<i class="no-highlight">8</i>&nbsp; * different type of resource: shields, servants, coins, stones.
+<i class="no-highlight">9</i>&nbsp; * @author redrick99
+<i class="no-highlight">10</i>&nbsp; */
+<i class="no-highlight">11</i>&nbsp;public class ResourceStack extends RedResourceStack{
+<i class="no-highlight">12</i>&nbsp;
+<i class="no-highlight">13</i>&nbsp;    /**
+<i class="no-highlight">14</i>&nbsp;     * Constructor for ResourceStack Class.
+<i class="no-highlight">15</i>&nbsp;     */
+<b class="fc"><i class="no-highlight">16</i>&nbsp;    public ResourceStack(int shields, int servants, int coins, int stones) {</b>
+<b class="fc"><i class="no-highlight">17</i>&nbsp;        this.shields = shields;</b>
+<b class="fc"><i class="no-highlight">18</i>&nbsp;        this.servants = servants;</b>
+<b class="fc"><i class="no-highlight">19</i>&nbsp;        this.coins = coins;</b>
+<b class="fc"><i class="no-highlight">20</i>&nbsp;        this.stones = stones;</b>
+<b class="fc"><i class="no-highlight">21</i>&nbsp;    }</b>
+<i class="no-highlight">22</i>&nbsp;
+<i class="no-highlight">23</i>&nbsp;
+<i class="no-highlight">24</i>&nbsp;    /**
+<i class="no-highlight">25</i>&nbsp;     * Setter for a specified type of resource inside the stack.
+<i class="no-highlight">26</i>&nbsp;     * @param resourceType Specified resource type.
+<i class="no-highlight">27</i>&nbsp;     */
+<i class="no-highlight">28</i>&nbsp;    public void setResource(int resources, ResourceType resourceType) {
+<b class="fc"><i class="no-highlight">29</i>&nbsp;        if(resourceType == ResourceType.SHIELDS)</b>
+<b class="fc"><i class="no-highlight">30</i>&nbsp;            this.shields = resources;</b>
+<b class="fc"><i class="no-highlight">31</i>&nbsp;        else if (resourceType == ResourceType.SERVANTS)</b>
+<b class="fc"><i class="no-highlight">32</i>&nbsp;            this.servants = resources;</b>
+<b class="fc"><i class="no-highlight">33</i>&nbsp;        else if (resourceType == ResourceType.COINS)</b>
+<b class="fc"><i class="no-highlight">34</i>&nbsp;            this.coins = resources;</b>
+<b class="fc"><i class="no-highlight">35</i>&nbsp;        else if (resourceType == ResourceType.STONES)</b>
+<b class="fc"><i class="no-highlight">36</i>&nbsp;            this.stones = resources;</b>
+<b class="fc"><i class="no-highlight">37</i>&nbsp;    }</b>
+<i class="no-highlight">38</i>&nbsp;
+<i class="no-highlight">39</i>&nbsp;    /**
+<i class="no-highlight">40</i>&nbsp;     * Adds resources of a specified type to the stack.
+<i class="no-highlight">41</i>&nbsp;     * @param resourcesToAdd Number of resources to add.
+<i class="no-highlight">42</i>&nbsp;     * @param resourceType Specified resource type.
+<i class="no-highlight">43</i>&nbsp;     */
+<i class="no-highlight">44</i>&nbsp;    public void addResource(int resourcesToAdd, ResourceType resourceType) {
+<b class="fc"><i class="no-highlight">45</i>&nbsp;        if(resourceType == ResourceType.SHIELDS)</b>
+<b class="fc"><i class="no-highlight">46</i>&nbsp;            this.shields += resourcesToAdd;</b>
+<b class="fc"><i class="no-highlight">47</i>&nbsp;        else if (resourceType == ResourceType.SERVANTS)</b>
+<b class="fc"><i class="no-highlight">48</i>&nbsp;            this.servants += resourcesToAdd;</b>
+<b class="fc"><i class="no-highlight">49</i>&nbsp;        else if (resourceType == ResourceType.COINS)</b>
+<b class="fc"><i class="no-highlight">50</i>&nbsp;            this.coins += resourcesToAdd;</b>
+<b class="fc"><i class="no-highlight">51</i>&nbsp;        else if (resourceType == ResourceType.STONES)</b>
+<b class="fc"><i class="no-highlight">52</i>&nbsp;            this.stones += resourcesToAdd;</b>
+<b class="fc"><i class="no-highlight">53</i>&nbsp;    }</b>
+<i class="no-highlight">54</i>&nbsp;
+<i class="no-highlight">55</i>&nbsp;    /**
+<i class="no-highlight">56</i>&nbsp;     * Adds the resources of a different ResourceStack.
+<i class="no-highlight">57</i>&nbsp;     * @param resourceStack Stack containing the resources to add.
+<i class="no-highlight">58</i>&nbsp;     */
+<i class="no-highlight">59</i>&nbsp;    public void addToAllTypes(ResourceStack resourceStack){
+<b class="fc"><i class="no-highlight">60</i>&nbsp;        ResourceType[] types = ResourceType.values();</b>
+<b class="fc"><i class="no-highlight">61</i>&nbsp;        for(int i = 1; i &lt; 5; i++){</b>
+<b class="fc"><i class="no-highlight">62</i>&nbsp;            this.addResource(resourceStack.getResource(types[i]), types[i]);</b>
+<i class="no-highlight">63</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">64</i>&nbsp;    }</b>
+<i class="no-highlight">65</i>&nbsp;
+<i class="no-highlight">66</i>&nbsp;    /**
+<i class="no-highlight">67</i>&nbsp;     * Removes resources of a specified type from the stack.
+<i class="no-highlight">68</i>&nbsp;     * @param resourcesToRemove is the number of resources to remove.
+<i class="no-highlight">69</i>&nbsp;     * @param resourceType Specified resource type.
+<i class="no-highlight">70</i>&nbsp;     */
+<i class="no-highlight">71</i>&nbsp;    public void removeResource(int resourcesToRemove, ResourceType resourceType) {
+<b class="fc"><i class="no-highlight">72</i>&nbsp;        if(resourceType == ResourceType.SHIELDS)</b>
+<b class="fc"><i class="no-highlight">73</i>&nbsp;            this.shields -= resourcesToRemove;</b>
+<b class="fc"><i class="no-highlight">74</i>&nbsp;        else if (resourceType == ResourceType.SERVANTS)</b>
+<b class="fc"><i class="no-highlight">75</i>&nbsp;            this.servants -= resourcesToRemove;</b>
+<b class="fc"><i class="no-highlight">76</i>&nbsp;        else if (resourceType == ResourceType.COINS)</b>
+<b class="fc"><i class="no-highlight">77</i>&nbsp;            this.coins -= resourcesToRemove;</b>
+<b class="fc"><i class="no-highlight">78</i>&nbsp;        else if (resourceType == ResourceType.STONES)</b>
+<b class="fc"><i class="no-highlight">79</i>&nbsp;            this.stones -= resourcesToRemove;</b>
+<b class="fc"><i class="no-highlight">80</i>&nbsp;    }</b>
+<i class="no-highlight">81</i>&nbsp;
+<i class="no-highlight">82</i>&nbsp;    /**
+<i class="no-highlight">83</i>&nbsp;     * Removes the resources of different ResourceStack.
+<i class="no-highlight">84</i>&nbsp;     * @param resourceStack Stack containing the resources to remove.
+<i class="no-highlight">85</i>&nbsp;     */
+<i class="no-highlight">86</i>&nbsp;    public void removeFromAllTypes(ResourceStack resourceStack) {
+<b class="fc"><i class="no-highlight">87</i>&nbsp;        ResourceType[] types = ResourceType.values();</b>
+<b class="fc"><i class="no-highlight">88</i>&nbsp;        for(int i = 1; i &lt; 5; i++){</b>
+<b class="fc"><i class="no-highlight">89</i>&nbsp;            if(this.getResource(types[i]) &lt; resourceStack.getResource(types[i]))</b>
+<b class="fc"><i class="no-highlight">90</i>&nbsp;                this.setResource(0, types[i]);</b>
+<i class="no-highlight">91</i>&nbsp;            else
+<b class="fc"><i class="no-highlight">92</i>&nbsp;                this.removeResource(resourceStack.getResource(types[i]), types[i]);</b>
+<i class="no-highlight">93</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">94</i>&nbsp;    }</b>
+<i class="no-highlight">95</i>&nbsp;
+<i class="no-highlight">96</i>&nbsp;    /**
+<i class="no-highlight">97</i>&nbsp;     * Creates a copy of the ResourceStack-type object.
+<i class="no-highlight">98</i>&nbsp;     * @return a copy of the stack.
+<i class="no-highlight">99</i>&nbsp;     */
+<i class="no-highlight">100</i>&nbsp;    public ResourceStack copyStack() {
+<b class="fc"><i class="no-highlight">101</i>&nbsp;        ResourceStack newStack = new ResourceStack(0, 0, 0, 0);</b>
+<b class="fc"><i class="no-highlight">102</i>&nbsp;        ResourceType[] resourceTypes = ResourceType.values();</b>
+<i class="no-highlight">103</i>&nbsp;
+<b class="fc"><i class="no-highlight">104</i>&nbsp;        for(int i = 1; i &lt;= 4; i++) {</b>
+<b class="fc"><i class="no-highlight">105</i>&nbsp;            newStack.setResource(this.getResource(resourceTypes[i]), resourceTypes[i]);</b>
+<i class="no-highlight">106</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">107</i>&nbsp;        return  newStack;</b>
+<i class="no-highlight">108</i>&nbsp;    }
+<i class="no-highlight">109</i>&nbsp;
+<i class="no-highlight">110</i>&nbsp;    /**
+<i class="no-highlight">111</i>&nbsp;     * This method is used when Resetting a Resource Manager. It reverts the ResourceStack to
+<i class="no-highlight">112</i>&nbsp;     * another given in input.
+<i class="no-highlight">113</i>&nbsp;     * @param resourceStack Stack to revert to.
+<i class="no-highlight">114</i>&nbsp;     */
+<i class="no-highlight">115</i>&nbsp;    public void revertBack(ResourceStack resourceStack) {
+<b class="fc"><i class="no-highlight">116</i>&nbsp;        ResourceType[] resourceTypes = ResourceType.values();</b>
+<i class="no-highlight">117</i>&nbsp;
+<b class="fc"><i class="no-highlight">118</i>&nbsp;        for(int i = 1; i &lt;= 4; i++) {</b>
+<b class="fc"><i class="no-highlight">119</i>&nbsp;            this.setResource(resourceStack.getResource(resourceTypes[i]), resourceTypes[i]);</b>
+<i class="no-highlight">120</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">121</i>&nbsp;    }</b>
+<i class="no-highlight">122</i>&nbsp;
+<i class="no-highlight">123</i>&nbsp;    /**
+<i class="no-highlight">124</i>&nbsp;     * Counts the total number of all Types of resources.
+<i class="no-highlight">125</i>&nbsp;     * @return the number of resources.
+<i class="no-highlight">126</i>&nbsp;     */
+<i class="no-highlight">127</i>&nbsp;    public int totalResourcesToInt() {
+<b class="fc"><i class="no-highlight">128</i>&nbsp;        return this.shields + this.servants + this.coins + this.stones;</b>
+<i class="no-highlight">129</i>&nbsp;    }
+<i class="no-highlight">130</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-07-02 23:15</div>
+</div>
+</body>
+</html>

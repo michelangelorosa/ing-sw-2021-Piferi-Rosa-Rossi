@@ -1,0 +1,147 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ActionController</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Controller</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ActionController (it.polimi.ingsw.Controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ActionController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    83,3%
+  </span>
+  <span class="absValue">
+    (5/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    73,3%
+  </span>
+  <span class="absValue">
+    (11/ 15)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Controller;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.Controller.Actions.*;
+<i>4</i>&nbsp;import it.polimi.ingsw.Model.*;
+<i>5</i>&nbsp;import it.polimi.ingsw.Model.MessagesToClient.*;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;/**
+<i>8</i>&nbsp; * ActionController Class contains all that is needed to compute a request sent by the Client
+<i>9</i>&nbsp; * and to create a object message containing a response.
+<i>10</i>&nbsp; */
+<i>11</i>&nbsp;public class ActionController {
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    private final Game game;
+<b class="fc"><i>14</i>&nbsp;    private final ModelToView modelToView = new ModelToView();</b>
+<b class="fc"><i>15</i>&nbsp;    private final ResetWarehouse resetWarehouse = new ResetWarehouse();</b>
+<b class="fc"><i>16</i>&nbsp;    private final ChooseCardSlot chooseCardSlot = new ChooseCardSlot(-1);</b>
+<b class="fc"><i>17</i>&nbsp;    private final ChooseProductionOutput chooseProductionOutput = new ChooseProductionOutput();</b>
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    /**
+<i>20</i>&nbsp;     * Constructor for ActionController Class.
+<i>21</i>&nbsp;     */
+<b class="fc"><i>22</i>&nbsp;    public ActionController() {</b>
+<b class="fc"><i>23</i>&nbsp;        this.game = new Game();</b>
+<b class="fc"><i>24</i>&nbsp;    }</b>
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    /**
+<i>27</i>&nbsp;     * Method used to compute the client&#39;s request.
+<i>28</i>&nbsp;     * @param action A generic action received by the server socket.
+<i>29</i>&nbsp;     */
+<i>30</i>&nbsp;    public void doAction(Action action) {
+<b class="nc"><i>31</i>&nbsp;        action.doAction(this);</b>
+<b class="nc"><i>32</i>&nbsp;        MessageToClient message = action.messagePrepare(this);</b>
+<i>33</i>&nbsp;
+<b class="nc"><i>34</i>&nbsp;        modelToView.notify(message);</b>
+<b class="nc"><i>35</i>&nbsp;    }</b>
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    /**
+<i>38</i>&nbsp;     * Getter for &quot;game&quot; attribute in ActionController Class.
+<i>39</i>&nbsp;     */
+<i>40</i>&nbsp;    public Game getGame() {
+<b class="fc"><i>41</i>&nbsp;        return game;</b>
+<i>42</i>&nbsp;    }
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    /**
+<i>45</i>&nbsp;     * Getter for &quot;resetWarehouse&quot; attribute in ActioController Class.
+<i>46</i>&nbsp;     */
+<i>47</i>&nbsp;    public ResetWarehouse getResetWarehouse() {
+<b class="fc"><i>48</i>&nbsp;        return resetWarehouse;</b>
+<i>49</i>&nbsp;    }
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    /**
+<i>52</i>&nbsp;     * Getter for &quot;chooseCardSlot&quot; attribute in ActioController Class.
+<i>53</i>&nbsp;     */
+<i>54</i>&nbsp;    public ChooseCardSlot getChooseCardSlot() {
+<b class="fc"><i>55</i>&nbsp;        return chooseCardSlot;</b>
+<i>56</i>&nbsp;    }
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    /**
+<i>59</i>&nbsp;     * Getter for &quot;chooseProductionOutput&quot; attribute in ActioController Class.
+<i>60</i>&nbsp;     */
+<i>61</i>&nbsp;    public ChooseProductionOutput getChooseProductionOutput() {
+<b class="fc"><i>62</i>&nbsp;        return chooseProductionOutput;</b>
+<i>63</i>&nbsp;    }
+<i>64</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-12 23:55</div>
+</div>
+</body>
+</html>

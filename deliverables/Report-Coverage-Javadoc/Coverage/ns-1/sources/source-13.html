@@ -1,0 +1,205 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ResetWarehouse</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+    @import "../../.css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../.js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">it.polimi.ingsw.Controller.Actions</a>
+</div>
+
+<h1>Coverage Summary for Class: ResetWarehouse (it.polimi.ingsw.Controller.Actions)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ResetWarehouse</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (27/27)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package it.polimi.ingsw.Controller.Actions;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import it.polimi.ingsw.Controller.ControllerClasses.ActionController;
+<i class="no-highlight">4</i>&nbsp;import it.polimi.ingsw.Model.GameModel.ResourceStack;
+<i class="no-highlight">5</i>&nbsp;import it.polimi.ingsw.Model.GameModel.Warehouse;
+<i class="no-highlight">6</i>&nbsp;import it.polimi.ingsw.Model.MessagesToClient.*;
+<i class="no-highlight">7</i>&nbsp;
+<i class="no-highlight">8</i>&nbsp;/**
+<i class="no-highlight">9</i>&nbsp; * ResetWarehouse Class contains data and methods to complete a Client&#39;s request when wanting
+<i class="no-highlight">10</i>&nbsp; * to reset his warehouse to initial conditions (when adding resources).
+<i class="no-highlight">11</i>&nbsp; * &lt;p&gt;&lt;b&gt;Attributes:&lt;/b&gt;&lt;/p&gt;
+<i class="no-highlight">12</i>&nbsp; * &lt;ul&gt;
+<i class="no-highlight">13</i>&nbsp; *     &lt;li&gt;Warehouse &quot;backupWarehouse&quot;: Backed Up Warehouse used to reset the player&#39;s Warehouse to initial conditions&lt;/li&gt;
+<i class="no-highlight">14</i>&nbsp; *     &lt;li&gt;ResourceStack &quot;backupResources&quot;: Backed up Temporary Resources used to reset the player&#39;s Warehouse to initial conditions&lt;/li&gt;
+<i class="no-highlight">15</i>&nbsp; * &lt;/ul&gt;
+<i class="no-highlight">16</i>&nbsp; * @author redrick99
+<i class="no-highlight">17</i>&nbsp; */
+<i class="no-highlight">18</i>&nbsp;public class ResetWarehouse extends Action {
+<i class="no-highlight">19</i>&nbsp;    private Warehouse backupWarehouse;
+<i class="no-highlight">20</i>&nbsp;    private ResourceStack backupResources;
+<i class="no-highlight">21</i>&nbsp;
+<i class="no-highlight">22</i>&nbsp;    /**
+<i class="no-highlight">23</i>&nbsp;     * Constructor for ResetWarehouse Class.
+<i class="no-highlight">24</i>&nbsp;     */
+<b class="fc"><i class="no-highlight">25</i>&nbsp;    public ResetWarehouse() {</b>
+<b class="fc"><i class="no-highlight">26</i>&nbsp;        this.actionType = ActionType.RESET_WAREHOUSE;</b>
+<b class="fc"><i class="no-highlight">27</i>&nbsp;    }</b>
+<i class="no-highlight">28</i>&nbsp;
+<i class="no-highlight">29</i>&nbsp;    /**
+<i class="no-highlight">30</i>&nbsp;     * Getter for &quot;backupWarehouse&quot; attribute.
+<i class="no-highlight">31</i>&nbsp;     */
+<i class="no-highlight">32</i>&nbsp;    public Warehouse getBackupWarehouse() {
+<b class="fc"><i class="no-highlight">33</i>&nbsp;        return backupWarehouse;</b>
+<i class="no-highlight">34</i>&nbsp;    }
+<i class="no-highlight">35</i>&nbsp;
+<i class="no-highlight">36</i>&nbsp;    /**
+<i class="no-highlight">37</i>&nbsp;     * Setter for &quot;backupWarehouse&quot; attribute.
+<i class="no-highlight">38</i>&nbsp;     */
+<i class="no-highlight">39</i>&nbsp;    public void setBackupWarehouse(Warehouse backupWarehouse) {
+<b class="fc"><i class="no-highlight">40</i>&nbsp;        this.backupWarehouse = backupWarehouse;</b>
+<b class="fc"><i class="no-highlight">41</i>&nbsp;    }</b>
+<i class="no-highlight">42</i>&nbsp;
+<i class="no-highlight">43</i>&nbsp;    /**
+<i class="no-highlight">44</i>&nbsp;     * Getter for &quot;backupResources&quot; attribute.
+<i class="no-highlight">45</i>&nbsp;     */
+<i class="no-highlight">46</i>&nbsp;    public ResourceStack getBackupResources() {
+<b class="fc"><i class="no-highlight">47</i>&nbsp;        return backupResources;</b>
+<i class="no-highlight">48</i>&nbsp;    }
+<i class="no-highlight">49</i>&nbsp;
+<i class="no-highlight">50</i>&nbsp;    /**
+<i class="no-highlight">51</i>&nbsp;     * Setter for &quot;backupResources&quot; attribute.
+<i class="no-highlight">52</i>&nbsp;     */
+<i class="no-highlight">53</i>&nbsp;    public void setBackupResources(ResourceStack backupResources) {
+<b class="fc"><i class="no-highlight">54</i>&nbsp;        this.backupResources = backupResources;</b>
+<b class="fc"><i class="no-highlight">55</i>&nbsp;    }</b>
+<i class="no-highlight">56</i>&nbsp;
+<i class="no-highlight">57</i>&nbsp;    /**
+<i class="no-highlight">58</i>&nbsp;     * Executes the action on the Model.
+<i class="no-highlight">59</i>&nbsp;     * @param actionController Class used to compute Action messages coming from the Client.
+<i class="no-highlight">60</i>&nbsp;     * @return &quot;SUCCESS&quot;.
+<i class="no-highlight">61</i>&nbsp;     */
+<i class="no-highlight">62</i>&nbsp;    @Override
+<i class="no-highlight">63</i>&nbsp;    public String doAction(ActionController actionController) {
+<b class="fc"><i class="no-highlight">64</i>&nbsp;        actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse().revertWarehouse(this.backupWarehouse);</b>
+<b class="fc"><i class="no-highlight">65</i>&nbsp;        actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().revertBack(this.backupResources);</b>
+<i class="no-highlight">66</i>&nbsp;
+<b class="fc"><i class="no-highlight">67</i>&nbsp;        this.backupWarehouse = actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse().copyWarehouse();</b>
+<b class="fc"><i class="no-highlight">68</i>&nbsp;        this.backupResources = actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay().copyStack();</b>
+<i class="no-highlight">69</i>&nbsp;
+<b class="fc"><i class="no-highlight">70</i>&nbsp;        this.response = &quot;SUCCESS&quot;;</b>
+<b class="fc"><i class="no-highlight">71</i>&nbsp;        return &quot;SUCCESS&quot;;</b>
+<i class="no-highlight">72</i>&nbsp;    }
+<i class="no-highlight">73</i>&nbsp;
+<i class="no-highlight">74</i>&nbsp;    /**
+<i class="no-highlight">75</i>&nbsp;     * Empties both backup objects when concluding the &lt;i&gt;Add Cycle&lt;/i&gt;.
+<i class="no-highlight">76</i>&nbsp;     */
+<i class="no-highlight">77</i>&nbsp;    public void emptyBackupResource() {
+<b class="fc"><i class="no-highlight">78</i>&nbsp;        this.backupWarehouse = new Warehouse();</b>
+<b class="fc"><i class="no-highlight">79</i>&nbsp;        this.backupResources = new ResourceStack(0,0,0,0);</b>
+<b class="fc"><i class="no-highlight">80</i>&nbsp;    }</b>
+<i class="no-highlight">81</i>&nbsp;
+<i class="no-highlight">82</i>&nbsp;    /**
+<i class="no-highlight">83</i>&nbsp;     * Prepares a ResetWarehouseMessage MessageToClient type object to be sent to the Client.
+<i class="no-highlight">84</i>&nbsp;     * @param actionController Class used to compute Action messages coming from the Client.
+<i class="no-highlight">85</i>&nbsp;     * @return A message to be sent to the client.
+<i class="no-highlight">86</i>&nbsp;     */
+<i class="no-highlight">87</i>&nbsp;    @Override
+<i class="no-highlight">88</i>&nbsp;    public MessageToClient messagePrepare(ActionController actionController) {
+<b class="fc"><i class="no-highlight">89</i>&nbsp;        ResetWarehouseMessage message = new ResetWarehouseMessage(actionController.getGame().getCurrentPlayerNickname());</b>
+<b class="fc"><i class="no-highlight">90</i>&nbsp;        message.setWarehouse(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getWarehouse());</b>
+<b class="fc"><i class="no-highlight">91</i>&nbsp;        message.setTemporaryResources(actionController.getGame().getCurrentPlayer().getBoard().getResourceManager().getTemporaryResourcesToPay());</b>
+<b class="fc"><i class="no-highlight">92</i>&nbsp;        message.setError(this.response);</b>
+<b class="fc"><i class="no-highlight">93</i>&nbsp;        message.addPossibleAction(ActionType.ADD_RESOURCE);</b>
+<b class="fc"><i class="no-highlight">94</i>&nbsp;        message.addPossibleAction(ActionType.RESET_WAREHOUSE);</b>
+<b class="fc"><i class="no-highlight">95</i>&nbsp;        message.addPossibleAction(ActionType.SWITCH_DEPOT);</b>
+<b class="fc"><i class="no-highlight">96</i>&nbsp;        message.addPossibleAction(ActionType.END_MARKET);</b>
+<i class="no-highlight">97</i>&nbsp;
+<b class="fc"><i class="no-highlight">98</i>&nbsp;        return message;</b>
+<i class="no-highlight">99</i>&nbsp;    }
+<i class="no-highlight">100</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-07-02 23:15</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,154 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Server</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Server (it.polimi.ingsw.Model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Server</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 25)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.io.IOException;
+<i>4</i>&nbsp;import java.net.ServerSocket;
+<i>5</i>&nbsp;import java.net.Socket;
+<i>6</i>&nbsp;import java.util.ArrayList;
+<i>7</i>&nbsp;import java.util.HashSet;
+<i>8</i>&nbsp;import java.util.Set;
+<i>9</i>&nbsp;import java.util.concurrent.Executors;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;/**
+<i>12</i>&nbsp; *  Handles the connections to new clients, keeping an HashSet of active Names and active Sockets
+<i>13</i>&nbsp; *  The default parameters are set to port 8765 for testing purposes.
+<i>14</i>&nbsp; *  For every clients that gets connected an istance of ServerConnection is run, the thread pool is fixed at 4 so that
+<i>15</i>&nbsp; *  there can&#39;t be more than 4 connections handled at the same time, for now they get ignored
+<i>16</i>&nbsp; */
+<b class="nc"><i>17</i>&nbsp;public class Server {</b>
+<b class="nc"><i>18</i>&nbsp;    private static Set&lt;String&gt; names = new HashSet&lt;&gt;();</b>
+<b class="nc"><i>19</i>&nbsp;    private static Set&lt;Socket&gt; socketSet = new HashSet&lt;&gt;();</b>
+<b class="nc"><i>20</i>&nbsp;    private static ArrayList&lt;ServerConnection&gt; connections = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>21</i>&nbsp;    private static int S_PORT = 8765;</b>
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    public static Set&lt;String&gt; getNames() {
+<b class="nc"><i>24</i>&nbsp;        return names;</b>
+<i>25</i>&nbsp;    }
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    public static void setNames(Set&lt;String&gt; names) {
+<b class="nc"><i>28</i>&nbsp;        Server.names = names;</b>
+<i>29</i>&nbsp;    }
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    public static Set&lt;Socket&gt; getSockets() {
+<b class="nc"><i>32</i>&nbsp;        return socketSet;</b>
+<i>33</i>&nbsp;    }
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    public static void setSockets(Set&lt;Socket&gt; socketSet) {
+<b class="nc"><i>36</i>&nbsp;        Server.socketSet = socketSet;</b>
+<i>37</i>&nbsp;    }
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    public static void main(String[] args){
+<i>40</i>&nbsp;        try{
+<i>41</i>&nbsp;            ServerSocket ss;
+<b class="nc"><i>42</i>&nbsp;            ss = new ServerSocket(S_PORT);</b>
+<b class="nc"><i>43</i>&nbsp;            var pool = Executors.newFixedThreadPool(4);</b>
+<i>44</i>&nbsp;            while (true){
+<i>45</i>&nbsp;                try{
+<b class="nc"><i>46</i>&nbsp;                    Socket client = ss.accept();</b>
+<b class="nc"><i>47</i>&nbsp;                    ServerConnection serverConnection = new ServerConnection(client,connections);</b>
+<b class="nc"><i>48</i>&nbsp;                    connections.add(serverConnection);</b>
+<b class="nc"><i>49</i>&nbsp;                    pool.execute(serverConnection);</b>
+<b class="nc"><i>50</i>&nbsp;                }catch (IOException e){</b>
+<b class="nc"><i>51</i>&nbsp;                    System.out.println(&quot;Drop &quot;);</b>
+<b class="nc"><i>52</i>&nbsp;                }</b>
+<i>53</i>&nbsp;            }
+<b class="nc"><i>54</i>&nbsp;        }catch (IOException e){</b>
+<b class="nc"><i>55</i>&nbsp;            System.out.println(&quot;Unable to open Server on port &quot;+S_PORT);</b>
+<b class="nc"><i>56</i>&nbsp;            System.exit(1);</b>
+<i>57</i>&nbsp;        }
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    }
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;    public int getPort() {
+<b class="nc"><i>62</i>&nbsp;        return S_PORT;</b>
+<i>63</i>&nbsp;    }
+<i>64</i>&nbsp;    public void setPort(int n) throws Exception {
+<b class="nc"><i>65</i>&nbsp;        if(n&gt;1024&amp;n&lt;65535)</b>
+<b class="nc"><i>66</i>&nbsp;            S_PORT=n;</b>
+<i>67</i>&nbsp;        else{
+<b class="nc"><i>68</i>&nbsp;            throw new Exception(&quot;Reserved port!&quot;);</b>
+<i>69</i>&nbsp;        }
+<i>70</i>&nbsp;    }
+<i>71</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-12 23:55</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,126 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ClientConnection</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.View</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ClientConnection (it.polimi.ingsw.View)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ClientConnection</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 16)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.View;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.io.*;
+<i>4</i>&nbsp;import java.net.Socket;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;/** ClientConnection handles the listening of messages from the server.
+<i>7</i>&nbsp; * the messages are int coded
+<i>8</i>&nbsp; */
+<i>9</i>&nbsp;public class ClientConnection implements Runnable{
+<i>10</i>&nbsp;    private Socket server;
+<i>11</i>&nbsp;    private OutputStream outputStream;
+<i>12</i>&nbsp;    private InputStream inputStream;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;
+<b class="nc"><i>15</i>&nbsp;    public ClientConnection (Socket socket) throws IOException{</b>
+<b class="nc"><i>16</i>&nbsp;        server = socket;</b>
+<b class="nc"><i>17</i>&nbsp;        inputStream = socket.getInputStream();</b>
+<b class="nc"><i>18</i>&nbsp;        outputStream = socket.getOutputStream();</b>
+<i>19</i>&nbsp;    }
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    @Override
+<i>22</i>&nbsp;    public void run(){
+<i>23</i>&nbsp;        try {
+<i>24</i>&nbsp;
+<b class="nc"><i>25</i>&nbsp;            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);</b>
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;            while (true) {
+<b class="nc"><i>28</i>&nbsp;                int action = objectInputStream.readInt();</b>
+<b class="nc"><i>29</i>&nbsp;                System.out.print(&quot;Got &quot;+action);</b>
+<i>30</i>&nbsp;
+<b class="nc"><i>31</i>&nbsp;                if (action==0) {</b>
+<b class="nc"><i>32</i>&nbsp;                    System.out.print(&quot; Enter name: &quot;);</b>
+<b class="nc"><i>33</i>&nbsp;                    String name =&quot;Giorgio&quot;;</b>
+<b class="nc"><i>34</i>&nbsp;                } //Tutti gli switch case</b>
+<b class="nc"><i>35</i>&nbsp;                else if(action==1){</b>
+<b class="nc"><i>36</i>&nbsp;                    System.out.println(objectInputStream.readUTF());</b>
+<i>37</i>&nbsp;                }
+<b class="nc"><i>38</i>&nbsp;            }</b>
+<b class="nc"><i>39</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>40</i>&nbsp;            e.printStackTrace();</b>
+<i>41</i>&nbsp;        }
+<i>42</i>&nbsp;    }
+<i>43</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-05-12 23:55</div>
+</div>
+</body>
+</html>

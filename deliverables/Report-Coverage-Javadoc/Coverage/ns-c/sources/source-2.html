@@ -1,0 +1,167 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > PersistenceServerController</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+    @import "../../.css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../.js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">it.polimi.ingsw.Model.Persistance</a>
+</div>
+
+<h1>Coverage Summary for Class: PersistenceServerController (it.polimi.ingsw.Model.Persistance)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PersistenceServerController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    12,5%
+  </span>
+  <span class="absValue">
+    (3/24)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package it.polimi.ingsw.Model.Persistance;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import it.polimi.ingsw.Model.Server.Server;
+<i class="no-highlight">4</i>&nbsp;
+<i class="no-highlight">5</i>&nbsp;import java.io.IOException;
+<i class="no-highlight">6</i>&nbsp;
+<i class="no-highlight">7</i>&nbsp;/**
+<i class="no-highlight">8</i>&nbsp; * PersistenceServerController Class is used by the server to reset itself if it stopped and not enough players connected
+<i class="no-highlight">9</i>&nbsp; * after five minutes.
+<i class="no-highlight">10</i>&nbsp; * &lt;p&gt;&lt;b&gt;Attributes:&lt;/b&gt;&lt;/p&gt;
+<i class="no-highlight">11</i>&nbsp; * &lt;ul&gt;
+<i class="no-highlight">12</i>&nbsp; *     &lt;li&gt;Server &quot;server&quot;: server to check&lt;/li&gt;
+<i class="no-highlight">13</i>&nbsp; *     &lt;li&gt;int &quot;numberOfPlayers&quot;: number of the players of the server&#39;s game&lt;/li&gt;
+<i class="no-highlight">14</i>&nbsp; * &lt;/ul&gt;
+<i class="no-highlight">15</i>&nbsp; * @author redrick99
+<i class="no-highlight">16</i>&nbsp; */
+<i class="no-highlight">17</i>&nbsp;public class PersistenceServerController implements Runnable {
+<i class="no-highlight">18</i>&nbsp;    Server server;
+<i class="no-highlight">19</i>&nbsp;    int numberOfPlayers;
+<i class="no-highlight">20</i>&nbsp;
+<i class="no-highlight">21</i>&nbsp;    /**
+<i class="no-highlight">22</i>&nbsp;     * Constructor for PersistenceServerController Class.
+<i class="no-highlight">23</i>&nbsp;     */
+<b class="fc"><i class="no-highlight">24</i>&nbsp;    public PersistenceServerController(Server server) {</b>
+<b class="fc"><i class="no-highlight">25</i>&nbsp;        this.server = server;</b>
+<i class="no-highlight">26</i>&nbsp;
+<b class="fc"><i class="no-highlight">27</i>&nbsp;    }</b>
+<i class="no-highlight">28</i>&nbsp;
+<i class="no-highlight">29</i>&nbsp;    /**
+<i class="no-highlight">30</i>&nbsp;     * An instance of this class is to be run on a thread in parallel with the server.
+<i class="no-highlight">31</i>&nbsp;     * &lt;p&gt;This method makes the object wait for 5 minutes and then resets the server if not enough players connected.&lt;/p&gt;
+<i class="no-highlight">32</i>&nbsp;     */
+<i class="no-highlight">33</i>&nbsp;    @Override
+<i class="no-highlight">34</i>&nbsp;    public void run() {
+<b class="nc"><i class="no-highlight">35</i>&nbsp;        numberOfPlayers = server.getController().getActionController().getPersistence().getNumberOfPlayers();</b>
+<i class="no-highlight">36</i>&nbsp;
+<b class="nc"><i class="no-highlight">37</i>&nbsp;        synchronized (this) {</b>
+<i class="no-highlight">38</i>&nbsp;            try {
+<b class="nc"><i class="no-highlight">39</i>&nbsp;                System.out.println(&quot;WAITING&quot;);</b>
+<b class="nc"><i class="no-highlight">40</i>&nbsp;                wait(300000L);</b>
+<b class="nc"><i class="no-highlight">41</i>&nbsp;                System.out.println(&quot;FINISHED WAITING&quot;);</b>
+<b class="nc"><i class="no-highlight">42</i>&nbsp;            } catch (InterruptedException e) {</b>
+<b class="nc"><i class="no-highlight">43</i>&nbsp;                System.out.println(&quot;[PSC] caught InterruptedException when waiting&quot;);</b>
+<b class="nc"><i class="no-highlight">44</i>&nbsp;                e.printStackTrace();</b>
+<b class="nc"><i class="no-highlight">45</i>&nbsp;            }</b>
+<b class="nc"><i class="no-highlight">46</i>&nbsp;        }</b>
+<i class="no-highlight">47</i>&nbsp;
+<b class="nc"><i class="no-highlight">48</i>&nbsp;        synchronized (server.getController().getActionController()) {</b>
+<b class="nc"><i class="no-highlight">49</i>&nbsp;            int gameSize = server.getController().getActionController().getGame().getPlayers().size();</b>
+<i class="no-highlight">50</i>&nbsp;
+<b class="nc"><i class="no-highlight">51</i>&nbsp;            if (numberOfPlayers != -1 &amp;&amp; server.getConnectedPlayers() &lt; numberOfPlayers &amp;&amp; gameSize == 0) {</b>
+<i class="no-highlight">52</i>&nbsp;                try {
+<b class="nc"><i class="no-highlight">53</i>&nbsp;                    server.getController().getActionController().getPersistence().resetFile();</b>
+<b class="nc"><i class="no-highlight">54</i>&nbsp;                    System.exit(1);</b>
+<b class="nc"><i class="no-highlight">55</i>&nbsp;                } catch (IOException e) {</b>
+<b class="nc"><i class="no-highlight">56</i>&nbsp;                    System.out.println(&quot;[PSC] caught IOException when resetting file&quot;);</b>
+<b class="nc"><i class="no-highlight">57</i>&nbsp;                    e.printStackTrace();</b>
+<b class="nc"><i class="no-highlight">58</i>&nbsp;                }</b>
+<i class="no-highlight">59</i>&nbsp;            }
+<b class="nc"><i class="no-highlight">60</i>&nbsp;        }</b>
+<b class="nc"><i class="no-highlight">61</i>&nbsp;    }</b>
+<i class="no-highlight">62</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-07-02 23:15</div>
+</div>
+</body>
+</html>

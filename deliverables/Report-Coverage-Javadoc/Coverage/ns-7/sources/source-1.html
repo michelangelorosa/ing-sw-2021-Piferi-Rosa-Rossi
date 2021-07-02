@@ -1,0 +1,292 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > SinglePlayer</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+    @import "../../.css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../.js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">it.polimi.ingsw.Model.GameModel.SinglePlayer</a>
+</div>
+
+<h1>Coverage Summary for Class: SinglePlayer (it.polimi.ingsw.Model.GameModel.SinglePlayer)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SinglePlayer</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (60/60)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">SinglePlayer$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (11/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (62/62)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package it.polimi.ingsw.Model.GameModel.SinglePlayer;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import it.polimi.ingsw.Model.Enums.Color;
+<i class="no-highlight">4</i>&nbsp;import it.polimi.ingsw.Model.Enums.SoloActionToken;
+<i class="no-highlight">5</i>&nbsp;import it.polimi.ingsw.Model.GameModel.*;
+<i class="no-highlight">6</i>&nbsp;
+<i class="no-highlight">7</i>&nbsp;
+<i class="no-highlight">8</i>&nbsp;/**
+<i class="no-highlight">9</i>&nbsp; * SinglePlayer Class contains data and methods used by the Model when playing a singleplayer game.
+<i class="no-highlight">10</i>&nbsp; * &lt;p&gt;&lt;b&gt;Attributes:&lt;/b&gt;&lt;/p&gt;
+<i class="no-highlight">11</i>&nbsp; * &lt;ul&gt;
+<i class="no-highlight">12</i>&nbsp; *     &lt;li&gt;SoloActionTokenDeck &quot;tokenDeck&quot;: deck containing all Action Tokens of the singleplayer game&lt;/li&gt;
+<i class="no-highlight">13</i>&nbsp; *     &lt;li&gt;int &quot;lorenzoCards&quot;: indicates the number of Development Cards owned by Lorenzo il Magnifico&lt;/li&gt;
+<i class="no-highlight">14</i>&nbsp; *     &lt;li&gt;int &quot;lorenzoFaithPoints&quot;: stores Lorenzo&#39;s faith points&lt;/li&gt;
+<i class="no-highlight">15</i>&nbsp; *     &lt;li&gt;boolean &quot;lorenzoWon&quot;: indicates if Lorenzo il Magnifico lost the game&lt;/li&gt;
+<i class="no-highlight">16</i>&nbsp; *     &lt;li&gt;SoloActionToken &quot;lastToken&quot;: last token drawn from the token deck by Lorenzo il Magnifico&lt;/li&gt;
+<i class="no-highlight">17</i>&nbsp; * &lt;/ul&gt;
+<i class="no-highlight">18</i>&nbsp; * @author redrick99 &amp; michelangelorosa
+<i class="no-highlight">19</i>&nbsp; */
+<i class="no-highlight">20</i>&nbsp;public class SinglePlayer {
+<b class="fc"><i class="no-highlight">21</i>&nbsp;    private final SoloActionTokenDeck tokenDeck = new SoloActionTokenDeck();</b>
+<i class="no-highlight">22</i>&nbsp;    private int lorenzoCards;
+<i class="no-highlight">23</i>&nbsp;    private int lorenzoFaithPoints;
+<b class="fc"><i class="no-highlight">24</i>&nbsp;    private boolean lorenzoWon = false;</b>
+<i class="no-highlight">25</i>&nbsp;    private SoloActionToken lastToken;
+<i class="no-highlight">26</i>&nbsp;
+<i class="no-highlight">27</i>&nbsp;    /**
+<i class="no-highlight">28</i>&nbsp;     * Constructor for SinglePlayer Class.
+<i class="no-highlight">29</i>&nbsp;     * &lt;p&gt;Sets Lorenzo&#39;s Development Cards and Faith Points to 0&lt;/p&gt;
+<i class="no-highlight">30</i>&nbsp;     */
+<b class="fc"><i class="no-highlight">31</i>&nbsp;    public SinglePlayer() {</b>
+<b class="fc"><i class="no-highlight">32</i>&nbsp;        lorenzoCards = 0;</b>
+<b class="fc"><i class="no-highlight">33</i>&nbsp;        lorenzoFaithPoints = 0;</b>
+<b class="fc"><i class="no-highlight">34</i>&nbsp;    }</b>
+<i class="no-highlight">35</i>&nbsp;
+<i class="no-highlight">36</i>&nbsp;    /**
+<i class="no-highlight">37</i>&nbsp;     * Plays Lorenzo&#39;s turn at the end of the player&#39;s turn.
+<i class="no-highlight">38</i>&nbsp;     * @param game Instance of the game being played by the player.
+<i class="no-highlight">39</i>&nbsp;     */
+<i class="no-highlight">40</i>&nbsp;    public void lorenzoTurn(Game game) {
+<b class="fc"><i class="no-highlight">41</i>&nbsp;        this.tokenParser(game, tokenDeck.draw());</b>
+<b class="fc"><i class="no-highlight">42</i>&nbsp;    }</b>
+<i class="no-highlight">43</i>&nbsp;
+<i class="no-highlight">44</i>&nbsp;    /**
+<i class="no-highlight">45</i>&nbsp;     * Draws a Token from the SoloActionToken deck and executes code based on the type of token drawn.
+<i class="no-highlight">46</i>&nbsp;     * @param game Instance of the game being played by the player.
+<i class="no-highlight">47</i>&nbsp;     * @param token Token drawn from the deck.
+<i class="no-highlight">48</i>&nbsp;     */
+<i class="no-highlight">49</i>&nbsp;    protected void tokenParser(Game game, SoloActionToken token) {
+<b class="fc"><i class="no-highlight">50</i>&nbsp;        Player Lorenzo = getLorenzo(game);</b>
+<b class="fc"><i class="no-highlight">51</i>&nbsp;        this.lastToken = token;</b>
+<i class="no-highlight">52</i>&nbsp;
+<b class="fc"><i class="no-highlight">53</i>&nbsp;        switch (token) {</b>
+<b class="fc"><i class="no-highlight">54</i>&nbsp;            case DELETE2BLUE: lorenzoDrawsCards(game, Color.BLUE);</b>
+<b class="fc"><i class="no-highlight">55</i>&nbsp;                break;</b>
+<b class="fc"><i class="no-highlight">56</i>&nbsp;            case DELETE2GREEN: lorenzoDrawsCards(game, Color.GREEN);</b>
+<b class="fc"><i class="no-highlight">57</i>&nbsp;                break;</b>
+<b class="fc"><i class="no-highlight">58</i>&nbsp;            case DELETE2PURPLE: lorenzoDrawsCards(game, Color.PURPLE);</b>
+<b class="fc"><i class="no-highlight">59</i>&nbsp;                break;</b>
+<b class="fc"><i class="no-highlight">60</i>&nbsp;            case DELETE2YELLOW: lorenzoDrawsCards(game, Color.YELLOW);</b>
+<b class="fc"><i class="no-highlight">61</i>&nbsp;                break;</b>
+<b class="fc"><i class="no-highlight">62</i>&nbsp;            case BLACKCROSSPLUS2:   Lorenzo.stepAhead(2);</b>
+<b class="fc"><i class="no-highlight">63</i>&nbsp;                                    lorenzoFaithPoints = Lorenzo.getFaithTrackPosition();</b>
+<b class="fc"><i class="no-highlight">64</i>&nbsp;                                    if(lorenzoFaithPoints &gt;= 24)</b>
+<b class="fc"><i class="no-highlight">65</i>&nbsp;                                        lorenzoWon = true;</b>
+<i class="no-highlight">66</i>&nbsp;                break;
+<b class="fc"><i class="no-highlight">67</i>&nbsp;            case BLACKCROSSSHUFFLE: Lorenzo.stepAhead(1);</b>
+<b class="fc"><i class="no-highlight">68</i>&nbsp;                                    lorenzoFaithPoints = Lorenzo.getFaithTrackPosition();</b>
+<b class="fc"><i class="no-highlight">69</i>&nbsp;                                    if(lorenzoFaithPoints &gt;= 24)</b>
+<b class="fc"><i class="no-highlight">70</i>&nbsp;                                        lorenzoWon = true;</b>
+<i class="no-highlight">71</i>&nbsp;                break;
+<i class="no-highlight">72</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">73</i>&nbsp;    }</b>
+<i class="no-highlight">74</i>&nbsp;
+<i class="no-highlight">75</i>&nbsp;    /**
+<i class="no-highlight">76</i>&nbsp;     * Return the player who&#39;s name is &quot;Lorenzo il Magnifico&quot;. Since the server does not allow names of more than
+<i class="no-highlight">77</i>&nbsp;     * 16 characters, Lorenzo il Magnifico can only be found in singleplayer games.
+<i class="no-highlight">78</i>&nbsp;     * @param game Instance of the game being played by the player.
+<i class="no-highlight">79</i>&nbsp;     * @return Lorenzo il Magnifico.
+<i class="no-highlight">80</i>&nbsp;     */
+<i class="no-highlight">81</i>&nbsp;    protected Player getLorenzo(Game game) {
+<b class="fc"><i class="no-highlight">82</i>&nbsp;        return game.getPlayerByNickname(&quot;Lorenzo il Magnifico&quot;);</b>
+<i class="no-highlight">83</i>&nbsp;    }
+<i class="no-highlight">84</i>&nbsp;
+<i class="no-highlight">85</i>&nbsp;    protected void lorenzoDrawsCards(Game game, Color color) {
+<b class="fc"><i class="no-highlight">86</i>&nbsp;        DevelopmentCardTable table = game.getDevelopmentCardTable();</b>
+<i class="no-highlight">87</i>&nbsp;        int column;
+<i class="no-highlight">88</i>&nbsp;
+<b class="fc"><i class="no-highlight">89</i>&nbsp;        switch (color) {</b>
+<b class="fc"><i class="no-highlight">90</i>&nbsp;            case GREEN: column = 0;</b>
+<b class="fc"><i class="no-highlight">91</i>&nbsp;            break;</b>
+<b class="fc"><i class="no-highlight">92</i>&nbsp;            case BLUE: column = 1;</b>
+<b class="fc"><i class="no-highlight">93</i>&nbsp;            break;</b>
+<b class="fc"><i class="no-highlight">94</i>&nbsp;            case YELLOW: column = 2;</b>
+<b class="fc"><i class="no-highlight">95</i>&nbsp;            break;</b>
+<b class="fc"><i class="no-highlight">96</i>&nbsp;            default: column = 3;</b>
+<i class="no-highlight">97</i>&nbsp;        }
+<i class="no-highlight">98</i>&nbsp;
+<b class="fc"><i class="no-highlight">99</i>&nbsp;        DevelopmentCardDeck deck = table.getLowestDeckByColumn(column);</b>
+<i class="no-highlight">100</i>&nbsp;
+<b class="fc"><i class="no-highlight">101</i>&nbsp;        if(deck != null) {</b>
+<b class="fc"><i class="no-highlight">102</i>&nbsp;            if (!deck.isEmpty()) {</b>
+<b class="fc"><i class="no-highlight">103</i>&nbsp;                deck.drawCard();</b>
+<b class="fc"><i class="no-highlight">104</i>&nbsp;                lorenzoCards++;</b>
+<i class="no-highlight">105</i>&nbsp;            }
+<b class="fc"><i class="no-highlight">106</i>&nbsp;            if (!deck.isEmpty()) {</b>
+<b class="fc"><i class="no-highlight">107</i>&nbsp;                deck.drawCard();</b>
+<b class="fc"><i class="no-highlight">108</i>&nbsp;                lorenzoCards++;</b>
+<i class="no-highlight">109</i>&nbsp;            }
+<i class="no-highlight">110</i>&nbsp;            else {
+<b class="fc"><i class="no-highlight">111</i>&nbsp;                DevelopmentCardDeck deck2 = table.getLowestDeckByColumn(column);</b>
+<b class="fc"><i class="no-highlight">112</i>&nbsp;                if(deck2 != null)</b>
+<b class="fc"><i class="no-highlight">113</i>&nbsp;                    if(!deck2.isEmpty()) {</b>
+<b class="fc"><i class="no-highlight">114</i>&nbsp;                        deck2.drawCard();</b>
+<b class="fc"><i class="no-highlight">115</i>&nbsp;                        lorenzoCards++;</b>
+<i class="no-highlight">116</i>&nbsp;                    }
+<i class="no-highlight">117</i>&nbsp;            }
+<i class="no-highlight">118</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">119</i>&nbsp;        if(table.columnIsEmpty(column))</b>
+<b class="fc"><i class="no-highlight">120</i>&nbsp;            lorenzoWon = true;</b>
+<b class="fc"><i class="no-highlight">121</i>&nbsp;    }</b>
+<i class="no-highlight">122</i>&nbsp;
+<i class="no-highlight">123</i>&nbsp;    /**
+<i class="no-highlight">124</i>&nbsp;     * Getter for &quot;lorenzoCards&quot; attribute.
+<i class="no-highlight">125</i>&nbsp;     */
+<i class="no-highlight">126</i>&nbsp;    public int getLorenzoCards() {
+<b class="fc"><i class="no-highlight">127</i>&nbsp;        return lorenzoCards;</b>
+<i class="no-highlight">128</i>&nbsp;    }
+<i class="no-highlight">129</i>&nbsp;
+<i class="no-highlight">130</i>&nbsp;    /**
+<i class="no-highlight">131</i>&nbsp;     * Getter for &quot;lorenzoFaithPoints&quot; attribute.
+<i class="no-highlight">132</i>&nbsp;     */
+<i class="no-highlight">133</i>&nbsp;    public int getLorenzoFaithPoints() {
+<b class="fc"><i class="no-highlight">134</i>&nbsp;        return lorenzoFaithPoints;</b>
+<i class="no-highlight">135</i>&nbsp;    }
+<i class="no-highlight">136</i>&nbsp;
+<i class="no-highlight">137</i>&nbsp;    /**
+<i class="no-highlight">138</i>&nbsp;     * Getter for &quot;lorenzoWon&quot; attribute.
+<i class="no-highlight">139</i>&nbsp;     */
+<i class="no-highlight">140</i>&nbsp;    public boolean hasLorenzoWon() {
+<b class="fc"><i class="no-highlight">141</i>&nbsp;        return lorenzoWon;</b>
+<i class="no-highlight">142</i>&nbsp;    }
+<i class="no-highlight">143</i>&nbsp;
+<i class="no-highlight">144</i>&nbsp;    /**
+<i class="no-highlight">145</i>&nbsp;     * Method used ONLY when the player ends a market interaction
+<i class="no-highlight">146</i>&nbsp;     * @param game Instance of the game being played by the player.
+<i class="no-highlight">147</i>&nbsp;     * @return true if Lorenzo il Magnifico won after the player has discarded resources from the market (thus giving
+<i class="no-highlight">148</i>&nbsp;     * faith points to Lorenzo).
+<i class="no-highlight">149</i>&nbsp;     */
+<i class="no-highlight">150</i>&nbsp;    public boolean hasLorenzoWonMarket(Game game) {
+<b class="fc"><i class="no-highlight">151</i>&nbsp;        lorenzoFaithPoints = getLorenzo(game).getFaithTrackPosition();</b>
+<b class="fc"><i class="no-highlight">152</i>&nbsp;        return lorenzoFaithPoints &gt;= 24;</b>
+<i class="no-highlight">153</i>&nbsp;    }
+<i class="no-highlight">154</i>&nbsp;
+<i class="no-highlight">155</i>&nbsp;    /**
+<i class="no-highlight">156</i>&nbsp;     * Getter for &quot;lastToken&quot; attribute.
+<i class="no-highlight">157</i>&nbsp;     */
+<i class="no-highlight">158</i>&nbsp;    public SoloActionToken getLastToken() {
+<b class="fc"><i class="no-highlight">159</i>&nbsp;        return lastToken;</b>
+<i class="no-highlight">160</i>&nbsp;    }
+<i class="no-highlight">161</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-07-02 23:15</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,320 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Board</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+    @import "../../.css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../.js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">it.polimi.ingsw.Model.GameModel</a>
+</div>
+
+<h1>Coverage Summary for Class: Board (it.polimi.ingsw.Model.GameModel)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Board</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (12/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (77/77)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package it.polimi.ingsw.Model.GameModel;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import java.io.Serializable;
+<i class="no-highlight">4</i>&nbsp;import java.util.ArrayList;
+<i class="no-highlight">5</i>&nbsp;
+<i class="no-highlight">6</i>&nbsp;import it.polimi.ingsw.Model.Enums.*;
+<i class="no-highlight">7</i>&nbsp;
+<i class="no-highlight">8</i>&nbsp;/**
+<i class="no-highlight">9</i>&nbsp; * Board Class contains all parts defining the playing board for each Player.
+<i class="no-highlight">10</i>&nbsp; * &lt;p&gt;Attributes:&lt;/p&gt;
+<i class="no-highlight">11</i>&nbsp; * &lt;ul&gt;
+<i class="no-highlight">12</i>&nbsp; *     &lt;li&gt;ResourceManager &quot;resourceManager&quot; contains both the Warehouse and the Strongbox&lt;/li&gt;
+<i class="no-highlight">13</i>&nbsp; *     &lt;li&gt;DevelopmentCardSlots &quot;developmentCardSlots&quot; contains all three Development Card slots on the player&#39;s board&lt;/li&gt;
+<i class="no-highlight">14</i>&nbsp; *     &lt;li&gt;LeaderCard[] &quot;leaderCards&quot;: contains both leader cards owned by the player&lt;/li&gt;
+<i class="no-highlight">15</i>&nbsp; *     &lt;li&gt;BasicProduction &quot;basicProduction&quot;: defines the basic production power of the player&#39;s board&lt;/li&gt;
+<i class="no-highlight">16</i>&nbsp; * &lt;/ul&gt;
+<i class="no-highlight">17</i>&nbsp; * @author everyone
+<i class="no-highlight">18</i>&nbsp; */
+<i class="no-highlight">19</i>&nbsp;public class Board implements Serializable {
+<i class="no-highlight">20</i>&nbsp;    private final ResourceManager resourceManager;
+<i class="no-highlight">21</i>&nbsp;    private final DevelopmentCardSlots developmentCardSlots;
+<i class="no-highlight">22</i>&nbsp;    private final LeaderCard[] leaderCards;
+<i class="no-highlight">23</i>&nbsp;    private BasicProduction basicProduction;
+<i class="no-highlight">24</i>&nbsp;
+<i class="no-highlight">25</i>&nbsp;    /**
+<i class="no-highlight">26</i>&nbsp;     * Constructor for Board Class.
+<i class="no-highlight">27</i>&nbsp;     */
+<b class="fc"><i class="no-highlight">28</i>&nbsp;    public Board() {</b>
+<b class="fc"><i class="no-highlight">29</i>&nbsp;        this.resourceManager = new ResourceManager();</b>
+<b class="fc"><i class="no-highlight">30</i>&nbsp;        this.developmentCardSlots = new DevelopmentCardSlots();</b>
+<b class="fc"><i class="no-highlight">31</i>&nbsp;        this.leaderCards = new LeaderCard[2];</b>
+<b class="fc"><i class="no-highlight">32</i>&nbsp;        this.basicProduction = new BasicProduction(2, 1);</b>
+<b class="fc"><i class="no-highlight">33</i>&nbsp;    }</b>
+<i class="no-highlight">34</i>&nbsp;
+<i class="no-highlight">35</i>&nbsp;    /**
+<i class="no-highlight">36</i>&nbsp;     * Getter for &quot;resourceManager&quot; attribute.
+<i class="no-highlight">37</i>&nbsp;     */
+<i class="no-highlight">38</i>&nbsp;    public ResourceManager getResourceManager() {
+<b class="fc"><i class="no-highlight">39</i>&nbsp;        return resourceManager;</b>
+<i class="no-highlight">40</i>&nbsp;    }
+<i class="no-highlight">41</i>&nbsp;
+<i class="no-highlight">42</i>&nbsp;    /**
+<i class="no-highlight">43</i>&nbsp;     * Getter for &quot;developmentCardSlots&quot; attribute.
+<i class="no-highlight">44</i>&nbsp;     */
+<i class="no-highlight">45</i>&nbsp;    public DevelopmentCardSlots getDevelopmentCardSlots() {
+<b class="fc"><i class="no-highlight">46</i>&nbsp;        return developmentCardSlots;</b>
+<i class="no-highlight">47</i>&nbsp;    }
+<i class="no-highlight">48</i>&nbsp;
+<i class="no-highlight">49</i>&nbsp;    /**
+<i class="no-highlight">50</i>&nbsp;     * Getter for &quot;leaderCards&quot; attribute.
+<i class="no-highlight">51</i>&nbsp;     */
+<i class="no-highlight">52</i>&nbsp;    public LeaderCard[] getLeaderCards() {
+<b class="fc"><i class="no-highlight">53</i>&nbsp;        return leaderCards;</b>
+<i class="no-highlight">54</i>&nbsp;    }
+<i class="no-highlight">55</i>&nbsp;
+<i class="no-highlight">56</i>&nbsp;    /**
+<i class="no-highlight">57</i>&nbsp;     * Getter for &quot;basicProduction&quot; attribute.
+<i class="no-highlight">58</i>&nbsp;     */
+<i class="no-highlight">59</i>&nbsp;    public BasicProduction getBasicProduction() {
+<b class="fc"><i class="no-highlight">60</i>&nbsp;        return basicProduction;</b>
+<i class="no-highlight">61</i>&nbsp;    }
+<i class="no-highlight">62</i>&nbsp;
+<i class="no-highlight">63</i>&nbsp;    /**
+<i class="no-highlight">64</i>&nbsp;     * Setter for &quot;basicProduction&quot; attribute.
+<i class="no-highlight">65</i>&nbsp;     */
+<i class="no-highlight">66</i>&nbsp;    public void setBasicProduction(BasicProduction basicProduction) {
+<b class="fc"><i class="no-highlight">67</i>&nbsp;        this.basicProduction = basicProduction;</b>
+<b class="fc"><i class="no-highlight">68</i>&nbsp;    }</b>
+<i class="no-highlight">69</i>&nbsp;
+<i class="no-highlight">70</i>&nbsp;    /**
+<i class="no-highlight">71</i>&nbsp;     * Counts input resources of the Production.
+<i class="no-highlight">72</i>&nbsp;     * @param developmentCards Cards chosen to activate production.
+<i class="no-highlight">73</i>&nbsp;     * @param leaderCards Leader Cards chosen to activate production.
+<i class="no-highlight">74</i>&nbsp;     * @param wantsBasicProduction True if the player wants to activate the basic production.
+<i class="no-highlight">75</i>&nbsp;     * @param inputs All inputs of the basic production.
+<i class="no-highlight">76</i>&nbsp;     * @return A stack containing all inputs.
+<i class="no-highlight">77</i>&nbsp;     */
+<i class="no-highlight">78</i>&nbsp;    public ResourceStack productionInputAdder(ArrayList&lt;DevelopmentCard&gt; developmentCards, ArrayList&lt;LeaderCard&gt; leaderCards, boolean wantsBasicProduction, ArrayList&lt;ResourceType&gt; inputs) throws IllegalArgumentException {
+<b class="fc"><i class="no-highlight">79</i>&nbsp;        ResourceStack totalInput = new ResourceStack(0, 0, 0, 0);</b>
+<i class="no-highlight">80</i>&nbsp;
+<b class="fc"><i class="no-highlight">81</i>&nbsp;        if(developmentCards != null &amp;&amp; developmentCards.size() &gt; 0)</b>
+<b class="fc"><i class="no-highlight">82</i>&nbsp;            for(DevelopmentCard card : developmentCards)</b>
+<b class="fc"><i class="no-highlight">83</i>&nbsp;                totalInput.addToAllTypes(card.getInput());</b>
+<i class="no-highlight">84</i>&nbsp;
+<b class="fc"><i class="no-highlight">85</i>&nbsp;        if(leaderCards != null &amp;&amp; leaderCards.size() &gt; 0)</b>
+<b class="fc"><i class="no-highlight">86</i>&nbsp;            for(LeaderCard leaderCard : leaderCards) {</b>
+<b class="fc"><i class="no-highlight">87</i>&nbsp;                if(!leaderCard.isActive())</b>
+<b class="fc"><i class="no-highlight">88</i>&nbsp;                    throw new IllegalArgumentException(&quot;Model.Board: Leader Card was not active.&quot;);</b>
+<b class="fc"><i class="no-highlight">89</i>&nbsp;                else if(leaderCard.getAction() != LeaderCardAction.PRODUCTIONPOWER)</b>
+<b class="fc"><i class="no-highlight">90</i>&nbsp;                    throw new IllegalArgumentException(&quot;Model.Board: Leader Card was not of type PRODUCTION POWER.&quot;);</b>
+<i class="no-highlight">91</i>&nbsp;                else
+<b class="fc"><i class="no-highlight">92</i>&nbsp;                    totalInput.addToAllTypes(leaderCard.getInput());</b>
+<b class="fc"><i class="no-highlight">93</i>&nbsp;            }</b>
+<i class="no-highlight">94</i>&nbsp;
+<b class="fc"><i class="no-highlight">95</i>&nbsp;        if(wantsBasicProduction) {</b>
+<b class="fc"><i class="no-highlight">96</i>&nbsp;            for (ResourceType type : inputs)</b>
+<b class="fc"><i class="no-highlight">97</i>&nbsp;                totalInput.addResource(1, type);</b>
+<b class="fc"><i class="no-highlight">98</i>&nbsp;            totalInput.addToAllTypes(this.basicProduction.getFixedInputs());</b>
+<i class="no-highlight">99</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">100</i>&nbsp;        return totalInput;</b>
+<i class="no-highlight">101</i>&nbsp;    }
+<i class="no-highlight">102</i>&nbsp;
+<i class="no-highlight">103</i>&nbsp;    /**
+<i class="no-highlight">104</i>&nbsp;     * Checks if the player has enough resources to start a production.
+<i class="no-highlight">105</i>&nbsp;     * @param developmentCards Cards chosen to activate production.
+<i class="no-highlight">106</i>&nbsp;     * @param leaderCards Leader Cards chosen to activate production.
+<i class="no-highlight">107</i>&nbsp;     * @param wantsBasicProduction True if the player wants to activate the basic production.
+<i class="no-highlight">108</i>&nbsp;     * @param inputs All inputs of the basic production.
+<i class="no-highlight">109</i>&nbsp;     * @return True if the player can start the Production.
+<i class="no-highlight">110</i>&nbsp;     */
+<i class="no-highlight">111</i>&nbsp;    public boolean canStartProduction(ArrayList&lt;DevelopmentCard&gt; developmentCards, ArrayList&lt;LeaderCard&gt; leaderCards, boolean wantsBasicProduction, ArrayList&lt;ResourceType&gt; inputs) {
+<i class="no-highlight">112</i>&nbsp;        ResourceStack totalInput;
+<b class="fc"><i class="no-highlight">113</i>&nbsp;        ResourceType[] resourceTypes = ResourceType.values();</b>
+<i class="no-highlight">114</i>&nbsp;
+<b class="fc"><i class="no-highlight">115</i>&nbsp;        totalInput = this.productionInputAdder(developmentCards, leaderCards, wantsBasicProduction, inputs);</b>
+<i class="no-highlight">116</i>&nbsp;
+<b class="fc"><i class="no-highlight">117</i>&nbsp;        for(int i = 1; i &lt;= 4; i++)</b>
+<b class="fc"><i class="no-highlight">118</i>&nbsp;            if(resourceManager.countAllResourcesByType(resourceTypes[i]) &lt; totalInput.getResource(resourceTypes[i]))</b>
+<b class="fc"><i class="no-highlight">119</i>&nbsp;                return false;</b>
+<i class="no-highlight">120</i>&nbsp;
+<b class="fc"><i class="no-highlight">121</i>&nbsp;        return true;</b>
+<i class="no-highlight">122</i>&nbsp;    }
+<i class="no-highlight">123</i>&nbsp;
+<i class="no-highlight">124</i>&nbsp;    /**
+<i class="no-highlight">125</i>&nbsp;     * Gets the total cost needed to start the Production.
+<i class="no-highlight">126</i>&nbsp;     * @param developmentCards Cards chosen to activate production.
+<i class="no-highlight">127</i>&nbsp;     * @param leaderCards Leader Cards chosen to activate production.
+<i class="no-highlight">128</i>&nbsp;     * @param wantsBasicProduction True if the player wants to activate the basic production.
+<i class="no-highlight">129</i>&nbsp;     * @param inputs All inputs of the basic production.
+<i class="no-highlight">130</i>&nbsp;     */
+<i class="no-highlight">131</i>&nbsp;    public void getProductionCost(ArrayList&lt;DevelopmentCard&gt; developmentCards, ArrayList&lt;LeaderCard&gt; leaderCards, boolean wantsBasicProduction, ArrayList&lt;ResourceType&gt; inputs) {
+<i class="no-highlight">132</i>&nbsp;        ResourceStack totalInput;
+<i class="no-highlight">133</i>&nbsp;
+<b class="fc"><i class="no-highlight">134</i>&nbsp;        totalInput = this.productionInputAdder(developmentCards, leaderCards, wantsBasicProduction, inputs);</b>
+<i class="no-highlight">135</i>&nbsp;
+<b class="fc"><i class="no-highlight">136</i>&nbsp;        this.resourceManager.setTemporaryResourcesToPay(totalInput);</b>
+<b class="fc"><i class="no-highlight">137</i>&nbsp;    }</b>
+<i class="no-highlight">138</i>&nbsp;
+<i class="no-highlight">139</i>&nbsp;    /**
+<i class="no-highlight">140</i>&nbsp;     * Gets the total output of non-choosable outputs of the Production.
+<i class="no-highlight">141</i>&nbsp;     * @param player The player who started a Production (to get faith points).
+<i class="no-highlight">142</i>&nbsp;     * @param developmentCards Cards chosen to activate production.
+<i class="no-highlight">143</i>&nbsp;     * @param leaderCards Leader Cards chosen to activate production.
+<i class="no-highlight">144</i>&nbsp;     * @param wantsBasicProduction True if the player wants to activate the basic production.
+<i class="no-highlight">145</i>&nbsp;     * @return ResourceStack containing total non-choosable output of the Production.
+<i class="no-highlight">146</i>&nbsp;     */
+<i class="no-highlight">147</i>&nbsp;    public ResourceStack getFixedProductionOutput(Player player, ArrayList&lt;DevelopmentCard&gt; developmentCards, ArrayList&lt;LeaderCard&gt; leaderCards, boolean wantsBasicProduction) throws IllegalArgumentException {
+<b class="fc"><i class="no-highlight">148</i>&nbsp;        ResourceStack totalOutput = new ResourceStack(0,0,0,0);</b>
+<b class="fc"><i class="no-highlight">149</i>&nbsp;        int outputFaithPoints = 0;</b>
+<i class="no-highlight">150</i>&nbsp;
+<b class="fc"><i class="no-highlight">151</i>&nbsp;        if(developmentCards != null &amp;&amp; developmentCards.size() &gt; 0) {</b>
+<b class="fc"><i class="no-highlight">152</i>&nbsp;            for (DevelopmentCard card : developmentCards) {</b>
+<b class="fc"><i class="no-highlight">153</i>&nbsp;                totalOutput.addToAllTypes(card.getOutput());</b>
+<b class="fc"><i class="no-highlight">154</i>&nbsp;                outputFaithPoints += card.getOutputFaith();</b>
+<b class="fc"><i class="no-highlight">155</i>&nbsp;            }</b>
+<i class="no-highlight">156</i>&nbsp;        }
+<i class="no-highlight">157</i>&nbsp;
+<b class="fc"><i class="no-highlight">158</i>&nbsp;        if(leaderCards != null &amp;&amp; leaderCards.size() &gt; 0)</b>
+<b class="fc"><i class="no-highlight">159</i>&nbsp;            for(LeaderCard leaderCard : leaderCards) {</b>
+<b class="fc"><i class="no-highlight">160</i>&nbsp;                if(!leaderCard.isActive())</b>
+<b class="fc"><i class="no-highlight">161</i>&nbsp;                    throw new IllegalArgumentException(&quot;Model.Board: Leader Card was not active.&quot;);</b>
+<b class="fc"><i class="no-highlight">162</i>&nbsp;                else if(leaderCard.getAction() != LeaderCardAction.PRODUCTIONPOWER)</b>
+<b class="fc"><i class="no-highlight">163</i>&nbsp;                    throw new IllegalArgumentException(&quot;Model.Board: Leader Card was not of type PRODUCTIONPOWER.&quot;);</b>
+<i class="no-highlight">164</i>&nbsp;                else
+<b class="fc"><i class="no-highlight">165</i>&nbsp;                    outputFaithPoints += leaderCard.getFaith();</b>
+<b class="fc"><i class="no-highlight">166</i>&nbsp;            }</b>
+<i class="no-highlight">167</i>&nbsp;
+<i class="no-highlight">168</i>&nbsp;
+<b class="fc"><i class="no-highlight">169</i>&nbsp;        if(wantsBasicProduction) {</b>
+<b class="fc"><i class="no-highlight">170</i>&nbsp;            totalOutput.addToAllTypes(this.basicProduction.getFixedOutputs());</b>
+<b class="fc"><i class="no-highlight">171</i>&nbsp;            outputFaithPoints += this.basicProduction.getOutputFaith();</b>
+<i class="no-highlight">172</i>&nbsp;        }
+<i class="no-highlight">173</i>&nbsp;
+<b class="fc"><i class="no-highlight">174</i>&nbsp;        if(outputFaithPoints &gt; 0)</b>
+<b class="fc"><i class="no-highlight">175</i>&nbsp;            player.stepAhead(outputFaithPoints);</b>
+<b class="fc"><i class="no-highlight">176</i>&nbsp;        if(!totalOutput.isEmpty())</b>
+<b class="fc"><i class="no-highlight">177</i>&nbsp;            return totalOutput;</b>
+<i class="no-highlight">178</i>&nbsp;        else
+<b class="fc"><i class="no-highlight">179</i>&nbsp;            return new ResourceStack(0,0,0,0);</b>
+<i class="no-highlight">180</i>&nbsp;    }
+<i class="no-highlight">181</i>&nbsp;
+<i class="no-highlight">182</i>&nbsp;    /**
+<i class="no-highlight">183</i>&nbsp;     * Checks if the player can activate a given leaderCard (checks both Resources and Cards).
+<i class="no-highlight">184</i>&nbsp;     * @param leaderCard Leader Card to be activated.
+<i class="no-highlight">185</i>&nbsp;     * @return True if the card can be activated.
+<i class="no-highlight">186</i>&nbsp;     */
+<i class="no-highlight">187</i>&nbsp;    public boolean canActivateLeaderCard(LeaderCard leaderCard) {
+<b class="fc"><i class="no-highlight">188</i>&nbsp;        ResourceStack leaderCardCost = leaderCard.getResourcesRequired();</b>
+<b class="fc"><i class="no-highlight">189</i>&nbsp;        LeaderRequirements leaderCardNeededCards = leaderCard.getCardsRequired();</b>
+<b class="fc"><i class="no-highlight">190</i>&nbsp;        ResourceType[] resourceTypes = ResourceType.values();</b>
+<i class="no-highlight">191</i>&nbsp;
+<b class="fc"><i class="no-highlight">192</i>&nbsp;        if(leaderCardNeededCards.getGeneric()){</b>
+<b class="fc"><i class="no-highlight">193</i>&nbsp;            if(!leaderCardNeededCards.hasRequirements(this.developmentCardSlots.sumColors()) || leaderCard.isDiscarded())</b>
+<b class="fc"><i class="no-highlight">194</i>&nbsp;                return false;</b>
+<i class="no-highlight">195</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">196</i>&nbsp;        else if(!leaderCardNeededCards.hasRequirements(this.developmentCardSlots.sumResources()) || leaderCard.isDiscarded())</b>
+<b class="fc"><i class="no-highlight">197</i>&nbsp;            return false;</b>
+<i class="no-highlight">198</i>&nbsp;
+<b class="fc"><i class="no-highlight">199</i>&nbsp;        for(int i = 1; i &lt;= 4; i++)</b>
+<b class="fc"><i class="no-highlight">200</i>&nbsp;            if(this.resourceManager.countAllResourcesByType(resourceTypes[i]) &lt; leaderCardCost.getResource(resourceTypes[i]))</b>
+<b class="fc"><i class="no-highlight">201</i>&nbsp;                return false;</b>
+<i class="no-highlight">202</i>&nbsp;
+<b class="fc"><i class="no-highlight">203</i>&nbsp;        return true;</b>
+<i class="no-highlight">204</i>&nbsp;    }
+<i class="no-highlight">205</i>&nbsp;
+<i class="no-highlight">206</i>&nbsp;    /**
+<i class="no-highlight">207</i>&nbsp;     * Activates a given Leader Card.
+<i class="no-highlight">208</i>&nbsp;     * @param leaderCard Leader Card to be activated.
+<i class="no-highlight">209</i>&nbsp;     */
+<i class="no-highlight">210</i>&nbsp;    public void activateLeaderCard(LeaderCard leaderCard) {
+<b class="fc"><i class="no-highlight">211</i>&nbsp;        leaderCard.setActive(true);</b>
+<b class="fc"><i class="no-highlight">212</i>&nbsp;        if(leaderCard.getAction() == LeaderCardAction.EXTRADEPOT)</b>
+<b class="fc"><i class="no-highlight">213</i>&nbsp;            this.resourceManager.activateLeaderDepot(leaderCard);</b>
+<b class="fc"><i class="no-highlight">214</i>&nbsp;    }</b>
+<i class="no-highlight">215</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-07-02 23:15</div>
+</div>
+</body>
+</html>
