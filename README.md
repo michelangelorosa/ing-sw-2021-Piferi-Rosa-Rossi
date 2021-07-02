@@ -44,7 +44,7 @@ This project was commissioned by Politecnico di Milano. It consists in creating 
 | View | 44% | 53% | 41% |
 | Controller | 100% | 98% | 92% |
 
-For more information, see [Generated Test Coverage]()
+For more information, see [Generated Test Coverage](https://github.com/michelangelorosa/ing-sw-2021-Piferi-Rosa-Rossi/tree/master/deliverables/Report-Coverage-Javadoc/Coverage)
 
 ## Requirements
 Java JRE version 15 (or higher) is required to correctly run the JAR files.
