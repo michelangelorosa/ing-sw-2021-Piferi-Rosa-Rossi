@@ -26,8 +26,12 @@ public class PersistenceServerController implements Runnable {
                 System.out.println("[PSC] caught InterruptedException when waiting");
                 e.printStackTrace();
             }
+        }
 
-            if(numberOfPlayers != -1 && server.getConnectedPlayers() < numberOfPlayers) {
+        synchronized (server.getController().getActionController()) {
+            int gameSize = server.getController().getActionController().getGame().getPlayers().size();
+
+            if (numberOfPlayers != -1 && server.getConnectedPlayers() < numberOfPlayers && gameSize == 0) {
                 try {
                     server.getController().getActionController().getPersistence().resetFile();
                     System.exit(1);
