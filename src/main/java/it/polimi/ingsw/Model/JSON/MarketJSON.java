@@ -9,6 +9,8 @@ import it.polimi.ingsw.Model.Enums.Marble;
 public class MarketJSON {
     Marble one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, extra;
 
+    /**This method is use to create the file "Persistence.json"*/
+
     public MarketJSON(Marble one, Marble two, Marble three, Marble four, Marble five, Marble six, Marble seven, Marble eight, Marble nine, Marble ten, Marble eleven, Marble twelve, Marble extra) {
         this.one = one;
         this.two = two;

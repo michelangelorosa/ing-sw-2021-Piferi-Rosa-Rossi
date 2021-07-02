@@ -265,10 +265,19 @@ public class Server {
             connection.conditionalSend(name,leaderCards);
     }
 
+    /**
+     * Getter for number of players
+     * @return the number of players
+     */
     public Integer getNumberOfPlayers() {
         return numberOfPlayers;
     }
 
+    /**
+     * Setter for number of player
+     * @param number is the number of players in the lobby
+     * @return true if the number is correct
+     */
     public boolean setNumberOfPlayers(int number) {
         if(number>0&&number<5) {
             DEBUGGER.printDebug("Number of players set to "+number);

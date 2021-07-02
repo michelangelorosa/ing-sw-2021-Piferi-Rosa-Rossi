@@ -617,6 +617,11 @@ public class JSONReader {
         return readPlayer;
     }
 
+    /**
+     * Method that converts Strings into ResourceType
+     * @param type is a String that represents the type of the resource
+     * @return ResourceType
+     */
     public static ResourceType convertType(String type){
         switch (type){
             case "SHIELDS":
